@@ -1,0 +1,1125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>**********************************</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-05-09 00:35:44 CEST"/>
+<meta name="author" content="Arthur Léothaud"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">**********************************</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 General purpose TODO list *** </a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-1">1 Negotium [5/17] </a>
+<ul>
+<li><a href="#sec-1.1">1.1 Nettoyer la ventilation du PC portable</a></li>
+<li><a href="#sec-1.2">1.2 Construire le cabanon</a></li>
+<li><a href="#sec-1.3">1.3 Acheter un meuble de cuisine</a></li>
+<li><a href="#sec-1.4">1.4 Changer le placard</a></li>
+<li><a href="#sec-1.5">1.5 Check-up santé [0/2] </a>
+<ul>
+<li><a href="#sec-1.5.1">1.5.1 Appeler la sécu </a></li>
+<li><a href="#sec-1.5.2">1.5.2 Prendre rendez-vous </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.6">1.6 Envoyer le formulaire pour la carte intégrale [0/1] </a>
+<ul>
+<li><a href="#sec-1.6.1">1.6.1 faire des photos d’identité </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.7">1.7 Réparer la lampe de chevet de Steph</a></li>
+<li><a href="#sec-1.8">1.8 Ranger le bureau</a></li>
+<li><a href="#sec-1.9">1.9 Renvoyer les papiers pour la mutuelle </a></li>
+<li><a href="#sec-1.10">1.10 Demander des subventions du CE pour les activités externes </a></li>
+<li><a href="#sec-1.11">1.11 Compte épargne entreprise [0/2] </a>
+<ul>
+<li><a href="#sec-1.11.1">1.11.1 Todo Créer les identifiants sur Esalia </a></li>
+<li><a href="#sec-1.11.2">1.11.2 Alimenter le compte (260 €) </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.12">1.12 Renvoyer l’attestation de transports </a></li>
+<li><a href="#sec-1.13">1.13 Recontacter Henri / Olivier pour l’avenant au contrat</a></li>
+<li><a href="#sec-1.14">1.14 Démo « Don du Sang » [2/3]</a>
+<ul>
+<li><a href="#sec-1.14.1">1.14.1 Prévenir Franck </a></li>
+<li><a href="#sec-1.14.2">1.14.2 Choisir les participants </a></li>
+<li><a href="#sec-1.14.3">1.14.3 Appeler Franck pour réserver Montreuil </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.15">1.15 Passages de grades [1/4]</a>
+<ul>
+<li><a href="#sec-1.15.1">1.15.1 Passer la ceinture marron </a></li>
+<li><a href="#sec-1.15.2">1.15.2 Passer le 1er dan FFKDA </a></li>
+<li><a href="#sec-1.15.3">1.15.3 Passer le 2e dan FFKDA </a></li>
+<li><a href="#sec-1.15.4">1.15.4 Passer la ceinture noire AFR </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.16">1.16 Récupérer licence 2012/2013</a></li>
+<li><a href="#sec-1.17">1.17 Acheter « la Recherche » et « L’écume des jours » chez le libraire </a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Neuneu [2/9] </a>
+<ul>
+<li><a href="#sec-2.1">2.1 Faire fonctionner ubikey </a></li>
+<li><a href="#sec-2.2">2.2 emacs [1/7] </a>
+<ul>
+<li><a href="#sec-2.2.1">2.2.1 Ajouter fonction de zoom </a></li>
+<li><a href="#sec-2.2.2">2.2.2 Versionner les .emacs </a></li>
+<li><a href="#sec-2.2.3">2.2.3 Ajouter fonction de copie du nom complet du fichier </a></li>
+<li><a href="#sec-2.2.4">2.2.4 Installer / utiliser Gnus avec Gmail </a></li>
+<li><a href="#sec-2.2.5">2.2.5 Installer / utiliser Gnus / RSS </a></li>
+<li><a href="#sec-2.2.6">2.2.6 Installer / utiliser JDEE </a></li>
+<li><a href="#sec-2.2.7">2.2.7 Installer / utiliser TRAMP </a></li>
+</ul>
+</li>
+<li><a href="#sec-2.3">2.3 Installer tt-rss sur dedipeche </a></li>
+<li><a href="#sec-2.4">2.4 Se renseigner sur piratebox </a></li>
+<li><a href="#sec-2.5">2.5 Refaire une vraie config mutt </a></li>
+<li><a href="#sec-2.6">2.6 Mapping touche mise en veille sur lubuntu </a></li>
+<li><a href="#sec-2.7">2.7 Install debian </a>
+<ul>
+<li><a href="#sec-2.7.1">2.7.1 Sur le FIONO </a></li>
+<li><a href="#sec-2.7.2">2.7.2 Sur la clé portable </a></li>
+</ul>
+</li>
+<li><a href="#sec-2.8">2.8 Installer / configurer une gentoo</a></li>
+<li><a href="#sec-2.9">2.9 fiono [4/5] </a>
+<ul>
+<li><a href="#sec-2.9.1">2.9.1 Nvidia drivers (apt-cache find or smth) </a></li>
+<li><a href="#sec-2.9.2">2.9.2 64-bit kernel </a></li>
+<li><a href="#sec-2.9.3">2.9.3 HDMI sound support </a></li>
+<li><a href="#sec-2.9.4">2.9.4 Copy music on intern drive </a></li>
+<li><a href="#sec-2.9.5">2.9.5 Réinstaller une debian </a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Otium [2/6] </a>
+<ul>
+<li><a href="#sec-3.1">3.1 Guitare</a></li>
+<li><a href="#sec-3.2">3.2 Langues </a>
+<ul>
+<li><a href="#sec-3.2.1">3.2.1 Apprendre l’Arabe </a></li>
+<li><a href="#sec-3.2.2">3.2.2 Reprendre l'espéranto </a></li>
+</ul>
+</li>
+<li><a href="#sec-3.3">3.3 Organiser le Hellfest </a></li>
+<li><a href="#sec-3.4">3.4 Organiser le Sonisphere</a></li>
+<li><a href="#sec-3.5">3.5 Dégustation de whiskey </a></li>
+<li><a href="#sec-3.6">3.6 Dégustation de vin </a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Contacter / Répondre [0/7] </a>
+<ul>
+<li><a href="#sec-4.1">4.1 Répondre à Dora </a></li>
+<li><a href="#sec-4.2">4.2 Répondre à Florian </a></li>
+<li><a href="#sec-4.3">4.3 Répondre à Denis </a></li>
+<li><a href="#sec-4.4">4.4 Répondre à Constance &amp; Colas </a></li>
+<li><a href="#sec-4.5">4.5 Répondre à Phil </a></li>
+<li><a href="#sec-4.6">4.6 Répondre à Anja </a></li>
+<li><a href="#sec-4.7">4.7 Écrire à Antonio </a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 Prêts / Emprunts [2/7] </a>
+<ul>
+<li><a href="#sec-5.1">5.1 Récupérer « Voyage au bout de la nuit » de Typhaine </a></li>
+<li><a href="#sec-5.2">5.2 Récupérer « La Zone Du Dehors » de Mabrouk </a></li>
+<li><a href="#sec-5.3">5.3 Récupérer 2 tickets restau  de Julien Amory </a></li>
+<li><a href="#sec-5.4">5.4 Récupérer 10 € de Laurence Wolf </a></li>
+<li><a href="#sec-5.5">5.5 Rendre « Buffy » (en BD) à BSE </a></li>
+<li><a href="#sec-5.6">5.6 Rendre « Spawn » à BSE </a></li>
+<li><a href="#sec-5.7">5.7 Rendre « The Walking Dead » à Polo </a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 À regarder / lire / écouter [0/12] </a>
+<ul>
+<li><a href="#sec-6.1">6.1 Regarder « L’irrésistible ascension d’un cowboy des temps modernes »</a></li>
+<li><a href="#sec-6.2">6.2 Regarder « Le prénom »</a></li>
+<li><a href="#sec-6.3">6.3 Regarder « Lola rennt »</a></li>
+<li><a href="#sec-6.4">6.4 Regarder « Die Welle »</a></li>
+<li><a href="#sec-6.5">6.5 Regarder « Das Experiment »</a></li>
+<li><a href="#sec-6.6">6.6 Lire « No Steak », Aymeric Caron</a></li>
+<li><a href="#sec-6.7">6.7 Lire « La revanche du rameur », Dominique Dupagne</a></li>
+<li><a href="#sec-6.8">6.8 Lire « Nachts unter der steinernen Brücke », Léo Perutz (1953)</a></li>
+<li><a href="#sec-6.9">6.9 Lire http://en.wikipedia.org/wiki/Getting_Things_Done#Organize</a></li>
+<li><a href="#sec-6.10">6.10 Relire (en anglais) « Brave New World », Aldous Huxley</a></li>
+<li><a href="#sec-6.11">6.11 Lire « À la recherche du temps perdu », Marcel Proust</a></li>
+<li><a href="#sec-6.12">6.12 Regarder « Looper »</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7 EOF </a></div>
+</div>
+
+<div id="outline-container-1" class="outline-4">
+<h4 id="sec-1"><span class="section-number-4">1</span> General purpose TODO list *** </h4>
+<div class="outline-text-4" id="text-1">
+
+<p>**********************************
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Negotium [5/17] </h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1.1" class="outline-3">
+<h3 id="sec-1.1"><span class="section-number-3">1.1</span> <span class="todo TODO"> TODO</span> Nettoyer la ventilation du PC portable &nbsp;&nbsp;&nbsp;<span class="tag"><span class="MAISON">MAISON</span></span></h3>
+<div class="outline-text-3" id="text-1.1">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED: </span> <span class="timestamp">2013-05-09 jeu.</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1.2" class="outline-3">
+<h3 id="sec-1.2"><span class="section-number-3">1.2</span> <span class="todo TODO"> TODO</span> Construire le cabanon &nbsp;&nbsp;&nbsp;<span class="tag"><span class="MAISON">MAISON</span></span></h3>
+<div class="outline-text-3" id="text-1.2">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED: </span> <span class="timestamp">2013-05-09 jeu.</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1.3" class="outline-3">
+<h3 id="sec-1.3"><span class="section-number-3">1.3</span> <span class="done DONE"> DONE</span> Acheter un meuble de cuisine &nbsp;&nbsp;&nbsp;<span class="tag"><span class="MAISON">MAISON</span></span></h3>
+<div class="outline-text-3" id="text-1.3">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 07:57</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 07:57</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.4" class="outline-3">
+<h3 id="sec-1.4"><span class="section-number-3">1.4</span> <span class="done DONE"> DONE</span> Changer le placard &nbsp;&nbsp;&nbsp;<span class="tag"><span class="MAISON">MAISON</span></span></h3>
+<div class="outline-text-3" id="text-1.4">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 08:01</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 08:01</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.5" class="outline-3">
+<h3 id="sec-1.5"><span class="section-number-3">1.5</span> <span class="todo TODO"> TODO</span> Check-up santé [0/2] </h3>
+<div class="outline-text-3" id="text-1.5">
+
+
+</div>
+
+<div id="outline-container-1.5.1" class="outline-4">
+<h4 id="sec-1.5.1"><span class="section-number-4">1.5.1</span> <span class="todo TODO"> TODO</span> Appeler la sécu </h4>
+<div class="outline-text-4" id="text-1.5.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.5.2" class="outline-4">
+<h4 id="sec-1.5.2"><span class="section-number-4">1.5.2</span> <span class="todo TODO"> TODO</span> Prendre rendez-vous </h4>
+<div class="outline-text-4" id="text-1.5.2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.6" class="outline-3">
+<h3 id="sec-1.6"><span class="section-number-3">1.6</span> <span class="todo TODO"> TODO</span> Envoyer le formulaire pour la carte intégrale [0/1] </h3>
+<div class="outline-text-3" id="text-1.6">
+
+
+</div>
+
+<div id="outline-container-1.6.1" class="outline-4">
+<h4 id="sec-1.6.1"><span class="section-number-4">1.6.1</span> <span class="todo TODO"> TODO</span> faire des photos d’identité </h4>
+<div class="outline-text-4" id="text-1.6.1">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.7" class="outline-3">
+<h3 id="sec-1.7"><span class="section-number-3">1.7</span> <span class="todo TODO"> TODO</span> Réparer la lampe de chevet de Steph &nbsp;&nbsp;&nbsp;<span class="tag"><span class="MAISON">MAISON</span></span></h3>
+<div class="outline-text-3" id="text-1.7">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.8" class="outline-3">
+<h3 id="sec-1.8"><span class="section-number-3">1.8</span> <span class="todo TODO"> TODO</span> Ranger le bureau &nbsp;&nbsp;&nbsp;<span class="tag"><span class="MAISON">MAISON</span></span></h3>
+<div class="outline-text-3" id="text-1.8">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.9" class="outline-3">
+<h3 id="sec-1.9"><span class="section-number-3">1.9</span> <span class="done DONE"> DONE</span> Renvoyer les papiers pour la mutuelle </h3>
+<div class="outline-text-3" id="text-1.9">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 08:09</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 08:09</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.10" class="outline-3">
+<h3 id="sec-1.10"><span class="section-number-3">1.10</span> <span class="todo TODO"> TODO</span> Demander des subventions du CE pour les activités externes </h3>
+<div class="outline-text-3" id="text-1.10">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.11" class="outline-3">
+<h3 id="sec-1.11"><span class="section-number-3">1.11</span> <span class="todo TODO"> TODO</span> Compte épargne entreprise [0/2] </h3>
+<div class="outline-text-3" id="text-1.11">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE: </span> <span class="timestamp">2013-12-13 ven.</span></span><br/>
+</p>
+</div>
+
+<div id="outline-container-1.11.1" class="outline-4">
+<h4 id="sec-1.11.1"><span class="section-number-4">1.11.1</span> Todo Créer les identifiants sur Esalia </h4>
+<div class="outline-text-4" id="text-1.11.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.11.2" class="outline-4">
+<h4 id="sec-1.11.2"><span class="section-number-4">1.11.2</span> <span class="todo TODO"> TODO</span> Alimenter le compte (260 €) </h4>
+<div class="outline-text-4" id="text-1.11.2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.12" class="outline-3">
+<h3 id="sec-1.12"><span class="section-number-3">1.12</span> <span class="done DONE"> DONE</span> Renvoyer l’attestation de transports </h3>
+<div class="outline-text-3" id="text-1.12">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 08:13</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 08:13</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.13" class="outline-3">
+<h3 id="sec-1.13"><span class="section-number-3">1.13</span> <span class="done CANCELLED"> CANCELLED</span> Recontacter Henri / Olivier pour l’avenant au contrat &nbsp;&nbsp;&nbsp;<span class="tag"><span class="CANCELLED">CANCELLED</span></span></h3>
+<div class="outline-text-3" id="text-1.13">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 08:14</span></span><br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-1.14" class="outline-3">
+<h3 id="sec-1.14"><span class="section-number-3">1.14</span> <span class="todo TODO"> TODO</span> Démo « Don du Sang » [2/3] &nbsp;&nbsp;&nbsp;<span class="tag"><span class="PENCHAK">PENCHAK</span></span></h3>
+<div class="outline-text-3" id="text-1.14">
+
+
+</div>
+
+<div id="outline-container-1.14.1" class="outline-4">
+<h4 id="sec-1.14.1"><span class="section-number-4">1.14.1</span> <span class="done DONE"> DONE</span> Prévenir Franck </h4>
+<div class="outline-text-4" id="text-1.14.1">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-09 jeu. 00:02</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-09 jeu. 00:02</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.14.2" class="outline-4">
+<h4 id="sec-1.14.2"><span class="section-number-4">1.14.2</span> <span class="done DONE"> DONE</span> Choisir les participants </h4>
+<div class="outline-text-4" id="text-1.14.2">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-09 jeu. 00:02</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-09 jeu. 00:02</span></span>
+</li>
+</ul>
+
+<p>Rivo, Damien, Laurent, Jean-Marc
+</p></div>
+
+</div>
+
+<div id="outline-container-1.14.3" class="outline-4">
+<h4 id="sec-1.14.3"><span class="section-number-4">1.14.3</span> <span class="todo TODO"> TODO</span> Appeler Franck pour réserver Montreuil </h4>
+<div class="outline-text-4" id="text-1.14.3">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE: </span> <span class="timestamp">2013-05-07 mar.</span></span>  <span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED: </span> <span class="timestamp">2013-05-12 mar.</span></span><br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-1.15" class="outline-3">
+<h3 id="sec-1.15"><span class="section-number-3">1.15</span> <span class="todo TODO"> TODO</span> Passages de grades [1/4] &nbsp;&nbsp;&nbsp;<span class="tag"><span class="PENCHAK">PENCHAK</span></span></h3>
+<div class="outline-text-3" id="text-1.15">
+
+
+</div>
+
+<div id="outline-container-1.15.1" class="outline-4">
+<h4 id="sec-1.15.1"><span class="section-number-4">1.15.1</span> <span class="todo TODO"> TODO</span> Passer la ceinture marron </h4>
+<div class="outline-text-4" id="text-1.15.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.15.2" class="outline-4">
+<h4 id="sec-1.15.2"><span class="section-number-4">1.15.2</span> <span class="done DONE"> DONE</span> Passer le 1er dan FFKDA </h4>
+<div class="outline-text-4" id="text-1.15.2">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:20</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:20</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.15.3" class="outline-4">
+<h4 id="sec-1.15.3"><span class="section-number-4">1.15.3</span> <span class="todo TODO"> TODO</span> Passer le 2e dan FFKDA </h4>
+<div class="outline-text-4" id="text-1.15.3">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.15.4" class="outline-4">
+<h4 id="sec-1.15.4"><span class="section-number-4">1.15.4</span> <span class="todo TODO"> TODO</span> Passer la ceinture noire AFR </h4>
+<div class="outline-text-4" id="text-1.15.4">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.16" class="outline-3">
+<h3 id="sec-1.16"><span class="section-number-3">1.16</span> <span class="todo TODO"> TODO</span> Récupérer licence 2012/2013 &nbsp;&nbsp;&nbsp;<span class="tag"><span class="PENCHAK">PENCHAK</span></span></h3>
+<div class="outline-text-3" id="text-1.16">
+
+</div>
+
+</div>
+
+<div id="outline-container-1.17" class="outline-3">
+<h3 id="sec-1.17"><span class="section-number-3">1.17</span> <span class="todo TODO"> TODO</span> Acheter « la Recherche » et « L’écume des jours » chez le libraire </h3>
+<div class="outline-text-3" id="text-1.17">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Neuneu [2/9] </h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2.1" class="outline-3">
+<h3 id="sec-2.1"><span class="section-number-3">2.1</span> <span class="todo TODO"> TODO</span> Faire fonctionner ubikey </h3>
+<div class="outline-text-3" id="text-2.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.2" class="outline-3">
+<h3 id="sec-2.2"><span class="section-number-3">2.2</span> <span class="todo TODO"> TODO</span> emacs [1/7] </h3>
+<div class="outline-text-3" id="text-2.2">
+
+
+</div>
+
+<div id="outline-container-2.2.1" class="outline-4">
+<h4 id="sec-2.2.1"><span class="section-number-4">2.2.1</span> <span class="todo TODO"> TODO</span> Ajouter fonction de zoom </h4>
+<div class="outline-text-4" id="text-2.2.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.2.2" class="outline-4">
+<h4 id="sec-2.2.2"><span class="section-number-4">2.2.2</span> <span class="todo TODO"> TODO</span> Versionner les .emacs </h4>
+<div class="outline-text-4" id="text-2.2.2">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.2.3" class="outline-4">
+<h4 id="sec-2.2.3"><span class="section-number-4">2.2.3</span> <span class="done DONE"> DONE</span> Ajouter fonction de copie du nom complet du fichier </h4>
+<div class="outline-text-4" id="text-2.2.3">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:10</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:10</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.2.4" class="outline-4">
+<h4 id="sec-2.2.4"><span class="section-number-4">2.2.4</span> <span class="todo TODO"> TODO</span> Installer / utiliser Gnus avec Gmail </h4>
+<div class="outline-text-4" id="text-2.2.4">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.2.5" class="outline-4">
+<h4 id="sec-2.2.5"><span class="section-number-4">2.2.5</span> <span class="todo TODO"> TODO</span> Installer / utiliser Gnus / RSS </h4>
+<div class="outline-text-4" id="text-2.2.5">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.2.6" class="outline-4">
+<h4 id="sec-2.2.6"><span class="section-number-4">2.2.6</span> <span class="todo TODO"> TODO</span> Installer / utiliser JDEE </h4>
+<div class="outline-text-4" id="text-2.2.6">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.2.7" class="outline-4">
+<h4 id="sec-2.2.7"><span class="section-number-4">2.2.7</span> <span class="todo TODO"> TODO</span> Installer / utiliser TRAMP </h4>
+<div class="outline-text-4" id="text-2.2.7">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2.3" class="outline-3">
+<h3 id="sec-2.3"><span class="section-number-3">2.3</span> <span class="todo STARTED"> STARTED</span> Installer tt-rss sur dedipeche </h3>
+<div class="outline-text-3" id="text-2.3">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.4" class="outline-3">
+<h3 id="sec-2.4"><span class="section-number-3">2.4</span> <span class="todo TODO"> TODO</span> Se renseigner sur piratebox </h3>
+<div class="outline-text-3" id="text-2.4">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.5" class="outline-3">
+<h3 id="sec-2.5"><span class="section-number-3">2.5</span> <span class="todo TODO"> TODO</span> Refaire une vraie config mutt </h3>
+<div class="outline-text-3" id="text-2.5">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.6" class="outline-3">
+<h3 id="sec-2.6"><span class="section-number-3">2.6</span> <span class="done DONE"> DONE</span> Mapping touche mise en veille sur lubuntu </h3>
+<div class="outline-text-3" id="text-2.6">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:13</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:13</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.7" class="outline-3">
+<h3 id="sec-2.7"><span class="section-number-3">2.7</span> <span class="todo TODO"> TODO</span> Install debian </h3>
+<div class="outline-text-3" id="text-2.7">
+
+
+</div>
+
+<div id="outline-container-2.7.1" class="outline-4">
+<h4 id="sec-2.7.1"><span class="section-number-4">2.7.1</span> <span class="todo TODO"> TODO</span> Sur le FIONO </h4>
+<div class="outline-text-4" id="text-2.7.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-2.7.2" class="outline-4">
+<h4 id="sec-2.7.2"><span class="section-number-4">2.7.2</span> <span class="todo TODO"> TODO</span> Sur la clé portable </h4>
+<div class="outline-text-4" id="text-2.7.2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2.8" class="outline-3">
+<h3 id="sec-2.8"><span class="section-number-3">2.8</span> <span class="done CANCELLED"> CANCELLED</span> Installer / configurer une gentoo &nbsp;&nbsp;&nbsp;<span class="tag"><span class="CANCELLED">CANCELLED</span></span></h3>
+<div class="outline-text-3" id="text-2.8">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:15</span></span><br/>
+</p><ul>
+<li>
+State "CANCELLED"  from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:15</span></span> <br/>
+Plutôt installer Debian sur tous les environnements
+<ul>
+<li>
+touchpad
+</li>
+<li>
+pbbuttonsd
+</li>
+<li>
+flash support
+</li>
+<li>
+FireWire &amp; HSF+ Drive
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.9" class="outline-3">
+<h3 id="sec-2.9"><span class="section-number-3">2.9</span> <span class="todo TODO"> TODO</span> fiono [4/5] </h3>
+<div class="outline-text-3" id="text-2.9">
+
+
+</div>
+
+<div id="outline-container-2.9.1" class="outline-4">
+<h4 id="sec-2.9.1"><span class="section-number-4">2.9.1</span> <span class="done DONE"> DONE</span> Nvidia drivers (apt-cache find or smth) </h4>
+<div class="outline-text-4" id="text-2.9.1">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:17</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:17</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.9.2" class="outline-4">
+<h4 id="sec-2.9.2"><span class="section-number-4">2.9.2</span> <span class="done DONE"> DONE</span> 64-bit kernel </h4>
+<div class="outline-text-4" id="text-2.9.2">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:17</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:17</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.9.3" class="outline-4">
+<h4 id="sec-2.9.3"><span class="section-number-4">2.9.3</span> <span class="done DONE"> DONE</span> HDMI sound support </h4>
+<div class="outline-text-4" id="text-2.9.3">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:17</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:17</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.9.4" class="outline-4">
+<h4 id="sec-2.9.4"><span class="section-number-4">2.9.4</span> <span class="done DONE"> DONE</span> Copy music on intern drive </h4>
+<div class="outline-text-4" id="text-2.9.4">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-07 mar. 09:17</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-07 mar. 09:17</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.9.5" class="outline-4">
+<h4 id="sec-2.9.5"><span class="section-number-4">2.9.5</span> <span class="todo TODO"> TODO</span> Réinstaller une debian </h4>
+<div class="outline-text-4" id="text-2.9.5">
+
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Otium [2/6] </h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3.1" class="outline-3">
+<h3 id="sec-3.1"><span class="section-number-3">3.1</span> <span class="todo TODO"> TODO</span> Guitare &nbsp;&nbsp;&nbsp;<span class="tag"><span class="MAISON">MAISON</span></span></h3>
+<div class="outline-text-3" id="text-3.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-3.2" class="outline-3">
+<h3 id="sec-3.2"><span class="section-number-3">3.2</span> <span class="todo TODO"> TODO</span> Langues </h3>
+<div class="outline-text-3" id="text-3.2">
+
+
+</div>
+
+<div id="outline-container-3.2.1" class="outline-4">
+<h4 id="sec-3.2.1"><span class="section-number-4">3.2.1</span> <span class="todo TODO"> TODO</span> Apprendre l’Arabe </h4>
+<div class="outline-text-4" id="text-3.2.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-3.2.2" class="outline-4">
+<h4 id="sec-3.2.2"><span class="section-number-4">3.2.2</span> <span class="todo TODO"> TODO</span> Reprendre l'espéranto </h4>
+<div class="outline-text-4" id="text-3.2.2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3.3" class="outline-3">
+<h3 id="sec-3.3"><span class="section-number-3">3.3</span> <span class="todo TODO"> TODO</span> Organiser le Hellfest </h3>
+<div class="outline-text-3" id="text-3.3">
+
+</div>
+
+</div>
+
+<div id="outline-container-3.4" class="outline-3">
+<h3 id="sec-3.4"><span class="section-number-3">3.4</span> <span class="done CANCELLED"> CANCELLED</span> Organiser le Sonisphere &nbsp;&nbsp;&nbsp;<span class="tag"><span class="CANCELLED">CANCELLED</span></span></h3>
+<div class="outline-text-3" id="text-3.4">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-08 mer. 23:22</span></span><br/>
+</p><ul>
+<li>
+State "CANCELLED"  from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-08 mer. 23:22</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-3.5" class="outline-3">
+<h3 id="sec-3.5"><span class="section-number-3">3.5</span> <span class="todo TODO"> TODO</span> Dégustation de whiskey </h3>
+<div class="outline-text-3" id="text-3.5">
+
+</div>
+
+</div>
+
+<div id="outline-container-3.6" class="outline-3">
+<h3 id="sec-3.6"><span class="section-number-3">3.6</span> <span class="done DONE"> DONE</span> Dégustation de vin </h3>
+<div class="outline-text-3" id="text-3.6">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">SCHEDULED: </span> <span class="timestamp">2013-05-04 sam.</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-08 mer. 00:42</span></span>
+
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Contacter / Répondre [0/7] </h2>
+<div class="outline-text-2" id="text-4">
+
+
+</div>
+
+<div id="outline-container-4.1" class="outline-3">
+<h3 id="sec-4.1"><span class="section-number-3">4.1</span> <span class="todo TODO"> TODO</span> Répondre à Dora </h3>
+<div class="outline-text-3" id="text-4.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.2" class="outline-3">
+<h3 id="sec-4.2"><span class="section-number-3">4.2</span> <span class="todo TODO"> TODO</span> Répondre à Florian </h3>
+<div class="outline-text-3" id="text-4.2">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.3" class="outline-3">
+<h3 id="sec-4.3"><span class="section-number-3">4.3</span> <span class="todo TODO"> TODO</span> Répondre à Denis </h3>
+<div class="outline-text-3" id="text-4.3">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.4" class="outline-3">
+<h3 id="sec-4.4"><span class="section-number-3">4.4</span> <span class="todo TODO"> TODO</span> Répondre à Constance &amp; Colas </h3>
+<div class="outline-text-3" id="text-4.4">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.5" class="outline-3">
+<h3 id="sec-4.5"><span class="section-number-3">4.5</span> <span class="todo TODO"> TODO</span> Répondre à Phil </h3>
+<div class="outline-text-3" id="text-4.5">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.6" class="outline-3">
+<h3 id="sec-4.6"><span class="section-number-3">4.6</span> <span class="todo TODO"> TODO</span> Répondre à Anja </h3>
+<div class="outline-text-3" id="text-4.6">
+
+</div>
+
+</div>
+
+<div id="outline-container-4.7" class="outline-3">
+<h3 id="sec-4.7"><span class="section-number-3">4.7</span> <span class="todo TODO"> TODO</span> Écrire à Antonio </h3>
+<div class="outline-text-3" id="text-4.7">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Prêts / Emprunts [2/7] </h2>
+<div class="outline-text-2" id="text-5">
+
+
+</div>
+
+<div id="outline-container-5.1" class="outline-3">
+<h3 id="sec-5.1"><span class="section-number-3">5.1</span> <span class="todo TODO"> TODO</span> Récupérer « Voyage au bout de la nuit » de Typhaine </h3>
+<div class="outline-text-3" id="text-5.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-5.2" class="outline-3">
+<h3 id="sec-5.2"><span class="section-number-3">5.2</span> <span class="done DONE"> DONE</span> Récupérer « La Zone Du Dehors » de Mabrouk </h3>
+<div class="outline-text-3" id="text-5.2">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-08 mer. 11:35</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-08 mer. 11:35</span></span>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-5.3" class="outline-3">
+<h3 id="sec-5.3"><span class="section-number-3">5.3</span> <span class="todo TODO"> TODO</span> Récupérer 2 tickets restau  de Julien Amory </h3>
+<div class="outline-text-3" id="text-5.3">
+
+</div>
+
+</div>
+
+<div id="outline-container-5.4" class="outline-3">
+<h3 id="sec-5.4"><span class="section-number-3">5.4</span> <span class="done DONE"> DONE</span> Récupérer 10 € de Laurence Wolf </h3>
+<div class="outline-text-3" id="text-5.4">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">CLOSED: </span> <span class="timestamp">2013-05-08 mer. 11:36</span></span><br/>
+</p><ul>
+<li>
+State "DONE"       from "TODO" <span class="timestamp-wrapper"> <span class="timestamp">2013-05-08 mer. 11:36</span></span>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-5.5" class="outline-3">
+<h3 id="sec-5.5"><span class="section-number-3">5.5</span> <span class="todo TODO"> TODO</span> Rendre « Buffy » (en BD) à BSE </h3>
+<div class="outline-text-3" id="text-5.5">
+
+</div>
+
+</div>
+
+<div id="outline-container-5.6" class="outline-3">
+<h3 id="sec-5.6"><span class="section-number-3">5.6</span> <span class="todo TODO"> TODO</span> Rendre « Spawn » à BSE </h3>
+<div class="outline-text-3" id="text-5.6">
+
+</div>
+
+</div>
+
+<div id="outline-container-5.7" class="outline-3">
+<h3 id="sec-5.7"><span class="section-number-3">5.7</span> <span class="todo TODO"> TODO</span> Rendre « The Walking Dead » à Polo </h3>
+<div class="outline-text-3" id="text-5.7">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> À regarder / lire / écouter [0/12] </h2>
+<div class="outline-text-2" id="text-6">
+
+
+</div>
+
+<div id="outline-container-6.1" class="outline-3">
+<h3 id="sec-6.1"><span class="section-number-3">6.1</span> <span class="todo TODO"> TODO</span> Regarder « L’irrésistible ascension d’un cowboy des temps modernes » &nbsp;&nbsp;&nbsp;<span class="tag"><span class="TH__TRE">THÉÂTRE</span></span></h3>
+<div class="outline-text-3" id="text-6.1">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.2" class="outline-3">
+<h3 id="sec-6.2"><span class="section-number-3">6.2</span> <span class="todo TODO"> TODO</span> Regarder « Le prénom » &nbsp;&nbsp;&nbsp;<span class="tag"><span class="FILM">FILM</span></span></h3>
+<div class="outline-text-3" id="text-6.2">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.3" class="outline-3">
+<h3 id="sec-6.3"><span class="section-number-3">6.3</span> <span class="todo TODO"> TODO</span> Regarder « Lola rennt » &nbsp;&nbsp;&nbsp;<span class="tag"><span class="FILM">FILM</span></span></h3>
+<div class="outline-text-3" id="text-6.3">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.4" class="outline-3">
+<h3 id="sec-6.4"><span class="section-number-3">6.4</span> <span class="todo TODO"> TODO</span> Regarder « Die Welle » &nbsp;&nbsp;&nbsp;<span class="tag"><span class="FILM">FILM</span></span></h3>
+<div class="outline-text-3" id="text-6.4">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.5" class="outline-3">
+<h3 id="sec-6.5"><span class="section-number-3">6.5</span> <span class="todo TODO"> TODO</span> Regarder « Das Experiment » &nbsp;&nbsp;&nbsp;<span class="tag"><span class="FILM">FILM</span></span></h3>
+<div class="outline-text-3" id="text-6.5">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.6" class="outline-3">
+<h3 id="sec-6.6"><span class="section-number-3">6.6</span> <span class="todo TODO"> TODO</span> Lire « No Steak », Aymeric Caron &nbsp;&nbsp;&nbsp;<span class="tag"><span class="LIVRE">LIVRE</span></span></h3>
+<div class="outline-text-3" id="text-6.6">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.7" class="outline-3">
+<h3 id="sec-6.7"><span class="section-number-3">6.7</span> <span class="todo TODO"> TODO</span> Lire « La revanche du rameur », Dominique Dupagne &nbsp;&nbsp;&nbsp;<span class="tag"><span class="LIVRE">LIVRE</span></span></h3>
+<div class="outline-text-3" id="text-6.7">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.8" class="outline-3">
+<h3 id="sec-6.8"><span class="section-number-3">6.8</span> <span class="todo TODO"> TODO</span> Lire « Nachts unter der steinernen Brücke », Léo Perutz (1953) &nbsp;&nbsp;&nbsp;<span class="tag"><span class="LIVRE">LIVRE</span></span></h3>
+<div class="outline-text-3" id="text-6.8">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.9" class="outline-3">
+<h3 id="sec-6.9"><span class="section-number-3">6.9</span> <span class="todo TODO"> TODO</span> Lire <a href="http://en.wikipedia.org/wiki/Getting_Things_Done#Organize">http://en.wikipedia.org/wiki/Getting_Things_Done#Organize</a> &nbsp;&nbsp;&nbsp;<span class="tag"><span class="ARTICLE">ARTICLE</span></span></h3>
+<div class="outline-text-3" id="text-6.9">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.10" class="outline-3">
+<h3 id="sec-6.10"><span class="section-number-3">6.10</span> <span class="todo TODO"> TODO</span> Relire (en anglais) « Brave New World », Aldous Huxley &nbsp;&nbsp;&nbsp;<span class="tag"><span class="LIVRE">LIVRE</span></span></h3>
+<div class="outline-text-3" id="text-6.10">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.11" class="outline-3">
+<h3 id="sec-6.11"><span class="section-number-3">6.11</span> <span class="todo TODO"> TODO</span> Lire « À la recherche du temps perdu », Marcel Proust &nbsp;&nbsp;&nbsp;<span class="tag"><span class="LIVRE">LIVRE</span></span></h3>
+<div class="outline-text-3" id="text-6.11">
+
+</div>
+
+</div>
+
+<div id="outline-container-6.12" class="outline-3">
+<h3 id="sec-6.12"><span class="section-number-3">6.12</span> <span class="todo TODO"> TODO</span> Regarder « Looper » &nbsp;&nbsp;&nbsp;<span class="tag"><span class="FILM">FILM</span></span></h3>
+<div class="outline-text-3" id="text-6.12">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> EOF </h2>
+<div class="outline-text-2" id="text-7">
+
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Arthur Léothaud
+<a href="mailto:duncan@sd-38388.dedibox.fr">&lt;duncan@sd-38388.dedibox.fr&gt;</a>
+</p>
+<p class="date"> Date: 2013-05-09 00:35:44 CEST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>

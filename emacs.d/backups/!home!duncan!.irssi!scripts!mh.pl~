@@ -1,0 +1,349 @@
+#!/usr/bin/perl
+
+# script irssi ajoutant des outils Mountyhall sur un chan IRC.
+# auteur : Krooh Tong Halaï (78402).
+# date de dernière mise à jour : 24/03/2013
+
+use strict;
+use Irssi;
+use POSIX;
+
+my $chan = "#MB3"; # the channel in which the script is active.
+my ($server, $nick);
+
+sub calculate_malus_blessures {
+    my ($pv_actuel, $pv_total) = @_;
+    my $malus = int(250 * ($pv_total - $pv_actuel) / $pv_total);
+    say("$malus minutes de malus ($nick)");
+}
+
+sub calculate_mm {
+    my ($rm, $sr) = @_;
+    my $mm;
+    if ($sr < 50){
+        $mm = int(50 * $rm / $sr);
+    } else {
+        $mm = int($rm * (100 - $sr) / 50);
+    }
+    say("MM de l'attaquant : $mm ($nick)");
+}
+
+sub calculate_rm {
+    my ($mm, $sr) = @_;
+    my $rm;
+    if ($sr < 50){
+        $rm = int($mm * $sr / 50);
+    } else {
+        $rm = int(50 * $mm / (100 - $sr));
+    }
+    say("RM du défenseur : $rm ($nick)");
+}
+
+sub calculate_px {
+    my ($lvl_att, $lvl_def) = @_;
+    my $px = (10 + 2 * ($lvl_def - $lvl_att) + $lvl_def);
+    my $result = $px > 0 ? int($px) : 0;
+    say("Gain en PX : $result ($nick)");
+}
+
+sub calculate_sr {
+    my ($mm, $rm) = @_;
+    my $sr = 0;
+    if ($rm >= $mm){
+        $sr = 100 - ($mm / $rm)*50;
+    }else{
+        $sr = ($rm / $mm)*50;
+    }
+    my $result = int($sr);
+    if ($sr < 10) { $result = 10; }
+    if ($sr > 90) { $result = 90; }
+    say("Seuil de résistance : $result ($nick)");
+}
+
+sub calculate_taco {
+    my ($nbr_dice_att, $bonus_att, $nbr_dice_def, $bonus_def) = @_;
+    return
+}
+
+sub call_random {
+    my ($call_avg, $nbr_dice, $nbr_facets, $has_bonus, $oper, $bonus) = @_;
+    $nbr_dice = $nbr_dice ? $nbr_dice : 1;
+    my ($moyenne, $value);
+    if ($call_avg){
+        $value = ($nbr_dice * ($nbr_facets + 1))/2;
+        $moyenne = "Moyenne :";
+    } else {
+        $value = 0;
+        for(my $i=0; $i < $nbr_dice; $i++){
+            $value += get_random(0, $nbr_facets);
+        }
+    }
+    if ($has_bonus){
+        $bonus =~ tr/,/\./;
+        if ($oper eq "+"){ $value += $bonus; }
+        elsif ($oper eq "-"){ $value -= $bonus; }
+        elsif ($oper eq "*"){ $value *= $bonus; }
+        elsif ($oper eq "/"){ $value /= $bonus; }
+    }
+    say("$moyenne $value ($nick)");
+}
+
+sub dispatch {
+    my ($_server, $msg, $nickname, $address, $target) = @_;
+    if ($target eq "#MB3" || $target eq "#testouille"){
+        $chan = $target;
+        $server = $_server;
+        $nick = $nickname;
+        if ($msg =~ /^!(help|aide)/i){
+            display_help();
+        } elsif ($msg =~ /^!update/i && ($nick eq "KTH" || $nick eq "Duncan")) {
+            update_public_files();
+            say("Fichiers mis à jour.");
+        } elsif ($msg =~ /^!random$/i){
+            call_random('', '', 100);
+        } elsif ($msg =~ /^!(!?)(\d*)d(\d+)(\s*([\+\-\*\/])\s*(\d+([,\.]?\d+)?))?$/i) {
+            call_random($1, $2, $3, $4, $5, $6);
+        } elsif ($msg =~ /^!pv\s+(\d+)[\/\s+](\d+)\s*$/i){
+            calculate_malus_blessures($1, $2);
+        } elsif ($msg =~ /^!px\s+(\d+)\s+(\d+)\s*$/i){
+            calculate_px($1, $2);
+        } elsif ($msg =~ /^!(\d+)\s*mm\s*(\d+)\s*rm\s*$/i){
+            calculate_sr($1, $2);
+        } elsif ($msg =~ /^!(\d*)\s*rm\s*(\d+)\s*mm\s*$/i){
+            calculate_sr($2, $1);
+        } elsif ($msg =~ /^!(\d*)\s*mm\s*(\d+)\s*(%|sr)\s*$/i){
+            calculate_rm($1, $2);
+        } elsif ($msg =~ /^!(\d*)\s*(%|sr)\s*(\d+)\s*mm\s*$/i){
+            calculate_rm($3, $1);
+        } elsif ($msg =~ /^!(\d*)\s*rm\s*(\d+)\s*(%|sr)\s*$/i){
+            calculate_mm($1, $2);
+        } elsif ($msg =~ /^!(\d*)\s*(%|sr)\s*(\d+)\s*rm\s*$/i){
+            calculate_mm($3, $1);
+        } elsif ($msg =~ /^!(\d{1,6})$/i){
+            display_troll_infos($1);
+        } elsif ($msg =~ /^!troll\s+(.+)$/i){
+            display_troll_infos($1);
+        } elsif ($msg =~ /^!guilde?\s+(.+)$/i){
+            display_guilde_infos($1);
+        } elsif ($msg =~ /^!tr\s+(.+)$/i){
+            translate($1);
+        } elsif ($msg =~ /^!am(\s+(\d+)\s*)?$/i){
+            display_am($2);
+        }
+    }
+}
+
+sub display_am {
+    my ($fatigue, $total) = @_;
+    if($fatigue) {
+        my $nouvelle_fatigue = floor($fatigue/1.25);
+        $total = $total . " → " . $nouvelle_fatigue;
+        if($nouvelle_fatigue > 4) {
+            display_am($nouvelle_fatigue, $total);
+        }else{
+            say($total);
+        }
+    }else{
+        say("Valeurs optimales : 4-6-8-11-14-18-23-29-37-47-59-74-93-117");
+    }
+}
+
+sub display_help {
+    say_private("Commandes disponibles :");
+    say_private("!XDY +Z → lance X dés à Y faces (+Z, bonus / malus facultatifs)");
+    say_private("!!XDY +Z → donne la moyenne");
+    say_private("!random → lance un D100");
+    say_private("!XX MM YY RM → donne le seuil de résistance de la cible");
+    say_private("!XX MM Y % → donne la RM de la cible");
+    say_private("!XX RM Y % → donne la MM de la cible");
+    say_private("!PX X Y → donne le gain en PX pour le kill d'un lvl Y par un lvl X");
+    say_private("!PV X/Y → donne le malus de blessures en minutes (X PV restants sur Y PV max)");
+    say_private("!num → donne le nom du Trõll numéro num ");
+    say_private("!troll nom → affiche les infos du Trõll nom[…]");
+    say_private("!troll %nom → affiche les infos du Trõll […]nom[…]");
+    say_private("!guilde nom → affiche les infos de la guilde nom[…]");
+    say_private("!guilde %nom → affiche les infos de la guilde […]nom[…]");
+    say_private("!tr ma_phrase → Traduit la phrase en langue Trõlle.");
+    say_private("!am → donne la liste des valeurs optimales de la fatigue.");
+    say_private("!am [fatigue] → donne la liste des valeurs suivante de la fatigue jusqu’à 4.");
+    update_public_files();
+}
+
+sub display_troll_infos {
+    my ($search) = @_;
+    my $matches = 0;
+    my @trolls;
+    if ($search =~ /\d{1,6}/) {
+        push(@trolls, find_troll($search));
+    } else {
+        @trolls = find_trolls($search);
+    }
+    foreach (@trolls) {
+        if ($_) {
+            $matches++;
+            if ($matches > 10) {
+                say("Seuls les 10 premiers résultats sont affichés.");
+                return;
+            }
+            my ($troll_num, $name, $race, $level, $kills, $deaths, $flies, $guilde_num, $rank_num) = split(/;/);
+            if($race eq "Darkling") { $race = "Da"; }
+            else {$race = substr($race, 0, 1); }
+            my $guild_rank = "";
+            my $guilde = get_guild_name($guilde_num);
+            if ($guilde) {
+                $guild_rank .= "- " . $guilde;
+            }
+            my $rank = get_rank($guilde_num, $rank_num);
+            if ($rank) {
+                $guild_rank .= " [" . $rank . "]";
+            }
+            say("$name ($troll_num), $race$level ($flies Bzz) $guild_rank\n"); # (http://games.mountyhall.com/mountyhall/View/PJView.php?ai_IDPJ=$troll_num)\n");
+        } else {
+            say ("$search : aucun résultat.");
+        }
+    }
+}
+
+sub display_guilde_infos {
+    my $matches = 0;
+    foreach (find_guilds(@_)) {
+        $matches++;
+        if ($matches > 10) {
+            say("Seuls les 10 premiers résultats sont affichés.");
+            return;
+        }
+        my ($num, $name, $nbre_membres) = split(/;/);
+        say("$name ($nbre_membres membres)\n"); # (http://games.mountyhall.com/mountyhall/View/AllianceView.php?ai_IDAlliance=$num)\n");
+    }
+}
+
+sub find_guild {
+    my ($num) = @_;
+    open(FILE_GUILD, 'Terminalcity/MH/Public_Guildes.txt');
+    while (<FILE_GUILD>) {
+        my $guild_num = split(/;/);
+        if ($guild_num eq $num) {
+            return $_;
+        }
+    }
+}
+
+sub find_guilds {
+    my ($search) = @_;
+    my @guilds;
+    open(FILE_GUILD, 'Terminalcity/MH/Public_Guildes.txt');
+    while (<FILE_GUILD>) {
+        my ($num, $name) = split(/;/);
+        if ($search =~ /([%\*]?)([^%\*]+)([%\*]?)/) {
+            if (($1 && $name =~ /$2/i) || $name =~ /^$2/i) {
+                push(@guilds, $_);
+            }
+        }
+    }
+    return @guilds;
+}
+
+sub find_troll {
+    my ($num) = @_;
+    open(FILE_TROLL, 'Terminalcity/MH/Public_Trolls2.txt');
+    while (<FILE_TROLL>) {
+        my ($troll_num) = split(/;/);
+        if ($troll_num eq $num) {
+            return $_;
+        }
+    }
+}
+
+sub find_trolls {
+    my ($search) = @_;
+    my @trolls;
+    open(FILE_TROLL, 'Terminalcity/MH/Public_Trolls2.txt');
+    while (<FILE_TROLL>) {
+        my ($num, $name) = split(/;/);
+        if ($search =~ /([%\*]?)([^%\*]+)([%\*]?)/) {
+            if (($1 && $name =~ /$2/i) || $name =~ /^$2/i) {
+                push(@trolls, $_);
+            }
+        }
+    }
+    return @trolls;
+}
+
+sub get_guild_name {
+    my ($guilde_num_param) = @_;
+    open(FILE_GUILD, 'Terminalcity/MH/Public_Guildes.txt');
+    while (<FILE_GUILD>) {
+        my ($guilde_num, $guilde_name) = split(/;/);
+        if ($guilde_num eq $guilde_num_param) {
+            return $guilde_name;
+        }
+    }
+}
+
+sub get_random {
+    my ($min, $max) = @_;
+    return int(rand($max - $min)) + 1 + $min ;
+}
+
+sub get_rank {
+    my ($guilde_num_param, $rank_num_param) = @_;
+    open(FILE_GUILD_RANK, 'Terminalcity/MH/Public_GuildesRangs.txt');
+    while (<FILE_GUILD_RANK>) {
+        my ($guilde_num, $rank_num, $rank) = split(/;/);
+        if ($guilde_num eq $guilde_num_param && $rank_num eq $rank_num_param) {
+            return $rank;
+        }
+    }
+}
+
+# sub join {
+#     my ($_server, $channel, $nickname, $address) = @_;
+#     if ($channel eq $chan && $nickname ne "KTH"){
+#         say("chut, le voilà");
+#     }
+# }
+
+sub own_call {
+    my ($_server, $msg, $target) = @_;
+    if ($target eq "#testouille") {
+        dispatch($_server, $msg, "Duncan", "", $target);
+    } else {
+        dispatch($_server, $msg, "KTH", "", $target);
+    }
+}
+
+sub say {
+    $server->command("MSG $chan @_");
+}
+
+sub say_private {
+    $server->command("MSG $nick @_");
+}
+
+sub translate {
+    my ($s) = @_;
+    $s =~ tr/a/\x{00E0}/;
+    $s =~ tr/e/\x{00E9}/;
+    $s =~ tr/i/\x{00EF}/;
+    $s =~ tr/o/\x{00F5}/;
+    $s =~ tr/u/\x{00FB}/;
+    $s =~ s/y/\x{00B0}y\x{00B0}/;
+    $s =~ tr/A/\x{00C0}/;
+    $s =~ tr/E/\x{00C9}/;
+    $s =~ tr/I/\x{00CF}/;
+    $s =~ tr/O/\x{00D5}/;
+    $s =~ tr/U/\x{00DB}/;
+    $s =~ s/Y/\x{00B0}Y\x{00B0}/;
+    say("$s");
+}
+
+sub update_public_files {
+    `wget -nd -q "ftp://ftp.mountyhall.com/Public_Trolls2.txt"; mv Public_Trolls2.txt ~/Terminalcity/MH/`;
+    `wget -nd -q "ftp://ftp.mountyhall.com/Public_Guildes.txt"; mv Public_Guildes.txt ~/Terminalcity/MH/`;
+    `wget -nd -q "ftp://ftp.mountyhall.com/Public_GuildesRangs.txt"; mv Public_GuildesRangs.txt ~/Terminalcity/MH/`;
+    `wget -nd -q "ftp://ftp.mountyhall.com/Public_Equipement.txt"; mv Public_Equipement.txt ~/Terminalcity/MH/`;
+}
+
+Irssi::signal_add("message public", "dispatch");
+Irssi::signal_add("message own_public", "own_call");
+# Irssi::signal_add("message join", "join");
