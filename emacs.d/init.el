@@ -72,14 +72,22 @@
 ;; Misc options
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; keep a list of recently opened files
+(recentf-mode 1)
+;; set F7 to open a list of recently opened file
+(global-set-key (kbd "<f7>") 'recentf-open-files)
+;; Tramp mode
+(setq tramp-default-method "ssh") ;; does not seem to work so far
 ;; Electric buffer by default
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
 ;; Coloration entre marque et curseur
 (setq-default transient-mark-mode t)
 ;; Mode texte par défaut
 (setq default-major-mode 'text-mode)
-;; Auto-wrapping en mode texte
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+;; Auto-wrapping (soft wrap) en mode texte
+(add-hook 'text-mode-hook 'visual-line-mode)
+;; No auto-fill in text-mode since I use visual-line-mode
+(remove-hook 'text-mode-hook #'turn-on-auto-fill)
 ;; (add-hook 'html-helper-mode-hook 'flyspell-mode)
 ;; (add-hook 'text-mode-hook 'flyspell-mode)
 (global-font-lock-mode t)
@@ -94,7 +102,9 @@
 ;; completion case-insensitive
 (setq read-buffer-completion-ignore-case t)
 ;; configuration pour mutt
-(setq auto-mode-alist (cons '("mutt-realpeche" . text-mode) auto-mode-alist))
+;; (setq auto-mode-alist (cons '("mutt-realpeche" . text-mode) auto-mode-alist))
+;; wrapping en mode mail
+(add-hook 'mail-mode-hook 'visual-line-mode)
 ;; Affiche le numéro de colonne
 (setq column-number-mode t)
 ;; Affiche les espaces en fin de ligne
@@ -104,7 +114,6 @@
       display-time-24hr-format t)
 (display-time)
 ;; Remove the toolbars on startup (only in non-shell emacs)
-;; (tool-bar-mode 0)
 (menu-bar-mode -1)
 ;; Pour ne pas avoir à taper en entier la réponse yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
