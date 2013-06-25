@@ -1,6 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; init.el config file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun files-in-below-directory (directory)
   "List the .el files in DIRECTORY and in its sub-directories."
   ;; Although the function will be used non-interactively,
@@ -39,6 +40,7 @@
       (setq current-directory-list (cdr current-directory-list)))
     ;; return the filenames
     el-files-list))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dependencies
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -54,10 +56,6 @@
 (dolist (file (files-in-below-directory elisp-dir))
   (when (file-regular-p file)
     (load file)))
-
-
-;; (add-to-list 'load-path user-emacs-directory) ;; supposedly "~/.emacs.d"
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
 
 ;; customization in separate file
 ;; (setq custom-file (expand-file-name "~/.emacs.d/elisp/custom.el"))
@@ -76,11 +74,6 @@
 
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
-
-;; (setq load-dir-recursive '("~/.emacs.d/elisp")) ;; or Customize it
-;; (setq load-dir-recursive '("/media/Sauvegarder/Arthur/emacs-conf/emacs.d/"))
-;; for other locations
-;; (require 'load-dir) ;; this will add `load-dirs' to your `after-init-hook'
 
 (require 'expand-region)
 (require 'multiple-cursors)
@@ -188,7 +181,7 @@
 ;; Write backup files to own directory
 (setq backup-directory-alist
       `(("." . ,(expand-file-name
-                 (concat user-emacs-directory "backups")))))
+                 (concat conf-dir "backups")))))
 
 (setq vc-make-backup-files t) ;; Make backups of files, even when they're in version control
 
@@ -196,7 +189,7 @@
 ;; Save point position between sessions
 (require 'saveplace)
 (setq-default save-place t)
-(setq save-place-file (expand-file-name ".places" user-emacs-directory))
+(setq save-place-file (expand-file-name ".places" conf-dir))
 
 ;; key-chords
 ;; (key-chord-define-global "fg" 'iy-go-to-char)
