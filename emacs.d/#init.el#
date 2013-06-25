@@ -82,6 +82,7 @@
 ;; for other locations
 ;; (require 'load-dir) ;; this will add `load-dirs' to your `after-init-hook'
 
+(require 'espuds)
 (require 'expand-region)
 (require 'multiple-cursors)
 
