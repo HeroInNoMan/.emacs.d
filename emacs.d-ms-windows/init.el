@@ -48,16 +48,31 @@
 (add-to-list 'load-path (expand-file-name "C:/cygwin/home/arthur_leothaud/.emacs.d/elisp/"))
 (add-to-list 'load-path (expand-file-name "C:/cygwin/home/arthur_leothaud/.emacs.d/elisp/expand-region.el"))
 (add-to-list 'load-path (expand-file-name "C:/cygwin/home/arthur_leothaud/.emacs.d/elisp/multiple-cursors.el"))
-
-;; customization in separate file
-;; (setq custom-file (expand-file-name "~~/.emacs.d/elisp/custom.el"))
-;; (load custom-file 'noerror)
+(add-to-list 'load-path (expand-file-name "C:/cygwin/home/arthur_leothaud/.emacs.d/elisp/groovy-mode")) ;; problème au chargement du mode (pas au chargement de la conf)
 
 ;; Functions (load all files in "~~/.emacs.d/elisp")
 (setq elisp-dir "C:/cygwin/home/arthur_leothaud/.emacs.d/elisp/")
 (dolist (file (files-in-below-directory elisp-dir))
   (when (file-regular-p file)
     (load file)))
+
+;; customization in separate file
+;; (setq custom-file (expand-file-name "~~/.emacs.d/elisp/custom.el"))
+;; (load custom-file 'noerror)
+
+;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
+(autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
+(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
+(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
+
+;;; make Groovy mode electric by default.
+(add-hook 'groovy-mode-hook
+          '(lambda ()
+             (require 'groovy-electric)
+             (groovy-electric-mode)))
+
+(autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
+(add-hook 'groovy-mode-hook 'groovy-eval)
 
 ;; (setq load-dir-recursive '("~~/.emacs.d/elisp")) ;; or Customize it
 ;; (require 'load-dir) ;; this will add `load-dirs' to your `after-init-hook'
