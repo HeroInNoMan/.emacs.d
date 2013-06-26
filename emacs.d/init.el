@@ -43,17 +43,10 @@
 
 (package-initialize) ;; init the packages before init.el loads
 
-;; conf-dir is set in .emacs, which should be set up according to the
-;; current system to call this init.el file and provide it a conf-dir
-;; file.
+;; init.el is called by .emacs, conf-dir is the dir containing init.el
+(defvar conf-dir (file-name-directory load-file-name))
 
-;; TODO : make the init.el find the conf-dir file on its own (current
-;; dir) so that .emacs’s only job is to load init.el.
-
-;; (defvar conf-dir ".")
-;; (print conf-dir)
-
-(setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; use convert-standard-filename if needed
+(setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; elisp/ is on same lvl as init.el
 
 ;; add all elisp dir to load-path recursively
 (let ((default-directory elisp-dir))
