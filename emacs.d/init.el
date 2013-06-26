@@ -107,6 +107,8 @@
 
 (setq inhibit-startup-message t) ;; Pas de message au lancement
 
+(setq initial-scratch-message nil) ;; empty *scratch*
+
 ;; (set-background-color "gray85") ;; background color
 
 (setq read-file-name-completion-ignore-case t) ;; completion case-insensitive
