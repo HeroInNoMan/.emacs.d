@@ -28,3 +28,4 @@ TODO:
  - fix the ruby-mode-expansions.el dependency issue
  - install JDEE
  - configure gnus
+ - emacs 24 : gestion des dépendances avec ELPA

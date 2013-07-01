@@ -40,8 +40,13 @@
       (setq current-directory-list (cdr current-directory-list)))
     ;; return the filenames
     el-files-list))
-
-(package-initialize) ;; init the packages before init.el loads
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  )
 
 ;; init.el is called by .emacs, conf-dir is the dir containing init.el
 (defvar conf-dir (file-name-directory load-file-name))
@@ -71,10 +76,6 @@
 
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
-
-(require 'expand-region) ;; https://github.com/magnars/expand-region.el
-
-(require 'multiple-cursors) ;; https://github.com/magnars/multiple-cursors.el
 
 (require 'dirtree) ;; Tree view for directories
 
