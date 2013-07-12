@@ -6,16 +6,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(blink-cursor-mode nil)
- ;; une seule espace après « deux-points » en mode auto-fill
- '(colon-double-space nil)
+
+ '(blink-cursor-mode nil) ;; cursor does not blink
+ '(colon-double-space nil) ;; une seule espace après « deux-points » en mode auto-fill
  '(current-language-environment "UTF-8")
- '(default-input-method "latin-1-alt-postfix") ;; ← TODO à creuser pour l’encodage
+ '(keyboard-coding-system (quote utf-8))
+ '(default-input-method "latin-1-alt-postfix") ;; TODO à creuser pour l’encodage
  '(diary-display-function (quote diary-fancy-display))
- '(diary-file "~/diary/emacs")
+ '(diary-file "~/diary/emacs") ;; TODO à modifier
  '(diary-list-entries-hook (quote (diary-include-other-diary-files)))
  '(diary-mark-entries-hook (quote (diary-mark-included-diary-files)))
  '(diff-switches "-u")
+
+ ;; ECB related customization
  '(ecb-auto-activate t)
  '(ecb-compile-window-height 6)
  '(ecb-compile-window-temporally-enlarge (quote both))
@@ -27,7 +30,10 @@
  '(ecb-source-file-regexps (quote (("/home/pgregory/Shared/" (".*") ("\\.\\(pas\\|dpr\\)$")) (".*" ("\\(^\\(\\.\\|#\\)\\|\\(~$\\|\\.\\(elc\\|obj\\|o\\|class\\|lib\\|dll\\|a\\|so\\|cache\\)$\\)\\)") ("^\\.\\(emacs\\|gnus\\)$")))))
  '(ecb-source-path (quote (("~/Shared/" #("svn" 0 3 (help-echo tree-buffer-help-echo-fn mouse-face highlight))) ("/home/pgregory" #("~" 0 1 (help-echo tree-buffer-help-echo-fn mouse-face highlight))) ("/" #("/" 0 1 (help-echo tree-buffer-help-echo-fn mouse-face highlight))) ("/mnt/development" #("jhall" 0 5 (help-echo tree-buffer-help-echo-fn mouse-face highlight))))))
  '(ecb-windows-width 16)
- '(fill-column 74)
+
+
+
+ '(fill-column 74) ;; width of auto-fill
  '(frame-background-mode (quote dark))
  '(global-font-lock-mode t nil (font-lock))
  '(imenu-auto-rescan t)
@@ -35,18 +41,20 @@
  '(indent-tabs-mode nil)
  '(indicate-empty-lines t)
  '(inhibit-local-menu-bar-menus t)
+
  '(iswitchb-buffer-ignore (quote ("^ " "*Messages*" "*Completions" "*ECB" "*Buffer" "^[Tt][Aa][Gg][Ss]$")))
  '(iswitchb-use-virtual-buffers t nil (recentf))
+
  ;; '(jde-global-classpath (quote ("~/school/")))
  '(jde-jdk (quote ("1.5.0")))
  '(jde-jdk-registry (quote (("1.6" . "/usr/lib/jvm/java-6-sun") ("1.5.0" . "/usr/lib/jvm/java-1.5.0-sun"))))
- ;; déjà fait plus haut
- ;; '(keyboard-coding-system (quote utf-8))
+
  '(linum-format "%5d|")
  '(lj-default-access-level "friends")
- '(lj-default-username "phil_g")
- '(menu-bar-mode nil)
+ '(lj-default-username "arthur_leothaud")
+
  '(muse-project-alist (quote (("WikiPlanner" ("~/Plans" :default "\"TaskPool\"" :major-mode planner-mode :visit-link planner-visit-link) (:base "\"planner-xhtml\"" :path "\"~/public_html/Plans\"")))))
+
  '(org-agenda-files (quote ("~/Plans/")))
  '(org-agenda-include-all-todo t)
  '(org-agenda-include-diary t)
@@ -73,22 +81,26 @@
  '(org-todo-state-tags-triggers (quote (("CANCELLED" ("CANCELLED" . t)) ("WAITING" ("WAITING" . t) ("NEXT")) ("SOMEDAY" ("WAITING" . t)) (done ("NEXT") ("WAITING")) ("TODO" ("WAITING") ("CANCELLED")) ("STARTED" ("WAITING")))))
  '(planner-carry-tasks-forward 7)
  '(planner-default-task-priority "B")
+
  '(printer-name "hmmktptr")
+
  '(ps-default-bg "white")
  '(ps-default-fg "black")
  '(ps-line-number 1)
  '(ps-printer-name nil)
- '(scroll-bar-mode nil)
+
+;; '(scroll-bar-mode nil)
  '(show-paren-mode t nil (paren))
  '(show-paren-style (quote expression))
- '(tool-bar-mode nil)
  '(tramp-auto-save-directory "~/.saves")
- '(w3m-coding-system (quote utf-8))
- '(w3m-default-coding-system (quote utf-8))
- '(w3m-file-coding-system (quote utf-8))
- '(w3m-file-name-coding-system (quote utf-8))
- '(w3m-key-binding (quote info))
- '(w3m-terminal-coding-system (quote utf-8))
+
+ ;; '(w3m-coding-system (quote utf-8))
+ ;; '(w3m-default-coding-system (quote utf-8))
+ ;; '(w3m-file-coding-system (quote utf-8))
+ ;; '(w3m-file-name-coding-system (quote utf-8))
+ ;; '(w3m-key-binding (quote info))
+ ;; '(w3m-terminal-coding-system (quote utf-8))
+
  '(zone-idle 300 t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

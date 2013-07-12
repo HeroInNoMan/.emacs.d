@@ -2,6 +2,7 @@
 ;; Key-bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(global-set-key (kbd "<f5>") 'reload-file)
 (global-set-key (kbd "\C-c\C-r") 'reload-file)
 (global-set-key (kbd "C-M-z") 'undo)
 (global-set-key (kbd "C-c u") 'simplified-beginning-of-buffer)

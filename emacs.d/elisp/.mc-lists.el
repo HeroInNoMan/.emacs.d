@@ -15,6 +15,5 @@
       '(
         apropos-documentation
         kmacro-start-macro
-        org-beginning-of-line
-        org-end-of-line
+
         ))

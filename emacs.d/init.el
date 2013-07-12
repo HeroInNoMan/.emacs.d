@@ -79,66 +79,40 @@
 
 (require 'dirtree) ;; Tree view for directories
 
+(require 're-builder)
+(setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
+
 (recentf-mode 1) ;; keep a list of recently opened files
-
 (global-set-key (kbd "<f7>") 'recentf-open-files) ;; set F7 to open a list of recently opened file
-
 (setq tramp-default-method "ssh") ;; Tramp mode; does not seem to work so far
-
 (global-set-key "\C-x\C-b" 'electric-buffer-list) ;; Electric buffer by default
-
 (setq-default transient-mark-mode t) ;; Coloration entre marque et curseur
-
 (setq default-major-mode 'text-mode) ;; Mode texte par défaut
-
 (add-hook 'text-mode-hook 'visual-line-mode) ;; Auto-wrapping (soft wrap) en mode texte
-
 (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; No auto-fill in text-mode since I use visual-line-mode
-
 (global-font-lock-mode t) ;; coloration syntaxique
-
 (setq font-lock-maximum-decoration t) ;; Toutes les couleurs possibles
-
 (setq inhibit-startup-message t) ;; Pas de message au lancement
-
 (setq initial-scratch-message nil) ;; empty *scratch*
-
 ;; (set-background-color "gray85") ;; background color
-
 (setq read-file-name-completion-ignore-case t) ;; completion case-insensitive
-
 (setq read-buffer-completion-ignore-case t) ;; completion case-insensitive
-
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping en mode mail
-
 (setq column-number-mode t) ;; Affiche le numéro de colonne
-
 (setq-default show-trailing-whitespace t) ;; Affiche les espaces en fin de ligne
-
 (setq display-time-day-and-date t ;; Affiche date et heure
       display-time-24hr-format t) ;; format de l’heure 24h
-
 (display-time) ;; affiche la date et l’heure
-
 (tool-bar-mode -1) ;; no tool-bar on startup (only in non-shell emacs)
-
 (menu-bar-mode -1) ;; no menu-bar
-
 (fset 'yes-or-no-p 'y-or-n-p) ;; Pour ne pas avoir à taper en entier la réponse yes/no
-
 (setq ispell-dictionary "francais") ;; dictionnaire francais pour la correction orthographique ispell
-
 (setq european-calendar-style t) ;; format jour/mois/an pour le calendrier (M-x calendar)
-
 (setq html-helper-use-expert-menu t) ;; use expert menu
-
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
-
 (setq c-auto-newline t) ;; automatically indent - no need to tab
-
 (setq-default indent-tabs-mode nil) ;; ???
-
-;; (global-hl-line-mode t) ;; Bold line
+;; (global-hl-line-mode t) ;; highlight current line
 
 ;;Indentation
 (setq tab-width 4
@@ -157,9 +131,6 @@
 (setq locale-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)) ;; From Emacs wiki
-
-(require 're-builder)
-(setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -203,6 +174,13 @@
 
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
+
+;; Macros
+
+;; transforms code into concatenated strings to be inserted in java code (as a string). "s are escaped so java doesn’t misinterprets them.
+(fset 'stringify-code-for-java
+   [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Not ready yet / TODO
