@@ -3,6 +3,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (global-set-key (kbd "<f5>") 'reload-file)
+(global-set-key (kbd "<f7>") 'recentf-open-files) ;; set F7 to open a list of recently opened file
+(global-set-key (kbd "<f8>") 'minimap-toggle-retain-size)
+(global-set-key (kbd "C-ç") 'simp-project-find-file)
+(global-set-key "\C-x\C-b" 'electric-buffer-list) ;; Electric buffer by default
 (global-set-key (kbd "\C-c\C-r") 'reload-file)
 (global-set-key (kbd "C-M-z") 'undo)
 (global-set-key (kbd "C-c u") 'simplified-beginning-of-buffer)
