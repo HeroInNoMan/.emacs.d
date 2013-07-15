@@ -25,7 +25,6 @@ The basic structure is as follows:
 TODO:
  - organize the elisp dir (theme-oriented dirs)
  - fix the customize conf, find nice portable theme & font
- - fix the ruby-mode-expansions.el dependency issue
  - install JDEE
  - configure gnus
  - emacs 24 : gestion des dépendances avec ELPA
