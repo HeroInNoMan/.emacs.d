@@ -166,6 +166,10 @@
 (defun load-windows-specific-conf ()
   "Loads all windows-nt specific conf"
   (set-clipboard-coding-system 'utf-16le-dos) ;; MS Windows clipboard is UTF-16LE
+  (setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
+  (setq exec-path (cons "c:/cygwin/bin/" exec-path))
+  (require 'cygwin-mount)
+  (cygwin-mount-activate)
   )
 
 (defun load-linux-specific-conf ()
@@ -179,7 +183,7 @@
 
 ;; transforms code into concatenated strings to be inserted in java code (as a string). "s are escaped so java doesn’t misinterprets them.
 (fset 'stringify-code-for-java
-   [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
+      [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
