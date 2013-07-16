@@ -105,6 +105,7 @@
 (menu-bar-mode -1) ;; no menu-bar
 (fset 'yes-or-no-p 'y-or-n-p) ;; Pour ne pas avoir à taper en entier la réponse yes/no
 (setq ispell-dictionary "francais") ;; dictionnaire francais pour la correction orthographique ispell
+(setq-default ispell-program-name "aspell")
 (setq european-calendar-style t) ;; format jour/mois/an pour le calendrier (M-x calendar)
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
@@ -153,7 +154,6 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-
 ;; Toggles minimap
 (defun minimap-toggle-retain-size ()
   "Toggle minimap"
@@ -182,6 +182,14 @@
  '(:has (.git)
         :ignore (tmp coverage log vendor .git public/system public/assets)))
 
+;; customization
+(custom-set-variables
+ ;; '(show-paren-mode t nil (paren))
+ ;; '(show-paren-style (quote expression))
+ (custom-set-faces
+  '(show-paren-match ((((class color)) (:weight bold))))
+  ))
+
 (server-start) ;; start in server mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -193,10 +201,18 @@
 (defun load-windows-specific-conf ()
   "Loads all windows-nt specific conf"
   (set-clipboard-coding-system 'utf-16le-dos) ;; MS Windows clipboard is UTF-16LE
+  ;; cygwin conf
   (setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
   (setq exec-path (cons "c:/cygwin/bin/" exec-path))
   (require 'cygwin-mount)
   (cygwin-mount-activate)
+  ;; tramp setup (to be tested)
+  ;; (setq shell-file-name "bash")
+  ;; (setq explicit-shell-file-name shell-file-name)
+  ;; (cond  ((eq window-system 'w32)
+  ;;         (setq tramp-default-method "scpx"))
+  ;;        (t
+  ;;         (setq tramp-default-method "scpc")))
   )
 
 (defun load-linux-specific-conf ()
@@ -221,7 +237,7 @@
 ;; (key-chord-define-global "fg" 'iy-go-to-char)
 ;; (key-chord-define-global "fd" 'iy-go-to-char-backward)
 
-;; configuration pour mutt
+;; configuration pour mutt -> gnus (?)
 ;; (setq auto-mode-alist (cons '("mutt-realpeche" . text-mode) auto-mode-alist))
 
 ;; Browse kill ring ← TODO : install browse-kill-ring
