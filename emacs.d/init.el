@@ -83,9 +83,7 @@
 (setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
 
 (recentf-mode 1) ;; keep a list of recently opened files
-(global-set-key (kbd "<f7>") 'recentf-open-files) ;; set F7 to open a list of recently opened file
 (setq tramp-default-method "ssh") ;; Tramp mode; does not seem to work so far
-(global-set-key "\C-x\C-b" 'electric-buffer-list) ;; Electric buffer by default
 (setq-default transient-mark-mode t) ;; Coloration entre marque et curseur
 (setq default-major-mode 'text-mode) ;; Mode texte par défaut
 (add-hook 'text-mode-hook 'visual-line-mode) ;; Auto-wrapping (soft wrap) en mode texte
@@ -154,6 +152,35 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+
+
+;; Toggles minimap
+(defun minimap-toggle-retain-size ()
+  "Toggle minimap"
+  (interactive)
+  (if (or (not (boundp 'minimap-exists))
+          (not minimap-exists))
+      (progn (minimap-create)
+             (setf minimap-exists t)
+             (set-frame-width (selected-frame) 100))
+    (progn (minimap-kill)
+           (setf minimap-exists nil)
+           (set-frame-width (selected-frame) 80))))
+
+;;;###autoload
+(defun minimap-toggle ()
+  "Toggle minimap for current buffer."
+  (interactive)
+  (if (null minimap-bufname)
+      (minimap-create)
+    (minimap-kill)))
+
+;; find in project (.git)
+(require 'simp)
+
+(simp-project-define
+ '(:has (.git)
+        :ignore (tmp coverage log vendor .git public/system public/assets)))
 
 (server-start) ;; start in server mode
 
