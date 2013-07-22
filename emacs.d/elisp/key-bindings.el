@@ -2,10 +2,18 @@
 ;; Key-bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; key-chords (experimental key pairs)
+(key-chord-define-global "«»"     'er/expand-region)
+(key-chord-define-global "bf"     'ido-switch-buffer)
+(key-chord-define-global "qg"     'magit-status)
+
+;; function keys
 (global-set-key (kbd "<f5>") 'reload-file)
 (global-set-key (kbd "<f7>") 'recentf-open-files) ;; set F7 to open a list of recently opened file
-(global-set-key (kbd "<f8>") 'minimap-toggle-retain-size)
-(global-set-key (kbd "C-ç") 'simp-project-find-file)
+(global-set-key (kbd "<f8>") 'minimap-toggle) ;; toggle minimap
+
+;; custom shortcuts
+(global-set-key (kbd "M-à") 'ace-jump-mode)
 (global-set-key "\C-x\C-b" 'electric-buffer-list) ;; Electric buffer by default
 (global-set-key (kbd "\C-c\C-r") 'reload-file)
 (global-set-key (kbd "C-M-z") 'undo)
@@ -41,4 +49,3 @@
 (global-set-key (kbd "M-è") 'mc/mark-all-like-this)
 (global-set-key (kbd "M-È") 'mc/mark-next-like-this)
 (global-set-key (kbd "M-É") 'mc/mark-previous-like-this)
-

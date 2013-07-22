@@ -110,6 +110,7 @@
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
 (setq c-auto-newline t) ;; automatically indent - no need to tab
+(setq-default tab-width 4) ;; eclipse-like
 (setq-default indent-tabs-mode nil) ;; ???
 ;; (global-hl-line-mode t) ;; highlight current line
 
@@ -153,8 +154,8 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-;
-; Toggles minimap
+
+;; Toggles minimap
 (defun minimap-toggle-retain-size ()
   "Toggle minimap"
   (interactive)
@@ -189,6 +190,9 @@
  (custom-set-faces
   '(show-paren-match ((((class color)) (:weight bold))))
   ))
+
+(require 'key-chord)
+(key-chord-mode 1)
 
 (server-start) ;; start in server mode
 
