@@ -1,6 +1,6 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; init.el config file
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun files-in-below-directory (directory)
   "List the .el files in DIRECTORY and in its sub-directories."
@@ -76,6 +76,11 @@
 
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
+
+;; Loads ruby mode when a .rb file is opened.
+(autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
+(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
 
 (require 'dirtree) ;; Tree view for directories
 
@@ -196,9 +201,9 @@
 
 (server-start) ;; start in server mode
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; windows / linux specific conf ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; windows / linux specific configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Load system-specific library and setup system-specific things that
 ;; must be setup before main setup
@@ -226,33 +231,36 @@
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Macros
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; transforms code into concatenated strings to be inserted in java code (as a string). "s are escaped so java doesn’t misinterprets them.
+;; transforms code into concatenated strings to be inserted in java code (as a string). "s are escaped so java doesn’t misinterpret them.
 (fset 'stringify-code-for-java
       [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Not ready yet / TODO
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; key-chords
-;; (key-chord-define-global "fg" 'iy-go-to-char)
-;; (key-chord-define-global "fd" 'iy-go-to-char-backward)
-
+;; MAIL
 ;; configuration pour mutt -> gnus (?)
 ;; (setq auto-mode-alist (cons '("mutt-realpeche" . text-mode) auto-mode-alist))
 
-;; Browse kill ring ← TODO : install browse-kill-ring
+;; BROWSE KILL RING ← TODO : install browse-kill-ring
 ;; (require 'browse-kill-ring)
 ;; (setq browse-kill-ring-quit-action 'save-and-restore)
 
-;; customization in separate file
+;; CUSTOMIZATION in separate file
 ;; (setq custom-file (expand-file-name "~/.emacs.d/elisp/custom.el"))
 ;; (load custom-file 'noerror)
 
+;; SPELL CHECKER
 ;; (add-hook 'html-helper-mode-hook 'flyspell-mode)
 ;; (add-hook 'text-mode-hook 'flyspell-mode)
+
+;; TRAMP
+;; setup TRAMP for both cygwin and GNU/Linux
 
 ;; init.el ends here.

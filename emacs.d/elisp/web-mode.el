@@ -559,7 +559,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
     (define-key keymap (kbd "C-c tp") 'web-mode-tag-previous)
     (define-key keymap (kbd "C-c tn") 'web-mode-tag-next)
 
-;;    (define-key keymap (kbd "<down-mouse-1>") 'web-mode-on-click)
+    ;;    (define-key keymap (kbd "<down-mouse-1>") 'web-mode-on-click)
 
     keymap)
   "Keymap for `web-mode'.")
@@ -818,7 +818,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 
 (defvar web-mode-freemarker-font-lock-keywords
   (list
-;;   '("[<[]/?[#@][[:alpha:]_.]*\\|/?>\\|/?]" 0 'web-mode-preprocessor-face)
+   ;;   '("[<[]/?[#@][[:alpha:]_.]*\\|/?>\\|/?]" 0 'web-mode-preprocessor-face)
    '("\\[/?#\\|\\]" 0 'web-mode-preprocessor-face)
    '("#[ ]?\\([[:alnum:]_]+\\)" 1 'web-mode-keyword-face)
    (cons (concat "\\<\\(" web-mode-freemarker-keywords "\\)\\>") '(1 'web-mode-keyword-face))
@@ -865,7 +865,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
   (list
    '("${{\\|{{[>#/{%^&]?\\|[}]?}}" 0 'web-mode-preprocessor-face)
    '("{{[#/>][ ]*\\([[:alnum:]_]+\\)" 1 'web-mode-keyword-face)
-;;   '("{{>[ ]*\\([[:alnum:]_]+\\)" 1 'web-mode-keyword-face)
+   ;;   '("{{>[ ]*\\([[:alnum:]_]+\\)" 1 'web-mode-keyword-face)
    '("[[:alnum:]_]" 0 'web-mode-variable-name-face)
    '("[ ]+\\([[:alnum:]_]+=\\)" 1 'web-mode-param-name-face t t)
    '("[:=]\\([[:alpha:]_]+\\)" 1 'web-mode-function-name-face t t)
@@ -942,7 +942,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 (defvar web-mode-aspx-font-lock-keywords
   (list
    '("<%[:=#]?\\|%>" 0 'web-mode-preprocessor-face)
-;;   '("\\<\\([[:alnum:]._]+\\)[ ]?(" 1 'web-mode-function-name-face)
+   ;;   '("\\<\\([[:alnum:]._]+\\)[ ]?(" 1 'web-mode-function-name-face)
    (cons (concat "\\<\\(" web-mode-aspx-keywords "\\)\\>") '(0 'web-mode-keyword-face))
    '("\\<\\([[:alnum:].]+\\)[ ]+[[:alpha:]]+" 1 'web-mode-type-face)
    ))
@@ -1078,7 +1078,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
                (when web-mode-is-scratch
                  (web-mode-guess-engine-and-content-type)
                  (web-mode-scan-buffer)
-;;                 (message "-->%S" (buffer-file-name))
+                 ;;                 (message "-->%S" (buffer-file-name))
                  )
                nil)
             t t)
@@ -1087,7 +1087,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
     (add-hook 'yas/after-exit-snippet-hook
               '(lambda ()
                  (web-mode-buffer-refresh)
-;;                 (indent-for-tab-command)
+                 ;;                 (indent-for-tab-command)
                  )
               t t)
     )
@@ -1159,12 +1159,12 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
     (setq elt (assoc web-mode-engine web-mode-engine-block-regexps))
     (if elt
         (setq web-mode-server-block-regexp (cdr elt))
-;;      (setq web-mode-server-block-regexp "<\\?\\|<%[#-!@]?\\|[<[]/?[#@][-]?\\|[$#]{\\|{[#{%]\\|^%.")
+      ;;      (setq web-mode-server-block-regexp "<\\?\\|<%[#-!@]?\\|[<[]/?[#@][-]?\\|[$#]{\\|{[#{%]\\|^%.")
       (setq web-mode-engine "none")
       )
 
-;;    (message "buffer=%S engine=%S type=%S regexp=%S"
-;;             buff-name web-mode-engine web-mode-content-type web-mode-server-block-regexp)
+    ;;    (message "buffer=%S engine=%S type=%S regexp=%S"
+    ;;             buff-name web-mode-engine web-mode-content-type web-mode-server-block-regexp)
 
     (when (string= web-mode-engine "razor")
       (setq web-mode-enable-block-faces t))
@@ -1177,13 +1177,13 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
     (save-excursion
       (goto-char (point-min))
       (while (re-search-forward "<h\\([1-9]\\)\\([^>]*\\)>\\([^<]*\\)" nil t)
-	(setq toc-index
-	      (cons (cons (concat (make-string
-				   (* 2 (1- (string-to-number (match-string 1))))
-				   ?\s)
-				  (match-string 3))
-			  (line-beginning-position))
-		    toc-index))))
+        (setq toc-index
+              (cons (cons (concat (make-string
+                                   (* 2 (1- (string-to-number (match-string 1))))
+                                   ?\s)
+                                  (match-string 3))
+                          (line-beginning-position))
+                    toc-index))))
     (nreverse toc-index)))
 
 (defun web-mode-scan-buffer ()
@@ -1194,7 +1194,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 (defun web-mode-scan-region (beg end &optional verbose)
   "Identify code blocks (client/server) and syntactic symbols (strings/comments)."
   (interactive)
-;;  (message "scanning buffer from %d to %d" beg end)
+  ;;  (message "scanning buffer from %d to %d" beg end)
   (web-mode-with-silent-modifications
    (save-excursion
      (save-restriction
@@ -1304,7 +1304,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
             (setq closing-string "*}"))
            ((string= sub2 "{#")
             (setq closing-string "#}"))
-;;           ((char-equal ?{ (string-to-char sub2))
+           ;;           ((char-equal ?{ (string-to-char sub2))
            (t
             (setq closing-string "}"))
            )
@@ -1663,7 +1663,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
        ((string= sub3 "<%#")
         (setq props '(server-token-type comment face web-mode-comment-face)))
        (t
-;;        (setq regexp "//\\|/\\*\\|\"\\|'"
+        ;;        (setq regexp "//\\|/\\*\\|\"\\|'"
         (setq regexp "\"\\|'"
               props '(server-engine erb face nil)
               keywords web-mode-erb-font-lock-keywords)
@@ -1812,7 +1812,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
         (when hddeb
           ;;          (message "%S %S" hddeb hdend)
           (web-mode-fontify-region hddeb hdend hdflk)
-;;          (web-mode-scan-client hddeb hdend)
+          ;;          (web-mode-scan-client hddeb hdend)
           (setq hddeb nil)
           )
 
@@ -1880,13 +1880,13 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
            ((web-mode-is-void-element tag-name)
             (setq props (plist-put props prop-name tag-name))
             (setq props (plist-put props prop-type 'void))
-;;            (setq regexp "/?>")
+            ;;            (setq regexp "/?>")
             (setq regexp ">")
             )
            (t
             (setq props (plist-put props prop-name tag-name))
             (setq props (plist-put props prop-type 'start))
-;;            (setq regexp "/?>")
+            ;;            (setq regexp "/?>")
             (setq regexp ">")
             )
            );cond
@@ -1895,19 +1895,19 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
          );cond
 
         (if (web-mode-sf-client regexp limit t)
-;;        (if (web-mode-rsf-client regexp limit t)
+            ;;        (if (web-mode-rsf-client regexp limit t)
             (progn
               (setq ;;attrs-end (match-beginning 0)
-                    attrs-end (- (point) (length regexp) 1)
-                    tag-end (point)
-                    close-found t)
+               attrs-end (- (point) (length regexp) 1)
+               tag-end (point)
+               close-found t)
 
-;;              (message "attrs-end=%S" attrs-end)
-;;              (message "close found , tag=%S (%d > %d)" tag-name tag-beg tag-end)
+              ;;              (message "attrs-end=%S" attrs-end)
+              ;;              (message "close found , tag=%S (%d > %d)" tag-name tag-beg tag-end)
 
-;;              (when (char-equal (string-to-char (match-string 0)) ?/)
+              ;;              (when (char-equal (string-to-char (match-string 0)) ?/)
               (when (char-equal (char-after (- (point) 2)) ?/)
-;;                (message "void-tag=%S" tag-name)
+                ;;                (message "void-tag=%S" tag-name)
                 (setq props (plist-put props prop-type 'void))
                 )
 
@@ -1935,7 +1935,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
            (t
             (setq element-content-type "javascript"))
            )
-;;          (message "tag=%S : %S" tag element-content-type)
+          ;;          (message "tag=%S : %S" tag element-content-type)
           );case script
          ((string= tag-name "style")
           (setq element-content-type "css")
@@ -2022,12 +2022,12 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
           (setq rules-beg nil)
           (setq props-end (web-mode-closing-paren-position rules-end end))
           (when props-end
-;;          (when (and (search-forward "}" end t) (< (point) end))
-;;            (setq props-end (1- (point))
-;;                  rules-beg (point))
+            ;;          (when (and (search-forward "}" end t) (< (point) end))
+            ;;            (setq props-end (1- (point))
+            ;;                  rules-beg (point))
             (setq rules-beg (1+ props-end))
             (goto-char rules-beg)
-;;            (message "props-beg(%S) props-end(%S)" props-beg props-end)
+            ;;            (message "props-beg(%S) props-end(%S)" props-beg props-end)
             (when (> (- props-end props-beg) 2)
               (web-mode-fontify-region props-beg props-end web-mode-css-props-font-lock-keywords)
               (goto-char props-beg)
@@ -2051,7 +2051,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
         (setq ch-at (char-after start))
         (setq ch-next (or (char-after (1+ start)) ?\d))
         (setq ch-before (or (char-before start) ?\d))
-;;        (message "beg=%S :%c%c%c" start ch-before ch-at ch-next)
+        ;;        (message "beg=%S :%c%c%c" start ch-before ch-at ch-next)
         (cond
 
          ((char-equal ch-at ?\')
@@ -2144,7 +2144,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
         (setq pos (point)
               char (char-after))
         (setq spaced (char-equal char ?\s))
-;;        (setq char (buffer-substring-no-properties pos (1+ pos)))
+        ;;        (setq char (buffer-substring-no-properties pos (1+ pos)))
 
         (cond
 
@@ -2273,11 +2273,11 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 (defun web-mode-colorize-foreground (color)
   "Colorize foreground based on background luminance."
   (let* ((values (x-color-values color))
-	 (r (car values))
-	 (g (cadr values))
-	 (b (car (cdr (cdr values)))))
+         (r (car values))
+         (g (cadr values))
+         (b (car (cdr (cdr values)))))
     (if (> 128.0 (floor (+ (* .3 r) (* .59 g) (* .11 b)) 256))
-	"white" "black")))
+        "white" "black")))
 
 (defun web-mode-colorize (beg end)
   "Colorize CSS colors."
@@ -2303,7 +2303,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 (defun web-mode-fontify-region (beg end keywords)
   "Highlight block."
   (save-excursion
-;;    (message "beg=%S end=%S" beg end)
+    ;;    (message "beg=%S end=%S" beg end)
     (let ((font-lock-keywords keywords)
           (font-lock-multiline nil)
           (font-lock-keywords-case-fold-search (string= web-mode-engine "asp"))
@@ -2345,7 +2345,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
                   delim-end "EOL"))
            ((string= chunk "/*")
             (setq delim-beg "/*"
-                 delim-end "*/"))
+                  delim-end "*/"))
            ((string= chunk "{#")
             (setq delim-beg "{#"
                   delim-end "#}"))
@@ -2353,7 +2353,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
             (setq delim-beg "<!--"
                   delim-end "-->"))
            )
-         ;;          (subst-char-in-region beg end ?\n ?\s)
+          ;;          (subst-char-in-region beg end ?\n ?\s)
           ;;          (message "fill-column=%S pt=%S pair=%S chunk=%S"
           ;;                   fill-column (point) pair chunk)
           )
@@ -2411,7 +2411,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
             (ori (point))
             (errors 0)
             (continue t)
-        )
+            )
     (setq overlays (overlays-in (point-min) (point-max)))
     (when overlays
       (dolist (overlay overlays)
@@ -2430,7 +2430,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
       (cond
        ((eq (get-text-property (point) 'client-tag-type) 'start)
         (setq tags (add-to-list 'tags (list tag pos)))
-;;        (message "(%S) opening %S" pos tag)
+        ;;        (message "(%S) opening %S" pos tag)
         )
        ((eq (get-text-property (point) 'client-tag-type) 'end)
         (setq i 0
@@ -2438,7 +2438,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
               cont t)
         (while (and (< i l) cont)
           (setq cell (nth i tags))
-;;          (message "cell=%S" cell)
+          ;;          (message "cell=%S" cell)
           (setq i (1+ i))
           (cond
            ((string= tag (nth 0 cell))
@@ -2452,15 +2452,15 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
               (setq first beg))
             (setq overlay (make-overlay beg (1+ end)))
             (overlay-put overlay 'face 'web-mode-warning-face)
-;;            (message "invalid <%S> at %S" (nth 0 cell) (nth 1 cell))
+            ;;            (message "invalid <%S> at %S" (nth 0 cell) (nth 1 cell))
             )
            );cond
           );while
 
         (dotimes (i i)
           (setq tags (cdr tags))
-;;          (setq cell (nth i tags))
-;;          (message "removing=%S" cell)
+          ;;          (setq cell (nth i tags))
+          ;;          (message "removing=%S" cell)
           )
 
         )
@@ -2728,7 +2728,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
                  (eq (get-text-property (1- pos) 'client-token-type) 'comment)
                  (progn
                    (setq block-beg (previous-single-property-change pos 'client-token-type))
-                        t))
+                   t))
             (and (eq (get-text-property pos 'server-token-type) 'comment)
                  (eq (get-text-property (1- pos) 'server-token-type) 'comment)
                  (progn
@@ -2804,7 +2804,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
           )
         )
 
-;;      (if (string= language "json") (setq language "javascript"))
+      ;;      (if (string= language "json") (setq language "javascript"))
 
       (setq ctx (list :block-beg block-beg
                       :block-column block-column
@@ -2816,7 +2816,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
                       :prev-line prev-line
                       :prev-char prev-char
                       :prev-props prev-props))
-;;      (message "%S" ctx)
+      ;;      (message "%S" ctx)
       ctx
       )))
 
@@ -2988,7 +2988,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
               )
           (let ((continue t)
                 (counter 0))
-;;            (message "pt=%S %S" (point) prev-line)
+            ;;            (message "pt=%S %S" (point) prev-line)
             (while (and continue (re-search-backward "^[[:blank:]]*</?[[:alpha:]]" nil t))
               (back-to-indentation)
               (when (web-mode-is-html-tag)
@@ -3032,7 +3032,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
     (setq h (web-mode-previous-line pos limit))
     (setq out initial-column)
     (when h
-;;      (message "prev-line=%S" h)
+      ;;      (message "prev-line=%S" h)
       (setq prev-line (car h))
       (setq prev-indentation (cdr h))
       (cond
@@ -3104,7 +3104,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
         (setq limit (point))
         (setq initial-column (current-indentation))
         );when
-;;      (message "point=%S limit=%S" (point) limit)
+      ;;      (message "point=%S limit=%S" (point) limit)
       (goto-char pos)
       (setq block-info (web-mode-count-opened-blocks pos limit))
       (setq col initial-column)
@@ -3118,7 +3118,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
         (setq col (+ initial-column (* n language-offset)))
         );if
       (if (< col block-column) block-column col)
-;;      col
+      ;;      col
       )))
 
 ;; return (opened-blocks . (col-num . arg-inline))
@@ -3126,7 +3126,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
   "Count opened opened block at point."
   (interactive)
   (unless limit (setq limit nil))
-;;  (message "limit=%S" limit)
+  ;;  (message "limit=%S" limit)
   (save-excursion
     (goto-char pos)
     (let ((continue t)
@@ -3138,22 +3138,22 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
           (col-num 0)
           (regexp "[\]\[}{)(]\\|\\(break\\|case\\|default\\)")
           close-char n queue arg-inline arg-inline-checked char lines
-;;          (i 0)
-;;          first-opened
+          ;;          (i 0)
+          ;;          first-opened
           (num-opened 0))
 
       (while (and continue (re-search-backward regexp limit t))
         (unless (web-mode-is-comment-or-string)
           (setq match (match-string-no-properties 0)
                 char (char-after)
-;;                p nil
+                ;;                p nil
                 )
 
           (cond
 
            ((member char '(?\{ ?\( ?\[))
 
-;;            (setq i (1+ i))
+            ;;            (setq i (1+ i))
 
             (cond
              ((char-equal char ?\() (setq close-char ?\)))
@@ -3179,7 +3179,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
               )
              ((= n 0)
               (setq num-opened (1+ num-opened))
-;;              (message "num-opened=%S %S" num-opened (point))
+              ;;              (message "num-opened=%S %S" num-opened (point))
               )
              )
 
@@ -3202,7 +3202,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
                 (setq arg-inline t
                       continue nil
                       col-num (1+ (current-column))))
-;;              (message "pt=%S" (point))
+              ;;              (message "pt=%S" (point))
               )
 
             );case
@@ -3239,12 +3239,12 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 
            );cond
 
-;;         (message "\n")
-;;          (message "queue=%S" queue)
+          ;;         (message "\n")
+          ;;          (message "queue=%S" queue)
 
-;;          (when p
-;;            (puthash char (cons i (point)) h)
-;;            )
+          ;;          (when p
+          ;;            (puthash char (cons i (point)) h)
+          ;;            )
 
           ;;        (message "%c : %S" char i)
           );unless
@@ -3283,7 +3283,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
           )
         );unless
 
-;;      (message "opened-blocks(%S) col-num(%S) arg-inline(%S)" opened-blocks col-num arg-inline)
+      ;;      (message "opened-blocks(%S) col-num(%S) arg-inline(%S)" opened-blocks col-num arg-inline)
 
       (cons opened-blocks (cons col-num arg-inline))
 
@@ -3331,11 +3331,11 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
                  (looking-at "<\\([[:alnum:]]+\\)"))
         (setq pos (point))
         (unless (web-mode-is-void-element)
-            (save-match-data
-              (web-mode-tag-match)
-              (if (looking-at "</[ ]*\\([[:alnum:]]+\\)")
-                  (replace-match (concat "</" tag-name))
-                )))
+          (save-match-data
+            (web-mode-tag-match)
+            (if (looking-at "</[ ]*\\([[:alnum:]]+\\)")
+                (replace-match (concat "</" tag-name))
+              )))
         (goto-char pos)
         (replace-match (concat "<" tag-name))
         (web-mode-scan-at-point)
@@ -3371,8 +3371,8 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
       (goto-char (or web-mode-expand-initial-position (point-min)))
       (recenter))
 
-    ((and (member (get-text-property pos 'server-token-type) '(comment string))
-          (not (string= web-mode-expand-previous-state "server-token")))
+     ((and (member (get-text-property pos 'server-token-type) '(comment string))
+           (not (string= web-mode-expand-previous-state "server-token")))
 
       (when (eq (get-text-property pos 'server-token-type) (get-text-property (1- pos) 'server-token-type))
         (setq beg (or (previous-single-property-change pos 'server-token-type) (point-min))))
@@ -3470,7 +3470,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 
      ) ; cond
 
-;;    (message "after=%S" web-mode-expand-previous-state)
+    ;;    (message "after=%S" web-mode-expand-previous-state)
 
     ))
 
@@ -3740,7 +3740,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
           (progn
             (setq beg (region-beginning)
                   end (region-end))
-;;            (message "beg=%S end=%S" beg end)
+            ;;            (message "beg=%S end=%S" beg end)
             (setq type (web-mode-line-type beg))
             )
         (setq type (web-mode-line-type (line-beginning-position)))
@@ -3756,16 +3756,16 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
         ); if
 
       (when (> (point) (mark))
-;;        (message "exchange")
+        ;;        (message "exchange")
         (exchange-point-and-mark))
 
 
       (if (eq (char-before end) ?\n)
           (setq end (1- end)))
 
-;;     (message "type=%S beg=%S end=%S" type beg end)
+      ;;     (message "type=%S beg=%S end=%S" type beg end)
 
-;;      (setq sel (buffer-substring-no-properties beg end))
+      ;;      (setq sel (buffer-substring-no-properties beg end))
       (setq sel (web-mode-trim (buffer-substring-no-properties beg end)))
       ;;      (message "[type=%s] sel=%s" type sel)
       (delete-region beg end)
@@ -3957,7 +3957,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 
      ((and (eq (get-text-property pos 'server-engine) 'erb)
            (web-mode-server-block-beginning)
-;;           (message "pt=%S" (point))
+           ;;           (message "pt=%S" (point))
            (looking-at-p "<%[ ]+\\(.* do \\|for\\|end\\|if\\|else\\)"))
       (web-mode-match-erb-tag))
 
@@ -4190,11 +4190,11 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
     (end-of-line)
     (setq end (point))
     (setq chunk (buffer-substring-no-properties beg end))
-;;    (message "chunk=%S" chunk)
+    ;;    (message "chunk=%S" chunk)
     (dolist (control web-mode-blade-controls)
       (when (string-match-p control chunk)
         (setq regexp (concat "@\\(" control "\\|end" control "\\)"))
-;;        (message "regexp=%S" regexp)
+        ;;        (message "regexp=%S" regexp)
         )
       )
     (if (string-match-p "end" chunk)
@@ -4382,7 +4382,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
     (looking-at "{{[ ]*\\([[:alpha:]]+\\)\\>")
     (setq tag (match-string-no-properties 1))
     (setq regexp (concat "{{[ ]*\\(" (regexp-opt web-mode-go-controls) "\\)"))
-;;    (message "go: point=%S regexp=%S tag=%S" (point) regexp tag)
+    ;;    (message "go: point=%S regexp=%S tag=%S" (point) regexp tag)
     (if (string= tag "end")
         (web-mode-match-opening-go-tag regexp)
       (web-mode-match-closing-go-tag regexp))))
@@ -4400,7 +4400,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
        (t
         (setq counter (1- counter)))
        )
-;;      (message "opening(%S)> %S : %S" (point) (match-string-no-properties 1) counter)
+      ;;      (message "opening(%S)> %S : %S" (point) (match-string-no-properties 1) counter)
       )
     ))
 
@@ -4419,7 +4419,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
         (setq counter (1+ counter))
         )
        )
-;;      (message "closing(%S)> %S : %S" (point) (match-string-no-properties 1) counter)
+      ;;      (message "closing(%S)> %S : %S" (point) (match-string-no-properties 1) counter)
       )
     (search-backward "{{")
     ))
@@ -4452,8 +4452,8 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 
 (defun web-mode-on-after-change (beg end len)
   "Auto-Pair"
-;;  (message "pos=%d, beg=%d, end=%d, len=%d, cur=%d"
-;;           (point) beg end len (current-column))
+  ;;  (message "pos=%d, beg=%d, end=%d, len=%d, cur=%d"
+  ;;           (point) beg end len (current-column))
 
   ;;  (backtrace)
 
@@ -4462,7 +4462,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 
   (let ((chunk "")
         (pos (point))
-;;        (cur-col (current-column))
+        ;;        (cur-col (current-column))
         tag
         continue
         found
@@ -4480,7 +4480,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 
     (if (not (= (point-max) (+ (buffer-size) 1)))
 
-       (setq web-mode-is-narrowed t)
+        (setq web-mode-is-narrowed t)
 
       (when (and (not web-mode-disable-auto-pairing)
                  (> pos 2)
@@ -4500,9 +4500,9 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
                  (not (get-text-property pos 'server-side))
                  (not (get-text-property pos 'client-side))
                  (web-mode-start-tag-previous)
-;;                 (web-mode-tag-previous "<[[:alpha:]]")
-;;                 (web-mode-rsb-html "<[[:alpha:]]")
-;;                 (not (web-mode-is-void-element))
+                 ;;                 (web-mode-tag-previous "<[[:alpha:]]")
+                 ;;                 (web-mode-rsb-html "<[[:alpha:]]")
+                 ;;                 (not (web-mode-is-void-element))
                  )
             (progn
               (forward-char)
@@ -4529,7 +4529,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
           ;;                                             (if (>= (+ beg 6) (line-end-position))
           ;;                                                 (line-end-position)
           ;;                                               (+ beg 6))))
-;;          (message "chunk=%S" chunk)
+          ;;          (message "chunk=%S" chunk)
 
           (setq continue t
                 counter 1)
@@ -4537,11 +4537,11 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
             (setq continue nil))
           (while (and continue
                       (web-mode-tag-previous)
-;;                      (web-mode-rsb web-mode-tag-regexp)
+                      ;;                      (web-mode-rsb web-mode-tag-regexp)
                       )
             (setq tag (substring (match-string-no-properties 0) 1))
-;;            (setq tag ())
-;;            (message "tag=%S" tag)
+            ;;            (setq tag ())
+            ;;            (message "tag=%S" tag)
             (if (string= (substring tag 0 1) "/")
                 (setq counter (1+ counter))
               (if (not (web-mode-is-void-element))
@@ -4649,7 +4649,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
       (while (web-mode-rsf-content "&\\([[:alpha:]]\\{2,8\\}\\);" max)
         (setq name (match-string 1))
         (setq pair (assoc name web-mode-html-entities))
-;;        (message "pos=%S name=%S pair=%S" (point) name pair)
+        ;;        (message "pos=%S name=%S pair=%S" (point) name pair)
         (when pair
           (replace-match (cdr pair)))
         );while
@@ -4904,7 +4904,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 (defun web-mode-server-block-beginning-position (&optional pos)
   "web-mode-server-block-beginning-position"
   (unless pos (setq pos (point)))
-;;  (message "web-mode-server-block-beginning-position=%S" pos)
+  ;;  (message "web-mode-server-block-beginning-position=%S" pos)
   (cond
    ((or (and (get-text-property pos 'server-side)
              (= pos (point-min)))
@@ -4917,12 +4917,12 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
    ((get-text-property pos 'server-side)
     (setq pos (previous-single-property-change pos 'server-boundary))
     (setq pos (if pos (1- pos) (point-min)))
-;;    (setq pos (if pos pos (point-min)))
+    ;;    (setq pos (if pos pos (point-min)))
     )
    (t
     (setq pos nil))
    );cond
-;;  (message "web-mode-server-block-beginning-position=%S" pos)
+  ;;  (message "web-mode-server-block-beginning-position=%S" pos)
   pos)
 
 ;; todo: alerte si valeur retournée est < pos
@@ -4930,16 +4930,16 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
   "web-mode-server-block-end-position"
   (unless pos (setq pos (point)))
   (cond
-;;   ((get-text-property pos 'server-end)
-;;    )
+   ;;   ((get-text-property pos 'server-end)
+   ;;    )
    ((get-text-property pos 'server-side)
 
     (setq pos (or (get-text-property (web-mode-server-block-beginning-position pos) 'server-boundary)
                   (point-max)))
-;;    (setq pos (or (next-single-property-change pos 'server-end)
-;;                  (point-max)))
+    ;;    (setq pos (or (next-single-property-change pos 'server-end)
+    ;;                  (point-max)))
 
-;;    (message "pos=%S" pos)
+    ;;    (message "pos=%S" pos)
     )
 
    (t
@@ -5037,7 +5037,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
   "Fetch previous tag."
   (interactive)
   (unless regexp (setq regexp web-mode-tag-regexp))
-;;  (unless regexp (setq regexp "</?[[:alpha:]]"))
+  ;;  (unless regexp (setq regexp "</?[[:alpha:]]"))
   (let ((continue t) ret)
     (while continue
       (setq ret (re-search-backward regexp nil t))
@@ -5249,7 +5249,7 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
       (setq ret (re-search-forward regexp limit noerror)
             beg (if (null ret) (point) (match-beginning 0))
             end (if (null ret) (point) (match-end 0)))
-;;      (message "pt=%S" pos)
+      ;;      (message "pt=%S" pos)
       (if (or (null ret)
               (and (web-mode-is-content beg)
                    (web-mode-is-content end)))
@@ -5565,224 +5565,224 @@ with value 2, HTML lines beginning text are also indented (do not forget side ef
 ;;            ))))
 
 
-      ;; (when (nil)
-      ;;   (setq pos-min (point-min)
-      ;;         indent-offset web-mode-code-indent-offset)
+;; (when (nil)
+;;   (setq pos-min (point-min)
+;;         indent-offset web-mode-code-indent-offset)
 
-      ;;   (cond
+;;   (cond
 
-      ;;    ((string= web-mode-content-type "css")
-      ;;     (setq in-css-block t
-      ;;           block-beg pos-min
-      ;;           block-column 0
-      ;;           indent-offset web-mode-css-indent-offset))
+;;    ((string= web-mode-content-type "css")
+;;     (setq in-css-block t
+;;           block-beg pos-min
+;;           block-column 0
+;;           indent-offset web-mode-css-indent-offset))
 
-      ;;    ((member web-mode-content-type '("javascript" "json"))
-      ;;     (setq in-javascript-block t
-      ;;           block-beg pos-min
-      ;;           block-column 0
-      ;;           indent-offset web-mode-code-indent-offset))
+;;    ((member web-mode-content-type '("javascript" "json"))
+;;     (setq in-javascript-block t
+;;           block-beg pos-min
+;;           block-column 0
+;;           indent-offset web-mode-code-indent-offset))
 
-      ;;    ((string= web-mode-content-type "php")
-      ;;     (setq in-php-block t
-      ;;           block-beg pos-min
-      ;;           block-column 0
-      ;;           indent-offset web-mode-code-indent-offset))
+;;    ((string= web-mode-content-type "php")
+;;     (setq in-php-block t
+;;           block-beg pos-min
+;;           block-column 0
+;;           indent-offset web-mode-code-indent-offset))
 
-      ;;    ((or (string= web-mode-content-type "xml"))
-      ;;     (setq in-html-block t
-      ;;           block-beg pos-min
-      ;;           block-column 0
-      ;;           indent-offset web-mode-markup-indent-offset))
+;;    ((or (string= web-mode-content-type "xml"))
+;;     (setq in-html-block t
+;;           block-beg pos-min
+;;           block-column 0
+;;           indent-offset web-mode-markup-indent-offset))
 
-      ;;    ((and (not (bobp))
-      ;;          (or (and (eq (get-text-property pos 'client-token-type) 'comment)
-      ;;                   (eq (get-text-property (1- pos) 'client-token-type) 'comment)
-      ;;                   (progn
-      ;;                     (setq block-beg (previous-single-property-change pos 'client-token-type))
-      ;;                     t))
-      ;;              (and (eq (get-text-property pos 'server-token-type) 'comment)
-      ;;                   (eq (get-text-property (1- pos) 'server-token-type) 'comment)
-      ;;                   (progn
-      ;;                     (setq block-beg (previous-single-property-change pos 'server-token-type))
-      ;;                     t))))
-      ;;     (setq in-comment-block t))
+;;    ((and (not (bobp))
+;;          (or (and (eq (get-text-property pos 'client-token-type) 'comment)
+;;                   (eq (get-text-property (1- pos) 'client-token-type) 'comment)
+;;                   (progn
+;;                     (setq block-beg (previous-single-property-change pos 'client-token-type))
+;;                     t))
+;;              (and (eq (get-text-property pos 'server-token-type) 'comment)
+;;                   (eq (get-text-property (1- pos) 'server-token-type) 'comment)
+;;                   (progn
+;;                     (setq block-beg (previous-single-property-change pos 'server-token-type))
+;;                     t))))
+;;     (setq in-comment-block t))
 
-      ;;    ((web-mode-in-server-block 'php)
-      ;;     (setq in-php-block t))
+;;    ((web-mode-in-server-block 'php)
+;;     (setq in-php-block t))
 
-      ;;    ((web-mode-in-server-block 'jsp)
-      ;;     (setq in-jsp-block t))
+;;    ((web-mode-in-server-block 'jsp)
+;;     (setq in-jsp-block t))
 
-      ;;    ((web-mode-in-server-block 'directive)
-      ;;     (setq in-directive-block t))
+;;    ((web-mode-in-server-block 'directive)
+;;     (setq in-directive-block t))
 
-      ;;    ((web-mode-in-server-block 'aspx)
-      ;;     (setq in-aspx-block t))
+;;    ((web-mode-in-server-block 'aspx)
+;;     (setq in-aspx-block t))
 
-      ;;    ((web-mode-in-server-block 'asp)
-      ;;     (setq in-asp-block t))
+;;    ((web-mode-in-server-block 'asp)
+;;     (setq in-asp-block t))
 
-      ;;    ((web-mode-in-server-block 'razor)
-      ;;     (setq in-code-block t))
+;;    ((web-mode-in-server-block 'razor)
+;;     (setq in-code-block t))
 
-      ;;    ((or (web-mode-in-client-block 'javascript)
-      ;;         (web-mode-in-client-block 'json))
-      ;;     (setq in-javascript-block t))
+;;    ((or (web-mode-in-client-block 'javascript)
+;;         (web-mode-in-client-block 'json))
+;;     (setq in-javascript-block t))
 
-      ;;    ((web-mode-in-client-block 'css)
-      ;;     (setq in-css-block t
-      ;;           indent-offset web-mode-css-indent-offset))
+;;    ((web-mode-in-client-block 'css)
+;;     (setq in-css-block t
+;;           indent-offset web-mode-css-indent-offset))
 
-      ;;    (t
-      ;;     (setq in-html-block t
-      ;;           indent-offset web-mode-markup-indent-offset))
+;;    (t
+;;     (setq in-html-block t
+;;           indent-offset web-mode-markup-indent-offset))
 
-      ;;    ((get-text-property pos 'client-side)
-      ;;     (message "*** in-client-side(%S) ***" pos)
-      ;;     (cond
-      ;;      ((eq (get-text-property pos 'client-language) 'css)
-      ;;       (setq in-css-block t
-      ;;             language 'css
-      ;;             indent-offset web-mode-css-indent-offset))
-      ;;      ((member (get-text-property pos 'client-language) '(javascript json))
-      ;;       (setq in-code-block t
-      ;;             language 'javascript
-      ;;             in-javascript-block t))
-      ;;      )
-      ;;     )
+;;    ((get-text-property pos 'client-side)
+;;     (message "*** in-client-side(%S) ***" pos)
+;;     (cond
+;;      ((eq (get-text-property pos 'client-language) 'css)
+;;       (setq in-css-block t
+;;             language 'css
+;;             indent-offset web-mode-css-indent-offset))
+;;      ((member (get-text-property pos 'client-language) '(javascript json))
+;;       (setq in-code-block t
+;;             language 'javascript
+;;             in-javascript-block t))
+;;      )
+;;     )
 
-      ;;    ((and (get-text-property pos 'server-side)
-      ;;          (not (get-text-property pos 'server-boundary)))
-      ;;     (message "*** in-server-side(%S) ***" pos)
-      ;;     (setq in-code-block t
-      ;;           language (get-text-property pos 'server-engine)
-      ;;           block-beg (or (previous-single-property-change pos 'server-engine)
-      ;;                         pos-min))
-      ;;     )
+;;    ((and (get-text-property pos 'server-side)
+;;          (not (get-text-property pos 'server-boundary)))
+;;     (message "*** in-server-side(%S) ***" pos)
+;;     (setq in-code-block t
+;;           language (get-text-property pos 'server-engine)
+;;           block-beg (or (previous-single-property-change pos 'server-engine)
+;;                         pos-min))
+;;     )
 
-      ;;    );cond
+;;    );cond
 
-      ;;   (setq line (web-mode-trim (buffer-substring-no-properties
-      ;;                              (line-beginning-position)
-      ;;                              (line-end-position))))
-      ;;   (setq first-char (if (string= line "") 0 (aref line 0)))
+;;   (setq line (web-mode-trim (buffer-substring-no-properties
+;;                              (line-beginning-position)
+;;                              (line-end-position))))
+;;   (setq first-char (if (string= line "") 0 (aref line 0)))
 
-      ;;   (if (or in-php-block in-aspx-block in-asp-block in-jsp-block in-directive-block)
-      ;;       (setq prev-line (web-mode-previous-usable-server-line))
-      ;;     (setq prev-line (web-mode-previous-usable-client-line)))
+;;   (if (or in-php-block in-aspx-block in-asp-block in-jsp-block in-directive-block)
+;;       (setq prev-line (web-mode-previous-usable-server-line))
+;;     (setq prev-line (web-mode-previous-usable-client-line)))
 
-      ;;   ;;(message "prev-line=[%s]" prev-line)
+;;   ;;(message "prev-line=[%s]" prev-line)
 
-      ;;   (when prev-line
-      ;;     (cond
-      ;;      ((or in-html-block in-javascript-block in-css-block)
-      ;;       ;;          (message "prev=[%s] %S" prev-line (length prev-line))
-      ;;       (setq prev-line (web-mode-clean-client-line prev-line))
-      ;;       ;;          (message "prev=[%s] %S" prev-line (length prev-line))
-      ;;       (setq prev-props (text-properties-at (1- (length prev-line)) prev-line))
-      ;;       ;;          (setq prev-props (text-properties-at (length prev-line) prev-line))
-      ;;       ;;(message "prev-props=%S" prev-props)
-      ;;       )
-      ;;      (t
-      ;;       (setq prev-line (web-mode-clean-server-line prev-line))
-      ;;       )
-      ;;      );cond
-      ;;     ;;        (message "prev=%s" prev-line)
-      ;;     (when (>= (length prev-line) 1)
-      ;;       (setq prev-char (aref prev-line (1- (length prev-line))))
-      ;;       )
-      ;;     );when prev-line
+;;   (when prev-line
+;;     (cond
+;;      ((or in-html-block in-javascript-block in-css-block)
+;;       ;;          (message "prev=[%s] %S" prev-line (length prev-line))
+;;       (setq prev-line (web-mode-clean-client-line prev-line))
+;;       ;;          (message "prev=[%s] %S" prev-line (length prev-line))
+;;       (setq prev-props (text-properties-at (1- (length prev-line)) prev-line))
+;;       ;;          (setq prev-props (text-properties-at (length prev-line) prev-line))
+;;       ;;(message "prev-props=%S" prev-props)
+;;       )
+;;      (t
+;;       (setq prev-line (web-mode-clean-server-line prev-line))
+;;       )
+;;      );cond
+;;     ;;        (message "prev=%s" prev-line)
+;;     (when (>= (length prev-line) 1)
+;;       (setq prev-char (aref prev-line (1- (length prev-line))))
+;;       )
+;;     );when prev-line
 
-      ;;   ;;      (goto-char pos)
-      ;;   ;;      (end-of-line)
+;;   ;;      (goto-char pos)
+;;   ;;      (end-of-line)
 
-      ;;   (when (null block-beg)
-      ;;     (save-excursion
-      ;;       (cond
-      ;;        ((or in-css-block in-javascript-block)
-      ;;         (setq block-beg (or (previous-single-property-change pos 'client-side) pos-min))
-      ;;         (goto-char block-beg)
-      ;;         (search-backward "<")
-      ;;         (setq block-column (current-column))
-      ;;         )
-      ;;        ((or in-php-block in-jsp-block in-directive-block in-asp-block in-aspx-block in-code-block)
-      ;;         (setq block-beg (or (previous-single-property-change pos 'server-engine) pos-min))
-      ;;         (goto-char block-beg)
-      ;;         (setq block-column (current-column))
-      ;;         )
-      ;;        );cond
-      ;;       );save-excursion
-      ;;     (when (string= web-mode-engine "razor")
-      ;;       (setq block-beg (+ block-beg 2))
-      ;;       (setq block-column (+ block-column 2))
-      ;;       )
-      ;;     )
-      ;;   ;;)
+;;   (when (null block-beg)
+;;     (save-excursion
+;;       (cond
+;;        ((or in-css-block in-javascript-block)
+;;         (setq block-beg (or (previous-single-property-change pos 'client-side) pos-min))
+;;         (goto-char block-beg)
+;;         (search-backward "<")
+;;         (setq block-column (current-column))
+;;         )
+;;        ((or in-php-block in-jsp-block in-directive-block in-asp-block in-aspx-block in-code-block)
+;;         (setq block-beg (or (previous-single-property-change pos 'server-engine) pos-min))
+;;         (goto-char block-beg)
+;;         (setq block-column (current-column))
+;;         )
+;;        );cond
+;;       );save-excursion
+;;     (when (string= web-mode-engine "razor")
+;;       (setq block-beg (+ block-beg 2))
+;;       (setq block-column (+ block-column 2))
+;;       )
+;;     )
+;;   ;;)
 
-      ;;   (when (and block-beg (null block-column))
-      ;;     (message "*** block-column is nil *** point(%S)" (point))
-      ;;     (setq block-column block-beg)
-      ;;     )
+;;   (when (and block-beg (null block-column))
+;;     (message "*** block-column is nil *** point(%S)" (point))
+;;     (setq block-column block-beg)
+;;     )
 
-      ;;   ;;(message "php(%S) jsp(%S) js(%S) css(%S) directive(%S) asp(%S) aspx(%S) html(%S) comment(%S)" in-php-block in-jsp-block in-javascript-block in-css-block in-directive-block in-asp-block in-aspx-block in-html-block in-comment-block)
-      ;;   ;;(message "block-beg(%S) block-column(%S)" block-beg block-column)
+;;   ;;(message "php(%S) jsp(%S) js(%S) css(%S) directive(%S) asp(%S) aspx(%S) html(%S) comment(%S)" in-php-block in-jsp-block in-javascript-block in-css-block in-directive-block in-asp-block in-aspx-block in-html-block in-comment-block)
+;;   ;;(message "block-beg(%S) block-column(%S)" block-beg block-column)
 
-      ;;   );when nil
+;;   );when nil
 
 
-         ;; (t
+;; (t
 
-         ;;  (cond
+;;  (cond
 
-         ;;   ((string= "#*" sub2)
-         ;;    (setq closing-string "*#"))
+;;   ((string= "#*" sub2)
+;;    (setq closing-string "*#"))
 
-         ;;   ((char-equal ?\# (string-to-char sub2))
-         ;;    (setq closing-string "EOL"))
+;;   ((char-equal ?\# (string-to-char sub2))
+;;    (setq closing-string "EOL"))
 
-         ;;   ((char-equal ?$ (string-to-char sub2))
-         ;;    (setq closing-string "EOV"));end of var
+;;   ((char-equal ?$ (string-to-char sub2))
+;;    (setq closing-string "EOV"));end of var
 
-         ;;   ((char-equal ?% (string-to-char sub2))
-         ;;    (setq closing-string "EOL"))
+;;   ((char-equal ?% (string-to-char sub2))
+;;    (setq closing-string "EOL"))
 
-         ;;   ((string= "<%-" tagopen)
-         ;;    (setq closing-string "--%>"))
+;;   ((string= "<%-" tagopen)
+;;    (setq closing-string "--%>"))
 
-         ;;   ((string= "<%#" tagopen)
-         ;;    (setq closing-string "%>"))
+;;   ((string= "<%#" tagopen)
+;;    (setq closing-string "%>"))
 
-         ;;   ((string= "[#-" tagopen)
-         ;;    (setq closing-string "--]"))
+;;   ((string= "[#-" tagopen)
+;;    (setq closing-string "--]"))
 
-         ;;   ((string= "<#-" tagopen)
-         ;;    (setq closing-string "-->"))
+;;   ((string= "<#-" tagopen)
+;;    (setq closing-string "-->"))
 
-         ;;   ((or (string= "[#" sub2) (string= "[@" sub2) (string= "[/" sub2))
-         ;;    (setq closing-string "]"))
+;;   ((or (string= "[#" sub2) (string= "[@" sub2) (string= "[/" sub2))
+;;    (setq closing-string "]"))
 
-         ;;   ((or (string= "<#" sub2) (string= "<@" sub2) (string= "</" sub2))
-         ;;    (setq closing-string ">"))
+;;   ((or (string= "<#" sub2) (string= "<@" sub2) (string= "</" sub2))
+;;    (setq closing-string ">"))
 
-         ;;   ((string= "<%@" tagopen)
-         ;;    (setq closing-string "%>"))
+;;   ((string= "<%@" tagopen)
+;;    (setq closing-string "%>"))
 
-         ;;   ((string= "<%" sub2)
-         ;;    (setq closing-string "%>"))
+;;   ((string= "<%" sub2)
+;;    (setq closing-string "%>"))
 
-         ;;   ((member sub2 '("${" "#{"))
-         ;;    (setq closing-string "}"))
+;;   ((member sub2 '("${" "#{"))
+;;    (setq closing-string "}"))
 
-         ;;   ((string= "{{" sub2)
-         ;;    (setq closing-string "}}"))
+;;   ((string= "{{" sub2)
+;;    (setq closing-string "}}"))
 
-         ;;   ((string= "{%" sub2)
-         ;;    (setq closing-string "%}"))
+;;   ((string= "{%" sub2)
+;;    (setq closing-string "%}"))
 
-         ;;   ((string= "{#" sub2)
-         ;;    (setq closing-string "#}"))
+;;   ((string= "{#" sub2)
+;;    (setq closing-string "#}"))
 
-         ;;   );cond
+;;   );cond
 
-         ;;  );t
+;;  );t

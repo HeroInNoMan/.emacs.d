@@ -5,7 +5,7 @@
 ;; Authors: Alex Schroeder <alex@gnu.org>
 ;;          Matt Henry <mcthenry+gnu@gmail.com>
 ;; Maintainer: Matt Henry <mcthenry+gnu@gmail.com>
-;; Version: $Id: sql-indent.el,v 1.10 2009/03/25 22:52:25 mhenry Exp $  
+;; Version: $Id: sql-indent.el,v 1.10 2009/03/25 22:52:25 mhenry Exp $
 
 ;; Keywords: languages
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki.pl?SqlIndent
@@ -102,19 +102,19 @@ indented by `sql-indent-offset'."
 (defun sql-indent-get-last-line-start ()
   "Find the last non-blank line.  Return the beginning position of that line and its indentation."
 
- (save-excursion
-   (forward-line -1)
+  (save-excursion
+    (forward-line -1)
 
-   (while (and (not (bobp))
-               (or
-                (looking-at "^\\s-*$")
-                (sql-indent-is-string-or-comment)) ; Skip comments or strings
-               )
+    (while (and (not (bobp))
+                (or
+                 (looking-at "^\\s-*$")
+                 (sql-indent-is-string-or-comment)) ; Skip comments or strings
+                )
 
-     (forward-line -1))
-   (list (point) (current-indentation))
-   )
- )
+      (forward-line -1))
+    (list (point) (current-indentation))
+    )
+  )
 
 (defun sql-indent-level-delta (&optional prev-start prev-indent)
   "Calculate the change in level from the previous non-blank line.
@@ -186,7 +186,7 @@ Return a list containing the level change and the previous indentation."
             (progn
               (setq line (1+ line))
               (message "Line %3d; level %3d; indent was %3d; at %d" line level indent (point))))
-        
+
         (beginning-of-line)
         (if (and (not (looking-at "^\\s-*$")) ; Leave blank lines alone
                  (not (sql-indent-is-string-or-comment)) ; Don't mess with comments or strings
