@@ -181,13 +181,6 @@
       (minimap-create)
     (minimap-kill)))
 
-;; find in project (.git)
-(require 'simp)
-
-(simp-project-define
- '(:has (.git)
-        :ignore (tmp coverage log vendor .git public/system public/assets)))
-
 ;; customization
 (custom-set-variables
  ;; '(show-paren-mode t nil (paren))
@@ -195,6 +188,10 @@
  (custom-set-faces
   '(show-paren-match ((((class color)) (:weight bold))))
   ))
+
+;; ERC conf
+(require 'erc-hl-nicks)
+(setq erc-input-line-position -2) ;; so the prompt is always at the bottom
 
 (require 'key-chord)
 (key-chord-mode 1)
@@ -235,7 +232,9 @@
 ;; Macros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; transforms code into concatenated strings to be inserted in java code (as a string). "s are escaped so java doesn’t misinterpret them.
+;; transforms code into concatenated strings to be inserted in java
+;; code (as a string). "s are escaped so java doesn’t misinterpret
+;; them.
 (fset 'stringify-code-for-java
       [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
 
