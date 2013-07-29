@@ -21,6 +21,9 @@
 (global-set-key (kbd "C-M-z") 'undo) ;; usefull when C-/ does not work (windows/putty)
 (global-set-key (kbd "C-c u") 'simplified-beginning-of-buffer) ;; usefull when C-< does not work (windows/putty)
 (global-set-key (kbd "C-c d") 'simplified-end-of-buffer) ;; usefull when C-> does not work (windows/putty)
+(global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; usefull when C-< does not work (windows/putty)
+(global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; usefull when C-> does not work (windows/putty)
+
 (global-set-key (kbd "C-c h") 'replace-string)
 (global-set-key (kbd "C-c j") 'replace-regexp)
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
