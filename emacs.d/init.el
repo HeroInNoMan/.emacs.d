@@ -2,7 +2,17 @@
 ;; init.el config file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun files-in-below-directory (directory)
+;; package-style dependencies
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (package-initialize)
+  )
+
+(defun files-in-below-directory (directory) ;; TODO externalize this function
   "List the .el files in DIRECTORY and in its sub-directories."
   ;; Although the function will be used non-interactively,
   ;; it will be easier to test if we make it interactive.
@@ -40,14 +50,6 @@
       (setq current-directory-list (cdr current-directory-list)))
     ;; return the filenames
     el-files-list))
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (package-initialize)
-  )
 
 ;; init.el is called by .emacs, conf-dir is the dir containing init.el
 (defvar conf-dir (file-name-directory load-file-name))
@@ -64,32 +66,12 @@
   (when (file-regular-p file)
     (load file)))
 
-;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
-(autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
-(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
-(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
-
-;;; make Groovy mode electric by default.
-(add-hook 'groovy-mode-hook
-          '(lambda ()
-             (require 'groovy-electric)
-             (groovy-electric-mode)))
-
-(autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
-(add-hook 'groovy-mode-hook 'groovy-eval)
-
-;; Loads ruby mode when a .rb file is opened.
-(autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
-(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
-
 (require 'dirtree) ;; Tree view for directories
 
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
 
 (recentf-mode 1) ;; keep a list of recently opened files
-(setq tramp-default-method "ssh") ;; Tramp mode; does not seem to work so far
 (setq-default transient-mark-mode t) ;; Coloration entre marque et curseur
 (setq default-major-mode 'text-mode) ;; Mode texte par défaut
 (add-hook 'text-mode-hook 'visual-line-mode) ;; Auto-wrapping (soft wrap) en mode texte
@@ -98,12 +80,11 @@
 (setq font-lock-maximum-decoration t) ;; Toutes les couleurs possibles
 (setq inhibit-startup-message t) ;; Pas de message au lancement
 (setq initial-scratch-message nil) ;; empty *scratch*
-;; (set-background-color "gray85") ;; background color
 (setq read-file-name-completion-ignore-case t) ;; completion case-insensitive
 (setq read-buffer-completion-ignore-case t) ;; completion case-insensitive
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping en mode mail
 (setq column-number-mode t) ;; Affiche le numéro de colonne
-(setq-default show-trailing-whitespace t) ;; Affiche les espaces en fin de ligne
+(setq-default show-trailing-whitespace nil) ;; don’t display thoses — rather annoying
 (setq display-time-day-and-date t ;; Affiche date et heure
       display-time-24hr-format t) ;; format de l’heure 24h
 (display-time) ;; affiche la date et l’heure
@@ -111,18 +92,17 @@
 (menu-bar-mode -1) ;; no menu-bar
 (fset 'yes-or-no-p 'y-or-n-p) ;; Pour ne pas avoir à taper en entier la réponse yes/no
 (setq european-calendar-style t) ;; format jour/mois/an pour le calendrier (M-x calendar)
-(setq html-helper-use-expert-menu t) ;; use expert menu
-(add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
 (setq c-auto-newline t) ;; automatically indent - no need to tab
 (setq-default tab-width 4) ;; eclipse-like
 (setq-default indent-tabs-mode nil) ;; ???
-;; (global-hl-line-mode t) ;; highlight current line
+(global-hl-line-mode -1) ;; don’t highlight current line
 
 ;; Spellchecking
 (require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
 (add-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct in text mode
+(add-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct in html mode
 
 ;;Indentation
 (setq tab-width 4
@@ -160,12 +140,7 @@
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" conf-dir))
 
-;; Org-mode
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
-;; Toggles minimap
+;; MINIMAP
 (defun minimap-toggle-retain-size ()
   "Toggle minimap"
   (interactive)
@@ -186,7 +161,7 @@
       (minimap-create)
     (minimap-kill)))
 
-;; customization
+;; CUSTOMIZATION
 (custom-set-variables
  ;; '(show-paren-mode t nil (paren))
  ;; '(show-paren-style (quote expression))
@@ -204,7 +179,34 @@
 (server-start) ;; start in server mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; windows / linux specific configuration
+;; Language-specific configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
+(autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
+(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
+(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
+
+;;; make Groovy mode electric by default.
+(add-hook 'groovy-mode-hook
+          '(lambda ()
+             (require 'groovy-electric)
+             (groovy-electric-mode)))
+
+(autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
+(add-hook 'groovy-mode-hook 'groovy-eval)
+
+;; Loads ruby mode when a .rb file is opened.
+(autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
+(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
+
+;; basic html configuration
+(setq html-helper-use-expert-menu t) ;; use expert menu
+(add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; OS-specific configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Load system-specific library and setup system-specific things that
@@ -264,10 +266,8 @@
 ;; (setq custom-file (expand-file-name "~/.emacs.d/elisp/custom.el"))
 ;; (load custom-file 'noerror)
 
-;; SPELL CHECKER
-;; (add-hook 'html-helper-mode-hook 'flyspell-mode)
-
 ;; TRAMP
 ;; setup TRAMP for both cygwin and GNU/Linux
+;; (setq tramp-default-method "ssh") ;; Tramp mode; does not seem to work so far
 
 ;; init.el ends here.
