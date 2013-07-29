@@ -11,6 +11,8 @@
 (global-set-key (kbd "<f5>") 'reload-file)
 (global-set-key (kbd "<f7>") 'recentf-open-files) ;; set F7 to open a list of recently opened file
 (global-set-key (kbd "<f8>") 'minimap-toggle) ;; toggle minimap
+(global-set-key (kbd "<f9>") 'ispell-word)
+(global-set-key (kbd "C-<f9>") 'flyspell-mode)
 
 ;; custom shortcuts
 (global-set-key (kbd "M-à") 'ace-jump-mode)

@@ -110,8 +110,6 @@
 (tool-bar-mode -1) ;; no tool-bar on startup (only in non-shell emacs)
 (menu-bar-mode -1) ;; no menu-bar
 (fset 'yes-or-no-p 'y-or-n-p) ;; Pour ne pas avoir à taper en entier la réponse yes/no
-(setq ispell-dictionary "francais") ;; dictionnaire francais pour la correction orthographique ispell
-(setq-default ispell-program-name "aspell")
 (setq european-calendar-style t) ;; format jour/mois/an pour le calendrier (M-x calendar)
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
@@ -119,6 +117,12 @@
 (setq-default tab-width 4) ;; eclipse-like
 (setq-default indent-tabs-mode nil) ;; ???
 ;; (global-hl-line-mode t) ;; highlight current line
+
+;; Spellchecking
+(require 'ispell)
+(setq ispell-dictionary "francais") ;; french dictionary for auto-correct
+(setq-default ispell-program-name "aspell") ;; aspell by default
+(add-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct in text mode
 
 ;;Indentation
 (setq tab-width 4
@@ -220,6 +224,10 @@
   ;;         (setq tramp-default-method "scpx"))
   ;;        (t
   ;;         (setq tramp-default-method "scpc")))
+
+  ;; Aspell Windows (http://www.emacswiki.org/emacs/AspellWindows)
+  (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
+  (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
   )
 
 (defun load-linux-specific-conf ()
@@ -258,7 +266,6 @@
 
 ;; SPELL CHECKER
 ;; (add-hook 'html-helper-mode-hook 'flyspell-mode)
-;; (add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; TRAMP
 ;; setup TRAMP for both cygwin and GNU/Linux
