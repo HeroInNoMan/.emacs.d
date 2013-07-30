@@ -3,9 +3,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; key-chords (experimental key pairs)
-(key-chord-define-global "«»"     'er/expand-region)
-(key-chord-define-global "bf"     'ido-switch-buffer)
-(key-chord-define-global "qg"     'magit-status) ;; git status
+(key-chord-define-global (kbd "«»") 'er/expand-region)
+(key-chord-define-global (kbd "bf") 'ido-switch-buffer)
+(key-chord-define-global (kbd "qg") 'magit-status) ;; git status
 
 ;; function keys
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
@@ -16,7 +16,7 @@
 
 ;; custom shortcuts
 (global-set-key (kbd "M-à") 'ace-jump-mode)
-(global-set-key "\C-x\C-b" 'electric-buffer-list) ;; Electric buffer by default
+(global-set-key (kbd "\C-x\C-b") 'electric-buffer-list) ;; Electric buffer by default
 (global-set-key (kbd "\C-c\C-r") 'reload-file)
 (global-set-key (kbd "C-M-z") 'undo) ;; usefull when C-/ does not work (windows/putty)
 (global-set-key (kbd "C-c u") 'simplified-beginning-of-buffer) ;; usefull when C-< does not work (windows/putty)
@@ -54,7 +54,7 @@
 (global-set-key (kbd "M-É") 'mc/mark-previous-like-this)
 
 ;; Org-mode
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key (kbd "\C-cl") 'org-store-link)
+(global-set-key (kbd "\C-ca") 'org-agenda)
+(global-set-key (kbd "\C-cb") 'org-iswitchb)
 
