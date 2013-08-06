@@ -61,9 +61,13 @@
 (setq-default indent-tabs-mode nil) ;; ???
 (global-hl-line-mode -1) ;; don’t highlight current line
 (auto-compression-mode 1) ;; parse, open, modify and save compressed archives
-(show-paren-mode 1) ;; hl parenthese couples
 (mouse-avoidance-mode 1);; takes the mouse out of the way when typing
 (ido-mode 1) ;; better prompt for buffer search / switch 
+
+(show-paren-mode t) ;; hl parenthesis couples
+(setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple
+(setq show-paren-style 'expression) ;; alternatives are 'parenthesis' and 'mixed'
+
 
 ;; Spellchecking
 (require 'ispell)
@@ -128,14 +132,6 @@
   (if (null minimap-bufname)
       (minimap-create)
     (minimap-kill)))
-
-;; CUSTOMIZATION
-(custom-set-variables
- ;; '(show-paren-mode t nil (paren))
- ;; '(show-paren-style (quote expression))
- (custom-set-faces
-  '(show-paren-match ((((class color)) (:weight bold))))
-  ))
 
 ;; ERC conf
 (require 'erc-hl-nicks)
