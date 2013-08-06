@@ -29,11 +29,12 @@
   (when (file-regular-p file)
     (load file)))
 
-(require 'dirtree) ;; Tree view for directories
+
 
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
 
+(require 'dirtree) ;; Tree view for directories
 (recentf-mode 1) ;; keep a list of recently opened files
 (setq-default transient-mark-mode t) ;; Coloration entre marque et curseur
 (setq default-major-mode 'text-mode) ;; Mode texte par défaut
@@ -60,6 +61,9 @@
 (setq-default indent-tabs-mode nil) ;; ???
 (global-hl-line-mode -1) ;; don’t highlight current line
 (auto-compression-mode 1) ;; parse, open, modify and save compressed archives
+(show-paren-mode 1) ;; hl parenthese couples
+(mouse-avoidance-mode 1);; takes the mouse out of the way when typing
+(ido-mode 1) ;; better prompt for buffer search / switch 
 
 ;; Spellchecking
 (require 'ispell)
@@ -236,5 +240,8 @@
 
 ;; AUTO-COMPRESSION-MODE
 ;; setup and learn to use
+
+;; DIFF TOOL
+;; learn to use
 
 ;; init.el ends here.
