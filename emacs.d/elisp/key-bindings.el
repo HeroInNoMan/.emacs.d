@@ -58,3 +58,10 @@
 (global-set-key (kbd "\C-ca") 'org-agenda)
 (global-set-key (kbd "\C-cb") 'org-iswitchb)
 
+;; Groovy-Mode
+(global-set-key (kbd "<f6>") 'groovy-eval-execute-buffer)
+
+;; multi-scratch
+(global-set-key (kbd "C-x \"") 'multi-scratch-new)
+(global-set-key (kbd "C-x «") 'multi-scratch-prev)
+(global-set-key (kbd "C-x »") 'multi-scratch-next)

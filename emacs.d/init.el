@@ -30,6 +30,9 @@
     (load file)))
 
 
+;; multi-scratch
+(require 'multi-scratch)
+(defvar multi-scratch-buffer-name "untitled")
 
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
@@ -56,6 +59,7 @@
 (menu-bar-mode -1) ;; no menu-bar
 (fset 'yes-or-no-p 'y-or-n-p) ;; Pour ne pas avoir à taper en entier la réponse yes/no
 (setq european-calendar-style t) ;; format jour/mois/an pour le calendrier (M-x calendar)
+(setq calendar-week-start-day 1) ;; start week on Monday
 (setq c-auto-newline t) ;; automatically indent - no need to tab
 (setq-default tab-width 4) ;; eclipse-like
 (setq-default indent-tabs-mode nil) ;; ???
@@ -66,15 +70,15 @@
 
 (show-paren-mode t) ;; hl parenthesis couples
 (setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple
-(setq show-paren-style 'expression) ;; alternatives are 'parenthesis' and 'mixed'
+(setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
 
 
 ;; Spellchecking
 (require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
-(add-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct in text mode
-(add-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct in html mode
+;; (add-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct in text mode
+;; (add-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct in html mode
 
 ;;Indentation
 (setq tab-width 4
@@ -164,7 +168,16 @@
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
 (setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
-
+(setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".pkb$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".mvw$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".con$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".ind$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".sqs$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".tab$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".trg$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".vw$" . sql-mode) auto-mode-alist))
 ;; basic html configuration
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
