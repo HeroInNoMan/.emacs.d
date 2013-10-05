@@ -2,6 +2,9 @@
 ;; Key-bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Key unbinding
+(global-unset-key (kbd "C-x C-c"))
+
 ;; key-chords (experimental key pairs)
 (key-chord-define-global (kbd "«»") 'er/expand-region)
 (key-chord-define-global (kbd "bf") 'ido-switch-buffer)
