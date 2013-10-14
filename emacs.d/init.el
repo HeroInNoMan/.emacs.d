@@ -72,6 +72,9 @@
 (setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple
 (setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
 
+;; dired customization
+(setq dired-listing-switches "-alh") ;; human readable size format
+
 
 ;; Spellchecking
 (require 'ispell)
@@ -225,6 +228,10 @@
 ;; them.
 (fset 'stringify-code-for-java
       [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
+
+;; for vimtutor
+(fset 'vim-tutor-next-lesson
+   "\C-s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\C-m\C-l\C-l\C-a\C-n\C-n\C-n\C-n")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
