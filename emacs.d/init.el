@@ -66,7 +66,8 @@
 (global-hl-line-mode -1) ;; don’t highlight current line
 (auto-compression-mode 1) ;; parse, open, modify and save compressed archives
 (mouse-avoidance-mode 1);; takes the mouse out of the way when typing
-(ido-mode 1) ;; better prompt for buffer search / switch 
+(blink-cursor-mode -1) ;; no blinking cursor
+(ido-mode 1) ;; better prompt for buffer search / switch
 
 (show-paren-mode t) ;; hl parenthesis couples
 (setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple
@@ -106,6 +107,11 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'set-goal-column 'disabled nil)
+
+;; set default browser to firefox
+(setq gnus-button-url 'browse-url-generic
+      browse-url-generic-program "firefox"
+      browse-url-browser-function gnus-button-url)
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -231,7 +237,7 @@
 
 ;; for vimtutor
 (fset 'vim-tutor-next-lesson
-   "\C-s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\C-m\C-l\C-l\C-a\C-n\C-n\C-n\C-n")
+      "\C-s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\C-m\C-l\C-l\C-a\C-n\C-n\C-n\C-n")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
