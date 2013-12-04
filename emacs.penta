@@ -1,0 +1,95 @@
+set complete=lsf
+set editor=emacsclient
+set go=bCs
+set hintkeys="asdfghjkl"
+set stal=never
+set titlestring=
+
+highlight -a Hint text-transform: uppercase
+
+map -b <A-x> :
+map -b -m base,caret,normal,visual <C-g> <Esc>
+
+map -b -m base,normal,caret,insert,visual <C-n> <Down>
+map -b -m base,normal,caret,insert,visual <C-p> <Up>
+map -b -m base,normal,caret,command-line,insert,visual <C-b> <Left>
+map -b -m base,normal,caret,command-line,insert,visual <C-f> <Right>
+
+map -b -m command-line <C-n> <Tab>
+map -b -m command-line <C-p> <S-Tab>
+
+map -b -m command,command-line,insert <C-/> <C-v><C-z>
+map -b -m base,normal,caret,insert,visual,command,command-line,insert <A-w> <C-v><C-c>
+map -b -m command,command-line,insert <C-w> <C-v><C-x>
+map -b -m command,command-line,insert <C-y> <C-v><C-v>
+
+map -b -m normal,caret,i,visual <A-<> gg
+map -b -m normal,caret,i,visual <A->> G
+map -b <A-v> <C-u>
+
+map -b <C-_> u
+map -b <C-a> 0
+map -b -m normal B <A-left>
+map -b <C-e> $
+map -b -m normal F <A-right>
+map -b <C-j> gT
+map -b <C-k> gt
+map -b <C-r> ?
+map -b <C-s> /
+map -b <C-v> <C-d>
+map -b <C-w> Y
+map -b <C-y> P
+
+map -b <C-x>~ ~
+map -b <C-x>b b
+map -b <C-x>e gF
+map -b <C-x>f :flashtoggle<CR>
+map -b <C-x>g gf
+map -b <C-x>h gh
+map -b <C-x>i gi
+map -b <C-x>k d
+map -b <C-x>m ;c
+map -b <C-x>p ;i
+map -b <C-x>r r
+map -b <C-x>R R
+map -b <C-x>u gu
+map -b <C-x>v O
+
+map -b <C-x><C-c> ZZ
+map -b <C-x><C-f> t
+map -b <C-x><C-r> :restart<CR>
+map -b <C-x><C-u> gU
+map -b <C-x><C-v> o
+map -b <C-x><A-w> y
+
+
+map <C-d> <Nop>
+map <C-u> <Nop>
+map <C-x> <Nop>
+map <C-h> <Nop>
+map : <Nop>
+map ~ <Nop>
+map / <Nop>
+map ? <Nop>
+map $ <Nop>
+map 0 <Nop>
+map d <Nop>
+map gg <Nop>
+map gh <Nop>
+map gi <Nop>
+map gU <Nop>
+map G <Nop>
+map j <Nop>
+map k <Nop>
+map o <Nop>
+map O <Nop>
+map p <Nop>
+map P <Nop>
+map q <Nop>
+map r <Nop>
+map t <Nop>
+map u <Nop>
+map w <Nop>
+map y <Nop>
+map Y <Nop>
+map ZZ <Nop>
