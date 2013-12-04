@@ -60,6 +60,7 @@
 (global-set-key (kbd "\C-cl") 'org-store-link)
 (global-set-key (kbd "\C-ca") 'org-agenda)
 (global-set-key (kbd "\C-cb") 'org-iswitchb)
+(global-set-key (kbd "C-M-r") 'remember)
 
 ;; Remember
 (global-set-key (kbd "\C-cr") 'org-remember)
