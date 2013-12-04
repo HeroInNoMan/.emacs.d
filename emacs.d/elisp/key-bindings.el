@@ -61,6 +61,10 @@
 (global-set-key (kbd "\C-ca") 'org-agenda)
 (global-set-key (kbd "\C-cb") 'org-iswitchb)
 
+;; Remember
+(global-set-key (kbd "\C-cr") 'org-remember)
+(global-set-key (kbd "C-M-r") 'org-remember)
+
 ;; Groovy-Mode
 (global-set-key (kbd "<f6>") 'groovy-eval-execute-buffer)
 

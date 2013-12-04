@@ -159,6 +159,12 @@
 ;; Language-specific configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;; sql-oracle connection without a tnsnames.ora
+;; (description=(address_list=(address=(protocol=TCP)(host=myhost.example.com)(port=1521)))(connect_data=(SERVICE_NAME=myservicename)))
+;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)))
+(add-hook 'sql-mode (setq truncate-lines nil))
+(add-hook 'sql-mode (setq linesize 9999))
+
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
@@ -190,6 +196,10 @@
 ;; basic html configuration
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
+
+;; confluence mode + it’s-all-text
+(add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
@@ -228,6 +238,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Macros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; makes a JIRA ticket number into an org hyperlink to this ticket.
+(fset 'linkify-jira-ticket
+   [?\C-s ?W ?D ?I ?A ?G ?- ?\C-m ?\C-c ?e ?e ?\M-w ?\[ ?\[ ?h ?t ?t ?p ?s ?: ?/ ?/ ?j ?i ?r ?a ?. ?v ?s ?c ?t ?. ?f ?r ?/ ?j ?i ?r ?a ?/ ?b ?r ?o ?w ?s ?e ?/ ?\C-y ?\] ?\[ ?\M-f ?\M-f ?\] ?\] ?  backspace])
 
 ;; transforms code into concatenated strings to be inserted in java
 ;; code (as a string). "s are escaped so java doesn’t misinterpret
