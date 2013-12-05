@@ -280,4 +280,6 @@
 ;; DIFF TOOL
 ;; learn to use
 
+;; TODO: separate work-related customizations in different file
+
 ;; init.el ends here.
