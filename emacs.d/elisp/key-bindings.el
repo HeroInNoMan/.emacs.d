@@ -70,3 +70,6 @@
 (global-set-key (kbd "C-x \"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
 (global-set-key (kbd "C-x «") 'multi-scratch-prev) ;; jump to previous scratch buffer
 (global-set-key (kbd "C-x »") 'multi-scratch-next) ;; jump to next scratch buffer
+
+;; lisp manipulation
+(global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value 

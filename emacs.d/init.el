@@ -29,7 +29,6 @@
   (when (file-regular-p file)
     (load file)))
 
-
 ;; multi-scratch
 (require 'multi-scratch)
 (defvar multi-scratch-buffer-name "untitled")
@@ -68,14 +67,19 @@
 (mouse-avoidance-mode 1);; takes the mouse out of the way when typing
 (blink-cursor-mode -1) ;; no blinking cursor
 (ido-mode 1) ;; better prompt for buffer search / switch
+(ido-vertical-mode 1)
+(flx-ido-mode 1)
 
 (show-paren-mode t) ;; hl parenthesis couples
 (setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple
-(setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
+(setq show-paren-style 'mixed) ;; alternatives are 'parenthesis' and 'mixed'
 
 ;; dired customization
 (setq dired-listing-switches "-alh") ;; human readable size format
 
+(require 'guide-key)
+(setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
+(guide-key-mode 1) ; Enable guide-key-mode
 
 ;; Spellchecking
 (require 'ispell)
