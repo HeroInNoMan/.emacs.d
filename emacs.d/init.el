@@ -72,13 +72,13 @@
 
 (show-paren-mode t) ;; hl parenthesis couples
 (setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple
-(setq show-paren-style 'mixed) ;; alternatives are 'parenthesis' and 'mixed'
+(setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
 
 ;; dired customization
 (setq dired-listing-switches "-alh") ;; human readable size format
 
 (require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x 4" "C-c"))
+(setq guide-key/guide-key-sequence '("C-x r" "C-x v" "C-x 4" "C-x 5" "C-c"))
 (guide-key-mode 1) ; Enable guide-key-mode
 
 ;; Spellchecking
@@ -197,6 +197,9 @@
 (setq auto-mode-alist  (cons '(".tab$" . sql-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".trg$" . sql-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".vw$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".prc$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".pk$" . sql-mode) auto-mode-alist))
+
 ;; basic html configuration
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
@@ -230,6 +233,14 @@
   ;; Aspell Windows (http://www.emacswiki.org/emacs/AspellWindows)
   (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
   (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
+
+  ;; Prevent issues with the Windows null device (NUL)
+  ;; when using cygwin find with rgrep.
+  (defadvice grep-compute-defaults (around grep-compute-defaults-advice-null-device)
+    "Use cygwin's /dev/null as the null-device."
+    (let ((null-device "/dev/null"))
+      ad-do-it))
+  (ad-activate 'grep-compute-defaults)
   )
 
 (defun load-linux-specific-conf ()
@@ -245,7 +256,7 @@
 
 ;; makes a JIRA ticket number into an org hyperlink to this ticket.
 (fset 'linkify-jira-ticket
-   [?\C-s ?W ?D ?I ?A ?G ?- ?\C-m ?\C-c ?e ?e ?\M-w ?\[ ?\[ ?h ?t ?t ?p ?s ?: ?/ ?/ ?j ?i ?r ?a ?. ?v ?s ?c ?t ?. ?f ?r ?/ ?j ?i ?r ?a ?/ ?b ?r ?o ?w ?s ?e ?/ ?\C-y ?\] ?\[ ?\M-f ?\M-f ?\] ?\] ?  backspace])
+      [?\C-s ?W ?D ?I ?A ?G ?- ?\C-m ?\C-c ?e ?e ?\M-w ?\[ ?\[ ?h ?t ?t ?p ?s ?: ?/ ?/ ?j ?i ?r ?a ?. ?v ?s ?c ?t ?. ?f ?r ?/ ?j ?i ?r ?a ?/ ?b ?r ?o ?w ?s ?e ?/ ?\C-y ?\] ?\[ ?\M-f ?\M-f ?\] ?\] ?  backspace])
 
 ;; transforms code into concatenated strings to be inserted in java
 ;; code (as a string). "s are escaped so java doesn’t misinterpret

@@ -6,6 +6,7 @@
 (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
 
 ;; key-chords
+(key-chord-define-global (kbd "éè") 'other-window) ;; quickly switch to other window
 (key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 
@@ -20,6 +21,7 @@
 (global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
 
 ;; custom shortcuts
+(global-set-key (kbd "C-x r q") 'kill-emacs) ;; really quit emacs
 (global-set-key (kbd "M-à") 'ace-jump-mode) ;; quickly jump to word by pressing its first letter
 (global-set-key (kbd "\C-x\C-b") 'electric-buffer-list) ;; electric buffer by default
 (global-set-key (kbd "\C-c\C-r") 'reload-file) ;; re-read file from disk
