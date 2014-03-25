@@ -7,6 +7,7 @@
 
 ;; key-chords
 (key-chord-define-global (kbd "éè") 'other-window) ;; quickly switch to other window
+(key-chord-define-global (kbd "«»") 'repeat) ;; repeat last command (C-x z is too slow)
 (key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 

@@ -75,10 +75,10 @@
 (setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
 
 ;; dired customization
-(setq dired-listing-switches "-alh") ;; human readable size format
+(setq dired-listing-switches "-alhG") ;; human readable size format
 
 (require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x v" "C-x 4" "C-x 5" "C-c"))
+(setq guide-key/guide-key-sequence '("C-x r" "C-x v" "C-x 4" "C-x 5" "C-c" "C-x C-k"))
 (guide-key-mode 1) ; Enable guide-key-mode
 
 ;; Spellchecking
@@ -163,11 +163,27 @@
 ;; Language-specific configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; SQL
+
+(setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".pkb$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".mvw$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".con$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".ind$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".sqs$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".tab$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".trg$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".vw$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".prc$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".pk$" . sql-mode) auto-mode-alist))
 ;;; sql-oracle connection without a tnsnames.ora
 ;; (description=(address_list=(address=(protocol=TCP)(host=myhost.example.com)(port=1521)))(connect_data=(SERVICE_NAME=myservicename)))
 ;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)))
 (add-hook 'sql-mode (setq truncate-lines nil))
 (add-hook 'sql-mode (setq linesize 9999))
+
+;; GROOVY
 
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
@@ -183,29 +199,25 @@
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
 
+;; RUBY
+
 ;; Loads ruby mode when a .rb file is opened.
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
 (setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".pkb$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".mvw$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".con$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".ind$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".sqs$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".tab$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".trg$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".vw$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".prc$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".pk$" . sql-mode) auto-mode-alist))
+
+;; HTML
 
 ;; basic html configuration
+(setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
 
+;; WIKI
+
 ;; confluence mode + it’s-all-text
 (add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
+
+;; PYTHON
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -289,11 +301,11 @@
 ;; setup TRAMP for both cygwin and GNU/Linux
 ;; (setq tramp-default-method "ssh") ;; Tramp mode; does not seem to work so far
 
-;; AUTO-COMPRESSION-MODE
-;; setup and learn to use
-
 ;; DIFF TOOL
 ;; learn to use
+
+;; SVN
+;; magit-svn integration
 
 ;; TODO: separate work-related customizations in different file
 
