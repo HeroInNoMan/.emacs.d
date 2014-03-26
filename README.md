@@ -24,7 +24,5 @@ The basic structure is as follows:
 
 TODO:
  - organize the elisp dir (theme-oriented dirs)
- - fix the customize conf, find nice portable theme & font
  - install JDEE
  - configure gnus
- - emacs 24 : gestion des dépendances avec ELPA

@@ -75,7 +75,7 @@
 (setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
 
 ;; dired customization
-(setq dired-listing-switches "-alhG") ;; human readable size format
+(setq dired-listing-switches "-AlhGF") ;; human readable size format
 
 (require 'guide-key)
 (setq guide-key/guide-key-sequence '("C-x r" "C-x v" "C-x 4" "C-x 5" "C-c" "C-x C-k"))
@@ -299,7 +299,7 @@
 
 ;; TRAMP
 ;; setup TRAMP for both cygwin and GNU/Linux
-;; (setq tramp-default-method "ssh") ;; Tramp mode; does not seem to work so far
+;; (setq tramp-default-method "ssh") ;; Tramp mode does not seem to work so far
 
 ;; DIFF TOOL
 ;; learn to use
