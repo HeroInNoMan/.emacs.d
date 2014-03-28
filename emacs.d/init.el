@@ -75,10 +75,10 @@
 (setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
 
 ;; dired customization
-(setq dired-listing-switches "-AlhGF") ;; human readable size format
+(setq dired-listing-switches "-AlhGF") ;; human readable size format, hide group
 
 (require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x v" "C-x 4" "C-x 5" "C-c" "C-x C-k"))
+(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-h" "<f1>" "<f2>" ))
 (guide-key-mode 1) ; Enable guide-key-mode
 
 ;; Spellchecking
@@ -96,7 +96,7 @@
 (setq truncate-lines t)
 
 ;; Encodage
-(set-language-environment "UTF-8")
+q(set-language-environment "UTF-8")
 (prefer-coding-system       'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -129,42 +129,23 @@
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" conf-dir))
 
-;; MINIMAP
-(defun minimap-toggle-retain-size ()
-  "Toggle minimap"
-  (interactive)
-  (if (or (not (boundp 'minimap-exists))
-          (not minimap-exists))
-      (progn (minimap-create)
-             (setf minimap-exists t)
-             (set-frame-width (selected-frame) 100))
-    (progn (minimap-kill)
-           (setf minimap-exists nil)
-           (set-frame-width (selected-frame) 80))))
-
-;;;###autoload
-(defun minimap-toggle ()
-  "Toggle minimap for current buffer."
-  (interactive)
-  (if (null minimap-bufname)
-      (minimap-create)
-    (minimap-kill)))
+;; Sublimity Mode
+(require 'sublimity)
+(require 'sublimity-scroll)
+(require 'sublimity-map)
 
 ;; ERC conf
 (require 'erc-hl-nicks)
 (setq erc-input-line-position -2) ;; so the prompt is always at the bottom
 
 (require 'key-chord)
+
 (key-chord-mode 1)
-
 (server-start) ;; start in server mode
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language-specific configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; SQL
-
 (setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".pkb$" . sql-mode) auto-mode-alist))
@@ -179,51 +160,41 @@
 (setq auto-mode-alist  (cons '(".pk$" . sql-mode) auto-mode-alist))
 ;;; sql-oracle connection without a tnsnames.ora
 ;; (description=(address_list=(address=(protocol=TCP)(host=myhost.example.com)(port=1521)))(connect_data=(SERVICE_NAME=myservicename)))
-;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)))
+;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)
 (add-hook 'sql-mode (setq truncate-lines nil))
 (add-hook 'sql-mode (setq linesize 9999))
-
 ;; GROOVY
-
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
-
 ;;; make Groovy mode electric by default.
 (add-hook 'groovy-mode-hook
           '(lambda ()
              (require 'groovy-electric)
              (groovy-electric-mode)))
-
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
-
 ;; RUBY
-
 ;; Loads ruby mode when a .rb file is opened.
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
 (setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
-
 ;; HTML
-
 ;; basic html configuration
 (setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
-
 ;; WIKI
-
 ;; confluence mode + it’s-all-text
 (add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
-
 ;; PYTHON
+(add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
+(setq jedi:complete-on-dot t) ;; optional
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; Load system-specific library and setup system-specific things that
 ;; must be setup before main setup
 (defun load-windows-specific-conf ()
@@ -241,10 +212,10 @@
   ;;         (setq tramp-default-method "scpx"))
   ;;        (t
   ;;         (setq tramp-default-method "scpc")))
-
   ;; Aspell Windows (http://www.emacswiki.org/emacs/AspellWindows)
   (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
   (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
+  (setq python-shell-interpreter "c:/cygwin/bin/python3.2m.exe")
 
   ;; Prevent issues with the Windows null device (NUL)
   ;; when using cygwin find with rgrep.
@@ -254,59 +225,43 @@
       ad-do-it))
   (ad-activate 'grep-compute-defaults)
   )
-
 (defun load-linux-specific-conf ()
   "Loads all GNU/Linux specific conf"
   )
-
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Macros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; makes a JIRA ticket number into an org hyperlink to this ticket.
 (fset 'linkify-jira-ticket
       [?\C-s ?W ?D ?I ?A ?G ?- ?\C-m ?\C-c ?e ?e ?\M-w ?\[ ?\[ ?h ?t ?t ?p ?s ?: ?/ ?/ ?j ?i ?r ?a ?. ?v ?s ?c ?t ?. ?f ?r ?/ ?j ?i ?r ?a ?/ ?b ?r ?o ?w ?s ?e ?/ ?\C-y ?\] ?\[ ?\M-f ?\M-f ?\] ?\] ?  backspace])
-
 ;; transforms code into concatenated strings to be inserted in java
 ;; code (as a string). "s are escaped so java doesn’t misinterpret
 ;; them.
 (fset 'stringify-code-for-java
       [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
-
 ;; for vimtutor
 (fset 'vim-tutor-next-lesson
       "\C-s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\C-m\C-l\C-l\C-a\C-n\C-n\C-n\C-n")
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Not ready yet / TODO
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; MAIL
 ;; configuration pour mutt -> gnus (?)
 ;; (setq auto-mode-alist (cons '("mutt-realpeche" . text-mode) auto-mode-alist))
-
 ;; BROWSE KILL RING ← TODO : install browse-kill-ring
 ;; (require 'browse-kill-ring)
 ;; (setq browse-kill-ring-quit-action 'save-and-restore)
-
 ;; CUSTOMIZATION in separate file
 ;; (setq custom-file (expand-file-name "~/.emacs.d/elisp/custom.el"))
 ;; (load custom-file 'noerror)
-
 ;; TRAMP
 ;; setup TRAMP for both cygwin and GNU/Linux
 ;; (setq tramp-default-method "ssh") ;; Tramp mode does not seem to work so far
-
 ;; DIFF TOOL
 ;; learn to use
-
 ;; SVN
 ;; magit-svn integration
-
 ;; TODO: separate work-related customizations in different file
-
 ;; init.el ends here.

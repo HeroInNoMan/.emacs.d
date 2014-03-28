@@ -16,8 +16,9 @@
 
 ;; function keys
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
+(global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
 (global-set-key (kbd "<f7>") 'recentf-open-files) ;; open a list of recently opened files
-(global-set-key (kbd "<f8>") 'minimap-toggle) ;; toggle minimap
+(global-set-key (kbd "<f8>") 'sublimity-mode) ;; toggle sublimity
 (global-set-key (kbd "<f9>") 'ispell-word) ;; check spelling of word at point or words in region
 (global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
 
@@ -29,6 +30,7 @@
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
 (global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
+(global-set-key (kbd "M-o") 'other-window) ;; quickly switch to other window
 
 (global-set-key (kbd "C-c h") 'replace-string)
 (global-set-key (kbd "C-c j") 'replace-regexp)

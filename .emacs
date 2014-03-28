@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; This .emacs file is supposed to be placed where emacs looks for it
-;; by default, so the whole config is loaded everytime emacs is
-;; started. It’s only job is to call init.el in the conf-dir/.
+;; This .emacs file should be placed where emacs looks for it by
+;; default. Its job is to call emacs-conf/emacs.d/init.el. Additional
+;; workstation-specific instructions can be added afterwards.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; load actual init file
