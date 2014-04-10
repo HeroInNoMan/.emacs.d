@@ -61,10 +61,9 @@
 (setq calendar-week-start-day 1) ;; start week on Monday
 (setq c-auto-newline t) ;; automatically indent - no need to tab
 (setq-default tab-width 4) ;; eclipse-like
-(setq-default indent-tabs-mode nil) ;; ???
+(setq-default indent-tabs-mode t) ;; indentation uses tabs instead of spaces
 (global-hl-line-mode -1) ;; don’t highlight current line
 (auto-compression-mode 1) ;; parse, open, modify and save compressed archives
-(mouse-avoidance-mode 1);; takes the mouse out of the way when typing
 (blink-cursor-mode -1) ;; no blinking cursor
 (ido-mode 1) ;; better prompt for buffer search / switch
 (ido-vertical-mode 1)
@@ -78,7 +77,7 @@
 (setq dired-listing-switches "-AlhGF") ;; human readable size format, hide group
 
 (require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-h" "<f1>" "<f2>" ))
+(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-x n" "C-h" "<f1>" "<f2>" ))
 (guide-key-mode 1) ; Enable guide-key-mode
 
 ;; Spellchecking
@@ -96,7 +95,7 @@
 (setq truncate-lines t)
 
 ;; Encodage
-q(set-language-environment "UTF-8")
+(set-language-environment "UTF-8")
 (prefer-coding-system       'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -129,6 +128,17 @@ q(set-language-environment "UTF-8")
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" conf-dir))
 
+;; Automatically save and restore sessions
+(setq desktop-dirname             (expand-file-name "desktop" conf-dir)
+      desktop-base-file-name      "emacs.desktop"
+      desktop-base-lock-name      "lock"
+      desktop-path                (list desktop-dirname)
+      desktop-save                t
+      desktop-files-not-to-save   "^$" ;reload tramp paths
+      desktop-load-locked-desktop nil)
+(desktop-save-mode 1)
+(desktop-read)
+
 ;; Sublimity Mode
 (require 'sublimity)
 (require 'sublimity-scroll)
@@ -139,8 +149,11 @@ q(set-language-environment "UTF-8")
 (setq erc-input-line-position -2) ;; so the prompt is always at the bottom
 
 (require 'key-chord)
-
 (key-chord-mode 1)
+
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings)
+
 (server-start) ;; start in server mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language-specific configuration
@@ -205,6 +218,10 @@ q(set-language-environment "UTF-8")
   (setq exec-path (cons "c:/cygwin/bin/" exec-path))
   (require 'cygwin-mount)
   (cygwin-mount-activate)
+
+  (require 'tramp)
+  (set-default 'tramp-auto-save-directory "c:/cygwin/home/arthur_leothaud/tramp_tmp/")
+  (set-default 'tramp-default-method "plink")
   ;; tramp setup (to be tested)
   ;; (setq shell-file-name "bash")
   ;; (setq explicit-shell-file-name shell-file-name)
