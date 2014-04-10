@@ -61,10 +61,9 @@
 (setq calendar-week-start-day 1) ;; start week on Monday
 (setq c-auto-newline t) ;; automatically indent - no need to tab
 (setq-default tab-width 4) ;; eclipse-like
-(setq-default indent-tabs-mode nil) ;; ???
+(setq-default indent-tabs-mode t) ;; indentation uses tabs instead of spaces
 (global-hl-line-mode -1) ;; don’t highlight current line
 (auto-compression-mode 1) ;; parse, open, modify and save compressed archives
-(mouse-avoidance-mode 1);; takes the mouse out of the way when typing
 (blink-cursor-mode -1) ;; no blinking cursor
 (ido-mode 1) ;; better prompt for buffer search / switch
 (ido-vertical-mode 1)
@@ -78,7 +77,7 @@
 (setq dired-listing-switches "-AlhGF") ;; human readable size format, hide group
 
 (require 'guide-key)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-h" "<f1>" "<f2>" ))
+(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-x n" "C-h" "<f1>" "<f2>" ))
 (guide-key-mode 1) ; Enable guide-key-mode
 
 ;; Spellchecking
@@ -96,7 +95,7 @@
 (setq truncate-lines t)
 
 ;; Encodage
-q(set-language-environment "UTF-8")
+(set-language-environment "UTF-8")
 (prefer-coding-system       'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -129,6 +128,17 @@ q(set-language-environment "UTF-8")
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" conf-dir))
 
+;; Automatically save and restore sessions
+(setq desktop-dirname             (expand-file-name "desktop" conf-dir)
+      desktop-base-file-name      "emacs.desktop"
+      desktop-base-lock-name      "lock"
+      desktop-path                (list desktop-dirname)
+      desktop-save                t
+      desktop-files-not-to-save   "^$" ;reload tramp paths
+      desktop-load-locked-desktop nil)
+(desktop-save-mode 1)
+(desktop-read)
+
 ;; Sublimity Mode
 (require 'sublimity)
 (require 'sublimity-scroll)
@@ -139,8 +149,12 @@ q(set-language-environment "UTF-8")
 (setq erc-input-line-position -2) ;; so the prompt is always at the bottom
 
 (require 'key-chord)
-
 (key-chord-mode 1)
+
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings)
+(setq browse-kill-ring-quit-action 'save-and-restore)
+
 (server-start) ;; start in server mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language-specific configuration
@@ -190,7 +204,20 @@ q(set-language-environment "UTF-8")
 ;; PYTHON
 (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
 (setq jedi:complete-on-dot t) ;; optional
+;; ORG-MODE
+;; notes in
+(setq org-default-notes-file
+      `(("." . ,(expand-file-name
+                 (concat conf-dir ".notes")))))
 
+;; font and faces customization
+(setq org-todo-keyword-faces
+      '(
+        ("INPR" . (:foreground "yellow" :weight bold))
+        ("STARTED" . (:foreground "yellow" :weight bold))
+        ("WAIT" . (:foreground "yellow" :weight bold))
+        ("INPROGRESS" . (:foreground "yellow" :weight bold))
+        ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
@@ -205,6 +232,12 @@ q(set-language-environment "UTF-8")
   (setq exec-path (cons "c:/cygwin/bin/" exec-path))
   (require 'cygwin-mount)
   (cygwin-mount-activate)
+
+  (require 'dos) ;; batch scripts
+
+  (require 'tramp)
+  (set-default 'tramp-auto-save-directory "c:/cygwin/home/arthur_leothaud/tramp_tmp/")
+  (set-default 'tramp-default-method "plink")
   ;; tramp setup (to be tested)
   ;; (setq shell-file-name "bash")
   ;; (setq explicit-shell-file-name shell-file-name)
@@ -230,38 +263,5 @@ q(set-language-environment "UTF-8")
   )
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Macros
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; makes a JIRA ticket number into an org hyperlink to this ticket.
-(fset 'linkify-jira-ticket
-      [?\C-s ?W ?D ?I ?A ?G ?- ?\C-m ?\C-c ?e ?e ?\M-w ?\[ ?\[ ?h ?t ?t ?p ?s ?: ?/ ?/ ?j ?i ?r ?a ?. ?v ?s ?c ?t ?. ?f ?r ?/ ?j ?i ?r ?a ?/ ?b ?r ?o ?w ?s ?e ?/ ?\C-y ?\] ?\[ ?\M-f ?\M-f ?\] ?\] ?  backspace])
-;; transforms code into concatenated strings to be inserted in java
-;; code (as a string). "s are escaped so java doesn’t misinterpret
-;; them.
-(fset 'stringify-code-for-java
-      [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
-;; for vimtutor
-(fset 'vim-tutor-next-lesson
-      "\C-s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\C-m\C-l\C-l\C-a\C-n\C-n\C-n\C-n")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Not ready yet / TODO
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MAIL
-;; configuration pour mutt -> gnus (?)
-;; (setq auto-mode-alist (cons '("mutt-realpeche" . text-mode) auto-mode-alist))
-;; BROWSE KILL RING ← TODO : install browse-kill-ring
-;; (require 'browse-kill-ring)
-;; (setq browse-kill-ring-quit-action 'save-and-restore)
-;; CUSTOMIZATION in separate file
-;; (setq custom-file (expand-file-name "~/.emacs.d/elisp/custom.el"))
-;; (load custom-file 'noerror)
-;; TRAMP
-;; setup TRAMP for both cygwin and GNU/Linux
-;; (setq tramp-default-method "ssh") ;; Tramp mode does not seem to work so far
-;; DIFF TOOL
-;; learn to use
-;; SVN
-;; magit-svn integration
-;; TODO: separate work-related customizations in different file
+
 ;; init.el ends here.

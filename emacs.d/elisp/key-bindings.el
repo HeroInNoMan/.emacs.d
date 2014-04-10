@@ -6,13 +6,10 @@
 (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
 
 ;; key-chords
-(key-chord-define-global (kbd "éè") 'other-window) ;; quickly switch to other window
-(key-chord-define-global (kbd "«»") 'repeat) ;; repeat last command (C-x z is too slow)
+(key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
+(key-chord-define-global (kbd "«»") 'electric-buffer-list) ;; call buffer list (C-x C-b is too slow)
 (key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
-
-;; goto-char (like t / f in vim)
-(global-set-key (kbd "M-ç") 'iy-go-to-char) ;; move to next occurence of char
 
 ;; function keys
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
@@ -21,12 +18,12 @@
 (global-set-key (kbd "<f8>") 'sublimity-mode) ;; toggle sublimity
 (global-set-key (kbd "<f9>") 'ispell-word) ;; check spelling of word at point or words in region
 (global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
+(global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
 
 ;; custom shortcuts
 (global-set-key (kbd "C-x r q") 'kill-emacs) ;; really quit emacs
 (global-set-key (kbd "M-à") 'ace-jump-mode) ;; quickly jump to word by pressing its first letter
-(global-set-key (kbd "\C-x\C-b") 'electric-buffer-list) ;; electric buffer by default
-(global-set-key (kbd "\C-c\C-r") 'reload-file) ;; re-read file from disk
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
 (global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
@@ -59,9 +56,9 @@
 (global-set-key (kbd "M-É") 'mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
 
 ;; Org-mode
-(global-set-key (kbd "\C-cl") 'org-store-link)
-(global-set-key (kbd "\C-ca") 'org-agenda)
-(global-set-key (kbd "\C-cb") 'org-iswitchb)
+(global-set-key (kbd "\C-c l") 'org-store-link)
+(global-set-key (kbd "\C-c a") 'org-agenda)
+(global-set-key (kbd "\C-c b") 'org-iswitchb)
 (global-set-key (kbd "C-M-r") 'remember)
 
 ;; Remember
@@ -73,6 +70,7 @@
 
 ;; multi-scratch
 (global-set-key (kbd "C-x \"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
+(global-set-key (kbd "M-\"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
 (global-set-key (kbd "C-x «") 'multi-scratch-prev) ;; jump to previous scratch buffer
 (global-set-key (kbd "C-x »") 'multi-scratch-next) ;; jump to next scratch buffer
 
