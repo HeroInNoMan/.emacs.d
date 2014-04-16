@@ -17,7 +17,7 @@
 ;; set up smtp so we can send from gmail too:
 (setq message-send-mail-function 'smtpmail-send-it
       smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "arthur.leothaud@gmail.com" nil))
+      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "user.name@gmail.com" nil))
       smtpmail-default-smtp-server "smtp.gmail.com"
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587)
@@ -33,11 +33,11 @@
 
 (setq gnus-posting-styles
       '((".*"
-         (name "Arthur Léothaud")
+         (name "Full Name")
          )))
 
-(setq user-full-name "Arthur Léothaud")
-(setq user-mail-address "arthur.leothaud@gmail.com")
+(setq user-full-name "Full Name")
+(setq user-mail-address "user.name@gmail.com")
 (setq send-mail-function 'smtpmail-send-it)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
