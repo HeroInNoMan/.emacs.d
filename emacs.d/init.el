@@ -12,8 +12,8 @@
   (package-initialize)
   )
 
-;; init.el is called by .emacs, conf-dir is the dir containing init.el
-(defvar conf-dir (file-name-directory load-file-name))
+;; init.el is called by .emacs, conf-dir is the dir containing init.el (emacs.d)
+(setq conf-dir (file-name-directory load-file-name))
 
 (setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; elisp/ is on same lvl as init.el
 
@@ -31,7 +31,7 @@
 
 ;; multi-scratch
 (require 'multi-scratch)
-(defvar multi-scratch-buffer-name "untitled")
+(setq multi-scratch-buffer-name "untitled")
 
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
