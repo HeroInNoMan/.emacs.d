@@ -18,8 +18,3 @@ Structure:
     │   └── init.el        # basic emacs config, loads everything found in elisp/
     │
     └── README.md
-
-TODO:
- - organize the elisp dir (theme-oriented dirs)
- - install JDEE
- - configure gnus

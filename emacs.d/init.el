@@ -12,8 +12,8 @@
   (package-initialize)
   )
 
-;; init.el is called by .emacs, conf-dir is the dir containing init.el
-(defvar conf-dir (file-name-directory load-file-name))
+;; init.el is called by .emacs, conf-dir is the dir containing init.el (emacs.d)
+(setq conf-dir (file-name-directory load-file-name))
 
 (setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; elisp/ is on same lvl as init.el
 
@@ -31,7 +31,7 @@
 
 ;; multi-scratch
 (require 'multi-scratch)
-(defvar multi-scratch-buffer-name "untitled")
+(setq multi-scratch-buffer-name "untitled")
 
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
@@ -153,6 +153,7 @@
 
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
+(setq browse-kill-ring-quit-action 'save-and-restore)
 
 (server-start) ;; start in server mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -203,7 +204,20 @@
 ;; PYTHON
 (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
 (setq jedi:complete-on-dot t) ;; optional
+;; ORG-MODE
+;; notes in
+(setq org-default-notes-file
+      `(("." . ,(expand-file-name
+                 (concat conf-dir ".notes")))))
 
+;; font and faces customization
+(setq org-todo-keyword-faces
+      '(
+        ("INPR" . (:foreground "yellow" :weight bold))
+        ("STARTED" . (:foreground "yellow" :weight bold))
+        ("WAIT" . (:foreground "yellow" :weight bold))
+        ("INPROGRESS" . (:foreground "yellow" :weight bold))
+        ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
@@ -219,6 +233,11 @@
   (require 'cygwin-mount)
   (cygwin-mount-activate)
 
+<<<<<<< HEAD
+=======
+  (require 'dos) ;; batch scripts
+
+>>>>>>> cleanup
   (require 'tramp)
   (set-default 'tramp-auto-save-directory "c:/cygwin/home/arthur_leothaud/tramp_tmp/")
   (set-default 'tramp-default-method "plink")
@@ -247,38 +266,5 @@
   )
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Macros
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; makes a JIRA ticket number into an org hyperlink to this ticket.
-(fset 'linkify-jira-ticket
-      [?\C-s ?W ?D ?I ?A ?G ?- ?\C-m ?\C-c ?e ?e ?\M-w ?\[ ?\[ ?h ?t ?t ?p ?s ?: ?/ ?/ ?j ?i ?r ?a ?. ?v ?s ?c ?t ?. ?f ?r ?/ ?j ?i ?r ?a ?/ ?b ?r ?o ?w ?s ?e ?/ ?\C-y ?\] ?\[ ?\M-f ?\M-f ?\] ?\] ?  backspace])
-;; transforms code into concatenated strings to be inserted in java
-;; code (as a string). "s are escaped so java doesn’t misinterpret
-;; them.
-(fset 'stringify-code-for-java
-      [?\M-x ?t ?e ?x ?t ?- ?m ?o ?d ?e return ?\C-c ?i ?\C-c ?h ?$ backspace ?\" return ?\\ ?\" return ?\M-< ?\C-c ?j ?^ return ?\" return ?\M-< ?\C-c ?j ?$ return ?\" ?  ?+ ?  ?/ ?/ return backspace backspace backspace backspace backspace])
-;; for vimtutor
-(fset 'vim-tutor-next-lesson
-      "\C-s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\C-m\C-l\C-l\C-a\C-n\C-n\C-n\C-n")
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Not ready yet / TODO
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MAIL
-;; configuration pour mutt -> gnus (?)
-;; (setq auto-mode-alist (cons '("mutt-realpeche" . text-mode) auto-mode-alist))
-;; BROWSE KILL RING ← TODO : install browse-kill-ring
-;; (require 'browse-kill-ring)
-;; (setq browse-kill-ring-quit-action 'save-and-restore)
-;; CUSTOMIZATION in separate file
-;; (setq custom-file (expand-file-name "~/.emacs.d/elisp/custom.el"))
-;; (load custom-file 'noerror)
-;; TRAMP
-;; setup TRAMP for both cygwin and GNU/Linux
-;; (setq tramp-default-method "ssh") ;; Tramp mode does not seem to work so far
-;; DIFF TOOL
-;; learn to use
-;; SVN
-;; magit-svn integration
-;; TODO: separate work-related customizations in different file
+
 ;; init.el ends here.
