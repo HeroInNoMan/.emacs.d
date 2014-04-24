@@ -12,10 +12,13 @@
   (package-initialize)
   )
 
-;; init.el is called by .emacs, conf-dir is the dir containing init.el (emacs.d)
-(setq conf-dir (file-name-directory load-file-name))
+;; initialize directories as variables
 
-(setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; elisp/ is on same lvl as init.el
+(setq conf-dir (file-name-directory load-file-name)) ;; emacs-conf/emacs.d/
+(setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; emacs-conf/emacs.d/elisp/
+(setq backup-dir (expand-file-name "backups" conf-dir)) ;; emacs-conf/emacs.d/backups/
+(setq desktop-dir (expand-file-name "desktop" conf-dir)) ;; emacs-conf/emacs.d/desktop/
+(setq places-file (expand-file-name ".places" conf-dir)) ;; emacs-conf/emacs.d/.places
 
 ;; add all elisp dir to load-path recursively
 (let ((default-directory elisp-dir))
@@ -118,18 +121,17 @@
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
-      `(("." . ,(expand-file-name
-                 (concat conf-dir "backups")))))
+      `(("." . ,backup-dir)))
 
 (setq vc-make-backup-files t) ;; Make backups of files, even when they're in version control
 
 ;; Save point position between sessions
 (require 'saveplace)
 (setq-default save-place t)
-(setq save-place-file (expand-file-name ".places" conf-dir))
+(setq save-place-file places-file)
 
 ;; Automatically save and restore sessions
-(setq desktop-dirname             (expand-file-name "desktop" conf-dir)
+(setq desktop-dirname             desktop-dir
       desktop-base-file-name      "emacs.desktop"
       desktop-base-lock-name      "lock"
       desktop-path                (list desktop-dirname)
