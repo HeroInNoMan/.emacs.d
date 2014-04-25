@@ -140,6 +140,9 @@
 (desktop-save-mode 1)
 (desktop-read)
 
+;; minimap
+(require 'minimap)
+
 ;; Sublimity Mode
 (require 'sublimity)
 (require 'sublimity-scroll)

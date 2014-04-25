@@ -15,6 +15,7 @@
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
 (global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
 (global-set-key (kbd "<f7>") 'recentf-open-files) ;; open a list of recently opened files
+(global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
 (global-set-key (kbd "<f8>") 'sublimity-mode) ;; toggle sublimity
 (global-set-key (kbd "<f9>") 'ispell-word) ;; check spelling of word at point or words in region
 (global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
