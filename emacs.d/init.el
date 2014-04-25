@@ -234,11 +234,8 @@
   (require 'cygwin-mount)
   (cygwin-mount-activate)
 
-<<<<<<< HEAD
-=======
   (require 'dos) ;; batch scripts
 
->>>>>>> cleanup
   (require 'tramp)
   (set-default 'tramp-auto-save-directory "c:/cygwin/home/arthur_leothaud/tramp_tmp/")
   (set-default 'tramp-default-method "plink")
