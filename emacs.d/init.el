@@ -59,6 +59,7 @@
 (fset 'yes-or-no-p 'y-or-n-p) ;; Pour ne pas avoir à taper en entier la réponse yes/no
 (setq european-calendar-style t) ;; format jour/mois/an pour le calendrier (M-x calendar)
 (setq calendar-week-start-day 1) ;; start week on Monday
+(setq sentence-end-double-space nil) ;; sentences end with a single space
 (setq c-auto-newline t) ;; automatically indent - no need to tab
 (setq-default tab-width 4) ;; eclipse-like
 (setq-default indent-tabs-mode t) ;; indentation uses tabs instead of spaces
