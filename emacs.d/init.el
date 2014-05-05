@@ -141,7 +141,7 @@
 (desktop-read)
 
 ;; minimap
-(require 'minimap)
+;; (require 'minimap)
 
 ;; Sublimity Mode
 (require 'sublimity)
