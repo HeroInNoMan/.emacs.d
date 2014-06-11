@@ -218,8 +218,8 @@
 ;; confluence mode + it’s-all-text
 (add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
 ;; PYTHON
-(add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
-(setq jedi:complete-on-dot t) ;; optional
+;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
+;; (setq jedi:complete-on-dot t) ;; optional
 ;; ORG-MODE
 ;; notes in
 (setq org-default-notes-file
