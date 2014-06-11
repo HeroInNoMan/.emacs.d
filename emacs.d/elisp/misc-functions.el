@@ -92,6 +92,11 @@
   (let ((filename (buffer-file-name)))
     (kill-new filename)))
 
+(defun show-file-name ()
+  "Show the full path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+
 (defun duplicate-current-line (&optional n)
   "duplicate current line, make more than 1 copy given a numeric argument"
   (interactive "p")

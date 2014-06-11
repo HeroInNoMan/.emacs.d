@@ -7,13 +7,14 @@
 
 ;; key-chords
 (key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
-(key-chord-define-global (kbd "«»") 'electric-buffer-list) ;; call buffer list (C-x C-b is too slow)
+(key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
 (key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 
 ;; function keys
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
 (global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
+(global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
 (global-set-key (kbd "<f7>") 'recentf-open-files) ;; open a list of recently opened files
 (global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
 (global-set-key (kbd "<f8>") 'sublimity-mode) ;; toggle sublimity
