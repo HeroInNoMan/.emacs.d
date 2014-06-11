@@ -1,6 +1,6 @@
 (require 'cl)
 
-(defcustom sqlplus-2-max-rows 30 "Maximum number of rows that will be returned from a select")
+(defcustom sqlplus-2-max-rows 50 "Maximum number of rows that will be returned from a select")
 
                                         ;why does emacs have no tail-call-optimization? :-/
 (setq max-lisp-eval-depth 20000)

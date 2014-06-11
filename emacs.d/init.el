@@ -182,6 +182,14 @@
 ;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)
 (add-hook 'sql-mode (setq truncate-lines nil))
 (add-hook 'sql-mode (setq linesize 9999))
+
+(add-hook 'sql-interactive-mode-hook
+          (function (lambda ()
+                      (setq comint-output-filter-functions 'comint-truncate-buffer
+                            comint-buffer-maximum-size 5000
+                            comint-scroll-show-maximum-output t
+                            comint-input-ring-size 500))))
+
 ;; GROOVY
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
