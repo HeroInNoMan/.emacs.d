@@ -141,7 +141,7 @@
       desktop-save                t
       desktop-files-not-to-save   "^$" ;reload tramp paths
       desktop-load-locked-desktop nil)
-(desktop-save-mode 1)
+(desktop-save-mode 0)
 (desktop-read)
 
 ;; minimap
