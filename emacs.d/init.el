@@ -69,6 +69,7 @@
 (ido-mode 1) ;; better prompt for buffer search / switch
 (ido-vertical-mode 1)
 (flx-ido-mode 1)
+(helm-mode 0) ;; helm-mode in all other places
 
 (show-paren-mode t) ;; hl parenthesis couples
 (setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple

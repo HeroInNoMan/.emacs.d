@@ -31,8 +31,7 @@
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
 (global-set-key (kbd "M-o") 'other-window) ;; quickly switch to other window
 
-(global-set-key (kbd "C-c h") 'replace-string)
-(global-set-key (kbd "C-c j") 'replace-regexp)
+(global-set-key (kbd "C-c h") 'helm-mini) ;; call helm completion
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
 ;; (global-set-key (kbd "C-c c") 'compile)
