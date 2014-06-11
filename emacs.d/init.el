@@ -82,6 +82,9 @@
 (setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-x n" "C-h" "<f1>" "<f2>" ))
 (guide-key-mode 1) ; Enable guide-key-mode
 
+(require 'guide-key-tip) ;; guide key as tip
+(setq guide-key-tip/enabled t)
+
 ;; Spellchecking
 (require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
