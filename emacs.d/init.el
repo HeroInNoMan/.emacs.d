@@ -163,10 +163,15 @@
 (browse-kill-ring-default-keybindings)
 (setq browse-kill-ring-quit-action 'save-and-restore)
 
+(undo-tree-mode t) ;; powerfull undo/redo mode
+
 (server-start) ;; start in server mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language-specific configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SH
+(add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
+
 ;; SQL
 (setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist))
 (setq auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist))
