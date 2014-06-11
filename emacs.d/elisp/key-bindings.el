@@ -39,6 +39,8 @@
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 ;; (global-set-key (kbd "<up>") 'previous-line)
 ;; (global-set-key (kbd "<down>") 'next-line)
+(global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
+
 
 ;; eclipse-like shortcuts
 (global-set-key (kbd "<M-up>") 'move-line-up)
