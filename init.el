@@ -27,12 +27,14 @@
 (add-to-list 'load-path elisp-dir) ;; manual load-path
 (add-to-list 'load-path elpa-dir) ;; package-managed load-path
 
-(require 'misc-functions) ;; custom functions
-(require 'key-bindings) ;; custom keybindings
+(require 'my-functions) ;; custom functions
+(require 'my-macros) ;; custom macros
+(require 'my-key-bindings) ;; custom keybindings
+
 (require 'dirtree) ;; tree view for directories
 
 (require 'multi-scratch)
-(setq multi-scratch-buffer-name "untitled")
+(setq multi-scratch-buffer-name "new")
 
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
@@ -86,8 +88,8 @@
 (require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
-;; (add-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct in text mode
-;; (add-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct in html mode
+(remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
+(remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 
 ;;Indentation
 (setq tab-width 4
@@ -216,12 +218,19 @@
 (setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
+
+;; JAVASCRIPT (to be tested)
+(autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
+(add-hook 'json-mode-hook 'json-pretty-print)
+
 ;; WIKI
 ;; confluence mode + it’s-all-text
 (add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
+
 ;; PYTHON
 ;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
 ;; (setq jedi:complete-on-dot t) ;; optional
+
 ;; ORG-MODE
 ;; notes in
 (setq org-default-notes-file
@@ -236,6 +245,9 @@
         ("WAIT" . (:foreground "yellow" :weight bold))
         ("INPROGRESS" . (:foreground "yellow" :weight bold))
         ))
+
+;; GIT
+(remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
