@@ -80,4 +80,4 @@
 ;; lisp manipulation
 (global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value 
 
-(provide 'key-bindings)
+(provide 'my-key-bindings)

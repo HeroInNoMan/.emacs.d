@@ -12,3 +12,5 @@
 ;; for vimtutor
 (fset 'vim-tutor-next-lesson
       "\C-s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\C-m\C-l\C-l\C-a\C-n\C-n\C-n\C-n")
+
+(provide 'my-macros)

@@ -176,5 +176,5 @@
              (current-buffer))
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
-(provide 'misc-functions)
+(provide 'my-functions)
 ;; misc-functions.el ends here.
