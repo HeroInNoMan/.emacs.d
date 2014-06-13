@@ -2,6 +2,10 @@
 ;; init.el config file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(tool-bar-mode -1) ;; no tool-bar (only in non-shell emacs)
+(menu-bar-mode -1) ;; no menu-bar
+(setq inhibit-startup-message t) ;; no message at startup
+
 ;; package-style dependencies
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -13,54 +17,44 @@
   )
 
 ;; initialize directories as variables
-
 (setq conf-dir (file-name-directory load-file-name)) ;; emacs-conf/
 (setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; emacs-conf/elisp/
+(setq elpa-dir (expand-file-name "elpa" conf-dir)) ;; emacs-conf/elpa/
 (setq backup-dir (expand-file-name "backups" conf-dir)) ;; emacs-conf/backups/
 (setq desktop-dir (expand-file-name "desktop" conf-dir)) ;; emacs-conf/desktop/
 (setq places-file (expand-file-name ".places" conf-dir)) ;; emacs-conf/.places
 
-;; add all elisp dir to load-path recursively
-(let ((default-directory elisp-dir))
-  (normal-top-level-add-to-load-path '("."))
-  (normal-top-level-add-subdirs-to-load-path))
+(add-to-list 'load-path elisp-dir) ;; manual load-path
+(add-to-list 'load-path elpa-dir) ;; package-managed load-path
 
-(load (expand-file-name "misc-functions.el" elisp-dir)) ;; load misc functions
+(require 'misc-functions) ;; custom functions
+(require 'key-bindings) ;; custom keybindings
+(require 'dirtree) ;; tree view for directories
 
-;; load all files in elisp/
-(dolist (file (files-in-below-directory elisp-dir))
-  (when (file-regular-p file)
-    (load file)))
-
-;; multi-scratch
 (require 'multi-scratch)
 (setq multi-scratch-buffer-name "untitled")
 
 (require 're-builder)
-(setq reb-re-syntax 'string) ;; Syntaxe utilisée dans le re-buidler
+(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 
-(require 'dirtree) ;; Tree view for directories
 (recentf-mode 1) ;; keep a list of recently opened files
-(setq-default transient-mark-mode t) ;; Coloration entre marque et curseur
-(setq default-major-mode 'text-mode) ;; Mode texte par défaut
-(add-hook 'text-mode-hook 'visual-line-mode) ;; Auto-wrapping (soft wrap) en mode texte
-(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; No auto-fill in text-mode since I use visual-line-mode
-(global-font-lock-mode t) ;; coloration syntaxique
-(setq font-lock-maximum-decoration t) ;; Toutes les couleurs possibles
-(setq inhibit-startup-message t) ;; Pas de message au lancement
+(setq-default transient-mark-mode t) ;; colour between mark and point
+(setq default-major-mode 'text-mode) ;; text-mode by default
+(add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
+(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill in text-mode since I use visual-line-mode
+(global-font-lock-mode t) ;; syntax highlight
+(setq font-lock-maximum-decoration t) ;; all possible colours
 (setq initial-scratch-message nil) ;; empty *scratch*
-(setq read-file-name-completion-ignore-case t) ;; completion case-insensitive
-(setq read-buffer-completion-ignore-case t) ;; completion case-insensitive
-(add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping en mode mail
-(setq column-number-mode t) ;; Affiche le numéro de colonne
-(setq-default show-trailing-whitespace nil) ;; don’t display thoses — rather annoying
-(setq display-time-day-and-date t ;; Affiche date et heure
-      display-time-24hr-format t) ;; format de l’heure 24h
-(display-time) ;; affiche la date et l’heure
-(tool-bar-mode -1) ;; no tool-bar on startup (only in non-shell emacs)
-(menu-bar-mode -1) ;; no menu-bar
-(fset 'yes-or-no-p 'y-or-n-p) ;; Pour ne pas avoir à taper en entier la réponse yes/no
-(setq european-calendar-style t) ;; format jour/mois/an pour le calendrier (M-x calendar)
+(setq read-file-name-completion-ignore-case t) ;; case-insensitive completion
+(setq read-buffer-completion-ignore-case t) ;; case-insensitive completion
+(add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
+(setq column-number-mode t) ;; display column-number
+(setq-default show-trailing-whitespace nil) ;; don’t display trailing whitespace
+(setq display-time-day-and-date t ;; display date and time
+      display-time-24hr-format t) ;; 24h time format
+(display-time) ;; display time
+(fset 'yes-or-no-p 'y-or-n-p) ;; short answer mode
+(setq european-calendar-style t) ;; day/month/year format for calendar
 (setq calendar-week-start-day 1) ;; start week on Monday
 (setq sentence-end-double-space nil) ;; sentences end with a single space
 (setq c-auto-newline t) ;; automatically indent - no need to tab
@@ -111,7 +105,7 @@
 (setq default-buffer-file-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)) ;; From Emacs wiki
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)) ;; from Emacs wiki
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -128,7 +122,7 @@
 (setq backup-directory-alist
       `(("." . ,backup-dir)))
 
-(setq vc-make-backup-files t) ;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
 
 ;; Save point position between sessions
 (require 'saveplace)
@@ -202,6 +196,7 @@
 
 ;; GROOVY
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
+(add-to-list 'load-path (expand-file-name "groovy-mode" elisp-dir)) ;; manual load-path
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
