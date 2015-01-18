@@ -1,8 +1,0 @@
-* emcas-conf TODO list
-** TODO clean the elisp dir (elpa instead of direct files)
-** TODO elpa, auto-save-list, backups and .places are sometimes stored in wrong location - should be saved in conf-dir.
-** TODO speed up startup by lazy-loading stuff
-** TODO setup gnus (?)
-** TODO install JDEE
-** TODO setup TRAMP for both windows/cygwin and GNU/Linux
-   (setq tramp-default-method "ssh") ;; Tramp mode does not seem to work so far

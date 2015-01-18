@@ -17,3 +17,11 @@ Structure:
 	├── init.el        # basic emacs config, loads everything found in elisp/
 	│
 	└── README.md
+
+* Actions
+** TODO clean init.el
+** TODO update package management
+** TODO update loading
+** TODO add better-defaults
+** TODO change emacs-conf structure
+
