@@ -2,10 +2,6 @@
 ;; init.el config file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(tool-bar-mode -1) ;; no tool-bar (only in non-shell emacs)
-(menu-bar-mode -1) ;; no menu-bar
-(setq inhibit-startup-message t) ;; no message at startup
-
 ;; package-style dependencies
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -13,45 +9,63 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (package-initialize)
-  )
+  (package-initialize))
 
-;; initialize directories as variables
-(setq conf-dir (file-name-directory load-file-name)) ;; emacs-conf/
-(setq elisp-dir (expand-file-name "elisp" conf-dir)) ;; emacs-conf/elisp/
-(setq elpa-dir (expand-file-name "elpa" conf-dir)) ;; emacs-conf/elpa/
-(setq backup-dir (expand-file-name "backups" conf-dir)) ;; emacs-conf/backups/
-(setq desktop-dir (expand-file-name "desktop" conf-dir)) ;; emacs-conf/desktop/
-(setq places-file (expand-file-name ".places" conf-dir)) ;; emacs-conf/.places
+;; packages to be installed and loaded
+(setq package-list '(ace-jump-mode ace-window better-defaults
+								   browse-kill-ring color-theme dirtree expand-region flx-ido
+								   gitconfig-mode guide-key guide-key-tip helm ido-vertical-mode
+								   key-chord magit multiple-cursors smartscan tree-mode undo-tree))
 
-(add-to-list 'load-path elisp-dir) ;; manual load-path
-(add-to-list 'load-path elpa-dir) ;; package-managed load-path
+;; fetch the list of packages available if no elpa dir present
+(or (file-exists-p package-user-dir) (package-refresh-contents))
 
+;; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+;; initialize files and directories as variables
+(setq elisp-dir (expand-file-name "elisp" user-emacs-directory)) ;; .emacs.d/elisp/
+
+(add-to-list 'load-path elisp-dir) ;; load everything in .emacs.d/elisp/
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; custom conf files
 (require 'my-functions) ;; custom functions
 (require 'my-macros) ;; custom macros
 (require 'my-key-bindings) ;; custom keybindings
 
-(require 'dirtree) ;; tree view for directories
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; load packages
+(require 'dirtree)
 (require 'multi-scratch)
-(setq multi-scratch-buffer-name "new")
-
 (require 're-builder)
-(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
+(require 'guide-key)
+(require 'guide-key-tip)
+(require 'smartscan)
+(require 'key-chord)
+(require 'browse-kill-ring)
+(require 'ispell)
+;; (require 'minimap)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; various settings
+(setq inhibit-startup-message t) ;; no message at startup
 (recentf-mode 1) ;; keep a list of recently opened files
 (setq-default transient-mark-mode t) ;; colour between mark and point
 (setq default-major-mode 'text-mode) ;; text-mode by default
 (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
-(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill in text-mode since I use visual-line-mode
+(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
 (global-font-lock-mode t) ;; syntax highlight
 (setq font-lock-maximum-decoration t) ;; all possible colours
 (setq initial-scratch-message nil) ;; empty *scratch*
+(setq multi-scratch-buffer-name "new")
 (setq read-file-name-completion-ignore-case t) ;; case-insensitive completion
 (setq read-buffer-completion-ignore-case t) ;; case-insensitive completion
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
 (setq column-number-mode t) ;; display column-number
-(setq-default show-trailing-whitespace nil) ;; don’t display trailing whitespace
+(setq-default show-trailing-whitespace t) ;; display trailing whitespaces
 (setq display-time-day-and-date t ;; display date and time
       display-time-24hr-format t) ;; 24h time format
 (display-time) ;; display time
@@ -59,46 +73,38 @@
 (setq european-calendar-style t) ;; day/month/year format for calendar
 (setq calendar-week-start-day 1) ;; start week on Monday
 (setq sentence-end-double-space nil) ;; sentences end with a single space
-(setq c-auto-newline t) ;; automatically indent - no need to tab
-(setq-default tab-width 4) ;; eclipse-like
-(setq-default indent-tabs-mode t) ;; indentation uses tabs instead of spaces
 (global-hl-line-mode -1) ;; don’t highlight current line
 (auto-compression-mode 1) ;; parse, open, modify and save compressed archives
 (blink-cursor-mode -1) ;; no blinking cursor
-(ido-mode 1) ;; better prompt for buffer search / switch
 (ido-vertical-mode 1)
 (flx-ido-mode 1)
 (helm-mode 0) ;; helm-mode in all other places
-
-(show-paren-mode t) ;; hl parenthesis couples
-(setq show-paren-delay 0)           ;; how long to wait before displaying parenthesis couple
-(setq show-paren-style 'parenthesis) ;; alternatives are 'parenthesis' and 'mixed'
-
-;; dired customization
-(setq dired-listing-switches "-AlhGF") ;; human readable size format, hide group
-
-(require 'guide-key)
+(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
+(undo-tree-mode t) ;; powerfull undo/redo mode
+(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 (setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-x n" "C-h" "<f1>" "<f2>" ))
-(guide-key-mode 1) ; Enable guide-key-mode
-
-(require 'guide-key-tip) ;; guide key as tip
+(guide-key-mode 1)
 (setq guide-key-tip/enabled t)
+(key-chord-mode 1)
+(browse-kill-ring-default-keybindings)
+(setq browse-kill-ring-quit-action 'save-and-restore)
 
 ;; Spellchecking
-(require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
 (remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 
 ;;Indentation
-(setq tab-width 4
-      c-default-style "k&r"
-      c-block-comment-prefix ""
-      c-basic-offset 4)
+(setq-default tab-width 4
+			  c-auto-newline t
+			  c-basic-offset 4
+			  c-block-comment-prefix ""
+			  c-default-style "k&r"
+			  indent-tabs-mode t)
 (setq truncate-lines t)
 
-;; Encodage
+;; Encoding
 (set-language-environment "UTF-8")
 (prefer-coding-system       'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -120,50 +126,20 @@
       browse-url-generic-program "firefox"
       browse-url-browser-function gnus-button-url)
 
-;; Write backup files to own directory
-(setq backup-directory-alist
-      `(("." . ,backup-dir)))
-
 (setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
 
-;; Save point position between sessions
-(require 'saveplace)
-(setq-default save-place t)
-(setq save-place-file places-file)
-
 ;; Automatically save and restore sessions
-(setq desktop-dirname             desktop-dir
-      desktop-base-file-name      "emacs.desktop"
+(setq desktop-base-file-name      "emacs.desktop"
       desktop-base-lock-name      "lock"
-      desktop-path                (list desktop-dirname)
       desktop-save                t
       desktop-files-not-to-save   "^$" ;reload tramp paths
       desktop-load-locked-desktop nil)
-(desktop-save-mode 0)
+(desktop-save-mode)
 (desktop-read)
 
-;; minimap
-;; (require 'minimap)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(server-start) ;; start in server mode (for emacsclient)
 
-;; Sublimity Mode
-(require 'sublimity)
-(require 'sublimity-scroll)
-(require 'sublimity-map)
-
-;; ERC conf
-(require 'erc-hl-nicks)
-(setq erc-input-line-position -2) ;; so the prompt is always at the bottom
-
-(require 'key-chord)
-(key-chord-mode 1)
-
-(require 'browse-kill-ring)
-(browse-kill-ring-default-keybindings)
-(setq browse-kill-ring-quit-action 'save-and-restore)
-
-(undo-tree-mode t) ;; powerfull undo/redo mode
-
-(server-start) ;; start in server mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Language-specific configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -235,7 +211,7 @@
 ;; notes in
 (setq org-default-notes-file
       `(("." . ,(expand-file-name
-                 (concat conf-dir ".notes")))))
+                 (concat user-emacs-directory ".notes")))))
 
 ;; font and faces customization
 (setq org-todo-keyword-faces
@@ -251,7 +227,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Load system-specific library and setup system-specific things that
 ;; must be setup before main setup
 (defun load-windows-specific-conf ()
@@ -265,17 +241,8 @@
 
   (require 'dos) ;; batch scripts
 
-  (require 'tramp)
   (set-default 'tramp-auto-save-directory "c:/cygwin/home/arthur_leothaud/tramp_tmp/")
   (set-default 'tramp-default-method "plink")
-  ;; tramp setup (to be tested)
-  ;; (setq shell-file-name "bash")
-  ;; (setq explicit-shell-file-name shell-file-name)
-  ;; (cond  ((eq window-system 'w32)
-  ;;         (setq tramp-default-method "scpx"))
-  ;;        (t
-  ;;         (setq tramp-default-method "scpc")))
-  ;; Aspell Windows (http://www.emacswiki.org/emacs/AspellWindows)
   (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
   (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
   (setq python-shell-interpreter "c:/cygwin/bin/python3.2m.exe")
@@ -293,5 +260,16 @@
   )
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; open some files
+
+(find-file (expand-file-name "init.el" user-emacs-directory))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; load theme
+(color-theme-initialize)
+(color-theme-dark-laptop)
 
 ;; init.el ends here.

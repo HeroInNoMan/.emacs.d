@@ -1,2 +1,11 @@
+/auto-save-list/
 /backups/
+/elpa/
+/eshell/
+tramp
+/url/		
 .places
+/.mc-lists.el
+/emacs.desktop
+/lock
+/places

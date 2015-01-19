@@ -4,11 +4,12 @@
 
 ;; Key unbinding
 (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
+(global-unset-key (kbd "C-z")) ;; used for tmux (C-z z for suspend-frame)
 
 ;; key-chords
 (key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
-(key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
+(key-chord-define-global (kbd "bf") 'switch-to-latest-buffer) ;; quickly switch buffer
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 
 ;; function keys
@@ -17,13 +18,13 @@
 (global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
 (global-set-key (kbd "<f7>") 'recentf-open-files) ;; open a list of recently opened files
 (global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
-(global-set-key (kbd "<f8>") 'sublimity-mode) ;; toggle sublimity
 (global-set-key (kbd "<f9>") 'ispell-word) ;; check spelling of word at point or words in region
 (global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
 (global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
 
 ;; custom shortcuts
 (global-set-key (kbd "C-x r q") 'kill-emacs) ;; really quit emacs
+(global-set-key (kbd "C-z z") 'suspend-frame) ;; C-z is saved for tmux
 (global-set-key (kbd "M-à") 'ace-jump-mode) ;; quickly jump to word by pressing its first letter
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
@@ -47,8 +48,9 @@
 (global-set-key (kbd "<M-down>") 'move-line-down)
 (global-set-key (kbd "<C-M-down>") 'duplicate-current-line)
 
-(global-set-key (kbd "M-n") 'smart-symbol-go-forward) ;; find next occurence of word at point
-(global-set-key (kbd "M-p") 'smart-symbol-go-backward) ;; find previous occurence of word at point
+(global-set-key (kbd "M-n") 'smartscan-symbol-go-forward) ;; find next occurence of word at point
+(global-set-key (kbd "M-p") 'smartscan-symbol-go-backward) ;; find previous occurence of word at point
+(global-set-key (kbd "M-'") 'smartscan-symbol-replace) ;; find previous occurence of word at point
 
 (global-set-key (kbd "C-c e") 'er/expand-region) ;; expand region by syntaxic units
 
