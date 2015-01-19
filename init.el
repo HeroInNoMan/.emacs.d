@@ -1,6 +1,9 @@
+;;;;;;;;;;;;;;;;;;;;;;;
+;; emacs config file ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; init.el config file
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; INSTALLATION & LOADING
 
 ;; package-style dependencies
 (when (>= emacs-major-version 24)
@@ -27,73 +30,79 @@
 
 ;; initialize files and directories as variables
 (setq elisp-dir (expand-file-name "elisp" user-emacs-directory)) ;; .emacs.d/elisp/
-
 (add-to-list 'load-path elisp-dir) ;; load everything in .emacs.d/elisp/
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; custom conf files
 (require 'my-functions) ;; custom functions
-(require 'my-macros) ;; custom macros
 (require 'my-key-bindings) ;; custom keybindings
+(require 'my-macros) ;; custom macros
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; load packages
+(require 'browse-kill-ring)
 (require 'dirtree)
-(require 'multi-scratch)
-(require 're-builder)
 (require 'guide-key)
 (require 'guide-key-tip)
-(require 'smartscan)
-(require 'key-chord)
-(require 'browse-kill-ring)
 (require 'ispell)
+(require 'key-chord)
+(require 'multi-scratch)
+(require 're-builder)
+(require 'smartscan)
 ;; (require 'minimap)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; various settings
-(setq inhibit-startup-message t) ;; no message at startup
-(recentf-mode 1) ;; keep a list of recently opened files
-(setq-default transient-mark-mode t) ;; colour between mark and point
-(setq default-major-mode 'text-mode) ;; text-mode by default
-(add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
-(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
-(global-font-lock-mode t) ;; syntax highlight
-(setq font-lock-maximum-decoration t) ;; all possible colours
-(setq initial-scratch-message nil) ;; empty *scratch*
-(setq multi-scratch-buffer-name "new")
+;; VARIOUS SETTINGS
+
+;; case-insensitive policy
 (setq read-file-name-completion-ignore-case t) ;; case-insensitive completion
 (setq read-buffer-completion-ignore-case t) ;; case-insensitive completion
-(add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
+
+;; conveniance, visuals
+(setq-default transient-mark-mode t) ;; colour between mark and point
 (setq column-number-mode t) ;; display column-number
-(setq-default show-trailing-whitespace t) ;; display trailing whitespaces
-(setq display-time-day-and-date t ;; display date and time
-      display-time-24hr-format t) ;; 24h time format
-(display-time) ;; display time
+(setq inhibit-startup-message t) ;; no message at startup
+(global-font-lock-mode t) ;; syntax highlight
+(setq font-lock-maximum-decoration t) ;; all possible colours
 (fset 'yes-or-no-p 'y-or-n-p) ;; short answer mode
-(setq european-calendar-style t) ;; day/month/year format for calendar
-(setq calendar-week-start-day 1) ;; start week on Monday
-(setq sentence-end-double-space nil) ;; sentences end with a single space
-(global-hl-line-mode -1) ;; don’t highlight current line
-(auto-compression-mode 1) ;; parse, open, modify and save compressed archives
 (blink-cursor-mode -1) ;; no blinking cursor
+(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
+(global-hl-line-mode -1) ;; don’t highlight current line
+(setq-default show-trailing-whitespace t) ;; display trailing whitespaces
+(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
+
+;; activate additional features
+(undo-tree-mode t) ;; powerfull undo/redo mode
+(recentf-mode 1) ;; keep a list of recently opened files
+(auto-compression-mode 1) ;; parse, open, modify and save compressed archives
 (ido-vertical-mode 1)
 (flx-ido-mode 1)
 (helm-mode 0) ;; helm-mode in all other places
-(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
-(undo-tree-mode t) ;; powerfull undo/redo mode
-(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
-(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-x n" "C-h" "<f1>" "<f2>" ))
 (guide-key-mode 1)
 (setq guide-key-tip/enabled t)
+(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-x n" "C-h" "<f1>" "<f2>" ))
 (key-chord-mode 1)
-(browse-kill-ring-default-keybindings)
-(setq browse-kill-ring-quit-action 'save-and-restore)
 
-;; Spellchecking
+;; scratch
+(setq initial-scratch-message nil) ;; empty *scratch*
+(setq multi-scratch-buffer-name "new")
+
+;; date, time, calendar
+(setq display-time-day-and-date t ;; display date and time
+      display-time-24hr-format t) ;; 24h time format
+(setq european-calendar-style t) ;; day/month/year format for calendar
+(setq calendar-week-start-day 1) ;; start week on Monday
+(display-time) ;; display time
+
+;; text-mode, mail-mode, git-mode, spellchecking
+(setq default-major-mode 'text-mode) ;; text-mode by default
+(add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
+(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
 (remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
+(add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
+(setq sentence-end-double-space nil) ;; sentences end with a single space
+(remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
 
 ;;Indentation
 (setq-default tab-width 4
@@ -115,6 +124,7 @@
 (set-selection-coding-system 'utf-8)
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)) ;; from Emacs wiki
 
+;; remember some preferences
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -126,9 +136,12 @@
       browse-url-generic-program "firefox"
       browse-url-browser-function gnus-button-url)
 
-(setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
+;; kill-ring
+(browse-kill-ring-default-keybindings)
+(setq browse-kill-ring-quit-action 'save-and-restore)
 
-;; Automatically save and restore sessions
+;; session saving, backup management
+(setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
 (setq desktop-base-file-name      "emacs.desktop"
       desktop-base-lock-name      "lock"
       desktop-save                t
@@ -138,11 +151,7 @@
 (desktop-read)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(server-start) ;; start in server mode (for emacsclient)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Language-specific configuration
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LANGUAGE-SPECIFIC CONFIGURATION
 ;; SH
 (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
 
@@ -222,9 +231,6 @@
         ("INPROGRESS" . (:foreground "yellow" :weight bold))
         ))
 
-;; GIT
-(remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
 
@@ -238,11 +244,7 @@
   (setq exec-path (cons "c:/cygwin/bin/" exec-path))
   (require 'cygwin-mount)
   (cygwin-mount-activate)
-
   (require 'dos) ;; batch scripts
-
-  (set-default 'tramp-auto-save-directory "c:/cygwin/home/arthur_leothaud/tramp_tmp/")
-  (set-default 'tramp-default-method "plink")
   (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
   (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
   (setq python-shell-interpreter "c:/cygwin/bin/python3.2m.exe")
@@ -261,15 +263,14 @@
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; open some files
+;; EPILOGUE
 
 (find-file (expand-file-name "init.el" user-emacs-directory))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; load theme
 (color-theme-initialize)
 (color-theme-dark-laptop)
+
+(server-start)
 
 ;; init.el ends here.
