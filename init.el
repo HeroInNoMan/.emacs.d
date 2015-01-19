@@ -15,10 +15,30 @@
   (package-initialize))
 
 ;; packages to be installed and loaded
-(setq package-list '(ace-jump-mode ace-window better-defaults
-								   browse-kill-ring color-theme dirtree expand-region flx-ido
-								   gitconfig-mode guide-key guide-key-tip helm ido-vertical-mode
-								   key-chord magit multiple-cursors smartscan tree-mode undo-tree))
+(setq package-list '(ace-jump-mode
+					 ace-window
+					 better-defaults
+					 browse-kill-ring
+					 color-theme
+					 company
+					 dirtree
+					 expand-region
+					 flx-ido
+					 gitconfig-mode
+					 guide-key
+					 guide-key-tip
+					 helm
+					 helm-projectile
+					 ido-ubiquitous
+					 ido-vertical-mode
+					 key-chord
+					 magit
+					 markdown-mode
+					 move-text
+					 multiple-cursors
+					 smartscan
+					 tree-mode
+					 undo-tree))
 
 ;; fetch the list of packages available if no elpa dir present
 (or (file-exists-p package-user-dir) (package-refresh-contents))
@@ -33,6 +53,7 @@
 (add-to-list 'load-path elisp-dir) ;; load everything in .emacs.d/elisp/
 
 ;; custom conf files
+(require 'sane-defaults) ;; sane defaults from danjacka
 (require 'my-functions) ;; custom functions
 (require 'my-key-bindings) ;; custom keybindings
 (require 'my-macros) ;; custom macros
@@ -42,12 +63,13 @@
 (require 'dirtree)
 (require 'guide-key)
 (require 'guide-key-tip)
+(require 'iso-transl)
 (require 'ispell)
 (require 'key-chord)
 (require 'multi-scratch)
 (require 're-builder)
 (require 'smartscan)
-;; (require 'minimap)
+;; (require 'minimap) ;; bugs with org-mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS SETTINGS
@@ -56,33 +78,36 @@
 (setq read-file-name-completion-ignore-case t) ;; case-insensitive completion
 (setq read-buffer-completion-ignore-case t) ;; case-insensitive completion
 
-;; conveniance, visuals
-(setq-default transient-mark-mode t) ;; colour between mark and point
-(setq column-number-mode t) ;; display column-number
-(setq inhibit-startup-message t) ;; no message at startup
-(global-font-lock-mode t) ;; syntax highlight
+;; colors, appearance
 (setq font-lock-maximum-decoration t) ;; all possible colours
-(fset 'yes-or-no-p 'y-or-n-p) ;; short answer mode
 (blink-cursor-mode -1) ;; no blinking cursor
-(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 (global-hl-line-mode -1) ;; don’t highlight current line
-(setq-default show-trailing-whitespace t) ;; display trailing whitespaces
-(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
+(setq-default show-trailing-whitespace nil) ;; don’t display trailing whitespaces
 
 ;; activate additional features
 (undo-tree-mode t) ;; powerfull undo/redo mode
-(recentf-mode 1) ;; keep a list of recently opened files
-(auto-compression-mode 1) ;; parse, open, modify and save compressed archives
 (ido-vertical-mode 1)
 (flx-ido-mode 1)
 (helm-mode 0) ;; helm-mode in all other places
+(key-chord-mode 1)
+(move-text-default-bindings) ;; M-up / M-down to move line or region
+(add-hook 'after-init-hook 'global-company-mode) ;; enable company in all buffers
+(setq ido-everywhere t) ;; ido goodness everywhere
+
+;; guide key
 (guide-key-mode 1)
 (setq guide-key-tip/enabled t)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-c" "C-x C-k" "C-x n" "C-h" "<f1>" "<f2>" ))
-(key-chord-mode 1)
+(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-x 8" "C-c" "C-x C-k" "C-x n" "C-x +" "C-h" "<f1>" "<f2>" ))
+(setq guide-key/recursive-key-sequence-flag t)
+(setq guide-key/popup-window-position 'bottom)
+
+;; regexp-builder
+(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
+
+;; dired
+(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
 ;; scratch
-(setq initial-scratch-message nil) ;; empty *scratch*
 (setq multi-scratch-buffer-name "new")
 
 ;; date, time, calendar
@@ -92,7 +117,7 @@
 (setq calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
 
-;; text-mode, mail-mode, git-mode, spellchecking
+;; text-mode, mail-mode, spellchecking
 (setq default-major-mode 'text-mode) ;; text-mode by default
 (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
 (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
@@ -101,8 +126,6 @@
 (remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
-(setq sentence-end-double-space nil) ;; sentences end with a single space
-(remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
 
 ;;Indentation
 (setq-default tab-width 4
@@ -111,20 +134,8 @@
 			  c-block-comment-prefix ""
 			  c-default-style "k&r"
 			  indent-tabs-mode t)
-(setq truncate-lines t)
 
-;; Encoding
-(set-language-environment "UTF-8")
-(prefer-coding-system       'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
-(setq locale-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)) ;; from Emacs wiki
-
-;; remember some preferences
+;; enable commands disabled by default
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -145,6 +156,7 @@
 (setq desktop-base-file-name      "emacs.desktop"
       desktop-base-lock-name      "lock"
       desktop-save                t
+	  desktop-dirname             user-emacs-directory
       desktop-files-not-to-save   "^$" ;reload tramp paths
       desktop-load-locked-desktop nil)
 (desktop-save-mode)
@@ -152,22 +164,31 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LANGUAGE-SPECIFIC CONFIGURATION
+
+;; git
+(remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
+(autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
+(setq auto-mode-alist  (cons '(".gitconfig$" . gitconfig-mode) auto-mode-alist))
+
 ;; SH
-(add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
+;; (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
+;; (autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
+(add-to-list 'auto-mode-alist '("rc$" . sh-mode))
+(add-to-list 'auto-mode-alist '("bash" . sh-mode))
 
 ;; SQL
-(setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".pkb$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".mvw$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".con$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".ind$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".sqs$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".tab$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".trg$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".vw$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".prc$" . sql-mode) auto-mode-alist))
-(setq auto-mode-alist  (cons '(".pk$" . sql-mode) auto-mode-alist))
+(setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".pkb$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".mvw$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".con$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".ind$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".sqs$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".tab$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".trg$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".vw$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".prc$" . sql-mode) auto-mode-alist)
+	  auto-mode-alist  (cons '(".pk$" . sql-mode) auto-mode-alist))
 ;;; sql-oracle connection without a tnsnames.ora
 ;; (description=(address_list=(address=(protocol=TCP)(host=myhost.example.com)(port=1521)))(connect_data=(SERVICE_NAME=myservicename)))
 ;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)
@@ -198,8 +219,8 @@
 ;; Loads ruby mode when a .rb file is opened.
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
 (setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
+
 ;; HTML
-;; basic html configuration
 (setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
 (setq html-helper-use-expert-menu t) ;; use expert menu
 (add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html

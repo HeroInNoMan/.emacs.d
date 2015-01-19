@@ -30,7 +30,7 @@
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
 (global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
-(global-set-key (kbd "M-o") 'other-window) ;; quickly switch to other window
+(global-set-key (kbd "M-o") 'ace-window) ;; quickly switch to other window
 
 (global-set-key (kbd "C-c h") 'helm-mini) ;; call helm completion
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
@@ -44,8 +44,6 @@
 
 
 ;; eclipse-like shortcuts
-(global-set-key (kbd "<M-up>") 'move-line-up)
-(global-set-key (kbd "<M-down>") 'move-line-down)
 (global-set-key (kbd "<C-M-down>") 'duplicate-current-line)
 
 (global-set-key (kbd "M-n") 'smartscan-symbol-go-forward) ;; find next occurence of word at point
@@ -71,7 +69,7 @@
 (global-set-key (kbd "C-M-r") 'org-remember)
 
 ;; Groovy-Mode
-(global-set-key (kbd "<f6>") 'groovy-eval-execute-buffer)
+(global-set-key (kbd "<f6>") 'whitespace-mode)
 
 ;; multi-scratch
 (global-set-key (kbd "C-x \"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
