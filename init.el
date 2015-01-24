@@ -1,6 +1,6 @@
-;;;;;;;;;;;;;;;;;;;;;;;
-;; emacs config file ;;
-;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    emacs config file                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INSTALLATION & LOADING
@@ -55,43 +55,89 @@
 (add-to-list 'load-path (expand-file-name "elisp/groovy-mode" user-emacs-directory))
 
 ;; custom conf files
-(require 'sane-defaults) ;; sane defaults from danjacka
 (require 'my-functions) ;; custom functions
-(require 'my-key-bindings) ;; custom keybindings
-(require 'my-macros) ;; custom macros
-
-;; load packages
-(require 'browse-kill-ring)
-(require 'dirtree)
-(require 'guide-key)
-(require 'guide-key-tip)
-(require 'iso-transl)
-(require 'ispell)
-(require 'key-chord)
-(require 'multi-scratch)
-(require 're-builder)
-(require 'smartscan)
-(require 'web-mode)
-;; (require 'minimap) ;; bugs with org-mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS SETTINGS
+
+;; defaults
+(require 'sane-defaults) ;; sane defaults from danjacka
+
+;; Killing emacs
+(global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
+(global-set-key (kbd "C-x r q") 'kill-emacs) ;; really quit emacs
+
+;; C-z is for tmux
+(global-unset-key (kbd "C-z")) ;; used for tmux (C-z z for suspend-frame)
+(global-set-key (kbd "C-z z") 'suspend-frame) ;; C-z is saved for tmux
 
 ;; case-insensitive policy
 (setq read-file-name-completion-ignore-case t) ;; case-insensitive completion
 (setq read-buffer-completion-ignore-case t) ;; case-insensitive completion
 
 ;; colors, appearance
+(require 'iso-transl) ;; some environments don’t handle dead keys
 (setq font-lock-maximum-decoration t) ;; all possible colours
 (blink-cursor-mode -1) ;; no blinking cursor
 (global-hl-line-mode -1) ;; don’t highlight current line
 (setq-default show-trailing-whitespace nil) ;; don’t display trailing whitespaces
+(global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
+(global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
+(global-set-key (kbd "<f6>") 'whitespace-mode)
+
+;; activate key-chords
+(require 'key-chord)
+(key-chord-mode 1)
+
+;; buffer handling
+(key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
+(key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
+(global-set-key (kbd "C-c f") 'recentf-open-files) ;; open a list of recently opened files
+(global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
+(global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
+(global-set-key (kbd "M-o") 'ace-window) ;; quickly switch to other window
+
+;; undo
+(undo-tree-mode t) ;; powerfull undo/redo mode
+(global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
+
+;; smartscan
+(require 'smartscan)
+(global-set-key (kbd "M-n") 'smartscan-symbol-go-forward) ;; find next occurence of word at point
+(global-set-key (kbd "M-p") 'smartscan-symbol-go-backward) ;; find previous occurence of word at point
+(global-set-key (kbd "M-'") 'smartscan-symbol-replace) ;; find previous occurence of word at point
+
+;; line handling features
+(move-text-default-bindings) ;; M-up / M-down to move line or region
+(global-set-key (kbd "<C-M-down>") 'duplicate-current-line)
+;; (global-set-key (kbd "<up>") 'previous-line)
+;; (global-set-key (kbd "<down>") 'next-line)
 
 ;; activate additional features
-(undo-tree-mode t) ;; powerfull undo/redo mode
 (helm-mode 0) ;; helm-mode in all other places
-(key-chord-mode 1)
-(move-text-default-bindings) ;; M-up / M-down to move line or region
+(global-set-key (kbd "C-c h") 'helm-mini) ;; call helm completion
+
+;; dirtree
+(require 'dirtree)
+(global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
+
+;; minimap (disabled)
+;; (require 'minimap) ;; bugs with org-mode
+;; (global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
+
+;; cursor movement and features
+(global-set-key (kbd "C-c e") 'er/expand-region) ;; expand region by syntaxic units
+(global-set-key (kbd "M-à") 'ace-jump-mode) ;; quickly jump to word by pressing its first letter
+(global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
+(global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
+
+
+;; Multiple cursors keybindings
+(global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
+(global-set-key (kbd "M-è") 'mc/mark-all-like-this) ;; new cursor on each occurence of current region
+(global-set-key (kbd "M-È") 'mc/mark-next-like-this) ;; new cursor on next occurence of current region
+(global-set-key (kbd "M-É") 'mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
 
 ;; auto-completion with company-mode
 (add-hook 'after-init-hook 'global-company-mode) ;; enable company in all buffers
@@ -107,10 +153,15 @@
 (setq projectile-enable-caching t) ;; enable caching for projectile-mode
 
 ;; spell-check
+(require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
+(global-set-key (kbd "<f9>") 'ispell-word) ;; check spelling of word at point or words in region
+(global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
 
 ;; guide key
+(require 'guide-key)
+(require 'guide-key-tip)
 (guide-key-mode 1)
 (setq guide-key-tip/enabled t)
 (setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-x 8" "C-c" "C-x C-k" "C-x n" "C-x +" "C-h" "<f1>" "<f2>" ))
@@ -118,13 +169,19 @@
 (setq guide-key/popup-window-position 'bottom)
 
 ;; regexp-builder
+(require 're-builder)
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 
 ;; dired
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
 ;; scratch
+(require 'multi-scratch)
 (setq multi-scratch-buffer-name "new")
+(global-set-key (kbd "C-x \"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
+(global-set-key (kbd "M-\"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
+(global-set-key (kbd "C-x «") 'multi-scratch-prev) ;; jump to previous scratch buffer
+(global-set-key (kbd "C-x »") 'multi-scratch-next) ;; jump to next scratch buffer
 
 ;; date, time, calendar
 (setq display-time-day-and-date t ;; display date and time
@@ -154,6 +211,7 @@
       browse-url-browser-function gnus-button-url)
 
 ;; kill-ring
+(require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 (setq browse-kill-ring-quit-action 'save-and-restore)
 
@@ -238,6 +296,7 @@
 (add-to-list 'auto-mode-alist '(".rb$" . ruby-mode))
 
 ;; HTML, XML, JSP (using web-mode)
+(require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -250,6 +309,9 @@
 (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
 							   ("blade" . "\\.blade\\.")))
 
+;; Java
+;; (global-set-key (kbd "<f12>") 'ctags-create-or-update-tags-table) ;; exuberant ctags update
+
 ;; JAVASCRIPT (to be tested)
 (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
 (add-hook 'json-mode-hook 'json-pretty-print)
@@ -257,6 +319,10 @@
 ;; WIKI
 ;; confluence mode + it’s-all-text
 (add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
+
+;; LISP
+(global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value 
+;; (global-set-key (kbd "C-c c") 'compile)
 
 ;; PYTHON
 ;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
@@ -274,6 +340,13 @@
         ("STARTED" . (:foreground "yellow" :weight bold))
         ("WAIT" . (:foreground "yellow" :weight bold))
         ("INPROGRESS" . (:foreground "yellow" :weight bold))))
+(global-set-key (kbd "\C-c l") 'org-store-link)
+(global-set-key (kbd "\C-c a") 'org-agenda)
+(global-set-key (kbd "\C-c b") 'org-iswitchb)
+(global-set-key (kbd "C-M-r") 'remember)
+;; Remember
+(global-set-key (kbd "\C-cr") 'org-remember)
+(global-set-key (kbd "C-M-r") 'org-remember)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
@@ -307,6 +380,16 @@
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; VARIOUS KEY BINDINGS
+(key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
+(key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
+
+(global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
+(global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
+(global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; EPILOGUE
 
@@ -315,6 +398,8 @@
 (color-theme-initialize)
 (color-theme-dark-laptop)
 
+;; server mode
 (server-start)
+(global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
 
 ;; init.el ends here.

@@ -23,5 +23,4 @@ My emacs configuration.
 
 * real eclipse-style indentation system
 * ctags with projectile
-* my-key-bindings.el in init.el (simpler)
 
