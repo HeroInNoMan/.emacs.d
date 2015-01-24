@@ -65,7 +65,7 @@
 (set-default 'indicate-empty-lines t)
 
 ;; Allow scrolling with mouse wheel
-(mouse-wheel-mode t)
+(when (display-graphic-p) (mouse-wheel-mode t))
 
 ;; Don't soft-break lines for me, please
 (setq-default truncate-lines t)
