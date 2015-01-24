@@ -10,3 +10,5 @@ tramp
 /lock
 /places
 /.emacs.desktop
+/projectile-bookmarks.eld
+/history
