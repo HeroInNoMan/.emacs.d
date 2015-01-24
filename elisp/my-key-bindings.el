@@ -9,18 +9,18 @@
 ;; key-chords
 (key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
-(key-chord-define-global (kbd "bf") 'switch-to-latest-buffer) ;; quickly switch buffer
+(key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 
 ;; function keys
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
 (global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
 (global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
-(global-set-key (kbd "<f7>") 'recentf-open-files) ;; open a list of recently opened files
-(global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
+;; (global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
 (global-set-key (kbd "<f9>") 'ispell-word) ;; check spelling of word at point or words in region
 (global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
 (global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
+;; (global-set-key (kbd "<f12>") 'ctags-create-or-update-tags-table) ;; exuberant ctags update
 
 ;; custom shortcuts
 (global-set-key (kbd "C-x r q") 'kill-emacs) ;; really quit emacs
@@ -32,6 +32,7 @@
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
 (global-set-key (kbd "M-o") 'ace-window) ;; quickly switch to other window
 
+(global-set-key (kbd "C-c f") 'recentf-open-files) ;; open a list of recently opened files
 (global-set-key (kbd "C-c h") 'helm-mini) ;; call helm completion
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
@@ -41,7 +42,6 @@
 ;; (global-set-key (kbd "<up>") 'previous-line)
 ;; (global-set-key (kbd "<down>") 'next-line)
 (global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
-
 
 ;; eclipse-like shortcuts
 (global-set-key (kbd "<C-M-down>") 'duplicate-current-line)

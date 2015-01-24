@@ -59,7 +59,7 @@
 
 ;; Save a list of recent files visited.
 (recentf-mode 1)
-(setq recentf-max-saved-items 100) ;; just 20 is too recent
+(setq recentf-max-saved-items 500) ;; just 20 is too recent
 
 ;; Show me empty lines after buffer end
 (set-default 'indicate-empty-lines t)

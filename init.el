@@ -38,7 +38,9 @@
 					 multiple-cursors
 					 smartscan
 					 tree-mode
-					 undo-tree))
+					 undo-tree
+					 web-mode
+					 w3m))
 
 ;; fetch the list of packages available if no elpa dir present
 (or (file-exists-p package-user-dir) (package-refresh-contents))
@@ -48,9 +50,9 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-;; initialize files and directories as variables
-(setq elisp-dir (expand-file-name "elisp" user-emacs-directory)) ;; .emacs.d/elisp/
-(add-to-list 'load-path elisp-dir) ;; load everything in .emacs.d/elisp/
+;; add to load-path : .emacs.d/elisp/ and .emacs.d/elisp/groovy-mode/
+(add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "elisp/groovy-mode" user-emacs-directory))
 
 ;; custom conf files
 (require 'sane-defaults) ;; sane defaults from danjacka
@@ -69,6 +71,7 @@
 (require 'multi-scratch)
 (require 're-builder)
 (require 'smartscan)
+(require 'web-mode)
 ;; (require 'minimap) ;; bugs with org-mode
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -86,13 +89,26 @@
 
 ;; activate additional features
 (undo-tree-mode t) ;; powerfull undo/redo mode
-(ido-vertical-mode 1)
-(flx-ido-mode 1)
 (helm-mode 0) ;; helm-mode in all other places
 (key-chord-mode 1)
 (move-text-default-bindings) ;; M-up / M-down to move line or region
+
+;; auto-completion with company-mode
 (add-hook 'after-init-hook 'global-company-mode) ;; enable company in all buffers
-(setq ido-everywhere t) ;; ido goodness everywhere
+
+;; ido
+(ido-ubiquitous-mode t)
+(ido-everywhere t)
+(ido-vertical-mode 1)
+(flx-ido-mode 1)
+
+;; projectile-mode
+(projectile-global-mode) ;; activate projectile-mode everywhere
+(setq projectile-enable-caching t) ;; enable caching for projectile-mode
+
+;; spell-check
+(setq ispell-dictionary "francais") ;; french dictionary for auto-correct
+(setq-default ispell-program-name "aspell") ;; aspell by default
 
 ;; guide key
 (guide-key-mode 1)
@@ -116,16 +132,6 @@
 (setq european-calendar-style t) ;; day/month/year format for calendar
 (setq calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
-
-;; text-mode, mail-mode, spellchecking
-(setq default-major-mode 'text-mode) ;; text-mode by default
-(add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
-(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
-(setq ispell-dictionary "francais") ;; french dictionary for auto-correct
-(setq-default ispell-program-name "aspell") ;; aspell by default
-(remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
-(remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
-(add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
 
 ;;Indentation
 (setq-default tab-width 4
@@ -153,42 +159,53 @@
 
 ;; session saving, backup management
 (setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
-(setq desktop-base-file-name      "emacs.desktop"
-      desktop-base-lock-name      "lock"
-      desktop-save                t
+(setq desktop-base-lock-name      "lock"
+	  desktop-save                t
 	  desktop-dirname             user-emacs-directory
-      desktop-files-not-to-save   "^$" ;reload tramp paths
-      desktop-load-locked-desktop nil)
-(desktop-save-mode)
+	  desktop-path                (list desktop-dirname)
+	  desktop-files-not-to-save   "^$" ;reload tramp paths
+	  desktop-load-locked-desktop nil)
+(desktop-save-mode 1)
+(savehist-mode 1)
 (desktop-read)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; LANGUAGE-SPECIFIC CONFIGURATION
+;; MAJOR MODE SPECIFIC CONFIGURATION
+
+;; text
+(setq default-major-mode 'text-mode) ;; text-mode by default
+(add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
+(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
+(remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
+
+;; mail-mode
+(remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
+(add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
 
 ;; git
-(remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
+;; (remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
 (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
-(setq auto-mode-alist  (cons '(".gitconfig$" . gitconfig-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode))
 
 ;; SH
-;; (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
-;; (autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
-(add-to-list 'auto-mode-alist '("rc$" . sh-mode))
-(add-to-list 'auto-mode-alist '("bash" . sh-mode))
+(add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
+;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
+(add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
+(add-to-list 'auto-mode-alist '(".*bash.*$" . sh-mode))
 
 ;; SQL
-(setq auto-mode-alist  (cons '(".sql$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".pks$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".pkb$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".mvw$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".con$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".ind$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".sqs$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".tab$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".trg$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".vw$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".prc$" . sql-mode) auto-mode-alist)
-	  auto-mode-alist  (cons '(".pk$" . sql-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '(".sql$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".pks$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".pkb$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".mvw$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".con$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".ind$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".sqs$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".tab$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".trg$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".vw$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".prc$" . sql-mode))
+(add-to-list 'auto-mode-alist '(".pk$" . sql-mode))
 ;;; sql-oracle connection without a tnsnames.ora
 ;; (description=(address_list=(address=(protocol=TCP)(host=myhost.example.com)(port=1521)))(connect_data=(SERVICE_NAME=myservicename)))
 ;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)
@@ -204,7 +221,6 @@
 
 ;; GROOVY
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
-(add-to-list 'load-path (expand-file-name "groovy-mode" elisp-dir)) ;; manual load-path
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
@@ -215,15 +231,24 @@
              (groovy-electric-mode)))
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
+
 ;; RUBY
 ;; Loads ruby mode when a .rb file is opened.
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
-(setq auto-mode-alist  (cons '(".rb$" . ruby-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '(".rb$" . ruby-mode))
 
-;; HTML
-(setq auto-mode-alist  (cons '(".rhtml$" . html-mode) auto-mode-alist))
-(setq html-helper-use-expert-menu t) ;; use expert menu
-(add-hook 'html-helper-load-hook 'my-html-helper-load-hook) ;; automatically indent html
+;; HTML, XML, JSP (using web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
+
+(setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
+							   ("blade" . "\\.blade\\.")))
 
 ;; JAVASCRIPT (to be tested)
 (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
@@ -242,15 +267,13 @@
 (setq org-default-notes-file
       `(("." . ,(expand-file-name
                  (concat user-emacs-directory ".notes")))))
-
+(setq org-completion-use-ido t)
 ;; font and faces customization
 (setq org-todo-keyword-faces
-      '(
-        ("INPR" . (:foreground "yellow" :weight bold))
+      '(("INPR" . (:foreground "yellow" :weight bold))
         ("STARTED" . (:foreground "yellow" :weight bold))
         ("WAIT" . (:foreground "yellow" :weight bold))
-        ("INPROGRESS" . (:foreground "yellow" :weight bold))
-        ))
+        ("INPROGRESS" . (:foreground "yellow" :weight bold))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
