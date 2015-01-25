@@ -1,9 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Définition de fonctions
+;;                  Custom lisp functions                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun reload-file ()
-  "reload file"
+  "Reload file"
   (interactive)
   (let ((curr-scroll (window-vscroll)))
     (find-file (buffer-name))
@@ -14,7 +14,7 @@
   (define-key html-mode-map (kbd "RET") 'newline-and-indent))
 
 (defun iwb ()
-  "indent whole buffer"
+  "Indent whole buffer"
   (interactive)
   (delete-trailing-whitespace)
   (indent-region (point-min) (point-max) nil)
@@ -36,13 +36,13 @@
   (goto-char (point-max)))
 
 (defun up-arrow ()
-  "move cursor up one line and buffer down one"
+  "Move cursor up one line and buffer down one"
   (interactive)
   (previous-line)
   (scroll-down 1))
 
 (defun down-arrow ()
-  "move cursor down one line and buffer up one"
+  "Move cursor down one line and buffer up one"
   (interactive)
   (next-line)
   (scroll-up 1))
@@ -59,7 +59,7 @@
   (message (buffer-file-name)))
 
 (defun duplicate-current-line (&optional n)
-  "duplicate current line, make more than 1 copy given a numeric argument"
+  "Duplicate current line, make more than 1 copy given a numeric argument"
   (interactive "p")
   (save-excursion
     (let ((nb (or n 1))
@@ -75,7 +75,7 @@
 
 ;; sql related functions
 (defvar sql-last-prompt-pos 1
-  "position of last prompt when added recording started")
+  "Position of last prompt when added recording started")
 (make-variable-buffer-local 'sql-last-prompt-pos)
 (put 'sql-last-prompt-pos 'permanent-local t)
 
@@ -102,8 +102,6 @@
   (add-hook 'comint-preoutput-filter-functions
             'sql-add-newline-first))
 
-(add-hook 'sql-interactive-mode-hook 'sqli-add-hooks)
-
 (defun eval-and-replace ()
   "Replace the preceding sexp with its value."
   (interactive)
@@ -113,10 +111,6 @@
              (current-buffer))
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
-
-(defun switch-to-latest-buffer ()
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 (provide 'my-functions)
 ;; misc-functions.el ends here.

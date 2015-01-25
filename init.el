@@ -50,7 +50,7 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-;; add to load-path : .emacs.d/elisp/ and .emacs.d/elisp/groovy-mode/
+;; add .emacs.d/elisp/ and .emacs.d/elisp/groovy-mode/ to load-path
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "elisp/groovy-mode" user-emacs-directory))
 
@@ -58,10 +58,98 @@
 (require 'my-functions) ;; custom functions
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; VARIOUS SETTINGS
+;; DEFAULTS
 
-;; defaults
-(require 'sane-defaults) ;; sane defaults from danjacka
+;; No splash screen
+(setq inhibit-startup-screen t)
+
+;; Allow pasting selection outside of Emacs
+(setq x-select-enable-clipboard t)
+
+;; Auto refresh buffers
+(global-auto-revert-mode 1)
+
+;; Also auto refresh dired
+(setq global-auto-revert-non-file-buffers nil)
+
+;; Show keystrokes in progress
+(setq echo-keystrokes 0.1)
+
+;; Show active region
+(setq-default transient-mark-mode t)
+
+;; Don't move files to trash when deleting
+(setq delete-by-moving-to-trash nil)
+
+;; Real emacs knights don't use shift to mark things
+(setq shift-select-mode nil)
+
+;; Transparently open compressed files
+(auto-compression-mode t)
+
+;; Enable syntax highlighting for older Emacsen that have it off
+(global-font-lock-mode t)
+
+;; <tab> inserts spaces, not tabs and spaces
+;; (setq-default indent-tabs-mode nil)
+
+;; No *scratch* message
+(setq initial-scratch-message nil)
+
+;; Answer questions with y/n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Sentences end with a single space
+(setq sentence-end-double-space nil)
+
+;; UTF-8 everywhere
+(prefer-coding-system       'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+;; Remove text in active region if inserting text
+(pending-delete-mode t)
+
+;; Always display line and column numbers
+(setq line-number-mode t)
+(setq column-number-mode t)
+
+;; Lines should be 80 characters wide, not 70
+(setq-default fill-column 80)
+
+;; Save a list of recent files visited.
+(recentf-mode 1)
+(setq recentf-max-saved-items 500) ;; just 20 is too recent
+
+;; Show me empty lines after buffer end
+(set-default 'indicate-empty-lines t)
+
+;; Allow scrolling with mouse wheel
+(when (display-graphic-p) (mouse-wheel-mode t))
+
+;; Don't soft-break lines for me, please
+(setq-default truncate-lines t)
+
+;; Don't be so stingy on the memory, we have lots now. It's the distant future.
+(setq gc-cons-threshold 20000000)
+
+;; Change how buffer names are made unique
+(setq
+  uniquify-buffer-name-style 'post-forward
+  uniquify-separator ":")
+
+;; A saner ediff
+(setq ediff-diff-options "-w")
+(setq ediff-split-window-function 'split-window-horizontally)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; Normal tab completion in Eshell
+(setq eshell-cmpl-cycle-completions nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; VARIOUS SETTINGS
 
 ;; Killing emacs
 (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
@@ -122,8 +210,8 @@
 (require 'dirtree)
 (global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
 
-;; minimap (disabled)
-;; (require 'minimap) ;; bugs with org-mode
+;; minimap (disabled because it causes org-mode to bug)
+;; (require 'minimap)
 ;; (global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
 
 ;; cursor movement and features
@@ -178,8 +266,8 @@
 ;; scratch
 (require 'multi-scratch)
 (setq multi-scratch-buffer-name "new")
-(global-set-key (kbd "C-x \"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
-(global-set-key (kbd "M-\"") 'multi-scratch-new) ;; create new scratch buffer named “multi-scratch<#>”
+(global-set-key (kbd "C-x \"") 'multi-scratch-new) ;; create new scratch buffer named “new<#>”
+(global-set-key (kbd "M-\"") 'multi-scratch-new) ;; create new scratch buffer named “new<#>”
 (global-set-key (kbd "C-x «") 'multi-scratch-prev) ;; jump to previous scratch buffer
 (global-set-key (kbd "C-x »") 'multi-scratch-next) ;; jump to next scratch buffer
 
@@ -270,6 +358,7 @@
 (add-hook 'sql-mode (setq truncate-lines nil))
 (add-hook 'sql-mode (setq linesize 9999))
 
+(add-hook 'sql-interactive-mode-hook 'sqli-add-hooks)
 (add-hook 'sql-interactive-mode-hook
           (function (lambda ()
                       (setq comint-output-filter-functions 'comint-truncate-buffer
