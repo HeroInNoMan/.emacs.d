@@ -312,7 +312,7 @@
 	  desktop-save                t
 	  desktop-dirname             user-emacs-directory
 	  desktop-path                (list desktop-dirname)
-	  desktop-files-not-to-save   "^$" ;reload tramp paths
+	  ;; desktop-files-not-to-save   "^$" ;reload tramp paths
 	  desktop-load-locked-desktop nil)
 (desktop-save-mode 1)
 (savehist-mode 1)
