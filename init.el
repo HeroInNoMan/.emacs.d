@@ -21,6 +21,7 @@
 					 browse-kill-ring
 					 color-theme
 					 company
+					 diminish
 					 dirtree
 					 expand-region
 					 flx-ido
@@ -48,7 +49,7 @@
 ;; install the missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
-    (package-install package)))
+	(package-install package)))
 
 ;; add .emacs.d/elisp/ and .emacs.d/elisp/groovy-mode/ to load-path
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
@@ -113,8 +114,8 @@
 (pending-delete-mode t)
 
 ;; Always display line and column numbers
-(setq line-number-mode t)
-(setq column-number-mode t)
+(setq line-number-mode t
+	  column-number-mode t)
 
 ;; Lines should be 80 characters wide, not 70
 (setq-default fill-column 80)
@@ -136,14 +137,13 @@
 (setq gc-cons-threshold 20000000)
 
 ;; Change how buffer names are made unique
-(setq
-  uniquify-buffer-name-style 'post-forward
-  uniquify-separator ":")
+(setq uniquify-buffer-name-style 'post-forward
+	  uniquify-separator ":")
 
 ;; A saner ediff
-(setq ediff-diff-options "-w")
-(setq ediff-split-window-function 'split-window-horizontally)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-diff-options "-w"
+	  ediff-split-window-function 'split-window-horizontally
+	  ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; Normal tab completion in Eshell
 (setq eshell-cmpl-cycle-completions nil)
@@ -160,15 +160,15 @@
 (global-set-key (kbd "C-z z") 'suspend-frame) ;; C-z is saved for tmux
 
 ;; case-insensitive policy
-(setq read-file-name-completion-ignore-case t) ;; case-insensitive completion
-(setq read-buffer-completion-ignore-case t) ;; case-insensitive completion
+(setq read-file-name-completion-ignore-case t ;; case-insensitive completion
+	  read-buffer-completion-ignore-case t) ;; case-insensitive completion
 
 ;; colors, appearance
 (require 'iso-transl) ;; some environments don’t handle dead keys
 (setq font-lock-maximum-decoration t) ;; all possible colours
 (blink-cursor-mode -1) ;; no blinking cursor
 (global-hl-line-mode -1) ;; don’t highlight current line
-(setq-default show-trailing-whitespace nil) ;; don’t display trailing whitespaces
+(setq show-trailing-whitespace nil) ;; don’t display trailing whitespaces
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
 (global-set-key (kbd "<f6>") 'whitespace-mode)
@@ -188,6 +188,7 @@
 
 ;; undo
 (undo-tree-mode t) ;; powerfull undo/redo mode
+(diminish 'undo-tree-mode)
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
 
 ;; smartscan
@@ -228,7 +229,8 @@
 (global-set-key (kbd "M-É") 'mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
 
 ;; auto-completion with company-mode
-(add-hook 'after-init-hook 'global-company-mode) ;; enable company in all buffers
+(global-company-mode) ;; enable company in all buffers
+(diminish 'company-mode)
 
 ;; ido
 (ido-ubiquitous-mode t)
@@ -251,10 +253,11 @@
 (require 'guide-key)
 (require 'guide-key-tip)
 (guide-key-mode 1)
+(diminish 'guide-key-mode)
 (setq guide-key-tip/enabled t)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-x 8" "C-c" "C-x C-k" "C-x n" "C-x +" "C-h" "<f1>" "<f2>" ))
-(setq guide-key/recursive-key-sequence-flag t)
-(setq guide-key/popup-window-position 'bottom)
+(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-x 8" "C-x C-k" "C-x n" "C-x +" "C-c" "C-h" "M-s" "<f1>" "<f2>" ))
+(setq guide-key/recursive-key-sequence-flag t
+	  guide-key/popup-window-position 'bottom)
 
 ;; regexp-builder
 (require 're-builder)
@@ -273,9 +276,9 @@
 
 ;; date, time, calendar
 (setq display-time-day-and-date t ;; display date and time
-      display-time-24hr-format t) ;; 24h time format
-(setq european-calendar-style t) ;; day/month/year format for calendar
-(setq calendar-week-start-day 1) ;; start week on Monday
+	  display-time-24hr-format t ;; 24h time format
+	  european-calendar-style t ;; day/month/year format for calendar
+	  calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
 
 ;;Indentation
@@ -295,8 +298,8 @@
 
 ;; set default browser to firefox
 (setq gnus-button-url 'browse-url-generic
-      browse-url-generic-program "firefox"
-      browse-url-browser-function gnus-button-url)
+	  browse-url-generic-program "firefox"
+	  browse-url-browser-function gnus-button-url)
 
 ;; kill-ring
 (require 'browse-kill-ring)
@@ -360,11 +363,11 @@
 
 (add-hook 'sql-interactive-mode-hook 'sqli-add-hooks)
 (add-hook 'sql-interactive-mode-hook
-          (function (lambda ()
-                      (setq comint-output-filter-functions 'comint-truncate-buffer
-                            comint-buffer-maximum-size 5000
-                            comint-scroll-show-maximum-output t
-                            comint-input-ring-size 500))))
+		  (function (lambda ()
+					  (setq comint-output-filter-functions 'comint-truncate-buffer
+							comint-buffer-maximum-size 5000
+							comint-scroll-show-maximum-output t
+							comint-input-ring-size 500))))
 
 ;; GROOVY
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
@@ -373,9 +376,9 @@
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 ;;; make Groovy mode electric by default.
 (add-hook 'groovy-mode-hook
-          '(lambda ()
-             (require 'groovy-electric)
-             (groovy-electric-mode)))
+		  '(lambda ()
+			 (require 'groovy-electric)
+			 (groovy-electric-mode)))
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
 
@@ -410,7 +413,7 @@
 (add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
 
 ;; LISP
-(global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value 
+(global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
 ;; (global-set-key (kbd "C-c c") 'compile)
 
 ;; PYTHON
@@ -420,15 +423,15 @@
 ;; ORG-MODE
 ;; notes in
 (setq org-default-notes-file
-      `(("." . ,(expand-file-name
-                 (concat user-emacs-directory ".notes")))))
+	  `(("." . ,(expand-file-name
+				 (concat user-emacs-directory ".notes")))))
 (setq org-completion-use-ido t)
 ;; font and faces customization
 (setq org-todo-keyword-faces
-      '(("INPR" . (:foreground "yellow" :weight bold))
-        ("STARTED" . (:foreground "yellow" :weight bold))
-        ("WAIT" . (:foreground "yellow" :weight bold))
-        ("INPROGRESS" . (:foreground "yellow" :weight bold))))
+	  '(("INPR" . (:foreground "yellow" :weight bold))
+		("STARTED" . (:foreground "yellow" :weight bold))
+		("WAIT" . (:foreground "yellow" :weight bold))
+		("INPROGRESS" . (:foreground "yellow" :weight bold))))
 (global-set-key (kbd "\C-c l") 'org-store-link)
 (global-set-key (kbd "\C-c a") 'org-agenda)
 (global-set-key (kbd "\C-c b") 'org-iswitchb)
@@ -458,17 +461,16 @@
   ;; Prevent issues with the Windows null device (NUL)
   ;; when using cygwin find with rgrep.
   (defadvice grep-compute-defaults (around grep-compute-defaults-advice-null-device)
-    "Use cygwin's /dev/null as the null-device."
-    (let ((null-device "/dev/null"))
-      ad-do-it))
+	"Use cygwin's /dev/null as the null-device."
+	(let ((null-device "/dev/null"))
+	  ad-do-it))
   (ad-activate 'grep-compute-defaults)
   )
 (defun load-linux-specific-conf ()
   "Loads all GNU/Linux specific conf"
   )
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
-      ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
-
+	  ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS KEY BINDINGS
