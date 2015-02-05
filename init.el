@@ -30,6 +30,7 @@
 					 guide-key-tip
 					 helm
 					 helm-projectile
+					 idle-highlight-mode
 					 ido-ubiquitous
 					 ido-vertical-mode
 					 key-chord
@@ -261,10 +262,25 @@
 (require 'guide-key-tip)
 (guide-key-mode 1)
 (diminish 'guide-key-mode)
-(setq guide-key-tip/enabled t)
-(setq guide-key/guide-key-sequence '("C-x r" "C-x <RET>" "C-x v" "C-x 4" "C-x 5" "C-x 6" "C-x 8" "C-x C-k" "C-x n" "C-x +" "C-c" "C-h" "M-s" "<f1>" "<f2>" ))
-(setq guide-key/recursive-key-sequence-flag t
-	  guide-key/popup-window-position 'bottom)
+(setq guide-key-tip/enabled t
+	  guide-key/recursive-key-sequence-flag t
+	  guide-key/popup-window-position 'right
+	  guide-key/guide-key-sequence '("<f1>"
+									 "<f2>"
+									 "C-c"
+									 "C-h"
+									 "C-x <RET>"
+									 "C-x +"
+									 "C-x n"
+									 "C-x r"
+									 "C-x v"
+									 "C-x 4"
+									 "C-x 5"
+									 "C-x 6"
+									 "C-x 8"
+									 "C-x C-k"
+									 "C-x C-v"
+									 "M-s"))
 
 ;; regexp-builder
 (require 're-builder)

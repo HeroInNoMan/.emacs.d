@@ -23,4 +23,4 @@ My emacs configuration.
 
 * real eclipse-style indentation system
 * ctags with projectile
-
+* auto-save draft buffers
