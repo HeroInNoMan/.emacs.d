@@ -112,5 +112,12 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
+(defun sudo-edit (&optional arg)
+  "edit file as root"
+  (interactive "p")
+  (if (or arg (not buffer-file-name))
+	  (ido-find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
+	(find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.

@@ -70,7 +70,7 @@
 ;; Auto refresh buffers
 (global-auto-revert-mode 1)
 
-;; Also auto refresh dired
+;; Do not auto refresh dired
 (setq global-auto-revert-non-file-buffers nil)
 
 ;; Show keystrokes in progress
@@ -148,6 +148,9 @@
 ;; Normal tab completion in Eshell
 (setq eshell-cmpl-cycle-completions nil)
 
+;; No flashing!
+(setq visible-bell nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS SETTINGS
 
@@ -177,7 +180,7 @@
 (require 'key-chord)
 (key-chord-mode 1)
 
-;; buffer handling
+;; buffer & file handling
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
 (key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
@@ -185,6 +188,10 @@
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
 (global-set-key (kbd "M-o") 'ace-window) ;; quickly switch to other window
+(global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
+(global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
+(global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
+(global-set-key (kbd "C-x C-r") 'sudo-edit) ;; sudo open file
 
 ;; undo
 (undo-tree-mode t) ;; powerfull undo/redo mode
@@ -295,6 +302,7 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'set-goal-column 'disabled nil)
+(put 'scroll-left 'disabled nil)
 
 ;; set default browser to firefox
 (setq gnus-button-url 'browse-url-generic
@@ -335,6 +343,7 @@
 ;; (remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
 (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
 (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode))
+(key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 
 ;; SH
 (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
@@ -475,11 +484,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS KEY BINDINGS
 (key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
-(key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
-
-(global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
-(global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
-(global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; EPILOGUE
