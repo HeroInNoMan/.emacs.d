@@ -214,8 +214,16 @@
 ;; (global-set-key (kbd "<down>") 'next-line)
 
 ;; activate additional features
-(helm-mode 0) ;; helm-mode in all other places
+(helm-mode t) ;; helm-mode in all other places
+(diminish 'helm-mode)
+(helm-autoresize-mode t)
+(global-set-key (kbd "M-x") 'helm-M-x) ;; superior to M-x
+(setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
+	  helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t)
 (global-set-key (kbd "C-c h") 'helm-mini) ;; call helm completion
+(global-set-key (kbd "M-ç") 'helm-mini) ;; call helm for current buffers and recent files
+(global-set-key (kbd "C-ç") 'helm-find-files) ;; call helm for new files
 
 ;; dirtree
 (require 'dirtree)
