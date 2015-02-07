@@ -174,6 +174,8 @@
 (setq show-trailing-whitespace nil) ;; don’t display trailing whitespaces
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
+
+;; some visual modes toggling with function keys
 (global-set-key (kbd "<f6>") 'whitespace-mode)
 (global-set-key (kbd "<f7>") 'linum-mode)
 
@@ -203,7 +205,7 @@
 (require 'smartscan)
 (global-set-key (kbd "M-n") 'smartscan-symbol-go-forward) ;; find next occurence of word at point
 (global-set-key (kbd "M-p") 'smartscan-symbol-go-backward) ;; find previous occurence of word at point
-(global-set-key (kbd "M-'") 'smartscan-symbol-replace) ;; find previous occurence of word at point
+(global-set-key (kbd "M-'") 'smartscan-symbol-replace) ;; replace all occurences of word at point
 
 ;; line handling features
 (move-text-default-bindings) ;; M-up / M-down to move line or region
@@ -253,8 +255,7 @@
 (require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
-(global-set-key (kbd "<f9>") 'ispell-word) ;; check spelling of word at point or words in region
-(global-set-key (kbd "C-<f9>") 'flyspell-mode) ;; check spelling on the fly
+(global-set-key (kbd "<f9>") 'flyspell-mode) ;; check spelling on the fly
 
 ;; guide key
 (require 'guide-key)
