@@ -441,10 +441,6 @@
 (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
 (add-hook 'json-mode-hook 'json-pretty-print)
 
-;; WIKI
-;; confluence mode + it’s-all-text
-(add-to-list 'auto-mode-alist '("\.wiki\.vsct\.fr.*\.txt$" . confluence-edit-mode))
-
 ;; LISP
 (global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
 ;; (global-set-key (kbd "C-c c") 'compile)
