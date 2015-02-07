@@ -32,7 +32,6 @@
 					 helm-projectile
 					 idle-highlight-mode
 					 ido-ubiquitous
-					 ido-vertical-mode
 					 key-chord
 					 magit
 					 markdown-mode
@@ -244,7 +243,6 @@
 ;; ido
 (ido-ubiquitous-mode t)
 (ido-everywhere t)
-(ido-vertical-mode 1)
 (flx-ido-mode 1)
 
 ;; projectile-mode
