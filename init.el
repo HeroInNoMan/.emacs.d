@@ -176,6 +176,7 @@
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
 (global-set-key (kbd "<f6>") 'whitespace-mode)
+(global-set-key (kbd "<f7>") 'linum-mode)
 
 ;; activate key-chords
 (require 'key-chord)
