@@ -171,13 +171,14 @@
 (setq font-lock-maximum-decoration t) ;; all possible colours
 (blink-cursor-mode -1) ;; no blinking cursor
 (global-hl-line-mode -1) ;; don’t highlight current line
-(setq show-trailing-whitespace nil) ;; don’t display trailing whitespaces
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
 
 ;; some visual modes toggling with function keys
 (global-set-key (kbd "<f6>") 'whitespace-mode)
+(global-set-key (kbd "C-<f6>") 'toggle-show-trailing-whitespace)
 (global-set-key (kbd "<f7>") 'linum-mode)
+(global-set-key (kbd "<f8>") 'idle-highlight-mode)
 
 ;; activate key-chords
 (require 'key-chord)
@@ -236,6 +237,7 @@
 ;; cursor movement and features
 (global-set-key (kbd "C-c e") 'er/expand-region) ;; expand region by syntaxic units
 (global-set-key (kbd "M-à") 'ace-jump-mode) ;; quickly jump to word by pressing its first letter
+(global-set-key (kbd "C-à") 'ace-jump-char-mode) ;; quickly jump to any char in word
 (global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
 
@@ -510,6 +512,7 @@
 
 (find-file (expand-file-name "init.el" user-emacs-directory))
 
+;; set up a nice dark theme
 (color-theme-initialize)
 (color-theme-dark-laptop)
 

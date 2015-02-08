@@ -119,5 +119,16 @@
 	  (ido-find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
 	(find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
+(defun toggle-show-trailing-whitespace ()
+  "toggle display trailing whitespaces"
+  (interactive)
+  (if show-trailing-whitespace
+	  (progn
+		(setq show-trailing-whitespace nil)
+		(message "trailing whitespaces disabled"))
+	(progn
+	  (setq show-trailing-whitespace t)
+	  (message "trailing whitespaces enabled"))))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.
