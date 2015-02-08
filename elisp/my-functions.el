@@ -130,5 +130,5 @@
 	  (setq show-trailing-whitespace t)
 	  (message "trailing whitespaces enabled"))))
 
-(provide 'my-functions)
-;; misc-functions.el ends here.
+  (provide 'my-functions)
+  ;; misc-functions.el ends here.

@@ -266,6 +266,7 @@
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
 (global-set-key (kbd "<f9>") 'flyspell-mode) ;; check spelling on the fly
+(global-set-key (kbd "C-<f9>") 'flyspell-buffer) ;; run check on buffer
 
 ;; guide key
 (require 'guide-key)
