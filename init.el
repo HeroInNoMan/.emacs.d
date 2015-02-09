@@ -22,6 +22,7 @@
 					 color-theme
 					 company
 					 diminish
+					 dired-details
 					 dirtree
 					 expand-region
 					 flx-ido
@@ -215,7 +216,7 @@
 ;; (global-set-key (kbd "<down>") 'next-line)
 
 ;; activate additional features
-(helm-mode t) ;; helm-mode in all other places
+(helm-mode 0) ;; helm-mode in all other places
 (diminish 'helm-mode)
 (helm-autoresize-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x) ;; superior to M-x
@@ -298,6 +299,8 @@
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 
 ;; dired
+(require 'dired-details)
+(dired-details-install)
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
 ;; scratch
