@@ -223,7 +223,7 @@
 ;; (global-set-key (kbd "<down>") 'next-line)
 
 ;; activate additional features
-(helm-mode 0) ;; helm-mode in all other places
+(helm-mode 0) ;; helm-mode only on demand
 (diminish 'helm-mode)
 (helm-autoresize-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x) ;; superior to M-x
