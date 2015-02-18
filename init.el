@@ -249,6 +249,11 @@
 (global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
 
+;; god-mode
+(require 'god-mode)
+(global-set-key (kbd "<f12>") 'god-mode-all)
+(setq god-exempt-major-modes nil)
+(setq god-exempt-predicates nil)
 
 ;; Multiple cursors keybindings
 (global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
@@ -446,9 +451,6 @@
 
 (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
 							   ("blade" . "\\.blade\\.")))
-
-;; Java
-;; (global-set-key (kbd "<f12>") 'ctags-create-or-update-tags-table) ;; exuberant ctags update
 
 ;; JAVASCRIPT (to be tested)
 (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
