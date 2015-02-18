@@ -198,6 +198,13 @@
 (global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
 (global-set-key (kbd "C-x C-r") 'sudo-edit) ;; sudo open file
 
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 30 30 :left :elide) " "
+              (size 9 -1 :right) " "
+              (mode 16 16 :left :elide) " " filename-and-process)
+        (mark " " (name 16 -1) " " filename)))
+
 ;; undo
 (undo-tree-mode t) ;; powerfull undo/redo mode
 (diminish 'undo-tree-mode)
