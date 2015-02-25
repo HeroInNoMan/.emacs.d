@@ -38,9 +38,11 @@
 					 markdown-mode
 					 move-text
 					 multiple-cursors
+					 restclient
 					 smartscan
 					 tree-mode
 					 undo-tree
+					 yasnippet
 					 web-mode
 					 w3m))
 
@@ -252,8 +254,29 @@
 ;; god-mode
 (require 'god-mode)
 (global-set-key (kbd "<f12>") 'god-mode-all)
-(setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
+(defun my-update-cursor ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only)
+                        'box
+                      'bar)))
+
+(add-hook 'god-mode-enabled-hook 'my-update-cursor)
+(add-hook 'god-mode-disabled-hook 'my-update-cursor)
+(defun c/god-mode-update-cursor ()
+  (let ((limited-colors-p (> 257 (length (defined-colors)))))
+    (cond (god-local-mode (progn
+                            (set-face-background 'mode-line (if limited-colors-p "white" "#e9e2cb"))
+                            (set-face-background 'mode-line-inactive (if limited-colors-p "white" "#e9e2cb"))))
+          (t (progn
+               (set-face-background 'mode-line (if limited-colors-p "black" "#0a2832"))
+               (set-face-background 'mode-line-inactive (if limited-colors-p "black" "#0a2832")))))))
+(define-key god-local-mode-map (kbd "i") 'god-local-mode)
+(define-key god-local-mode-map (kbd ".") 'repeat)
+(global-set-key (kbd "C-x C-1") 'delete-other-windows)
+(global-set-key (kbd "C-x C-2") 'split-window-below)
+(global-set-key (kbd "C-x C-3") 'split-window-right)
+(global-set-key (kbd "C-x C-0") 'delete-window)
+(add-to-list 'god-exempt-major-modes 'magit-mode)
 
 ;; Multiple cursors keybindings
 (global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
@@ -355,6 +378,33 @@
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 (setq browse-kill-ring-quit-action 'save-and-restore)
+
+;; snippets
+(require 'yasnippet)
+(yas-global-mode 1)
+;; Completing point by some yasnippet key
+(defun yas-ido-expand ()
+  "Lets you select (and expand) a yasnippet key"
+  (interactive)
+  (let ((original-point (point)))
+	(while (and
+			(not (= (point) (point-min) ))
+			(not
+			 (string-match "[[:space:]\n]" (char-to-string (char-before)))))
+	  (backward-word 1))
+    (let* ((init-word (point))
+           (word (buffer-substring init-word original-point))
+           (list (yas-active-keys)))
+      (goto-char original-point)
+      (let ((key (remove-if-not
+                  (lambda (s) (string-match (concat "^" word) s)) list)))
+        (if (= (length key) 1)
+            (setq key (pop key))
+          (setq key (ido-completing-read "key: " list nil nil word)))
+        (delete-char (- init-word original-point))
+        (insert key)
+        (yas-expand)))))
+(define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-ido-expand)
 
 ;; session saving, backup management
 (setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
@@ -525,7 +575,7 @@
 
 (find-file (expand-file-name "init.el" user-emacs-directory))
 
-;; set up a nice dark theme
+;; set up a dark theme
 (color-theme-initialize)
 (color-theme-dark-laptop)
 

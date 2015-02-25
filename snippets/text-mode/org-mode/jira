@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: jira
+# key: jira
+# binding: direct-keybinding
+# --
+[[http://jira.sfrdev.fr/browse/$1][$1]]$0
+`(org-toggle-link-display)`
