@@ -12,3 +12,4 @@ tramp
 /.emacs.desktop
 /projectile-bookmarks.eld
 /history
+/projectile.cache
