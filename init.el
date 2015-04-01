@@ -24,6 +24,7 @@
 					 diminish
 					 dired-details
 					 dirtree
+					 engine-mode
 					 expand-region
 					 flx-ido
 					 gitconfig-mode
@@ -337,11 +338,6 @@
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 
-;; dired
-(require 'dired-details)
-(dired-details-install)
-(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
-
 ;; scratch
 (require 'multi-scratch)
 (setq multi-scratch-buffer-name "new")
@@ -422,6 +418,19 @@
 (savehist-mode 1)
 (desktop-read)
 
+;; engine-mode
+(require 'engine-mode)
+(engine-mode t)
+(defengine duckduckgo "https://duckduckgo.com/?q=%s" "d")
+(defengine github "https://github.com/search?ref=simplesearch&q=%s" "h")
+(defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" "g")
+(defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" "i")
+(defengine google-maps "http://maps.google.com/maps?q=%s" "m")
+(defengine stack-overflow "https://stackoverflow.com/search?q=%s" "o")
+(defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" "w")
+(defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s")
+(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" "y")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION
 
@@ -434,6 +443,11 @@
 ;; mail-mode
 (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
+
+;; dired
+(require 'dired-details)
+(dired-details-install)
+(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
 ;; git
 ;; (remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
