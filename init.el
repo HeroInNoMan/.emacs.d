@@ -428,8 +428,9 @@
 (defengine google-maps "http://maps.google.com/maps?q=%s" "m")
 (defengine stack-overflow "https://stackoverflow.com/search?q=%s" "o")
 (defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" "w")
-(defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s")
+(defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" "t")
 (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" "y")
+(defengine torrentz "https://torrentz.eu/search?f=%s" "z")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION
@@ -533,24 +534,30 @@
 ;; (setq jedi:complete-on-dot t) ;; optional
 
 ;; ORG-MODE
-;; notes in
-(setq org-default-notes-file
-	  `(("." . ,(expand-file-name
-				 (concat user-emacs-directory ".notes")))))
+(global-set-key (kbd "\C-c l") 'org-store-link)
+(global-set-key (kbd "\C-c a") 'org-agenda)
+(global-set-key (kbd "\C-c b") 'org-iswitchb)
+
+;; org-capture
+(setq org-default-notes-file (concat user-emacs-directory ".notes"))
+(global-set-key (kbd "C-c c") 'org-capture)
+(setq org-export-coding-system 'utf-8)
+
+;; org-capture-templates
+(setq org-capture-templates
+      '(("t" "Todo polopeche" entry (file+headline "/sshx:polopeche:/home/duncan/Terminalcity/Todo/arthur.org" "VRAC") "* TODO %?\n\t%i")
+        ("d" "Diary entry" entry (file+datetree "/sshx:polopeche:/home/duncan/Terminalcity/Textes/diary.org") "* %<%Hh%M>\n\t%?")
+        ("n" "Note" entry (file+datetree "/home/duncan/Terminalcity/Textes/notes.org") "* %<%Hh%M>\n\t%?")
+		))
+
 (setq org-completion-use-ido t)
+
 ;; font and faces customization
 (setq org-todo-keyword-faces
 	  '(("INPR" . (:foreground "yellow" :weight bold))
 		("STARTED" . (:foreground "yellow" :weight bold))
 		("WAIT" . (:foreground "yellow" :weight bold))
 		("INPROGRESS" . (:foreground "yellow" :weight bold))))
-(global-set-key (kbd "\C-c l") 'org-store-link)
-(global-set-key (kbd "\C-c a") 'org-agenda)
-(global-set-key (kbd "\C-c b") 'org-iswitchb)
-(global-set-key (kbd "C-M-r") 'remember)
-;; Remember
-(global-set-key (kbd "\C-cr") 'org-remember)
-(global-set-key (kbd "C-M-r") 'org-remember)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration
