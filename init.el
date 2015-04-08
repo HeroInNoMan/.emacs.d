@@ -259,7 +259,7 @@
 (defun my-update-cursor ()
   (setq cursor-type (if (or god-local-mode buffer-read-only)
                         'box
-                      'bar)))
+                      'box)))
 
 (add-hook 'god-mode-enabled-hook 'my-update-cursor)
 (add-hook 'god-mode-disabled-hook 'my-update-cursor)
@@ -281,6 +281,7 @@
 (global-set-key (kbd "C-x C-2") 'split-window-below)
 (global-set-key (kbd "C-x C-3") 'split-window-right)
 (global-set-key (kbd "C-x C-0") 'delete-window)
+(add-to-list 'god-exempt-major-modes 'ibuffer-mode)
 (add-to-list 'god-exempt-major-modes 'magit-mode)
 
 ;; Multiple cursors keybindings
@@ -301,6 +302,7 @@
 ;; projectile-mode
 (projectile-global-mode) ;; activate projectile-mode everywhere
 (setq projectile-enable-caching t) ;; enable caching for projectile-mode
+(diminish 'projectile-mode)
 
 ;; spell-check
 (require 'ispell)
@@ -431,6 +433,7 @@
 (defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" "t")
 (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" "y")
 (defengine torrentz "https://torrentz.eu/search?f=%s" "z")
+(defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" "c")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION
@@ -541,13 +544,18 @@
 ;; org-capture
 (setq org-default-notes-file (concat user-emacs-directory ".notes"))
 (global-set-key (kbd "C-c c") 'org-capture)
+(key-chord-define-global (kbd "gx") 'org-capture)
 (setq org-export-coding-system 'utf-8)
 
 ;; org-capture-templates
 (setq org-capture-templates
-      '(("t" "Todo polopeche" entry (file+headline "/sshx:polopeche:/home/duncan/Terminalcity/Todo/arthur.org" "VRAC") "* TODO %?\n\t%i")
-        ("d" "Diary entry" entry (file+datetree "/sshx:polopeche:/home/duncan/Terminalcity/Textes/diary.org") "* %<%Hh%M>\n\t%?")
-        ("n" "Note" entry (file+datetree "/home/duncan/Terminalcity/Textes/notes.org") "* %<%Hh%M>\n\t%?")
+      '(
+        ("d" "Diary entry" entry (file+datetree "/sshx:polopeche:/home/duncan/Terminalcity/Textes/diary.org") "* %<%Hh%M>\n\t%i%?")
+        ("l" "work log" entry (file+datetree "~/Terminalcity/SFR.org" "Diary") "* %i%?")
+        ("n" "Note" entry (file+datetree "~/.emacs.d/notes.org") "* %<%Hh%M>\n\t%i%?")
+		("s" "Todo SFR" entry (file+headline "~/Terminalcity/SFR.org" "À faire") "* TODO %?\n\t%i")
+		("t" "Todo Arthur" entry (file+headline "/sshx:polopeche:/home/duncan/Terminalcity/Todo/arthur.org" "VRAC") "* TODO %?\n\t%i")
+		("y" "Code snippet" plain (file "~/.emacs.d/code-snippets.txt" "À faire") "\n%i%?")
 		))
 
 (setq org-completion-use-ido t)
