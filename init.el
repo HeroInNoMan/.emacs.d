@@ -458,6 +458,7 @@
 (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
 (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode))
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; SH
 (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
@@ -541,8 +542,12 @@
 (global-set-key (kbd "\C-c a") 'org-agenda)
 (global-set-key (kbd "\C-c b") 'org-iswitchb)
 
-;; org-capture
-(setq org-default-notes-file (concat user-emacs-directory ".notes"))
+;; ORG-CAPTURE
+(setq org-default-notes-file (concat user-emacs-directory "notes.org"))
+(setq terminalcity-dir "~/Terminalcity/")
+(setq sfr-journal-file (concat terminalcity-dir "SFR.org"))
+(setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
+
 (global-set-key (kbd "C-c c") 'org-capture)
 (key-chord-define-global (kbd "gx") 'org-capture)
 (setq org-export-coding-system 'utf-8)
@@ -550,12 +555,15 @@
 ;; org-capture-templates
 (setq org-capture-templates
       '(
-        ("d" "Diary entry" entry (file+datetree "/sshx:polopeche:/home/duncan/Terminalcity/Textes/diary.org") "* %<%Hh%M>\n\t%i%?")
-        ("l" "work log" entry (file+datetree "~/Terminalcity/SFR.org" "Diary") "* %i%?")
-        ("n" "Note" entry (file+datetree "~/.emacs.d/notes.org") "* %<%Hh%M>\n\t%i%?")
-		("s" "Todo SFR" entry (file+headline "~/Terminalcity/SFR.org" "À faire") "* TODO %?\n\t%i")
-		("t" "Todo Arthur" entry (file+headline "/sshx:polopeche:/home/duncan/Terminalcity/Todo/arthur.org" "VRAC") "* TODO %?\n\t%i")
-		("y" "Code snippet" plain (file "~/.emacs.d/code-snippets.txt" "À faire") "\n%i%?")
+		;; local
+        ("l" "work log" entry (file+datetree (concat terminalcity-dir "SFR.org") "Diary") "* %i%?")
+        ("n" "Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
+		("s" "Todo SFR" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i")
+		("T" "Todo local" entry (file+headline org-default-notes-file "VRAC") "* TODO %?\n\t%i")
+		("y" "Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
+		;; remote
+        ("d" "Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
+		("t" "Todo Arthur" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
 		))
 
 (setq org-completion-use-ido t)
