@@ -621,7 +621,9 @@
 (color-theme-dark-laptop)
 
 ;; server mode
-(server-start)
+(if (and (fboundp 'server-running-p)
+         (not (server-running-p)))
+	(server-start))
 (global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
 
 ;; init.el ends here.
