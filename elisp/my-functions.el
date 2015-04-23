@@ -130,5 +130,14 @@
 	  (setq show-trailing-whitespace t)
 	  (message "trailing whitespaces enabled"))))
 
-  (provide 'my-functions)
-  ;; misc-functions.el ends here.
+(defun jirify ()
+  "makes a ticket ID into an org link to the JIRA ticket"
+  (interactive)
+  (setq id (thing-at-point 'filename))
+  (setq org-url (concat " [[http://jira.sfrdev.fr/browse/" id "][" id "]]"))
+  (search-backward " ")
+  (kill-word 2)
+  (insert org-url))
+
+(provide 'my-functions)
+;; misc-functions.el ends here.
