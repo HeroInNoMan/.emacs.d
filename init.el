@@ -255,11 +255,11 @@
 
 ;; god-mode
 (require 'god-mode)
-(global-set-key (kbd "<f12>") 'god-mode-all)
+(global-set-key (kbd "<f12>") 'god-local-mode)
 (defun my-update-cursor ()
-  (setq cursor-type (if (or god-local-mode buffer-read-only)
-                        'box
-                      'box)))
+  (if (or god-local-mode buffer-read-only)
+	  (set-cursor-color "red")
+	(set-cursor-color "yellow")))
 
 (add-hook 'god-mode-enabled-hook 'my-update-cursor)
 (add-hook 'god-mode-disabled-hook 'my-update-cursor)
