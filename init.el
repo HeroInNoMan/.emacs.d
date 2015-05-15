@@ -423,17 +423,17 @@
 ;; engine-mode
 (require 'engine-mode)
 (engine-mode t)
-(defengine duckduckgo "https://duckduckgo.com/?q=%s" "d")
-(defengine github "https://github.com/search?ref=simplesearch&q=%s" "h")
-(defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" "g")
-(defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" "i")
-(defengine google-maps "http://maps.google.com/maps?q=%s" "m")
-(defengine stack-overflow "https://stackoverflow.com/search?q=%s" "o")
-(defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" "w")
-(defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" "t")
-(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" "y")
-(defengine torrentz "https://torrentz.eu/search?f=%s" "z")
-(defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" "c")
+(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
+(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
+(defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" :keybinding "g")
+(defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" :keybinding "i")
+(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m")
+(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "o")
+(defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" :keybinding "w")
+(defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
+(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
+(defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
+(defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION
