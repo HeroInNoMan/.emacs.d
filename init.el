@@ -15,7 +15,8 @@
   (package-initialize))
 
 ;; packages to be installed and loaded
-(setq package-list '(ace-jump-mode
+(setq package-list '(2048-game
+					 ace-jump-mode
 					 ace-window
 					 better-defaults
 					 browse-kill-ring
@@ -42,6 +43,7 @@
 					 multiple-cursors
 					 restclient
 					 smartscan
+					 speed-type
 					 tree-mode
 					 undo-tree
 					 yasnippet
