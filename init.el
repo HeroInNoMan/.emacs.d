@@ -437,6 +437,10 @@
 (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
 (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c")
 
+;;revert windows on ediff exit - needs winner mode
+(winner-mode)
+(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION
 
