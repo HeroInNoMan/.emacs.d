@@ -284,7 +284,6 @@
 (global-set-key (kbd "C-x C-3") 'split-window-right)
 (global-set-key (kbd "C-x C-0") 'delete-window)
 (add-to-list 'god-exempt-major-modes 'ibuffer-mode)
-(add-to-list 'god-exempt-major-modes 'magit-mode)
 
 ;; Multiple cursors keybindings
 (global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
@@ -436,6 +435,8 @@
 (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
 (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
 (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c")
+(defengine wordreference "www.wordreference.com/enfr/%s" :keybinding "r")
+(defengine wordreference "www.wordreference.com/fren/%s" :keybinding "R")
 
 ;;revert windows on ediff exit - needs winner mode
 (winner-mode)
@@ -457,6 +458,7 @@
 ;; dired
 (require 'dired-details)
 (dired-details-install)
+(put 'dired-find-alternate-file 'disabled nil)
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
 ;; git
