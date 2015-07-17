@@ -670,7 +670,6 @@ Results are reported in a compilation buffer."
 (defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
 (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
 (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
-(defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c")
 (defengine wordreference "www.wordreference.com/enfr/%s" :keybinding "r")
 (defengine wordreference "www.wordreference.com/fren/%s" :keybinding "R")
 (engine/set-keymap-prefix (kbd "C-c s"))
@@ -962,7 +961,6 @@ _mx_: xml
 ;; ORG-CAPTURE
 (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
 (setq terminalcity-dir "~/Terminalcity/")
-(setq sfr-journal-file (concat terminalcity-dir "SFR.org"))
 (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
 
 (key-chord-define-global (kbd "gx") 'org-capture)
@@ -972,9 +970,7 @@ _mx_: xml
 (setq org-capture-templates
       '(
         ;; local
-        ("d" "local - Diary entry" entry (file+datetree (concat terminalcity-dir "Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
         ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
-        ("t" "local - TODO" entry (file+headline (concat terminalcity-dir "Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
         ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
         ;; remote
         ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
@@ -995,6 +991,11 @@ _mx_: xml
 ;;;;;;;;;;;;;;;;;;;
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; load environment specific code ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(load-file (expand-file-name "env.el" user-emacs-directory))
 
 ;;;;;;;;;;;;;;
 ;; EPILOGUE ;;
