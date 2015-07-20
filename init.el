@@ -259,12 +259,13 @@
 (require 'god-mode)
 (global-set-key (kbd "<f12>") 'god-local-mode)
 (defun my-update-cursor ()
-  (if (or god-local-mode buffer-read-only)
+  (if god-local-mode
 	  (set-cursor-color "red")
 	(set-cursor-color "yellow")))
 
 (add-hook 'god-mode-enabled-hook 'my-update-cursor)
 (add-hook 'god-mode-disabled-hook 'my-update-cursor)
+(add-hook 'window-configuration-change-hook 'my-update-cursor)
 (define-key god-local-mode-map (kbd "z") 'repeat)
 (define-key god-local-mode-map (kbd ".") 'repeat)
 (define-key god-local-mode-map (kbd "i") 'god-local-mode)
