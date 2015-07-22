@@ -313,6 +313,32 @@
 (global-set-key (kbd "<f9>") 'flyspell-mode) ;; check spelling on the fly
 (global-set-key (kbd "C-<f9>") 'flyspell-buffer) ;; run check on buffer
 
+;; auto-correct
+(global-set-key (kbd "<f2>") 'endless/ispell-word-then-abbrev)
+
+(defun endless/ispell-word-then-abbrev (p)
+  "Call `ispell-word', then create an abbrev for it.
+With prefix P, create local abbrev. Otherwise it will
+be global."
+  (interactive "P")
+  (let ((bef (downcase (or (thing-at-point 'word)
+                           "")))
+        aft)
+    (call-interactively 'ispell-word)
+    (setq aft (downcase
+               (or (thing-at-point 'word) "")))
+    (unless (or (string= aft bef)
+                (string= aft "")
+                (string= bef ""))
+      (message "\"%s\" now expands to \"%s\" %sally"
+               bef aft (if p "loc" "glob"))
+      (define-abbrev
+        (if p local-abbrev-table global-abbrev-table)
+        bef aft))))
+
+(setq save-abbrevs t)
+(setq-default abbrev-mode t)
+
 ;; guide key
 (require 'guide-key)
 (require 'guide-key-tip)
