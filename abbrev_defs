@@ -50,7 +50,24 @@
 (define-abbrev-table 'global-abbrev-table
   '(
     ("praamètres" "paramètres" nil 1)
-   ))
+	("cuop" "coup" nil 1)
+	("adns" "dans" nil 1)
+	("dasn" "dans" nil 1)
+	("dnas" "dans" nil 1)
+	("uoi" "oui" nil 1)
+	("oauis" "ouais" nil 1)
+	("oausi" "ouais" nil 1)
+	("ouasi" "ouais" nil 1)
+	("ouias" "ouais" nil 1)
+	("aps" "pas" nil 1)
+	("psa" "pas" nil 1)
+	("qunad" "quand" nil 1)
+	("qqun" "quelqu’un" nil 1)
+	("mainetnat" "maintenant" nil 1)
+	("uqe" "que" nil 1)
+	("vraiemnt" "vraiment" nil 1)
+	("trcu" "truc" nil 1)
+	))
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
 
@@ -133,4 +150,3 @@
 (define-abbrev-table 'vc-git-log-view-mode-abbrev-table '())
 
 (define-abbrev-table 'web-mode-abbrev-table '())
-
