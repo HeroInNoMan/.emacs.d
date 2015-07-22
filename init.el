@@ -592,14 +592,13 @@ be global."
 (setq org-capture-templates
       '(
 		;; local
-        ("l" "work log" entry (file+datetree (concat terminalcity-dir "SFR.org") "Diary") "* %i%?")
-        ("n" "Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
-		("s" "Todo SFR" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i")
-		("T" "Todo local" entry (file+headline org-default-notes-file "VRAC") "* TODO %?\n\t%i")
-		("y" "Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
+        ("d" "local - Diary entry" entry (file+datetree (concat terminalcity-dir "Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
+        ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
+		("t" "local - TODO" entry (file+headline (concat terminalcity-dir "Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
+		("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
 		;; remote
-        ("d" "Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
-		("t" "Todo Arthur" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
+        ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
+		("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
 		))
 
 (setq org-completion-use-ido t)
