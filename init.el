@@ -34,6 +34,7 @@
 					 guide-key-tip
 					 helm
 					 helm-projectile
+					 hydra
 					 idle-highlight-mode
 					 ido-ubiquitous
 					 key-chord
@@ -468,6 +469,10 @@ be global."
 ;;revert windows on ediff exit - needs winner mode
 (winner-mode)
 (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+
+
+;; hydra mode
+(require 'hydra)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION
