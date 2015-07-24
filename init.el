@@ -40,6 +40,7 @@
 					 key-chord
 					 magit
 					 markdown-mode
+					 minimap
 					 move-text
 					 multiple-cursors
 					 restclient
@@ -240,7 +241,7 @@
 (global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
 
 ;; minimap (disabled because it causes org-mode to bug)
-;; (require 'minimap)
+(require 'minimap)
 ;; (global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
 
 ;; cursor movement and features
