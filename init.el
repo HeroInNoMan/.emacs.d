@@ -469,7 +469,7 @@ Single Capitals as you type."
 
 ;; engine-mode
 (require 'engine-mode)
-(engine-mode t)
+(engine-mode t) ;; prefix C-c /
 (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
 (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
 (defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" :keybinding "g")
