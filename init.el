@@ -182,12 +182,6 @@
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
 
-;; some visual modes toggling with function keys
-(global-set-key (kbd "<f6>") 'whitespace-mode)
-(global-set-key (kbd "C-<f6>") 'toggle-show-trailing-whitespace)
-(global-set-key (kbd "<f7>") 'linum-mode)
-(global-set-key (kbd "<f8>") 'idle-highlight-mode)
-
 ;; activate key-chords
 (require 'key-chord)
 (key-chord-mode 1)
@@ -470,9 +464,56 @@ be global."
 (winner-mode)
 (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
 
-
 ;; hydra mode
 (require 'hydra)
+(defvar whitespace-mode nil)
+(global-set-key
+ (kbd "<f8>")
+ (defhydra hydra-toggle-simple (:color red)
+   "toggle minor mode"
+   ("a" abbrev-mode "abbrev")
+   ("d" toggle-debug-on-error "debug")
+   ("f" flyspell-mode "flyspell")
+   ("F" flyspell-buffer "check buffer")
+   ("g" god-mode "GOD" :color blue)
+   ("h" idle-highlight-mode "highlight")
+   ("l" linum-mode "linum")
+   ("m" minimap-toggle "map")
+   ("t" toggle-show-trailing-whitespace "trailing")
+   ("w" whitespace-mode "whitespace")
+   ("q" nil "cancel")))
+(global-set-key
+ (kbd "C-c m")
+ (defhydra hydra-major-mode (:color blue)
+   "select major mode"
+   ("g" groovy-mode "groovy")
+   ("j" java-mode "java")
+   ("J" javascript-mode "javascript")
+   ("l" lisp-mode "lisp")
+   ("o" org-mode "org")
+   ("p" python-mode "python")
+   ("r" ruby-mode "ruby")
+   ("s" sh-mode "shell")
+   ("S" sql-mode "sql")
+   ("t" text-mode "text")
+   ("w" web-mode "web")
+   ("x" xml-mode "xml")
+   ("q" nil "cancel")))
+(key-chord-define-global (kbd "+-")
+ (defhydra hydra-major-mode (:color red)
+   "move around"
+   ("a" move-beginning-of-line "home")
+   ("e" move-end-of-line "end")
+   ("n" next-line "down")
+   ("j" next-line "down")
+   ("p" previous-line "up")
+   ("k" previous-line "up")
+   ("f" forward-char "right")
+   ("b" backward-char "left")
+   ("<SPC>" scroll-up-command "page down")
+   ("u" scroll-down-command "page up")
+   ("d" scroll-up-command "page down")
+   ("q" nil "cancel")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION
