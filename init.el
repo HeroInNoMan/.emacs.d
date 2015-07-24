@@ -334,6 +334,29 @@ be global."
 (setq save-abbrevs t)
 (setq-default abbrev-mode t)
 
+;; more auto-correct: remove accidental double capitals
+(defun dcaps-to-scaps ()
+  "Convert word in DOuble CApitals to Single Capitals."
+  (interactive)
+  (and (= ?w (char-syntax (char-before)))
+       (save-excursion
+         (and (if (called-interactively-p)
+                  (skip-syntax-backward "w")
+                (= -3 (skip-syntax-backward "w")))
+              (let (case-fold-search)
+                (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
+              (capitalize-word 1)))))
+
+(add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
+(define-minor-mode dubcaps-mode
+  "Toggle `dubcaps-mode'.  Converts words in DOuble CApitals to
+Single Capitals as you type."
+  :init-value nil
+  :lighter (" DC")
+  (if dubcaps-mode
+      (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
+    (remove-hook 'post-self-insert-hook #'dcaps-to-scaps 'local)))
+
 ;; guide key
 (require 'guide-key)
 (require 'guide-key-tip)
@@ -521,6 +544,7 @@ be global."
 ;; text
 (setq default-major-mode 'text-mode) ;; text-mode by default
 (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
+(add-hook 'text-mode-hook 'dubcaps-mode)
 (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
 (remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 
