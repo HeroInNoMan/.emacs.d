@@ -40,12 +40,12 @@
 					 key-chord
 					 magit
 					 markdown-mode
-					 minimap
 					 move-text
 					 multiple-cursors
 					 restclient
 					 smartscan
 					 speed-type
+					 sublimity
 					 tree-mode
 					 undo-tree
 					 yasnippet
@@ -240,9 +240,10 @@
 (require 'dirtree)
 (global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
 
-;; minimap (disabled because it causes org-mode to bug)
-(require 'minimap)
-;; (global-set-key (kbd "<f12>") 'minimap-toggle) ;; toggle minimap
+;; sublimity (minimap, distraction-free mode)
+(require 'sublimity)
+(require 'sublimity-scroll)
+(require 'sublimity-map)
 
 ;; cursor movement and features
 (global-set-key (kbd "C-c e") 'er/expand-region) ;; expand region by syntaxic units
