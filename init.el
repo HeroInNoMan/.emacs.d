@@ -238,7 +238,6 @@
 
 ;; dirtree
 (require 'dirtree)
-(global-set-key (kbd "<f10>") 'dirtree) ;; call a visual directory tree to browse
 
 ;; sublimity (minimap, distraction-free mode)
 (require 'sublimity)
@@ -307,12 +306,8 @@
 (require 'ispell)
 (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
 (setq-default ispell-program-name "aspell") ;; aspell by default
-(global-set-key (kbd "<f9>") 'flyspell-mode) ;; check spelling on the fly
-(global-set-key (kbd "C-<f9>") 'flyspell-buffer) ;; run check on buffer
 
 ;; auto-correct
-(global-set-key (kbd "<f2>") 'endless/ispell-word-then-abbrev)
-
 (defun endless/ispell-word-then-abbrev (p)
   "Call `ispell-word', then create an abbrev for it.
 With prefix P, create local abbrev. Otherwise it will
@@ -493,51 +488,77 @@ Single Capitals as you type."
 (require 'hydra)
 (defvar whitespace-mode nil)
 (global-set-key
- (kbd "<f8>")
- (defhydra hydra-toggle-simple (:color red)
-   "toggle minor mode"
+ (kbd "C-c m")
+ (defhydra hydra-toggle-mode (:color blue)
+   "
+^Major mode^        ^Minor mode^
+^^^^^^^^----------------------------
+_mg_: groovy        _a_: abbrev
+_mj_: java          _c_: dubcaps
+_mJ_: javascript    _d_: dirtree
+_ml_: lisp          _f_: flyspell
+_mm_: markdown      _F_: flycheck
+_mo_: org           _g_: god
+_mp_: python        _h_: highlight
+_mr_: ruby          _l_: highlight
+_ms_: shell         _s_: sublimity
+_mS_: sql           _t_: trailing
+_mt_: text          _u_: undo-tree
+_mw_: web           _w_: whitespace
+_mx_: xml
+"
    ("a" abbrev-mode "abbrev")
-   ("d" toggle-debug-on-error "debug")
+   ("c" dubcaps-mode "dubcaps")
+   ("d" dirtree "dirtree")
+   ;; ("d" toggle-debug-on-error "debug")
    ("f" flyspell-mode "flyspell")
-   ("F" flyspell-buffer "check buffer")
+   ("F" flyspell-buffer "flycheck")
    ("g" god-mode "GOD" :color blue)
    ("h" idle-highlight-mode "highlight")
    ("l" linum-mode "linum")
-   ("m" minimap-toggle "map")
+   ("s" sublimity-mode "sublimity")
    ("t" toggle-show-trailing-whitespace "trailing")
+   ("u" undo-tree-visualize "undo-tree")
    ("w" whitespace-mode "whitespace")
+   ("mg" groovy-mode "groovy")
+   ("mj" java-mode "java")
+   ("mJ" javascript-mode "javascript")
+   ("ml" lisp-mode "lisp")
+   ("mm" markdown-mode "markdown")
+   ("mo" org-mode "org")
+   ("mp" python-mode "python")
+   ("mr" ruby-mode "ruby")
+   ("ms" sh-mode "shell")
+   ("mS" sql-mode "sql")
+   ("mt" text-mode "text")
+   ("mw" web-mode "web")
+   ("mx" xml-mode "xml")
    ("q" nil "cancel")))
+;; (global-set-key
+;;  (kbd "<f7>")
+;;  (defhydra hydra-major-mode (:color pink)
+;;    "move around"
+;;    ("a" move-beginning-of-line "home")
+;;    ("e" move-end-of-line "end")
+;;    ("n" next-line "down")
+;;    ("j" next-line "down")
+;;    ("p" previous-line "up")
+;;    ("k" previous-line "up")
+;;    ("f" forward-char "right")
+;;    ("b" backward-char "left")
+;;    ("<SPC>" scroll-up-command "page down")
+;;    ("d" scroll-up-command "page down")
+;;    ("v" scroll-up-command "page down")
+;;    ("u" scroll-down-command "page up")
+;;    ("q" nil "cancel")))
 (global-set-key
- (kbd "C-c m")
- (defhydra hydra-major-mode (:color blue)
-   "select major mode"
-   ("g" groovy-mode "groovy")
-   ("j" java-mode "java")
-   ("J" javascript-mode "javascript")
-   ("l" lisp-mode "lisp")
-   ("o" org-mode "org")
-   ("p" python-mode "python")
-   ("r" ruby-mode "ruby")
-   ("s" sh-mode "shell")
-   ("S" sql-mode "sql")
-   ("t" text-mode "text")
-   ("w" web-mode "web")
-   ("x" xml-mode "xml")
-   ("q" nil "cancel")))
-(key-chord-define-global (kbd "+-")
- (defhydra hydra-major-mode (:color red)
-   "move around"
-   ("a" move-beginning-of-line "home")
-   ("e" move-end-of-line "end")
-   ("n" next-line "down")
-   ("j" next-line "down")
-   ("p" previous-line "up")
-   ("k" previous-line "up")
-   ("f" forward-char "right")
-   ("b" backward-char "left")
-   ("<SPC>" scroll-up-command "page down")
-   ("u" scroll-down-command "page up")
-   ("d" scroll-up-command "page down")
+ (kbd "<f9>")
+ (defhydra hydra-spell (:color blue)
+   "spelling"
+   ("t" endless/ispell-word-then-abbrev "corr. & add")
+   ("f" flyspell-mode "flyspell")
+   ("c" flyspell-buffer "flycheck buffer")
+   ("d" ispell-change-dictionary "change dictionary")
    ("q" nil "cancel")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -546,12 +567,11 @@ Single Capitals as you type."
 ;; text
 (setq default-major-mode 'text-mode) ;; text-mode by default
 (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
-(add-hook 'text-mode-hook 'dubcaps-mode)
+(add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
 (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
-(remove-hook 'text-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 
 ;; mail-mode
-(remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
+;; (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
 
 ;; dired
@@ -561,7 +581,6 @@ Single Capitals as you type."
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
 ;; git
-;; (remove-hook 'git-commit-mode-hook 'flyspell-mode) ;; auto-correct disabled in git-commit buffers
 (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
 (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode))
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
