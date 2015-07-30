@@ -566,9 +566,10 @@ _mx_: xml
 
 ;; text
 (setq default-major-mode 'text-mode) ;; text-mode by default
+(add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
 (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
 (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
-(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; no auto-fill since I use visual-line-mode
+(remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
 
 ;; mail-mode
 ;; (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
