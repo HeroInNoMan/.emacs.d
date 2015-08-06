@@ -601,10 +601,12 @@ _mx_: xml
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
 ;; git
+(require 'magit)
 (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
 (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode))
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 (setq magit-last-seen-setup-instructions "1.4.0")
+(magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order")
 
 ;; SH
 (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
@@ -847,3 +849,9 @@ _mx_: xml
  ;; If there is more than one, they won't work right.
  '(magit-fetch-arguments (quote ("--prune")))
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
