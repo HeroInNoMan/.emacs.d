@@ -2,8 +2,9 @@
 ;;                    emacs config file                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; INSTALLATION & LOADING
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; INSTALLATION & LOADING ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; package-style dependencies
 (when (>= emacs-major-version 24)
@@ -67,8 +68,9 @@
 ;; custom conf files
 (require 'my-functions) ;; custom functions
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; DEFAULTS
+;;;;;;;;;;;;;;
+;; DEFAULTS ;;
+;;;;;;;;;;;;;;
 
 ;; No splash screen
 (setq inhibit-startup-screen t)
@@ -160,8 +162,9 @@
 ;; No flashing!
 (setq visible-bell nil)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; VARIOUS SETTINGS
+;;;;;;;;;;;;;;;;;;;;;;
+;; VARIOUS SETTINGS ;;
+;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Killing emacs
 (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
@@ -562,8 +565,9 @@ _mx_: xml
    ("d" ispell-change-dictionary "change dictionary")
    ("q" nil "cancel")))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MAJOR MODE SPECIFIC CONFIGURATION
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MAJOR MODE SPECIFIC CONFIGURATION ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; text
 (setq default-major-mode 'text-mode) ;; text-mode by default
@@ -703,8 +707,9 @@ _mx_: xml
 		("WAIT" . (:foreground "yellow" :weight bold))
 		("INPROGRESS" . (:foreground "yellow" :weight bold))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; OS-specific configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; OS-specific configuration ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Load system-specific library and setup system-specific things that
 ;; must be setup before main setup
@@ -735,12 +740,15 @@ _mx_: xml
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
 	  ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; VARIOUS KEY BINDINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; VARIOUS KEY BINDINGS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; EPILOGUE
+;;;;;;;;;;;;;;
+;; EPILOGUE ;;
+;;;;;;;;;;;;;;
 
 (find-file (expand-file-name "init.el" user-emacs-directory))
 
