@@ -397,6 +397,19 @@ Single Capitals as you type."
 ;; date, time, calendar
 (setq display-time-day-and-date t ;; display date and time
 	  display-time-24hr-format t ;; 24h time format
+	  display-time-string-forms '((propertize
+								   (format-time-string
+									(or display-time-format
+										(if display-time-24hr-format "%H:%M" "%-I:%M%p"))
+									now)
+								   'help-echo
+								   (format-time-string "%a %e %b %Y" now))
+								  (if
+									  (and
+									   (not display-time-format)
+									   display-time-day-and-date)
+									  (format-time-string ", %a %e %b %Y" now)
+									""))
 	  european-calendar-style t ;; day/month/year format for calendar
 	  calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
