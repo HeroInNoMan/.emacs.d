@@ -562,6 +562,7 @@ _mx_: xml
    ("t" endless/ispell-word-then-abbrev "corr. & add")
    ("f" flyspell-mode "flyspell")
    ("c" flyspell-buffer "flycheck buffer")
+   ("F" flyspell-buffer "flycheck buffer")
    ("d" ispell-change-dictionary "change dictionary")
    ("q" nil "cancel")))
 
