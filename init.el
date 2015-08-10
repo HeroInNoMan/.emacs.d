@@ -17,42 +17,42 @@
 
 ;; packages to be installed and loaded
 (setq package-list '(2048-game
-					 ace-jump-mode
-					 ace-window
-					 better-defaults
-					 browse-kill-ring
-					 color-theme
-					 company
-					 diminish
-					 dired-details
-					 dirtree
-					 engine-mode
-					 expand-region
-					 flx-ido
-					 gitconfig-mode
-					 god-mode
-					 guide-key
-					 guide-key-tip
-					 helm
-					 helm-projectile
-					 hydra
-					 idle-highlight-mode
-					 ido-ubiquitous
-					 key-chord
-					 magit
-					 markdown-mode
-					 move-text
-					 multiple-cursors
-					 restclient
-					 smart-mode-line
-					 smartscan
-					 speed-type
-					 sublimity
-					 tree-mode
-					 undo-tree
-					 yasnippet
-					 web-mode
-					 w3m))
+                     ace-jump-mode
+                     ace-window
+                     better-defaults
+                     browse-kill-ring
+                     color-theme
+                     company
+                     diminish
+                     dired-details
+                     dirtree
+                     engine-mode
+                     expand-region
+                     flx-ido
+                     gitconfig-mode
+                     god-mode
+                     guide-key
+                     guide-key-tip
+                     helm
+                     helm-projectile
+                     hydra
+                     idle-highlight-mode
+                     ido-ubiquitous
+                     key-chord
+                     magit
+                     markdown-mode
+                     move-text
+                     multiple-cursors
+                     restclient
+                     smart-mode-line
+                     smartscan
+                     speed-type
+                     sublimity
+                     tree-mode
+                     undo-tree
+                     yasnippet
+                     web-mode
+                     w3m))
 
 ;; fetch the list of packages available if no elpa dir present
 (or (file-exists-p package-user-dir) (package-refresh-contents))
@@ -60,7 +60,7 @@
 ;; install the missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
-	(package-install package)))
+    (package-install package)))
 
 ;; add .emacs.d/elisp/ and .emacs.d/elisp/groovy-mode/ to load-path
 (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
@@ -127,7 +127,7 @@
 
 ;; Always display line and column numbers
 (setq line-number-mode t
-	  column-number-mode t)
+      column-number-mode t)
 
 ;; Lines should be 80 characters wide, not 70
 (setq-default fill-column 80)
@@ -150,12 +150,12 @@
 
 ;; Change how buffer names are made unique
 (setq uniquify-buffer-name-style 'post-forward
-	  uniquify-separator ":")
+      uniquify-separator ":")
 
 ;; A saner ediff
 (setq ediff-diff-options "-w"
-	  ediff-split-window-function 'split-window-horizontally
-	  ediff-window-setup-function 'ediff-setup-windows-plain)
+      ediff-split-window-function 'split-window-horizontally
+      ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; Normal tab completion in Eshell
 (setq eshell-cmpl-cycle-completions nil)
@@ -177,7 +177,7 @@
 
 ;; case-insensitive policy
 (setq read-file-name-completion-ignore-case t ;; case-insensitive completion
-	  read-buffer-completion-ignore-case t) ;; case-insensitive completion
+      read-buffer-completion-ignore-case t) ;; case-insensitive completion
 
 ;; colors, appearance
 (require 'iso-transl) ;; some environments don’t handle dead keys
@@ -240,7 +240,7 @@
 (helm-autoresize-mode t)
 (global-set-key (kbd "M-x") 'helm-M-x) ;; superior to M-x
 (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
-	  helm-buffers-fuzzy-matching t
+      helm-buffers-fuzzy-matching t
       helm-recentf-fuzzy-match    t)
 (global-set-key (kbd "C-c h") 'helm-mini) ;; call helm completion
 (global-set-key (kbd "M-ç") 'helm-mini) ;; call helm for current buffers and recent files
@@ -266,8 +266,8 @@
 (global-set-key (kbd "<f12>") 'god-local-mode)
 (defun my-update-cursor ()
   (if god-local-mode
-	  (set-cursor-color "red")
-	(set-cursor-color "yellow")))
+      (set-cursor-color "red")
+    (set-cursor-color "yellow")))
 
 (add-hook 'god-mode-enabled-hook 'my-update-cursor)
 (add-hook 'god-mode-disabled-hook 'my-update-cursor)
@@ -370,24 +370,24 @@ Single Capitals as you type."
 (guide-key-mode 1)
 (diminish 'guide-key-mode)
 (setq guide-key-tip/enabled t
-	  guide-key/recursive-key-sequence-flag t
-	  guide-key/popup-window-position 'right
-	  guide-key/guide-key-sequence '("<f1>"
-									 "<f2>"
-									 "C-c"
-									 "C-h"
-									 "C-x <RET>"
-									 "C-x +"
-									 "C-x n"
-									 "C-x r"
-									 "C-x v"
-									 "C-x 4"
-									 "C-x 5"
-									 "C-x 6"
-									 "C-x 8"
-									 "C-x C-k"
-									 "C-x C-v"
-									 "M-s"))
+      guide-key/recursive-key-sequence-flag t
+      guide-key/popup-window-position 'right
+      guide-key/guide-key-sequence '("<f1>"
+                                     "<f2>"
+                                     "C-c"
+                                     "C-h"
+                                     "C-x <RET>"
+                                     "C-x +"
+                                     "C-x n"
+                                     "C-x r"
+                                     "C-x v"
+                                     "C-x 4"
+                                     "C-x 5"
+                                     "C-x 6"
+                                     "C-x 8"
+                                     "C-x C-k"
+                                     "C-x C-v"
+                                     "M-s"))
 
 ;; regexp-builder
 (require 're-builder)
@@ -403,31 +403,31 @@ Single Capitals as you type."
 
 ;; date, time, calendar
 (setq display-time-day-and-date t ;; display date and time
-	  display-time-24hr-format t ;; 24h time format
-	  display-time-string-forms '((propertize
-								   (format-time-string
-									(or display-time-format
-										(if display-time-24hr-format "%H:%M" "%-I:%M%p"))
-									now)
-								   'help-echo
-								   (format-time-string "%a %e %b %Y" now))
-								  (if
-									  (and
-									   (not display-time-format)
-									   display-time-day-and-date)
-									  (format-time-string ", %a %e %b %Y" now)
-									""))
-	  european-calendar-style t ;; day/month/year format for calendar
-	  calendar-week-start-day 1) ;; start week on Monday
+      display-time-24hr-format t ;; 24h time format
+      display-time-string-forms '((propertize
+                                   (format-time-string
+                                    (or display-time-format
+                                        (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
+                                    now)
+                                   'help-echo
+                                   (format-time-string "%a %e %b %Y" now))
+                                  (if
+                                      (and
+                                       (not display-time-format)
+                                       display-time-day-and-date)
+                                      (format-time-string ", %a %e %b %Y" now)
+                                    ""))
+      european-calendar-style t ;; day/month/year format for calendar
+      calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
 
 ;;Indentation
 (setq-default tab-width 4
-			  c-auto-newline t
-			  c-basic-offset 4
-			  c-block-comment-prefix ""
-			  c-default-style "k&r"
-			  indent-tabs-mode t)
+              c-auto-newline t
+              c-basic-offset 4
+              c-block-comment-prefix ""
+              c-default-style "k&r"
+              indent-tabs-mode t)
 
 ;; enable commands disabled by default
 (put 'downcase-region 'disabled nil)
@@ -439,8 +439,8 @@ Single Capitals as you type."
 
 ;; set default browser to firefox
 (setq gnus-button-url 'browse-url-generic
-	  browse-url-generic-program "firefox"
-	  browse-url-browser-function gnus-button-url)
+      browse-url-generic-program "firefox"
+      browse-url-browser-function gnus-button-url)
 
 ;; kill-ring
 (require 'browse-kill-ring)
@@ -455,11 +455,11 @@ Single Capitals as you type."
   "Lets you select (and expand) a yasnippet key"
   (interactive)
   (let ((original-point (point)))
-	(while (and
-			(not (= (point) (point-min) ))
-			(not
-			 (string-match "[[:space:]\n]" (char-to-string (char-before)))))
-	  (backward-word 1))
+    (while (and
+            (not (= (point) (point-min) ))
+            (not
+             (string-match "[[:space:]\n]" (char-to-string (char-before)))))
+      (backward-word 1))
     (let* ((init-word (point))
            (word (buffer-substring init-word original-point))
            (list (yas-active-keys)))
@@ -477,11 +477,11 @@ Single Capitals as you type."
 ;; session saving, backup management
 (setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
 (setq desktop-base-lock-name      "lock"
-	  desktop-save                t
-	  desktop-dirname             user-emacs-directory
-	  desktop-path                (list desktop-dirname)
-	  ;; desktop-files-not-to-save   "^$" ;reload tramp paths
-	  desktop-load-locked-desktop t)
+      desktop-save                t
+      desktop-dirname             user-emacs-directory
+      desktop-path                (list desktop-dirname)
+      ;; desktop-files-not-to-save   "^$" ;reload tramp paths
+      desktop-load-locked-desktop t)
 (desktop-save-mode 1)
 (savehist-mode 1)
 (desktop-read)
@@ -642,11 +642,11 @@ _mx_: xml
 
 (add-hook 'sql-interactive-mode-hook 'sqli-add-hooks)
 (add-hook 'sql-interactive-mode-hook
-		  (function (lambda ()
-					  (setq comint-output-filter-functions 'comint-truncate-buffer
-							comint-buffer-maximum-size 5000
-							comint-scroll-show-maximum-output t
-							comint-input-ring-size 500))))
+          (function (lambda ()
+                      (setq comint-output-filter-functions 'comint-truncate-buffer
+                            comint-buffer-maximum-size 5000
+                            comint-scroll-show-maximum-output t
+                            comint-input-ring-size 500))))
 
 ;; GROOVY
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
@@ -655,9 +655,9 @@ _mx_: xml
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 ;;; make Groovy mode electric by default.
 (add-hook 'groovy-mode-hook
-		  '(lambda ()
-			 (require 'groovy-electric)
-			 (groovy-electric-mode)))
+          '(lambda ()
+             (require 'groovy-electric)
+             (groovy-electric-mode)))
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
 
@@ -678,7 +678,7 @@ _mx_: xml
 (add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
 
 (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
-							   ("blade" . "\\.blade\\.")))
+                               ("blade" . "\\.blade\\.")))
 
 ;; JAVASCRIPT (to be tested)
 (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
@@ -711,24 +711,24 @@ _mx_: xml
 ;; org-capture-templates
 (setq org-capture-templates
       '(
-		;; local
+        ;; local
         ("d" "local - Diary entry" entry (file+datetree (concat terminalcity-dir "Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
         ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
-		("t" "local - TODO" entry (file+headline (concat terminalcity-dir "Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
-		("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
-		;; remote
+        ("t" "local - TODO" entry (file+headline (concat terminalcity-dir "Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
+        ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
+        ;; remote
         ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
-		("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
-		))
+        ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
+        ))
 
 (setq org-completion-use-ido t)
 
 ;; font and faces customization
 (setq org-todo-keyword-faces
-	  '(("INPR" . (:foreground "yellow" :weight bold))
-		("STARTED" . (:foreground "yellow" :weight bold))
-		("WAIT" . (:foreground "yellow" :weight bold))
-		("INPROGRESS" . (:foreground "yellow" :weight bold))))
+      '(("INPR" . (:foreground "yellow" :weight bold))
+        ("STARTED" . (:foreground "yellow" :weight bold))
+        ("WAIT" . (:foreground "yellow" :weight bold))
+        ("INPROGRESS" . (:foreground "yellow" :weight bold))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OS-specific configuration ;;
@@ -752,16 +752,16 @@ _mx_: xml
   ;; Prevent issues with the Windows null device (NUL)
   ;; when using cygwin find with rgrep.
   (defadvice grep-compute-defaults (around grep-compute-defaults-advice-null-device)
-	"Use cygwin's /dev/null as the null-device."
-	(let ((null-device "/dev/null"))
-	  ad-do-it))
+    "Use cygwin's /dev/null as the null-device."
+    (let ((null-device "/dev/null"))
+      ad-do-it))
   (ad-activate 'grep-compute-defaults)
   )
 (defun load-linux-specific-conf ()
   "Loads all GNU/Linux specific conf"
   )
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
-	  ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
+      ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS KEY BINDINGS ;;
@@ -782,7 +782,7 @@ _mx_: xml
 ;; server mode
 (if (and (fboundp 'server-running-p)
          (not (server-running-p)))
-	(server-start))
+    (server-start))
 (global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
 
 
@@ -792,61 +792,61 @@ _mx_: xml
 
 ;; ;; use setq-default to set it for /all/ modes
 ;; (setq mode-line-format
-;; 	  (list
-;; 	   ;; the buffer name; the file name as a tool tip
-;; 	   '(:eval (propertize "%b " 'face 'font-lock-keyword-face
-;; 						   'help-echo (buffer-file-name)))
+;;        (list
+;;         ;; the buffer name; the file name as a tool tip
+;;         '(:eval (propertize "%b " 'face 'font-lock-keyword-face
+;;                             'help-echo (buffer-file-name)))
 
-;; 	   ;; line and column
-;; 	   "(" ;; '%02' to set to 2 chars at least; prevents flickering
-;; 	   (propertize "%02l" 'face 'font-lock-type-face) ","
-;; 	   (propertize "%02c" 'face 'font-lock-type-face)
-;; 	   ") "
+;;         ;; line and column
+;;         "(" ;; '%02' to set to 2 chars at least; prevents flickering
+;;         (propertize "%02l" 'face 'font-lock-type-face) ","
+;;         (propertize "%02c" 'face 'font-lock-type-face)
+;;         ") "
 
-;; 	   ;; relative position, size of file
-;; 	   "["
-;; 	   (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
-;; 	   "/"
-;; 	   (propertize "%I" 'face 'font-lock-constant-face) ;; size
-;; 	   "] "
+;;         ;; relative position, size of file
+;;         "["
+;;         (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
+;;         "/"
+;;         (propertize "%I" 'face 'font-lock-constant-face) ;; size
+;;         "] "
 
-;; 	   ;; the current major mode for the buffer.
-;; 	   "["
+;;         ;; the current major mode for the buffer.
+;;         "["
 
-;; 	   '(:eval (propertize "%m" 'face 'font-lock-string-face
-;; 						   'help-echo buffer-file-coding-system))
-;; 	   "] "
+;;         '(:eval (propertize "%m" 'face 'font-lock-string-face
+;;                             'help-echo buffer-file-coding-system))
+;;         "] "
 
 
-;; 	   "[" ;; insert vs overwrite mode, input-method in a tooltip
-;; 	   '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-;; 						   'face 'font-lock-preprocessor-face
-;; 						   'help-echo (concat "Buffer is in "
-;; 											  (if overwrite-mode "overwrite" "insert") " mode")))
+;;         "[" ;; insert vs overwrite mode, input-method in a tooltip
+;;         '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+;;                             'face 'font-lock-preprocessor-face
+;;                             'help-echo (concat "Buffer is in "
+;;                                                (if overwrite-mode "overwrite" "insert") " mode")))
 
-;; 	   ;; was this buffer modified since the last save?
-;; 	   '(:eval (when (buffer-modified-p)
-;; 				 (concat ","  (propertize "Mod"
-;; 										  'face 'font-lock-warning-face
-;; 										  'help-echo "Buffer has been modified"))))
+;;         ;; was this buffer modified since the last save?
+;;         '(:eval (when (buffer-modified-p)
+;;                   (concat ","  (propertize "Mod"
+;;                                            'face 'font-lock-warning-face
+;;                                            'help-echo "Buffer has been modified"))))
 
-;; 	   ;; is this buffer read-only?
-;; 	   '(:eval (when buffer-read-only
-;; 				 (concat ","  (propertize "RO"
-;; 										  'face 'font-lock-type-face
-;; 										  'help-echo "Buffer is read-only"))))
-;; 	   "] "
+;;         ;; is this buffer read-only?
+;;         '(:eval (when buffer-read-only
+;;                   (concat ","  (propertize "RO"
+;;                                            'face 'font-lock-type-face
+;;                                            'help-echo "Buffer is read-only"))))
+;;         "] "
 
-;; 	   ;; add the time, with the date and the emacs uptime in the tooltip
-;; 	   '(:eval (propertize (format-time-string "%H:%M")
-;; 						   'help-echo
-;; 						   (concat (format-time-string "%c; ")
-;; 								   (emacs-uptime "Uptime:%hh"))))
-;; 	   " --"
-;; 	   ;; i don't want to see minor-modes; but if you want, uncomment this:
-;; 	   minor-mode-alist  ;; list of minor modes
-;; 	   "%-" ;; fill with '-'
-;; 	   ))
+;;         ;; add the time, with the date and the emacs uptime in the tooltip
+;;         '(:eval (propertize (format-time-string "%H:%M")
+;;                             'help-echo
+;;                             (concat (format-time-string "%c; ")
+;;                                     (emacs-uptime "Uptime:%hh"))))
+;;         " --"
+;;         ;; i don't want to see minor-modes; but if you want, uncomment this:
+;;         minor-mode-alist  ;; list of minor modes
+;;         "%-" ;; fill with '-'
+;;         ))
 
 ;; init.el ends here.
 (custom-set-variables
@@ -856,10 +856,10 @@ _mx_: xml
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-	("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
-	 "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
-	 "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
-	 default)))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
+     "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
+     "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
+     default)))
  '(magit-fetch-arguments (quote ("--prune")))
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate"))))
 (custom-set-faces
