@@ -17,8 +17,8 @@
 
 ;; packages to be installed and loaded
 (setq package-list '(2048-game
-                     ace-jump-mode
                      ace-window
+                     avy
                      better-defaults
                      browse-kill-ring
                      color-theme
@@ -256,8 +256,8 @@
 
 ;; cursor movement and features
 (global-set-key (kbd "C-c e") 'er/expand-region) ;; expand region by syntaxic units
-(global-set-key (kbd "M-à") 'ace-jump-mode) ;; quickly jump to word by pressing its first letter
-(global-set-key (kbd "C-à") 'ace-jump-char-mode) ;; quickly jump to any char in word
+(global-set-key (kbd "M-à") 'avy-goto-word-or-subword-1) ;; quickly jump to word by pressing its first letter
+(global-set-key (kbd "C-à") 'avy-goto-char) ;; quickly jump to any char in word
 (global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
 
