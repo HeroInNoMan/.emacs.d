@@ -511,70 +511,80 @@ Single Capitals as you type."
 ;; hydra mode
 (require 'hydra)
 (defvar whitespace-mode nil)
+(defvar idle-highlight-mode nil)
+(defvar linum-mode nil)
 (global-set-key
  (kbd "C-c m")
- (defhydra hydra-toggle-mode (:color blue)
+ (defhydra hydra-toggle-mode (:color pink)
    "
-^Major mode^        ^Minor mode^
-^^^^^^^^----------------------------
-_mg_: groovy        _a_: abbrev
-_mj_: java          _c_: dubcaps
-_mJ_: javascript    _d_: dirtree
-_ml_: lisp          _f_: flyspell
-_mm_: markdown      _F_: flycheck
-_mo_: org           _g_: god
-_mp_: python        _h_: highlight
-_mr_: ruby          _l_: highlight
-_ms_: shell         _s_: sublimity
-_mS_: sql           _t_: trailing
-_mt_: text          _u_: undo-tree
-_mw_: web           _w_: whitespace
+^Major mode^    ^Run^           ^Minor mode^
+^^^^^^^^----------------------------------------------
+_mg_: groovy    _b_: tabify     _a_: abbrev     %`abbrev-mode
+_mj_: java      _B_: untabify   _c_: dubcaps    %`dubcaps-mode
+_mJ_: js        _d_: dirtree    _f_: flyspell   %`flyspell-mode
+_ml_: lisp      _F_: flycheck   _g_: god        %`god-local-mode
+_mm_: markdown  _i_: indent     _h_: highlight  %`idle-highlight-mode
+_mo_: org       _T_: rm. trail. _l_: linum      %`linum-mode
+_mp_: python    _u_: undo-tree  _s_: sublimity  %`sublimity-mode
+_mr_: ruby                    _t_: trailing   %`show-trailing-whitespace
+_ms_: shell                   _w_: whitespace %`whitespace-mode
+_mS_: sql
+_mt_: text
+_mw_: web
 _mx_: xml
 "
    ("a" abbrev-mode "abbrev")
+   ("b" tabify "tabify" :color blue)
+   ("B" untabify "untabify" :color blue)
    ("c" dubcaps-mode "dubcaps")
-   ("d" dirtree "dirtree")
+   ("d" dirtree "dirtree" :color blue)
    ;; ("d" toggle-debug-on-error "debug")
    ("f" flyspell-mode "flyspell")
-   ("F" flyspell-buffer "flycheck")
-   ("g" god-mode "GOD" :color blue)
+   ("F" flyspell-buffer "flycheck" :color blue)
+   ("g" god-mode "GOD")
    ("h" idle-highlight-mode "highlight")
+   ("i" iwb "indent" :color blue)
    ("l" linum-mode "linum")
    ("s" sublimity-mode "sublimity")
    ("t" toggle-show-trailing-whitespace "trailing")
-   ("u" undo-tree-visualize "undo-tree")
+   ("T" delete-trailing-whitespace "rm trail." :color blue)
+   ("u" undo-tree-visualize "undo-tree" :color blue)
    ("w" whitespace-mode "whitespace")
-   ("mg" groovy-mode "groovy")
-   ("mj" java-mode "java")
-   ("mJ" javascript-mode "javascript")
-   ("ml" lisp-mode "lisp")
-   ("mm" markdown-mode "markdown")
-   ("mo" org-mode "org")
-   ("mp" python-mode "python")
-   ("mr" ruby-mode "ruby")
-   ("ms" sh-mode "shell")
-   ("mS" sql-mode "sql")
-   ("mt" text-mode "text")
-   ("mw" web-mode "web")
-   ("mx" xml-mode "xml")
-   ("q" nil "cancel")))
-;; (global-set-key
-;;  (kbd "<f7>")
-;;  (defhydra hydra-major-mode (:color pink)
-;;    "move around"
-;;    ("a" move-beginning-of-line "home")
-;;    ("e" move-end-of-line "end")
-;;    ("n" next-line "down")
-;;    ("j" next-line "down")
-;;    ("p" previous-line "up")
-;;    ("k" previous-line "up")
-;;    ("f" forward-char "right")
-;;    ("b" backward-char "left")
-;;    ("<SPC>" scroll-up-command "page down")
-;;    ("d" scroll-up-command "page down")
-;;    ("v" scroll-up-command "page down")
-;;    ("u" scroll-down-command "page up")
-;;    ("q" nil "cancel")))
+   ("mg" groovy-mode "groovy" :color blue)
+   ("mj" java-mode "java" :color blue)
+   ("mJ" javascript-mode "javascript" :color blue)
+   ("ml" lisp-mode "lisp" :color blue)
+   ("mm" markdown-mode "markdown" :color blue)
+   ("mo" org-mode "org" :color blue)
+   ("mp" python-mode "python" :color blue)
+   ("mr" ruby-mode "ruby" :color blue)
+   ("ms" sh-mode "shell" :color blue)
+   ("mS" sql-mode "sql" :color blue)
+   ("mt" text-mode "text" :color blue)
+   ("mw" web-mode "web" :color blue)
+   ("mx" xml-mode "xml" :color blue)
+   ("q" nil "cancel" :color blue)))
+(global-set-key
+ (kbd "C-c c")
+ (defhydra hydra-major-mode (:color pink)
+   "move around"
+   ("«" simplified-beginning-of-buffer "top")
+   ("»" simplified-end-of-buffer "bottom")
+   ("a" move-beginning-of-line "home")
+   ("e" move-end-of-line "end")
+   ("n" next-line "down")
+   ("j" next-line "down")
+   ("p" previous-line "up")
+   ("k" previous-line "up")
+   ("f" forward-char "right")
+   ("b" backward-char "left")
+   ("<SPC>" scroll-up-command "pg down")
+   ("d" scroll-up-command "pg down")
+   ("v" scroll-up-command "pg down")
+   ("u" scroll-down-command "pg up")
+   ("l" recenter-top-bottom "recenter")
+   ("g" goto-line "goto")
+   ("q" nil "cancel" :color blue)))
 (global-set-key
  (kbd "<f9>")
  (defhydra hydra-spell (:color blue)
@@ -704,7 +714,6 @@ _mx_: xml
 (setq sfr-journal-file (concat terminalcity-dir "SFR.org"))
 (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
 
-(global-set-key (kbd "C-c c") 'org-capture)
 (key-chord-define-global (kbd "gx") 'org-capture)
 (setq org-export-coding-system 'utf-8)
 
