@@ -514,88 +514,90 @@ Single Capitals as you type."
 (defvar whitespace-mode nil)
 (defvar idle-highlight-mode nil)
 (defvar linum-mode nil)
-(global-set-key
- (kbd "C-c m")
- (defhydra hydra-toggle-mode (:color pink)
-   "
-^Major mode^    ^Run^           ^Minor mode^
-^^^^^^^^----------------------------------------------
-_mg_: groovy    _b_: tabify     _a_: abbrev     %`abbrev-mode
-_mj_: java      _B_: untabify   _c_: dubcaps    %`dubcaps-mode
-_mJ_: js        _d_: dirtree    _f_: flyspell   %`flyspell-mode
-_ml_: lisp      _F_: flycheck   _g_: god        %`god-local-mode
-_mm_: markdown  _i_: indent     _h_: highlight  %`idle-highlight-mode
-_mo_: org       _T_: rm. trail. _l_: linum      %`linum-mode
-_mp_: python    _u_: undo-tree  _s_: sublimity  %`sublimity-mode
-_mr_: ruby                    _t_: trailing   %`show-trailing-whitespace
-_ms_: shell                   _w_: whitespace %`whitespace-mode
+(defhydra hydra-toggle-mode (:color pink)
+  "
+^Major mode^    ^Run^             ^Minor mode^
+^^^^^^^^------------------------------------------------
+_mg_: groovy    _b_: tabify       _a_: abbrev     %`abbrev-mode
+_mj_: java      _B_: untabify     _c_: dubcaps    %`dubcaps-mode
+_mJ_: js        _d_: dirtree      _f_: flyspell   %`flyspell-mode
+_ml_: lisp      _F_: flycheck     _g_: god        %`god-local-mode
+_mm_: markdown  _i_: indent       _h_: highlight  %`idle-highlight-mode
+_mo_: org       _r_: reload conf  _l_: linum      %`linum-mode
+_mp_: python    _T_: rm. trail.   _s_: sublimity  %`sublimity-mode
+_mr_: ruby      _u_: undo-tree    _t_: trailing   %`show-trailing-whitespace
+_ms_: shell                     _w_: whitespace %`whitespace-mode
 _mS_: sql
 _mt_: text
 _mw_: web
 _mx_: xml
 "
-   ("a" abbrev-mode "abbrev")
-   ("b" tabify "tabify" :color blue)
-   ("B" untabify "untabify" :color blue)
-   ("c" dubcaps-mode "dubcaps")
-   ("d" dirtree "dirtree" :color blue)
-   ;; ("d" toggle-debug-on-error "debug")
-   ("f" flyspell-mode "flyspell")
-   ("F" flyspell-buffer "flycheck" :color blue)
-   ("g" god-mode "GOD")
-   ("h" idle-highlight-mode "highlight")
-   ("i" iwb "indent" :color blue)
-   ("l" linum-mode "linum")
-   ("s" sublimity-mode "sublimity")
-   ("t" toggle-show-trailing-whitespace "trailing")
-   ("T" delete-trailing-whitespace "rm trail." :color blue)
-   ("u" undo-tree-visualize "undo-tree" :color blue)
-   ("w" whitespace-mode "whitespace")
-   ("mg" groovy-mode "groovy" :color blue)
-   ("mj" java-mode "java" :color blue)
-   ("mJ" javascript-mode "javascript" :color blue)
-   ("ml" lisp-mode "lisp" :color blue)
-   ("mm" markdown-mode "markdown" :color blue)
-   ("mo" org-mode "org" :color blue)
-   ("mp" python-mode "python" :color blue)
-   ("mr" ruby-mode "ruby" :color blue)
-   ("ms" sh-mode "shell" :color blue)
-   ("mS" sql-mode "sql" :color blue)
-   ("mt" text-mode "text" :color blue)
-   ("mw" web-mode "web" :color blue)
-   ("mx" xml-mode "xml" :color blue)
-   ("q" nil "cancel" :color blue)))
-(global-set-key
- (kbd "C-c c")
- (defhydra hydra-major-mode (:color pink)
-   "move around"
-   ("«" simplified-beginning-of-buffer "top")
-   ("»" simplified-end-of-buffer "bottom")
-   ("a" move-beginning-of-line "home")
-   ("e" move-end-of-line "end")
-   ("n" next-line "down")
-   ("j" next-line "down")
-   ("p" previous-line "up")
-   ("k" previous-line "up")
-   ("f" forward-char "right")
-   ("b" backward-char "left")
-   ("<SPC>" scroll-up-command "pg down")
-   ("d" scroll-up-command "pg down")
-   ("v" scroll-up-command "pg down")
-   ("u" scroll-down-command "pg up")
-   ("l" recenter-top-bottom "recenter")
-   ("g" goto-line "goto")
-   ("q" nil "cancel" :color blue)))
-(global-set-key
- (kbd "<f9>")
- (defhydra hydra-spell (:color blue)
-   "spelling"
-   ("t" endless/ispell-word-then-abbrev "corr. & add")
-   ("f" flyspell-mode "flyspell")
-   ("c" flyspell-buffer "flycheck buffer")
-   ("F" flyspell-buffer "flycheck buffer")
-   ("d" ispell-change-dictionary "change dictionary")
-   ("q" nil "cancel")))
+  ("a" abbrev-mode "abbrev")
+  ("b" tabify "tabify" :color blue)
+  ("B" untabify "untabify" :color blue)
+  ("c" dubcaps-mode "dubcaps")
+  ("d" dirtree "dirtree" :color blue)
+  ;; ("d" toggle-debug-on-error "debug")
+  ("f" flyspell-mode "flyspell")
+  ("F" flyspell-buffer "flycheck" :color blue)
+  ("g" god-mode "GOD")
+  ("h" idle-highlight-mode "highlight")
+  ("i" iwb "indent" :color blue)
+  ("l" linum-mode "linum")
+  ("r" reload-config "reload conf" :color blue)
+  ("s" sublimity-mode "sublimity")
+  ("t" toggle-show-trailing-whitespace "trailing")
+  ("T" delete-trailing-whitespace "rm trail." :color blue)
+  ("u" undo-tree-visualize "undo-tree" :color blue)
+  ("w" whitespace-mode "whitespace")
+  ("mg" groovy-mode "groovy" :color blue)
+  ("mj" java-mode "java" :color blue)
+  ("mJ" javascript-mode "javascript" :color blue)
+  ("ml" lisp-mode "lisp" :color blue)
+  ("mm" markdown-mode "markdown" :color blue)
+  ("mo" org-mode "org" :color blue)
+  ("mp" python-mode "python" :color blue)
+  ("mr" ruby-mode "ruby" :color blue)
+  ("ms" sh-mode "shell" :color blue)
+  ("mS" sql-mode "sql" :color blue)
+  ("mt" text-mode "text" :color blue)
+  ("mw" web-mode "web" :color blue)
+  ("mx" xml-mode "xml" :color blue)
+  ("q" nil "cancel" :color blue))
+(global-set-key (kbd "C-c m") 'hydra-toggle-mode/body)
+(global-set-key (kbd "C-=") 'hydra-toggle-mode/body)
+
+(defhydra hydra-move-around (:color pink)
+  "move around"
+  ("«" simplified-beginning-of-buffer "top")
+  ("»" simplified-end-of-buffer "bottom")
+  ("a" move-beginning-of-line "home")
+  ("e" move-end-of-line "end")
+  ("n" next-line "down")
+  ("j" next-line "down")
+  ("p" previous-line "up")
+  ("k" previous-line "up")
+  ("f" forward-char "right")
+  ("b" backward-char "left")
+  ("h" backward-char "left")
+  ("<SPC>" scroll-up-command "pg down")
+  ("d" scroll-up-command "pg down")
+  ("v" scroll-up-command "pg down")
+  ("u" scroll-down-command "pg up")
+  ("l" recenter-top-bottom "recenter")
+  ("g" goto-line "goto")
+  ("q" nil "cancel" :color blue))
+(global-set-key (kbd "C-c c") 'hydra-move-around/body)
+
+(defhydra hydra-spell (:color blue)
+  "spelling"
+  ("t" endless/ispell-word-then-abbrev "corr. & add")
+  ("f" flyspell-mode "flyspell")
+  ("c" flyspell-buffer "flycheck buffer")
+  ("F" flyspell-buffer "flycheck buffer")
+  ("d" ispell-change-dictionary "change dictionary")
+  ("q" nil "cancel"))
+(global-set-key (kbd "<f9>") 'hydra-spell/body)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION ;;

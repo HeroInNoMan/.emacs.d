@@ -139,5 +139,10 @@
   (kill-word 2)
   (insert org-url))
 
+(defun reload-config ()
+  "reload init.el"
+  (interactive)
+  (load-file (expand-file-name "init.el" user-emacs-directory)))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.
