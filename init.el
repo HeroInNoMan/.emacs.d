@@ -535,6 +535,7 @@ Single Capitals as you type."
 (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c")
 (defengine wordreference "www.wordreference.com/enfr/%s" :keybinding "r")
 (defengine wordreference "www.wordreference.com/fren/%s" :keybinding "R")
+(engine/set-keymap-prefix (kbd "C-c s"))
 
 ;;revert windows on ediff exit - needs winner mode
 (winner-mode)
