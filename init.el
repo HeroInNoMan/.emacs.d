@@ -292,6 +292,12 @@
 (global-set-key (kbd "C-x C-0") 'delete-window)
 (add-to-list 'god-exempt-major-modes 'ibuffer-mode)
 
+;; better access to window manipulation commands
+(global-set-key (kbd "C-\"") 'delete-other-windows)
+(global-set-key (kbd "C-«") 'split-window-below)
+(global-set-key (kbd "C-»") 'split-window-right)
+(global-set-key (kbd "C-*") 'delete-window)
+
 ;; Multiple cursors keybindings
 (global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
 (global-set-key (kbd "M-è") 'mc/mark-all-like-this) ;; new cursor on each occurence of current region
