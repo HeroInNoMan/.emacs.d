@@ -54,6 +54,7 @@
 	("adns" "dans" nil 1)
 	("dasn" "dans" nil 1)
 	("dnas" "dans" nil 1)
+	("dnsa" "dans" nil 1)
 	("uoi" "oui" nil 1)
 	("oauis" "ouais" nil 1)
 	("oausi" "ouais" nil 1)
