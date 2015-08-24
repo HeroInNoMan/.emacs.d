@@ -142,7 +142,8 @@
 (defun reload-config ()
   "reload init.el"
   (interactive)
-  (load-file (expand-file-name "init.el" user-emacs-directory)))
+  (load-file (expand-file-name "init.el" user-emacs-directory))
+  (message "Reloaded init.el file"))
 
 (provide 'my-functions)
 ;; misc-functions.el ends here.
