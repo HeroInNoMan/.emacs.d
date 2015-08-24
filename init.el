@@ -250,6 +250,9 @@
 (global-set-key (kbd "M-ç") 'helm-mini) ;; call helm for current buffers and recent files
 (global-set-key (kbd "C-ç") 'helm-find-files) ;; call helm for new files
 
+;; rgrep
+(key-chord-define-global (kbd "éè") 'rgrep)
+
 ;; dirtree
 (require 'dirtree)
 
@@ -419,6 +422,7 @@ Single Capitals as you type."
                                      "C-x 8"
                                      "C-x C-k"
                                      "C-x C-v"
+									 "M-g"
                                      "M-s"))
 
 ;; regexp-builder
@@ -807,16 +811,11 @@ _mx_: xml
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; VARIOUS KEY BINDINGS ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(key-chord-define-global (kbd "éè") 'rgrep) ;; call rgrep
-
 ;;;;;;;;;;;;;;
 ;; EPILOGUE ;;
 ;;;;;;;;;;;;;;
 
+;; always open init file!
 (find-file (expand-file-name "init.el" user-emacs-directory))
 
 ;; set up a dark theme
@@ -829,70 +828,10 @@ _mx_: xml
     (server-start))
 (global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
 
+;;;;;;;;;;;;;;;;;;;
+;; CUSTOMISATION ;;
+;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Customize mode-line ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ;; use setq-default to set it for /all/ modes
-;; (setq mode-line-format
-;;        (list
-;;         ;; the buffer name; the file name as a tool tip
-;;         '(:eval (propertize "%b " 'face 'font-lock-keyword-face
-;;                             'help-echo (buffer-file-name)))
-
-;;         ;; line and column
-;;         "(" ;; '%02' to set to 2 chars at least; prevents flickering
-;;         (propertize "%02l" 'face 'font-lock-type-face) ","
-;;         (propertize "%02c" 'face 'font-lock-type-face)
-;;         ") "
-
-;;         ;; relative position, size of file
-;;         "["
-;;         (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
-;;         "/"
-;;         (propertize "%I" 'face 'font-lock-constant-face) ;; size
-;;         "] "
-
-;;         ;; the current major mode for the buffer.
-;;         "["
-
-;;         '(:eval (propertize "%m" 'face 'font-lock-string-face
-;;                             'help-echo buffer-file-coding-system))
-;;         "] "
-
-
-;;         "[" ;; insert vs overwrite mode, input-method in a tooltip
-;;         '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
-;;                             'face 'font-lock-preprocessor-face
-;;                             'help-echo (concat "Buffer is in "
-;;                                                (if overwrite-mode "overwrite" "insert") " mode")))
-
-;;         ;; was this buffer modified since the last save?
-;;         '(:eval (when (buffer-modified-p)
-;;                   (concat ","  (propertize "Mod"
-;;                                            'face 'font-lock-warning-face
-;;                                            'help-echo "Buffer has been modified"))))
-
-;;         ;; is this buffer read-only?
-;;         '(:eval (when buffer-read-only
-;;                   (concat ","  (propertize "RO"
-;;                                            'face 'font-lock-type-face
-;;                                            'help-echo "Buffer is read-only"))))
-;;         "] "
-
-;;         ;; add the time, with the date and the emacs uptime in the tooltip
-;;         '(:eval (propertize (format-time-string "%H:%M")
-;;                             'help-echo
-;;                             (concat (format-time-string "%c; ")
-;;                                     (emacs-uptime "Uptime:%hh"))))
-;;         " --"
-;;         ;; i don't want to see minor-modes; but if you want, uncomment this:
-;;         minor-mode-alist  ;; list of minor modes
-;;         "%-" ;; fill with '-'
-;;         ))
-
-;; init.el ends here.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -905,7 +844,7 @@ _mx_: xml
      "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
      default)))
  '(magit-fetch-arguments (quote ("--prune")))
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate"))))
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "--date-order")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
