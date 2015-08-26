@@ -163,6 +163,10 @@
 ;; No flashing!
 (setq visible-bell nil)
 
+;; use count-words instead of count-words-region as it works on buffer
+;; if no region is selected
+(global-set-key (kbd "M-=") 'count-words)
+
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS SETTINGS ;;
 ;;;;;;;;;;;;;;;;;;;;;;
