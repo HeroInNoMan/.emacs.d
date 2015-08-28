@@ -44,6 +44,7 @@
                      move-text
                      multiple-cursors
                      restclient
+					 shrink-whitespace
                      smart-mode-line
                      smartscan
                      speed-type
@@ -439,6 +440,10 @@ Single Capitals as you type."
             (setq arg 0))
         (forward-word)))))
 (global-set-key (kbd "C-,") 'flyspell-goto-previous-error)
+
+;; shrink-whitespace
+(require 'shrink-whitespace)
+(global-set-key (kbd "C-x C-o") 'shrink-whitespace)
 
 ;; guide key
 (require 'guide-key)
