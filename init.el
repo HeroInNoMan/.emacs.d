@@ -23,6 +23,7 @@
                      browse-kill-ring
                      color-theme
                      company
+					 company-emoji
                      diminish
                      dired-details
                      dirtree
@@ -315,6 +316,15 @@
 ;; auto-completion with company-mode
 (global-company-mode) ;; enable company in all buffers
 (diminish 'company-mode)
+
+;; emoji
+(require 'company-emoji)
+(add-hook 'markdown-mode-hook 'company-mode)
+(add-hook 'markdown-mode-hook 'company-emoji-init)
+(add-hook 'text-mode-hook 'company-mode)
+(add-hook 'text-mode-hook 'company-emoji-init)
+(require 'emoji-display)
+(emoji-display-mode)
 
 ;; ido
 (ido-ubiquitous-mode t)
