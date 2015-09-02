@@ -272,7 +272,8 @@
 
 ;; god-mode
 (require 'god-mode)
-(global-set-key (kbd "<f12>") 'god-local-mode)
+(global-set-key (kbd "C-c g") 'god-mode)
+(global-set-key (kbd "<f8>") 'god-mode)
 (defun my-update-cursor ()
   (if god-local-mode
       (set-cursor-color "red")
@@ -283,7 +284,7 @@
 (add-hook 'window-configuration-change-hook 'my-update-cursor)
 (define-key god-local-mode-map (kbd "z") 'repeat)
 (define-key god-local-mode-map (kbd ".") 'repeat)
-(define-key god-local-mode-map (kbd "i") 'god-local-mode)
+(define-key god-local-mode-map (kbd "i") 'god-mode)
 
 (defun c/god-mode-update-cursor ()
   (let ((limited-colors-p (> 257 (length (defined-colors)))))
