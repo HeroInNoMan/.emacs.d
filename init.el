@@ -32,8 +32,6 @@
                      flx-ido
                      gitconfig-mode
                      god-mode
-                     guide-key
-                     guide-key-tip
                      helm
                      helm-projectile
                      hydra
@@ -52,6 +50,7 @@
                      sublimity
                      tree-mode
                      undo-tree
+					 which-key
                      yasnippet
                      web-mode
                      w3m))
@@ -456,32 +455,9 @@ Single Capitals as you type."
 (require 'shrink-whitespace)
 (global-set-key (kbd "C-x C-o") 'shrink-whitespace)
 
-;; guide key
-(require 'guide-key)
-(require 'guide-key-tip)
-(guide-key-mode 1)
-(diminish 'guide-key-mode)
-(setq guide-key-tip/enabled t
-      guide-key/recursive-key-sequence-flag t
-      guide-key/popup-window-position 'right
-      guide-key/guide-key-sequence '("<f1>"
-                                     "<f2>"
-                                     "C-c"
-                                     "C-h"
-                                     "C-x"
-                                     "C-x <RET>"
-                                     "C-x +"
-                                     "C-x n"
-                                     "C-x r"
-                                     "C-x v"
-                                     "C-x 4"
-                                     "C-x 5"
-                                     "C-x 6"
-                                     "C-x 8"
-                                     "C-x C-k"
-                                     "C-x C-v"
-									 "M-g"
-                                     "M-s"))
+;; which-key (replacement for guide-key)
+(require 'which-key)
+(which-key-mode)
 
 ;; regexp-builder
 (require 're-builder)
