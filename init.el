@@ -669,6 +669,39 @@ _mx_: xml
   ("q" nil "cancel"))
 (global-set-key (kbd "<f9>") 'hydra-spell/body)
 
+(defhydra hydra-arabic (:color pink)
+  "type in arabic"
+  ("a" (insert-char 1575) "ا") ;; ARABIC LETTER ALEF
+  ("b" (insert-char 1576) "ب") ;; ARABIC LETTER BEH
+  ("t" (insert-char 1578) "ت") ;; ARABIC LETTER TEH
+  ("þ" (insert-char 1579) "ث") ;; ARABIC LETTER THEH
+  ("j" (insert-char 1580) "ج") ;; ARABIC LETTER JEEM
+  ("H" (insert-char 1581) "ح") ;; ARABIC LETTER HAH
+  ("†" (insert-char 1582) "خ") ;; ARABIC LETTER KHAH
+  ("d" (insert-char 1583) "د") ;; ARABIC LETTER DAL
+  ("ð" (insert-char 1584) "ذ") ;; ARABIC LETTER THAL
+  ("r" (insert-char 1585) "ر") ;; ARABIC LETTER REH
+  ("z" (insert-char 1586) "ز") ;; ARABIC LETTER ZAIN
+  ("s" (insert-char 1587) "س") ;; ARABIC LETTER SEEN
+  ("ß" (insert-char 1588) "ش") ;; ARABIC LETTER SHEEN
+  ("S" (insert-char 1589) "ص") ;; ARABIC LETTER SAD
+  ("D" (insert-char 1590) "ض") ;; ARABIC LETTER DAD
+  ("T" (insert-char 1591) "ط") ;; ARABIC LETTER TAH
+  ("Z" (insert-char 1592) "ظ") ;; ARABIC LETTER ZAH
+  ("g" (insert-char 1593) "ع") ;; ARABIC LETTER AIN
+  ("®" (insert-char 1594) "غ") ;; ARABIC LETTER GHAIN
+  ("f" (insert-char 1601) "ف") ;; ARABIC LETTER FEH
+  ("Q" (insert-char 1602) "ق") ;; ARABIC LETTER QAF
+  ("k" (insert-char 1603) "ك") ;; ARABIC LETTER KAF
+  ("l" (insert-char 1604) "ل") ;; ARABIC LETTER LAM
+  ("m" (insert-char 1605) "م") ;; ARABIC LETTER MEEM
+  ("n" (insert-char 1606) "ن") ;; ARABIC LETTER NOON
+  ("h" (insert-char 1607) "ه") ;; ARABIC LETTER HEH
+  ("w" (insert-char 1608) "و") ;; ARABIC LETTER WAW
+  ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
+  ("q" nil "cancel" :color blue))
+
+(global-set-key (kbd "<f6>") 'hydra-arabic/body)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
