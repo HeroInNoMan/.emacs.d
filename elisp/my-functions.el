@@ -116,8 +116,8 @@
   "edit file as root"
   (interactive "p")
   (if (or arg (not buffer-file-name))
-	  (ido-find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
-	(find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+	  (find-file (concat "/sudo::" (ido-read-file-name "File: ")))
+	(find-alternate-file (concat "/sudo::" buffer-file-name))))
 
 (defun toggle-show-trailing-whitespace ()
   "toggle display trailing whitespaces"
