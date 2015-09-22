@@ -30,6 +30,7 @@
                      engine-mode
                      expand-region
                      flx-ido
+                     flycheck
                      gitconfig-mode
                      god-mode
                      helm
@@ -70,6 +71,7 @@
 
 ;; custom conf files
 (require 'my-functions) ;; custom functions
+(require 'flycheck-java) ;; custom functions
 
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
@@ -803,9 +805,16 @@ _mx_: xml
 (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
                                ("blade" . "\\.blade\\.")))
 
+;; JAVA
+(add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
+
 ;; JAVASCRIPT (to be tested)
 (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
 (add-hook 'json-mode-hook 'json-pretty-print)
+
+(require 'flycheck)
+(add-hook 'js-mode-hook
+          (lambda () (flycheck-mode t)))
 
 ;; LISP
 (global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
