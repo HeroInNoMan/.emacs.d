@@ -1,7 +1,7 @@
 ;;; flycheck-java --- On the fly java syntax checking  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; Copyright (c) 2013,2014 Alexander Korobov 
+;; Copyright (c) 2013,2014 Alexander Korobov
 ;; Author: https://github.com/akorobov
 ;; URL: https://github.com/akorobov/flycheck-java
 ;; Version: 0.2
@@ -49,7 +49,7 @@
     :options "-warn:+over-ann,uselessTypeCheck -proceedOnError -maxProblems 100"
 
     ;; source directory -> class directory mappings
-    :paths (("src/main/java" . "target/classes") 
+    :paths (("src/main/java" . "target/classes")
             ("src/test/java" . "target/test-classes"))
 
     ;; library paths to check
@@ -103,7 +103,7 @@
      ((stringp fmj-dir) (cons :custom fmj-dir))
      ((stringp eclipse-dir) (cons :eclipse eclipse-dir))
      (t (flycheck-java-match-project-def dir flycheck-java-standard-java-project-def)))))
-    
+
 (defun flycheck-java-get-project-def (dir)
   "Look up project type and root directory for given source path DIR, if successful read, parse and return project definition."
   (let* ((project (flycheck-java-find-project dir))
@@ -162,15 +162,15 @@
 
 (flycheck-define-checker java
   "Java syntax checker using ecj batch compiler."
-  :command ("java" 
+  :command ("java"
             (option "-jar" flycheck-java-ecj-jar-path)
-            "-d" "none" "-Xemacs" 
+            "-d" "none" "-Xemacs"
             (eval (flycheck-java-get-cmd-options))
             source)
-  :error-patterns 
-  ((warning line-start (file-name) ":" line ": warning:" 
+  :error-patterns
+  ((warning line-start (file-name) ":" line ": warning:"
             (message (zero-or-more not-newline)) line-end)
-   (error line-start (file-name) ":" line ": error:" 
+   (error line-start (file-name) ":" line ": error:"
           (message (zero-or-more not-newline)) line-end))
   :modes java-mode)
 

@@ -23,7 +23,7 @@
                      browse-kill-ring
                      color-theme
                      company
-					 company-emoji
+                     company-emoji
                      diminish
                      dired-details
                      dirtree
@@ -43,14 +43,14 @@
                      move-text
                      multiple-cursors
                      restclient
-					 shrink-whitespace
+                     shrink-whitespace
                      smart-mode-line
                      smartscan
                      speed-type
                      sublimity
                      tree-mode
                      undo-tree
-					 which-key
+                     which-key
                      yasnippet
                      web-mode
                      w3m))
