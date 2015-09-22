@@ -38,6 +38,7 @@
                      idle-highlight-mode
                      ido-ubiquitous
                      key-chord
+                     keyfreq
                      magit
                      markdown-mode
                      move-text
@@ -702,6 +703,12 @@ _mx_: xml
   ("q" nil "cancel" :color blue))
 
 (global-set-key (kbd "<f6>") 'hydra-arabic/body)
+
+;; statistics on key use frequency
+(require 'keyfreq)
+(keyfreq-mode 1)
+(keyfreq-autosave-mode 1)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
