@@ -29,7 +29,6 @@
                      dirtree
                      engine-mode
                      expand-region
-                     flx-ido
                      flycheck
                      gitconfig-mode
                      god-mode
@@ -37,7 +36,6 @@
                      helm-projectile
                      hydra
                      idle-highlight-mode
-                     ido-ubiquitous
                      key-chord
                      keyfreq
                      magit
@@ -207,7 +205,7 @@
 
 ;; buffer & file handling
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
-(key-chord-define-global (kbd "bf") 'ido-switch-buffer) ;; quickly switch buffer
+(key-chord-define-global (kbd "bf") 'helm-mini) ;; quickly switch buffer
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
 (global-set-key (kbd "C-c f") 'recentf-open-files) ;; open a list of recently opened files
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
@@ -329,10 +327,10 @@
 (require 'emoji-display)
 (emoji-display-mode)
 
-;; ido
-(ido-ubiquitous-mode t)
-(ido-everywhere t)
-(flx-ido-mode 1)
+;; ;; ido
+;; (ido-ubiquitous-mode nil)
+;; (ido-everywhere nil)
+;; (flx-ido-mode nil)
 
 ;; projectile-mode
 (projectile-global-mode) ;; activate projectile-mode everywhere
@@ -519,6 +517,7 @@ Single Capitals as you type."
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 (setq browse-kill-ring-quit-action 'save-and-restore)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
 ;; snippets
 (require 'yasnippet)
