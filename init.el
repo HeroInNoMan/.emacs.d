@@ -836,6 +836,7 @@ _mx_: xml
 (global-set-key (kbd "\C-c a") 'org-agenda)
 (global-set-key (kbd "\C-c b") 'org-iswitchb)
 (global-set-key (kbd "\C-c j") 'jirify)
+(define-key org-mode-map (kbd "\C-c t") 'org-begin-template)
 
 ;; ORG-CAPTURE
 (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
