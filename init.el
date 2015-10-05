@@ -460,6 +460,16 @@ Single Capitals as you type."
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 
+
+;; i-search with arrow keys
+(progn
+  ;; set arrow keys in isearch. left/right is backward/forward, up/down is history. press Return to exit
+  (define-key isearch-mode-map (kbd "<up>") 'isearch-ring-retreat )
+  (define-key isearch-mode-map (kbd "<down>") 'isearch-ring-advance )
+  (define-key isearch-mode-map (kbd "<left>") 'isearch-repeat-backward) ; single key, useful
+  (define-key isearch-mode-map (kbd "<right>") 'isearch-repeat-forward) ; single key, useful
+  )
+
 ;; scratch
 (require 'multi-scratch)
 (setq multi-scratch-buffer-name "new")
@@ -697,6 +707,7 @@ _mx_: xml
   ("h" (insert-char 1607) "ه") ;; ARABIC LETTER HEH
   ("w" (insert-char 1608) "و") ;; ARABIC LETTER WAW
   ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
+  ("'" (insert-char 1569) "ء") ;; ARABIC LETTER HAMZA
   ("q" nil "cancel" :color blue))
 
 (global-set-key (kbd "<f6>") 'hydra-arabic/body)
@@ -796,6 +807,7 @@ _mx_: xml
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tag\\'" . web-mode))
 
 (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
                                ("blade" . "\\.blade\\.")))
