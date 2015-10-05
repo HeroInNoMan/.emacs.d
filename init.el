@@ -296,10 +296,6 @@
                (set-face-background 'mode-line-inactive (if limited-colors-p "black" "#0a2832")))))))
 (define-key god-local-mode-map (kbd "i") 'god-local-mode)
 (define-key god-local-mode-map (kbd ".") 'repeat)
-(global-set-key (kbd "C-x C-1") 'delete-other-windows)
-(global-set-key (kbd "C-x C-2") 'split-window-below)
-(global-set-key (kbd "C-x C-3") 'split-window-right)
-(global-set-key (kbd "C-x C-0") 'delete-window)
 (add-to-list 'god-exempt-major-modes 'ibuffer-mode)
 
 ;; better access to window manipulation commands
@@ -597,7 +593,7 @@ _ml_: lisp      _F_: flycheck     _g_: god        %`god-local-mode
 _mm_: markdown  _i_: indent       _h_: highlight  %`idle-highlight-mode
 _mo_: org       _r_: reload conf  _l_: linum      %`linum-mode
 _mp_: python    _T_: rm. trail.   _s_: sublimity  %`sublimity-mode
-_mr_: ruby      _u_: undo-tree    _t_: trailing   %`show-trailing-whitespace
+_mr_: ruby      _u_: undo-tree  _t_: trailing   %`show-trailing-whitespace
 _ms_: shell                     _w_: whitespace %`whitespace-mode
 _mS_: sql
 _mt_: text
@@ -816,7 +812,7 @@ _mx_: xml
           (lambda () (flycheck-mode t)))
 
 ;; LISP
-(global-set-key (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
+(define-key lisp-mode-map (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
 ;; (global-set-key (kbd "C-c c") 'compile)
 
 ;; PYTHON
