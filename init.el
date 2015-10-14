@@ -309,6 +309,22 @@
 (global-set-key (kbd "M-è") 'mc/mark-all-like-this) ;; new cursor on each occurence of current region
 (global-set-key (kbd "M-È") 'mc/mark-next-like-this) ;; new cursor on next occurence of current region
 (global-set-key (kbd "M-É") 'mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
+(global-set-key (kbd "C-M-é") 'mc/unmark-next-like-this)
+(global-set-key (kbd "C-M-è") 'mc/unmark-previous-like-this)
+
+(define-prefix-command 'endless/mc-map)
+;; C-x m is usually `compose-mail'. Bind it to something else if you use this command.
+(define-key ctl-x-map "m" 'endless/mc-map)
+(define-key endless/mc-map "i" 'mc/insert-numbers)
+(define-key endless/mc-map "h" 'mc-hide-unmatched-lines-mode)
+(define-key endless/mc-map "a" 'mc/mark-all-like-this)
+(define-key endless/mc-map "d" 'mc/mark-all-symbols-like-this-in-defun)
+(define-key endless/mc-map "D" 'mc/mark-all-dwim)
+(define-key endless/mc-map "r" 'mc/reverse-regions)
+(define-key endless/mc-map "s" 'mc/sort-regions)
+(define-key endless/mc-map "l" 'mc/edit-lines)
+(define-key endless/mc-map "\C-a" 'mc/edit-beginnings-of-lines)
+(define-key endless/mc-map "\C-e" 'mc/edit-ends-of-lines)
 
 ;; auto-completion with company-mode
 (global-company-mode) ;; enable company in all buffers
