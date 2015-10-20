@@ -48,6 +48,8 @@
                      smartscan
                      speed-type
                      sublimity
+                     swiper
+                     swiper-helm
                      tree-mode
                      undo-tree
                      which-key
@@ -546,6 +548,9 @@ Results are reported in a compilation buffer."
   (define-key isearch-mode-map (kbd "<left>") 'isearch-repeat-backward) ; single key, useful
   (define-key isearch-mode-map (kbd "<right>") 'isearch-repeat-forward) ; single key, useful
   )
+
+;; swipe instead of regular search
+(global-set-key (kbd "C-S-s") 'swiper-helm)
 
 ;; scratch
 (require 'multi-scratch)
