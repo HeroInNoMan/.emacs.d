@@ -216,6 +216,7 @@
 (global-set-key (kbd "C-c f") 'recentf-open-files) ;; open a list of recently opened files
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
+(key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
 (global-set-key (kbd "M-o") 'ace-window) ;; quickly switch to other window
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
 (global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
@@ -680,12 +681,12 @@ Results are reported in a compilation buffer."
 _mg_: groovy    _b_: tabify       _a_: abbrev     %`abbrev-mode
 _mj_: java      _B_: untabify     _c_: dubcaps    %`dubcaps-mode
 _mJ_: js        _d_: dirtree      _f_: flyspell   %`flyspell-mode
-_ml_: lisp      _F_: flycheck     _g_: god        %`god-local-mode
-_mm_: markdown  _i_: indent       _h_: highlight  %`idle-highlight-mode
-_mo_: org       _r_: reload conf  _l_: linum      %`linum-mode
-_mp_: python    _T_: rm. trail.   _s_: sublimity  %`sublimity-mode
-_mr_: ruby      _u_: undo-tree  _t_: trailing   %`show-trailing-whitespace
-_ms_: shell                     _w_: whitespace %`whitespace-mode
+_ml_: lisp      _D_: change dict. _g_: god        %`god-local-mode
+_mm_: markdown  _F_: flycheck     _h_: highlight  %`idle-highlight-mode
+_mo_: org       _i_: indent       _l_: linum      %`linum-mode
+_mp_: python    _r_: reload conf  _s_: sublimity  %`sublimity-mode
+_mr_: ruby      _T_: rm. trail.   _t_: trailing   %`show-trailing-whitespace
+_ms_: shell     _u_: undo-tree    _w_: whitespace %`whitespace-mode
 _mS_: sql
 _mt_: text
 _mw_: web
@@ -696,6 +697,7 @@ _mx_: xml
   ("B" untabify "untabify")
   ("c" dubcaps-mode "dubcaps")
   ("d" dirtree "dirtree")
+  ("D" ispell-change-dictionary "change dict.")
   ;; ("d" toggle-debug-on-error "debug")
   ("f" flyspell-mode "flyspell")
   ("F" flyspell-buffer "flycheck")
@@ -1012,10 +1014,7 @@ _mx_: xml
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
-     "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
-     "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
-     default)))
+	("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(magit-fetch-arguments (quote ("--prune")))
  '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "--date-order")))
 (custom-set-faces
