@@ -42,6 +42,7 @@
                      markdown-mode
                      move-text
                      multiple-cursors
+                     rainbow-mode
                      restclient
                      shrink-whitespace
                      smart-mode-line
@@ -901,6 +902,7 @@ _mx_: xml
 
 (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
                                ("blade" . "\\.blade\\.")))
+(add-hook 'css-mode-hook 'rainbow-mode)
 
 ;; JAVA
 (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
