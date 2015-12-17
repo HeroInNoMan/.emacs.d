@@ -72,7 +72,8 @@
 
 ;; custom conf files
 (require 'my-functions) ;; custom functions
-(require 'flycheck-java) ;; custom functions
+(require 'flycheck-java) ;; flycheck minor mode for java
+(require 'highlight-line) ;; highlight line in list buffers
 
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
@@ -193,6 +194,7 @@
 (setq font-lock-maximum-decoration t) ;; all possible colours
 (blink-cursor-mode -1) ;; no blinking cursor
 (global-hl-line-mode -1) ;; don’t highlight current line
+(highlight-line-mode 1) ;; except in “list” modes
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
 
