@@ -1,0 +1,375 @@
+" {{{ beslayed's pentadactyl configuration with Emacs bindings,  based on anrxc's vimperator configuration with Emacs bindings, but with fairly major changes to the bindings
+"
+" Bindings
+"
+" source: * http://babbagefiles.blogspot.com
+" (based on: * http://sysphere.org/~anrxc/j/articles/vimperator/index.html)
+"
+" Todo (anrcx's)
+"  * C-n and C-p in "INSERT (menu)" mode
+"    * http://code.google.com/p/vimperator-labs/issues/detail?id=36
+
+" License (both)
+"  * http://creativecommons.org/publicdomain/zero/1.0
+" }}}
+
+
+" {{{ Options
+"
+
+" Turn off auto-autocompletion (press tab to see autocompletions)
+set autocomplete=
+
+" determine which tabs open with focus
+set activate=addons,bookmarks,diverted,extoptions,help,homepage,quickmark
+
+" pentadactyl gui options
+set go=rbC
+
+" Editor, C-e invokes it in text fields
+set editor="emacsclient -c"
+
+" Show destination links in 1=status line, 2=command line
+" set showstatuslinks=2
+
+
+" {{{ Key bindings
+"     - Emacs GTK key-theme and FF already provide bindings for input fields
+"
+
+" C-v was pass-next, remap to bind with default keys
+noremap <C-d> <C-v>
+
+" M-x enters command mode
+noremap <A-x> :
+
+" Emacs navigation in command line and insert mode
+cmap <C-n> <Tab>
+cmap <C-p> <S-Tab>
+cmap <C-f> <Right>
+cmap <C-b> <Left>
+cmap <C-j> <CR>
+noremap <C-j> <CR>
+inoremap <C-j> <CR>
+inoremap <C-n> <Down>
+inoremap <C-p> <Up>
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+
+" Use C-f and C-b for page navigation
+" Also F and B (like Conkeror)
+noremap <C-f> :forward<CR>
+noremap <C-b> :back<CR>
+
+
+" Use M-f and M-b for buffer/tab browsing
+noremap <A-f> :tabnext<CR>
+noremap <A-b> :tabprevious<CR>
+
+" Use C-f and C-b to re-order tabs
+map <C-Left> :tabmove! -1<CR>
+map <C-Right> :tabmove! +1<CR>
+
+" Select all ("mark entire buffer or field")
+noremap <C-x>h <C-z><C-a><Esc>
+inoremap <C-x>h <C-z><C-a><Esc>
+vnoremap <C-x>h <C-z><C-a><Esc>
+
+" Use C-a and C-e to go to the absolute left/right of the document
+noremap <C-a> 0
+noremap <C-e> $
+
+" Use C-p and C-n for up/down
+noremap <C-p> 2k
+noremap <C-n> 2j
+
+" Use C-v and M-v for jump scrolling
+noremap <C-v> <C-d>
+noremap <A-v> <C-u>
+
+" Goto the top of the document with M-<
+noremap <A-<> gg
+
+" Goto the end of the document with M->
+noremap <A->> G
+
+" Use C-s and C-r for searching (n/N for next/prev as in less)
+noremap <C-s> /
+noremap <C-r> ?
+
+" Use M-s and M-r for finding word under cursor
+noremap <A-s> *
+noremap <A-r> #
+
+" Copy selected text to the clipboard with C-w
+noremap <C-w> Y
+inoremap <C-w> <C-d><C-c><Esc>
+tnoremap <C-w> <C-d><C-c><Esc>
+
+" Copy the current URL to the clipboard with M-w
+noremap <A-w> y
+
+" Yank (i.e. paste) the current clipboard selection with C-y
+inoremap <C-y> <S-Ins>
+tnoremap <C-y> i_<S-Ins>
+noremap <C-y> <S-Ins>
+cnoremap <C-y> <S-Ins>
+vnoremap <C-y> <S-Ins>
+
+" Yank (i.e. paste) the current clipboard selection to new background buffer with M-y
+noremap <A-y> P
+
+" Yank (i.e. paste) the current clipboard selection to a new focussed buffer with C-M-y
+noremap <C-A-y> :tabopen!<SPACE><S-Ins><CR>
+
+" C-g as cancel (C-q is stop) (except QuickHint mode, see below)
+cnoremap <C-g> <Esc>
+inoremap <C-g> <Esc>
+noremap <C-g> <Esc>
+vnoremap <C-g> <Esc>
+
+" Avoid Find dialog when cancelling a started command, C-x C-g
+" [note QuickHint mode can only be cancelled by <Esc>]
+noremap <C-x><C-g> <Esc>
+
+" Avoid quit on C-q, and it's more suitable for Stop here
+noremap <C-q> :stop<CR>
+
+" Exit and save the contents of all buffers (=save session) with C-x s
+noremap <C-x>s :xall<CR>
+
+" Exit without saving the session with C-x C-c
+noremap <C-x><C-c> :quitall<CR>
+
+" Select another buffer with C-x b
+noremap <C-x>b :buffer<SPACE>
+
+" List all buffers with C-x C-b
+noremap <C-x><C-b> :buffers<CR>
+
+" Close the current tab ("kill buffer") with C-x k
+" Close the current tab ("delete this window") with C-x 0
+noremap <C-x>k :tabclose<CR>
+noremap <C-x>0 :tabclose<CR>
+
+" Close currently selected window ("delete this frame") with C-x 5 0
+noremap <C-x>50 :winclose<CR>
+
+" Undo close tab with C-_ (also with C-Shift-t, as C-t is new tab)
+" (Also with C-x u, C-/)
+noremap <C-_> :undo<CR>
+noremap <C-x>u :undo<CR>
+noremap <C-/> :undo<CR>
+
+" Close all other tabs ("delete all other windows") with C-x 1
+noremap <C-x>1 :tabonly<CR>
+
+" Close all other windows ("delete all other frames") with C-x 5 1
+noremap <C-x>51 :winonly<CR>
+
+" Switch to previously selected tab ("switch cursor to other window") with C-x o
+noremap <C-x>o <C-6>
+
+" Duplicate tab ("split window") with C-x 2
+noremap <C-x>2 T<CR>
+
+" Duplicate window ("split frame") with C-x 5 2
+noremap <C-x>52 W<CR>
+
+" Open a URL in the current buffer with C-x C-f
+noremap <C-x><C-f> :open<SPACE>
+
+" Open a URL based on current location in the current buffer with C-x C-v
+" ("replace the contents of this buffer with new URL")
+noremap <C-x><C-v> O
+
+" Open a URL in a new window with C-x 5 f
+noremap <C-x>5f :winopen<SPACE>
+
+" Open a URL in a new background tab with C-x t
+noremap <C-x>t :tabopen<SPACE>
+
+" Open a URL based on current location in new background tab with C-x T
+noremap <C-x>T T
+
+" Open a URL in a new focussed tab with C-x C-t
+"                                  with C-x 4 f
+noremap <C-x><C-t> :tabopen!<SPACE>
+noremap <C-x>4f :tabopen!<SPACE>
+
+" QuickHint mode bindings
+" Follow link using l to open in current buffer
+" Follow link using L to open in new background tab
+" Follow link using M-l to open in new focussed tab
+" [Alt: Follow link using C-x l to open in new focussed tab]
+" Use neighbouring ; to open extended hint mode (as per standard vimperator)
+noremap l f
+noremap L F
+noremap <A-l> ;t
+noremap <C-x>l ;t
+
+" Use C-h r to start pentadactyl help
+" Use C-h i to go to pentadactyl index
+" Use C-h t to go to pentadactyl quickstart tutorial
+" Use C-h I to go to emacslik pentadactyl quickreference card
+noremap <C-h>r :help<CR>
+noremap <C-h>i o<SPACE>dactyl://help/index<CR>
+noremap <C-h>t o<SPACE>dactyl://help/tutorial<CR>
+noremap <C-h>I o<SPACE>http://www.jnanam.net/pentadactylemacs/pentadactylemacs.html<CR>
+
+" Record a key sequence into a macro with C-x (
+noremap <C-x>( q
+
+" Play a macro with C-x e
+noremap <C-x>e @
+
+" Set a jump-mark at the cursor with C-x r m
+noremap <C-x>rm m
+
+" Jump to the jump-mark in the current buffer with C-x r b
+noremap <C-x>rb '
+
+" List all jump-marks with C-x r l
+noremap <C-x>rl :marks<CR>
+
+" C-x C-w starts the "Save as" dialog
+map <C-x><C-w> <C-d><C-s>
+
+" {{{ Personal key bindings
+"
+
+" M-Up/Dn toggles the toolbar and scrollbars
+map <A-Down> :set go+=BTm<CR>
+map <A-Up> :set go-=BTm<CR>
+
+" Focus last used input field with C-c i
+map <C-c>i gi
+
+" Add a bookmark with C-c a (dialog)
+map <C-c>a <C-d><C-d>
+
+" Bookmarks search, and search by tag
+map <C-c>q :bmarks<SPACE>
+map <C-c>w :bmarks -tags=
+
+" Dialog selection with d
+map d :dialog<SPACE>
+
+" View source with C-c g, and
+map <C-c>g gf
+
+" ... in an editor with C-c e
+map <C-c>e gF
+
+" Open picture location with C-c p
+map <C-c>p ;i
+
+" Open context menu with C-c m
+map <C-c>m ;c
+
+" Open home directory with C-c f
+map <C-c>f ~
+
+" Go to home page with C-c h
+noremap <C-c>h gh
+
+" Go to parent directory with C-c u
+map <C-c>u gu
+
+" Go to the root of the website with C-c C-u
+map <C-c><C-u> gU
+
+" Restart with C-c C-r
+map <C-c><C-r> :restart<CR>
+
+
+" Turn off certain keybindings
+
+:map D <Nop>
+:map u <Nop>
+:map w <Nop>
+:map W <Nop>
+:map <C-u> <Nop>
+
+
+" {{{ Wikipedia look-up macro
+"
+:command -nargs=* wiki tabopen wikipedia <args>
+"
+" }}}
+
+
+
+echo "[pentadactyl initialized]"
+
+
+
+"-------------------------
+"Considered
+
+
+" Use C-x C-f to start the "Open File" dialog  (currently used for opening new url)
+
+"-----------------------
+"NOT USED
+
+" Extended hint mode with M-f
+"  ; - focus link, a - save, y - copy link, O - :open query, T - for :tabopen ...
+" noremap <A-f> ;
+
+
+" Use C-a and C-e to jump to first/last tab
+"noremap <C-a> g0
+"noremap <C-e> g$
+"
+" Sidebar selection with s, close with S
+" map s :sidebar<SPACE>
+" map S :sbclose<CR>
+
+
+" Focus the address bar with C-l
+" map <C-l> <C-d><C-l>
+
+
+" Tab moving helpers
+"map <C-m> :tabmove<SPACE>
+
+" }}}
+
+" {{{ Javascript functions
+"
+" Show the Feed and Bookmark buttons on the statusbar
+javascript <<EOF
+(function(){
+var statusPanel = document.createElement("statusbarpanel");
+statusPanel.setAttribute("id", "buttons-panel-clone");
+statusPanel.appendChild(document.getElementById("feed-button"));
+statusPanel.appendChild(document.getElementById("star-button"));
+statusPanel.firstChild.setAttribute("style", "padding: 0; max-height: 16px;");
+document.getElementById("status-bar")
+.insertBefore(statusPanel, document.getElementById("security-button"));
+})();
+EOF
+" }}}
+
+
+
+" {{{ Enable gmail-specific keybindings (disabled because this can bypassed with <C-Z>)
+"
+" autocmd LocationChange .* :js modes.passAllKeys = /mail\.google\.com|www\.google\.com\/reader\/view/.test(buffer.URL)
+"
+" }}}
+
+" {{{ Plugin bindings
+"
+" Buftabs
+map <C-c>b :set invbuftabs<CR>
+
+" Noscript
+map <C-c>s :noscript toggletemp<CR>
+map <C-c>S :noscript popup<CR>
+
+" TinyURL
+" map <C-c>t :exe ":tinyurl "+getBrowser().contentWindow.location.href<CR>
+" }}}
+" }}}
