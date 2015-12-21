@@ -213,7 +213,7 @@
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
 (key-chord-define-global (kbd "bf") 'helm-mini) ;; quickly switch buffer
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
-(global-set-key (kbd "C-c f") 'recentf-open-files) ;; open a list of recently opened files
+(global-set-key (kbd "C-c f") 'helm-recentf) ;; open helm list of recently opened files
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
 (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
@@ -260,9 +260,9 @@
 (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
       helm-buffers-fuzzy-matching t
       helm-recentf-fuzzy-match    t)
-(global-set-key (kbd "C-c h") 'helm-mini) ;; call helm completion
+(global-set-key (kbd "C-c h") 'helm-projectile) ;; call helm for anything within project
 (global-set-key (kbd "M-ç") 'helm-mini) ;; call helm for current buffers and recent files
-(global-set-key (kbd "C-ç") 'helm-find-files) ;; call helm for new files
+(global-set-key (kbd "C-ç") 'helm-locate) ;; find any file with helm
 
 ;; rgrep
 (key-chord-define-global (kbd "éè") 'rgrep)
@@ -351,15 +351,14 @@
 (require 'emoji-display)
 (emoji-display-mode)
 
-;; ;; ido
-;; (ido-ubiquitous-mode nil)
-;; (ido-everywhere nil)
-;; (flx-ido-mode nil)
-
 ;; projectile-mode
 (projectile-global-mode) ;; activate projectile-mode everywhere
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
 (setq projectile-enable-caching t) ;; enable caching for projectile-mode
+(setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
 (diminish 'projectile-mode)
+
 
 ;; spell-check
 (require 'ispell)
