@@ -341,6 +341,7 @@
 ;; auto-completion with company-mode
 (global-company-mode) ;; enable company in all buffers
 (diminish 'company-mode)
+(setq company-show-numbers t)
 
 ;; emoji
 (require 'company-emoji)
