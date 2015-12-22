@@ -263,6 +263,7 @@
 (global-set-key (kbd "C-c h") 'helm-projectile) ;; call helm for anything within project
 (global-set-key (kbd "M-ç") 'helm-mini) ;; call helm for current buffers and recent files
 (global-set-key (kbd "C-ç") 'helm-locate) ;; find any file with helm
+(global-set-key (kbd "C-x w") 'helm-wikipedia-suggest) ;; quick wp lookup
 
 ;; rgrep
 (key-chord-define-global (kbd "éè") 'rgrep)
