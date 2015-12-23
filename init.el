@@ -199,12 +199,6 @@
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
 
-;; mode line (smart-mode-line)
-(setq powerline-arrow-shape 'curve)
-(setq powerline-default-separator-dir '(right . left))
-(setq sml/theme 'dark)
-(sml/setup)
-
 ;; activate key-chords
 (require 'key-chord)
 (key-chord-mode 1)
@@ -635,18 +629,6 @@ Results are reported in a compilation buffer."
         (yas-expand)))))
 (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-ido-expand)
 
-;; session saving, backup management
-(setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
-(setq desktop-base-lock-name      "lock"
-      desktop-save                t
-      desktop-dirname             user-emacs-directory
-      desktop-path                (list desktop-dirname)
-      ;; desktop-files-not-to-save   "^$" ;reload tramp paths
-      desktop-load-locked-desktop t)
-(desktop-save-mode 1)
-(savehist-mode 1)
-(desktop-read)
-
 ;; engine-mode
 (require 'engine-mode)
 (engine-mode t) ;; prefix C-c /
@@ -987,23 +969,6 @@ _mx_: xml
 (cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
       ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
 
-;;;;;;;;;;;;;;
-;; EPILOGUE ;;
-;;;;;;;;;;;;;;
-
-;; always open init file!
-(find-file (expand-file-name "init.el" user-emacs-directory))
-
-;; set up a dark theme
-(color-theme-initialize)
-(color-theme-dark-laptop)
-
-;; server mode
-(if (and (fboundp 'server-running-p)
-         (not (server-running-p)))
-    (server-start))
-(global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
-
 ;;;;;;;;;;;;;;;;;;;
 ;; CUSTOMISATION ;;
 ;;;;;;;;;;;;;;;;;;;
@@ -1017,10 +982,45 @@ _mx_: xml
    (quote
 	("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(magit-fetch-arguments (quote ("--prune")))
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "--date-order")))
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "--date-order"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;;;;;;;;;;;;;
+;; EPILOGUE ;;
+;;;;;;;;;;;;;;
+
+;; mode line (smart-mode-line)
+(setq powerline-arrow-shape 'curve)
+(setq powerline-default-separator-dir '(right . left))
+(setq sml/theme 'dark)
+(sml/setup)
+
+;; set up a dark theme
+(color-theme-initialize)
+(color-theme-dark-laptop)
+
+;; server mode
+(if (and (fboundp 'server-running-p)
+         (not (server-running-p)))
+    (server-start))
+(global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
+
+;; session saving, backup management
+(setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
+(setq desktop-base-lock-name      "lock"
+      desktop-save                t
+      desktop-dirname             user-emacs-directory
+      desktop-path                (list desktop-dirname)
+      ;; desktop-files-not-to-save   "^$" ;reload tramp paths
+      desktop-load-locked-desktop t)
+(desktop-save-mode 1)
+(savehist-mode 1)
+(desktop-read)
+
+;; always open init file!
+(find-file (expand-file-name "init.el" user-emacs-directory))
