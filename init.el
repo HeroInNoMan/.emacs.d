@@ -23,7 +23,6 @@
                      browse-kill-ring
                      color-theme
                      company
-                     company-emoji
                      diminish
                      dired-details
                      dirtree
@@ -338,14 +337,8 @@
 (diminish 'company-mode)
 (setq company-show-numbers t)
 
-;; emoji
-(require 'company-emoji)
 (add-hook 'markdown-mode-hook 'company-mode)
-(add-hook 'markdown-mode-hook 'company-emoji-init)
 (add-hook 'text-mode-hook 'company-mode)
-(add-hook 'text-mode-hook 'company-emoji-init)
-(require 'emoji-display)
-(emoji-display-mode)
 
 ;; projectile-mode
 (projectile-global-mode) ;; activate projectile-mode everywhere
