@@ -23,6 +23,7 @@
                      browse-kill-ring
                      color-theme
                      company
+                     define-word
                      diminish
                      dired-details
                      dirtree
@@ -524,6 +525,9 @@ Results are reported in a compilation buffer."
       (if was-visited
           (bury-buffer was-visited)
         (kill-buffer (current-buffer))))))
+
+;; define word at point
+(global-set-key (kbd "<f12>") 'define-word-at-point)
 
 ;; shrink-whitespace
 (require 'shrink-whitespace)
