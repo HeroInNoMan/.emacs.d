@@ -1023,3 +1023,5 @@ _mx_: xml
 
 ;; always open init file!
 (find-file (expand-file-name "init.el" user-emacs-directory))
+
+;;; init.el ends here
