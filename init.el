@@ -46,7 +46,6 @@
                      restclient
                      shrink-whitespace
                      smart-mode-line
-                     smartparens
                      smartscan
                      speed-type
                      sublimity
@@ -228,11 +227,6 @@
 (undo-tree-mode t) ;; powerfull undo/redo mode
 (diminish 'undo-tree-mode)
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
-
-;; smartparens
-(require 'smartparens-config)
-;; Always start smartparens mode in programming modes.
-(add-hook 'prog-mode-hook #'smartparens-mode)
 
 ;; smartscan
 (require 'smartscan)
