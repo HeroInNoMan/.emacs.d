@@ -27,6 +27,7 @@
                      diminish
                      dired-details
                      engine-mode
+                     epresent
                      expand-region
                      flycheck
                      gitconfig-mode
