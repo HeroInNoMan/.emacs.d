@@ -862,6 +862,8 @@ _mx_: xml
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tag\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.xsd\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.wsdl\\'" . web-mode))
 
 (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
                                ("blade" . "\\.blade\\.")))
