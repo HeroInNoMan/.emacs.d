@@ -51,7 +51,6 @@
                      sublimity
                      swiper
                      swiper-helm
-                     tree-mode
                      undo-tree
                      w3m
                      web-mode
