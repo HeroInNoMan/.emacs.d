@@ -26,7 +26,6 @@
                      define-word
                      diminish
                      dired-details
-                     dirtree
                      engine-mode
                      expand-region
                      flycheck
@@ -261,9 +260,6 @@
 
 ;; rgrep
 (key-chord-define-global (kbd "éè") 'rgrep)
-
-;; dirtree
-(require 'dirtree)
 
 ;; sublimity (minimap, distraction-free mode)
 (require 'sublimity)
