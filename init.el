@@ -263,8 +263,8 @@
 
 ;; cursor movement and features
 (global-set-key (kbd "C-c e") 'er/expand-region) ;; expand region by syntaxic units
-(global-set-key (kbd "M-à") 'avy-goto-word-or-subword-1) ;; quickly jump to word by pressing its first letter
-(global-set-key (kbd "C-à") 'avy-goto-char) ;; quickly jump to any char in word
+(global-set-key (kbd "M-à") 'avy-goto-word-1) ;; quickly jump to word by pressing its first letter
+(global-set-key (kbd "C-à") 'avy-goto-char-timer) ;; quickly jump to any char in word
 (global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
 (global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
 
