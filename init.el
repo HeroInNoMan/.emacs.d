@@ -36,6 +36,7 @@
                      helm-projectile
                      hydra
                      idle-highlight-mode
+                     imenu-anywhere
                      key-chord
                      keyfreq
                      magit
@@ -769,6 +770,9 @@ _mx_: xml
 (require 'keyfreq)
 (keyfreq-mode 1)
 (keyfreq-autosave-mode 1)
+
+(global-set-key (kbd "C-.") 'helm-imenu-anywhere)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION ;;
