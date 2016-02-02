@@ -21,6 +21,7 @@
                      avy
                      better-defaults
                      browse-kill-ring
+                     char-menu
                      color-theme
                      company
                      define-word
@@ -773,6 +774,16 @@ _mx_: xml
   ("q" nil "cancel" :color blue))
 
 (global-set-key (kbd "<f6>") 'hydra-arabic/body)
+
+;; char-menu
+(require 'char-menu)
+(global-set-key (kbd "<f7>") 'char-menu)
+(setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
+                  ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
+                  ("cyrillic"       "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
+                  ("Smileys"       "☺" "☹")
+                  ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒")))
+
 
 ;; statistics on key use frequency
 (require 'keyfreq)
