@@ -45,6 +45,7 @@
                      multiple-cursors
                      rainbow-mode
                      restclient
+                     s ;; ???
                      shrink-whitespace
                      smart-mode-line
                      smartscan
