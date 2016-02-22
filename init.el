@@ -205,9 +205,7 @@
 
 ;; buffer & file handling
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
-(key-chord-define-global (kbd "bf") 'helm-mini) ;; quickly switch buffer
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
-(global-set-key (kbd "C-c f") 'helm-recentf) ;; open helm list of recently opened files
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
 (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
@@ -249,10 +247,19 @@
 (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
       helm-buffers-fuzzy-matching t
       helm-recentf-fuzzy-match    t)
-(global-set-key (kbd "C-c h") 'helm-projectile) ;; call helm for anything within project
-(global-set-key (kbd "M-ç") 'helm-mini) ;; call helm for current buffers and recent files
-(global-set-key (kbd "C-ç") 'helm-locate) ;; find any file with helm
+;; helm-for-file looks everywhere, no need for anything else
+(key-chord-define-global (kbd "bf") 'helm-for-files)
+
+(global-set-key (kbd "C-h v") 'helm-apropos)
+(global-set-key (kbd "C-h f") 'helm-apropos)
+(global-set-key (kbd "C-h a") 'helm-apropos)
+(global-set-key (kbd "M-ç") 'helm-for-files)
+(global-set-key (kbd "C-ç") 'helm-for-files)
 (global-set-key (kbd "C-x w") 'helm-wikipedia-suggest) ;; quick wp lookup
+;; more commands with helm
+(global-set-key (kbd "C-c h p") 'helm-list-elisp-packages-no-fetch)
+(global-set-key (kbd "C-c h P") 'helm-apt)
+(global-set-key (kbd "C-c h w") 'helm-wikipedia-suggest)
 
 ;; rgrep
 (key-chord-define-global (kbd "éè") 'rgrep)
