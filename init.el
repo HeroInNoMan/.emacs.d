@@ -541,7 +541,7 @@ Results are reported in a compilation buffer."
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 
 ;; swipe instead of regular search
-(global-set-key (kbd "C-s") 'swiper-helm)
+(global-set-key (kbd "C-S-s") 'swiper-helm)
 
 ;; scratch
 (require 'multi-scratch)
