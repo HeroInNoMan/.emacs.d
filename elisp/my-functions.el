@@ -18,7 +18,7 @@
   (interactive)
   (delete-trailing-whitespace)
   (indent-region (point-min) (point-max) nil)
-  ;;(untabify (point-min) (point-max))
+  (untabify (point-min) (point-max))
   (message "File indented"))
 
 (defun simplified-beginning-of-buffer ()
