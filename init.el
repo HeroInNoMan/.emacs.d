@@ -44,6 +44,7 @@
                      markdown-mode
                      move-text
                      multiple-cursors
+					 org-bullets
                      rainbow-mode
                      restclient
                      s ;; ???
@@ -917,6 +918,9 @@ _mx_: xml
 (global-set-key (kbd "\C-c b") 'org-iswitchb)
 (global-set-key (kbd "\C-c j") 'jirify)
 (define-key org-mode-map (kbd "\C-c t") 'org-begin-template)
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 ;; ORG-CAPTURE
 (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
