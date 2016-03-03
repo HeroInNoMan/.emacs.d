@@ -27,6 +27,7 @@
                      define-word
                      diminish
                      dired-details
+                     dired-narrow
                      engine-mode
                      epresent
                      expand-region
@@ -814,6 +815,8 @@ _mx_: xml
 (dired-details-install)
 (put 'dired-find-alternate-file 'disabled nil)
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
+(require 'dired-narrow)
+(define-key dired-mode-map (kbd "/") 'dired-narrow)
 
 ;; git
 (require 'magit)
