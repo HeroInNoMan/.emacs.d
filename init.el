@@ -177,6 +177,9 @@
 ;; if no region is selected
 (global-set-key (kbd "M-=") 'count-words)
 
+;; use tab to auto-comlete if indentation is right
+(setq tab-always-indent 'complete)
+
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS SETTINGS ;;
 ;;;;;;;;;;;;;;;;;;;;;;
