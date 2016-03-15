@@ -46,6 +46,7 @@
                      move-text
                      multiple-cursors
                      org-bullets
+					 rainbow-delimiters
                      rainbow-mode
                      restclient
                      s ;; ???
@@ -611,6 +612,9 @@ Results are reported in a compilation buffer."
 (put 'narrow-to-page 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (put 'scroll-left 'disabled nil)
+
+;; rainbow-delimiters
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; set default browser to firefox
 (setq gnus-button-url 'browse-url-generic
