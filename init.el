@@ -94,6 +94,9 @@
 
 ;; Do not auto refresh dired
 (setq global-auto-revert-non-file-buffers nil)
+;; always delete and copy recursively
+(setq dired-recursive-deletes 'always)
+(setq dired-recursive-copies 'always)
 
 ;; Show keystrokes in progress
 (setq echo-keystrokes 0.1)
