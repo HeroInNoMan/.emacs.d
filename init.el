@@ -925,6 +925,12 @@ _mx_: xml
 (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
 
 ;; JAVASCRIPT (to be tested)
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;; (setq js2-basic-offset 2)
+;; (setq js2-use-font-lock-faces t)
+
+
 (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
 (add-hook 'json-mode-hook 'json-pretty-print)
 
