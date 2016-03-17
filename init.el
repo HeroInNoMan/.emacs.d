@@ -35,6 +35,7 @@
                      gitconfig-mode
                      god-mode
                      helm
+					 helm-descbinds
                      helm-projectile
                      hydra
                      idle-highlight-mode
@@ -263,6 +264,7 @@
 (global-set-key (kbd "C-h v") 'helm-apropos)
 (global-set-key (kbd "C-h f") 'helm-apropos)
 (global-set-key (kbd "C-h a") 'helm-apropos)
+(global-set-key (kbd "C-h b") 'helm-descbinds)
 (global-set-key (kbd "M-ç") 'helm-for-files)
 (global-set-key (kbd "C-ç") 'helm-for-files)
 (global-set-key (kbd "C-x w") 'helm-wikipedia-suggest) ;; quick wp lookup
