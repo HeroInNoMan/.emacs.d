@@ -116,19 +116,19 @@
   "edit file as root"
   (interactive "p")
   (if (or arg (not buffer-file-name))
-	  (find-file (concat "/sudo::" (ido-read-file-name "File: ")))
-	(find-alternate-file (concat "/sudo::" buffer-file-name))))
+      (find-file (concat "/sudo::" (ido-read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo::" buffer-file-name))))
 
 (defun toggle-show-trailing-whitespace ()
   "toggle display trailing whitespaces"
   (interactive)
   (if show-trailing-whitespace
-	  (progn
-		(setq show-trailing-whitespace nil)
-		(message "trailing whitespaces disabled"))
-	(progn
-	  (setq show-trailing-whitespace t)
-	  (message "trailing whitespaces enabled"))))
+      (progn
+        (setq show-trailing-whitespace nil)
+        (message "trailing whitespaces disabled"))
+    (progn
+      (setq show-trailing-whitespace t)
+      (message "trailing whitespaces enabled"))))
 
 (defun jirify ()
   "makes a ticket ID into an org link to the JIRA ticket"
@@ -188,6 +188,28 @@
              (t
               (insert "#+BEGIN_" choice "\n")
               (save-excursion (insert "#+END_" choice))))))))))
+
+(defun load-windows-specific-conf ()
+  "Loads all windows-nt specific conf"
+  (set-clipboard-coding-system 'utf-16le-dos) ;; MS Windows clipboard is UTF-16LE
+  ;; cygwin conf
+  (setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
+  (setq exec-path (cons "c:/cygwin/bin/" exec-path))
+  (require 'cygwin-mount)
+  (cygwin-mount-activate)
+  (require 'dos) ;; batch scripts
+  (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
+  (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
+  (setq python-shell-interpreter "c:/cygwin/bin/python3.2m.exe")
+
+  ;; Prevent issues with the Windows null device (NUL)
+  ;; when using cygwin find with rgrep.
+  (defadvice grep-compute-defaults (around grep-compute-defaults-advice-null-device)
+    "Use cygwin's /dev/null as the null-device."
+    (let ((null-device "/dev/null"))
+      ad-do-it))
+  (ad-activate 'grep-compute-defaults)
+  )
 
 (provide 'my-functions)
 ;; misc-functions.el ends here.

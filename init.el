@@ -990,39 +990,6 @@ _mx_: xml
         ("WAIT" . (:foreground "yellow" :weight bold))
         ("INPROGRESS" . (:foreground "yellow" :weight bold))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; OS-specific configuration ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Load system-specific library and setup system-specific things that
-;; must be setup before main setup
-(defun load-windows-specific-conf ()
-  "Loads all windows-nt specific conf"
-  (set-clipboard-coding-system 'utf-16le-dos) ;; MS Windows clipboard is UTF-16LE
-  ;; cygwin conf
-  (setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
-  (setq exec-path (cons "c:/cygwin/bin/" exec-path))
-  (require 'cygwin-mount)
-  (cygwin-mount-activate)
-  (require 'dos) ;; batch scripts
-  (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
-  (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
-  (setq python-shell-interpreter "c:/cygwin/bin/python3.2m.exe")
-
-  ;; Prevent issues with the Windows null device (NUL)
-  ;; when using cygwin find with rgrep.
-  (defadvice grep-compute-defaults (around grep-compute-defaults-advice-null-device)
-    "Use cygwin's /dev/null as the null-device."
-    (let ((null-device "/dev/null"))
-      ad-do-it))
-  (ad-activate 'grep-compute-defaults)
-  )
-(defun load-linux-specific-conf ()
-  "Loads all GNU/Linux specific conf"
-  )
-(cond ((eq system-type 'windows-nt) (load-windows-specific-conf))
-      ((eq system-type 'gnu/linux) (load-linux-specific-conf)))
-
 ;;;;;;;;;;;;;;;;;;;
 ;; CUSTOMISATION ;;
 ;;;;;;;;;;;;;;;;;;;
