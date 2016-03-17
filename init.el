@@ -35,7 +35,7 @@
                      gitconfig-mode
                      god-mode
                      helm
-					 helm-descbinds
+                     helm-descbinds
                      helm-projectile
                      hydra
                      idle-highlight-mode
@@ -47,7 +47,7 @@
                      move-text
                      multiple-cursors
                      org-bullets
-					 rainbow-delimiters
+                     rainbow-delimiters
                      rainbow-mode
                      restclient
                      s ;; ???
