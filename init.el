@@ -26,8 +26,8 @@
                      company
                      define-word
                      diminish
-                     dired-details
                      dired-narrow
+                     dired+
                      engine-mode
                      epresent
                      expand-region
@@ -838,8 +838,6 @@ _mx_: xml
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
 
 ;; dired
-(require 'dired-details)
-(dired-details-install)
 (put 'dired-find-alternate-file 'disabled nil)
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 (require 'dired-narrow)
