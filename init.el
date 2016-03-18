@@ -319,6 +319,9 @@
 (global-set-key (kbd "C-«") 'split-window-below)
 (global-set-key (kbd "C-»") 'split-window-right)
 (global-set-key (kbd "C-*") 'delete-window)
+(global-set-key (kbd "C-+") 'zoom-frm-in)
+(global-set-key (kbd "C-=") 'zoom-frm-unzoom)
+
 
 ;; Multiple cursors keybindings
 (global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
@@ -733,7 +736,6 @@ _mx_: xml
   ("mx" xml-mode "xml")
   ("q" nil "cancel"))
 (global-set-key (kbd "C-c m") 'hydra-toggle-mode/body)
-(global-set-key (kbd "C-=") 'hydra-toggle-mode/body)
 
 (defhydra hydra-move-around (:color pink)
   "move around"
