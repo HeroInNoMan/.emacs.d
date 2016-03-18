@@ -666,8 +666,8 @@ Results are reported in a compilation buffer."
 (defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
 (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
 (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
-(defengine wordreference "www.wordreference.com/enfr/%s" :keybinding "r")
-(defengine wordreference "www.wordreference.com/fren/%s" :keybinding "R")
+(defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
+(defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R")
 (engine/set-keymap-prefix (kbd "C-c s"))
 
 ;;revert windows on ediff exit - needs winner mode
