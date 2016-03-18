@@ -22,15 +22,25 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)                ;; if you use :diminish
-(require 'bind-key)                ;; if you use any :bind variant
+(require 'diminish)                ;; for :diminish
+(require 'bind-key)                ;; for :bind
+
+(setq use-package-always-ensure t)
+
+;; basic packages (no additional conf)
+(use-package 2048-game)
+(use-package better-defaults)
+(use-package dired+)
+(use-package epresent)
+(use-package restclient)
+(use-package s)
+(use-package speed-type)
+(use-package swiper)
 
 ;; packages to be installed and loaded
-(setq package-list '(2048-game
-                     ace-window
-					 aggressive-indent
+(setq package-list '(ace-window
+                     aggressive-indent
                      avy
-                     better-defaults
                      browse-kill-ring
                      char-menu
                      color-theme
@@ -38,9 +48,7 @@
                      define-word
                      diminish
                      dired-narrow
-                     dired+
                      engine-mode
-                     epresent
                      expand-region
                      flycheck
                      gitconfig-mode
@@ -60,17 +68,12 @@
                      org-bullets
                      rainbow-delimiters
                      rainbow-mode
-                     restclient
-                     s ;; ???
                      shrink-whitespace
                      smart-mode-line
                      smartscan
-                     speed-type
                      sublimity
-                     swiper
                      swiper-helm
                      undo-tree
-                     w3m
                      web-mode
                      which-key
                      yasnippet
