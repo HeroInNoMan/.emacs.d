@@ -19,7 +19,10 @@
     ;; org-capture-templates
     (add-to-list 'org-capture-templates
                  '("d" "SFR - work log" entry (file+datetree (concat terminalcity-dir "SFR.org") "Diary") "* %i%?")
-                 '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))))
+                 '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))
+
+    ;; open work log file
+    (find-file (expand-file-name "~/Terminalcity/SFR.org"))))
 
  ;; machine perso
  ((equal "highlander" (system-name))
