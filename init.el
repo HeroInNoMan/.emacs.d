@@ -62,7 +62,8 @@
                      w3m
                      web-mode
                      which-key
-                     yasnippet))
+                     yasnippet
+                     zoom-frm))
 
 ;; fetch the list of packages available if no elpa dir present
 (or (file-exists-p package-user-dir) (package-refresh-contents))

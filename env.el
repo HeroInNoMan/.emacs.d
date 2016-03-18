@@ -19,16 +19,16 @@
     ;; org-capture-templates
     (add-to-list 'org-capture-templates
                  '("d" "SFR - work log" entry (file+datetree (concat terminalcity-dir "SFR.org") "Diary") "* %i%?")
-                 '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))
-    (message "machine dijon detected")))
+                 '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))))
 
  ;; machine perso
  ((equal "highlander" (system-name))
   (progn
-    (message "machine highlander detected")))
+    ;; bigger font by default on laptop
+    (dotimes (number 5) (zoom-frm-in))))
 
  ;; default
  (t (progn
-      (message "no specific machine detected"))))
+      (message "unknown system"))))
 
 ;;; env.el ends here
