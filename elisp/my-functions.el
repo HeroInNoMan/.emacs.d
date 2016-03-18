@@ -47,15 +47,18 @@
   (next-line)
   (scroll-up 1))
 
-(defun copy-current-file-path ()
-  "Add current file path to kill ring. Limits the filename to project root if possible."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (kill-new filename)))
-
 (defun show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
+  (message (buffer-file-name)))
+
+(defun copy-and-show-current-file-path ()
+  "Add current file path to kill ring. Limits the filename to
+   project root if possible. Show the full path file name in the
+   minibuffer."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (kill-new filename))
   (message (buffer-file-name)))
 
 (defun duplicate-current-line (&optional n)

@@ -223,7 +223,7 @@
 (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
 (global-set-key (kbd "M-o") 'ace-window) ;; quickly switch to other window
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
-(global-set-key (kbd "C-<f5>") 'copy-current-file-path) ;; copy current file path
+(global-set-key (kbd "C-<f5>") 'copy-and-show-current-file-path) ;; copy current file path
 (global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
 (global-set-key (kbd "C-x C-r") 'sudo-edit) ;; sudo open file
 
