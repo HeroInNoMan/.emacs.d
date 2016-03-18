@@ -18,6 +18,7 @@
 ;; packages to be installed and loaded
 (setq package-list '(2048-game
                      ace-window
+					 aggressive-indent
                      avy
                      better-defaults
                      browse-kill-ring
@@ -185,6 +186,7 @@
 
 ;; use tab to auto-comlete if indentation is right
 (setq tab-always-indent 'complete)
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS SETTINGS ;;
@@ -968,8 +970,7 @@ _mx_: xml
         ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
         ;; remote
         ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
-        ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")
-        ))
+        ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
 
 (setq org-completion-use-ido t)
 
