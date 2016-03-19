@@ -22,79 +22,250 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)                ;; for :diminish
-(require 'bind-key)                ;; for :bind
+(require 'diminish) ;; for :diminish
+(require 'bind-key) ;; for :bind
 
 (setq use-package-always-ensure t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PACKAGE DECLARATIONS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; basic packages (no additional conf)
-(use-package 2048-game)
+(use-package 2048-game :disabled t)
 (use-package better-defaults)
+(use-package color-theme)
 (use-package dired+)
-(use-package epresent)
-(use-package restclient)
+(use-package epresent :disabled t)
+(use-package restclient :disabled t)
 (use-package s)
 (use-package speed-type)
 (use-package swiper)
 
-;; packages to be installed and loaded
-(setq package-list '(ace-window
-                     aggressive-indent
-                     avy
-                     browse-kill-ring
-                     char-menu
-                     color-theme
-                     company
-                     define-word
-                     diminish
-                     dired-narrow
-                     engine-mode
-                     expand-region
-                     flycheck
-                     gitconfig-mode
-                     god-mode
-                     helm
-                     helm-descbinds
-                     helm-projectile
-                     hydra
-                     idle-highlight-mode
-                     imenu-anywhere
-                     key-chord
-                     keyfreq
-                     magit
-                     markdown-mode
-                     move-text
-                     multiple-cursors
-                     org-bullets
-                     rainbow-delimiters
-                     rainbow-mode
-                     shrink-whitespace
-                     smart-mode-line
-                     smartscan
-                     sublimity
-                     swiper-helm
-                     undo-tree
-                     web-mode
-                     which-key
-                     yasnippet
-                     zoom-frm))
+;; quickly switch to other window
+(use-package ace-window
+  :bind ("M-o" . ace-window))
 
-;; fetch the list of packages available if no elpa dir present
-(or (file-exists-p package-user-dir) (package-refresh-contents))
+(use-package aggressive-indent
+  :config (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode))
 
-;; install the missing packages
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+(use-package avy
+  :bind
+  ("M-à" . avy-goto-word-1) ;; quickly jump to word by pressing its first letter
+  ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
 
-;; add .emacs.d/elisp/ and .emacs.d/elisp/groovy-mode/ to load-path
-(add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "elisp/groovy-mode" user-emacs-directory))
+(use-package browse-kill-ring
+  :config
+  (browse-kill-ring-default-keybindings)
+  (setq browse-kill-ring-quit-action 'save-and-restore))
 
-;; custom conf files
-(require 'my-functions) ;; custom functions
-(require 'flycheck-java) ;; flycheck minor mode for java
-(require 'highlight-line) ;; highlight line in list buffers
+(use-package char-menu
+  :bind ("<f7>" . char-menu)
+  :config
+  (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
+                    ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
+                    ("cyrillic"       "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
+                    ("Smileys"       "☺" "☹")
+                    ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
+
+(use-package company
+  :diminish company-mode
+  :config
+  (global-company-mode) ;; enable company in all buffers
+  (setq company-show-numbers t)
+  (add-hook 'markdown-mode-hook 'company-mode)
+  (add-hook 'text-mode-hook 'company-mode))
+
+(use-package define-word
+  :bind ("<f12>" . define-word-at-point))
+
+(use-package dired-narrow
+  :bind (:map dired-mode-map ("/" . dired-narrow)))
+
+(use-package expand-region
+  :bind ("C-c e" . er/expand-region))
+
+(use-package keyfreq
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
+(use-package move-text
+  :config (move-text-default-bindings)) ;; M-up / M-down to move line or region
+
+(use-package org-bullets
+  :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package rainbow-delimiters
+  :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :config (add-hook 'css-mode-hook 'rainbow-mode))
+
+(use-package shrink-whitespace
+  :bind ("C-x C-o" . shrink-whitespace))
+
+;; smartscan
+(use-package smartscan
+  :bind
+  ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
+  ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
+  ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
+
+(use-package swiper-helm
+  :bind ("C-S-s" . swiper-helm))
+
+(use-package undo-tree  ;; powerfull undo/redo mode
+  :diminish undo-tree-mode
+  :config (undo-tree-mode t))
+
+(use-package web-mode ;; HTML, XML, JSP (using web-mode)
+  :config
+  (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
+                                 ("blade" . "\\.blade\\.")))
+  :mode ("\\.phtml\\'"
+         "\\.tpl\\.php\\'"
+         "\\.[agj]sp\\'"
+         "\\.as[cp]x\\'"
+         "\\.erb\\'"
+         "\\.mustache\\'"
+         "\\.djhtml\\'"
+         "\\.rhtml\\'"
+         "\\.html\\'"
+         "\\.tag\\'"
+         "\\.xsd\\'"
+         "\\.wsdl\\'"))
+
+(use-package which-key ;; which-key (replacement for guide-key)
+  :config (which-key-mode))
+
+(use-package zoom-frm
+  :if window-system
+  :bind
+  ("C-+" . zoom-frm-in)
+  ("C-=" . zoom-frm-unzoom))
+
+
+(use-package engine-mode
+  :config
+  (engine-mode t) ;; prefix C-c /
+  (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
+  (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
+  (defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" :keybinding "g")
+  (defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" :keybinding "i")
+  (defengine leo "http://dict.leo.org/frde/index_de.html#/search=%s&searchLoc=0&resultOrder=basic&multiwordShowSingle=on" :keybinding "l")
+  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m")
+  (defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "o")
+  (defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" :keybinding "w")
+  (defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
+  (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
+  (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
+  (defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
+  (defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R")
+  (engine/set-keymap-prefix (kbd "C-c s")))
+
+(use-package god-mode
+  :bind
+  (("C-c g" . god-mode-all)
+   ("<f8>" . god-mode-all)
+   :map god-local-mode-map
+   ("z" . repeat)
+   ("i" . god-mode-all)
+   ("." . repeat))
+  :config
+  (defun my-update-cursor ()
+    (cond
+     (god-local-mode
+      (progn
+        (set-cursor-color "red")
+        (set-face-background 'mode-line "brown")))
+     (t
+      (progn
+        (set-cursor-color "yellow")
+        (set-face-background 'mode-line "#0a2832")))))
+  (add-hook 'god-mode-enabled-hook 'my-update-cursor)
+  (add-hook 'god-mode-disabled-hook 'my-update-cursor)
+  (add-hook 'window-configuration-change-hook 'my-update-cursor)
+  (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
+
+(use-package idle-highlight-mode)
+
+(use-package sublimity
+  :config
+  (require 'sublimity-scroll)
+  (require 'sublimity-map))
+
+(use-package gitconfig-mode
+  :config
+  (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
+  (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
+
+(use-package flycheck)
+(use-package helm)
+(use-package helm-descbinds)
+(use-package helm-projectile)
+(use-package hydra)
+(use-package imenu-anywhere
+  :bind ("C-." . helm-imenu-anywhere))
+
+(use-package key-chord)
+(use-package magit)
+(use-package markdown-mode)
+(use-package multiple-cursors)
+(use-package smart-mode-line)
+
+(use-package yasnippet
+  :bind (:map yas-minor-mode-map ("<C-tab>" . yas-ido-expand))
+  :config
+  (yas-global-mode 1)
+  :init
+  (defun yas-ido-expand ()
+    "Lets you select (and expand) a yasnippet key"
+    (interactive)
+    (let ((original-point (point)))
+      (while (and
+              (not (= (point) (point-min) ))
+              (not
+               (string-match "[[:space:]\n]" (char-to-string (char-before)))))
+        (backward-word 1))
+      (let* ((init-word (point))
+             (word (buffer-substring init-word original-point))
+             (list (yas-active-keys)))
+        (goto-char original-point)
+        (let ((key (remove-if-not
+                    (lambda (s) (string-match (concat "^" word) s)) list)))
+          (if (= (length key) 1)
+              (setq key (pop key))
+            (setq key (ido-completing-read "key: " list nil nil word)))
+          (delete-char (- init-word original-point))
+          (insert key)
+          (yas-expand))))))
+
+(use-package my-functions ;; custom functions
+  :ensure nil
+  :load-path "elisp/"
+  :bind
+  ("C-c i" . iwb) ;; indent whole buffer
+  ("M-«" . simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
+  ("M-»" . simplified-end-of-buffer)) ;; useful when C-> does not work (windows/putty)
+
+(use-package flycheck-java ;; flycheck minor mode for java
+  :ensure nil
+  :load-path "elisp/")
+(use-package highlight-line ;; highlight line in list buffers
+  :ensure nil
+  :load-path "elisp/")
+
+(use-package multi-scratch ;; scratch
+  :ensure nil
+  :load-path "elisp"
+  :bind
+  ("C-x \"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
+  ("M-\"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
+  ("C-x «" . multi-scratch-prev) ;; jump to previous scratch buffer
+  ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
+  :config (setq multi-scratch-buffer-name "new"))
+
 
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
@@ -199,7 +370,6 @@
 
 ;; use tab to auto-comlete if indentation is right
 (setq tab-always-indent 'complete)
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; VARIOUS SETTINGS ;;
@@ -224,7 +394,6 @@
 (global-hl-line-mode -1) ;; don’t highlight current line
 (highlight-line-mode 1) ;; except in “list” modes
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
-(global-set-key (kbd "C-c i") 'iwb) ;; indent whole buffer
 
 ;; activate key-chords
 (require 'key-chord)
@@ -236,7 +405,6 @@
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
 (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
-(global-set-key (kbd "M-o") 'ace-window) ;; quickly switch to other window
 (global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
 (global-set-key (kbd "C-<f5>") 'copy-and-show-current-file-path) ;; copy current file path
 (global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
@@ -249,19 +417,9 @@
               (mode 16 16 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
 
-;; undo
-(undo-tree-mode t) ;; powerfull undo/redo mode
-(diminish 'undo-tree-mode)
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
 
-;; smartscan
-(require 'smartscan)
-(global-set-key (kbd "M-n") 'smartscan-symbol-go-forward) ;; find next occurence of word at point
-(global-set-key (kbd "M-p") 'smartscan-symbol-go-backward) ;; find previous occurence of word at point
-(global-set-key (kbd "M-'") 'smartscan-symbol-replace) ;; replace all occurences of word at point
-
 ;; line handling features
-(move-text-default-bindings) ;; M-up / M-down to move line or region
 (global-set-key (kbd "<C-M-down>") 'duplicate-current-line)
 ;; (global-set-key (kbd "<up>") 'previous-line)
 ;; (global-set-key (kbd "<down>") 'next-line)
@@ -292,49 +450,11 @@
 ;; rgrep
 (key-chord-define-global (kbd "éè") 'rgrep)
 
-;; sublimity (minimap, distraction-free mode)
-(require 'sublimity)
-(require 'sublimity-scroll)
-(require 'sublimity-map)
-
-;; cursor movement and features
-(global-set-key (kbd "C-c e") 'er/expand-region) ;; expand region by syntaxic units
-(global-set-key (kbd "M-à") 'avy-goto-word-1) ;; quickly jump to word by pressing its first letter
-(global-set-key (kbd "C-à") 'avy-goto-char-timer) ;; quickly jump to any char in word
-(global-set-key (kbd "M-«") 'simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
-(global-set-key (kbd "M-»") 'simplified-end-of-buffer) ;; useful when C-> does not work (windows/putty)
-
-;; god-mode
-(require 'god-mode)
-(global-set-key (kbd "C-c g") 'god-mode-all)
-(global-set-key (kbd "<f8>") 'god-mode-all)
-(defun my-update-cursor ()
-  (cond
-   (god-local-mode
-    (progn
-      (set-cursor-color "red")
-      (set-face-background 'mode-line "brown")))
-   (t
-    (progn
-      (set-cursor-color "yellow")
-      (set-face-background 'mode-line "#0a2832")))))
-
-(add-hook 'god-mode-enabled-hook 'my-update-cursor)
-(add-hook 'god-mode-disabled-hook 'my-update-cursor)
-(add-hook 'window-configuration-change-hook 'my-update-cursor)
-(define-key god-local-mode-map (kbd "z") 'repeat)
-(define-key god-local-mode-map (kbd "i") 'god-mode-all)
-(define-key god-local-mode-map (kbd ".") 'repeat)
-(add-to-list 'god-exempt-major-modes 'ibuffer-mode)
-
 ;; better access to window manipulation commands
 (global-set-key (kbd "C-\"") 'delete-other-windows)
 (global-set-key (kbd "C-«") 'split-window-below)
 (global-set-key (kbd "C-»") 'split-window-right)
 (global-set-key (kbd "C-*") 'delete-window)
-(global-set-key (kbd "C-+") 'zoom-frm-in)
-(global-set-key (kbd "C-=") 'zoom-frm-unzoom)
-
 
 ;; Multiple cursors keybindings
 (global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
@@ -357,14 +477,6 @@
 (define-key endless/mc-map "l" 'mc/edit-lines)
 (define-key endless/mc-map "\C-a" 'mc/edit-beginnings-of-lines)
 (define-key endless/mc-map "\C-e" 'mc/edit-ends-of-lines)
-
-;; auto-completion with company-mode
-(global-company-mode) ;; enable company in all buffers
-(diminish 'company-mode)
-(setq company-show-numbers t)
-
-(add-hook 'markdown-mode-hook 'company-mode)
-(add-hook 'text-mode-hook 'company-mode)
 
 ;; projectile-mode
 (projectile-global-mode) ;; activate projectile-mode everywhere
@@ -567,31 +679,9 @@ Results are reported in a compilation buffer."
           (bury-buffer was-visited)
         (kill-buffer (current-buffer))))))
 
-;; define word at point
-(global-set-key (kbd "<f12>") 'define-word-at-point)
-
-;; shrink-whitespace
-(require 'shrink-whitespace)
-(global-set-key (kbd "C-x C-o") 'shrink-whitespace)
-
-;; which-key (replacement for guide-key)
-(require 'which-key)
-(which-key-mode)
-
 ;; regexp-builder
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
-
-;; swipe instead of regular search
-(global-set-key (kbd "C-S-s") 'swiper-helm)
-
-;; scratch
-(require 'multi-scratch)
-(setq multi-scratch-buffer-name "new")
-(global-set-key (kbd "C-x \"") 'multi-scratch-new) ;; create new scratch buffer named “new<#>”
-(global-set-key (kbd "M-\"") 'multi-scratch-new) ;; create new scratch buffer named “new<#>”
-(global-set-key (kbd "C-x «") 'multi-scratch-prev) ;; jump to previous scratch buffer
-(global-set-key (kbd "C-x »") 'multi-scratch-next) ;; jump to next scratch buffer
 
 ;; date, time, calendar
 (setq display-time-day-and-date t ;; display date and time
@@ -629,64 +719,13 @@ Results are reported in a compilation buffer."
 (put 'set-goal-column 'disabled nil)
 (put 'scroll-left 'disabled nil)
 
-;; rainbow-delimiters
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
 ;; set default browser to firefox
 (setq gnus-button-url 'browse-url-generic
       browse-url-generic-program "firefox"
       browse-url-browser-function gnus-button-url)
 
 ;; kill-ring
-(require 'browse-kill-ring)
-(browse-kill-ring-default-keybindings)
-(setq browse-kill-ring-quit-action 'save-and-restore)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-
-;; snippets
-(require 'yasnippet)
-(yas-global-mode 1)
-;; Completing point by some yasnippet key
-(defun yas-ido-expand ()
-  "Lets you select (and expand) a yasnippet key"
-  (interactive)
-  (let ((original-point (point)))
-    (while (and
-            (not (= (point) (point-min) ))
-            (not
-             (string-match "[[:space:]\n]" (char-to-string (char-before)))))
-      (backward-word 1))
-    (let* ((init-word (point))
-           (word (buffer-substring init-word original-point))
-           (list (yas-active-keys)))
-      (goto-char original-point)
-      (let ((key (remove-if-not
-                  (lambda (s) (string-match (concat "^" word) s)) list)))
-        (if (= (length key) 1)
-            (setq key (pop key))
-          (setq key (ido-completing-read "key: " list nil nil word)))
-        (delete-char (- init-word original-point))
-        (insert key)
-        (yas-expand)))))
-(define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-ido-expand)
-
-;; engine-mode
-(require 'engine-mode)
-(engine-mode t) ;; prefix C-c /
-(defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
-(defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
-(defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" :keybinding "g")
-(defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" :keybinding "i")
-(defengine leo "http://dict.leo.org/frde/index_de.html#/search=%s&searchLoc=0&resultOrder=basic&multiwordShowSingle=on" :keybinding "l")
-(defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m")
-(defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "o")
-(defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" :keybinding "w")
-(defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
-(defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
-(defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
-(defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
-(defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R")
-(engine/set-keymap-prefix (kbd "C-c s"))
 
 ;;revert windows on ediff exit - needs winner mode
 (winner-mode)
@@ -817,24 +856,6 @@ _mx_: xml
 
 (global-set-key (kbd "<f6>") 'hydra-arabic/body)
 
-;; char-menu
-(require 'char-menu)
-(global-set-key (kbd "<f7>") 'char-menu)
-(setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
-                  ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
-                  ("cyrillic"       "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
-                  ("Smileys"       "☺" "☹")
-                  ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒")))
-
-
-;; statistics on key use frequency
-(require 'keyfreq)
-(keyfreq-mode 1)
-(keyfreq-autosave-mode 1)
-
-(global-set-key (kbd "C-.") 'helm-imenu-anywhere)
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -853,13 +874,9 @@ _mx_: xml
 ;; dired
 (put 'dired-find-alternate-file 'disabled nil)
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
-(require 'dired-narrow)
-(define-key dired-mode-map (kbd "/") 'dired-narrow)
 
 ;; git
 (require 'magit)
-(autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
-(add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode))
 (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
 (setq magit-last-seen-setup-instructions "1.4.0")
 (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order")
@@ -915,24 +932,6 @@ _mx_: xml
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
 (add-to-list 'auto-mode-alist '(".rb$" . ruby-mode))
 
-;; HTML, XML, JSP (using web-mode)
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tag\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.xsd\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.wsdl\\'" . web-mode))
-
-(setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
-                               ("blade" . "\\.blade\\.")))
-(add-hook 'css-mode-hook 'rainbow-mode)
-
 ;; JAVA
 (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
 
@@ -965,9 +964,6 @@ _mx_: xml
 (global-set-key (kbd "\C-c b") 'org-iswitchb)
 (global-set-key (kbd "\C-c j") 'jirify)
 (define-key org-mode-map (kbd "\C-c t") 'org-begin-template)
-
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 ;; ORG-CAPTURE
 (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
