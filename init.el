@@ -32,14 +32,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; basic packages (no additional conf)
-(use-package 2048-game :disabled t)
+
 (use-package better-defaults)
-(use-package color-theme)
+
+(use-package color-theme
+  :config
+  (color-theme-initialize)
+  (color-theme-dark-laptop)
+  (set-face-background 'mode-line "#0a2832"))
+
 (use-package dired+)
 (use-package epresent :disabled t)
 (use-package restclient :disabled t)
 (use-package s)
-(use-package speed-type)
 (use-package swiper)
 
 ;; quickly switch to other window
@@ -201,17 +206,68 @@
   (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
 
 (use-package flycheck)
-(use-package helm)
-(use-package helm-descbinds)
-(use-package helm-projectile)
+
+
+(use-package helm
+  :diminish helm-mode
+  :bind
+  ("M-x" . helm-M-x) ;; superior to M-x
+  ("M-y" . helm-show-kill-ring)
+  ("C-h v" . helm-apropos)
+  ("C-h f" . helm-apropos)
+  ("C-h a" . helm-apropos)
+  ("M-ç" . helm-for-files)
+  ("C-ç" . helm-for-files)
+  ("C-x w" . helm-wikipedia-suggest) ;; quick wp lookup
+  ("C-c h p" . helm-list-elisp-packages-no-fetch)
+  ("C-c h P" . helm-apt)
+  ("C-c h w" . helm-wikipedia-suggest)
+  :config
+  ;; activate additional features
+  (helm-mode 0) ;; helm-mode only on demand
+  (helm-autoresize-mode t)
+  (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
+		helm-buffers-fuzzy-matching t
+		helm-recentf-fuzzy-match    t)
+  ;; helm-for-file looks everywhere, no need for anything else
+  (key-chord-define-global (kbd "bf") 'helm-for-files))
+
+(use-package helm-descbinds
+  :bind ("C-h b" . helm-descbinds))
+
+(use-package helm-projectile
+  :diminish projectile-mode
+  :init
+  (projectile-global-mode) ;; activate projectile-mode everywhere
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
+  (setq projectile-enable-caching t) ;; enable caching for projectile-mode
+  (setq projectile-switch-project-action 'projectile-vc)) ;; magit-status or svn
+
 (use-package hydra)
 (use-package imenu-anywhere
   :bind ("C-." . helm-imenu-anywhere))
 
-(use-package key-chord)
-(use-package magit)
+(use-package key-chord
+  :config  (key-chord-mode 1))
+
+(use-package magit
+  :config
+  (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
+
 (use-package markdown-mode)
-(use-package multiple-cursors)
+(use-package multiple-cursors
+  ;; Multiple cursors keybindings
+  :bind
+  ("M-é" . mc/edit-lines) ;; new cursor on each line of region
+  ("M-è" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
+  ("M-È" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
+  ("M-É" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
+  ("C-M-é" . mc/unmark-next-like-this)
+  ("C-M-è" . mc/unmark-previous-like-this))
+
 (use-package smart-mode-line)
 
 (use-package yasnippet
@@ -247,11 +303,19 @@
   :bind
   ("C-c i" . iwb) ;; indent whole buffer
   ("M-«" . simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
-  ("M-»" . simplified-end-of-buffer)) ;; useful when C-> does not work (windows/putty)
+  ("M-»" . simplified-end-of-buffer)
+  ("<C-M-down>" . duplicate-current-line)
+  ("<up>" . up-arrow)
+  ("<down>" . down-arrow)
+  ("<f5>" . reload-file) ;; re-read file from disk
+  ("C-<f5>" . copy-and-show-current-file-path) ;; copy current file path
+  ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
+  ("C-x C-r" . sudo-edit)) ;; sudo open file
 
 (use-package flycheck-java ;; flycheck minor mode for java
   :ensure nil
   :load-path "elisp/")
+
 (use-package highlight-line ;; highlight line in list buffers
   :ensure nil
   :load-path "elisp/")
@@ -266,6 +330,45 @@
   ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
   :config (setq multi-scratch-buffer-name "new"))
 
+(use-package org
+  :bind
+  (("\C-c l" . org-store-link)
+   ("\C-c a" . org-agenda)
+   ("\C-c b" . org-iswitchb)
+   ("\C-c j" . jirify)
+   :map org-mode-map
+   ("\C-c t" . org-begin-template))
+  :config
+  ;; ORG-CAPTURE
+  (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
+  (setq terminalcity-dir "~/Terminalcity/")
+  (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
+
+  (key-chord-define-global (kbd "gx") 'org-capture)
+  (setq org-export-coding-system 'utf-8)
+
+  ;; org-capture-templates
+  (setq org-capture-templates
+        '(
+          ;; local
+          ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
+          ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
+          ;; remote
+          ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
+          ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
+
+  (setq org-completion-use-ido t)
+
+  ;; font and faces customization
+  (setq org-todo-keyword-faces
+        '(("INPR" . (:foreground "yellow" :weight bold))
+          ("STARTED" . (:foreground "yellow" :weight bold))
+          ("WAIT" . (:foreground "yellow" :weight bold))
+          ("INPROGRESS" . (:foreground "yellow" :weight bold)))))
+
+;; additional games
+(use-package 2048-game :disabled t)
+(use-package speed-type :disabled t)
 
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
@@ -395,20 +498,12 @@
 (highlight-line-mode 1) ;; except in “list” modes
 (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
-;; activate key-chords
-(require 'key-chord)
-(key-chord-mode 1)
-
 ;; buffer & file handling
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
 (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
 (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
 (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
-(global-set-key (kbd "<f5>") 'reload-file) ;; re-read file from disk
-(global-set-key (kbd "C-<f5>") 'copy-and-show-current-file-path) ;; copy current file path
-(global-set-key (kbd "M-<f5>") 'show-file-name) ;; show the file name in minibuffer
-(global-set-key (kbd "C-x C-r") 'sudo-edit) ;; sudo open file
 
 (setq ibuffer-formats
       '((mark modified read-only " "
@@ -419,34 +514,6 @@
 
 (global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
 
-;; line handling features
-(global-set-key (kbd "<C-M-down>") 'duplicate-current-line)
-;; (global-set-key (kbd "<up>") 'previous-line)
-;; (global-set-key (kbd "<down>") 'next-line)
-
-;; activate additional features
-(helm-mode 0) ;; helm-mode only on demand
-(diminish 'helm-mode)
-(helm-autoresize-mode t)
-(global-set-key (kbd "M-x") 'helm-M-x) ;; superior to M-x
-(setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
-      helm-buffers-fuzzy-matching t
-      helm-recentf-fuzzy-match    t)
-;; helm-for-file looks everywhere, no need for anything else
-(key-chord-define-global (kbd "bf") 'helm-for-files)
-
-(global-set-key (kbd "C-h v") 'helm-apropos)
-(global-set-key (kbd "C-h f") 'helm-apropos)
-(global-set-key (kbd "C-h a") 'helm-apropos)
-(global-set-key (kbd "C-h b") 'helm-descbinds)
-(global-set-key (kbd "M-ç") 'helm-for-files)
-(global-set-key (kbd "C-ç") 'helm-for-files)
-(global-set-key (kbd "C-x w") 'helm-wikipedia-suggest) ;; quick wp lookup
-;; more commands with helm
-(global-set-key (kbd "C-c h p") 'helm-list-elisp-packages-no-fetch)
-(global-set-key (kbd "C-c h P") 'helm-apt)
-(global-set-key (kbd "C-c h w") 'helm-wikipedia-suggest)
-
 ;; rgrep
 (key-chord-define-global (kbd "éè") 'rgrep)
 
@@ -455,14 +522,6 @@
 (global-set-key (kbd "C-«") 'split-window-below)
 (global-set-key (kbd "C-»") 'split-window-right)
 (global-set-key (kbd "C-*") 'delete-window)
-
-;; Multiple cursors keybindings
-(global-set-key (kbd "M-é") 'mc/edit-lines) ;; new cursor on each line of region
-(global-set-key (kbd "M-è") 'mc/mark-all-like-this) ;; new cursor on each occurence of current region
-(global-set-key (kbd "M-È") 'mc/mark-next-like-this) ;; new cursor on next occurence of current region
-(global-set-key (kbd "M-É") 'mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
-(global-set-key (kbd "C-M-é") 'mc/unmark-next-like-this)
-(global-set-key (kbd "C-M-è") 'mc/unmark-previous-like-this)
 
 (define-prefix-command 'endless/mc-map)
 ;; C-x m is usually `compose-mail'. Bind it to something else if you use this command.
@@ -477,14 +536,6 @@
 (define-key endless/mc-map "l" 'mc/edit-lines)
 (define-key endless/mc-map "\C-a" 'mc/edit-beginnings-of-lines)
 (define-key endless/mc-map "\C-e" 'mc/edit-ends-of-lines)
-
-;; projectile-mode
-(projectile-global-mode) ;; activate projectile-mode everywhere
-(setq projectile-completion-system 'helm)
-(helm-projectile-on)
-(setq projectile-enable-caching t) ;; enable caching for projectile-mode
-(setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
-(diminish 'projectile-mode)
 
 
 ;; spell-check
@@ -724,15 +775,11 @@ Results are reported in a compilation buffer."
       browse-url-generic-program "firefox"
       browse-url-browser-function gnus-button-url)
 
-;; kill-ring
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-
 ;;revert windows on ediff exit - needs winner mode
 (winner-mode)
 (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
 
 ;; hydra mode
-(require 'hydra)
 (defvar whitespace-mode nil)
 (defvar idle-highlight-mode nil)
 (defvar linum-mode nil)
@@ -875,12 +922,6 @@ _mx_: xml
 (put 'dired-find-alternate-file 'disabled nil)
 (setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
 
-;; git
-(require 'magit)
-(key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
-(setq magit-last-seen-setup-instructions "1.4.0")
-(magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order")
-
 ;; SH
 (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
 ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
@@ -957,41 +998,6 @@ _mx_: xml
 ;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
 ;; (setq jedi:complete-on-dot t) ;; optional
 
-;; ORG-MODE
-(require 'org)
-(global-set-key (kbd "\C-c l") 'org-store-link)
-(global-set-key (kbd "\C-c a") 'org-agenda)
-(global-set-key (kbd "\C-c b") 'org-iswitchb)
-(global-set-key (kbd "\C-c j") 'jirify)
-(define-key org-mode-map (kbd "\C-c t") 'org-begin-template)
-
-;; ORG-CAPTURE
-(setq org-default-notes-file (concat user-emacs-directory "notes.org"))
-(setq terminalcity-dir "~/Terminalcity/")
-(setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
-
-(key-chord-define-global (kbd "gx") 'org-capture)
-(setq org-export-coding-system 'utf-8)
-
-;; org-capture-templates
-(setq org-capture-templates
-      '(
-        ;; local
-        ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
-        ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
-        ;; remote
-        ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
-        ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
-
-(setq org-completion-use-ido t)
-
-;; font and faces customization
-(setq org-todo-keyword-faces
-      '(("INPR" . (:foreground "yellow" :weight bold))
-        ("STARTED" . (:foreground "yellow" :weight bold))
-        ("WAIT" . (:foreground "yellow" :weight bold))
-        ("INPROGRESS" . (:foreground "yellow" :weight bold))))
-
 ;;;;;;;;;;;;;;;;;;;
 ;; CUSTOMISATION ;;
 ;;;;;;;;;;;;;;;;;;;
@@ -1012,10 +1018,6 @@ _mx_: xml
 (setq powerline-default-separator-dir '(right . left))
 (setq sml/theme 'dark)
 (sml/setup)
-
-;; set up a dark theme
-(color-theme-initialize)
-(color-theme-dark-laptop)
 
 ;; server mode
 (if (and (fboundp 'server-running-p)
