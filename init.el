@@ -415,6 +415,16 @@
   (modalka-define-kbd "/" "C-/")
   (modalka-define-kbd "SPC" "C-SPC"))
 
+(use-package wgrep
+  :bind (:map grep-mode-map
+			  ("C-x C-q" . wgrep-change-to-wgrep-mode)
+			  ("C-c C-c" . wgrep-finish-edit)))
+
+(use-package helm-ag
+  :bind (:map helm-ag-mode-map
+			  ("C-x C-q" . wgrep-change-to-wgrep-mode)
+			  ("C-c C-c" . wgrep-finish-edit)))
+
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
 ;;;;;;;;;;;;;;
