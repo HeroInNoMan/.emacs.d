@@ -7,6 +7,10 @@ My emacs configuration.
     │
     ├── init.el       # main config file
     │
+    ├── custom.el     # customize file (mostly generated) called by init.el
+    │
+    ├── env.el        # system-aware lisp config called by init.el
+    │
     ├── elisp/        # plugins, modules (managed manually)
     │
     ├── misc/         # emacs-related stuff (managed manually)
