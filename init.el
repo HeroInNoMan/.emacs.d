@@ -1020,7 +1020,30 @@ _mx_: xml
 (add-to-list 'auto-mode-alist '(".rb$" . ruby-mode))
 
 ;; JAVA
-(add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
+(use-package eclim ;; TODO à tester
+  :disabled t
+  :config
+  (require 'eclim)
+  (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
+  (global-eclim-mode))
+
+(use-package malabar-mode ;; TODO à tester
+  :disabled t
+  :config
+  ;; JAVA (malabar-mode)
+  ;; mimic the IDEish compile-on-save behaviour
+  ;; (load-file "~/outils/cedet/cedet-devel-load.el")
+  (add-hook 'after-init-hook (lambda ()
+							   (message "activate-malabar-mode")
+							   (activate-malabar-mode)))
+
+  (add-hook 'malabar-java-mode-hook 'flycheck-mode)
+  (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
+  (add-hook 'malabar-mode-hook (lambda () (add-hook 'after-save-hook 'malabar-compile-file-silently nil t)))
+  (add-hook 'malabar-mode-hook
+			(lambda ()
+			  (add-hook 'after-save-hook 'malabar-http-compile-file-silently
+						nil t))))
 
 ;; JAVASCRIPT (to be tested)
 (autoload 'js2-mode "js2" nil t)
