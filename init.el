@@ -22,10 +22,14 @@
 
 (eval-when-compile
   (require 'use-package))
+
+(setq use-package-always-ensure t)
+
 (require 'diminish) ;; for :diminish
 (require 'bind-key) ;; for :bind
 
-(setq use-package-always-ensure t)
+(use-package use-package-chords
+  :config (key-chord-mode 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGE DECLARATIONS ;;
@@ -222,15 +226,14 @@
   ("C-c h p" . helm-list-elisp-packages-no-fetch)
   ("C-c h P" . helm-apt)
   ("C-c h w" . helm-wikipedia-suggest)
+  :chords ("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
   :config
   ;; activate additional features
   (helm-mode 0) ;; helm-mode only on demand
   (helm-autoresize-mode t)
   (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
         helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match    t)
-  ;; helm-for-file looks everywhere, no need for anything else
-  (key-chord-define-global (kbd "bf") 'helm-for-files))
+        helm-recentf-fuzzy-match    t))
 
 (use-package helm-descbinds
   :bind ("C-h b" . helm-descbinds))
@@ -249,12 +252,9 @@
 (use-package imenu-anywhere
   :bind ("C-." . helm-imenu-anywhere))
 
-(use-package key-chord
-  :config  (key-chord-mode 1))
-
 (use-package magit
+  :chords ("qg" . magit-status) ;; run git status for current buffer
   :config
-  (key-chord-define-global (kbd "qg") 'magit-status) ;; run git status for current buffer
   (setq magit-last-seen-setup-instructions "1.4.0")
   (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
 
@@ -340,6 +340,7 @@
    ("\C-c j" . jirify)
    :map org-mode-map
    ("\C-c t" . org-begin-template))
+  :chords ("gx" . org-capture)
   :init
   (require 'org-agenda)
   :config
@@ -347,8 +348,6 @@
   (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
   (setq terminalcity-dir "~/Terminalcity/")
   (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
-
-  (key-chord-define-global (kbd "gx") 'org-capture)
 
   ;; org-capture-templates
   (setq org-capture-templates
