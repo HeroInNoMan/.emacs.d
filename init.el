@@ -372,6 +372,48 @@
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
 
+(use-package modalka ;; TODO à tester
+  :disabled t
+  :bind ("<f8>" . modalka-mode)
+  :config (modalka-global-mode 1)
+  (add-to-list 'modalka-excluded-modes 'magit-status-mode)
+
+  ;; includes:
+  (add-hook 'text-mode-hook #'modalka-mode)
+  (add-hook 'org-mode-hook #'modalka-mode)
+  (add-hook 'prog-mode-hook #'modalka-mode)
+  (setq-default cursor-type 'box)
+  (setq modalka-cursor-type '(hbar . 2))
+
+  ;; bindings
+  (modalka-define-kbd "Y" "M-y")
+  (modalka-define-kbd "a" "C-a")
+  (modalka-define-kbd "b" "C-b")
+  (modalka-define-kbd "c" "C-c")
+  (modalka-define-kbd "d" "C-d")
+  (modalka-define-kbd "e" "C-e")
+  (modalka-define-kbd "f" "C-f")
+  (modalka-define-kbd "g" "C-g")
+  (modalka-define-kbd "h" "C-h")
+  (modalka-define-kbd "i" "<f8>")
+  (modalka-define-kbd "j" "C-j")
+  (modalka-define-kbd "k" "C-k")
+  (modalka-define-kbd "l" "C-l")
+  (modalka-define-kbd "m" "C-m")
+  (modalka-define-kbd "n" "C-n")
+  (modalka-define-kbd "o" "C-o")
+  (modalka-define-kbd "p" "C-p")
+  (modalka-define-kbd "q" "C-q")
+  (modalka-define-kbd "r" "C-r")
+  (modalka-define-kbd "s" "C-s")
+  (modalka-define-kbd "t" "C-t")
+  (modalka-define-kbd "u" "C-u")
+  (modalka-define-kbd "v" "C-v")
+  (modalka-define-kbd "w" "C-w")
+  (modalka-define-kbd "z" "C-z")
+  (modalka-define-kbd "/" "C-/")
+  (modalka-define-kbd "SPC" "C-SPC"))
+
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
 ;;;;;;;;;;;;;;
