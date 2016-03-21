@@ -227,8 +227,8 @@
   (helm-mode 0) ;; helm-mode only on demand
   (helm-autoresize-mode t)
   (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
-		helm-buffers-fuzzy-matching t
-		helm-recentf-fuzzy-match    t)
+        helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match    t)
   ;; helm-for-file looks everywhere, no need for anything else
   (key-chord-define-global (kbd "bf") 'helm-for-files))
 
@@ -338,6 +338,8 @@
    ("\C-c j" . jirify)
    :map org-mode-map
    ("\C-c t" . org-begin-template))
+  :init
+  (require 'org-agenda)
   :config
   ;; ORG-CAPTURE
   (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
@@ -345,7 +347,6 @@
   (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
 
   (key-chord-define-global (kbd "gx") 'org-capture)
-  (setq org-export-coding-system 'utf-8)
 
   ;; org-capture-templates
   (setq org-capture-templates
@@ -357,6 +358,7 @@
           ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
           ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
 
+  (setq org-export-coding-system 'utf-8)
   (setq org-completion-use-ido t)
 
   ;; font and faces customization
