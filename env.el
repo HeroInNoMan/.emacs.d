@@ -21,7 +21,8 @@
     (add-to-list 'org-capture-templates '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))
 
     ;; smaller font by default on dijon
-    (dotimes (number 2) (zoom-frm-out))
+    (if (featurep 'zoom-frm)
+        (dotimes (number 2) (zoom-frm-out)))
 
     ;; open work log file
     (find-file (expand-file-name "~/Terminalcity/SFR.org"))))
@@ -30,7 +31,8 @@
  ((equal "highlander" (system-name))
   (progn
     ;; bigger font by default on laptop
-    (dotimes (number 5) (zoom-frm-in))))
+    (if (featurep 'zoom-frm)
+        (dotimes (number 5) (zoom-frm-in)))))
 
  ;; default
  (t (progn
