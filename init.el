@@ -150,7 +150,6 @@
   ("C-+" . zoom-frm-in)
   ("C-=" . zoom-frm-unzoom))
 
-
 (use-package engine-mode
   :config
   (engine-mode t) ;; prefix C-c /
@@ -196,6 +195,7 @@
 (use-package idle-highlight-mode)
 
 (use-package sublimity
+  :disabled t
   :config
   (require 'sublimity-scroll)
   (require 'sublimity-map))
@@ -245,6 +245,7 @@
   (setq projectile-switch-project-action 'projectile-vc)) ;; magit-status or svn
 
 (use-package hydra)
+
 (use-package imenu-anywhere
   :bind ("C-." . helm-imenu-anywhere))
 
@@ -258,6 +259,7 @@
   (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
 
 (use-package markdown-mode)
+
 (use-package multiple-cursors
   ;; Multiple cursors keybindings
   :bind
