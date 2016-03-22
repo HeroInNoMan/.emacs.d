@@ -829,8 +829,10 @@ Results are reported in a compilation buffer."
       browse-url-browser-function gnus-button-url)
 
 ;;revert windows on ediff exit - needs winner mode
-(winner-mode)
-(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+(use-package winner
+  :config
+  (winner-mode)
+  (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
 
 ;; hydra mode
 (defvar whitespace-mode nil)
