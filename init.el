@@ -245,7 +245,129 @@
   (setq projectile-enable-caching t) ;; enable caching for projectile-mode
   (setq projectile-switch-project-action 'projectile-vc)) ;; magit-status or svn
 
-(use-package hydra)
+(use-package hydra
+  :config
+  (defvar whitespace-mode nil)
+  (defvar idle-highlight-mode nil)
+  (defvar global-linum-mode nil)
+  (defvar god-local-mode nil)
+  (defhydra hydra-toggle-mode (:color blue)
+    "
+^Major mode^    ^Run^             ^Minor mode^
+^^^^^^^^------------------------------------------------
+_mg_: groovy    _b_: tabify       _a_: abbrev     %`abbrev-mode
+_mj_: java      _B_: untabify     _c_: dubcaps    %`dubcaps-mode
+_mJ_: js        _d_: change dict. _f_: flyspell   %`flyspell-mode
+_ml_: lisp      _F_: flycheck     _g_: god        %`god-local-mode
+_mm_: markdown  _i_: indent       _h_: highlight  %`idle-highlight-mode
+_mo_: org       _r_: reload conf  _l_: linum      %`global-linum-mode
+_mp_: python    _T_: rm. trail.   _s_: sublimity  %`sublimity-mode
+_mr_: ruby      _u_: undo-tree    _t_: trailing   %`show-trailing-whitespace
+_ms_: shell                     _w_: whitespace %`whitespace-mode
+_mS_: sql
+_mt_: text
+_mw_: web
+_mx_: xml
+"
+    ("a" abbrev-mode "abbrev")
+    ("b" tabify "tabify")
+    ("B" untabify "untabify")
+    ("c" dubcaps-mode "dubcaps")
+    ("d" ispell-change-dictionary "change dict.")
+    ("f" flyspell-mode "flyspell")
+    ("F" flyspell-buffer "flycheck")
+    ("g" god-mode "GOD")
+    ("h" idle-highlight-mode "highlight")
+    ("i" iwb "indent")
+    ("l" global-linum-mode "linum")
+    ("r" reload-config "reload conf")
+    ("s" sublimity-mode "sublimity")
+    ("t" toggle-show-trailing-whitespace "trailing")
+    ("T" delete-trailing-whitespace "rm trail.")
+    ("u" undo-tree-visualize "undo-tree")
+    ("w" whitespace-mode "whitespace")
+    ("mg" groovy-mode "groovy")
+    ("mj" java-mode "java")
+    ("mJ" javascript-mode "javascript")
+    ("ml" lisp-mode "lisp")
+    ("mm" markdown-mode "markdown")
+    ("mo" org-mode "org")
+    ("mp" python-mode "python")
+    ("mr" ruby-mode "ruby")
+    ("ms" sh-mode "shell")
+    ("mS" sql-mode "sql")
+    ("mt" text-mode "text")
+    ("mw" web-mode "web")
+    ("mx" xml-mode "xml")
+    ("q" nil "cancel"))
+  (global-set-key (kbd "C-c m") 'hydra-toggle-mode/body)
+
+  (defhydra hydra-move-around (:color pink)
+    "move around"
+    ("«" simplified-beginning-of-buffer "top")
+    ("»" simplified-end-of-buffer "bottom")
+    ("a" move-beginning-of-line "home")
+    ("e" move-end-of-line "end")
+    ("n" next-line "down")
+    ("j" next-line "down")
+    ("p" previous-line "up")
+    ("k" previous-line "up")
+    ("f" forward-char "right")
+    ("b" backward-char "left")
+    ("h" backward-char "left")
+    ("<SPC>" scroll-up-command "pg down")
+    ("d" scroll-up-command "pg down")
+    ("v" scroll-up-command "pg down")
+    ("u" scroll-down-command "pg up")
+    ("l" recenter-top-bottom "recenter")
+    ("g" goto-line "goto")
+    ("q" nil "cancel" :color blue))
+  (global-set-key (kbd "C-c c") 'hydra-move-around/body)
+
+  (defhydra hydra-spell (:color blue)
+    "spelling"
+    ("t" endless/ispell-word-then-abbrev "corr. & add")
+    ("f" flyspell-mode "flyspell")
+    ("c" flyspell-buffer "flycheck buffer")
+    ("F" flyspell-buffer "flycheck buffer")
+    ("d" ispell-change-dictionary "change dictionary")
+    ("q" nil "cancel"))
+  (global-set-key (kbd "<f9>") 'hydra-spell/body)
+
+  (defhydra hydra-arabic (:color pink)
+    "type in arabic"
+    ("a" (insert-char 1575) "ا") ;; ARABIC LETTER ALEF
+    ("b" (insert-char 1576) "ب") ;; ARABIC LETTER BEH
+    ("t" (insert-char 1578) "ت") ;; ARABIC LETTER TEH
+    ("þ" (insert-char 1579) "ث") ;; ARABIC LETTER THEH
+    ("j" (insert-char 1580) "ج") ;; ARABIC LETTER JEEM
+    ("H" (insert-char 1581) "ح") ;; ARABIC LETTER HAH
+    ("†" (insert-char 1582) "خ") ;; ARABIC LETTER KHAH
+    ("d" (insert-char 1583) "د") ;; ARABIC LETTER DAL
+    ("ð" (insert-char 1584) "ذ") ;; ARABIC LETTER THAL
+    ("r" (insert-char 1585) "ر") ;; ARABIC LETTER REH
+    ("z" (insert-char 1586) "ز") ;; ARABIC LETTER ZAIN
+    ("s" (insert-char 1587) "س") ;; ARABIC LETTER SEEN
+    ("ß" (insert-char 1588) "ش") ;; ARABIC LETTER SHEEN
+    ("S" (insert-char 1589) "ص") ;; ARABIC LETTER SAD
+    ("D" (insert-char 1590) "ض") ;; ARABIC LETTER DAD
+    ("T" (insert-char 1591) "ط") ;; ARABIC LETTER TAH
+    ("Z" (insert-char 1592) "ظ") ;; ARABIC LETTER ZAH
+    ("g" (insert-char 1593) "ع") ;; ARABIC LETTER AIN
+    ("®" (insert-char 1594) "غ") ;; ARABIC LETTER GHAIN
+    ("f" (insert-char 1601) "ف") ;; ARABIC LETTER FEH
+    ("Q" (insert-char 1602) "ق") ;; ARABIC LETTER QAF
+    ("k" (insert-char 1603) "ك") ;; ARABIC LETTER KAF
+    ("l" (insert-char 1604) "ل") ;; ARABIC LETTER LAM
+    ("m" (insert-char 1605) "م") ;; ARABIC LETTER MEEM
+    ("n" (insert-char 1606) "ن") ;; ARABIC LETTER NOON
+    ("h" (insert-char 1607) "ه") ;; ARABIC LETTER HEH
+    ("w" (insert-char 1608) "و") ;; ARABIC LETTER WAW
+    ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
+    ("'" (insert-char 1569) "ء") ;; ARABIC LETTER HAMZA
+    ("q" nil "cancel" :color blue))
+
+  (global-set-key (kbd "<f6>") 'hydra-arabic/body))
 
 (use-package imenu-anywhere
   :bind ("C-." . helm-imenu-anywhere))
@@ -833,130 +955,6 @@ Results are reported in a compilation buffer."
   :config
   (winner-mode)
   (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
-
-;; hydra mode
-(defvar whitespace-mode nil)
-(defvar idle-highlight-mode nil)
-(defvar linum-mode nil)
-(defhydra hydra-toggle-mode (:color blue)
-  "
-^Major mode^    ^Run^             ^Minor mode^
-^^^^^^^^------------------------------------------------
-_mg_: groovy    _b_: tabify       _a_: abbrev     %`abbrev-mode
-_mj_: java      _B_: untabify     _c_: dubcaps    %`dubcaps-mode
-_mJ_: js        _d_: dirtree      _f_: flyspell   %`flyspell-mode
-_ml_: lisp      _D_: change dict. _g_: god        %`god-local-mode
-_mm_: markdown  _F_: flycheck     _h_: highlight  %`idle-highlight-mode
-_mo_: org       _i_: indent       _l_: linum      %`linum-mode
-_mp_: python    _r_: reload conf  _s_: sublimity  %`sublimity-mode
-_mr_: ruby      _T_: rm. trail.   _t_: trailing   %`show-trailing-whitespace
-_ms_: shell     _u_: undo-tree    _w_: whitespace %`whitespace-mode
-_mS_: sql
-_mt_: text
-_mw_: web
-_mx_: xml
-"
-  ("a" abbrev-mode "abbrev")
-  ("b" tabify "tabify")
-  ("B" untabify "untabify")
-  ("c" dubcaps-mode "dubcaps")
-  ("d" dirtree "dirtree")
-  ("D" ispell-change-dictionary "change dict.")
-  ;; ("d" toggle-debug-on-error "debug")
-  ("f" flyspell-mode "flyspell")
-  ("F" flyspell-buffer "flycheck")
-  ("g" god-mode "GOD")
-  ("h" idle-highlight-mode "highlight")
-  ("i" iwb "indent")
-  ("l" linum-mode "linum")
-  ("r" reload-config "reload conf")
-  ("s" sublimity-mode "sublimity")
-  ("t" toggle-show-trailing-whitespace "trailing")
-  ("T" delete-trailing-whitespace "rm trail.")
-  ("u" undo-tree-visualize "undo-tree")
-  ("w" whitespace-mode "whitespace")
-  ("mg" groovy-mode "groovy")
-  ("mj" java-mode "java")
-  ("mJ" javascript-mode "javascript")
-  ("ml" lisp-mode "lisp")
-  ("mm" markdown-mode "markdown")
-  ("mo" org-mode "org")
-  ("mp" python-mode "python")
-  ("mr" ruby-mode "ruby")
-  ("ms" sh-mode "shell")
-  ("mS" sql-mode "sql")
-  ("mt" text-mode "text")
-  ("mw" web-mode "web")
-  ("mx" xml-mode "xml")
-  ("q" nil "cancel"))
-(global-set-key (kbd "C-c m") 'hydra-toggle-mode/body)
-
-(defhydra hydra-move-around (:color pink)
-  "move around"
-  ("«" simplified-beginning-of-buffer "top")
-  ("»" simplified-end-of-buffer "bottom")
-  ("a" move-beginning-of-line "home")
-  ("e" move-end-of-line "end")
-  ("n" next-line "down")
-  ("j" next-line "down")
-  ("p" previous-line "up")
-  ("k" previous-line "up")
-  ("f" forward-char "right")
-  ("b" backward-char "left")
-  ("h" backward-char "left")
-  ("<SPC>" scroll-up-command "pg down")
-  ("d" scroll-up-command "pg down")
-  ("v" scroll-up-command "pg down")
-  ("u" scroll-down-command "pg up")
-  ("l" recenter-top-bottom "recenter")
-  ("g" goto-line "goto")
-  ("q" nil "cancel" :color blue))
-(global-set-key (kbd "C-c c") 'hydra-move-around/body)
-
-(defhydra hydra-spell (:color blue)
-  "spelling"
-  ("t" endless/ispell-word-then-abbrev "corr. & add")
-  ("f" flyspell-mode "flyspell")
-  ("c" flyspell-buffer "flycheck buffer")
-  ("F" flyspell-buffer "flycheck buffer")
-  ("d" ispell-change-dictionary "change dictionary")
-  ("q" nil "cancel"))
-(global-set-key (kbd "<f9>") 'hydra-spell/body)
-
-(defhydra hydra-arabic (:color pink)
-  "type in arabic"
-  ("a" (insert-char 1575) "ا") ;; ARABIC LETTER ALEF
-  ("b" (insert-char 1576) "ب") ;; ARABIC LETTER BEH
-  ("t" (insert-char 1578) "ت") ;; ARABIC LETTER TEH
-  ("þ" (insert-char 1579) "ث") ;; ARABIC LETTER THEH
-  ("j" (insert-char 1580) "ج") ;; ARABIC LETTER JEEM
-  ("H" (insert-char 1581) "ح") ;; ARABIC LETTER HAH
-  ("†" (insert-char 1582) "خ") ;; ARABIC LETTER KHAH
-  ("d" (insert-char 1583) "د") ;; ARABIC LETTER DAL
-  ("ð" (insert-char 1584) "ذ") ;; ARABIC LETTER THAL
-  ("r" (insert-char 1585) "ر") ;; ARABIC LETTER REH
-  ("z" (insert-char 1586) "ز") ;; ARABIC LETTER ZAIN
-  ("s" (insert-char 1587) "س") ;; ARABIC LETTER SEEN
-  ("ß" (insert-char 1588) "ش") ;; ARABIC LETTER SHEEN
-  ("S" (insert-char 1589) "ص") ;; ARABIC LETTER SAD
-  ("D" (insert-char 1590) "ض") ;; ARABIC LETTER DAD
-  ("T" (insert-char 1591) "ط") ;; ARABIC LETTER TAH
-  ("Z" (insert-char 1592) "ظ") ;; ARABIC LETTER ZAH
-  ("g" (insert-char 1593) "ع") ;; ARABIC LETTER AIN
-  ("®" (insert-char 1594) "غ") ;; ARABIC LETTER GHAIN
-  ("f" (insert-char 1601) "ف") ;; ARABIC LETTER FEH
-  ("Q" (insert-char 1602) "ق") ;; ARABIC LETTER QAF
-  ("k" (insert-char 1603) "ك") ;; ARABIC LETTER KAF
-  ("l" (insert-char 1604) "ل") ;; ARABIC LETTER LAM
-  ("m" (insert-char 1605) "م") ;; ARABIC LETTER MEEM
-  ("n" (insert-char 1606) "ن") ;; ARABIC LETTER NOON
-  ("h" (insert-char 1607) "ه") ;; ARABIC LETTER HEH
-  ("w" (insert-char 1608) "و") ;; ARABIC LETTER WAW
-  ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
-  ("'" (insert-char 1569) "ء") ;; ARABIC LETTER HAMZA
-  ("q" nil "cancel" :color blue))
-
-(global-set-key (kbd "<f6>") 'hydra-arabic/body)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MAJOR MODE SPECIFIC CONFIGURATION ;;
