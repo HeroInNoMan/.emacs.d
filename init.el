@@ -71,8 +71,8 @@
   :config
   (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
                     ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
-                    ("cyrillic"       "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
-                    ("Smileys"       "☺" "☹")
+                    ("cyrillic"   "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
+                    ("Smileys"    "☺" "☹")
                     ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
 
 (use-package company
@@ -415,13 +415,13 @@
 
 (use-package wgrep
   :bind (:map grep-mode-map
-			  ("C-x C-q" . wgrep-change-to-wgrep-mode)
-			  ("C-c C-c" . wgrep-finish-edit)))
+              ("C-x C-q" . wgrep-change-to-wgrep-mode)
+              ("C-c C-c" . wgrep-finish-edit)))
 
 (use-package helm-ag
   :bind (:map helm-ag-mode-map
-			  ("C-x C-q" . wgrep-change-to-wgrep-mode)
-			  ("C-c C-c" . wgrep-finish-edit)))
+              ("C-x C-q" . wgrep-change-to-wgrep-mode)
+              ("C-c C-c" . wgrep-finish-edit)))
 
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
@@ -1041,16 +1041,16 @@ _mx_: xml
   ;; mimic the IDEish compile-on-save behaviour
   ;; (load-file "~/outils/cedet/cedet-devel-load.el")
   (add-hook 'after-init-hook (lambda ()
-							   (message "activate-malabar-mode")
-							   (activate-malabar-mode)))
+                               (message "activate-malabar-mode")
+                               (activate-malabar-mode)))
 
   (add-hook 'malabar-java-mode-hook 'flycheck-mode)
   (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
   (add-hook 'malabar-mode-hook (lambda () (add-hook 'after-save-hook 'malabar-compile-file-silently nil t)))
   (add-hook 'malabar-mode-hook
-			(lambda ()
-			  (add-hook 'after-save-hook 'malabar-http-compile-file-silently
-						nil t))))
+            (lambda ()
+              (add-hook 'after-save-hook 'malabar-http-compile-file-silently
+                        nil t))))
 
 ;; JAVASCRIPT (to be tested)
 (autoload 'js2-mode "js2" nil t)
