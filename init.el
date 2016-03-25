@@ -154,6 +154,7 @@
 
 (use-package engine-mode
   :config
+  (engine/set-keymap-prefix (kbd "C-c s"))
   (engine-mode t) ;; prefix C-c /
   (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
   (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
@@ -167,8 +168,7 @@
   (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
   (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
   (defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
-  (defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R")
-  (engine/set-keymap-prefix (kbd "C-c s")))
+  (defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R"))
 
 (use-package god-mode
   :bind
