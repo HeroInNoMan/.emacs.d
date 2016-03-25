@@ -22,6 +22,7 @@
   (require 'use-package))
 
 (setq use-package-always-ensure t)
+(setq use-package-verbose t)
 
 (require 'diminish) ;; for :diminish
 (require 'bind-key) ;; for :bind
@@ -32,8 +33,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGE DECLARATIONS ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; basic packages (no additional conf)
 
 (use-package better-defaults)
 
@@ -237,8 +236,8 @@
   :bind ("C-h b" . helm-descbinds))
 
 (use-package helm-projectile
-  :diminish projectile-mode
-  :init
+  ;; :diminish projectile-mode
+  :config
   (projectile-global-mode) ;; activate projectile-mode everywhere
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
@@ -396,7 +395,6 @@ _mx_: xml
   :bind (:map yas-minor-mode-map ("<C-tab>" . yas-ido-expand))
   :config
   (yas-global-mode 1)
-  :init
   (defun yas-ido-expand ()
     "Lets you select (and expand) a yasnippet key"
     (interactive)
