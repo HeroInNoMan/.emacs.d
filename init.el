@@ -209,7 +209,6 @@
 
 (use-package flycheck)
 
-
 (use-package helm
   :diminish helm-mode
   :bind
@@ -224,6 +223,7 @@
   ("C-c h p" . helm-list-elisp-packages-no-fetch)
   ("C-c h P" . helm-apt)
   ("C-c h w" . helm-wikipedia-suggest)
+  ("C-c h g" . helm-ag)
   :chords ("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
   :config
   ;; activate additional features
