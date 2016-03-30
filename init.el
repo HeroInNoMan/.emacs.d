@@ -637,6 +637,18 @@ _mx_: xml
 ;; Normal tab completion in Eshell
 (setq eshell-cmpl-cycle-completions nil)
 
+;; another C-d in shell kills shell buffer
+(defun comint-delchar-or-eof-or-kill-buffer (arg)
+  (interactive "p")
+  (if (null (get-buffer-process (current-buffer)))
+      (kill-buffer)
+    (comint-delchar-or-maybe-eof arg)))
+
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (define-key shell-mode-map
+              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+
 ;; No flashing!
 (setq visible-bell nil)
 
