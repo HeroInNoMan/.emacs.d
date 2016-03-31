@@ -606,6 +606,12 @@ _mx_: xml
 (setq line-number-mode t
       column-number-mode t)
 
+;; join lines below onto current line
+(global-set-key (kbd "M-j")
+				(lambda ()
+                  (interactive)
+                  (join-line -1)))
+
 ;; Lines should be 80 characters wide, not 70
 (setq-default fill-column 80)
 
