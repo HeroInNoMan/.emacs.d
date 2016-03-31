@@ -459,8 +459,7 @@ _mx_: xml
    :map org-mode-map
    ("\C-c t" . org-begin-template))
   :chords ("gx" . org-capture)
-  :init
-  (require 'org-agenda)
+  :init (require 'org-agenda)
   :config
   ;; ORG-CAPTURE
   (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
@@ -485,7 +484,21 @@ _mx_: xml
         '(("INPR" . (:foreground "yellow" :weight bold))
           ("STARTED" . (:foreground "yellow" :weight bold))
           ("WAIT" . (:foreground "yellow" :weight bold))
-          ("INPROGRESS" . (:foreground "yellow" :weight bold)))))
+          ("INPROGRESS" . (:foreground "yellow" :weight bold))))
+
+  ;; update cookies [1/2] when deleting lines
+  (defun myorg-update-parent-cookie ()
+	(when (equal major-mode 'org-mode)
+	  (save-excursion
+		(ignore-errors
+		  (org-back-to-heading)
+		  (org-update-parent-todo-statistics)))))
+
+  (defadvice org-kill-line (after fix-cookies activate)
+	(myorg-update-parent-cookie))
+
+  (defadvice kill-whole-line (after fix-cookies activate)
+	(myorg-update-parent-cookie)))
 
 ;; additional games
 (use-package 2048-game :disabled t)
