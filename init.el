@@ -1086,6 +1086,11 @@ Results are reported in a compilation buffer."
 (define-key lisp-mode-map (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
 ;; (global-set-key (kbd "C-c c") 'compile)
 
+(use-package elisp-slime-nav
+  :diminish elisp-slime-nav-mode
+  :config (add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t))))
+
+
 ;; PYTHON
 ;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
 ;; (setq jedi:complete-on-dot t) ;; optional
