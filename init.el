@@ -556,6 +556,9 @@ _mx_: xml
               ("C-x C-q" . wgrep-change-to-wgrep-mode)
               ("C-c C-c" . wgrep-finish-edit)))
 
+(use-package smart-comment
+  :bind ("M-;" . smart-comment))
+
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
 ;;;;;;;;;;;;;;
