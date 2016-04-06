@@ -395,8 +395,6 @@ _mx_: xml
   ("C-M-é" . mc/unmark-next-like-this)
   ("C-M-è" . mc/unmark-previous-like-this))
 
-(use-package smart-mode-line)
-
 (use-package yasnippet
   :bind (:map yas-minor-mode-map ("<C-tab>" . yas-ido-expand))
   :config
@@ -1153,10 +1151,14 @@ Results are reported in a compilation buffer."
 ;;;;;;;;;;;;;;
 
 ;; mode line (smart-mode-line)
-(setq powerline-arrow-shape 'curve)
-(setq powerline-default-separator-dir '(right . left))
-(setq sml/theme 'dark)
-(sml/setup)
+(use-package smart-mode-line
+  :config
+  (setq powerline-arrow-shape 'curve)
+  (setq powerline-default-separator-dir '(right . left))
+  (setq sml/theme 'dark)
+  ;; (setq sml/no-confirm-load-theme t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
+  (sml/setup))
 
 ;; server mode
 (if (and (fboundp 'server-running-p)
