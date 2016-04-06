@@ -1160,6 +1160,10 @@ Results are reported in a compilation buffer."
   (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
   (sml/setup))
 
+;; progress in file
+(use-package sml-modeline
+  :config (sml-modeline-mode))
+
 ;; server mode
 (if (and (fboundp 'server-running-p)
          (not (server-running-p)))
