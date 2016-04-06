@@ -204,6 +204,9 @@
   (require 'sublimity-scroll)
   (require 'sublimity-map))
 
+(use-package git-timemachine
+  :bind ("C-x g" . git-timemachine))
+(use-package gitignore-mode)
 (use-package gitconfig-mode
   :config
   (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
