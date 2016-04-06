@@ -125,6 +125,9 @@
   :diminish undo-tree-mode
   :config (undo-tree-mode t))
 
+(use-package volatile-highlights
+  :config (volatile-highlights-mode t))
+
 (use-package web-mode ;; HTML, XML, JSP (using web-mode)
   :config
   (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
