@@ -10,6 +10,7 @@
 (when (>= emacs-major-version 24)
   (require 'package)
   ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t) ;; default
+  ;; (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (package-initialize))
 
@@ -111,7 +112,6 @@
 (use-package shrink-whitespace
   :bind ("C-x C-o" . shrink-whitespace))
 
-;; smartscan
 (use-package smartscan
   :bind
   ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
@@ -492,17 +492,17 @@ _mx_: xml
 
   ;; update cookies [1/2] when deleting lines
   (defun myorg-update-parent-cookie ()
-	(when (equal major-mode 'org-mode)
-	  (save-excursion
-		(ignore-errors
-		  (org-back-to-heading)
-		  (org-update-parent-todo-statistics)))))
+    (when (equal major-mode 'org-mode)
+      (save-excursion
+        (ignore-errors
+          (org-back-to-heading)
+          (org-update-parent-todo-statistics)))))
 
   (defadvice org-kill-line (after fix-cookies activate)
-	(myorg-update-parent-cookie))
+    (myorg-update-parent-cookie))
 
   (defadvice kill-whole-line (after fix-cookies activate)
-	(myorg-update-parent-cookie)))
+    (myorg-update-parent-cookie)))
 
 ;; additional games
 (use-package 2048-game :disabled t)
@@ -640,7 +640,7 @@ _mx_: xml
 
 ;; join lines below onto current line
 (global-set-key (kbd "M-j")
-				(lambda ()
+                (lambda ()
                   (interactive)
                   (join-line -1)))
 
@@ -1140,10 +1140,10 @@ Results are reported in a compilation buffer."
 
 ;; if I ever have to use this on a Mac
 (if (equal "darwin" system-type)
-	(progn
-	  (setq mac-command-modifier 'meta)
-	  (setq mac-option-modifier 'super)
-	  (setq ns-function-modifier 'hyper)))
+    (progn
+      (setq mac-command-modifier 'meta)
+      (setq mac-option-modifier 'super)
+      (setq ns-function-modifier 'hyper)))
 
 
 ;;;;;;;;;;;;;;
