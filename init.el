@@ -563,6 +563,16 @@ _mx_: xml
 (use-package smart-comment
   :bind ("M-;" . smart-comment))
 
+
+;; TODO voir si c’est mieux que butler
+(use-package jenkins
+  :disabled t
+  :config
+  (setq jenkins-api-token "<api token can be found on user's configure page>")
+  (setq jenkins-url "<jenkins url>")
+  (setq jenkins-username "<your user name>")
+  (setq jenkins-viewname "<viewname>"))
+
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
 ;;;;;;;;;;;;;;
@@ -1163,6 +1173,15 @@ Results are reported in a compilation buffer."
 ;; progress in file
 (use-package sml-modeline
   :config (sml-modeline-mode))
+
+;; TODO configure weather in mode line
+(use-package weatherline-mode
+  :disabled t
+  :ensure nil
+  :load-path "elisp"
+  :config
+  (setq weatherline-location-id "2988507")
+  (weatherline-mode))
 
 ;; server mode
 (if (and (fboundp 'server-running-p)
