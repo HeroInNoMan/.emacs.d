@@ -581,6 +581,13 @@ _mx_: xml
   (setq jenkins-username "<your user name>")
   (setq jenkins-viewname "<viewname>"))
 
+
+(use-package helm-mode-manager
+  :bind
+  ("C-c m" . helm-switch-major-mode)
+  ("C-c n" . helm-enable-minor-mode)
+  ("C-c d" . helm-disable-minor-mode))
+
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
 ;;;;;;;;;;;;;;
