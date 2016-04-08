@@ -563,6 +563,8 @@ _mx_: xml
 
 (use-package helm-ag
   :bind (:map helm-ag-mode-map
+              ("p" . previous-line)
+              ("n" . next-line)
               ("C-x C-q" . wgrep-change-to-wgrep-mode)
               ("C-c C-c" . wgrep-finish-edit)))
 
