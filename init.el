@@ -982,6 +982,21 @@ Results are reported in a compilation buffer."
 (require 're-builder)
 (setq reb-re-syntax 'string) ;; syntax used in the re-buidler
 
+(use-package visual-regexp-steroids
+  :bind
+  (("M-s r" . vr/replace)
+   ("M-s q" . vr/query-replace)
+   ;; if you use multiple-cursors, this is for you:
+   ("M-s m" . vr/mc-mark)
+   ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
+   ("C-M-r" . vr/isearch-backward)
+   ("C-M-s" . vr/isearch-forward))
+  :config
+  (require 'visual-regexp))
+;; if the files are not already in the load path
+;; (add-to-list 'load-path "folder-to/visual-regexp/")
+;; (add-to-list 'load-path "folder-to/visual-regexp-steroids/")
+
 ;; date, time, calendar
 (setq display-time-day-and-date t ;; display date and time
       display-time-24hr-format t ;; 24h time format
