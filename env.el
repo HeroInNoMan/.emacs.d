@@ -45,7 +45,12 @@
   (progn
     ;; bigger font by default on laptop
     (when (featurep 'zoom-frm)
-	  (dotimes (number 5) (zoom-frm-in)))))
+	  (dotimes (number 3) (zoom-frm-in)))
+    ;; display battery level
+    (use-package fancy-battery
+	  :config
+	  (add-hook 'after-init-hook #'fancy-battery-mode)
+	  (setq fancy-battery-show-percentage t))))
 
  ;;;;;;;;;;
  ;; default
