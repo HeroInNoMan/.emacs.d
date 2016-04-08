@@ -198,6 +198,12 @@
 
 (use-package idle-highlight-mode)
 
+(use-package minimap
+  :ensure nil
+  :load-path "elisp/"
+  :bind ("<f2>" . minimap-toggle))
+
+
 (use-package sublimity
   :disabled t
   :config
