@@ -14,8 +14,8 @@
     (add-to-list 'org-agenda-files "~/Terminalcity/SFR.org")
 
     ;; confluence search
-    (if (featurep 'engine-mode)
-        (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c"))
+    (when (featurep 'engine-mode)
+	  (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c"))
 
     ;; jenkins interaction
     (use-package butler
@@ -33,8 +33,8 @@
     (add-to-list 'org-capture-templates '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))
 
     ;; smaller font by default on dijon
-    (if (featurep 'zoom-frm)
-        (dotimes (number 2) (zoom-frm-out)))
+    (when (featurep 'zoom-frm)
+	  (dotimes (number 2) (zoom-frm-out)))
 
     ;; open work log file
     (find-file (expand-file-name "~/Terminalcity/SFR.org"))))
@@ -44,8 +44,8 @@
  ((equal "highlander" (system-name))
   (progn
     ;; bigger font by default on laptop
-    (if (featurep 'zoom-frm)
-        (dotimes (number 5) (zoom-frm-in)))))
+    (when (featurep 'zoom-frm)
+	  (dotimes (number 5) (zoom-frm-in)))))
 
  ;;;;;;;;;;
  ;; default
