@@ -203,7 +203,6 @@
   :load-path "elisp/"
   :bind ("<f2>" . minimap-toggle))
 
-
 (use-package sublimity
   :disabled t
   :config
@@ -211,7 +210,19 @@
   (require 'sublimity-map))
 
 (use-package git-timemachine
-  :bind ("C-x g" . git-timemachine))
+  :bind ("C-x g t" . git-timemachine))
+
+(use-package git-messenger
+  :bind
+  (("C-x g g" . git-messenger:popup-message)
+   :map git-messenger-map
+   ("d" . git-messenger:popup-diff)
+   ("s" . git-messenger:)
+   ("c" . git-messenger:copy-commit-id))
+  :config
+  (add-hook 'git-messenger:popup-buffer-hook 'magit-commit-mode)
+  (setq git-messenger:show-detail t))
+
 (use-package gitignore-mode)
 (use-package gitconfig-mode
   :config
