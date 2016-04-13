@@ -56,6 +56,7 @@
 	("dnas" "dans" nil 1)
 	("dnsa" "dans" nil 1)
 	("uoi" "oui" nil 1)
+	("opur" "pour" nil 1)
 	("oauis" "ouais" nil 1)
 	("oausi" "ouais" nil 1)
 	("ouasi" "ouais" nil 1)
