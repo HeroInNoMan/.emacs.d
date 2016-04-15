@@ -584,7 +584,7 @@
 (global-auto-revert-mode 1)
 
 ;; Do not auto refresh dired
-(setq global-auto-revert-non-file-buffers nil)
+(setq global-auto-revert-non-file-buffers t)
 ;; always delete and copy recursively
 (setq dired-recursive-deletes 'always)
 (setq dired-recursive-copies 'always)
