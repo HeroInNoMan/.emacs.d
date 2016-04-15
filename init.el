@@ -604,7 +604,7 @@
 (global-font-lock-mode t)
 
 ;; <tab> inserts spaces, not tabs and spaces
-;; (setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 
 ;; No *scratch* message
 (setq initial-scratch-message nil)
