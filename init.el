@@ -147,6 +147,15 @@
          "\\.tag\\'"
          "\\.xsd\\'"
          "\\.wsdl\\'"))
+(use-package web-beautify
+  :bind-keymap (
+                ;; :map js2-mode-map ("C-c b" . web-beautify-js)
+                ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+                :map js-mode-map ("C-c b" . web-beautify-js)
+                     :map json-mode-map ("C-c b" . web-beautify-js)
+                     :map html-mode-map ("C-c b" . web-beautify-html)
+                     :map web-mode-map ("C-c b" . web-beautify-html)
+                     :map css-mode-map ("C-c b" . web-beautify-css)))
 
 (use-package which-key ;; which-key (replacement for guide-key)
   :config (which-key-mode))
