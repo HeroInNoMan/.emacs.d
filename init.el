@@ -533,6 +533,7 @@
   (modalka-define-kbd "z" "C-z")
   (modalka-define-kbd "/" "C-/")
   (modalka-define-kbd "SPC" "C-SPC"))
+(use-package ten-hundred-mode :disabled t)
 
 (use-package wgrep
   :bind (:map grep-mode-map
