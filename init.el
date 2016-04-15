@@ -485,6 +485,9 @@
 (use-package spray
   :bind ("C-x g s" . spray-mode))
 
+(use-package zop-to-char
+  :bind ("C-M-z" . zop-up-to-char))
+
 ;; additional games
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
