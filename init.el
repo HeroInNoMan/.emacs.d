@@ -1197,6 +1197,9 @@ Results are reported in a compilation buffer."
     (server-start))
 (global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
 
+(use-package edit-server
+  :init (edit-server-start))
+
 ;; session saving, backup management
 (setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
 (setq desktop-base-lock-name      "lock"
