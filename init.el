@@ -481,6 +481,10 @@
   (defadvice kill-whole-line (after fix-cookies activate)
     (myorg-update-parent-cookie)))
 
+;; spray mode (spritz)
+(use-package spray
+  :bind ("C-x g s" . spray-mode))
+
 ;; additional games
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
