@@ -566,6 +566,10 @@
   ("C-c n" . helm-enable-minor-mode)
   ("C-c d" . helm-disable-minor-mode))
 
+;; pomodoro available
+(use-package pomodoro
+  :config (pomodoro-add-to-mode-line))
+
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
 ;;;;;;;;;;;;;;
