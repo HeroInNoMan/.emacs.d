@@ -531,6 +531,16 @@
 
 (use-package emacs-calfw) ;; à tester
 
+(use-package emacs-eclim
+  :config
+  (global-eclim-mode)
+  (require 'eclimd)
+  (setq eclim-eclipse-dirs "~/outils/eclipse/eclipse-mars")
+  (setq eclim-executable "~/outils/eclipse/eclipse-mars/eclim")
+  (require 'company-emacs-eclim)
+  (company-emacs-eclim-setup)
+  (company-emacs-eclim-ignore-case t))
+
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
 ;;;;;;;;;;;;;;
