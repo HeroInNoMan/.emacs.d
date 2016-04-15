@@ -243,6 +243,8 @@
 
 (use-package flycheck)
 
+(use-package crontab-mode)
+
 (use-package helm
   :diminish helm-mode
   :bind
