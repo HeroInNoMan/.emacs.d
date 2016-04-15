@@ -559,7 +559,6 @@
   (setq jenkins-username "<your user name>")
   (setq jenkins-viewname "<viewname>"))
 
-
 (use-package helm-mode-manager
   :bind
   ("C-c m" . helm-switch-major-mode)
@@ -569,6 +568,8 @@
 ;; pomodoro available
 (use-package pomodoro
   :config (pomodoro-add-to-mode-line))
+
+(use-package emacs-calfw) ;; à tester
 
 ;;;;;;;;;;;;;;
 ;; DEFAULTS ;;
