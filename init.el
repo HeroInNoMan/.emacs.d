@@ -45,7 +45,10 @@
 
 (use-package dired+)
 (use-package epresent :disabled t)
+
 (use-package restclient :disabled t)
+(use-package restclient-helm :disabled t)
+
 (use-package s)
 (use-package swiper)
 
