@@ -742,7 +742,7 @@
               (mode 16 16 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
 
-(global-set-key (kbd "C-M-z") 'undo) ;; useful when C-/ does not work (windows/putty)
+
 
 ;; rgrep
 (key-chord-define-global (kbd "éè") 'rgrep)
