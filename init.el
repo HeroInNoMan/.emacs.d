@@ -411,7 +411,9 @@
   ("<f5>" . reload-file) ;; re-read file from disk
   ("C-<f5>" . copy-and-show-current-file-path) ;; copy current file path
   ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
-  ("C-x C-r" . sudo-edit)) ;; sudo open file
+  ("C-x C-r" . sudo-edit) ;; sudo open file
+  ("C-x |" . toggle-window-split)
+  ("C-|" . toggle-window-split))
 
 (use-package flycheck-java ;; flycheck minor mode for java
   :ensure nil
