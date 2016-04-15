@@ -253,13 +253,15 @@
   ("C-h v" . helm-apropos)
   ("C-h f" . helm-apropos)
   ("C-h a" . helm-apropos)
-  ("M-ç" . helm-for-files)
-  ("C-ç" . helm-for-files)
   ("C-x w" . helm-wikipedia-suggest) ;; quick wp lookup
   ("C-c h p" . helm-list-elisp-packages-no-fetch)
   ("C-c h P" . helm-apt)
+  ("C-c h t" . helm-top)
+  ("C-c h s" . helm-google-suggest)
   ("C-c h w" . helm-wikipedia-suggest)
   ("C-c h g" . helm-ag)
+  ("M-ç" . helm-for-files)
+  ("C-ç" . helm-for-files)
   :chords ("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
   :config
   ;; activate additional features
@@ -267,7 +269,15 @@
   (helm-autoresize-mode t)
   (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
         helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match    t))
+        helm-recentf-fuzzy-match    t)
+  (setq
+   helm-for-files-preferred-list '(helm-source-buffers-list
+                                   helm-source-recentf
+                                   helm-source-projectile-files-list
+                                   helm-source-bookmarks
+                                   helm-source-file-cache
+                                   helm-source-files-in-current-dir
+                                   helm-source-locate)))
 
 (use-package helm-descbinds
   :bind ("C-h b" . helm-descbinds))
@@ -279,7 +289,16 @@
   (setq projectile-completion-system 'helm)
   (helm-projectile-on)
   (setq projectile-enable-caching t) ;; enable caching for projectile-mode
-  (setq projectile-switch-project-action 'projectile-vc)) ;; magit-status or svn
+  (setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
+  (def-projectile-commander-method ?d
+    "Open project root in dired."
+    (projectile-dired))
+  (def-projectile-commander-method ?f
+    "Git fetch."
+    (magit-status)
+    (call-interactively #'magit-fetch-current)))
+
+(use-package helm-org-rifle)
 
 (use-package hydra
   :config
