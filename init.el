@@ -1156,14 +1156,6 @@ Results are reported in a compilation buffer."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file (expand-file-name "env.el" user-emacs-directory))
 
-;; if I ever have to use this on a Mac
-(if (equal "darwin" system-type)
-    (progn
-      (setq mac-command-modifier 'meta)
-      (setq mac-option-modifier 'super)
-      (setq ns-function-modifier 'hyper)))
-
-
 ;;;;;;;;;;;;;;
 ;; EPILOGUE ;;
 ;;;;;;;;;;;;;;
