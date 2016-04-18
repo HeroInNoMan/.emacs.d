@@ -148,6 +148,7 @@
          "\\.xsd\\'"
          "\\.wsdl\\'"))
 (use-package web-beautify
+  :disabled t
   :bind-keymap (
                 ;; :map js2-mode-map ("C-c b" . web-beautify-js)
                 ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
@@ -531,7 +532,8 @@
 (use-package pomodoro
   :config (pomodoro-add-to-mode-line))
 
-(use-package emacs-calfw) ;; à tester
+(use-package emacs-calfw
+  :disabled t) ;; à tester
 
 (use-package emacs-eclim
   :config
