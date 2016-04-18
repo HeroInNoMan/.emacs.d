@@ -260,17 +260,20 @@
   ("C-c h t" . helm-top)
   ("C-c h s" . helm-google-suggest)
   ("C-c h w" . helm-wikipedia-suggest)
-  ("C-c h g" . helm-ag)
+  ("C-c h g" . helm-do-ag)
   ("M-ç" . helm-for-files)
   ("C-ç" . helm-for-files)
-  :chords ("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
+  :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
+           ("éè" . helm-do-ag-project-root)) ;; incremental grep in project
   :config
   ;; activate additional features
   (helm-mode 0) ;; helm-mode only on demand
   (helm-autoresize-mode t)
   (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
         helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match    t)
+        helm-recentf-fuzzy-match    t
+        helm-ag-insert-at-point 'symbol
+        helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
   (setq
    helm-for-files-preferred-list '(helm-source-buffers-list
                                    helm-source-recentf
@@ -279,6 +282,18 @@
                                    helm-source-file-cache
                                    helm-source-files-in-current-dir
                                    helm-source-locate)))
+
+(use-package wgrep
+  :bind (:map grep-mode-map
+              ("C-x C-q" . wgrep-change-to-wgrep-mode)
+              ("C-c C-c" . wgrep-finish-edit)))
+
+(use-package helm-ag
+  :bind (:map helm-ag-mode-map
+              ("p" . previous-line)
+              ("n" . next-line)
+              ("C-x C-q" . wgrep-change-to-wgrep-mode)
+              ("C-c C-c" . wgrep-finish-edit)))
 
 (global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
 
@@ -499,18 +514,6 @@
 (use-package typit :disabled t)
 (use-package ten-hundred-mode :disabled t)
 
-(use-package wgrep
-  :bind (:map grep-mode-map
-              ("C-x C-q" . wgrep-change-to-wgrep-mode)
-              ("C-c C-c" . wgrep-finish-edit)))
-
-(use-package helm-ag
-  :bind (:map helm-ag-mode-map
-              ("p" . previous-line)
-              ("n" . next-line)
-              ("C-x C-q" . wgrep-change-to-wgrep-mode)
-              ("C-c C-c" . wgrep-finish-edit)))
-
 (use-package smart-comment
   :bind ("M-;" . smart-comment))
 
@@ -718,11 +721,6 @@
               (size 9 -1 :right) " "
               (mode 16 16 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
-
-
-
-;; rgrep
-(key-chord-define-global (kbd "éè") 'rgrep)
 
 ;; better access to window manipulation commands
 (global-set-key (kbd "C-\"") 'delete-other-windows)
