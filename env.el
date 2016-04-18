@@ -41,7 +41,10 @@
         (dotimes (number 4) (zoom-frm-out))))
 
     ;; open work log file
-    (find-file (expand-file-name "~/Terminalcity/SFR.org"))))
+    (find-file (expand-file-name "~/Terminalcity/SFR.org"))
+
+	;; change theme
+	(color-theme-oswald)))
 
  ;;;;;;;;;;;;
  ;; POLOPECHE
