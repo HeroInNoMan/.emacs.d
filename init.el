@@ -280,6 +280,8 @@
                                    helm-source-files-in-current-dir
                                    helm-source-locate)))
 
+(global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
+
 (use-package helm-descbinds
   :bind ("C-h b" . helm-descbinds))
 
