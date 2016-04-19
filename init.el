@@ -31,159 +31,44 @@
 (use-package use-package-chords
   :config (key-chord-mode 1))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PACKAGE DECLARATIONS ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+;; LIBS & TOOLS ;;
+;;;;;;;;;;;;;;;;;;
+
+(use-package s)
+
+(use-package my-functions ;; custom functions
+  :ensure nil
+  :load-path "elisp/"
+  :bind
+  ("C-c i" . iwb) ;; indent whole buffer
+  ("M-«" . simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
+  ("M-»" . simplified-end-of-buffer)
+  ("<C-M-down>" . duplicate-current-line)
+  ("<up>" . up-arrow)
+  ("<down>" . down-arrow)
+  ("<f5>" . reload-file) ;; re-read file from disk
+  ("C-<f5>" . copy-and-show-current-file-path) ;; copy current file path
+  ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
+  ("C-x C-r" . sudo-edit) ;; sudo open file
+  ("C-x |" . toggle-window-split)
+  ("C-|" . toggle-window-split))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DEFAULTS, ERGONOMY & KEYBINDINGS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package better-defaults)
 
-(use-package color-theme
-  :config
-  (color-theme-initialize)
-  (color-theme-dark-laptop)
-  (set-face-background 'mode-line "#0a2832"))
+(global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
 
-(use-package dired+)
-(use-package epresent :disabled t)
+;; Killing emacs
+(global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
+(global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
 
-(use-package restclient :disabled t)
-(use-package restclient-helm :disabled t)
-
-(use-package s)
-(use-package swiper)
-
-;; quickly switch to other window
-(use-package ace-window
-  :bind ("M-o" . ace-window))
-
-(use-package aggressive-indent
-  :config (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode))
-
-(use-package avy
-  :bind
-  ("M-à" . avy-goto-word-1) ;; quickly jump to word by pressing its first letter
-  ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
-
-(use-package browse-kill-ring
-  :config
-  (browse-kill-ring-default-keybindings)
-  (setq browse-kill-ring-quit-action 'save-and-restore))
-
-(use-package char-menu
-  :bind ("<f7>" . char-menu)
-  :config
-  (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
-                    ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
-                    ("cyrillic"   "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
-                    ("Smileys"    "☺" "☹")
-                    ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
-
-(use-package company
-  :diminish company-mode
-  :config
-  (global-company-mode) ;; enable company in all buffers
-  (setq company-show-numbers t)
-  (add-hook 'markdown-mode-hook 'company-mode)
-  (add-hook 'text-mode-hook 'company-mode))
-
-(use-package define-word
-  :bind ("<f12>" . define-word-at-point))
-
-(use-package dired-narrow
-  :bind (:map dired-mode-map ("/" . dired-narrow)))
-
-(use-package expand-region
-  :bind ("C-c e" . er/expand-region))
-
-(use-package keyfreq
-  :config
-  (keyfreq-mode 1)
-  (keyfreq-autosave-mode 1))
-
-(use-package move-text
-  :config (move-text-default-bindings)) ;; M-up / M-down to move line or region
-
-(use-package org-bullets
-  :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
-(use-package rainbow-delimiters
-  :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-
-(use-package rainbow-mode
-  :config (add-hook 'css-mode-hook 'rainbow-mode))
-
-(use-package shrink-whitespace
-  :bind ("C-x C-o" . shrink-whitespace))
-
-(use-package smartscan
-  :bind
-  ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
-  ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
-  ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
-
-(use-package swiper-helm
-  :bind ("C-S-s" . swiper-helm))
-
-(use-package undo-tree  ;; powerfull undo/redo mode
-  :diminish undo-tree-mode
-  :config (undo-tree-mode t))
-
-(use-package volatile-highlights
-  :config (volatile-highlights-mode t))
-
-(use-package web-mode ;; HTML, XML, JSP (using web-mode)
-  :config
-  (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
-                                 ("blade" . "\\.blade\\.")))
-  :mode ("\\.phtml\\'"
-         "\\.tpl\\.php\\'"
-         "\\.[agj]sp\\'"
-         "\\.as[cp]x\\'"
-         "\\.erb\\'"
-         "\\.mustache\\'"
-         "\\.djhtml\\'"
-         "\\.rhtml\\'"
-         "\\.html\\'"
-         "\\.tag\\'"
-         "\\.xsd\\'"
-         "\\.wsdl\\'"))
-(use-package web-beautify
-  :disabled t
-  :bind-keymap (
-                ;; :map js2-mode-map ("C-c b" . web-beautify-js)
-                ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
-                :map js-mode-map ("C-c b" . web-beautify-js)
-                     :map json-mode-map ("C-c b" . web-beautify-js)
-                     :map html-mode-map ("C-c b" . web-beautify-html)
-                     :map web-mode-map ("C-c b" . web-beautify-html)
-                     :map css-mode-map ("C-c b" . web-beautify-css)))
-
-(use-package which-key ;; which-key (replacement for guide-key)
-  :config (which-key-mode))
-
-(use-package zoom-frm
-  :if window-system
-  :bind
-  ("C-+" . zoom-frm-in)
-  ("C-=" . zoom-frm-unzoom))
-
-(use-package engine-mode
-  :config
-  (engine/set-keymap-prefix (kbd "C-c s"))
-  (engine-mode t) ;; prefix C-c /
-  (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
-  (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
-  (defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" :keybinding "g")
-  (defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" :keybinding "i")
-  (defengine leo "http://dict.leo.org/frde/index_de.html#/search=%s&searchLoc=0&resultOrder=basic&multiwordShowSingle=on" :keybinding "l")
-  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m")
-  (defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "o")
-  (defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" :keybinding "w")
-  (defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
-  (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
-  (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
-  (defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
-  (defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R"))
+(unless (display-graphic-p)
+  (global-unset-key (kbd "C-z")) ;; used for tmux (C-z z for suspend-frame)
+  (global-set-key (kbd "C-z z") 'suspend-frame)) ;; C-z is saved for tmux
 
 (use-package god-mode
   :bind
@@ -209,12 +94,78 @@
   (add-hook 'window-configuration-change-hook 'my-update-cursor)
   (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
 
+;; Answer questions with y/n
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Real emacs knights don't use shift to mark things
+(setq shift-select-mode nil)
+
+;; Transparently open compressed files
+(auto-compression-mode t)
+
+;; UTF-8 everywhere
+(prefer-coding-system       'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+;; Lines should be 80 characters wide, not 70
+(setq-default fill-column 80)
+
+;; Don't be so stingy on the memory, we have lots now. It's the distant future.
+(setq gc-cons-threshold 20000000)
+
+;; use count-words instead of count-words-region as it works on buffer
+;; if no region is selected
+(global-set-key (kbd "M-=") 'count-words)
+
+;; enable commands disabled by default
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
+(put 'set-goal-column 'disabled nil)
+(put 'scroll-left 'disabled nil)
+
+;; set default browser to firefox
+(setq gnus-button-url 'browse-url-generic
+      browse-url-generic-program "firefox"
+      browse-url-browser-function gnus-button-url)
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; THEME & APPEARANCE ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package color-theme
+  :config
+  (color-theme-initialize)
+  (color-theme-dark-laptop)
+  (set-face-background 'mode-line "#0a2832"))
+
+(use-package org-bullets
+  :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package rainbow-delimiters
+  :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :config (add-hook 'css-mode-hook 'rainbow-mode))
+
+(use-package volatile-highlights
+  :config (volatile-highlights-mode t))
+
 (use-package idle-highlight-mode)
 
-(use-package minimap
+(use-package highlight-line ;; highlight line in list buffers
   :ensure nil
-  :load-path "elisp/"
-  :bind ("<f2>" . minimap-toggle))
+  :load-path "elisp/")
+
+(use-package zoom-frm
+  :if window-system
+  :bind
+  ("C-+" . zoom-frm-in)
+  ("C-=" . zoom-frm-unzoom))
 
 (use-package sublimity
   :disabled t
@@ -222,29 +173,197 @@
   (require 'sublimity-scroll)
   (require 'sublimity-map))
 
-(use-package git-timemachine
-  :bind ("C-x g t" . git-timemachine))
+;; colors, appearance
+(require 'iso-transl) ;; some environments don’t handle dead keys
+(global-font-lock-mode t) ;; enable syntax highlighting
+(setq font-lock-maximum-decoration t) ;; all possible colours
+(blink-cursor-mode -1) ;; no blinking cursor
+(global-hl-line-mode -1) ;; don’t highlight current line
+(highlight-line-mode 1) ;; except in “list” modes
 
-(use-package git-messenger
+;; progress in file
+(use-package sml-modeline
+  :config (sml-modeline-mode))
+
+;; Show me empty lines after buffer end
+(set-default 'indicate-empty-lines t)
+
+;; No splash screen
+(setq inhibit-startup-screen t)
+
+;; Show keystrokes in progress
+(setq echo-keystrokes 0.1)
+
+;; Show active region
+(setq-default transient-mark-mode t)
+
+;; No *scratch* message
+(setq initial-scratch-message nil)
+
+;; Always display line and column numbers
+(setq line-number-mode t
+      column-number-mode t)
+
+;; don’t display linum except while goto-line
+(global-set-key [remap goto-line] 'goto-line-with-feedback)
+
+(defun goto-line-with-feedback ()
+  "Show line numbers temporarily, while prompting for the line number input"
+  (interactive)
+  (unwind-protect
+      (progn
+        (linum-mode 1)
+        (goto-line (read-number "Goto line: ")))
+    (linum-mode -1)))
+
+;; No flashing!
+(setq visible-bell nil)
+
+;; Don't soft-break lines for me, please
+(setq-default truncate-lines t)
+
+;;;;;;;;;;;
+;; DIRED ;;
+;;;;;;;;;;;
+
+(use-package dired+)
+
+(use-package dired-narrow
+  :bind (:map dired-mode-map ("/" . dired-narrow)))
+
+(put 'dired-find-alternate-file 'disabled nil)
+(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
+
+;; Auto refresh dired
+(setq global-auto-revert-non-file-buffers t
+      auto-revert-verbose nil
+      ;; always delete and copy recursively
+      dired-recursive-deletes 'always
+      dired-recursive-copies 'always)
+
+;;;;;;;;;;;;
+;; SEARCH ;;
+;;;;;;;;;;;;
+
+(use-package swiper)
+
+(use-package swiper-helm
+  :bind ("C-S-s" . swiper-helm))
+
+(use-package smartscan
   :bind
-  (("C-x g g" . git-messenger:popup-message)
-   :map git-messenger-map
-   ("d" . git-messenger:popup-diff)
-   ("s" . git-messenger:)
-   ("c" . git-messenger:copy-commit-id))
+  ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
+  ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
+  ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
+
+;; regexp-builder
+(require 're-builder)
+(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
+
+(use-package visual-regexp-steroids
+  :bind
+  (("M-s r" . vr/replace)
+   ("M-s q" . vr/query-replace)
+   ;; if you use multiple-cursors, this is for you:
+   ("M-s m" . vr/mc-mark)
+   ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
+   ("C-M-r" . vr/isearch-backward)
+   ("C-M-s" . vr/isearch-forward))
   :config
-  (add-hook 'git-messenger:popup-buffer-hook 'magit-commit-mode)
-  (setq git-messenger:show-detail t))
+  (require 'visual-regexp))
+;; if the files are not already in the load path
+;; (add-to-list 'load-path "folder-to/visual-regexp/")
+;; (add-to-list 'load-path "folder-to/visual-regexp-steroids/")
 
-(use-package gitignore-mode)
-(use-package gitconfig-mode
+;;;;;;;;;;;;;;;;
+;; NAVIGATION ;;
+;;;;;;;;;;;;;;;;
+
+;; quickly switch to other window
+(use-package ace-window
+  :bind ("M-o" . ace-window))
+
+(use-package avy
+  :bind
+  ("M-à" . avy-goto-word-1) ;; quickly jump to word by pressing its first letter
+  ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
+
+(use-package imenu-anywhere
+  :bind ("C-." . helm-imenu-anywhere))
+
+(use-package dumb-jump
   :config
-  (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
-  (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
+  (setq dumb-jump-default-project "~/projets")
+  (dumb-jump-mode))
 
-(use-package flycheck)
+(use-package minimap
+  :ensure nil
+  :load-path "elisp/"
+  :bind ("<f2>" . minimap-toggle))
 
-(use-package crontab-mode)
+;; Allow scrolling with mouse wheel
+(when (display-graphic-p) (mouse-wheel-mode t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; INDENTATION, TABS, SPACES & FOLDING ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
+
+(use-package aggressive-indent
+  :config (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode))
+
+;;Indentation
+(setq-default tab-width 4
+              c-auto-newline t
+              c-basic-offset 4
+              c-block-comment-prefix ""
+              c-default-style "k&r"
+              indent-tabs-mode nil ;; <tab> inserts spaces, not tabs and spaces
+              sentence-end-double-space nil) ;; Sentences end with a single space
+
+;; use tab to auto-comlete if indentation is right
+(setq tab-always-indent 'complete)
+
+(use-package shrink-whitespace
+  :bind ("C-x C-o" . shrink-whitespace))
+
+(use-package origami
+  :bind ("C-%" . origami-recursively-toggle-node)
+  :config (add-hook 'prog-mode-hook #'origami-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;; COMPLETION & HELP ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package browse-kill-ring
+  :config
+  (browse-kill-ring-default-keybindings)
+  (setq browse-kill-ring-quit-action 'save-and-restore))
+
+(use-package char-menu
+  :bind ("<f7>" . char-menu)
+  :config
+  (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
+                    ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
+                    ("cyrillic"   "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
+                    ("Smileys"    "☺" "☹")
+                    ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
+
+(use-package company
+  :diminish company-mode
+  :config
+  (global-company-mode) ;; enable company in all buffers
+  (setq company-show-numbers t)
+  (add-hook 'markdown-mode-hook 'company-mode)
+  (add-hook 'text-mode-hook 'company-mode))
+
+(use-package undo-tree  ;; powerfull undo/redo mode
+  :diminish undo-tree-mode
+  :config (undo-tree-mode t))
+
+(use-package which-key ;; which-key (replacement for guide-key)
+  :config (which-key-mode))
 
 (use-package helm
   :diminish helm-mode
@@ -283,6 +402,9 @@
                                    helm-source-files-in-current-dir
                                    helm-source-locate)))
 
+(use-package helm-descbinds
+  :bind ("C-h b" . helm-descbinds))
+
 (use-package wgrep
   :bind (:map grep-mode-map
               ("C-x C-q" . wgrep-change-to-wgrep-mode)
@@ -295,28 +417,11 @@
               ("C-x C-q" . wgrep-change-to-wgrep-mode)
               ("C-c C-c" . wgrep-finish-edit)))
 
-(global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
-
-(use-package helm-descbinds
-  :bind ("C-h b" . helm-descbinds))
-
-(use-package helm-projectile
-  ;; :diminish projectile-mode
-  :config
-  (projectile-global-mode) ;; activate projectile-mode everywhere
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on)
-  (setq projectile-enable-caching t) ;; enable caching for projectile-mode
-  (setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
-  (def-projectile-commander-method ?d
-    "Open project root in dired."
-    (projectile-dired))
-  (def-projectile-commander-method ?f
-    "Git fetch."
-    (magit-status)
-    (call-interactively #'magit-fetch-current)))
-
-(use-package helm-org-rifle)
+(use-package helm-mode-manager
+  :bind
+  ("C-c m" . helm-switch-major-mode)
+  ("C-c n" . helm-enable-minor-mode)
+  ("C-c d" . helm-disable-minor-mode))
 
 (use-package hydra
   :config
@@ -369,27 +474,6 @@
 
   (global-set-key (kbd "<f6>") 'hydra-arabic/body))
 
-(use-package imenu-anywhere
-  :bind ("C-." . helm-imenu-anywhere))
-
-(use-package magit
-  :chords ("qg" . magit-status) ;; run git status for current buffer
-  :config
-  (setq magit-last-seen-setup-instructions "1.4.0")
-  (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
-
-(use-package markdown-mode)
-
-(use-package multiple-cursors
-  ;; Multiple cursors keybindings
-  :bind
-  ("M-é" . mc/edit-lines) ;; new cursor on each line of region
-  ("M-è" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
-  ("M-È" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
-  ("M-É" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
-  ("C-M-é" . mc/unmark-next-like-this)
-  ("C-M-è" . mc/unmark-previous-like-this))
-
 (use-package yasnippet
   :bind (:map yas-minor-mode-map ("<C-tab>" . yas-ido-expand))
   :config
@@ -416,30 +500,65 @@
           (insert key)
           (yas-expand))))))
 
-(use-package my-functions ;; custom functions
-  :ensure nil
-  :load-path "elisp/"
+;; case-insensitive policy
+(setq read-file-name-completion-ignore-case t ;; case-insensitive completion
+      read-buffer-completion-ignore-case t) ;; case-insensitive completion
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;; TEXT MANIPULATION ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package expand-region
+  :bind ("C-c e" . er/expand-region))
+
+(use-package move-text
+  :config (move-text-default-bindings)) ;; M-up / M-down to move line or region
+
+(use-package zop-to-char
+  :bind ("C-M-z" . zop-up-to-char))
+
+(use-package multiple-cursors
+  ;; Multiple cursors keybindings
   :bind
-  ("C-c i" . iwb) ;; indent whole buffer
-  ("M-«" . simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
-  ("M-»" . simplified-end-of-buffer)
-  ("<C-M-down>" . duplicate-current-line)
-  ("<up>" . up-arrow)
-  ("<down>" . down-arrow)
-  ("<f5>" . reload-file) ;; re-read file from disk
-  ("C-<f5>" . copy-and-show-current-file-path) ;; copy current file path
-  ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
-  ("C-x C-r" . sudo-edit) ;; sudo open file
-  ("C-x |" . toggle-window-split)
-  ("C-|" . toggle-window-split))
+  ("M-é" . mc/edit-lines) ;; new cursor on each line of region
+  ("M-è" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
+  ("M-È" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
+  ("M-É" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
+  ("C-M-é" . mc/unmark-next-like-this)
+  ("C-M-è" . mc/unmark-previous-like-this)
+  :init
+  (define-prefix-command 'endless/mc-map)
+  ;; C-x m is usually `compose-mail'. Bind it to something else if you use this command.
+  (define-key ctl-x-map "m" 'endless/mc-map)
+  (define-key endless/mc-map "i" 'mc/insert-numbers)
+  (define-key endless/mc-map "h" 'mc-hide-unmatched-lines-mode)
+  (define-key endless/mc-map "a" 'mc/mark-all-like-this)
+  (define-key endless/mc-map "d" 'mc/mark-all-symbols-like-this-in-defun)
+  (define-key endless/mc-map "D" 'mc/mark-all-dwim)
+  (define-key endless/mc-map "r" 'mc/reverse-regions)
+  (define-key endless/mc-map "s" 'mc/sort-regions)
+  (define-key endless/mc-map "l" 'mc/edit-lines)
+  (define-key endless/mc-map "\C-a" 'mc/edit-beginnings-of-lines)
+  (define-key endless/mc-map "\C-e" 'mc/edit-ends-of-lines))
 
-(use-package flycheck-java ;; flycheck minor mode for java
-  :ensure nil
-  :load-path "elisp/")
+(use-package smart-comment
+  :bind ("M-;" . smart-comment))
 
-(use-package highlight-line ;; highlight line in list buffers
-  :ensure nil
-  :load-path "elisp/")
+;; Remove text in active region if inserting text
+(pending-delete-mode t)
+
+;; join lines below onto current line
+(global-set-key (kbd "M-j")
+                (lambda ()
+                  (interactive)
+                  (join-line -1)))
+
+;; Allow pasting selection outside of Emacs
+(setq x-select-enable-clipboard t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; BUFFER & WINDOW MANIPULATION ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package multi-scratch ;; scratch
   :ensure nil
@@ -451,262 +570,11 @@
   ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
   :config (setq multi-scratch-buffer-name "new"))
 
-(use-package org
-  :bind
-  (("\C-c l" . org-store-link)
-   ("\C-c a" . org-agenda)
-   ("\C-c b" . org-iswitchb)
-   ("\C-c j" . jirify)
-   :map org-mode-map
-   ("\C-c t" . org-begin-template))
-  :chords ("gx" . org-capture)
-  :init (require 'org-agenda)
-  :config
-  ;; ORG-CAPTURE
-  (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
-  (setq terminalcity-dir "~/Terminalcity/")
-  (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
-
-  ;; org-capture-templates
-  (setq org-capture-templates
-        '(
-          ;; local
-          ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
-          ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
-          ;; remote
-          ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
-          ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
-
-  (setq org-export-coding-system 'utf-8)
-  (setq org-completion-use-ido t)
-
-  ;; font and faces customization
-  (setq org-todo-keyword-faces
-        '(("INPR" . (:foreground "yellow" :weight bold))
-          ("STARTED" . (:foreground "yellow" :weight bold))
-          ("WAIT" . (:foreground "yellow" :weight bold))
-          ("INPROGRESS" . (:foreground "yellow" :weight bold))))
-
-  ;; update cookies [1/2] when deleting lines
-  (defun myorg-update-parent-cookie ()
-    (when (equal major-mode 'org-mode)
-      (save-excursion
-        (ignore-errors
-          (org-back-to-heading)
-          (org-update-parent-todo-statistics)))))
-
-  (defadvice org-kill-line (after fix-cookies activate)
-    (myorg-update-parent-cookie))
-
-  (defadvice kill-whole-line (after fix-cookies activate)
-    (myorg-update-parent-cookie)))
-
-;; spray mode (spritz)
-(use-package spray
-  :bind ("C-x g s" . spray-mode))
-
-(use-package zop-to-char
-  :bind ("C-M-z" . zop-up-to-char))
-
-;; additional games
-(use-package 2048-game :disabled t)
-(use-package speed-type :disabled t)
-(use-package typit :disabled t)
-(use-package ten-hundred-mode :disabled t)
-
-(use-package smart-comment
-  :bind ("M-;" . smart-comment))
-
-
-;; TODO voir si c’est mieux que butler
-(use-package jenkins
-  :disabled t
-  :config
-  (setq jenkins-api-token "<api token can be found on user's configure page>")
-  (setq jenkins-url "<jenkins url>")
-  (setq jenkins-username "<your user name>")
-  (setq jenkins-viewname "<viewname>"))
-
-(use-package helm-mode-manager
-  :bind
-  ("C-c m" . helm-switch-major-mode)
-  ("C-c n" . helm-enable-minor-mode)
-  ("C-c d" . helm-disable-minor-mode))
-
-;; pomodoro available
-(use-package pomodoro
-  :config (pomodoro-add-to-mode-line))
-
-(use-package emacs-calfw
-  :disabled t) ;; à tester
-
-(use-package emacs-eclim
-  :config
-  (global-eclim-mode)
-  (require 'eclimd)
-  (setq eclim-eclipse-dirs "~/outils/eclipse/eclipse-mars")
-  (setq eclim-executable "~/outils/eclipse/eclipse-mars/eclim")
-  (require 'company-emacs-eclim)
-  (company-emacs-eclim-setup)
-  (company-emacs-eclim-ignore-case t))
-
-;;;;;;;;;;;;;;
-;; DEFAULTS ;;
-;;;;;;;;;;;;;;
-
-;; No splash screen
-(setq inhibit-startup-screen t)
-
-;; Allow pasting selection outside of Emacs
-(setq x-select-enable-clipboard t)
-
-;; Auto refresh buffers
-(global-auto-revert-mode 1)
-
-;; Do not auto refresh dired
-(setq global-auto-revert-non-file-buffers t)
-;; always delete and copy recursively
-(setq dired-recursive-deletes 'always)
-(setq dired-recursive-copies 'always)
-
-;; Show keystrokes in progress
-(setq echo-keystrokes 0.1)
-
-;; Show active region
-(setq-default transient-mark-mode t)
-
-;; Don't move files to trash when deleting
-(setq delete-by-moving-to-trash nil)
-
-;; Real emacs knights don't use shift to mark things
-(setq shift-select-mode nil)
-
-;; Transparently open compressed files
-(auto-compression-mode t)
-
-;; Enable syntax highlighting for older Emacsen that have it off
-(global-font-lock-mode t)
-
-;; <tab> inserts spaces, not tabs and spaces
-(setq-default indent-tabs-mode nil)
-
-;; No *scratch* message
-(setq initial-scratch-message nil)
-
-;; Answer questions with y/n
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Sentences end with a single space
-(setq sentence-end-double-space nil)
-
-;; UTF-8 everywhere
-(prefer-coding-system       'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
-
-;; Remove text in active region if inserting text
-(pending-delete-mode t)
-
-;; Always display line and column numbers
-(setq line-number-mode t
-      column-number-mode t)
-
-;; don’t display linum except while goto-line
-(global-set-key [remap goto-line] 'goto-line-with-feedback)
-
-(defun goto-line-with-feedback ()
-  "Show line numbers temporarily, while prompting for the line number input"
-  (interactive)
-  (unwind-protect
-      (progn
-        (linum-mode 1)
-        (goto-line (read-number "Goto line: ")))
-    (linum-mode -1)))
-
-;; join lines below onto current line
-(global-set-key (kbd "M-j")
-                (lambda ()
-                  (interactive)
-                  (join-line -1)))
-
-;; Lines should be 80 characters wide, not 70
-(setq-default fill-column 80)
-
-;; Save a list of recent files visited.
-(recentf-mode 1)
-(setq recentf-max-saved-items 500) ;; just 20 is too recent
-
-;; Show me empty lines after buffer end
-(set-default 'indicate-empty-lines t)
-
-;; Allow scrolling with mouse wheel
-(when (display-graphic-p) (mouse-wheel-mode t))
-
-;; Don't soft-break lines for me, please
-(setq-default truncate-lines t)
-
-;; Don't be so stingy on the memory, we have lots now. It's the distant future.
-(setq gc-cons-threshold 20000000)
-
-;; Change how buffer names are made unique
-(setq uniquify-buffer-name-style 'post-forward
-      uniquify-separator ":")
-
-;; A saner ediff
-(setq ediff-diff-options "-w"
-      ediff-split-window-function 'split-window-horizontally
-      ediff-window-setup-function 'ediff-setup-windows-plain)
-
-;; Normal tab completion in Eshell
-(setq eshell-cmpl-cycle-completions nil)
-
-;; another C-d in shell kills shell buffer
-(defun comint-delchar-or-eof-or-kill-buffer (arg)
-  (interactive "p")
-  (if (null (get-buffer-process (current-buffer)))
-      (kill-buffer)
-    (comint-delchar-or-maybe-eof arg)))
-
-(add-hook 'shell-mode-hook
-          (lambda ()
-            (define-key shell-mode-map
-              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
-
-;; No flashing!
-(setq visible-bell nil)
-
-;; use count-words instead of count-words-region as it works on buffer
-;; if no region is selected
-(global-set-key (kbd "M-=") 'count-words)
-
-;; use tab to auto-comlete if indentation is right
-(setq tab-always-indent 'complete)
-
-;;;;;;;;;;;;;;;;;;;;;;
-;; VARIOUS SETTINGS ;;
-;;;;;;;;;;;;;;;;;;;;;;
-
-;; Killing emacs
-(global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
-(global-set-key (kbd "C-x r q") 'kill-emacs) ;; really quit emacs
-
-;; C-z is for tmux
-(global-unset-key (kbd "C-z")) ;; used for tmux (C-z z for suspend-frame)
-(global-set-key (kbd "C-z z") 'suspend-frame) ;; C-z is saved for tmux
-
-;; case-insensitive policy
-(setq read-file-name-completion-ignore-case t ;; case-insensitive completion
-      read-buffer-completion-ignore-case t) ;; case-insensitive completion
-
-;; colors, appearance
-(require 'iso-transl) ;; some environments don’t handle dead keys
-(setq font-lock-maximum-decoration t) ;; all possible colours
-(blink-cursor-mode -1) ;; no blinking cursor
-(global-hl-line-mode -1) ;; don’t highlight current line
-(highlight-line-mode 1) ;; except in “list” modes
-(global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
+;; better access to window manipulation commands
+(global-set-key (kbd "C-\"") 'delete-other-windows)
+(global-set-key (kbd "C-«") 'split-window-below)
+(global-set-key (kbd "C-»") 'split-window-right)
+(global-set-key (kbd "C-*") 'delete-window)
 
 ;; buffer & file handling
 (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
@@ -722,26 +590,59 @@
               (mode 16 16 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
 
-;; better access to window manipulation commands
-(global-set-key (kbd "C-\"") 'delete-other-windows)
-(global-set-key (kbd "C-«") 'split-window-below)
-(global-set-key (kbd "C-»") 'split-window-right)
-(global-set-key (kbd "C-*") 'delete-window)
+;;revert windows on ediff exit - needs winner mode
+(use-package winner
+  :config
+  (winner-mode)
+  (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
 
-(define-prefix-command 'endless/mc-map)
-;; C-x m is usually `compose-mail'. Bind it to something else if you use this command.
-(define-key ctl-x-map "m" 'endless/mc-map)
-(define-key endless/mc-map "i" 'mc/insert-numbers)
-(define-key endless/mc-map "h" 'mc-hide-unmatched-lines-mode)
-(define-key endless/mc-map "a" 'mc/mark-all-like-this)
-(define-key endless/mc-map "d" 'mc/mark-all-symbols-like-this-in-defun)
-(define-key endless/mc-map "D" 'mc/mark-all-dwim)
-(define-key endless/mc-map "r" 'mc/reverse-regions)
-(define-key endless/mc-map "s" 'mc/sort-regions)
-(define-key endless/mc-map "l" 'mc/edit-lines)
-(define-key endless/mc-map "\C-a" 'mc/edit-beginnings-of-lines)
-(define-key endless/mc-map "\C-e" 'mc/edit-ends-of-lines)
+;; Change how buffer names are made unique
+(setq uniquify-buffer-name-style 'post-forward
+      uniquify-separator ":")
 
+;; Auto refresh buffers
+(global-auto-revert-mode 1)
+
+;;;;;;;;;;;;;;;;
+;; GIT AND VC ;;
+;;;;;;;;;;;;;;;;
+
+(use-package git-timemachine
+  :bind ("C-x g t" . git-timemachine))
+
+(use-package git-messenger
+  :bind
+  (("C-x g g" . git-messenger:popup-message)
+   :map git-messenger-map
+   ("d" . git-messenger:popup-diff)
+   ("s" . git-messenger:)
+   ("c" . git-messenger:copy-commit-id))
+  :config
+  (add-hook 'git-messenger:popup-buffer-hook 'magit-commit-mode)
+  (setq git-messenger:show-detail t))
+
+(use-package gitignore-mode)
+(use-package gitconfig-mode
+  :config
+  (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
+  (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
+
+(use-package magit
+  :chords ("qg" . magit-status) ;; run git status for current buffer
+  :config
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
+
+;; A saner ediff
+(setq ediff-diff-options "-w"
+      ediff-split-window-function 'split-window-horizontally
+      ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SPELLING & ERROR CHECKING ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package flycheck)
 
 ;; spell-check
 (require 'ispell)
@@ -935,26 +836,92 @@ Results are reported in a compilation buffer."
           (bury-buffer was-visited)
         (kill-buffer (current-buffer))))))
 
-;; regexp-builder
-(require 're-builder)
-(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; PROJECT MANAGEMENT ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package visual-regexp-steroids
-  :bind
-  (("M-s r" . vr/replace)
-   ("M-s q" . vr/query-replace)
-   ;; if you use multiple-cursors, this is for you:
-   ("M-s m" . vr/mc-mark)
-   ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
-   ("C-M-r" . vr/isearch-backward)
-   ("C-M-s" . vr/isearch-forward))
+(use-package helm-projectile
+  ;; :diminish projectile-mode
   :config
-  (require 'visual-regexp))
-;; if the files are not already in the load path
-;; (add-to-list 'load-path "folder-to/visual-regexp/")
-;; (add-to-list 'load-path "folder-to/visual-regexp-steroids/")
+  (projectile-global-mode) ;; activate projectile-mode everywhere
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
+  (setq projectile-enable-caching t) ;; enable caching for projectile-mode
+  (setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
+  (def-projectile-commander-method ?d
+    "Open project root in dired."
+    (projectile-dired))
+  (def-projectile-commander-method ?f
+    "Git fetch."
+    (magit-status)
+    (call-interactively #'magit-fetch-current)))
 
-;; date, time, calendar
+(use-package jenkins ;; TODO voir si c’est mieux que butler
+  :disabled t
+  :config
+  (setq jenkins-api-token "<api token can be found on user's configure page>")
+  (setq jenkins-url "<jenkins url>")
+  (setq jenkins-username "<your user name>")
+  (setq jenkins-viewname "<viewname>"))
+
+;;;;;;;;;;;;;;
+;; ORG-MODE ;;
+;;;;;;;;;;;;;;
+
+(use-package org
+  :bind
+  (("\C-c l" . org-store-link)
+   ("\C-c a" . org-agenda)
+   ("\C-c b" . org-iswitchb)
+   ("\C-c j" . jirify)
+   :map org-mode-map
+   ("\C-c t" . org-begin-template))
+  :chords ("gx" . org-capture)
+  :init (require 'org-agenda)
+  :config
+  ;; ORG-CAPTURE
+  (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
+  (setq terminalcity-dir "~/Terminalcity/")
+  (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
+
+  ;; org-capture-templates
+  (setq org-capture-templates
+        '(
+          ;; local
+          ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
+          ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
+          ;; remote
+          ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
+          ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
+
+  (setq org-export-coding-system 'utf-8)
+  (setq org-completion-use-ido t)
+
+  ;; font and faces customization
+  (setq org-todo-keyword-faces
+        '(("INPR" . (:foreground "yellow" :weight bold))
+          ("STARTED" . (:foreground "yellow" :weight bold))
+          ("WAIT" . (:foreground "yellow" :weight bold))
+          ("INPROGRESS" . (:foreground "yellow" :weight bold))))
+
+  ;; update cookies [1/2] when deleting lines
+  (defun myorg-update-parent-cookie ()
+    (when (equal major-mode 'org-mode)
+      (save-excursion
+        (ignore-errors
+          (org-back-to-heading)
+          (org-update-parent-todo-statistics)))))
+
+  (defadvice org-kill-line (after fix-cookies activate)
+    (myorg-update-parent-cookie))
+
+  (defadvice kill-whole-line (after fix-cookies activate)
+    (myorg-update-parent-cookie)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DATE, TIME & CALENDAR ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq display-time-day-and-date t ;; display date and time
       display-time-24hr-format t ;; 24h time format
       display-time-string-forms '((propertize
@@ -974,59 +941,161 @@ Results are reported in a compilation buffer."
       calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
 
-;;Indentation
-(setq-default tab-width 4
-              c-auto-newline t
-              c-basic-offset 4
-              c-block-comment-prefix ""
-              c-default-style "k&r"
-              indent-tabs-mode t)
+(use-package emacs-calfw
+  :disabled t) ;; à tester
 
-;; enable commands disabled by default
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'narrow-to-page 'disabled nil)
-(put 'set-goal-column 'disabled nil)
-(put 'scroll-left 'disabled nil)
-
-;; set default browser to firefox
-(setq gnus-button-url 'browse-url-generic
-      browse-url-generic-program "firefox"
-      browse-url-browser-function gnus-button-url)
-
-;;revert windows on ediff exit - needs winner mode
-(use-package winner
+;; TODO configure weather in mode line
+(use-package weatherline-mode
+  :disabled t
+  :ensure nil
+  :load-path "elisp"
   :config
-  (winner-mode)
-  (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
+  (setq weatherline-location-id "2988507")
+  (weatherline-mode))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MAJOR MODE SPECIFIC CONFIGURATION ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package engine-mode
+  :config
+  (engine/set-keymap-prefix (kbd "C-c s"))
+  (engine-mode t) ;; prefix C-c /
+  (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
+  (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
+  (defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" :keybinding "g")
+  (defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" :keybinding "i")
+  (defengine leo "http://dict.leo.org/frde/index_de.html#/search=%s&searchLoc=0&resultOrder=basic&multiwordShowSingle=on" :keybinding "l")
+  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m")
+  (defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "o")
+  (defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" :keybinding "w")
+  (defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
+  (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
+  (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
+  (defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
+  (defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R"))
 
-;; text
+;;;;;;;;;;
+;; JAVA ;;
+;;;;;;;;;;
+
+(use-package flycheck-java ;; flycheck minor mode for java
+  :ensure nil
+  :load-path "elisp/")
+
+(use-package malabar-mode ;; TODO à tester
+  :disabled t
+  :config
+  ;; JAVA (malabar-mode)
+  ;; mimic the IDEish compile-on-save behaviour
+  ;; (load-file "~/outils/cedet/cedet-devel-load.el")
+  (add-hook 'after-init-hook (lambda ()
+                               (message "activate-malabar-mode")
+                               (activate-malabar-mode)))
+
+  (add-hook 'malabar-java-mode-hook 'flycheck-mode)
+  (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
+  (add-hook 'malabar-mode-hook (lambda () (add-hook 'after-save-hook 'malabar-compile-file-silently nil t)))
+  (add-hook 'malabar-mode-hook
+            (lambda ()
+              (add-hook 'after-save-hook 'malabar-http-compile-file-silently
+                        nil t))))
+
+
+(use-package emacs-eclim
+  :config
+  (global-eclim-mode)
+  (require 'eclimd)
+  (setq eclim-eclipse-dirs "~/outils/eclipse/eclipse-mars"
+        eclim-executable "~/outils/eclipse/eclipse-mars/eclim")
+  (require 'company-emacs-eclim)
+  (company-emacs-eclim-setup)
+  (company-emacs-eclim-ignore-case t)
+  (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar"))))
+
+;;;;;;;;;;;;;;;;;;;;;;
+;; WEB & JAVASCRIPT ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package web-mode ;; HTML, XML, JSP (using web-mode)
+  :config
+  (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
+                                 ("blade" . "\\.blade\\.")))
+  :mode ("\\.phtml\\'"
+         "\\.tpl\\.php\\'"
+         "\\.[agj]sp\\'"
+         "\\.as[cp]x\\'"
+         "\\.erb\\'"
+         "\\.mustache\\'"
+         "\\.djhtml\\'"
+         "\\.rhtml\\'"
+         "\\.html\\'"
+         "\\.tag\\'"
+         "\\.xsd\\'"
+         "\\.wsdl\\'"))
+(use-package web-beautify
+  :disabled t
+  :bind-keymap (
+                ;; :map js2-mode-map ("C-c b" . web-beautify-js)
+                ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+                :map js-mode-map ("C-c b" . web-beautify-js)
+                     :map json-mode-map ("C-c b" . web-beautify-js)
+                     :map html-mode-map ("C-c b" . web-beautify-html)
+                     :map web-mode-map ("C-c b" . web-beautify-html)
+                     :map css-mode-map ("C-c b" . web-beautify-css)))
+
+;; JAVASCRIPT (to be tested)
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;; (setq js2-basic-offset 2)
+;; (setq js2-use-font-lock-faces t)
+
+
+(autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
+(add-hook 'json-mode-hook 'json-pretty-print)
+(add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
+
+;;;;;;;;;;
+;; TEXT ;;
+;;;;;;;;;;
+
 (setq default-major-mode 'text-mode) ;; text-mode by default
 (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
 (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
 (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
 (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
 
-;; mail-mode
+;;;;;;;;;;
+;; MAIL ;;
+;;;;;;;;;;
+
 ;; (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
 (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
 
-;; dired
-(put 'dired-find-alternate-file 'disabled nil)
-(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
+;;;;;;;;;;;
+;; SHELL ;;
+;;;;;;;;;;;
 
-;; SH
 (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
 ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
 (add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
 (add-to-list 'auto-mode-alist '(".*bash.*$" . sh-mode))
 
-;; SQL
+;; Normal tab completion in Eshell
+(setq eshell-cmpl-cycle-completions nil)
+
+;; another C-d in shell kills shell buffer
+(defun comint-delchar-or-eof-or-kill-buffer (arg)
+  (interactive "p")
+  (if (null (get-buffer-process (current-buffer)))
+      (kill-buffer)
+    (comint-delchar-or-maybe-eof arg)))
+
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (define-key shell-mode-map
+              (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+
+;;;;;;;;;
+;; SQL ;;
+;;;;;;;;;
+
 (add-to-list 'auto-mode-alist '(".sql$" . sql-mode))
 (add-to-list 'auto-mode-alist '(".pks$" . sql-mode))
 (add-to-list 'auto-mode-alist '(".pkb$" . sql-mode))
@@ -1053,7 +1122,10 @@ Results are reported in a compilation buffer."
                             comint-scroll-show-maximum-output t
                             comint-input-ring-size 500))))
 
-;; GROOVY
+;;;;;;;;;;;;
+;; GROOVY ;;
+;;;;;;;;;;;;
+
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
@@ -1066,52 +1138,18 @@ Results are reported in a compilation buffer."
 (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
 (add-hook 'groovy-mode-hook 'groovy-eval)
 
-;; RUBY
+;;;;;;;;;;
+;; RUBY ;;
+;;;;;;;;;;
+
 ;; Loads ruby mode when a .rb file is opened.
 (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
 (add-to-list 'auto-mode-alist '(".rb$" . ruby-mode))
 
-;; JAVA
-(use-package eclim ;; TODO à tester
-  :disabled t
-  :config
-  (require 'eclim)
-  (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
-  (global-eclim-mode))
+;;;;;;;;;;
+;; LISP ;;
+;;;;;;;;;;
 
-(use-package malabar-mode ;; TODO à tester
-  :disabled t
-  :config
-  ;; JAVA (malabar-mode)
-  ;; mimic the IDEish compile-on-save behaviour
-  ;; (load-file "~/outils/cedet/cedet-devel-load.el")
-  (add-hook 'after-init-hook (lambda ()
-                               (message "activate-malabar-mode")
-                               (activate-malabar-mode)))
-
-  (add-hook 'malabar-java-mode-hook 'flycheck-mode)
-  (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
-  (add-hook 'malabar-mode-hook (lambda () (add-hook 'after-save-hook 'malabar-compile-file-silently nil t)))
-  (add-hook 'malabar-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook 'malabar-http-compile-file-silently
-                        nil t))))
-
-;; JAVASCRIPT (to be tested)
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;; (setq js2-basic-offset 2)
-;; (setq js2-use-font-lock-faces t)
-
-
-(autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
-(add-hook 'json-mode-hook 'json-pretty-print)
-
-(require 'flycheck)
-(add-hook 'js-mode-hook
-          (lambda () (flycheck-mode t)))
-
-;; LISP
 (define-key lisp-mode-map (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
 ;; (global-set-key (kbd "C-c c") 'compile)
 
@@ -1119,59 +1157,32 @@ Results are reported in a compilation buffer."
   :diminish elisp-slime-nav-mode
   :config (add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t))))
 
+;;;;;;;;;;;;
+;; PYTHON ;;
+;;;;;;;;;;;;
 
-;; PYTHON
 ;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
 ;; (setq jedi:complete-on-dot t) ;; optional
 
-;;;;;;;;;;;;;;;;;;;
-;; CUSTOMISATION ;;
-;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CUSTOMISATION & ENVIRONMENT ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; load environment specific code ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (load-file (expand-file-name "env.el" user-emacs-directory))
 
-;;;;;;;;;;;;;;
-;; EPILOGUE ;;
-;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SESSION SAVING & BACKUPS ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; mode line (smart-mode-line)
-(use-package smart-mode-line
-  :config
-  (setq powerline-arrow-shape 'curve)
-  (setq powerline-default-separator-dir '(right . left))
-  (setq sml/theme 'dark)
-  ;; (setq sml/no-confirm-load-theme t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
-  (sml/setup))
+;; Don't move files to trash when deleting
+(setq delete-by-moving-to-trash nil)
 
-;; progress in file
-(use-package sml-modeline
-  :config (sml-modeline-mode))
+;; Save a list of recent files visited.
+(recentf-mode 1)
+(setq recentf-max-saved-items 500) ;; just 20 is too recent
 
-;; TODO configure weather in mode line
-(use-package weatherline-mode
-  :disabled t
-  :ensure nil
-  :load-path "elisp"
-  :config
-  (setq weatherline-location-id "2988507")
-  (weatherline-mode))
-
-;; server mode
-(if (and (fboundp 'server-running-p)
-         (not (server-running-p)))
-    (server-start))
-(global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
-
-(use-package edit-server
-  :init (edit-server-start))
-
-;; session saving, backup management
 (setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
 (setq desktop-base-lock-name      "lock"
       desktop-save                t
@@ -1182,6 +1193,52 @@ Results are reported in a compilation buffer."
 (desktop-save-mode 1)
 (savehist-mode 1)
 (desktop-read)
+
+;;;;;;;;;;;;;;;;;
+;; SERVER MODE ;;
+;;;;;;;;;;;;;;;;;
+
+(if (and (fboundp 'server-running-p)
+         (not (server-running-p)))
+    (server-start))
+(global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
+
+(use-package edit-server
+  :init (edit-server-start))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MODE LINE (smart-mode-line) ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; TODO configure weather in mode line
+(use-package weatherline-mode
+  :disabled t
+  :ensure nil
+  :load-path "elisp"
+  :config
+  (setq weatherline-location-id "2988507")
+  (weatherline-mode))
+
+(use-package smart-mode-line
+  :config
+  (setq powerline-arrow-shape 'curve)
+  (setq powerline-default-separator-dir '(right . left))
+  (setq sml/theme 'dark)
+  ;; (setq sml/no-confirm-load-theme t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
+  (sml/setup))
+
+;;;;;;;;;;;
+;; GAMES ;;
+;;;;;;;;;;;
+
+(use-package 2048-game :disabled t)
+(use-package speed-type :disabled t)
+(use-package typit :disabled t)
+
+;;;;;;;;;;;;;;
+;; EPILOGUE ;;
+;;;;;;;;;;;;;;
 
 ;; always open init file!
 (find-file (expand-file-name "init.el" user-emacs-directory))
