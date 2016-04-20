@@ -43,8 +43,8 @@
     ;; open work log file
     (find-file (expand-file-name "~/Terminalcity/SFR.org"))
 
-	;; change theme
-	(color-theme-oswald)))
+    ;; change theme
+    (color-theme-oswald)))
 
  ;;;;;;;;;;;;
  ;; POLOPECHE
@@ -66,7 +66,8 @@
     (use-package fancy-battery
       :config
       (add-hook 'after-init-hook #'fancy-battery-mode)
-      (setq fancy-battery-show-percentage t))))
+      (setq fancy-battery-show-percentage t))
+    (color-theme-oswald)))
 
  ;;;;;;;;;;
  ;; DEFAULT
