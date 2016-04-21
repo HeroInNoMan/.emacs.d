@@ -164,7 +164,7 @@
   :load-path "elisp/")
 
 (use-package zoom-frm
-  :if window-system
+  :if (display-graphic-p)
   :bind
   ("C-+" . zoom-frm-in)
   ("C-=" . zoom-frm-unzoom))
