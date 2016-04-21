@@ -290,8 +290,6 @@
   (dumb-jump-mode))
 
 (use-package minimap
-  :ensure nil
-  :load-path "elisp/"
   :bind ("<f2>" . minimap-toggle))
 
 ;; Allow scrolling with mouse wheel
