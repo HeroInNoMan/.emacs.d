@@ -250,13 +250,17 @@
           (if this-win-2nd (other-window 1))))))
 
 (defun goto-line-with-feedback ()
-  "Show line numbers temporarily, while prompting for the line number input"
+  "Show line numbers and whitespaces temporarily, while prompting
+for the line number input"
   (interactive)
   (unwind-protect
       (progn
         (linum-mode 1)
+        (whitespace-mode 1)
         (goto-line (read-number "Goto line: ")))
-    (linum-mode -1)))
+    (progn
+      (linum-mode -1)
+      (whitespace-mode -1))))
 
 (provide 'my-functions)
 ;; misc-functions.el ends here.
