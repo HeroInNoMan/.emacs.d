@@ -285,9 +285,10 @@
   :bind ("C-." . helm-imenu-anywhere))
 
 (use-package dumb-jump
-  :config
-  (setq dumb-jump-default-project "~/projets")
-  (dumb-jump-mode))
+  :bind
+  ("C-M-g" . dumb-jump-go)
+  ("C-M-S-g" . dumb-jump-back)
+  ("C-M-q" . dumb-jump-quick-look))
 
 (use-package minimap
   :bind ("<f2>" . minimap-toggle))

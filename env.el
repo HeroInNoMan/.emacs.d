@@ -40,6 +40,10 @@
         (zoom-frm-unzoom)
         (dotimes (number 4) (zoom-frm-out))))
 
+    ;; default project root folder
+    (when (featurep 'dumb-jump)
+      (setq dumb-jump-default-project "~/projets"))
+
     ;; open work log file
     (find-file (expand-file-name "~/Terminalcity/SFR.org"))
 
