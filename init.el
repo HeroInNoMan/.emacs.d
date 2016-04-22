@@ -699,6 +699,7 @@
         '(("INPR" . (:foreground "yellow" :weight bold))
           ("STARTED" . (:foreground "yellow" :weight bold))
           ("WAIT" . (:foreground "yellow" :weight bold))
+          ("WIP" . (:foreground "yellow" :weight bold))
           ("INPROGRESS" . (:foreground "yellow" :weight bold))))
 
   ;; update cookies [1/2] when deleting lines
