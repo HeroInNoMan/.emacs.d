@@ -515,26 +515,29 @@
 (use-package multiple-cursors
   ;; Multiple cursors keybindings
   :bind
-  ("M-é" . mc/edit-lines) ;; new cursor on each line of region
-  ("M-è" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
-  ("M-È" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
-  ("M-É" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
-  ("C-M-é" . mc/unmark-next-like-this)
-  ("C-M-è" . mc/unmark-previous-like-this)
-  :init
-  (define-prefix-command 'endless/mc-map)
-  ;; C-x m is usually `compose-mail'. Bind it to something else if you use this command.
-  (define-key ctl-x-map "m" 'endless/mc-map)
-  (define-key endless/mc-map "i" 'mc/insert-numbers)
-  (define-key endless/mc-map "h" 'mc-hide-unmatched-lines-mode)
-  (define-key endless/mc-map "a" 'mc/mark-all-like-this)
-  (define-key endless/mc-map "d" 'mc/mark-all-symbols-like-this-in-defun)
-  (define-key endless/mc-map "D" 'mc/mark-all-dwim)
-  (define-key endless/mc-map "r" 'mc/reverse-regions)
-  (define-key endless/mc-map "s" 'mc/sort-regions)
-  (define-key endless/mc-map "l" 'mc/edit-lines)
-  (define-key endless/mc-map "\C-a" 'mc/edit-beginnings-of-lines)
-  (define-key endless/mc-map "\C-e" 'mc/edit-ends-of-lines))
+  (("M-é" . set-rectangular-region-anchor)
+   :map region-bindings-mode-map
+   ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
+   ("d" . mc/mark-all-symbols-like-this-in-defun)
+   ("D" . mc/mark-all-dwim)
+   ("p" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
+   ("n" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
+   ("P" . mc/unmark-previous-like-this)
+   ("N" . mc/unmark-next-like-this)
+   ("é" . mc/edit-lines) ;; new cursor on each line of region
+   ("(" . mc/cycle-backward)
+   (")" . mc/cycle-forward)
+   ("m" . mc/mark-more-like-this-extended)
+   ("h" . mc-hide-unmatched-lines-mode)
+   ("v" . mc/vertical-align)
+   ("|" . mc/vertical-align-with-space)
+   ("r" . mc/reverse-regions)
+   ("s" . mc/sort-regions)
+   ("#" . mc/insert-numbers) ; use num prefix to set the starting number
+   ("^" . mc/edit-beginnings-of-lines)
+   ("$" . mc/edit-ends-of-lines)
+   ("<down>" . move-text-down)
+   ("<up>" . move-text-up)))
 
 (use-package smart-comment
   :bind ("M-;" . smart-comment))
