@@ -1034,6 +1034,10 @@
 ;; GAMES ;;
 ;;;;;;;;;;;
 
+;; spray mode (spritz)
+(use-package spray
+  :bind ("C-x g s" . spray-mode))
+
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
 (use-package typit :disabled t)
