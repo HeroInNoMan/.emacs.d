@@ -825,6 +825,7 @@
          "\\.rhtml\\'"
          "\\.html\\'"
          "\\.tag\\'"
+         "\\.xml\\'"
          "\\.xsd\\'"
          "\\.wsdl\\'"))
 (use-package web-beautify
