@@ -509,6 +509,9 @@
 (use-package zop-to-char
   :bind ("C-M-z" . zop-up-to-char))
 
+(use-package region-bindings-mode
+  :config (region-bindings-mode-enable))
+
 (use-package multiple-cursors
   ;; Multiple cursors keybindings
   :bind
