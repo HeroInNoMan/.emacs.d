@@ -219,7 +219,8 @@
 ;; DIRED ;;
 ;;;;;;;;;;;
 
-(use-package dired+)
+(use-package dired+
+  :config (unbind-key "M-b" dired-mode-map))
 
 (use-package dired-narrow
   :bind (:map dired-mode-map ("/" . dired-narrow)))
