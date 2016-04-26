@@ -1047,6 +1047,7 @@
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
 (use-package typit :disabled t)
+(use-package vimgolf :disabled t)
 
 ;;;;;;;;;;;;;;
 ;; EPILOGUE ;;
