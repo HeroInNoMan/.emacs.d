@@ -351,7 +351,7 @@
   (add-hook 'markdown-mode-hook 'company-mode)
   (add-hook 'text-mode-hook 'company-mode))
 
-(use-package undo-tree  ;; powerfull undo/redo mode
+(use-package undo-tree ;; powerfull undo/redo mode
   :diminish undo-tree-mode
   :config (undo-tree-mode t))
 
