@@ -978,7 +978,12 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
+
 (load-file (expand-file-name "env.el" user-emacs-directory))
+
+(setq private-file (expand-file-name "my-private.el" user-emacs-directory))
+(when (file-exists-p private-file)
+  (load-file "~/my-private.el"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SESSION SAVING & BACKUPS ;;
