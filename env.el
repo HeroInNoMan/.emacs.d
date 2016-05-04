@@ -2,10 +2,10 @@
 ;; environment specific customisations ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(cond
- ;;;;;;;;
- ;; DIJON
- ((equal "dijon" (system-name))
+;;;;;;;;;;;
+;; DIJON ;;
+;;;;;;;;;;;
+(defun load-dijon-env ()
   (progn
     ;; set default browser to chromium-browser
     (setq browse-url-generic-program "chromium-browser")
@@ -50,46 +50,67 @@
     ;; change theme
     (color-theme-oswald)))
 
- ;;;;;;;;;;;;
- ;; POLOPECHE
- ((equal "ns301170.ip-91-121-73.eu" (system-name))
+;;;;;;;;;;;;;;;
+;; POLOPECHE ;;
+;;;;;;;;;;;;;;;
+(defun load-polopeche-env ()
   (progn
-    (global-hl-line-mode -1) ;; don’t highlight current line
+    ;; don’t highlight current line
+    (global-hl-line-mode -1)
+
+    ;; change theme
     (color-theme-calm-forest)))
 
- ;;;;;;;;;;;;;
- ;; HIGHLANDER
- ((equal "highlander" (system-name))
+;;;;;;;;;;;;;;;;
+;; HIGHLANDER ;;
+;;;;;;;;;;;;;;;;
+(defun load-highlander-env ()
   (progn
     ;; bigger font by default on laptop
     (when (featurep 'zoom-frm)
       (progn
         (zoom-frm-unzoom)
         (dotimes (number 3) (zoom-frm-in))))
+
     ;; display battery level
     (use-package fancy-battery
       :config
-      (add-hook 'after-init-hook #'fancy-battery-mode)
-      (setq fancy-battery-show-percentage t))
+      (setq fancy-battery-show-percentage t)
+      (fancy-battery-mode))
+
+    ;; change theme
     (color-theme-oswald)))
 
- ;;;;;;;;;;
- ;; DEFAULT
- (t (progn
-      (cond
-       ;; MAC OS X
-       ((equal "darwin" system-type)
-        (progn
-          (setq mac-command-modifier 'meta)
-          (setq mac-option-modifier 'super)
-          (setq ns-function-modifier 'hyper)))
+;;;;;;;;;;;;;
+;; DEFAULT ;;
+;;;;;;;;;;;;;
+(defun load-default-env ()
+  (progn
+    (cond
+     ;; MAC OS X
+     ((equal "darwin" system-type)
+      (progn
+        (setq mac-command-modifier 'meta)
+        (setq mac-option-modifier 'super)
+        (setq ns-function-modifier 'hyper)))
 
-       ;; windows
-       ((or (equal "ms-dos" system-type)
-            (equal "windows-nt" system-type)
-            (equal "cygwin" system-type))
-        (global-set-key (kbd "C-M-z") 'undo))) ;; useful when C-/ does not work (windows/putty)
+     ;; windows
+     ((or (equal "ms-dos" system-type)
+          (equal "windows-nt" system-type)
+          (equal "cygwin" system-type))
+      ;; useful when C-/ does not work (windows/putty)
+      (global-set-key (kbd "C-M-z") 'undo)))))
 
-      (message "unknown system"))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; LOAD APPROPRIATE ENVIRONMENT ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(cond
+ ((equal "dijon" (system-name))
+  (load-dijon-env))
+ ((equal "ns301170.ip-91-121-73.eu" (system-name))
+  (load-polopeche-env))
+ ((equal "highlander" (system-name))
+  (load-highlander-env))
+ (t (load-default-env)))
 
 ;;; env.el ends here
