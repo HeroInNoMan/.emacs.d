@@ -1053,6 +1053,7 @@
 (use-package speed-type :disabled t)
 (use-package typit :disabled t)
 (use-package vimgolf :disabled t)
+(use-package slime-volleyball :disabled t)
 
 ;;;;;;;;;;;;;;
 ;; EPILOGUE ;;
