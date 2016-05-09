@@ -31,6 +31,10 @@
 (use-package use-package-chords
   :config (key-chord-mode 1))
 
+(use-package spu
+  :defer 5 ;; defer package loading for 5 second
+  :config (spu-package-upgrade-daily))
+
 ;;;;;;;;;;;;;;;;;;
 ;; LIBS & TOOLS ;;
 ;;;;;;;;;;;;;;;;;;
