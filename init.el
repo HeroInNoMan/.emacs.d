@@ -402,6 +402,7 @@
                                    helm-source-bookmarks
                                    helm-source-file-cache
                                    helm-source-files-in-current-dir
+                                   helm-source-google-suggest
                                    helm-source-locate)))
 
 (use-package helm-descbinds
