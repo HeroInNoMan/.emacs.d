@@ -382,8 +382,21 @@
   ("C-c h w" . helm-wikipedia-suggest)
   ("C-c h x" . helm-run-external-command)
   ("C-c h g" . helm-do-ag)
+  ("C-ç c" . helm-org-capture-templates)
+  ("C-ç p" . helm-list-elisp-packages-no-fetch)
+  ("C-ç P" . helm-apt)
+  ("C-ç m" . helm-man-woman)
+  ("C-ç o" . helm-occur)
+  ("C-ç r" . helm-resume)
+  ("C-ç s" . helm-google-suggest)
+  ("C-ç t" . helm-top)
+  ("C-ç w" . helm-wikipedia-suggest)
+  ("C-ç x" . helm-run-external-command)
+  ("C-ç g" . helm-do-ag)
+  ("C-ç a" . helm-do-ag-project-root)
+  ("C-ç b" . helm-for-files)
+  ("C-ç h" . helm-apropos)
   ("M-ç" . helm-for-files)
-  ("C-ç" . helm-for-files)
   :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
            ("éè" . helm-do-ag-project-root)) ;; incremental grep in project
   :config
@@ -635,6 +648,9 @@
   :config
   (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
   (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
+
+(use-package helm-git-grep
+  :bind ("C-ç G" . helm-git-grep))
 
 (use-package magit
   :chords ("qg" . magit-status) ;; run git status for current buffer
