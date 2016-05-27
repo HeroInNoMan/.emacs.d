@@ -828,6 +828,7 @@
 
 
 (use-package emacs-eclim
+  :disabled t
   :config
   (global-eclim-mode)
   (require 'eclimd)
