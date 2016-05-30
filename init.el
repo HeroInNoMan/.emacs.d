@@ -782,6 +782,14 @@
   (setq weatherline-location-id "2988507")
   (weatherline-mode))
 
+;; weather from wttr.in
+(use-package wttrin
+  :commands (wttrin)
+  :bind ("C-x g w" . wttrin)
+  :config
+  (setq wttrin-default-cities
+        '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
+
 (use-package engine-mode
   :config
   (engine/set-keymap-prefix (kbd "C-c s"))
