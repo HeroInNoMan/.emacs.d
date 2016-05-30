@@ -804,6 +804,15 @@
   (defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
   (defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R"))
 
+;; avandu (gateway to tiny tiny RSS)
+(use-package avandu
+  :config (setq avandu-tt-rss-api-url "http://leothaud.eu/tt-rss/api/"
+                avandu-user "duncan")
+  :bind (("C-x g r" . avandu-overview)
+         :map avandu-article-mode-map
+         ("p" . previous-line)
+         ("n" . next-line)))
+
 ;;;;;;;;;;
 ;; JAVA ;;
 ;;;;;;;;;;
