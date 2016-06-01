@@ -334,6 +334,9 @@
 (use-package shrink-whitespace
   :bind ("C-x C-o" . shrink-whitespace))
 
+(use-package hungry-delete
+  :config (global-hungry-delete-mode))
+
 (use-package origami
   :bind ("C-%" . origami-recursively-toggle-node)
   :config (add-hook 'prog-mode-hook #'origami-mode))
