@@ -310,6 +310,9 @@
 ;; Allow scrolling with mouse wheel
 (when (display-graphic-p) (mouse-wheel-mode t))
 
+(use-package goto-last-change
+  :bind ("C-x C-/" . goto-last-change))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INDENTATION, TABS, SPACES & FOLDING ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
