@@ -457,6 +457,7 @@
   (defvar idle-highlight-mode nil)
   (defvar global-linum-mode nil)
   (defvar god-local-mode nil)
+
   (defhydra hydra-spell (:color blue)
     "spelling"
     ("t" endless/ispell-word-then-abbrev "corr. & add")
@@ -464,6 +465,7 @@
     ("c" flyspell-buffer "flycheck buffer")
     ("F" flyspell-buffer "flycheck buffer")
     ("d" ispell-change-dictionary "change dictionary")
+    ("w" define-word-at-point "word definition")
     ("q" nil "cancel"))
   (global-set-key (kbd "<f9>") 'hydra-spell/body)
 
@@ -499,7 +501,6 @@
     ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
     ("'" (insert-char 1569) "ء") ;; ARABIC LETTER HAMZA
     ("q" nil "cancel" :color blue))
-
   (global-set-key (kbd "<f6>") 'hydra-arabic/body))
 
 (use-package yasnippet
@@ -942,6 +943,8 @@
 (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
 (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
 (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
+
+(use-package define-word)
 
 ;;;;;;;;;;
 ;; MAIL ;;
