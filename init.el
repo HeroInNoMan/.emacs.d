@@ -101,7 +101,8 @@
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
   (add-hook 'window-configuration-change-hook 'my-update-cursor)
-  (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
+  (add-to-list 'god-exempt-major-modes 'ibuffer-mode)
+  :defer 1)
 
 ;; Answer questions with y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -504,9 +505,30 @@
   (global-set-key (kbd "<f6>") 'hydra-arabic/body))
 
 (use-package yasnippet
-  :bind (:map yas-minor-mode-map ("<C-tab>" . yas-ido-expand))
+  :bind (:map
+         yas-minor-mode-map ("<C-tab>" . yas-expand))
   :config
+  (setq yas-prompt-functions '(yas-x-prompt yas-dropdown-prompt))
   (yas-global-mode 1)
+  (defun shk-yas/helm-prompt (prompt choices &optional display-fn)
+    "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
+    (interactive)
+    (setq display-fn (or display-fn 'identity))
+    (if (require 'helm-config)
+        (let (tmpsource cands result rmap)
+          (setq cands (mapcar (lambda (x) (funcall display-fn x)) choices))
+          (setq rmap (mapcar (lambda (x) (cons (funcall display-fn x) x)) choices))
+          (setq tmpsource
+                (list
+                 (cons 'name prompt)
+                 (cons 'candidates cands)
+                 '(action . (("Expand" . (lambda (selection) selection))))
+                 ))
+          (setq result (helm-other-buffer '(tmpsource) "*helm-select-yasnippet"))
+          (if (null result)
+              (signal 'quit "user quit!")
+            (cdr (assoc result rmap))))
+      nil))
   (defun yas-ido-expand ()
     "Lets you select (and expand) a yasnippet key"
     (interactive)
@@ -866,6 +888,8 @@
   ;; JAVA (malabar-mode)
   ;; mimic the IDEish compile-on-save behaviour
   ;; (load-file "~/outils/cedet/cedet-devel-load.el")
+  (load-file "~/projets/malabar-mode/src/main/lisp/malabar-mode.el")
+  (load-file "~/projets/cedet/cedet-devel-load.el")
   (add-hook 'after-init-hook (lambda ()
                                (message "activate-malabar-mode")
                                (activate-malabar-mode)))
@@ -890,6 +914,7 @@
   (company-emacs-eclim-setup)
   (company-emacs-eclim-ignore-case t)
   (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar"))))
+(use-package ecb :disabled t) ;; TODO à tester
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; WEB & JAVASCRIPT ;;
@@ -958,9 +983,11 @@
 ;;;;;;;;;;;
 
 (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
+(add-hook 'sh-mode-hook 'flycheck-mode)
 ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
 (add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
 (add-to-list 'auto-mode-alist '(".*bash.*$" . sh-mode))
+
 
 ;; Normal tab completion in Eshell
 (setq eshell-cmpl-cycle-completions nil)
