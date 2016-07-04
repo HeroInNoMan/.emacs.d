@@ -337,9 +337,6 @@
 (use-package shrink-whitespace
   :bind ("C-x C-o" . shrink-whitespace))
 
-(use-package hungry-delete
-  :config (global-hungry-delete-mode))
-
 (use-package origami
   :bind ("C-%" . origami-recursively-toggle-node)
   :config (add-hook 'prog-mode-hook #'origami-mode))
@@ -447,12 +444,6 @@
               ("n" . next-line)
               ("C-x C-q" . wgrep-change-to-wgrep-mode)
               ("C-c C-c" . wgrep-finish-edit)))
-
-(use-package helm-mode-manager
-  :bind
-  ("C-c m" . helm-switch-major-mode)
-  ("C-c n" . helm-enable-minor-mode)
-  ("C-c d" . helm-disable-minor-mode))
 
 (use-package hydra
   :config
