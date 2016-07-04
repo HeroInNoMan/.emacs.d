@@ -22,7 +22,6 @@
       :bind (:map butler-mode-map
                   ("n" . next-line)
                   ("p" . previous-line))
-      :chords ("jb" . butler-status)
       :config
       (add-to-list 'god-exempt-major-modes 'butler-mode)
       (add-to-list 'butler-server-list

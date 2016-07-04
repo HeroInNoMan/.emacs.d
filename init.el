@@ -470,6 +470,22 @@
     ("q" nil "cancel"))
   (global-set-key (kbd "<f9>") 'hydra-spell/body)
 
+  (defhydra hydra-widgets (:color blue)
+    "widgets"
+    ("a" avandu-overview "avandu RSS")
+    ("b" butler-status "jenkins")
+    ("c" open-calendar "calfw calendar")
+    ("e" elfeed "elfeed RSS")
+    ("E" ecb-activate "Emacs Code Browser")
+    ("g" god-mode "God mode")
+    ("j" butler-status "jenkins")
+    ("m" mingus "mingus music")
+    ("s" sublimity-mode "sublimity")
+    ("S" spray-mode "spritz")
+    ("w" wttrin "Weather")
+    ("q" nil "cancel"))
+  (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
+
   (defhydra hydra-arabic (:color pink)
     "type in arabic"
     ("a" (insert-char 1575) "ا") ;; ARABIC LETTER ALEF
