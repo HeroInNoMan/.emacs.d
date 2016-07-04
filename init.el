@@ -830,7 +830,25 @@
   :bind (("C-x g r" . avandu-overview)
          :map avandu-article-mode-map
          ("p" . previous-line)
-         ("n" . next-line)))
+         ("n" . next-line)
+         ("l" . recenter-top-bottom)
+         :map avandu-overview-map
+         ("l" . recenter-top-bottom)
+         ("v" . scroll-up-command)))
+
+;; elfeed
+(use-package elfeed
+  :config
+  (setq elfeed-use-curl t)
+  :bind ("C-x g e" . elfeed))
+
+
+(use-package mingus
+  :disabled t
+  :bind (("C-x g m" . mingus)
+         :map mingus-browse-map
+         ;; ("p" . (lambda nil (interactive) (forward-line -1)))
+         ("n" . forward-line)))
 
 ;;;;;;;;;;
 ;; JAVA ;;
