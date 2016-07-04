@@ -381,7 +381,7 @@
   :diminish helm-mode
   :bind
   ("M-x" . helm-M-x) ;; superior to M-x
-  ("M-y" . helm-show-kill-ring)
+  ;; ("M-y" . helm-show-kill-ring)
   ("C-h v" . helm-apropos)
   ("C-h f" . helm-apropos)
   ("C-h a" . helm-apropos)
@@ -592,6 +592,8 @@
 
 ;; Allow pasting selection outside of Emacs
 (setq x-select-enable-clipboard t)
+
+(global-set-key (kbd "M-y") 'yank-pop)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BUFFER & WINDOW MANIPULATION ;;
