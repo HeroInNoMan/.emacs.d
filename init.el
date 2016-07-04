@@ -836,6 +836,8 @@
 ;; JAVA ;;
 ;;;;;;;;;;
 
+(use-package java-snippets) ;; requires yasnippet
+
 (use-package flycheck-java ;; flycheck minor mode for java
   :ensure nil
   :load-path "elisp/")
