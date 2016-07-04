@@ -815,8 +815,8 @@
   (cfw:open-calendar-buffer
    :contents-sources
    (list
-    (cfw:ical-create-source "gcal AL" primary-gcal-url "Blue")
-    (cfw:ical-create-source "gcal hellfest" secondary-gcal-url "Brown"))))
+    (cfw:ical-create-source "gcal AL" my-private-primary-gcal-url "Blue")
+    (cfw:ical-create-source "gcal hellfest" my-private-secondary-gcal-url "Brown"))))
 
 ;; TODO configure weather in mode line
 (use-package weatherline-mode
@@ -855,8 +855,9 @@
 
 ;; avandu (gateway to tiny tiny RSS)
 (use-package avandu
-  :config (setq avandu-tt-rss-api-url "http://leothaud.eu/tt-rss/api/"
-                avandu-user "duncan")
+  :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
+                avandu-user my-private-personal-tt-rss-username
+                avandu-password my-private-personal-tt-rss-password)
   :bind (("C-x g r" . avandu-overview)
          :map avandu-article-mode-map
          ("p" . previous-line)
