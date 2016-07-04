@@ -183,7 +183,6 @@
   ("C-=" . zoom-frm-unzoom))
 
 (use-package sublimity
-  :disabled t
   :config
   (require 'sublimity-scroll)
   (require 'sublimity-map))
