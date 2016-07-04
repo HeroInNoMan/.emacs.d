@@ -807,8 +807,16 @@
       calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
 
-(use-package emacs-calfw
-  :disabled t) ;; à tester
+(use-package calfw) ;; à tester
+(use-package calfw-gcal)
+(require 'calfw-ical)
+(defun open-calendar ()
+  (interactive)
+  (cfw:open-calendar-buffer
+   :contents-sources
+   (list
+    (cfw:ical-create-source "gcal AL" primary-gcal-url "Blue")
+    (cfw:ical-create-source "gcal hellfest" secondary-gcal-url "Brown"))))
 
 ;; TODO configure weather in mode line
 (use-package weatherline-mode
