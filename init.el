@@ -2,6 +2,13 @@
 ;;                    emacs config file                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;;;;;;;;;;;;;;;;;;;
+;; PRIVATE VARIABLES ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+(setq private-file (expand-file-name "private.el" user-emacs-directory))
+(when (file-exists-p private-file)
+  (load-file private-file))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INSTALLATION & LOADING ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1047,10 +1054,6 @@
 (load custom-file 'noerror)
 
 (load-file (expand-file-name "env.el" user-emacs-directory))
-
-(setq private-file (expand-file-name "my-private.el" user-emacs-directory))
-(when (file-exists-p private-file)
-  (load-file "~/my-private.el"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; SESSION SAVING & BACKUPS ;;
