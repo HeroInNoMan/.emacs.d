@@ -475,7 +475,7 @@
     ("d" ispell-change-dictionary "change dictionary")
     ("w" define-word-at-point "word definition")
     ("q" nil "cancel"))
-  (global-set-key (kbd "<f9>") 'hydra-spell/body)
+  (global-set-key (kbd "C-è") 'hydra-spell/body)
 
   (defhydra hydra-widgets (:color blue)
     "widgets"
@@ -853,7 +853,6 @@
 ;; weather from wttr.in
 (use-package wttrin
   :commands (wttrin)
-  :bind ("C-x g w" . wttrin)
   :config
   (setq wttrin-default-cities
         '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
@@ -881,28 +880,23 @@
   :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
                 avandu-user my-private-personal-tt-rss-username
                 avandu-password my-private-personal-tt-rss-password)
-  :bind (("C-x g r" . avandu-overview)
-         :map avandu-article-mode-map
-         ("p" . previous-line)
-         ("n" . next-line)
-         ("l" . recenter-top-bottom)
-         :map avandu-overview-map
-         ("l" . recenter-top-bottom)
-         ("v" . scroll-up-command)))
+  :bind (:map avandu-article-mode-map
+              ("p" . previous-line)
+              ("n" . next-line)
+              ("l" . recenter-top-bottom)
+              :map avandu-overview-map
+              ("l" . recenter-top-bottom)
+              ("v" . scroll-up-command)))
 
 ;; elfeed
 (use-package elfeed
-  :config
-  (setq elfeed-use-curl t)
-  :bind ("C-x g e" . elfeed))
-
+  :config (setq elfeed-use-curl t))
 
 (use-package mingus
   :disabled t
-  :bind (("C-x g m" . mingus)
-         :map mingus-browse-map
-         ;; ("p" . (lambda nil (interactive) (forward-line -1)))
-         ("n" . forward-line)))
+  :bind (:map mingus-browse-map
+              ;; ("p" . (lambda nil (interactive) (forward-line -1)))
+              ("n" . forward-line)))
 
 ;;;;;;;;;;
 ;; JAVA ;;
@@ -1178,8 +1172,7 @@
 ;;;;;;;;;;;
 
 ;; spray mode (spritz)
-(use-package spray
-  :bind ("C-x g s" . spray-mode))
+(use-package spray)
 
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
