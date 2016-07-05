@@ -184,6 +184,9 @@
   :ensure nil
   :load-path "elisp/")
 
+(use-package fancy-narrow
+  :config (fancy-narrow-mode t))
+
 (use-package zoom-frm
   :if (display-graphic-p)
   :bind
