@@ -292,6 +292,9 @@
 ;; (add-to-list 'load-path "folder-to/visual-regexp/")
 ;; (add-to-list 'load-path "folder-to/visual-regexp-steroids/")
 
+;; file finder
+(use-package f3)
+
 ;;;;;;;;;;;;;;;;
 ;; NAVIGATION ;;
 ;;;;;;;;;;;;;;;;
@@ -389,9 +392,9 @@
   :bind
   ("M-x" . helm-M-x) ;; superior to M-x
   ;; ("M-y" . helm-show-kill-ring)
-  ("C-h v" . helm-apropos)
-  ("C-h f" . helm-apropos)
   ("C-h a" . helm-apropos)
+  ("C-h f" . helm-apropos)
+  ("C-h v" . helm-apropos)
   ("C-x w" . helm-wikipedia-suggest) ;; quick wp lookup
   ("C-c h c" . helm-org-capture-templates)
   ("C-c h p" . helm-list-elisp-packages-no-fetch)
@@ -404,20 +407,21 @@
   ("C-c h w" . helm-wikipedia-suggest)
   ("C-c h x" . helm-run-external-command)
   ("C-c h g" . helm-do-ag)
-  ("C-ç c" . helm-org-capture-templates)
-  ("C-ç p" . helm-list-elisp-packages-no-fetch)
   ("C-ç P" . helm-apt)
+  ("C-ç a" . helm-do-ag-project-root)
+  ("C-ç b" . helm-for-files)
+  ("C-ç c" . helm-org-capture-templates)
+  ("C-ç f" . f3)
+  ("C-ç g" . helm-do-ag)
+  ("C-ç h" . helm-apropos)
   ("C-ç m" . helm-man-woman)
   ("C-ç o" . helm-occur)
+  ("C-ç p" . helm-list-elisp-packages-no-fetch)
   ("C-ç r" . helm-resume)
   ("C-ç s" . helm-google-suggest)
   ("C-ç t" . helm-top)
   ("C-ç w" . helm-wikipedia-suggest)
   ("C-ç x" . helm-run-external-command)
-  ("C-ç g" . helm-do-ag)
-  ("C-ç a" . helm-do-ag-project-root)
-  ("C-ç b" . helm-for-files)
-  ("C-ç h" . helm-apropos)
   ("M-ç" . helm-for-files)
   :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
            ("éè" . helm-do-ag-project-root)) ;; incremental grep in project
