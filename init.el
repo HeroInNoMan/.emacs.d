@@ -410,7 +410,7 @@
   ("C-c h x" . helm-run-external-command)
   ("C-c h g" . helm-do-ag)
   ("C-ç P" . helm-apt)
-  ("C-ç a" . helm-do-ag-project-root)
+  ("C-ç a" . my-do-ag-project-root-or-dir)
   ("C-ç b" . helm-for-files)
   ("C-ç c" . helm-org-capture-templates)
   ("C-ç f" . f3)
@@ -426,8 +426,15 @@
   ("C-ç x" . helm-run-external-command)
   ("M-ç" . helm-for-files)
   :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
-           ("éè" . helm-do-ag-project-root)) ;; incremental grep in project
+           ("éè" . my-do-ag-project-root-or-dir)) ;; incremental grep in project
   :config
+  (defun my-do-ag-project-root-or-dir ()
+    "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
+    (interactive)
+    (require 'helm-ag)
+    (let ((rootdir (helm-ag--project-root)))
+      (unless rootdir (helm-do-ag))
+      (helm-do-ag rootdir)))
   ;; activate additional features
   (helm-mode 0) ;; helm-mode only on demand
   (helm-autoresize-mode t)
