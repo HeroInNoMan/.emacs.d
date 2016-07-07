@@ -432,17 +432,18 @@
   (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
         helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match    t
+        helm-ff-skip-boring-files t
+        helm-candidate-number-limit 500
         helm-ag-insert-at-point 'symbol
-        helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
-  (setq
-   helm-for-files-preferred-list '(helm-source-buffers-list
-                                   helm-source-recentf
-                                   helm-source-projectile-files-list
-                                   helm-source-bookmarks
-                                   helm-source-file-cache
-                                   helm-source-files-in-current-dir
-                                   helm-source-google-suggest
-                                   helm-source-locate)))
+        helm-ag-base-command "ag --nocolor --nogroup --smart-case"
+        helm-for-files-preferred-list '(helm-source-buffers-list
+                                        helm-source-recentf
+                                        helm-source-projectile-files-list
+                                        helm-source-bookmarks
+                                        helm-source-file-cache
+                                        helm-source-files-in-current-dir
+                                        helm-source-google-suggest
+                                        helm-source-locate)))
 
 (use-package helm-descbinds
   :bind ("C-h b" . helm-descbinds))
