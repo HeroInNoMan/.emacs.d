@@ -538,6 +538,7 @@
   (global-set-key (kbd "<f6>") 'hydra-arabic/body))
 
 (use-package yasnippet
+  :no-require t
   :bind (:map
          yas-minor-mode-map ("<C-tab>" . yas-expand))
   :config
