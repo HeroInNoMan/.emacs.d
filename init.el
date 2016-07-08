@@ -1258,6 +1258,13 @@
 ;; spray mode (spritz)
 (use-package spray)
 
+;; lorem ipsum filling
+(use-package lorem-ipsum
+  :disabled t
+  :bind (("C-c C-l p" . lorem-ipsum-insert-paragraphs)
+         ("C-c C-l s" . lorem-ipsum-insert-sentences)
+         ("C-c C-l l" . lorem-ipsum-insert-list)))
+
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
 (use-package typit :disabled t)
