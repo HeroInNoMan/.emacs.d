@@ -971,6 +971,7 @@
 
 ;; elfeed
 (use-package elfeed
+  :disabled t
   :config (setq elfeed-use-curl t))
 
 (use-package mingus
