@@ -366,11 +366,13 @@
   (setq browse-kill-ring-quit-action 'save-and-restore))
 
 (use-package char-menu
-  :bind ("<f7>" . char-menu)
+  :bind (("<f7>" . char-menu)
+         ("C-é" . char-menu))
   :config
   (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
                     ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
                     ("cyrillic"   "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
+                    ("arabic"      "ا" "ب" "ت" "ث" "ج" "ح" "خ" "د" "ذ" "ر" "ز" "س" "ش" "ص" "ض" "ط" "ظ" "ع" "غ" "ف" "ق" "ك" "ل" "م" "ن" "ه" "و" "ي" "ء")
                     ("Smileys"    "☺" "☹")
                     ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
 
