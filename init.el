@@ -586,8 +586,9 @@
           (yas-expand))))))
 
 ;; case-insensitive policy
-(setq read-file-name-completion-ignore-case t ;; case-insensitive completion
-      read-buffer-completion-ignore-case t) ;; case-insensitive completion
+(setq completion-ignore-case t
+      read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; TEXT MANIPULATION ;;
