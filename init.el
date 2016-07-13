@@ -995,6 +995,9 @@
                      :map web-mode-map ("C-c b" . web-beautify-html)
                      :map css-mode-map ("C-c b" . web-beautify-css)))
 
+(use-package tidy
+  :config (setq sgml-validate-command "tidy"))
+
 ;; JAVASCRIPT (to be tested)
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
