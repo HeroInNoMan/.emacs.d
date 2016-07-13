@@ -326,7 +326,8 @@
   :bind ("<f2>" . minimap-toggle))
 
 ;; Allow scrolling with mouse wheel
-(when (display-graphic-p) (mouse-wheel-mode t))
+(when (display-graphic-p) (progn(mouse-wheel-mode t)
+                                (mouse-avoidance-mode 'exile)))
 
 (use-package goto-last-change
   :bind ("C-x C-/" . goto-last-change))
