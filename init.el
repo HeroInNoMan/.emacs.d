@@ -745,6 +745,36 @@
       ediff-split-window-function 'split-window-horizontally
       ediff-window-setup-function 'ediff-setup-windows-plain)
 
+(use-package vdiff
+  :disabled t
+  :bind (:map vdiff-mode-map
+              ("C-c" . vdiff-mode-prefix-map))
+  :init (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
+  :config
+  (require 'vdiff)
+  (setq
+   ;; Whether to lock scrolling by default when starting vdiff
+   vdiff-lock-scrolling t
+   ;; external diff program/command to use
+   vdiff-diff-program "diff"
+   ;; Extra arguments to pass to diff. If this is set wrong, you may break vdiff.
+   vdiff-diff-program-args ""
+   ;; Commands that should be executed in other vdiff buffer to keep lines in
+   ;; sync. There is no need to include commands that scroll the buffer here,
+   ;; because those are handled differently.
+   vdiff-mirrored-commands '(next-line
+                             previous-line
+                             beginning-of-buffer
+                             end-of-buffer)
+   ;; Minimum number of lines to fold
+   vdiff-fold-padding 2
+   ;; Unchanged lines to leave unfolded around a fold
+   vdiff-min-fold-size 4
+   ;; Function that returns the string printed for a closed fold. The arguments
+   ;; passed are the number of lines folded, the text on the first line, and the
+   ;; width of the buffer.
+   vdiff-fold-string-function 'vdiff-fold-string-default))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PROJECT MANAGEMENT ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
