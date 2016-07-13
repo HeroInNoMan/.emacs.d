@@ -19,6 +19,8 @@ My emacs configuration.
     │
     ├── backups/      # backup files (not under vc)
     │
+    ├── private.el    # private variables definitions (not under vc)
+    │
     └── README.md     # info file with todo-list
 
 # Actions #

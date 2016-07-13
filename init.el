@@ -29,8 +29,8 @@
 (eval-when-compile
   (require 'use-package))
 
-(setq use-package-always-ensure t)
-(setq use-package-verbose t)
+(setq use-package-always-ensure t
+      use-package-verbose t)
 
 (require 'diminish) ;; for :diminish
 (require 'bind-key) ;; for :bind
@@ -399,37 +399,40 @@
   :diminish helm-mode
   :bind
   ("M-x" . helm-M-x) ;; superior to M-x
-  ;; ("M-y" . helm-show-kill-ring)
+  ("C-ç A" . helm-apt)
+  ("C-c h A" . helm-apt)
+  ("C-ç P" . helm-list-elisp-packages-no-fetch)
+  ("C-c h P" . helm-list-elisp-packages-no-fetch)
+  ("C-ç a" . my-do-ag-project-root-or-dir)
+  ("C-c h a" . my-do-ag-project-root-or-dir)
+  ("C-ç c" . helm-org-capture-templates)
+  ("C-c h c" . helm-org-capture-templates)
+  ("C-ç f" . f3)
+  ("C-c h f" . f3)
+  ("C-ç g" . helm-do-ag)
+  ("C-c h g" . helm-do-ag)
+  ("C-ç m" . helm-man-woman)
+  ("C-c h m" . helm-man-woman)
+  ("C-ç o" . helm-occur)
+  ("C-c h o" . helm-occur)
+  ("C-ç p" . helm-projectile-switch-project)
+  ("C-c h p" . helm-projectile-switch-project)
+  ("C-ç r" . helm-resume)
+  ("C-c h r" . helm-resume)
+  ("C-ç s" . helm-google-suggest)
+  ("C-c h s" . helm-google-suggest)
+  ("C-ç t" . helm-top)
+  ("C-c h t" . helm-top)
+  ("C-ç w" . helm-wikipedia-suggest)
+  ("C-c h w" . helm-wikipedia-suggest)
+  ("C-ç x" . helm-run-external-command)
+  ("C-c h x" . helm-run-external-command)
+  ("C-ç h" . helm-apropos)
   ("C-h a" . helm-apropos)
   ("C-h f" . helm-apropos)
   ("C-h v" . helm-apropos)
-  ("C-x w" . helm-wikipedia-suggest) ;; quick wp lookup
-  ("C-c h c" . helm-org-capture-templates)
-  ("C-c h p" . helm-list-elisp-packages-no-fetch)
-  ("C-c h P" . helm-apt)
-  ("C-c h m" . helm-man-woman)
-  ("C-c h o" . helm-occur)
-  ("C-c h r" . helm-resume)
-  ("C-c h s" . helm-google-suggest)
-  ("C-c h t" . helm-top)
-  ("C-c h w" . helm-wikipedia-suggest)
-  ("C-c h x" . helm-run-external-command)
-  ("C-c h g" . helm-do-ag)
-  ("C-ç P" . helm-apt)
-  ("C-ç a" . my-do-ag-project-root-or-dir)
   ("C-ç b" . helm-for-files)
-  ("C-ç c" . helm-org-capture-templates)
-  ("C-ç f" . f3)
-  ("C-ç g" . helm-do-ag)
-  ("C-ç h" . helm-apropos)
-  ("C-ç m" . helm-man-woman)
-  ("C-ç o" . helm-occur)
-  ("C-ç p" . helm-list-elisp-packages-no-fetch)
-  ("C-ç r" . helm-resume)
-  ("C-ç s" . helm-google-suggest)
-  ("C-ç t" . helm-top)
-  ("C-ç w" . helm-wikipedia-suggest)
-  ("C-ç x" . helm-run-external-command)
+  ("C-ç C-ç" . helm-for-files)
   ("M-ç" . helm-for-files)
   :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
            ("éè" . my-do-ag-project-root-or-dir)) ;; incremental grep in project
@@ -750,10 +753,10 @@
   ;; :diminish projectile-mode
   :config
   (projectile-global-mode) ;; activate projectile-mode everywhere
-  (setq projectile-completion-system 'helm)
   (helm-projectile-on)
-  (setq projectile-enable-caching t) ;; enable caching for projectile-mode
-  (setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
+  (setq projectile-completion-system 'helm
+        projectile-enable-caching t ;; enable caching for projectile-mode
+        projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
   (def-projectile-commander-method ?d
     "Open project root in dired."
     (projectile-dired))
@@ -765,10 +768,10 @@
 (use-package jenkins ;; TODO voir si c’est mieux que butler
   :disabled t
   :config
-  (setq jenkins-api-token "<api token can be found on user's configure page>")
-  (setq jenkins-url "<jenkins url>")
-  (setq jenkins-username "<your user name>")
-  (setq jenkins-viewname "<viewname>"))
+  (setq jenkins-api-token "<api token can be found on user's configure page>"
+        jenkins-url "<jenkins url>"
+        jenkins-username "<your user name>"
+        jenkins-viewname "<viewname>"))
 
 ;;;;;;;;;;;;;;
 ;; ORG-MODE ;;
@@ -786,9 +789,9 @@
   :init (require 'org-agenda)
   :config
   ;; ORG-CAPTURE
-  (setq org-default-notes-file (concat user-emacs-directory "notes.org"))
-  (setq terminalcity-dir "~/Terminalcity/")
-  (setq polopeche-home-dir "/sshx:polopeche:/home/duncan/")
+  (setq org-default-notes-file (concat user-emacs-directory "notes.org")
+        terminalcity-dir "~/Terminalcity/"
+        polopeche-home-dir "/sshx:polopeche:/home/duncan/")
 
   ;; org-capture-templates
   (setq org-capture-templates
