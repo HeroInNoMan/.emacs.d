@@ -156,6 +156,9 @@
       browse-url-generic-program "firefox"
       browse-url-browser-function gnus-button-url)
 
+(use-package dot-mode
+  :config (dot-mode-on))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; THEME & APPEARANCE ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
@@ -311,7 +314,7 @@
   ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
 
 (use-package imenu-anywhere
-  :bind ("C-." . helm-imenu-anywhere))
+  :bind ("C-ç ." . helm-imenu-anywhere))
 
 (use-package dumb-jump
   :bind
