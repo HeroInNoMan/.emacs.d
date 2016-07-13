@@ -134,13 +134,17 @@
       (message "trailing whitespaces enabled"))))
 
 (defun jirify ()
-  "makes a ticket ID into an org link to the JIRA ticket"
+  "creates an org link with a ticket ID using the URL in my-private-work-bugtracker-url."
   (interactive)
-  (setq id (thing-at-point 'filename))
-  (setq org-url (concat " [[http://jira.sfrdev.fr/browse/" id "][" id "]]"))
-  (search-backward " ")
-  (kill-word 2)
-  (insert org-url))
+  (if (and
+       (boundp 'my-private-work-bugtracker-url)
+       (not (null my-private-work-bugtracker-url)))
+      (let* ((id (thing-at-point 'symbol))
+             (bounds (bounds-of-thing-at-point 'symbol))
+             (org-link (concat "[[" my-private-work-bugtracker-url id "][" id "]]")))
+        (delete-region (car bounds) (cdr bounds))
+        (insert org-link))
+    (message "Var my-private-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
 
 (defun reload-config ()
   "reload init.el"

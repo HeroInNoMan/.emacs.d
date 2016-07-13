@@ -776,11 +776,11 @@
 
 (use-package org
   :bind
-  (("\C-c l" . org-store-link)
-   ("\C-c a" . org-agenda)
+  (("\C-c a" . org-agenda)
    ("\C-c b" . org-iswitchb)
-   ("\C-c j" . jirify)
    :map org-mode-map
+   ("\C-c l" . org-store-link)
+   ("\C-c j" . jirify)
    ("\C-c t" . org-begin-template))
   :chords ("gx" . org-capture)
   :init (require 'org-agenda)
