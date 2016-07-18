@@ -264,6 +264,7 @@ for the line number input"
         (goto-line (read-number "Goto line: ")))
     (progn
       (linum-mode -1)
+      (git-gutter-mode +1)
       (whitespace-mode -1))))
 
 (provide 'my-functions)

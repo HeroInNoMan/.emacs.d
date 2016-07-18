@@ -737,8 +737,22 @@
 (use-package helm-git-grep
   :bind ("C-ç G" . helm-git-grep))
 
+(use-package git-gutter
+  :diminish git-gutter-mode
+  :bind
+  ("C-x g n" . git-gutter:next-hunk)
+  ("C-x g p" . git-gutter:previous-hunk)
+  ("M-N" . git-gutter:next-hunk)
+  ("M-P" . git-gutter:previous-hunk)
+  ("C-x g s" . git-gutter:stage-hunk)
+  ("C-x g r" . git-gutter:revert-hunk)
+  :config
+  (global-git-gutter-mode +1)
+  (setq git-gutter:hide-gutter t))
+
 (use-package magit
   :chords ("qg" . magit-status) ;; run git status for current buffer
+  :bind ("C-x g ." . magit-status)
   :bind ("C-x g b" . magit-blame)
   :config
   (setq magit-last-seen-setup-instructions "1.4.0")
