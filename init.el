@@ -322,8 +322,7 @@
   ("C-M-S-g" . dumb-jump-back)
   ("C-M-q" . dumb-jump-quick-look))
 
-(use-package minimap
-  :bind ("<f2>" . minimap-toggle))
+(use-package minimap)
 
 ;; Allow scrolling with mouse wheel
 (when (display-graphic-p) (progn(mouse-wheel-mode t)
@@ -500,15 +499,18 @@
     "widgets"
     ("a" avandu-overview "avandu RSS")
     ("b" butler-status "jenkins")
+    ("B" ecb-activate "Emacs Code Browser")
     ("c" open-calendar "calfw calendar")
-    ("e" elfeed "elfeed RSS")
-    ("E" ecb-activate "Emacs Code Browser")
+    ("e" eshell "eshell")
+    ("E" elfeed "elfeed RSS")
     ("g" god-mode "God mode")
     ("j" butler-status "jenkins")
-    ("m" mingus "mingus music")
+    ("m" minimap-mode "minimap")
+    ("M" mingus "mingus music")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
     ("w" wttrin "Weather")
+    ("$" shell "shell")
     ("q" nil "cancel"))
   (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
 
