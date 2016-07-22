@@ -63,6 +63,8 @@
 
 (use-package my-checks :ensure nil)
 
+(use-package describe-number)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFAULTS, ERGONOMY & KEYBINDINGS ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
