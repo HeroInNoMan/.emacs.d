@@ -212,6 +212,7 @@
 (blink-cursor-mode -1) ;; no blinking cursor
 (global-hl-line-mode -1) ;; don’t highlight current line
 (highlight-line-mode 1) ;; except in “list” modes
+(fringe-mode 0) ;; remove fringes on the sides
 
 ;; progress in file
 (use-package sml-modeline
