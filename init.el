@@ -71,6 +71,16 @@
 
 (use-package better-defaults)
 
+(use-package crux
+  :config
+  (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
+  (crux-reopen-as-root-mode)
+  ;; advices
+  (crux-with-region-or-buffer comment-or-uncomment-region)
+  (crux-with-region-or-buffer indent-region)
+  (crux-with-region-or-buffer untabify)
+  (crux-with-region-or-buffer tabify))
+
 (global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
 
 ;; Killing emacs
@@ -512,6 +522,7 @@
     ("M" mingus "mingus music")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
+    ("t" crux-visit-term-buffer "ansi-term")
     ("w" wttrin "Weather")
     ("$" shell "shell")
     ("q" nil "cancel"))
