@@ -13,13 +13,21 @@
 (defun my-html-helper-load-hook ()
   (define-key html-mode-map (kbd "RET") 'newline-and-indent))
 
-(defun iwb ()
-  "Indent whole buffer"
+(defun indent-region-or-buffer ()
+  "Indent region or whole buffer"
   (interactive)
-  (delete-trailing-whitespace)
-  (indent-region (point-min) (point-max) nil)
-  (untabify (point-min) (point-max))
-  (message "File indented"))
+  (cond ((region-active-p)
+         (let ((start (region-beginning))
+               (end (region-end)))
+           (indent-region start end nil)
+           (delete-trailing-whitespace start end)
+           (untabify start end)
+           (message "Region indented.")))
+        (t
+         (indent-region (point-min) (point-max) nil)
+         (delete-trailing-whitespace (point-min) (point-max))
+         (untabify (point-min) (point-max))
+         (message "Buffer indented."))))
 
 (defun simplified-beginning-of-buffer ()
   "Move point to the beginning of the buffer;

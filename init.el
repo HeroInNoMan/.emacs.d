@@ -48,7 +48,7 @@
   :ensure nil
   :load-path "elisp/"
   :bind
-  ("C-c i" . iwb) ;; indent whole buffer
+  ("C-c i" . indent-region-or-buffer) ;; indent whole buffer
   ("M-«" . simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
   ("M-»" . simplified-end-of-buffer)
   ("<C-M-down>" . duplicate-current-line)
