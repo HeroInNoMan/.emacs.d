@@ -2,13 +2,11 @@
 ;;                  Custom lisp functions                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun reload-file ()
-  "Reload file"
+(defun revert-buffer-no-confirm ()
+  ;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+  "Revert buffer without confirmation."
   (interactive)
-  (let ((curr-scroll (window-vscroll)))
-    (find-file (buffer-name))
-    (set-window-vscroll nil curr-scroll)
-    (message "Reloaded file")))
+  (revert-buffer :ignore-auto :noconfirm))
 
 (defun my-html-helper-load-hook ()
   (define-key html-mode-map (kbd "RET") 'newline-and-indent))
