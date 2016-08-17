@@ -121,13 +121,6 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
-(defun sudo-edit (&optional arg)
-  "edit file as root"
-  (interactive "p")
-  (if (or arg (not buffer-file-name))
-      (find-file (concat "/sudo::" (ido-read-file-name "File: ")))
-    (find-alternate-file (concat "/sudo::" buffer-file-name))))
-
 (defun toggle-show-trailing-whitespace ()
   "toggle display trailing whitespaces"
   (interactive)
