@@ -918,6 +918,7 @@
       european-calendar-style t ;; day/month/year format for calendar
       calendar-week-start-day 1) ;; start week on Monday
 (display-time) ;; display time
+(global-set-key (kbd "C-c d") 'insert-todays-date)
 
 (use-package calfw) ;; à tester
 (use-package calfw-gcal)

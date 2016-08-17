@@ -275,5 +275,12 @@ for the line number input"
       (git-gutter-mode +1)
       (whitespace-mode -1))))
 
+;; from http://emacswiki.org/emacs/InsertingTodaysDate
+(defun insert-todays-date (arg)
+  (interactive "P")
+  (insert (if arg
+              (format-time-string "%d-%m-%Y")
+            (format-time-string "%Y-%m-%d"))))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.
