@@ -948,6 +948,7 @@
         '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
 
 (use-package engine-mode
+  :disabled t
   :config
   (engine/set-keymap-prefix (kbd "C-c s"))
   (engine-mode t) ;; prefix C-c /
