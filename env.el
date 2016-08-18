@@ -13,6 +13,9 @@
     ;; specific agenda files
     (add-to-list 'org-agenda-files "~/Terminalcity/SFR.org")
 
+    ;; hooking for specific functions
+    (add-hook 'git-commit-setup-hook 'insert-ticket-prefix)
+
     ;; confluence search
     (when (featurep 'engine-mode)
       (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c"))

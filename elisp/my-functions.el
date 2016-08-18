@@ -273,5 +273,16 @@ for the line number input"
               (format-time-string "%d-%m-%Y")
             (format-time-string "%Y-%m-%d"))))
 
+(defun insert-ticket-prefix ()
+  "Inserts a prefix containing the number of the Jira ticket"
+  (let* ((result  (re-search-forward "\\(?:US\\|BUG\\)-\\([A-Z]+-[0-9]+\\).*$" nil t))
+         (s (match-string 1)))
+    (if (and result
+             (not (string-match (concat "\\[" s "\\]") (buffer-string))))
+        (progn
+          (goto-char (point-min))
+          (insert (concat "[" s "] ")))
+      (goto-char (point-min)))))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.

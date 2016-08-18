@@ -46,6 +46,7 @@
 
 (use-package my-functions ;; custom functions
   :ensure nil
+  :commands (insert-ticket-prefix)
   :load-path "elisp/"
   :bind
   ("C-c i" . indent-region-or-buffer) ;; indent whole buffer
