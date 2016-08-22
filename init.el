@@ -675,6 +675,7 @@
 (global-set-key (kbd "M-y") 'yank-pop)
 
 (use-package paredit
+  :disabled t
   :config
   (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
