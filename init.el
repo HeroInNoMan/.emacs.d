@@ -774,6 +774,7 @@
   ("M-P" . git-gutter:previous-hunk)
   ("C-x g s" . git-gutter:stage-hunk)
   ("C-x g r" . git-gutter:revert-hunk)
+  ("C-x g u" . git-gutter-mode)
   :config
   (global-git-gutter-mode +1)
   (setq git-gutter:hide-gutter t))
