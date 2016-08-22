@@ -442,7 +442,6 @@
   ("C-h a" . helm-apropos)
   ("C-h f" . helm-apropos)
   ("C-h v" . helm-apropos)
-  ("C-ç b" . helm-for-files)
   ("C-ç C-ç" . helm-for-files)
   ("M-ç" . helm-for-files)
   :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
@@ -475,7 +474,9 @@
                                         helm-source-locate)))
 
 (use-package helm-descbinds
-  :bind ("C-h b" . helm-descbinds))
+  :bind
+  ("C-ç b" . helm-descbinds)
+  ("C-h b" . helm-descbinds))
 
 (use-package wgrep
   :bind (:map grep-mode-map
