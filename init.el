@@ -279,6 +279,10 @@
 ;; SEARCH ;;
 ;;;;;;;;;;;;
 
+;; standard isearch by default
+(global-set-key (kbd "C-s") 'isearch-forward)
+(global-set-key (kbd "C-r") 'isearch-backward)
+
 (use-package swiper)
 
 (use-package swiper-helm
@@ -298,16 +302,17 @@
   :bind
   (("M-s r" . vr/replace)
    ("M-s q" . vr/query-replace)
+   ("C-M-%" . vr/query-replace)
    ;; if you use multiple-cursors, this is for you:
    ("M-s m" . vr/mc-mark)
    ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
    ("C-M-r" . vr/isearch-backward)
    ("C-M-s" . vr/isearch-forward))
   :config
+  ;; if the files are not already in the load path
+  ;; (add-to-list 'load-path "folder-to/visual-regexp/")
+  ;; (add-to-list 'load-path "folder-to/visual-regexp-steroids/")
   (require 'visual-regexp))
-;; if the files are not already in the load path
-;; (add-to-list 'load-path "folder-to/visual-regexp/")
-;; (add-to-list 'load-path "folder-to/visual-regexp-steroids/")
 
 ;; file finder
 (use-package f3)
