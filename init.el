@@ -334,10 +334,10 @@
   :bind ("C-ç ." . helm-imenu-anywhere))
 
 (use-package dumb-jump
-  :bind
-  ("C-M-g" . dumb-jump-go)
-  ("C-M-S-g" . dumb-jump-back)
-  ("C-M-q" . dumb-jump-quick-look))
+  :bind (:map prog-mode-map
+              ("C-." . dumb-jump-go)
+              ("C-," . dumb-jump-back)
+              ("C-;" . dumb-jump-quick-look)))
 
 (use-package minimap)
 
