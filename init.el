@@ -264,7 +264,7 @@
   :bind (:map dired-mode-map ("/" . dired-narrow)))
 
 (put 'dired-find-alternate-file 'disabled nil)
-(setq dired-listing-switches "-AlhGF") ;; dired human readable size format, hide group
+(setq dired-listing-switches "-AlhF") ;; dired human readable size format
 
 ;; Auto refresh dired
 (setq global-auto-revert-non-file-buffers t
