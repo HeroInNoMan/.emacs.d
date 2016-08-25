@@ -997,17 +997,20 @@
                         nil t))))
 
 
-(use-package emacs-eclim
+(use-package eclim
   :disabled t
   :config
   (global-eclim-mode)
   (require 'eclimd)
   (setq eclim-eclipse-dirs "~/outils/eclipse/eclipse-mars"
         eclim-executable "~/outils/eclipse/eclipse-mars/eclim")
+  (require 'company)
   (require 'company-emacs-eclim)
+  (global-company-mode t)
   (company-emacs-eclim-setup)
-  (company-emacs-eclim-ignore-case t)
-  (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar"))))
+  ;; (company-emacs-eclim-ignore-case t)
+  (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
+  (add-hook 'java-mode-hook 'eclim-mode))
 (use-package ecb :disabled t) ;; TODO à tester
 
 ;;;;;;;;;;;;;;;;;;;;;;
