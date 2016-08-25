@@ -565,54 +565,6 @@
     ("q" nil "cancel" :color blue))
   (global-set-key (kbd "<f6>") 'hydra-arabic/body))
 
-(use-package yasnippet
-  :no-require t
-  :bind (:map
-         yas-minor-mode-map ("<C-tab>" . yas-expand))
-  :config
-  (setq yas-prompt-functions '(yas-x-prompt yas-dropdown-prompt))
-  (yas-global-mode 1)
-  (defun shk-yas/helm-prompt (prompt choices &optional display-fn)
-    "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
-    (interactive)
-    (setq display-fn (or display-fn 'identity))
-    (if (require 'helm-config)
-        (let (tmpsource cands result rmap)
-          (setq cands (mapcar (lambda (x) (funcall display-fn x)) choices))
-          (setq rmap (mapcar (lambda (x) (cons (funcall display-fn x) x)) choices))
-          (setq tmpsource
-                (list
-                 (cons 'name prompt)
-                 (cons 'candidates cands)
-                 '(action . (("Expand" . (lambda (selection) selection))))
-                 ))
-          (setq result (helm-other-buffer '(tmpsource) "*helm-select-yasnippet"))
-          (if (null result)
-              (signal 'quit "user quit!")
-            (cdr (assoc result rmap))))
-      nil))
-  (defun yas-ido-expand ()
-    "Lets you select (and expand) a yasnippet key"
-    (interactive)
-    (let ((original-point (point)))
-      (while (and
-              (not (= (point) (point-min) ))
-              (not
-               (string-match "[[:space:]\n]" (char-to-string (char-before)))))
-        (backward-word 1))
-      (let* ((init-word (point))
-             (word (buffer-substring init-word original-point))
-             (list (yas-active-keys)))
-        (goto-char original-point)
-        (let ((key (remove-if-not
-                    (lambda (s) (string-match (concat "^" word) s)) list)))
-          (if (= (length key) 1)
-              (setq key (pop key))
-            (setq key (ido-completing-read "key: " list nil nil word)))
-          (delete-char (- init-word original-point))
-          (insert key)
-          (yas-expand))))))
-
 ;; case-insensitive policy
 (setq completion-ignore-case t
       read-file-name-completion-ignore-case t
@@ -1019,8 +971,6 @@
 ;;;;;;;;;;
 ;; JAVA ;;
 ;;;;;;;;;;
-
-(use-package java-snippets) ;; requires yasnippet
 
 (use-package flycheck-java ;; flycheck minor mode for java
   :ensure nil
