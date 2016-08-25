@@ -309,7 +309,10 @@
   :config (require 'visual-regexp)) ;; TODO check if really necessary
 
 ;; file finder
-(use-package f3)
+(use-package f3
+  :bind
+  ("C-ç f" . f3)
+  ("C-c h f" . f3))
 
 ;;;;;;;;;;;;;;;;
 ;; NAVIGATION ;;
@@ -420,8 +423,6 @@
   ("C-c h a" . my-do-ag-project-root-or-dir)
   ("C-ç c" . helm-org-capture-templates)
   ("C-c h c" . helm-org-capture-templates)
-  ("C-ç f" . f3)
-  ("C-c h f" . f3)
   ("C-ç g" . helm-do-ag)
   ("C-c h g" . helm-do-ag)
   ("C-ç m" . helm-man-woman)
