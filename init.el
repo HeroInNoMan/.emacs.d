@@ -16,8 +16,6 @@
 ;; package-style dependencies
 (when (>= emacs-major-version 24)
   (require 'package)
-  ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t) ;; default
-  ;; (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (package-initialize))
 
@@ -308,11 +306,7 @@
    ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
    ("C-M-r" . vr/isearch-backward)
    ("C-M-s" . vr/isearch-forward))
-  :config
-  ;; if the files are not already in the load path
-  ;; (add-to-list 'load-path "folder-to/visual-regexp/")
-  ;; (add-to-list 'load-path "folder-to/visual-regexp-steroids/")
-  (require 'visual-regexp))
+  :config (require 'visual-regexp)) ;; TODO check if really necessary
 
 ;; file finder
 (use-package f3)
