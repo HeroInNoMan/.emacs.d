@@ -281,6 +281,12 @@
 (global-set-key (kbd "C-s") 'isearch-forward)
 (global-set-key (kbd "C-r") 'isearch-backward)
 
+
+(use-package isearch-dabbrev
+  :bind (:map isearch-mode-map
+              ("<tab>" . isearch-dabbrev-expand)
+              ("M-/" . isearch-dabbrev-expand)))
+
 (use-package swiper)
 
 (use-package swiper-helm
