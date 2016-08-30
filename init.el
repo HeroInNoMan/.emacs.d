@@ -646,6 +646,9 @@
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
 
+;; easier access to transposition commands
+(global-set-key (kbd "C-x M-h") 'transpose-paragraphs)
+(global-set-key (kbd "C-x M-s") 'transpose-sentences)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BUFFER & WINDOW MANIPULATION ;;
