@@ -48,8 +48,6 @@
   :load-path "elisp/"
   :bind
   ("C-c i" . indent-region-or-buffer) ;; indent whole buffer
-  ("M-«" . simplified-beginning-of-buffer) ;; useful when C-< does not work (windows/putty)
-  ("M-»" . simplified-end-of-buffer)
   ("<C-M-down>" . duplicate-current-line)
   ("<up>" . up-arrow)
   ("<down>" . down-arrow)
@@ -81,6 +79,10 @@
   (crux-with-region-or-buffer tabify))
 
 (global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
+
+(global-set-key (kbd "M-«") 'beginning-of-buffer)
+(global-set-key (kbd "M-»") 'end-of-buffer)
+
 
 ;; Killing emacs
 (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
@@ -1027,6 +1029,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package web-mode ;; HTML, XML, JSP (using web-mode)
+  :bind (:map html-mode-map ("RET" . newline-and-indent))
   :config
   (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
                                  ("blade" . "\\.blade\\.")))
@@ -1043,6 +1046,7 @@
          "\\.xml\\'"
          "\\.xsd\\'"
          "\\.wsdl\\'"))
+
 (use-package web-beautify
   :disabled t
   :bind-keymap (

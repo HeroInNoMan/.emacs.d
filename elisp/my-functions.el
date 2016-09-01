@@ -8,9 +8,6 @@
   (interactive)
   (revert-buffer :ignore-auto :noconfirm))
 
-(defun my-html-helper-load-hook ()
-  (define-key html-mode-map (kbd "RET") 'newline-and-indent))
-
 (defun indent-region-or-buffer ()
   "Indent region or whole buffer"
   (interactive)
@@ -27,30 +24,16 @@
          (untabify (point-min) (point-max))
          (message "Buffer indented."))))
 
-(defun simplified-beginning-of-buffer ()
-  "Move point to the beginning of the buffer;
-     leave mark at previous position."
-  (interactive)
-  (push-mark)
-  (goto-char (point-min)))
-
-(defun simplified-end-of-buffer ()
-  "Move point to the end of the buffer;
-     leave mark at previous position."
-  (interactive)
-  (push-mark)
-  (goto-char (point-max)))
-
 (defun up-arrow ()
   "Move cursor up one line and buffer down one"
   (interactive)
-  (previous-line)
+  (forward-line -1)
   (scroll-down 1))
 
 (defun down-arrow ()
   "Move cursor down one line and buffer up one"
   (interactive)
-  (next-line)
+  (forward-line)
   (scroll-up 1))
 
 (defun show-file-name ()
