@@ -1084,6 +1084,12 @@
 
 (use-package define-word)
 
+;;;;;;;;;;;;;;
+;; MARKDOWN ;;
+;;;;;;;;;;;;;;
+
+(use-package markdown-mode)
+
 ;;;;;;;;;;
 ;; MAIL ;;
 ;;;;;;;;;;
