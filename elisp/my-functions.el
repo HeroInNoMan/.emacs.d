@@ -210,7 +210,18 @@
 (defun add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'add-d-to-ediff-mode-map)
 
+(defun swap-buffers ()
+  (interactive)
+  (cond ((one-window-p) (display-buffer (other-buffer)))
+        ((let* ((buffer-a (current-buffer))
+                (window-b (cadr (window-list)))
+                (buffer-b (window-buffer window-b)))
+           (set-window-buffer window-b buffer-a)
+           (switch-to-buffer buffer-b)
+           (other-window 1)))))
+
 (defun toggle-window-split ()
+  "Switch between vertical and horizontal split of windows. Swap buffers in the process"
   (interactive)
   (if (= (count-windows) 2)
       (let* ((this-win-buffer (window-buffer))
@@ -227,12 +238,13 @@
                   'split-window-horizontally
                 'split-window-vertically)))
         (delete-other-windows)
+        (funcall splitter)
+        (swap-buffers)
         (let ((first-win (selected-window)))
-          (funcall splitter)
-          (if this-win-2nd (other-window 1))
           (set-window-buffer (selected-window) this-win-buffer)
-          (set-window-buffer (next-window) next-win-buffer)
+          (if this-win-2nd (other-window 1))
           (select-window first-win)
+          (set-window-buffer (next-window) next-win-buffer)
           (if this-win-2nd (other-window 1))))))
 
 (defun goto-line-with-feedback ()
