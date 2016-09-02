@@ -534,6 +534,7 @@
     ("j" butler-status "jenkins")
     ("m" minimap-mode "minimap")
     ("M" mingus "mingus music")
+    ("p" redtick "pomodoro")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
     ("t" crux-visit-term-buffer "ansi-term")
@@ -1262,6 +1263,14 @@
   ;; (setq sml/no-confirm-load-theme t)
   (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
   (sml/setup))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; pomodoro technique ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package pomodoro :disabled t)
+(use-package tomatinho :disabled t)
+(use-package redtick)
 
 ;;;;;;;;;;;
 ;; GAMES ;;
