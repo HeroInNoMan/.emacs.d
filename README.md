@@ -5,6 +5,8 @@ My emacs configuration.
 
     .emacs.d/
     │
+    ├── README.md     # info file with TODO-list
+    │
     ├── init.el       # main config file
     │
     ├── custom.el     # customize file (mostly generated) called by init.el
@@ -19,9 +21,7 @@ My emacs configuration.
     │
     ├── backups/      # backup files (not under vc)
     │
-    ├── private.el    # private variables definitions (not under vc)
-    │
-    └── README.md     # info file with todo-list
+    └── private.el    # private variables definitions (not under vc)
 
 # Actions #
 
