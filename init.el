@@ -215,7 +215,9 @@
   (require 'sublimity-map))
 
 ;; colors, appearance
-(require 'iso-transl) ;; some environments don’t handle dead keys
+(use-package iso-transl ;; some environments don’t handle dead keys
+  :ensure nil)
+
 (global-font-lock-mode t) ;; enable syntax highlighting
 (setq font-lock-maximum-decoration t) ;; all possible colours
 (blink-cursor-mode -1) ;; no blinking cursor
@@ -301,8 +303,8 @@
   ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
 
 ;; regexp-builder
-(require 're-builder)
-(setq reb-re-syntax 'string) ;; syntax used in the re-buidler
+(use-package re-builder
+  :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
 
 (use-package visual-regexp-steroids
   :bind
@@ -921,7 +923,7 @@
 
 (use-package calfw) ;; à tester
 (use-package calfw-gcal)
-(require 'calfw-ical)
+(use-package calfw-ical :ensure nil)
 (defun open-calendar ()
   (interactive)
   (cfw:open-calendar-buffer
@@ -1164,6 +1166,18 @@
 ;;;;;;;;;;;;
 ;; GROOVY ;;
 ;;;;;;;;;;;;
+
+;; TODO tout passer en use-package
+;; (use-package groovy
+;;   :ensure nil
+;;   :mode ("\\.groovy" . groovy-mode)
+;;   :config
+;;   ((add-hook 'groovy-mode-hook
+;;              '(lambda ()
+;;                 (require 'groovy-electric)
+;;                 (groovy-electric-mode)))
+;;    (autoload 'groovy-eval "groovy-eval" "Groovy Evaluation" t)
+;;    (add-hook 'groovy-mode-hook 'groovy-eval)))
 
 ;;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Major mode for editing Groovy code." t)
