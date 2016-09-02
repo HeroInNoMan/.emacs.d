@@ -484,6 +484,9 @@
                                         helm-source-google-suggest
                                         helm-source-locate)))
 
+(use-package helm-dash
+  :bind ("C-ç d" . helm-dash))
+
 (use-package helm-descbinds
   :bind
   ("C-ç b" . helm-descbinds)
