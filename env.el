@@ -91,6 +91,13 @@
       (setq fancy-battery-show-percentage t)
       (fancy-battery-mode))
 
+    (use-package transmission
+      :config
+      (setq
+       transmission-host my-private-transmission-host
+       transmission-service my-private-transmission-service
+       transmission-rpc-path my-private-transmission-rpc-path))
+
     ;; change theme
     (color-theme-oswald)))
 
