@@ -1066,16 +1066,15 @@
 (use-package tidy
   :config (setq sgml-validate-command "tidy"))
 
-;; JAVASCRIPT (to be tested)
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-;; (setq js2-basic-offset 2)
-;; (setq js2-use-font-lock-faces t)
-
-
-(autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t)
-(add-hook 'json-mode-hook 'json-pretty-print)
-(add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
+;; JAVASCRIPT
+(use-package js2-mode
+  :mode ("\\.js$" . js2-mode)
+  :config
+  (setq js2-basic-offset 2
+        js2-use-font-lock-faces t)
+  (add-hook 'json-mode-hook 'json-pretty-print)
+  (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
+  (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
 ;;;;;;;;;;
 ;; TEXT ;;
