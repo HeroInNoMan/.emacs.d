@@ -20,6 +20,17 @@
     (when (featurep 'engine-mode)
       (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c"))
 
+
+    ;; gitlab interaction
+    (use-package gitlab
+      :config
+      (setq gitlab-host my-private-gitlab-host
+            gitlab-username my-private-gitlab-username
+            gitlab-password my-private-gitlab-password
+            gitlab-token-id my-private-gitlab-token-id))
+
+    (use-package helm-gitlab)
+
     ;; jenkins interaction
     (use-package butler
       :bind (:map butler-mode-map

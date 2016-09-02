@@ -532,6 +532,7 @@
     ("E" elfeed "elfeed RSS")
     ("g" god-mode "God mode")
     ("j" butler-status "jenkins")
+    ("l" helm-gitlab-projects "Projets gitlab")
     ("m" minimap-mode "minimap")
     ("M" mingus "mingus music")
     ("p" redtick "pomodoro")
