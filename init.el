@@ -820,13 +820,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package helm-projectile
-  ;; :diminish projectile-mode
   :config
   (projectile-global-mode) ;; activate projectile-mode everywhere
   (helm-projectile-on)
   (setq projectile-completion-system 'helm
         projectile-enable-caching t ;; enable caching for projectile-mode
-        projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
+        projectile-switch-project-action 'projectile-vc ;; magit-status or svn
+        projectile-mode-line '(:eval
+                               (format " [%s]"
+                                       (projectile-project-name))))
   (def-projectile-commander-method ?d
     "Open project root in dired."
     (projectile-dired))
