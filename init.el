@@ -1039,7 +1039,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package web-mode ;; HTML, XML, JSP (using web-mode)
-  :bind (:map html-mode-map ("RET" . newline-and-indent))
   :config
   (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
                                  ("blade" . "\\.blade\\.")))
