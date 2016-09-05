@@ -189,6 +189,7 @@
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package rainbow-mode
+  :diminish rainbow-mode
   :config (add-hook 'prog-mode-hook #'rainbow-mode))
 
 (use-package volatile-highlights
