@@ -807,6 +807,11 @@
    ;; width of the buffer.
    vdiff-fold-string-function 'vdiff-fold-string-default))
 
+;; always follow symbolic links for files under VC
+(use-package vc
+  :config (setq vc-follow-symlinks t))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PROJECT MANAGEMENT ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
