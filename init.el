@@ -726,6 +726,11 @@
 ;; Auto refresh buffers
 (global-auto-revert-mode 1)
 
+;; C-M-e to edit minibuffer in a full-size buffer
+(use-package miniedit
+  :commands minibuffer-edit
+  :init (miniedit-install))
+
 ;;;;;;;;;;;;;;;;
 ;; GIT AND VC ;;
 ;;;;;;;;;;;;;;;;
