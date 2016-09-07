@@ -277,6 +277,10 @@
       dired-recursive-deletes 'always
       dired-recursive-copies 'always)
 
+(use-package find-dired
+  :bind ("C-ç f" . find-name-dired)
+  :config (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
+
 ;;;;;;;;;;;;
 ;; SEARCH ;;
 ;;;;;;;;;;;;
@@ -320,9 +324,7 @@
 
 ;; file finder
 (use-package f3
-  :bind
-  ("C-ç f" . f3)
-  ("C-c h f" . f3))
+  :bind ("C-c h f" . f3))
 
 ;;;;;;;;;;;;;;;;
 ;; NAVIGATION ;;
