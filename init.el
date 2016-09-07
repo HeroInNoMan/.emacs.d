@@ -95,11 +95,11 @@
 (use-package god-mode
   :bind
   (("C-c g" . god-mode-all)
-   ("<f8>" . god-mode-all)
    :map god-local-mode-map
-   ("z" . repeat)
    ("i" . god-mode-all)
+   ("z" . repeat)
    ("." . repeat))
+  :chords ("ii" . god-mode-all)
   :config
   (defun my-update-cursor ()
     (cond
@@ -114,8 +114,7 @@
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
   (add-hook 'window-configuration-change-hook 'my-update-cursor)
-  (add-to-list 'god-exempt-major-modes 'ibuffer-mode)
-  :defer 1)
+  (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
 
 ;; Answer questions with y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
