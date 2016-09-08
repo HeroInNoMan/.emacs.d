@@ -5,9 +5,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; PRIVATE VARIABLES ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
-(setq private-file (expand-file-name "private.el" user-emacs-directory))
-(when (file-exists-p private-file)
-  (load-file private-file))
+(let ((private-file (expand-file-name "private.el" user-emacs-directory)))
+  (when (file-exists-p private-file)
+    (load-file private-file)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INSTALLATION & LOADING ;;
