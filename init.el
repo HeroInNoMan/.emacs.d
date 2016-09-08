@@ -1262,13 +1262,16 @@
 ;; SERVER MODE ;;
 ;;;;;;;;;;;;;;;;;
 
-(if (and (fboundp 'server-running-p)
-         (not (server-running-p)))
-    (server-start))
-(global-set-key (kbd "M-#") 'server-edit) ;; send back to server, quicker than C-x #
-
 (use-package edit-server
-  :init (edit-server-start))
+  :if (and
+       (window-system)
+       (or
+        (not (fboundp 'server-running-p))
+        (not (server-running-p))))
+  :bind ("M-#" . server-edit) ;; send back to server, quicker than C-x #
+  :init
+  (add-hook 'after-init-hook 'server-start t)
+  (add-hook 'after-init-hook 'edit-server-start t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MODE LINE (smart-mode-line) ;;
