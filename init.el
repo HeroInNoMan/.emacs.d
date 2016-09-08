@@ -168,9 +168,6 @@
       browse-url-generic-program "firefox"
       browse-url-browser-function gnus-button-url)
 
-(use-package dot-mode
-  :config (dot-mode-on))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; THEME & APPEARANCE ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
