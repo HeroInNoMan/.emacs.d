@@ -200,6 +200,14 @@
 (use-package fancy-narrow
   :config (fancy-narrow-mode t))
 
+(use-package highlight-indentation
+  :disabled t
+  :config
+  (add-hook 'prog-mode-hook #'highlight-indentation-mode)
+  (add-hook 'prog-mode-hook #'highlight-indentation-current-column-mode)
+  (set-face-background 'highlight-indentation-face "#222222")
+  (set-face-background ' highlight-indentation-current-column-face "#555555"))
+
 (use-package zoom-frm
   :if (display-graphic-p)
   :bind
@@ -1320,6 +1328,7 @@
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
 (use-package typit :disabled t)
+(use-package typing :disabled t)
 (use-package vimgolf :disabled t)
 (use-package slime-volleyball :disabled t)
 
