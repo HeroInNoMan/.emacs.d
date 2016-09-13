@@ -593,6 +593,7 @@
 
 ;; case-insensitive policy
 (setq completion-ignore-case t
+      pcomplete-ignore-case t
       read-file-name-completion-ignore-case t
       read-buffer-completion-ignore-case t)
 
