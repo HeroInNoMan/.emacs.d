@@ -1236,6 +1236,12 @@
 ;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
 ;; (setq jedi:complete-on-dot t) ;; optional
 
+;;;;;;;;;;;;;
+;; CRONTAB ;;
+;;;;;;;;;;;;;
+(use-package crontab-mode
+  :mode ("crontab$" . crontab-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUSTOMISATION & ENVIRONMENT ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
