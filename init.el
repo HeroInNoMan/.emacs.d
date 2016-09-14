@@ -94,26 +94,35 @@
 
 (use-package god-mode
   :bind
-  (("C-c g" . god-mode-all)
+  (("C-c g" . toggle-god-mode)
    :map god-local-mode-map
-   ("i" . god-mode-all)
+   ("i" . toggle-god-mode)
    ("z" . repeat)
    ("." . repeat))
-  :chords ("ii" . god-mode-all)
+  :chords ("ii" . toggle-god-mode)
+  :init (setq god-mode-colors nil)
   :config
+  (defun toggle-god-mode ()
+    (interactive)
+    (god-mode-all)
+    (my-update-cursor))
   (defun my-update-cursor ()
+    "change cursor and mode-line colours if god-mode is activated/deactivated effectively."
     (cond
-     (god-local-mode
+     ((and god-local-mode (not god-mode-colors))
       (progn
         (set-cursor-color "red")
-        (set-face-background 'mode-line "brown")))
-     (t
+        (set-face-background 'mode-line "brown")
+        (setq god-mode-colors t)))
+     ((and (not god-local-mode) god-mode-colors)
       (progn
         (set-cursor-color "yellow")
-        (set-face-background 'mode-line "#0a2832")))))
-  (add-hook 'god-mode-enabled-hook 'my-update-cursor)
-  (add-hook 'god-mode-disabled-hook 'my-update-cursor)
-  (add-hook 'window-configuration-change-hook 'my-update-cursor)
+        (set-face-background 'mode-line "#0a2832")
+        (setq god-mode-colors nil)))))
+  (defadvice select-window (after update-cursor-and-mode-line-color activate)
+    (my-update-cursor))
+  ;; (add-hook 'buffer-list-update-hook #'my-update-cursor)
+  (add-to-list 'god-exempt-major-modes 'helm-major-mode)
   (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
 
 ;; Answer questions with y/n
@@ -543,7 +552,7 @@
     ("c" open-calendar "calfw calendar")
     ("e" eshell "eshell")
     ("E" elfeed "elfeed RSS")
-    ("g" god-mode "God mode")
+    ("g" toggle-god-mode "God mode")
     ("j" butler-status "jenkins")
     ("l" helm-gitlab-projects "Projets gitlab")
     ("m" minimap-mode "minimap")
