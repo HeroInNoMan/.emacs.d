@@ -24,6 +24,20 @@
          (untabify (point-min) (point-max))
          (message "Buffer indented."))))
 
+(unless (fboundp 'prefix-region)
+  (defun prefix-region (prefix)
+    "Add a prefix string to each line between mark and point."
+    (interactive "sPrefix string: ")
+    (if prefix
+        (let ((count (count-lines (mark) (point))))
+          (goto-char (min (mark) (point)))
+          (while (> count 0)
+            (setq count (1- count))
+            (beginning-of-line 1)
+            (insert prefix)
+            (end-of-line 1)
+            (forward-char 1))))))
+
 (defun up-arrow ()
   "Move cursor up one line and buffer down one"
   (interactive)
