@@ -286,12 +286,12 @@ for the line number input"
   "Inserts a prefix containing the number of the Jira ticket"
   (let* ((result  (re-search-forward "\\(?:US\\|BUG\\)-\\([A-Z]+-[0-9]+\\).*$" nil t))
          (s (match-string 1)))
+    (goto-char (point-min))
     (if (and result
              (not (string-match (concat "\\[" s "\\]") (buffer-string))))
-        (progn
-          (goto-char (point-min))
-          (insert (concat "[" s "] ")))
-      (goto-char (point-min)))))
+        (insert (concat "[" s "] "))
+      (unless (string-match (concat "\\[.*\\]") (buffer-string))
+        (insert (concat "[TECH] "))))))
 
 (defun toggle-camelcase-underscores ()
   "Toggle between camelcase and underscore notation for the symbol at point."
