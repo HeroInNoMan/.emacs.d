@@ -369,7 +369,10 @@
                                 (mouse-avoidance-mode 'exile)))
 
 (use-package goto-last-change
-  :bind ("C-x C-/" . goto-last-change))
+  :bind
+  ("C-x C-/" . goto-last-change)
+  ("C-x /" . goto-last-change)
+  :config (make-command-repeatable 'goto-last-change))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INDENTATION, TABS, SPACES & FOLDING ;;
