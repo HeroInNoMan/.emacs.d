@@ -680,6 +680,10 @@
 (global-set-key (kbd "C-x M-h") 'transpose-paragraphs)
 (global-set-key (kbd "C-x M-s") 'transpose-sentences)
 
+(use-package repeatable
+  :ensure nil
+  :load-path "elisp")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BUFFER & WINDOW MANIPULATION ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
