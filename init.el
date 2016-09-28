@@ -366,7 +366,7 @@
 
 ;; Allow scrolling with mouse wheel
 (when (display-graphic-p) (progn(mouse-wheel-mode t)
-                                (mouse-avoidance-mode 'exile)))
+                                (mouse-avoidance-mode 'animate)))
 
 (use-package goto-last-change
   :bind
@@ -494,6 +494,7 @@
   (helm-mode 0) ;; helm-mode only on demand
   (helm-autoresize-mode t)
   (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
+        helm-adaptive-mode t
         helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match    t
         helm-ff-skip-boring-files t
@@ -665,7 +666,8 @@
                   (join-line -1)))
 
 ;; Allow pasting selection outside of Emacs
-(setq x-select-enable-clipboard t)
+(setq-default select-enable-clipboard t
+              x-select-enable-clipboard t)
 
 (global-set-key (kbd "M-y") 'yank-pop)
 
