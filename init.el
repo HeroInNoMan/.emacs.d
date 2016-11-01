@@ -449,6 +449,8 @@
   :diminish helm-mode
   :bind
   ("M-x" . helm-M-x) ;; superior to M-x
+  ("C-x M-x" . execute-extended-command)
+  ("C-M-x" . execute-extended-command)
   ("C-ç A" . helm-apt)
   ("C-c h A" . helm-apt)
   ("C-ç P" . helm-list-elisp-packages-no-fetch)
