@@ -438,10 +438,9 @@
 (use-package undo-tree ;; powerfull undo/redo mode
   :diminish undo-tree-mode
   :config
-  (progn
-    (global-undo-tree-mode)
-    (setq undo-tree-visualizer-timestamps t
-          undo-tree-visualizer-diff t)))
+  (global-undo-tree-mode)
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-visualizer-diff t))
 
 (use-package which-key ;; which-key (replacement for guide-key)
   :config (which-key-mode))
