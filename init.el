@@ -1282,7 +1282,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Don't move files to trash when deleting
-(setq delete-by-moving-to-trash nil)
+(setq delete-by-moving-to-trash t)
 
 ;; Save a list of recent files visited.
 (recentf-mode 1)
