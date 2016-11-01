@@ -706,6 +706,9 @@
   ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
   :config (setq multi-scratch-buffer-name "new"))
 
+(use-package persistent-scratch
+  :config (persistent-scratch-setup-default))
+
 ;; better access to window manipulation commands
 (global-set-key (kbd "C-\"") 'delete-other-windows)
 (global-set-key (kbd "C-«") 'split-window-below)
