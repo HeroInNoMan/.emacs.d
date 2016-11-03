@@ -1098,6 +1098,7 @@
          "\\.rhtml\\'"
          "\\.html\\'"
          "\\.tag\\'"
+         "\\.tsx\\'"
          "\\.xml\\'"
          "\\.xsd\\'"
          "\\.wsdl\\'"))
@@ -1126,6 +1127,30 @@
   (add-hook 'json-mode-hook 'json-pretty-print)
   (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
   (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
+
+(use-package tide
+  :config
+  (defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    (eldoc-mode +1)
+    ;; company is an optional dependency. You have to
+    ;; install it separately via package-install
+    ;; `M-x package-install [ret] company`
+    (company-mode +1))
+
+  ;; aligns annotation to the right hand side
+  (setq company-tooltip-align-annotations t)
+
+  ;; formats the buffer before saving
+  (add-hook 'before-save-hook 'tide-format-before-save)
+
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+  ;; format options
+  (setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil)))
 
 (use-package sass-mode
   :mode ("\\.sass$" . sass-mode))
