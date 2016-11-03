@@ -1127,6 +1127,9 @@
   (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
   (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
+(use-package sass-mode
+  :mode ("\\.sass$" . sass-mode))
+
 ;;;;;;;;;;
 ;; TEXT ;;
 ;;;;;;;;;;
