@@ -5,6 +5,34 @@
 ;;;;;;;;;;;
 ;; DIJON ;;
 ;;;;;;;;;;;
+(defun load-kuutamo-env ()
+  (progn
+    ;; specific agenda files
+    (add-to-list 'org-agenda-files "~/Terminalcity/Renault.org")
+
+    ;; hooking for specific functions
+    (add-hook 'git-commit-setup-hook 'insert-ticket-prefix)
+
+    ;; org-capture-templates
+    (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree (concat terminalcity-dir "Renault.org") "Diary") "* %i%?"))
+    (add-to-list 'org-capture-templates '("t" "Renault - TODO" entry (file+headline (concat terminalcity-dir "Renault.org") "À faire") "* TODO %?\n\t%i"))
+
+    ;; display battery level
+    (use-package fancy-battery
+      :config
+      (setq fancy-battery-show-percentage t)
+      (fancy-battery-mode))
+
+    ;; default project root folder
+    (when (featurep 'dumb-jump)
+      (setq dumb-jump-default-project "~/projets"))
+
+    ;; open work log file
+    (find-file (expand-file-name "~/Terminalcity/Renault.org"))
+
+    ;; change theme
+    (color-theme-oswald)))
+
 (defun load-dijon-env ()
   (progn
     ;; set default browser to chromium-browser
@@ -127,6 +155,8 @@
 (cond
  ((equal "dijon" (system-name))
   (load-dijon-env))
+ ((equal "kuutamo" (system-name))
+  (load-kuutamo-env))
  ((equal "ns301170.ip-91-121-73.eu" (system-name))
   (load-polopeche-env))
  ((equal "highlander" (system-name))
