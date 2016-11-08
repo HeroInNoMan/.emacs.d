@@ -289,7 +289,7 @@ for the line number input"
     (goto-char (point-min))
     (if (and result
              (not (string-match (concat "\\[" s "\\]") (buffer-string))))
-        (insert (concat "[" s "] "))
+        (insert (concat "[" (upcase s) "] "))
       (unless (string-match (concat "\\[.*\\]") (buffer-string))
         (insert (concat "[TECH] "))))))
 
