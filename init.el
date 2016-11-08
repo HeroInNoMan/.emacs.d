@@ -368,7 +368,7 @@
 
 ;; Allow scrolling with mouse wheel
 (when (display-graphic-p) (progn(mouse-wheel-mode t)
-                                (mouse-avoidance-mode 'animate)))
+                                (mouse-avoidance-mode 'none)))
 
 (use-package goto-last-change
   :bind
