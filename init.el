@@ -502,6 +502,7 @@
   (helm-autoresize-mode t)
   (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
         helm-adaptive-mode t
+        helm-buffer-max-length nil
         helm-buffers-fuzzy-matching t
         helm-recentf-fuzzy-match    t
         helm-ff-skip-boring-files t
