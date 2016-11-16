@@ -273,6 +273,8 @@
 ;; Don't soft-break lines for me, please
 (setq-default truncate-lines t)
 
+(setq-default truncate-string-ellipsis "…")
+
 ;;;;;;;;;;;
 ;; DIRED ;;
 ;;;;;;;;;;;
