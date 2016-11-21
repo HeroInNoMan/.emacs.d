@@ -284,7 +284,7 @@ for the line number input"
 
 (defun insert-ticket-prefix ()
   "Inserts a prefix containing the number of the Jira ticket"
-  (let* ((result  (re-search-forward "\\(?:US\\|BUG\\)-\\([A-Z]+-[0-9]+\\).*$" nil t))
+  (let* ((result  (re-search-forward "\\(?:US\\|BUG\\)-\\([A-Z]+-?[0-9]+\\).*$" nil t))
          (s (match-string 1)))
     (goto-char (point-min))
     (if (and result
