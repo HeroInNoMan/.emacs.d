@@ -12,17 +12,16 @@
  '(ecb-options-version "2.40")
  '(elfeed-feeds my-private-feeds)
  '(helm-external-programs-associations (quote (("mp3" . "audacious"))))
+ '(magit-branch-arguments nil)
  '(magit-fetch-arguments (quote ("--prune")))
  '(magit-log-arguments
    (quote
     ("--graph" "--color" "--decorate" "--date-order" "-n100")))
  '(magit-stash-arguments (quote ("--include-untracked")))
- '(org-agenda-files
-   (quote
-    ("~/Terminalcity/.emacs.d/gcal.org" "/sshx:polopeche:/home/duncan/Terminalcity/Todo/arthur.org")))
+ '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (ibuffer-vc ibuffer-projectile zop-to-char zoom-frm wttrin which-key wgrep web-mode volatile-highlights visual-regexp-steroids use-package-chords undo-tree tidy swiper-helm sublimity spray sml-modeline smartscan smart-mode-line smart-comment shrink-whitespace region-bindings-mode rainbow-mode rainbow-delimiters paredit origami org-bullets multiple-cursors move-text minimap magit java-snippets jade imenu-anywhere idle-highlight-mode hydra helm-projectile helm-git-grep helm-descbinds helm-ag goto-last-change god-mode gitignore-mode gitconfig-mode git-timemachine git-messenger git-gutter-fringe git-gutter+ flycheck fancy-narrow f3 expand-region engine-mode elisp-slime-nav elfeed edit-server dumb-jump dot-mode dired-narrow dired+ describe-number define-word crux color-theme char-menu calfw-gcal calfw butler browse-kill-ring better-defaults avandu aggressive-indent ace-window)))
+    (web-beautify swagger-to-org neotree dirtree helm-git helm-ls-git redtick tide yaml-mode ibuffer-vc ibuffer-projectile zop-to-char zoom-frm wttrin which-key wgrep web-mode volatile-highlights visual-regexp-steroids use-package-chords undo-tree tidy swiper-helm sublimity spray sml-modeline smartscan smart-mode-line smart-comment shrink-whitespace region-bindings-mode rainbow-mode rainbow-delimiters paredit origami org-bullets multiple-cursors move-text minimap magit java-snippets jade imenu-anywhere idle-highlight-mode hydra helm-projectile helm-git-grep helm-descbinds helm-ag goto-last-change god-mode gitignore-mode gitconfig-mode git-timemachine git-messenger git-gutter-fringe git-gutter+ flycheck fancy-narrow f3 expand-region engine-mode elisp-slime-nav elfeed edit-server dumb-jump dot-mode dired-narrow dired+ describe-number define-word crux color-theme char-menu calfw-gcal calfw butler browse-kill-ring better-defaults avandu aggressive-indent ace-window)))
  '(sml/use-projectile-p (quote before-prefixes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
