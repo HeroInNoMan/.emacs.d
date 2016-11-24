@@ -1345,15 +1345,12 @@
 ;; SESSION SAVING & BACKUPS ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Don't move files to trash when deleting
-(setq delete-by-moving-to-trash t)
-
 ;; Save a list of recent files visited.
 (recentf-mode 1)
-(setq recentf-max-saved-items 500) ;; just 20 is too recent
-
-(setq vc-make-backup-files t) ;; make backups of files, even when they're in version control
-(setq desktop-base-lock-name      "lock"
+(setq recentf-max-saved-items 500  ;; just 20 is too recent
+      vc-make-backup-files t ;; make backups of files, even when they're in version control
+      delete-by-moving-to-trash t ;; move files to trash when deleting
+      desktop-base-lock-name      "lock"
       desktop-save                t
       desktop-dirname             user-emacs-directory
       desktop-path                (list desktop-dirname)
