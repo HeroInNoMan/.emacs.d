@@ -2,9 +2,9 @@
 ;; environment specific customisations ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;
-;; DIJON ;;
-;;;;;;;;;;;
+;;;;;;;;;;;;;
+;; KUUTAMO ;;
+;;;;;;;;;;;;;
 (defun load-kuutamo-env ()
   (progn
     ;; specific agenda files
