@@ -62,6 +62,8 @@
 
 (use-package describe-number)
 
+(use-package swagger-to-org)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; DEFAULTS, ERGONOMY & KEYBINDINGS ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
