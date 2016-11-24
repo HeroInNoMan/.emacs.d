@@ -374,6 +374,12 @@
   ("C-x /" . goto-last-change)
   :config (make-command-repeatable 'goto-last-change))
 
+(use-package neotree
+  :bind (:map neotree-mode-map
+              ("<f2>" . neotree-copy-filepath-to-yank-ring)
+              ("<f5>" . neotree-refresh)
+              ("e" . neotree-stretch-toggle)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INDENTATION, TABS, SPACES & FOLDING ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -564,6 +570,7 @@
     ("l" linum-mode "line number")
     ("m" minimap-mode "minimap")
     ("M" mingus "mingus music")
+    ("n" neotree-toggle "neotree")
     ("p" redtick "pomodoro")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
