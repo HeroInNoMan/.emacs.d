@@ -1080,28 +1080,95 @@
   (add-hook 'java-mode-hook 'eclim-mode))
 (use-package ecb :disabled t) ;; TODO à tester
 
-;;;;;;;;;;;;;;;;;;;;;;
-;; WEB & JAVASCRIPT ;;
-;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;
+;; WEB ;;
+;;;;;;;;;
+
+;; ;; JAVASCRIPT
+;; (use-package js2-mode
+;;   :bind (:js2-mode-map ("C-c C-c" . compile))
+;;   :mode ("\\.js\\'\\|\\.json\\'" . js2-mode)
+;;   :config
+;;   (setq js2-basic-offset 2
+;;         js-indent-level 2
+;;         js2-use-font-lock-faces t)
+;;   (add-hook 'json-mode-hook 'json-pretty-print)
+;;   (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
+;;   (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
 (use-package web-mode ;; HTML, XML, JSP (using web-mode)
   :config
-  (setq web-mode-engines-alist '(("php" . "\\.phtml\\'")
+  (setq web-mode-markup-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-enable-auto-indentation t
+        web-mode-enable-auto-quoting t
+        web-mode-engines-alist '(("php" . "\\.phtml\\'")
                                  ("blade" . "\\.blade\\.")))
   :mode ("\\.phtml\\'"
          "\\.tpl\\.php\\'"
          "\\.[agj]sp\\'"
          "\\.as[cp]x\\'"
          "\\.erb\\'"
+         "\\.js\\'"
+         "\\.jsx\\'"
+         "\\.json\\'"
          "\\.mustache\\'"
          "\\.djhtml\\'"
          "\\.rhtml\\'"
+         "\\.htm\\'"
          "\\.html\\'"
          "\\.tag\\'"
          "\\.tsx\\'"
          "\\.xml\\'"
          "\\.xsd\\'"
          "\\.wsdl\\'"))
+
+;;;;;;;;;;;;;;;;
+;; TYPESCRIPT ;;
+;;;;;;;;;;;;;;;;
+(use-package tide
+  :bind
+  (:map tide-mode-map
+        ("C-." . tide-jump-to-definition)
+        ("C-," . tide-jump-back)
+        ("C-c C-c" . hydra-tide/body))
+  :config
+  (defun setup-tide-mode ()
+    (interactive)
+    (tide-setup)
+    (flycheck-mode +1)
+    (setq flycheck-check-syntax-automatically '(save mode-enabled))
+    ;; flycheck-typescript-tslint-executable "tslint"
+    (eldoc-mode +1)
+    (company-mode +1))
+
+  (setq company-tooltip-align-annotations t  ;; aligns annotation to the right hand side
+        typescript-indent-level 2
+        ;; format options
+        tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t
+                                                                                    :placeOpenBraceOnNewLineForFunctions nil))
+
+  ;; formats the buffer before saving
+  (add-hook 'before-save-hook 'tide-format-before-save)
+  (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-hook 'js2-mode-hook #'setup-tide-mode)
+  ;; (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file ~/projets/tss.log"))
+
+  (defhydra hydra-tide(:color blue)
+    "tide"
+    ("e" tide-project-errors "errors")
+    ("f" tide-format "format")
+    ("g" tide-references "references")
+    ("r" tide-rename-symbol "rename")
+    ("s" tide-restart-server "restart server")
+    ("q" nil "cancel")))
+
+(use-package typescript-mode
+  :disabled t
+  :mode ("\\.ts\\'"))
+
+(use-package sass-mode
+  :mode ("\\.sass$" . sass-mode))
 
 (use-package web-beautify
   :disabled t
@@ -1116,44 +1183,6 @@
 
 (use-package tidy
   :config (setq sgml-validate-command "tidy"))
-
-;; JAVASCRIPT
-(use-package js2-mode
-  :bind (:js2-mode-map ("C-c C-c" . compile))
-  :mode ("\\.js\\'\\|\\.json\\'" . js2-mode)
-  :config
-  (setq js2-basic-offset 2
-        js2-use-font-lock-faces t)
-  (add-hook 'json-mode-hook 'json-pretty-print)
-  (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
-  (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
-
-(use-package tide
-  :config
-  (defun setup-tide-mode ()
-    (interactive)
-    (tide-setup)
-    (flycheck-mode +1)
-    (setq flycheck-check-syntax-automatically '(save mode-enabled))
-    (eldoc-mode +1)
-    ;; company is an optional dependency. You have to
-    ;; install it separately via package-install
-    ;; `M-x package-install [ret] company`
-    (company-mode +1))
-
-  ;; aligns annotation to the right hand side
-  (setq company-tooltip-align-annotations t)
-
-  ;; formats the buffer before saving
-  (add-hook 'before-save-hook 'tide-format-before-save)
-
-  (add-hook 'typescript-mode-hook #'setup-tide-mode)
-
-  ;; format options
-  (setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil)))
-
-(use-package sass-mode
-  :mode ("\\.sass$" . sass-mode))
 
 ;;;;;;;;;;
 ;; TEXT ;;
