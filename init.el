@@ -575,6 +575,7 @@
     ("t" crux-visit-term-buffer "ansi-term")
     ("w" wttrin "Weather")
     ("$" shell "shell")
+    ("%" ansi-term "term")
     ("q" nil "cancel"))
   (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
 
