@@ -728,12 +728,12 @@
 (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
 (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
 
-(setq ibuffer-formats
-      '((mark modified read-only " "
-              (name 30 30 :left :elide) " "
-              (size 9 -1 :right) " "
-              (mode 16 16 :left :elide) " " filename-and-process)
-        (mark " " (name 16 -1) " " filename)))
+;; (setq ibuffer-formats
+;;       '((mark modified read-only " "
+;;               (name 30 30 :left :elide) " "
+;;               (size 9 -1 :right) " "
+;;               (mode 16 16 :left :elide) " " filename-and-process)
+;;         (mark " " (name 16 -1) " " filename)))
 
 (use-package ibuffer-vc
   :config
@@ -754,14 +754,10 @@
                 (ibuffer-do-sort-by-alphabetic))))
   (setq ibuffer-formats
         '((mark modified read-only vc-status-mini " "
-                (name 18 18 :left :elide)
-                " "
-                (size 9 -1 :right)
-                " "
-                (mode 16 16 :left :elide)
-                " "
-                (vc-status 14 14 :left)
-                " "
+                (name 18 18 :left :elide) " "
+                (size 9 -1 :right) " "
+                (mode 16 16 :left :elide) " "
+                ;; (vc-status 14 14 :left) " "
                 filename-and-process))))
 
 ;;revert windows on ediff exit - needs winner mode
