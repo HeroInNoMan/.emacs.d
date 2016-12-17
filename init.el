@@ -712,6 +712,8 @@
   ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
   :config (setq multi-scratch-buffer-name "new"))
 
+(use-package temporary-persistent)
+
 (use-package persistent-scratch
   :config (persistent-scratch-setup-default))
 
