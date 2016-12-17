@@ -574,6 +574,8 @@
     ("S" spray-mode "spritz")
     ("t" crux-visit-term-buffer "ansi-term")
     ("w" wttrin "Weather")
+    ("y" play-youtube-video "Youtube")
+    ("Y" w3m-play-youtube-video "Youtube at point")
     ("$" shell "shell")
     ("%" ansi-term "term")
     ("q" nil "cancel"))
@@ -1442,6 +1444,16 @@
 (use-package typing :disabled t)
 (use-package vimgolf :disabled t)
 (use-package slime-volleyball :disabled t)
+
+(defun play-youtube-video (url)
+  (interactive "sURL: ")
+  (shell-command
+   (concat "youtube-dl  -o - " url " | vlc -")))
+
+(defun w3m-play-youtube-video ()
+  (interactive)
+  (play-youtube-video
+   (w3m-print-this-url (point))))
 
 ;;;;;;;;;;;;;;
 ;; EPILOGUE ;;
