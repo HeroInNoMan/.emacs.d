@@ -757,8 +757,8 @@
               (unless (eq ibuffer-sorting-mode 'alphabetic)
                 (ibuffer-do-sort-by-alphabetic))))
   (setq ibuffer-formats
-        '((mark modified read-only vc-status-mini " "
-                (name 18 18 :left :elide) " "
+        '((mark modified " " read-only " " vc-status-mini " "
+                (name 50 50 :left :elide) " "
                 (size 9 -1 :right) " "
                 (mode 16 16 :left :elide) " "
                 ;; (vc-status 14 14 :left) " "
