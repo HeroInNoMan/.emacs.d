@@ -1342,8 +1342,19 @@
 ;; PYTHON ;;
 ;;;;;;;;;;;;
 
-;; (add-hook 'python-mode-hook 'jedi:setup) ;; fire up jedi in python env
-;; (setq jedi:complete-on-dot t) ;; optional
+(use-package elpy)
+(use-package jedi)
+(use-package python
+  :bind (:map python-mode-map
+              ("M-g M-p" . elpy-flymake-previous-error)
+              ("M-g M-n" . elpy-flymake-next-error)
+              ("C-x C-e " . python-shell-send-defun))
+  :config
+  (require 'elpy)
+  (require 'jedi)
+  (add-hook 'python-mode-hook 'elpy-enable)
+  (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
+  (setq jedi:complete-on-dot t))
 
 ;;;;;;;;;;;;;
 ;; CRONTAB ;;
