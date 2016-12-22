@@ -1435,6 +1435,13 @@
 (use-package tomatinho :disabled t)
 (use-package redtick)
 
+;; REST client
+(use-package restclient
+  :mode ("restclient" . restclient-mode)
+  :bind
+  (:map restclient-mode-map
+        ("C-c n w" . widen)))
+
 ;;;;;;;;;;;
 ;; GAMES ;;
 ;;;;;;;;;;;
