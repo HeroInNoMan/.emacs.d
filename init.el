@@ -31,7 +31,6 @@
       use-package-verbose t)
 
 (require 'diminish) ;; for :diminish
-(require 'bind-key) ;; for :bind
 
 (use-package use-package-chords
   :config (key-chord-mode 1))
