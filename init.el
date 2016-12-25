@@ -39,8 +39,6 @@
 ;; LIBS & TOOLS ;;
 ;;;;;;;;;;;;;;;;;;
 
-(use-package s)
-
 (use-package my-functions ;; custom functions
   :ensure nil
   :commands (insert-ticket-prefix jirify)
