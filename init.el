@@ -208,13 +208,10 @@
 (use-package fancy-narrow
   :config (fancy-narrow-mode t))
 
-(use-package highlight-indentation
-  :disabled t
+(use-package highlight-indent-guides
   :config
-  (add-hook 'prog-mode-hook #'highlight-indentation-mode)
-  (add-hook 'prog-mode-hook #'highlight-indentation-current-column-mode)
-  (set-face-background 'highlight-indentation-face "#222222")
-  (set-face-background ' highlight-indentation-current-column-face "#555555"))
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-mode t))
 
 (use-package zoom-frm
   :if (display-graphic-p)
@@ -562,6 +559,7 @@
     ("e" eshell "eshell")
     ("E" elfeed "elfeed RSS")
     ("g" toggle-god-mode "God mode")
+    ("i" highlight-indent-guides-mode "indent-guide")
     ("j" butler-status "jenkins")
     ("l" helm-gitlab-projects "Projets gitlab")
     ("m" minimap-mode "minimap")
