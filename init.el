@@ -1109,16 +1109,29 @@
 ;;;;;;;;;
 
 ;; ;; JAVASCRIPT
-;; (use-package js2-mode
-;;   :bind (:js2-mode-map ("C-c C-c" . compile))
-;;   :mode ("\\.js\\'\\|\\.json\\'" . js2-mode)
-;;   :config
-;;   (setq js2-basic-offset 2
-;;         js-indent-level 2
-;;         js2-use-font-lock-faces t)
-;;   (add-hook 'json-mode-hook 'json-pretty-print)
-;;   (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
-;;   (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
+(use-package js2-mode
+  :bind (:js2-mode-map ("C-c C-c" . compile))
+  ;; :mode ("\\.js\\'\\|\\.json\\'" . js2-mode)
+  :config
+  (setq js2-basic-offset 2
+        js-indent-level 2
+        js2-use-font-lock-faces t)
+  (add-hook 'json-mode-hook 'json-pretty-print)
+  (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
+  (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
+
+;; à tester
+(use-package js-comint
+  :config  (defun inferior-js-mode-hook-setup ()
+             (add-hook 'comint-output-filter-functions 'js-comint-process-output))
+  (add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
+              (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
+              (local-set-key (kbd "C-c b") 'js-send-buffer)
+              (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
+              (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
 
 (use-package web-mode ;; HTML, XML, JSP (using web-mode)
   :config
