@@ -41,7 +41,7 @@
 
 (use-package my-functions ;; custom functions
   :ensure nil
-  :commands (insert-ticket-prefix jirify)
+  :commands (insert-ticket-prefix jirify find-init-file)
   :load-path "elisp/"
   :bind
   ("C-c i" . indent-region-or-buffer) ;; indent whole buffer
@@ -560,25 +560,28 @@
     "widgets"
     ("a" avandu-overview "avandu RSS")
     ("b" butler-status "jenkins")
-    ("B" ecb-activate "Emacs Code Browser")
-    ("c" open-calendar "calfw calendar")
+    ("B" ecb-activate "code browser")
+    ("c" open-calendar "calendar")
     ("e" eshell "eshell")
     ("E" elfeed "elfeed RSS")
-    ("g" toggle-god-mode "God mode")
+    ("f" find-init-file "init file")
+    ("g" toggle-god-mode "god")
     ("i" highlight-indent-guides-mode "indent-guide")
     ("j" butler-status "jenkins")
     ("l" linum-mode "line number")
     ("m" minimap-mode "minimap")
     ("M" mingus "mingus music")
     ("n" neotree-toggle "neotree")
-    ("p" redtick "pomodoro")
+    ("o" org-mode "org-mode")
+    ("p" list-packages "packages")
+    ("P" redtick "pomodoro")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
     ("t" crux-visit-term-buffer "ansi-term")
-    ("w" whitespace-mode "show whitespace")
-    ("W" wttrin "Weather")
-    ("y" play-youtube-video "Youtube")
-    ("Y" w3m-play-youtube-video "Youtube at point")
+    ("w" whitespace-mode "whitespace")
+    ("W" wttrin "weather")
+    ("y" play-youtube-video "youtube")
+    ("Y" w3m-play-youtube-video "youtube at point")
     ("$" shell "shell")
     ("%" ansi-term "term")
     ("q" nil "cancel"))
@@ -1481,6 +1484,6 @@
 ;;;;;;;;;;;;;;
 
 ;; always open init file!
-(find-file (expand-file-name "init.el" user-emacs-directory))
+(find-init-file)
 
 ;;; init.el ends here

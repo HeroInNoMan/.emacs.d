@@ -310,5 +310,10 @@ for the line number input"
         (replace-regexp "\\([A-Z]\\)" "_\\1" nil (1+ start) end)
         (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))
 
+(defun find-init-file ()
+  "Find init file"
+  (interactive)
+  (find-file (expand-file-name "init.el" user-emacs-directory)))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.
