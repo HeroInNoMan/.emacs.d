@@ -46,8 +46,6 @@
   :bind
   ("C-c i" . indent-region-or-buffer) ;; indent whole buffer
   ("<C-M-down>" . duplicate-current-line)
-  ("<up>" . up-arrow)
-  ("<down>" . down-arrow)
   ("<f5>" . revert-buffer-no-confirm) ;; re-read file from disk
   ("C-<f5>" . copy-and-show-current-file-path) ;; copy current file path
   ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
