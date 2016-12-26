@@ -315,5 +315,11 @@ for the line number input"
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
 
+(defun find-diary-file ()
+  "Find work diary file"
+  (interactive)
+  (find-file (expand-file-name my-private-work-diary-org-file)))
+
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.

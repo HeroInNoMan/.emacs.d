@@ -7,15 +7,12 @@
 ;;;;;;;;;;;;;
 (defun load-kuutamo-env ()
   (progn
-    ;; specific agenda files
-    (add-to-list 'org-agenda-files "~/Terminalcity/Renault.org")
-
     ;; hooking for specific functions
     (add-hook 'git-commit-setup-hook 'insert-ticket-prefix)
 
     ;; org-capture-templates
-    (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree (concat terminalcity-dir "Renault.org") "Diary") "* %i%?"))
-    (add-to-list 'org-capture-templates '("t" "Renault - TODO" entry (file+headline (concat terminalcity-dir "Renault.org") "À faire") "* TODO %?\n\t%i"))
+    (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree my-private-work-diary-org-file "Diary") "* %i%?"))
+    (add-to-list 'org-capture-templates '("t" "Renault - TODO" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i"))
 
     ;; display battery level
     (use-package fancy-battery
@@ -27,9 +24,6 @@
     (when (featurep 'dumb-jump)
       (setq dumb-jump-default-project "~/projets"))
 
-    ;; open work log file
-    (find-file (expand-file-name "~/Terminalcity/Renault.org"))
-
     ;; change theme
     (color-theme-oswald)))
 
@@ -37,9 +31,6 @@
   (progn
     ;; set default browser to chromium-browser
     (setq browse-url-generic-program "chromium-browser")
-
-    ;; specific agenda files
-    (add-to-list 'org-agenda-files "~/Terminalcity/SFR.org")
 
     ;; hooking for specific functions
     (add-hook 'git-commit-setup-hook 'insert-ticket-prefix)
@@ -84,9 +75,6 @@
     ;; default project root folder
     (when (featurep 'dumb-jump)
       (setq dumb-jump-default-project "~/projets"))
-
-    ;; open work log file
-    (find-file (expand-file-name "~/Terminalcity/SFR.org"))
 
     ;; change theme
     (color-theme-oswald)))

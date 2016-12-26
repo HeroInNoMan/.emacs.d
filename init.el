@@ -562,6 +562,7 @@
     ("b" butler-status "jenkins")
     ("B" ecb-activate "code browser")
     ("c" open-calendar "calendar")
+    ("d" find-diary-file "diary")
     ("e" eshell "eshell")
     ("E" elfeed "elfeed RSS")
     ("f" find-init-file "init file")
@@ -940,6 +941,9 @@
 
   (setq org-export-coding-system 'utf-8)
   (setq org-completion-use-ido t)
+  ;; specific agenda files
+  (add-to-list 'org-agenda-files my-private-work-diary-org-file)
+
 
   ;; font and faces customization
   (setq org-todo-keyword-faces
