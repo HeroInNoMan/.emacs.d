@@ -1455,7 +1455,15 @@
 ;;;;;;;;;;;
 
 ;; spray mode (spritz)
-(use-package spray)
+(use-package spray
+  :bind (:map spray-mode-map
+              ("-" . spray-slower)
+              ("+" . spray-faster)
+              ("<SPC>" . spray-start/stop)
+              ("b" . spray-backward-word)
+              ("p" . spray-backward-word)
+              ("f" . spray-forward-word)
+              ("n" . spray-forward-word)))
 
 ;; lorem ipsum filling
 (use-package lorem-ipsum
