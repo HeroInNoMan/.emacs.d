@@ -557,7 +557,7 @@
   (defhydra hydra-widgets (:color blue)
     "widgets"
     ("a" avandu-overview "avandu RSS")
-    ("b" butler-status "jenkins")
+    ("b" eww "eww-browser")
     ("B" ecb-activate "code browser")
     ("c" open-calendar "calendar")
     ("d" find-diary-file "diary")
