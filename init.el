@@ -190,6 +190,8 @@
 (use-package rainbow-delimiters
   :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(use-package rainbow-blocks)
+
 (use-package rainbow-mode
   :diminish rainbow-mode
   :config (add-hook 'prog-mode-hook #'rainbow-mode))
@@ -574,6 +576,7 @@
     ("o" org-mode "org-mode")
     ("p" list-packages "packages")
     ("P" tomatinho "pomodoro")
+    ("r" rainbow-blocks-mode "rainbow-blocks")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
     ("t" crux-visit-term-buffer "ansi-term")
