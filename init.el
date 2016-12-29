@@ -543,7 +543,7 @@
   (defvar global-linum-mode nil)
   (defvar god-local-mode nil)
 
-  (defhydra hydra-spell (:color blue)
+  (defhydra hydra-spell (:color teal)
     "spelling"
     ("t" endless/ispell-word-then-abbrev "corr. & add")
     ("f" flyspell-mode "flyspell")
@@ -554,7 +554,7 @@
     ("q" nil "cancel"))
   (global-set-key (kbd "C-è") 'hydra-spell/body)
 
-  (defhydra hydra-widgets (:color blue)
+  (defhydra hydra-widgets (:color teal)
     "widgets"
     ("a" avandu-overview "avandu RSS")
     ("b" eww "eww-browser")
@@ -563,9 +563,9 @@
     ("d" find-diary-file "diary")
     ("e" eshell "eshell")
     ("E" elfeed "elfeed RSS")
-    ("f" find-init-file "init file")
     ("g" toggle-god-mode "god")
-    ("i" highlight-indent-guides-mode "indent-guide")
+    ("i" find-init-file "init file")
+    ("I" highlight-indent-guides-mode "indent-guide")
     ("j" butler-status "jenkins")
     ("l" linum-mode "line number")
     ("m" minimap-mode "minimap")
