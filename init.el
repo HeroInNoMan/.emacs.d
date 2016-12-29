@@ -1019,25 +1019,6 @@
   (setq wttrin-default-cities
         '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
 
-(use-package engine-mode
-  :disabled t
-  :config
-  (engine/set-keymap-prefix (kbd "C-c s"))
-  (engine-mode t) ;; prefix C-c /
-  (defengine duckduckgo "https://duckduckgo.com/?q=%s" :keybinding "d")
-  (defengine github "https://github.com/search?ref=simplesearch&q=%s" :keybinding "h")
-  (defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s" :keybinding "g")
-  (defengine google-images "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s" :keybinding "i")
-  (defengine leo "http://dict.leo.org/frde/index_de.html#/search=%s&searchLoc=0&resultOrder=basic&multiwordShowSingle=on" :keybinding "l")
-  (defengine google-maps "http://maps.google.com/maps?q=%s" :keybinding "m")
-  (defengine stack-overflow "https://stackoverflow.com/search?q=%s" :keybinding "o")
-  (defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s" :keybinding "w")
-  (defengine wiktionary "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s" :keybinding "t")
-  (defengine youtube "http://www.youtube.com/results?aq=f&oq=&search_query=%s" :keybinding "y")
-  (defengine torrentz "https://torrentz.eu/search?f=%s" :keybinding "z")
-  (defengine wordreference-en-fr "www.wordreference.com/enfr/%s" :keybinding "r")
-  (defengine wordreference-fr-en "www.wordreference.com/fren/%s" :keybinding "R"))
-
 ;; avandu (gateway to tiny tiny RSS)
 (use-package avandu
   :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
@@ -1050,17 +1031,6 @@
               :map avandu-overview-map
               ("l" . recenter-top-bottom)
               ("v" . scroll-up-command)))
-
-;; elfeed
-(use-package elfeed
-  :disabled t
-  :config (setq elfeed-use-curl t))
-
-(use-package mingus
-  :disabled t
-  :bind (:map mingus-browse-map
-              ;; ("p" . (lambda nil (interactive) (forward-line -1)))
-              ("n" . forward-line)))
 
 ;;;;;;;;;;
 ;; JAVA ;;
@@ -1464,9 +1434,7 @@
 ;; pomodoro technique ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package pomodoro :disabled t)
 (use-package tomatinho)
-(use-package redtick :disabled t)
 
 ;; REST client
 (use-package restclient
