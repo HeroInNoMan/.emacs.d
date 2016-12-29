@@ -573,7 +573,7 @@
     ("n" neotree-toggle "neotree")
     ("o" org-mode "org-mode")
     ("p" list-packages "packages")
-    ("P" redtick "pomodoro")
+    ("P" tomatinho "pomodoro")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
     ("t" crux-visit-term-buffer "ansi-term")
@@ -1440,8 +1440,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package pomodoro :disabled t)
-(use-package tomatinho :disabled t)
-(use-package redtick)
+(use-package tomatinho)
+(use-package redtick :disabled t)
 
 ;; REST client
 (use-package restclient
