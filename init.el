@@ -937,11 +937,11 @@
           ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
           ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
 
-  (setq org-export-coding-system 'utf-8)
-  (setq org-completion-use-ido t)
   ;; specific agenda files
   (add-to-list 'org-agenda-files my-private-work-diary-org-file)
 
+  (setq org-export-coding-system 'utf-8
+        org-completion-use-ido t)
 
   ;; font and faces customization
   (setq org-todo-keyword-faces
