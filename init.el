@@ -1441,11 +1441,20 @@
 
 (use-package smart-mode-line
   :config
-  (setq powerline-arrow-shape 'curve)
-  (setq powerline-default-separator-dir '(right . left))
-  (setq sml/theme 'dark)
+  (setq
+   sml/theme 'dark
+   sml/shorten-directory nil
+   sml/shorten-modes nil
+   sml/name-width 40
+   sml/mode-width 'full
+   powerline-arrow-shape 'curve
+   powerline-default-separator-dir '(right . left)
+   )
   ;; (setq sml/no-confirm-load-theme t)
   (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^:p:\(.*\)/src/main/java/" ":\1/smj:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/Terminalcity/" ":T:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/Téléchargements/" ":DL:") t)
   (sml/setup))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
