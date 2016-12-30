@@ -404,9 +404,9 @@
 (use-package shrink-whitespace
   :bind ("C-x C-o" . shrink-whitespace))
 
-(use-package origami
-  :bind ("C-%" . origami-recursively-toggle-node)
-  :config (add-hook 'prog-mode-hook #'origami-mode))
+(use-package hs-minor-mode
+  :ensure nil
+  :bind ("C-%" . hs-toggle-hiding))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPLETION & HELP ;;
