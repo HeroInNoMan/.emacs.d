@@ -1029,6 +1029,8 @@
               ("n" . next-line)
               ("l" . recenter-top-bottom)
               :map avandu-overview-map
+              ("<tab>" . avandu-next-feed)
+              ("<backtab>" . avandu-previous-feed)
               ("l" . recenter-top-bottom)
               ("v" . scroll-up-command)))
 
