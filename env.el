@@ -134,6 +134,7 @@
      ((or (equal "ms-dos" system-type)
           (equal "windows-nt" system-type)
           (equal "cygwin" system-type))
+      (ale-load-windows-specific-conf)
       ;; useful when C-/ does not work (windows/putty)
       (global-set-key (kbd "C-M-z") 'undo)))))
 
