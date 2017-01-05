@@ -8,7 +8,7 @@
 (defun load-kuutamo-env ()
   (progn
     ;; hooking for specific functions
-    (add-hook 'git-commit-setup-hook 'insert-ticket-prefix)
+    (add-hook 'git-commit-setup-hook 'ale-insert-ticket-prefix)
 
     ;; org-capture-templates
     (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree my-private-work-diary-org-file "Diary") "* %i%?"))
@@ -33,7 +33,7 @@
     (setq browse-url-generic-program "chromium-browser")
 
     ;; hooking for specific functions
-    (add-hook 'git-commit-setup-hook 'insert-ticket-prefix)
+    (add-hook 'git-commit-setup-hook 'ale-insert-ticket-prefix)
 
     ;; confluence search
     (when (featurep 'engine-mode)

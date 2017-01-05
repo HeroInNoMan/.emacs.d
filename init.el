@@ -41,17 +41,17 @@
 
 (use-package my-functions ;; custom functions
   :ensure nil
-  :commands (insert-ticket-prefix jirify find-init-file)
+  :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file)
   :load-path "elisp/"
   :bind
-  ("C-c i" . indent-region-or-buffer) ;; indent whole buffer
+  ("C-c i" . ale-indent-region-or-buffer) ;; indent whole buffer
   ("<C-M-down>" . duplicate-current-line)
-  ("<f5>" . revert-buffer-no-confirm) ;; re-read file from disk
-  ("C-<f5>" . copy-and-show-current-file-path) ;; copy current file path
+  ("<f5>" . ale-revert-buffer-no-confirm) ;; re-read file from disk
+  ("C-<f5>" . ale-copy-and-show-current-file-path) ;; copy current file path
   ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
   ("C-x C-r" . sudo-edit) ;; sudo open file
-  ("C-x |" . toggle-window-split)
-  ("C-|" . toggle-window-split))
+  ("C-x |" . ale-toggle-window-split)
+  ("C-|" . ale-toggle-window-split))
 
 (use-package my-checks :ensure nil)
 
@@ -560,11 +560,11 @@
     ("b" eww "eww-browser")
     ("B" ecb-activate "code browser")
     ("c" open-calendar "calendar")
-    ("d" find-diary-file "diary")
+    ("d" ale-find-diary-file "diary")
     ("e" eshell "eshell")
     ("E" elfeed "elfeed RSS")
     ("g" toggle-god-mode "god")
-    ("i" find-init-file "init file")
+    ("i" ale-find-init-file "init file")
     ("I" highlight-indent-guides-mode "indent-guide")
     ("j" butler-status "jenkins")
     ("l" linum-mode "line number")
@@ -918,7 +918,7 @@
    ("\C-c b" . org-iswitchb)
    :map org-mode-map
    ("\C-c l" . org-store-link)
-   ("\C-c j" . jirify)
+   ("\C-c j" . ale-jirify)
    ("\C-c t" . org-begin-template))
   :chords ("gx" . org-capture)
   :init (require 'org-agenda)
@@ -1495,6 +1495,6 @@
 ;;;;;;;;;;;;;;
 
 ;; always open init file!
-(find-init-file)
+(ale-find-init-file)
 
 ;;; init.el ends here
