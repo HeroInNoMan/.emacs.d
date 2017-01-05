@@ -293,7 +293,7 @@ for the line number input"
       (unless (string-match (concat "\\[.*\\]") (buffer-string))
         (insert (concat "[TECH] "))))))
 
-(defun ale-toggle-camelcase-underscores ()
+(defun ale-toggle-camel-snake-kebab-case ()
   "Toggle between camelcase and underscore notation for the symbol at point."
   (interactive)
   (save-excursion
@@ -301,14 +301,20 @@ for the line number input"
            (start (car bounds))
            (end (cdr bounds))
            (currently-using-underscores-p (progn (goto-char start)
-                                                 (re-search-forward "_" end t))))
-      (if currently-using-underscores-p
-          (progn
-            (upcase-initials-region start end)
-            (replace-string "_" "" nil start end)
-            (downcase-region start (1+ start)))
-        (replace-regexp "\\([A-Z]\\)" "_\\1" nil (1+ start) end)
-        (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))
+                                                 (re-search-forward "_" end t)))
+           (currently-using-dashes-p (progn (goto-char start)
+                                            (re-search-forward "-" end t))))
+      (cond (currently-using-underscores-p ;; snake-case → camel-case
+             (progn
+               (upcase-initials-region start end)
+               (replace-string "_" "" nil start end)
+               (downcase-region start (1+ start))))
+            (currently-using-dashes-p ;; kebab-case → snake-case
+             (replace-string "-" "_" nil start end))
+            (t ;; camel-case → kebab-case
+             (progn
+               (replace-regexp "\\([A-Z]\\)" "-\\1" nil (1+ start) end)
+               (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))))
 
 (defun ale-find-init-file ()
   "Find init file"

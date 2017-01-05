@@ -706,6 +706,8 @@
   :ensure nil
   :load-path "elisp")
 
+(global-set-key (kbd "C-x _") 'ale-toggle-camel-snake-kebab-case)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; BUFFER & WINDOW MANIPULATION ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
