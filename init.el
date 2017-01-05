@@ -930,6 +930,14 @@
         terminalcity-dir "~/Terminalcity/"
         polopeche-home-dir "/sshx:polopeche:/home/duncan/")
 
+  ;; active Babel languages
+  (setq org-confirm-babel-evaluate nil)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((R . nil)
+     (sh . t)
+     (emacs-lisp . t)))
+
   ;; org-capture-templates
   (setq org-capture-templates
         '(
