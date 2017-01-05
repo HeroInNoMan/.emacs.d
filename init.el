@@ -404,9 +404,7 @@
 (use-package shrink-whitespace
   :bind ("C-x C-o" . shrink-whitespace))
 
-(use-package hs-minor-mode
-  :ensure nil
-  :bind ("C-%" . hs-toggle-hiding))
+(global-set-key (kbd "C-%") 'ale-toggle-selective-display)
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; COMPLETION & HELP ;;

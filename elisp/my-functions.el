@@ -320,6 +320,16 @@ for the line number input"
   (interactive)
   (find-file (expand-file-name my-private-work-diary-org-file)))
 
+(defun ale-toggle-selective-display (column)
+  (interactive "P")
+  (set-selective-display
+   (cond
+    (column (if selective-display nil column))
+    ((not selective-display) 1)
+    ((equal selective-display 1) 2)
+    ((equal selective-display 2) 3)
+    ((equal selective-display 3) 4)
+    ((equal selective-display 4) nil))))
 
 (provide 'my-functions)
 ;; misc-functions.el ends here.
