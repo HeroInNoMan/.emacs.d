@@ -9,6 +9,7 @@
   (progn
     ;; hooking for specific functions
     (add-hook 'git-commit-setup-hook 'ale-insert-ticket-prefix)
+    (add-hook 'git-commit-setup-hook 'ale-switch-to-en-dict)
 
     ;; org-capture-templates
     (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree my-private-work-diary-org-file "Diary") "* %i%?"))
