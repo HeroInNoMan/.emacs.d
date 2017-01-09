@@ -116,7 +116,7 @@
        transmission-rpc-path my-private-transmission-rpc-path))
 
     ;; change theme
-    (color-theme-oswald)))
+    (color-theme-charcoal-black)))
 
 ;;;;;;;;;;;;;
 ;; DEFAULT ;;
