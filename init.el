@@ -155,7 +155,10 @@
                 #'endless/fill-or-unfill)
 
 ;; Don't be so stingy on the memory, we have lots now. It's the distant future.
-(setq gc-cons-threshold 20000000)
+(setq gc-cons-threshold 20000000
+      global-mark-ring-max 128
+      mark-ring-max 128
+      kill-ring-max 128)
 
 ;; use count-words instead of count-words-region as it works on buffer
 ;; if no region is selected
