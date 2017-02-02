@@ -1150,6 +1150,8 @@
                            (current-buffer) t
                            "*Xmllint Error Buffer*" t))
 
+(use-package gradle-mode)
+
 ;;;;;;;;;;;;;;;;
 ;; TYPESCRIPT ;;
 ;;;;;;;;;;;;;;;;
