@@ -372,6 +372,7 @@
   :bind ("M-o" . ace-window))
 
 (use-package avy
+  :chords ("àà" . avy-goto-char-timer)
   :bind
   ("M-à" . avy-goto-word-1) ;; quickly jump to word by pressing its first letter
   ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
