@@ -293,6 +293,9 @@
   :bind ("C-ç f" . find-name-dired)
   :config (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
 
+(use-package disk
+  :chords ("<f5><f5>" . disk)) ;; cannot use function keys for chords
+
 ;;;;;;;;;;;;
 ;; SEARCH ;;
 ;;;;;;;;;;;;
