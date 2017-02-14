@@ -1174,7 +1174,8 @@
                            (current-buffer) t
                            "*Xmllint Error Buffer*" t))
 
-(use-package gradle-mode)
+(use-package gradle-mode
+  :mode ("\\.gradle\\'" . gradle-mode))
 
 ;;;;;;;;;;;;;;;;
 ;; TYPESCRIPT ;;
