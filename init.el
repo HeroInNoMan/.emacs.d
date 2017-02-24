@@ -539,6 +539,9 @@
                                         helm-source-google-suggest
                                         helm-source-locate)))
 
+
+(use-package ace-jump-helm-line
+  :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
 (use-package helm-dash
   :bind ("C-ç d" . helm-dash))
 
