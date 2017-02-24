@@ -724,7 +724,9 @@
 
 ;; easier access to transposition commands
 (global-set-key (kbd "C-x M-h") 'transpose-paragraphs)
+(global-set-key (kbd "C-§") 'transpose-paragraphs)
 (global-set-key (kbd "C-x M-s") 'transpose-sentences)
+(global-set-key (kbd "C-x M-t") 'transpose-sexps)
 
 (use-package repeatable
   :ensure nil
