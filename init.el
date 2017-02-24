@@ -330,8 +330,6 @@
               ("<tab>" . isearch-dabbrev-expand)
               ("M-/" . isearch-dabbrev-expand)))
 
-(use-package swiper)
-
 (use-package swiper-helm
   :bind ("C-S-s" . swiper-helm))
 
