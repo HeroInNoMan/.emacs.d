@@ -1144,8 +1144,8 @@
 
 (use-package web-mode ;; HTML, XML, JSP (using web-mode)
   :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-code-indent-offset 2
+  (setq web-mode-markup-indent-offset 4
+        web-mode-code-indent-offset 4
         web-mode-enable-auto-indentation t
         web-mode-enable-auto-quoting t
         web-mode-engines-alist '(("php" . "\\.phtml\\'")
