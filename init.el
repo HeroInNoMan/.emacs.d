@@ -1391,7 +1391,8 @@
   (require 'jedi)
   (add-hook 'python-mode-hook 'elpy-enable)
   (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
-  (setq jedi:complete-on-dot t))
+  (setq jedi:complete-on-dot t)
+  (setq tab-always-indent t))
 
 ;;;;;;;;;;;;;
 ;; CRONTAB ;;
