@@ -591,6 +591,7 @@
     ("e" eshell "eshell")
     ("E" elfeed "elfeed RSS")
     ("g" toggle-god-mode "god")
+    ("G" gnus "gnus")
     ("i" ale-find-init-file "init file")
     ("I" highlight-indent-guides-mode "indent-guide")
     ("j" butler-status "jenkins")
