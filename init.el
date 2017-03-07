@@ -333,8 +333,8 @@
               ("<tab>" . isearch-dabbrev-expand)
               ("M-/" . isearch-dabbrev-expand)))
 
-(use-package swiper-helm
-  :bind ("C-S-s" . swiper-helm))
+;; (use-package swiper-helm
+;;   :bind ("C-S-s" . swiper-helm))
 
 (use-package smartscan
   :bind
@@ -654,6 +654,27 @@
       pcomplete-ignore-case t
       read-file-name-completion-ignore-case t
       read-buffer-completion-ignore-case t)
+
+;; IVY / SWIPER / COUNSEL
+(use-package ivy
+  :config (setq ivy-height 20))
+(use-package swiper
+  :bind ("C-S-s" . counsel-grep-or-swiper))
+(use-package counsel
+  :chords ("éè" . counsel-ag))
+
+(defhydra hydra-counsel (:color teal)
+  "call counsel functions"
+  ("é" counsel-recentf "recentf")
+  ("f" counsel-find-file "find file")
+  ("l" counsel-locate "locate")
+  ("r" ivy-resume "resume")
+  ("s" counsel-grep-or-swiper "grep or swiper")
+  ("u" counsel-unicode-char "unicode char")
+  ("x" counsel-M-x "M-x")
+  ("y" counsel-yank-pop "yank-pop")
+  ("q" nil "cancel" :color blue))
+(global-set-key (kbd "C-é") 'hydra-counsel/body)
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; TEXT MANIPULATION ;;
