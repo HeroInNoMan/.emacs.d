@@ -597,7 +597,7 @@
     ("j" butler-status "jenkins")
     ("l" linum-mode "line number")
     ("m" minimap-mode "minimap")
-    ("M" mingus "mingus music")
+    ("M" helm-spotify-plus "spotify")
     ("n" neotree-toggle "neotree")
     ("o" org-mode "org-mode")
     ("p" list-packages "packages")
@@ -1528,6 +1528,7 @@
          ("C-c C-l s" . lorem-ipsum-insert-sentences)
          ("C-c C-l l" . lorem-ipsum-insert-list)))
 
+(use-package helm-spotify-plus)
 (use-package 2048-game :disabled t)
 (use-package speed-type :disabled t)
 (use-package typit :disabled t)
