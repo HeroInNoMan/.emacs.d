@@ -316,6 +316,11 @@ for the line number input"
                (replace-regexp "\\([A-Z]\\)" "-\\1" nil (1+ start) end)
                (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))))
 
+(defun ale-find-rest-client-file ()
+  "Find rest-client file"
+  (interactive)
+  (find-file "~/projets/restclient-buffer"))
+
 (defun ale-find-init-file ()
   "Find init file"
   (interactive)
