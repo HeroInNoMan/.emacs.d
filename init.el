@@ -109,16 +109,13 @@
      ((and god-local-mode (not god-mode-colors))
       (progn
         (set-cursor-color "red")
-        (set-face-background 'mode-line "brown")
         (setq god-mode-colors t)))
      ((and (not god-local-mode) god-mode-colors)
       (progn
         (set-cursor-color "yellow")
-        (set-face-background 'mode-line "#0a2832")
         (setq god-mode-colors nil)))))
   (defadvice select-window (after update-cursor-and-mode-line-color activate)
     (my-update-cursor))
-  ;; (add-hook 'buffer-list-update-hook #'my-update-cursor)
   (add-to-list 'god-exempt-major-modes 'helm-major-mode)
   (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
 
@@ -181,16 +178,44 @@
 ;; THEME & APPEARANCE ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package anzu
-  :diminish anzu-mode
-  :config (anzu-mode)
-  (setq anzu-cons-mode-line-p nil))
+(use-package spaceline)
+(use-package spaceline-all-the-icons)
+
+(use-package spaceline-config
+  :config
+  (defface spaceline-god-face
+    `((t (:background "brown"
+                      :foreground "#3E3D31"
+                      :inherit 'mode-line)))
+    "Default highlight face for spaceline."
+    :group 'spaceline)
+
+  (defun spaceline-highlight-face-god ()
+    "Set the highlight face depending on the god-mode state.
+Set `spaceline-highlight-face-func' to
+`spaceline-highlight-face-god' to use this."
+    (cond
+     (buffer-read-only 'spaceline-read-only)
+     (god-local-mode 'spaceline-god-face)
+     ((buffer-modified-p) 'spaceline-modified)
+     (t 'spaceline-unmodified)))
+  (spaceline-emacs-theme)
+  (spaceline-helm-mode)
+  (spaceline-info-mode)
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-god)
+  )
+
+  (use-package anzu
+    :diminish anzu-mode
+    :config (anzu-mode)
+    (setq anzu-cons-mode-line-p nil))
 
 (use-package color-theme
   :config
   (color-theme-initialize)
   (color-theme-dark-laptop)
-  (set-face-background 'mode-line "#0a2832"))
+  ;; (set-face-background 'mode-line "#0a2832")
+  )
 
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
@@ -262,10 +287,6 @@
 (global-hl-line-mode -1) ;; don’t highlight current line
 (highlight-line-mode 1) ;; except in “list” modes
 (fringe-mode 0) ;; remove fringes on the sides
-
-;; progress in file
-(use-package sml-modeline
-  :config (sml-modeline-mode))
 
 ;; Show me empty lines after buffer end
 (set-default 'indicate-empty-lines t)
@@ -1486,21 +1507,21 @@
   (setq weatherline-location-id "2988507")
   (weatherline-mode))
 
-(use-package smart-mode-line
-  :config
-  (setq sml/theme 'dark
-        sml/shorten-directory nil
-        sml/shorten-modes nil
-        sml/name-width 40
-        sml/mode-width 'full
-        powerline-arrow-shape 'curve
-        powerline-default-separator-dir '(right . left))
-  ;; (setq sml/no-confirm-load-theme t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^:p:\(.*\)/src/main/java/" ":\1/smj:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/Terminalcity/" ":T:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/Téléchargements/" ":DL:") t)
-  (sml/setup))
+;;( use-package smart-mode-line
+;;  :config
+;;  (setq sml/theme 'dark
+;;        sml/shorten-directory nil
+;;        sml/shorten-modes nil
+;;        sml/name-width 40
+;;        sml/mode-width 'full
+;;        powerline-arrow-shape 'curve
+;;        powerline-default-separator-dir '(right . left))
+;;  ;; (setq sml/no-confirm-load-theme t)
+;;  (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
+;;  (add-to-list 'sml/replacer-regexp-list '("^:p:\(.*\)/src/main/java/" ":\1/smj:") t)
+;;  (add-to-list 'sml/replacer-regexp-list '("^~/Terminalcity/" ":T:") t)
+;;  (add-to-list 'sml/replacer-regexp-list '("^~/Téléchargements/" ":DL:") t)
+;;  (sml/setup))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; pomodoro technique ;;
