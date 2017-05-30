@@ -304,6 +304,7 @@
 
 (put 'dired-find-alternate-file 'disabled nil)
 (setq dired-listing-switches "-AlhF") ;; dired human readable size format
+(unbind-key "M-b" dired-mode-map)
 
 ;; Auto refresh dired
 (setq global-auto-revert-non-file-buffers t
