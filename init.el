@@ -181,6 +181,11 @@
 ;; THEME & APPEARANCE ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package anzu
+  :diminish anzu-mode
+  :config (anzu-mode)
+  (setq anzu-cons-mode-line-p nil))
+
 (use-package color-theme
   :config
   (color-theme-initialize)
