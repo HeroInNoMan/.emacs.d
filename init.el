@@ -178,18 +178,30 @@
 ;; THEME & APPEARANCE ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package spaceline)
-(use-package spaceline-all-the-icons)
-
-(use-package spaceline-config
+(use-package anzu
+  :diminish anzu-mode
   :config
+  (global-anzu-mode t)
+  (setq-default anzu-cons-mode-line-p nil))
+
+(use-package spaceline
+  :ensure t
+  :config
+  (spaceline-define-segment ale/version-control
+    "Show the current version control branch."
+    (when vc-mode
+      (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name)))))))
+  (spaceline-define-segment ale/buffer-modified
+    "Buffer status (read-only, modified), with color"
+    (cond (buffer-read-only (propertize "" 'face 'spaceline-read-only))
+          ((buffer-modified-p) (propertize " " 'face 'spaceline-modified))
+          (t "")))
   (defface spaceline-god-face
     `((t (:background "brown"
                       :foreground "#3E3D31"
                       :inherit 'mode-line)))
     "Default highlight face for spaceline."
     :group 'spaceline)
-
   (defun spaceline-highlight-face-god ()
     "Set the highlight face depending on the god-mode state.
 Set `spaceline-highlight-face-func' to
@@ -199,23 +211,53 @@ Set `spaceline-highlight-face-func' to
      (god-local-mode 'spaceline-god-face)
      ((buffer-modified-p) 'spaceline-modified)
      (t 'spaceline-unmodified)))
-  (spaceline-emacs-theme)
+  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
+
+(use-package spaceline-all-the-icons
+  :after spaceline)
+
+(use-package spaceline-config
+  :ensure spaceline
+  :config
   (spaceline-helm-mode)
   (spaceline-info-mode)
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-god)
-  )
-
-  (use-package anzu
-    :diminish anzu-mode
-    :config (anzu-mode)
-    (setq anzu-cons-mode-line-p nil))
+  (setq-default
+   spaceline-minor-modes-separator " ⚫ "
+   powerline-default-separator 'arrow ;; Valid Values: alternate, arrow, arrow-fade, bar, box, brace,butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag, utf-8.
+   spaceline-highlight-face-func 'spaceline-highlight-face-god)
+  ;; build mode line
+  (spaceline-install
+    'main
+    '((ale/buffer-modified :face highlight-face)
+      ((remote-host buffer-id line) :face highlight-face :separator ":" :priority 1)
+      (buffer-size)
+      (anzu)
+      ((projectile-root ale/version-control) :separator " ⑂ ")
+      (process :when active)
+      (erc-track))
+    '((selection-info :face region :when mark-active)
+      ((flycheck-error flycheck-warning flycheck-info) :when active)
+      (python-pyenv)
+      (python-pyvenv)
+      (org-clock)
+      (org-pomodoro)
+      (minor-modes :face spaceline-evil-visual)
+      (major-mode :face highlight-face :priority 1)
+      (which-function)
+      (line-column :priority 0)
+      (point-position :priority 0)
+      (global :face spaceline-evil-visual :when active :priority 2)
+      (window-number :priority 0)
+      (workspace-number :priority 0)
+      (battery :face powerline-active1 :priority 0 :when active)
+      (buffer-encoding-abbrev :priority 0 :when active)
+      (buffer-position :priority 0)
+      (hud :priority 0))))
 
 (use-package color-theme
   :config
   (color-theme-initialize)
-  (color-theme-dark-laptop)
-  ;; (set-face-background 'mode-line "#0a2832")
-  )
+  (color-theme-dark-laptop))
 
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
@@ -964,15 +1006,15 @@ Set `spaceline-highlight-face-func' to
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package helm-projectile
+  :diminish projectile-mode
   :config
   (projectile-global-mode) ;; activate projectile-mode everywhere
   (helm-projectile-on)
   (setq projectile-completion-system 'helm
         projectile-enable-caching t ;; enable caching for projectile-mode
         projectile-switch-project-action 'projectile-vc ;; magit-status or svn
-        projectile-mode-line '(:eval
-                               (format " [%s]"
-                                       (projectile-project-name))))
+        ;; projectile-mode-line '(:eval (format " [%s]" (projectile-project-name)))
+        )
   (def-projectile-commander-method ?d
     "Open project root in dired."
     (projectile-dired))
@@ -1148,7 +1190,6 @@ Set `spaceline-highlight-face-func' to
             (lambda ()
               (add-hook 'after-save-hook 'malabar-http-compile-file-silently
                         nil t))))
-
 
 (use-package eclim
   :disabled t
