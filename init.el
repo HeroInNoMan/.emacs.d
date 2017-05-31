@@ -187,6 +187,13 @@
 (use-package spaceline
   :ensure t
   :config
+  (defun spaceline-face-func-god (face active)
+    (cond
+     ((eq 'face1 face) (if active 'powerline-active1 'powerline-inactive1))
+     ((eq 'face2 face) (if active 'powerline-active2 'powerline-inactive2))
+     ((eq 'line face) (if active (if god-local-mode 'spaceline-god-face 'mode-line) 'mode-line-inactive))
+     ((eq 'highlight face) (if active (funcall spaceline-highlight-face-func) 'powerline-inactive1))))
+
   (spaceline-define-segment ale/version-control
     "Show the current version control branch."
     (when vc-mode
@@ -196,26 +203,30 @@
     (cond (buffer-read-only (propertize "" 'face 'spaceline-read-only))
           ((buffer-modified-p) (propertize " " 'face 'spaceline-modified))
           (t "")))
+  (spaceline-define-segment ale/major-mode
+    "The name of the major mode."
+    (if god-local-mode
+        (propertize (powerline-major-mode) 'face 'spaceline-god-face)
+      (powerline-major-mode)))
   (defface spaceline-god-face
     `((t (:background "brown"
                       :foreground "#3E3D31"
                       :inherit 'mode-line)))
     "Default highlight face for spaceline."
     :group 'spaceline)
-  (defun spaceline-highlight-face-god ()
-    "Set the highlight face depending on the god-mode state.
+  (defun spaceline-highlight-face-modified ()
+    "Set the highlight face depending on the modified state.
 Set `spaceline-highlight-face-func' to
-`spaceline-highlight-face-god' to use this."
+`spaceline-highlight-face-modified' to use this."
     (cond
      (buffer-read-only 'spaceline-read-only)
-     (god-local-mode 'spaceline-god-face)
      ((buffer-modified-p) 'spaceline-modified)
      (t 'spaceline-unmodified)))
-  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
+  (setq-default spaceline-face-func 'spaceline-face-func-god
+                mode-line-format '("%e" (:eval (spaceline-ml-main)))))
 
 (use-package spaceline-all-the-icons
   :after spaceline)
-
 (use-package spaceline-config
   :ensure spaceline
   :config
@@ -223,13 +234,12 @@ Set `spaceline-highlight-face-func' to
   (spaceline-info-mode)
   (setq-default
    spaceline-minor-modes-separator " ⚫ "
-   powerline-default-separator 'arrow ;; Valid Values: alternate, arrow, arrow-fade, bar, box, brace,butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag, utf-8.
-   spaceline-highlight-face-func 'spaceline-highlight-face-god)
+   ;; spaceline-highlight-face-func 'spaceline-highlight-face-modified
+   powerline-default-separator 'arrow);; Valid Values: alternate, arrow, arrow-fade, bar, box, brace,butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag, utf-8.
   ;; build mode line
   (spaceline-install
     'main
-    '((ale/buffer-modified :face highlight-face)
-      ((remote-host buffer-id line) :face highlight-face :separator ":" :priority 1)
+    '(((remote-host buffer-id line) :face highlight-face :separator ":" :priority 1)
       (buffer-size)
       (anzu)
       ((projectile-root ale/version-control) :separator " ⑂ ")
@@ -241,17 +251,17 @@ Set `spaceline-highlight-face-func' to
       (python-pyvenv)
       (org-clock)
       (org-pomodoro)
-      (minor-modes :face spaceline-evil-visual)
       (major-mode :face highlight-face :priority 1)
+      (minor-modes :face spaceline-evil-visual)
       (which-function)
       (line-column :priority 0)
       (point-position :priority 0)
+      (buffer-encoding-abbrev :priority 0 :when active)
       (global :face spaceline-evil-visual :when active :priority 2)
       (window-number :priority 0)
       (workspace-number :priority 0)
       (battery :face powerline-active1 :priority 0 :when active)
-      (buffer-encoding-abbrev :priority 0 :when active)
-      (buffer-position :priority 0)
+      (buffer-position :face highlight-face :priority 0)
       (hud :priority 0))))
 
 (use-package color-theme
@@ -1109,12 +1119,12 @@ Set `spaceline-highlight-face-func' to
                                         (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
                                     now)
                                    'help-echo
-                                   (format-time-string "%a %e %b %Y" now))
+                                   (format-time-string "%a %e %b %Y S%V" now))
                                   (if
                                       (and
                                        (not display-time-format)
                                        display-time-day-and-date)
-                                      (format-time-string ", %a %e %b %Y" now)
+                                      (format-time-string ", %a %e %b %Y S%V" now)
                                     ""))
       european-calendar-style t ;; day/month/year format for calendar
       calendar-week-start-day 1) ;; start week on Monday
