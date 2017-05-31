@@ -90,6 +90,7 @@
   (global-set-key (kbd "C-z z") 'suspend-frame)) ;; C-z is saved for tmux
 
 (use-package god-mode
+  :diminish god-local-mode
   :bind
   (("C-c g" . toggle-god-mode)
    :map god-local-mode-map
@@ -282,6 +283,7 @@ Set `spaceline-highlight-face-func' to
   :config (add-hook 'prog-mode-hook #'rainbow-mode))
 
 (use-package volatile-highlights
+  :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
 
 (use-package idle-highlight-mode)
@@ -291,6 +293,7 @@ Set `spaceline-highlight-face-func' to
   :load-path "elisp/")
 
 (use-package fancy-narrow
+  :diminish fancy-narrow-mode
   :config (fancy-narrow-mode t))
 
 (use-package highlight-indent-guides
@@ -549,6 +552,7 @@ Set `spaceline-highlight-face-func' to
         undo-tree-visualizer-diff t))
 
 (use-package which-key ;; which-key (replacement for guide-key)
+  :diminish which-key-mode
   :config (which-key-mode))
 
 (use-package helm
