@@ -760,6 +760,9 @@ Set `spaceline-highlight-face-func' to
   ("q" nil "cancel" :color blue))
 (global-set-key (kbd "C-é") 'hydra-counsel/body)
 
+(use-package yasnippet
+  :config (yas-global-mode 1))
+
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; TEXT MANIPULATION ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
