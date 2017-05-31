@@ -373,6 +373,12 @@ Set `spaceline-highlight-face-func' to
 
 (setq-default truncate-string-ellipsis "…")
 
+;; prettify-symbols
+(defconst lisp--prettify-symbols-alist
+  '(("lambda"  . ?λ)
+    (">=" . ?≥)
+    ("<=" . ?≤)))
+
 ;;;;;;;;;;;
 ;; DIRED ;;
 ;;;;;;;;;;;
