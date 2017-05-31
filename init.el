@@ -401,7 +401,6 @@ Set `spaceline-highlight-face-func' to
       dired-recursive-copies 'always)
 
 (use-package find-dired
-  :bind ("C-ç f" . find-name-dired)
   :config (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
 
 (use-package disk
@@ -581,6 +580,7 @@ Set `spaceline-highlight-face-func' to
   ("C-ç o" . helm-occur)
   ("C-c h o" . helm-occur)
   ("C-ç p" . helm-projectile-switch-project)
+  ("C-ç C-p" . helm-projectile-switch-project)
   ("C-c h p" . helm-projectile-switch-project)
   ("C-ç r" . helm-resume)
   ("C-c h r" . helm-resume)
@@ -597,7 +597,7 @@ Set `spaceline-highlight-face-func' to
   ("C-h f" . helm-apropos)
   ("C-h v" . helm-apropos)
   ("C-ç C-ç" . helm-for-files)
-  ("M-ç" . helm-for-files)
+  ("M-ç" . my/helm-find-files)
   :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
            ("éè" . my-do-ag-project-root-or-dir)) ;; incremental grep in project
   :config
@@ -626,9 +626,31 @@ Set `spaceline-highlight-face-func' to
                                         helm-source-bookmarks
                                         helm-source-file-cache
                                         helm-source-files-in-current-dir
-                                        helm-source-google-suggest
-                                        helm-source-locate)))
+                                        ;; helm-source-google-suggest
+                                        helm-source-locate))
+  (defun my/helm-find-files ()
+    ;; https://stackoverflow.com/questions/11403862/how-to-have-emacs-helm-list-offer-files-in-current-directory-as-options
+    (interactive)
 
+    ;; From helm-buffers-list in helm-buffers.el
+    (unless helm-source-buffers-list
+      (setq helm-source-buffers-list
+            (helm-make-source " Buffers" 'helm-source-buffers)))
+
+    ;; From file:elpa/helm-20160401.1302/helm-files.el::(with-helm-temp-hook%20'helm-after-initialize-hook
+    ;; This lets me bring up results from locate without having to
+    ;; exit and run a separate command.  Now I just have to remember
+    ;; to use it...
+    (with-helm-temp-hook 'helm-after-initialize-hook
+      (define-key helm-map (kbd "C-x C-l")
+        'helm-multi-files-toggle-to-locate))
+
+    (helm-other-buffer (list helm-source-buffers-list
+                             helm-source-files-in-current-dir
+                             helm-source-bookmarks
+                             helm-source-recentf
+                             helm-source-projectile-files-list)
+                       " * my/helm-find-files *")))
 
 (use-package ace-jump-helm-line
   :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
@@ -690,12 +712,14 @@ Set `spaceline-highlight-face-func' to
     ("n" neotree-toggle "neotree")
     ("o" org-mode "org-mode")
     ("p" list-packages "packages")
-    ("P" tomatinho "pomodoro")
+    ("P" prettify-symbols-mode "prettify symbols")
     ("r" ale-find-rest-client-file "rest-client")
     ("R" rainbow-blocks-mode "rainbow-blocks")
     ("s" sublimity-mode "sublimity")
     ("S" spray-mode "spritz")
     ("t" crux-visit-term-buffer "ansi-term")
+    ("T" tomatinho "pomodoro (tomatinho)")
+    ("v" visual-line-mode "visual-line")
     ("w" whitespace-mode "whitespace")
     ("W" wttrin "weather")
     ("y" play-youtube-video "youtube")
@@ -750,8 +774,8 @@ Set `spaceline-highlight-face-func' to
   :config (setq ivy-height 20))
 (use-package swiper
   :bind ("C-S-s" . counsel-grep-or-swiper))
-(use-package counsel
-  :chords ("éè" . counsel-ag))
+;; (use-package counsel
+;;   :chords ("éè" . counsel-ag))
 
 (defhydra hydra-counsel (:color teal)
   "call counsel functions"
