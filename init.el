@@ -1527,6 +1527,7 @@ Set `spaceline-highlight-face-func' to
   (require 'elpy)
   (require 'jedi)
   (add-hook 'python-mode-hook 'elpy-enable)
+  (add-hook 'python-mode-hook 'flycheck-mode)
   (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
   (setq jedi:complete-on-dot t)
   (setq tab-always-indent t))
