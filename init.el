@@ -104,7 +104,7 @@
     (god-mode-all)
     (my-update-cursor))
   (defun my-update-cursor ()
-    "change cursor and mode-line colours if god-mode is activated/deactivated effectively."
+    "change cursor colour if god-mode is activated/deactivated effectively."
     (cond
      ((and god-local-mode (not god-mode-colors))
       (progn
@@ -114,7 +114,7 @@
       (progn
         (set-cursor-color "yellow")
         (setq god-mode-colors nil)))))
-  (defadvice select-window (after update-cursor-and-mode-line-color activate)
+  (defadvice select-window (after update-cursor-color activate)
     (my-update-cursor))
   (add-to-list 'god-exempt-major-modes 'helm-major-mode)
   (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
@@ -234,7 +234,7 @@ Set `spaceline-highlight-face-func' to
   (spaceline-info-mode)
   (setq-default
    spaceline-minor-modes-separator " ⚫ "
-   ;; spaceline-highlight-face-func 'spaceline-highlight-face-modified
+   spaceline-highlight-face-func 'spaceline-highlight-face-modified
    powerline-default-separator 'arrow);; Valid Values: alternate, arrow, arrow-fade, bar, box, brace,butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag, utf-8.
   ;; build mode line
   (spaceline-install
@@ -1022,9 +1022,7 @@ Set `spaceline-highlight-face-func' to
   (helm-projectile-on)
   (setq projectile-completion-system 'helm
         projectile-enable-caching t ;; enable caching for projectile-mode
-        projectile-switch-project-action 'projectile-vc ;; magit-status or svn
-        ;; projectile-mode-line '(:eval (format " [%s]" (projectile-project-name)))
-        )
+        projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
   (def-projectile-commander-method ?d
     "Open project root in dired."
     (projectile-dired))
@@ -1544,35 +1542,6 @@ Set `spaceline-highlight-face-func' to
   :init
   (add-hook 'after-init-hook 'server-start t)
   (add-hook 'after-init-hook 'edit-server-start t))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MODE LINE (smart-mode-line) ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; TODO configure weather in mode line
-(use-package weatherline-mode
-  :disabled t
-  :ensure nil
-  :load-path "elisp"
-  :config
-  (setq weatherline-location-id "2988507")
-  (weatherline-mode))
-
-;;( use-package smart-mode-line
-;;  :config
-;;  (setq sml/theme 'dark
-;;        sml/shorten-directory nil
-;;        sml/shorten-modes nil
-;;        sml/name-width 40
-;;        sml/mode-width 'full
-;;        powerline-arrow-shape 'curve
-;;        powerline-default-separator-dir '(right . left))
-;;  ;; (setq sml/no-confirm-load-theme t)
-;;  (add-to-list 'sml/replacer-regexp-list '("^~/projets/" ":p:") t)
-;;  (add-to-list 'sml/replacer-regexp-list '("^:p:\(.*\)/src/main/java/" ":\1/smj:") t)
-;;  (add-to-list 'sml/replacer-regexp-list '("^~/Terminalcity/" ":T:") t)
-;;  (add-to-list 'sml/replacer-regexp-list '("^~/Téléchargements/" ":DL:") t)
-;;  (sml/setup))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; pomodoro technique ;;
