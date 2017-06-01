@@ -186,6 +186,8 @@
   (global-anzu-mode t)
   (setq-default anzu-cons-mode-line-p nil))
 
+(use-package all-the-icons)
+
 (use-package spaceline
   :ensure t
   :config
