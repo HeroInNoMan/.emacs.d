@@ -118,6 +118,7 @@
   (defadvice select-window (after update-cursor-color activate)
     (my-update-cursor))
   (add-to-list 'god-exempt-major-modes 'helm-major-mode)
+  (add-to-list 'god-exempt-major-modes 'browse-kill-ring-mode)
   (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
 
 ;; Answer questions with y/n
