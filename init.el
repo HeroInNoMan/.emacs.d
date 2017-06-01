@@ -1506,6 +1506,9 @@ Set `spaceline-highlight-face-func' to
 ;;;;;;;;;;
 
 (define-key lisp-mode-map (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
+(define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-region)
+(define-key lisp-mode-map (kbd "C-c C-c") 'eval-region)
+
 ;; (global-set-key (kbd "C-c c") 'compile)
 
 (use-package elisp-slime-nav
