@@ -261,7 +261,7 @@ Set `spaceline-highlight-face-func' to
       (window-number :priority 0)
       (workspace-number :priority 0)
       (battery :face powerline-active1 :priority 0 :when active)
-      (buffer-position :face highlight-face :priority 0)
+      ;; (buffer-position :face highlight-face :priority 0)
       (hud :priority 0))))
 
 (use-package color-theme
@@ -1111,22 +1111,24 @@ Set `spaceline-highlight-face-func' to
 
 (setq display-time-day-and-date t ;; display date and time
       display-time-24hr-format t ;; 24h time format
+      european-calendar-style t ;; day/month/year format for calendar
+      calendar-week-start-day 1 ;; start week on Monday
       display-time-string-forms '((propertize
                                    (format-time-string
                                     (or display-time-format
                                         (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
                                     now)
                                    'help-echo
-                                   (format-time-string "%a %e %b %Y S%V" now))
+                                   (format-time-string "%a %e %b %Y S%V" now)
+                                   'face '(:foreground "blue" :weight bold)
+                                   )
                                   (if
                                       (and
                                        (not display-time-format)
                                        display-time-day-and-date)
                                       (format-time-string ", %a %e %b %Y S%V" now)
-                                    ""))
-      european-calendar-style t ;; day/month/year format for calendar
-      calendar-week-start-day 1) ;; start week on Monday
-(display-time) ;; display time
+                                    "")))
+(display-time)
 (global-set-key (kbd "C-c d") 'insert-todays-date)
 
 (use-package calfw) ;; à tester
