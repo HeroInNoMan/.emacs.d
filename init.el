@@ -241,8 +241,8 @@ Set `spaceline-highlight-face-func' to
     'main
     '(((remote-host buffer-id line) :face highlight-face :separator ":" :priority 1)
       (buffer-size)
-      (anzu)
       ((projectile-root ale/version-control) :separator " ⑂ ")
+      (anzu :face mode-line)
       (process :when active)
       (erc-track))
     '((selection-info :face region :when mark-active)
