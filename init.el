@@ -93,6 +93,7 @@
   :diminish god-local-mode
   :bind
   (("C-c g" . toggle-god-mode)
+   ("<menu>" . toggle-god-mode)
    :map god-local-mode-map
    ("i" . toggle-god-mode)
    ("z" . repeat)
