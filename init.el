@@ -216,7 +216,13 @@
     `((t (:background "brown"
                       :foreground "#3E3D31"
                       :inherit 'mode-line)))
-    "Default highlight face for spaceline."
+    "Face for god mode."
+    :group 'spaceline)
+  (defface spaceline-process-face
+    `((t (:background "blue"
+                      :foreground "bold"
+                      :inherit 'mode-line)))
+    "Face for process segment."
     :group 'spaceline)
   (defun spaceline-highlight-face-modified ()
     "Set the highlight face depending on the modified state.
@@ -244,10 +250,9 @@ Set `spaceline-highlight-face-func' to
   (spaceline-install
     'main
     '(((remote-host buffer-id line) :face highlight-face :separator ":" :priority 1)
-      (buffer-size)
       ((projectile-root ale/version-control) :separator " ⑂ ")
       (anzu :face mode-line)
-      (process :when active)
+      (process :when active :face spaceline-process-face)
       (erc-track))
     '((selection-info :face region :when mark-active)
       ((flycheck-error flycheck-warning flycheck-info) :when active)
@@ -260,6 +265,7 @@ Set `spaceline-highlight-face-func' to
       (which-function)
       (line-column :priority 0)
       (point-position :priority 0)
+      (buffer-size :priority 0)
       (buffer-encoding-abbrev :priority 0 :when active)
       (global :face spaceline-evil-visual :when active :priority 2)
       (window-number :priority 0)
