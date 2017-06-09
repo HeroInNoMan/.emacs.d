@@ -500,7 +500,8 @@ Set `spaceline-highlight-face-func' to
   :bind (:map neotree-mode-map
               ("<f2>" . neotree-copy-filepath-to-yank-ring)
               ("<f5>" . neotree-refresh)
-              ("e" . neotree-stretch-toggle)))
+              ("e" . neotree-stretch-toggle))
+  :config (setq neo-window-width 50))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INDENTATION, TABS, SPACES & FOLDING ;;
