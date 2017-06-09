@@ -503,6 +503,29 @@ Set `spaceline-highlight-face-func' to
               ("e" . neotree-stretch-toggle))
   :config (setq neo-window-width 50))
 
+(use-package pfuture)
+(use-package treemacs
+  :disabled t
+  :after pfuture
+  :load-path "~/projets/treemacs/"
+  :defer t
+  :config
+  (setq treemacs-header-function            #'treemacs--create-header-projectile
+        treemacs-follow-after-init          t
+        treemacs-width                      45
+        treemacs-indentation                2
+        treemacs-git-integration            t
+        treemacs-change-root-without-asking nil
+        treemacs-sorting                    'alphabetic-desc
+        treemacs-show-hidden-files          t
+        treemacs-never-persist              nil)
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  :bind
+  (:map
+   global-map
+   ([f8] . treemacs-toggle)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; INDENTATION, TABS, SPACES & FOLDING ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -724,6 +747,7 @@ Set `spaceline-highlight-face-func' to
     ("m" minimap-mode "minimap")
     ("M" helm-spotify-plus "spotify")
     ("n" neotree-toggle "neotree")
+    ;; ("n" treemacs-toggle "tree")
     ("o" org-mode "org-mode")
     ("p" list-packages "packages")
     ("P" prettify-symbols-mode "prettify symbols")
