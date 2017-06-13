@@ -29,3 +29,4 @@ My emacs configuration.
 * ctags with projectile
 * auto-save draft buffers
 * complete IDE for javascript
+* spaceline: manage battery status
