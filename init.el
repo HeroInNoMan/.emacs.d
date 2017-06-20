@@ -594,6 +594,8 @@ Set `spaceline-highlight-face-func' to
   :diminish which-key-mode
   :config (which-key-mode))
 
+(use-package helpful)
+
 (use-package helm
   :diminish helm-mode
   :bind
