@@ -251,7 +251,7 @@ Set `spaceline-highlight-face-func' to
   (spaceline-install
     'main
     '(((remote-host buffer-id line) :face highlight-face :separator ":" :priority 1)
-      ((projectile-root ale/version-control) :separator " ⑂ ")
+      ((projectile-root ale/version-control) :separator " ⑂ " :face spaceline-evil-insert)
       (anzu :face mode-line)
       (process :when active :face spaceline-process-face)
       (erc-track))
@@ -261,7 +261,7 @@ Set `spaceline-highlight-face-func' to
       (python-pyvenv)
       (org-clock)
       (org-pomodoro)
-      (major-mode :face highlight-face :priority 1)
+      (major-mode :face spaceline-evil-insert :priority 1)
       (minor-modes :face spaceline-evil-visual)
       (which-function)
       (line-column :priority 0)
