@@ -1365,8 +1365,11 @@ Set `spaceline-highlight-face-func' to
 ;; TYPESCRIPT ;;
 ;;;;;;;;;;;;;;;;
 (use-package tide
+  :chords (:map tide-mode-map
+                ("+-" . bury-buffer))
   :bind
   (:map tide-mode-map
+        ("C-c k" . bury-buffer)
         ("C-." . tide-jump-to-definition)
         ("C-," . tide-jump-back)
         ("C-c C-c" . hydra-tide/body))
@@ -1377,7 +1380,7 @@ Set `spaceline-highlight-face-func' to
     (flycheck-mode +1)
     (setq flycheck-check-syntax-automatically '(save mode-enabled))
     ;; flycheck-typescript-tslint-executable "tslint"
-    (eldoc-mode +1)
+    ;; (eldoc-mode +1)
     (company-mode +1))
 
   (setq company-tooltip-align-annotations t  ;; aligns annotation to the right hand side
@@ -1389,6 +1392,7 @@ Set `spaceline-highlight-face-func' to
   ;; formats the buffer before saving
   (add-hook 'before-save-hook 'tide-format-before-save)
   (add-hook 'typescript-mode-hook #'setup-tide-mode)
+  (add-hook 'typescript-mode-hook #'rainbow-blocks-mode)
   (add-hook 'js2-mode-hook #'setup-tide-mode)
   ;; (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file ~/projets/tss.log"))
 
