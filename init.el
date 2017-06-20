@@ -1040,8 +1040,8 @@ Set `spaceline-highlight-face-func' to
 
 (use-package magit
   :chords ("qg" . magit-status) ;; run git status for current buffer
-  :bind ("C-x g ." . magit-status)
-  :bind ("C-x g b" . magit-blame)
+  :bind (("C-x g ." . magit-status)
+         ("C-x g b" . magit-blame))
   :config
   (setq magit-last-seen-setup-instructions "1.4.0")
   (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
