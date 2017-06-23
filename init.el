@@ -215,6 +215,17 @@
     (if god-local-mode
         (propertize (powerline-major-mode) 'face 'spaceline-god-face)
       (powerline-major-mode)))
+
+  (spaceline-define-segment ale/battery
+    "Show battery information.  Requires `fancy-battery-mode' to be enabled.
+This segment overrides the modeline functionality of
+`fancy-battery-mode'."
+    (when (bound-and-true-p fancy-battery-mode)
+      (let ((text (spaceline--fancy-battery-mode-line)))
+        (and text (powerline-raw (s-trim text)
+                                 (spaceline--fancy-battery-face)))))
+    :global-override fancy-battery-mode-line)
+
   (defface spaceline-god-face
     `((t (:background "brown"
                       :foreground "#3E3D31"
@@ -273,7 +284,7 @@ Set `spaceline-highlight-face-func' to
       (global :face spaceline-evil-visual :when active :priority 2)
       (window-number :priority 0)
       (workspace-number :priority 0)
-      (battery :face powerline-active1 :priority 0 :when active)
+      (ale/battery :face powerline-active1 :priority 0 :when active)
       ;; (buffer-position :face highlight-face :priority 0)
       (hud :priority 0))))
 
