@@ -1198,14 +1198,14 @@ Set `spaceline-highlight-face-func' to
                                         (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
                                     now)
                                    'help-echo
-                                   (format-time-string "%a %e %b %Y S%V" now)
+                                   (format-time-string "%A %e %b %Y (%V)" now)
                                    'face '(:foreground "blue" :weight bold)
                                    )
                                   (if
                                       (and
                                        (not display-time-format)
                                        display-time-day-and-date)
-                                      (format-time-string ", %a %e %b %Y S%V" now)
+                                      (format-time-string ", %A %e %b %Y (%V)" now)
                                     "")))
 (display-time)
 (global-set-key (kbd "C-c d") 'insert-todays-date)
