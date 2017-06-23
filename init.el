@@ -76,6 +76,8 @@
   (crux-with-region-or-buffer tabify))
 
 (global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
+(global-set-key (kbd "<f8>") 'bookmark-set)
+(global-set-key (kbd "<f9>") 'bookmark-jump)
 
 (global-set-key (kbd "M-«") 'beginning-of-buffer)
 (global-set-key (kbd "M-»") 'end-of-buffer)
