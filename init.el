@@ -1565,16 +1565,22 @@ Set `spaceline-highlight-face-func' to
 ;; PYTHON ;;
 ;;;;;;;;;;;;
 
-(use-package elpy)
+
+(use-package elpy
+  :config
+  (elpy-enable)
+  (setq elpy-rpc-backend "jedi"))
 (use-package jedi)
 (use-package python
+  :after (elpy jedi)
+
   :bind (:map python-mode-map
               ("M-g M-p" . elpy-flymake-previous-error)
               ("M-g M-n" . elpy-flymake-next-error)
               ("C-x C-e " . python-shell-send-defun))
   :config
-  (require 'elpy)
-  (require 'jedi)
+  ;; (require 'elpy)
+  ;; (require 'jedi)
   (add-hook 'python-mode-hook 'elpy-enable)
   (add-hook 'python-mode-hook 'flycheck-mode)
   (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
