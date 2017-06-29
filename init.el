@@ -577,48 +577,42 @@ Set `spaceline-highlight-face-func' to
 (use-package helm
   :diminish helm-mode
   :functions defhydra
+  :chords
+  (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
+   ("éè" . my-do-ag-project-root-or-dir)) ;; incremental grep in project
   :bind
   (("M-x" . helm-M-x) ;; superior to M-x
    ("C-x M-x" . execute-extended-command)
-   ("C-ç A" . helm-apt)
-   ("C-c h A" . helm-apt)
-   ("C-ç P" . helm-list-elisp-packages-no-fetch)
-   ("C-c h P" . helm-list-elisp-packages-no-fetch)
-   ("C-ç a" . my-do-ag-project-root-or-dir)
-   ("C-c h a" . my-do-ag-project-root-or-dir)
-   ("C-ç c" . helm-org-capture-templates)
-   ("C-c h c" . helm-org-capture-templates)
-   ("C-ç g" . helm-do-ag)
-   ("C-c h g" . helm-do-ag)
-   ("C-ç m" . helm-man-woman)
-   ("C-c h m" . helm-man-woman)
-   ("C-ç o" . helm-occur)
-   ("C-c h o" . helm-occur)
-   ("C-ç p" . helm-projectile-switch-project)
-   ("C-ç C-p" . helm-projectile-switch-project)
-   ("C-c h p" . helm-projectile-switch-project)
-   ("C-ç r" . helm-resume)
-   ("C-c h r" . helm-resume)
-   ("C-ç s" . helm-google-suggest)
-   ("C-c h s" . helm-google-suggest)
-   ("C-ç t" . helm-top)
-   ("C-c h t" . helm-top)
-   ("C-ç w" . helm-wikipedia-suggest)
-   ("C-c h w" . helm-wikipedia-suggest)
-   ("C-ç x" . helm-run-external-command)
-   ("C-c h x" . helm-run-external-command)
-   ("C-ç h" . helm-apropos)
    ("C-h a" . helm-apropos)
    ("C-h f" . helm-apropos)
    ("C-h v" . helm-apropos)
-   ("C-ç C-ç" . my/helm-for-files)
    ("M-ç" . hydra-helm/body)
+   ("C-ç" . hydra-helm/body)
+   ("C-c h" . hydra-helm/body)
    :map helm-map
    ("M-«" . helm-beginning-of-buffer)
    ("M-»" . helm-end-of-buffer))
-  :chords (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
-           ("éè" . my-do-ag-project-root-or-dir)) ;; incremental grep in project
   :config
+  (defhydra hydra-helm(:color blue :columns 5)
+    "helm"
+    ("a" my-do-ag-project-root-or-dir "grep project or dir")
+    ("A" helm-apt "apt")
+    ("c" helm-org-capture-templates "org-capture")
+    ("C-ç" my/helm-for-files "files (custom)")
+    ("f" helm-for-files "files")
+    ("g" helm-do-ag "grep")
+    ("h" helm-apropos "apropos")
+    ("m" helm-man-woman "man-woman")
+    ("o" helm-occur "occur")
+    ("p" helm-projectile-switch-project "switch project")
+    ("C-p" helm-projectile-switch-project "switch project")
+    ("P" helm-list-elisp-packages-no-fetch "elisp packages")
+    ("r" helm-resume "resume")
+    ("s" helm-google-suggest "google")
+    ("t" helm-top "top")
+    ("w" helm-wikipedia-suggest "wikipedia")
+    ("x" helm-run-external-command "run ext. cmd")
+    ("q" nil "cancel"))
   (defun my-do-ag-project-root-or-dir ()
     "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
     (interactive)
@@ -668,24 +662,7 @@ Set `spaceline-highlight-face-func' to
                              helm-source-bookmarks
                              helm-source-recentf
                              helm-source-projectile-files-list)
-                       " * my/helm-find-files *"))
-  (defhydra hydra-helm(:color blue)
-    "helm"
-    ("a" my-do-ag-project-root-or-dir "grep project or dir")
-    ("A" helm-apt "apt")
-    ("c" helm-org-capture-templates "org-capture")
-    ("g" helm-do-ag "grep")
-    ("h" helm-apropos "apropos")
-    ("m" helm-man-woman "man-woman")
-    ("o" helm-occur "occur")
-    ("p" helm-projectile-switch-project "switch project")
-    ("P" helm-list-elisp-packages-no-fetch "elisp packages")
-    ("r" helm-resume "resume")
-    ("s" helm-google-suggest "google")
-    ("t" helm-top "top")
-    ("w" helm-wikipedia-suggest "wikipedia")
-    ("x" helm-run-external-command "run ext. cmd")
-    ("q" nil "cancel")))
+                       " * my/helm-find-files *")))
 
 (use-package ace-jump-helm-line
   :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
