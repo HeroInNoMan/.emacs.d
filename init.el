@@ -316,7 +316,7 @@ Set `spaceline-highlight-face-func' to
 (use-package zoom-frm
   :if (display-graphic-p)
   :bind
-  ("C-+" . zoom-frm-in)
+  ("C-+" . zoom-frm-in) ;; zoom-frm-out with "C-- C-+"
   ("C-=" . zoom-frm-unzoom))
 
 ;; (defun my--set-transparency (inc)
