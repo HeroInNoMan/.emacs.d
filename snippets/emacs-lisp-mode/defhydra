@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: defhydra
+# key: defhydra
+# --
+(defhydra hydra-${1:name}(${2::color ${3:color$(yas-choose-value '("red" "blue" "amaranth" "teal" "pink"))}} ${4::columns ${5:columns}})
+  "$1"
+  ("${7:binding}" ${8:command} "$8")
+  $0
+  ("q" nil "cancel"))
+(global-set-key (kbd "$6") 'hydra-$1/body)
