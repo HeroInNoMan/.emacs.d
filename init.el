@@ -832,7 +832,6 @@ Set `spaceline-highlight-face-func' to
   :config (region-bindings-mode-enable))
 
 (use-package multiple-cursors
-  ;; Multiple cursors keybindings
   :bind
   (("M-é" . set-rectangular-region-anchor)
    :map region-bindings-mode-map
