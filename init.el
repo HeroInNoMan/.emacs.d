@@ -63,6 +63,8 @@
 ;; DEFAULTS, ERGONOMY & KEYBINDINGS ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package hydra)
+
 (use-package better-defaults)
 
 (use-package crux
@@ -194,6 +196,7 @@
 (use-package spaceline
   :ensure t
   :config
+  (defvar god-local-mode nil)
   (defun spaceline-face-func-god (face active)
     (cond
      ((eq 'face1 face) (if active 'powerline-active1 'powerline-inactive1))
@@ -550,20 +553,6 @@ Set `spaceline-highlight-face-func' to
   (browse-kill-ring-default-keybindings)
   (setq browse-kill-ring-quit-action 'save-and-restore))
 
-(use-package char-menu
-  :bind (("<f7>" . char-menu)
-         ("C-é" . char-menu))
-  :config
-  (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
-                    ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
-                    ("cyrillic"   "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
-                    ("cyril. maj" "А" "Б" "В" "Г" "Д" "Е" "Ж" "З" "И" "Й" "К" "Л" "М" "Н" "О" "П" "Р" "С")
-                    ("arabic"     "ا" "ب" "ت" "ث" "ج" "ح" "خ" "د" "ذ" "ر" "ز" "س" "ش" "ص" "ض" "ط" "ظ" "ع" "غ" "ف" "ق" "ك" "ل" "م" "ن" "ه" "و" "ي" "ء")
-                    ("Greek"      "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
-                    ("Greek Maj"  "Α" "Β" "Y" "Δ" "Ε" "Ζ" "Η" "Θ" "Ι" "Κ" "Λ" "Μ" "Ν" "Ξ" "Ο" "Π" "Ρ" "Σ" "Τ" "Υ" "Φ" "Χ" "Ψ" "Ω")
-                    ("Smileys"    "☺" "☹")
-                    ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
-
 (use-package company
   :diminish company-mode
   :config
@@ -587,7 +576,6 @@ Set `spaceline-highlight-face-func' to
 
 (use-package helm
   :diminish helm-mode
-  :functions defhydra
   :chords
   (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
    ("éè" . my-do-ag-project-root-or-dir)) ;; incremental grep in project
@@ -697,95 +685,12 @@ Set `spaceline-highlight-face-func' to
               ("C-x C-q" . wgrep-change-to-wgrep-mode)
               ("C-c C-c" . wgrep-finish-edit)))
 
-(use-package hydra
-  :config
-  (defvar whitespace-mode nil)
-  (defvar idle-highlight-mode nil)
-  (defvar global-linum-mode nil)
-  (defvar god-local-mode nil)
+(use-package helm-dash)
 
-  (defhydra hydra-spell (:color teal)
-    "spelling"
-    ("t" endless/ispell-word-then-abbrev "corr. & add")
-    ("f" flyspell-mode "flyspell")
-    ("c" flyspell-buffer "flycheck buffer")
-    ("F" flyspell-buffer "flycheck buffer")
-    ("d" ispell-change-dictionary "change dictionary")
-    ("w" define-word-at-point "word definition")
-    ("q" nil "cancel"))
-  (global-set-key (kbd "C-è") 'hydra-spell/body)
+(use-package helm-git-grep)
 
-  (defhydra hydra-widgets (:color teal)
-    "widgets"
-    ("a" avandu-overview "avandu RSS")
-    ("b" eww "eww-browser")
-    ("B" ecb-activate "code browser")
-    ("c" open-calendar "calendar")
-    ("d" ale-find-diary-file "diary")
-    ("e" eshell "eshell")
-    ("E" elfeed "elfeed RSS")
-    ("g" toggle-god-mode "god")
-    ("G" gnus "gnus")
-    ("i" ale-find-init-file "init file")
-    ("I" highlight-indent-guides-mode "indent-guide")
-    ("j" butler-status "jenkins")
-    ("l" linum-mode "line number")
-    ("m" minimap-mode "minimap")
-    ("M" helm-spotify-plus "spotify")
-    ("n" neotree-toggle "neotree")
-    ;; ("n" treemacs-toggle "tree")
-    ("o" org-mode "org-mode")
-    ("p" list-packages "packages")
-    ("P" prettify-symbols-mode "prettify symbols")
-    ("r" ale-find-rest-client-file "rest-client")
-    ("R" rainbow-blocks-mode "rainbow-blocks")
-    ("s" sublimity-mode "sublimity")
-    ("S" spray-mode "spritz")
-    ("t" crux-visit-term-buffer "ansi-term")
-    ("T" tomatinho "pomodoro (tomatinho)")
-    ("v" visual-line-mode "visual-line")
-    ("w" whitespace-mode "whitespace")
-    ("W" wttrin "weather")
-    ("y" play-youtube-video "youtube")
-    ("Y" w3m-play-youtube-video "youtube at point")
-    ("$" shell "shell")
-    ("%" ansi-term "term")
-    ("q" nil "cancel"))
-  (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
-
-  (defhydra hydra-arabic (:color pink)
-    "type in arabic"
-    ("a" (insert-char 1575) "ا") ;; ARABIC LETTER ALEF
-    ("b" (insert-char 1576) "ب") ;; ARABIC LETTER BEH
-    ("t" (insert-char 1578) "ت") ;; ARABIC LETTER TEH
-    ("þ" (insert-char 1579) "ث") ;; ARABIC LETTER THEH
-    ("j" (insert-char 1580) "ج") ;; ARABIC LETTER JEEM
-    ("H" (insert-char 1581) "ح") ;; ARABIC LETTER HAH
-    ("†" (insert-char 1582) "خ") ;; ARABIC LETTER KHAH
-    ("d" (insert-char 1583) "د") ;; ARABIC LETTER DAL
-    ("ð" (insert-char 1584) "ذ") ;; ARABIC LETTER THAL
-    ("r" (insert-char 1585) "ر") ;; ARABIC LETTER REH
-    ("z" (insert-char 1586) "ز") ;; ARABIC LETTER ZAIN
-    ("s" (insert-char 1587) "س") ;; ARABIC LETTER SEEN
-    ("ß" (insert-char 1588) "ش") ;; ARABIC LETTER SHEEN
-    ("S" (insert-char 1589) "ص") ;; ARABIC LETTER SAD
-    ("D" (insert-char 1590) "ض") ;; ARABIC LETTER DAD
-    ("T" (insert-char 1591) "ط") ;; ARABIC LETTER TAH
-    ("Z" (insert-char 1592) "ظ") ;; ARABIC LETTER ZAH
-    ("g" (insert-char 1593) "ع") ;; ARABIC LETTER AIN
-    ("®" (insert-char 1594) "غ") ;; ARABIC LETTER GHAIN
-    ("f" (insert-char 1601) "ف") ;; ARABIC LETTER FEH
-    ("Q" (insert-char 1602) "ق") ;; ARABIC LETTER QAF
-    ("k" (insert-char 1603) "ك") ;; ARABIC LETTER KAF
-    ("l" (insert-char 1604) "ل") ;; ARABIC LETTER LAM
-    ("m" (insert-char 1605) "م") ;; ARABIC LETTER MEEM
-    ("n" (insert-char 1606) "ن") ;; ARABIC LETTER NOON
-    ("h" (insert-char 1607) "ه") ;; ARABIC LETTER HEH
-    ("w" (insert-char 1608) "و") ;; ARABIC LETTER WAW
-    ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
-    ("'" (insert-char 1569) "ء") ;; ARABIC LETTER HAMZA
-    ("q" nil "cancel" :color blue))
-  (global-set-key (kbd "<f6>") 'hydra-arabic/body))
+(use-package helm-swoop
+  :bind ("C-S-s" . helm-swoop))
 
 ;; case-insensitive policy
 (setq completion-ignore-case t
@@ -1574,6 +1479,69 @@ Set `spaceline-highlight-face-func' to
 (use-package crontab-mode
   :mode ("crontab$" . crontab-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; SPECIAL CHARACTERS, SPELLING, I18N ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package char-menu
+  :bind (("<f7>" . char-menu)
+         ("C-é" . char-menu))
+  :config
+  (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
+                    ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
+                    ("cyrillic"   "а" "б" "в" "г" "д" "е" "ж" "з" "и" "й" "к" "л" "м" "н" "о" "п" "р" "с")
+                    ("cyril. maj" "А" "Б" "В" "Г" "Д" "Е" "Ж" "З" "И" "Й" "К" "Л" "М" "Н" "О" "П" "Р" "С")
+                    ("arabic"     "ا" "ب" "ت" "ث" "ج" "ح" "خ" "د" "ذ" "ر" "ز" "س" "ش" "ص" "ض" "ط" "ظ" "ع" "غ" "ف" "ق" "ك" "ل" "م" "ن" "ه" "و" "ي" "ء")
+                    ("Greek"      "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
+                    ("Greek Maj"  "Α" "Β" "Y" "Δ" "Ε" "Ζ" "Η" "Θ" "Ι" "Κ" "Λ" "Μ" "Ν" "Ξ" "Ο" "Π" "Ρ" "Σ" "Τ" "Υ" "Φ" "Χ" "Ψ" "Ω")
+                    ("Smileys"    "☺" "☹")
+                    ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
+(global-set-key (kbd "<f6>") 'hydra-arabic/body)
+
+(defhydra hydra-arabic (:color pink)
+  "type in arabic"
+  ("a" (insert-char 1575) "ا") ;; ARABIC LETTER ALEF
+  ("b" (insert-char 1576) "ب") ;; ARABIC LETTER BEH
+  ("t" (insert-char 1578) "ت") ;; ARABIC LETTER TEH
+  ("þ" (insert-char 1579) "ث") ;; ARABIC LETTER THEH
+  ("j" (insert-char 1580) "ج") ;; ARABIC LETTER JEEM
+  ("H" (insert-char 1581) "ح") ;; ARABIC LETTER HAH
+  ("†" (insert-char 1582) "خ") ;; ARABIC LETTER KHAH
+  ("d" (insert-char 1583) "د") ;; ARABIC LETTER DAL
+  ("ð" (insert-char 1584) "ذ") ;; ARABIC LETTER THAL
+  ("r" (insert-char 1585) "ر") ;; ARABIC LETTER REH
+  ("z" (insert-char 1586) "ز") ;; ARABIC LETTER ZAIN
+  ("s" (insert-char 1587) "س") ;; ARABIC LETTER SEEN
+  ("ß" (insert-char 1588) "ش") ;; ARABIC LETTER SHEEN
+  ("S" (insert-char 1589) "ص") ;; ARABIC LETTER SAD
+  ("D" (insert-char 1590) "ض") ;; ARABIC LETTER DAD
+  ("T" (insert-char 1591) "ط") ;; ARABIC LETTER TAH
+  ("Z" (insert-char 1592) "ظ") ;; ARABIC LETTER ZAH
+  ("g" (insert-char 1593) "ع") ;; ARABIC LETTER AIN
+  ("®" (insert-char 1594) "غ") ;; ARABIC LETTER GHAIN
+  ("f" (insert-char 1601) "ف") ;; ARABIC LETTER FEH
+  ("Q" (insert-char 1602) "ق") ;; ARABIC LETTER QAF
+  ("k" (insert-char 1603) "ك") ;; ARABIC LETTER KAF
+  ("l" (insert-char 1604) "ل") ;; ARABIC LETTER LAM
+  ("m" (insert-char 1605) "م") ;; ARABIC LETTER MEEM
+  ("n" (insert-char 1606) "ن") ;; ARABIC LETTER NOON
+  ("h" (insert-char 1607) "ه") ;; ARABIC LETTER HEH
+  ("w" (insert-char 1608) "و") ;; ARABIC LETTER WAW
+  ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
+  ("'" (insert-char 1569) "ء") ;; ARABIC LETTER HAMZA
+  ("q" nil "cancel" :color blue))
+
+(defhydra hydra-spell (:color teal)
+  "spelling"
+  ("t" endless/ispell-word-then-abbrev "corr. & add")
+  ("f" flyspell-mode "flyspell")
+  ("c" flyspell-buffer "flycheck buffer")
+  ("F" flyspell-buffer "flycheck buffer")
+  ("d" ispell-change-dictionary "change dictionary")
+  ("w" define-word-at-point "word definition")
+  ("q" nil "cancel"))
+(global-set-key (kbd "C-è") 'hydra-spell/body)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUSTOMISATION & ENVIRONMENT ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1618,6 +1586,50 @@ Set `spaceline-highlight-face-func' to
   :init
   (add-hook 'after-init-hook 'server-start t)
   (add-hook 'after-init-hook 'edit-server-start t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; WIDGETS, PLUGINS, ADD-ONS, EXTENSIONS, MODULES ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defhydra hydra-widgets (:color teal)
+  "widgets"
+  ("a" avandu-overview "avandu RSS")
+  ("b" eww "eww-browser")
+  ("B" ecb-activate "code browser")
+  ("c" open-calendar "calendar")
+  ("C" flyspell-buffer "flycheck buffer")
+  ("d" ale-find-diary-file "diary")
+  ("e" eshell "eshell")
+  ("E" elfeed "elfeed RSS")
+  ;; ("f"  "f")
+  ("g" toggle-god-mode "god")
+  ("G" gnus "gnus")
+  ("i" ale-find-init-file "init file")
+  ("I" highlight-indent-guides-mode "indent-guide")
+  ("j" butler-status "jenkins")
+  ("l" linum-mode "line number")
+  ("m" minimap-mode "minimap")
+  ("M" helm-spotify-plus "spotify")
+  ("n" neotree-toggle "neotree")
+  ;; ("n" treemacs-toggle "tree")
+  ("o" org-mode "org-mode")
+  ("p" list-packages "packages")
+  ("P" prettify-symbols-mode "prettify symbols")
+  ("r" ale-find-rest-client-file "rest-client")
+  ("R" rainbow-blocks-mode "rainbow-blocks")
+  ("s" sublimity-mode "sublimity")
+  ("S" spray-mode "spritz")
+  ("t" crux-visit-term-buffer "ansi-term")
+  ("T" tomatinho "pomodoro (tomatinho)")
+  ("v" visual-line-mode "visual-line")
+  ("w" whitespace-mode "whitespace")
+  ("W" wttrin "weather")
+  ("y" play-youtube-video "youtube")
+  ("Y" w3m-play-youtube-video "youtube at point")
+  ("$" shell "shell")
+  ("%" ansi-term "term")
+  ("q" nil "cancel"))
+(key-chord-define-global (kbd "bj") 'hydra-widgets/body)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; pomodoro technique ;;
