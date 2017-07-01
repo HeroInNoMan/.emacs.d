@@ -367,9 +367,8 @@ Set `spaceline-highlight-face-func' to
 
 ;; prettify-symbols
 (defconst lisp--prettify-symbols-alist
-  '(("lambda"  . ?λ)
-    (">=" . ?≥)
-    ("<=" . ?≤)))
+  '(("lambda"  . λ)
+    ("!=" . ≠)))
 
 ;;;;;;;;;;;
 ;; DIRED ;;
