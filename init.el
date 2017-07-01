@@ -868,16 +868,13 @@ Set `spaceline-highlight-face-func' to
 ;; GIT AND VC ;;
 ;;;;;;;;;;;;;;;;
 
-(use-package git-timemachine
-  :bind ("C-x g t" . git-timemachine))
+(use-package git-timemachine)
 
 (use-package git-messenger
-  :bind
-  (("C-x g g" . git-messenger:popup-message)
-   :map git-messenger-map
-   ("d" . git-messenger:popup-diff)
-   ("s" . git-messenger:)
-   ("c" . git-messenger:copy-commit-id))
+  :bind (:map git-messenger-map
+              ("d" . git-messenger:popup-diff)
+              ("s" . git-messenger:)
+              ("c" . git-messenger:copy-commit-id))
   :config
   (add-hook 'git-messenger:popup-buffer-hook 'magit-commit-mode)
   (setq git-messenger:show-detail t))
@@ -891,25 +888,32 @@ Set `spaceline-highlight-face-func' to
 (use-package git-gutter
   :diminish git-gutter-mode
   :bind
-  ("C-x g n" . git-gutter:next-hunk)
-  ("C-x g p" . git-gutter:previous-hunk)
   ("M-N" . git-gutter:next-hunk)
   ("M-P" . git-gutter:previous-hunk)
-  ("C-x g s" . git-gutter:stage-hunk)
-  ("C-x g r" . git-gutter:revert-hunk)
-  ("C-x g u" . git-gutter-mode)
   :config
   (global-git-gutter-mode +1)
   (setq git-gutter:ask-p nil
         git-gutter:hide-gutter t))
 
 (use-package magit
-  :chords ("qg" . magit-status) ;; run git status for current buffer
-  :bind (("C-x g ." . magit-status)
-         ("C-x g b" . magit-blame))
+  :chords ("qg" . magit-status) ;; run git status for current buffer)
   :config
   (setq magit-last-seen-setup-instructions "1.4.0")
   (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
+
+(defhydra hydra-git(:color blue :columns 4)
+  "git"
+  ("." magit-status "status")
+  ("b" magit-blame "blame")
+  ("g" git-messenger:popup-message "message")
+  ("n" git-gutter:next-hunk "next hunk")
+  ("p" git-gutter:previous-hunk "previous hunk")
+  ("r" git-gutter:revert-hunk "revert-hunk")
+  ("s" git-gutter:stage-hunk "stage-hunk")
+  ("t" git-timemachine "git-timemachine")
+  ("u" git-gutter-mode "gutter-mode")
+  ("q" nil "cancel"))
+(global-set-key (kbd "C-x g") 'hydra-git/body)
 
 ;; A saner ediff
 (setq ediff-diff-options "-w"
