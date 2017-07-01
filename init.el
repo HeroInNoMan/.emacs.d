@@ -411,9 +411,6 @@ Set `spaceline-highlight-face-func' to
               ("<tab>" . isearch-dabbrev-expand)
               ("M-/" . isearch-dabbrev-expand)))
 
-;; (use-package swiper-helm
-;;   :bind ("C-S-s" . swiper-helm))
-
 (use-package smartscan
   :bind
   ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
