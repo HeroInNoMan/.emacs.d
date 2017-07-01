@@ -467,8 +467,7 @@ Set `spaceline-highlight-face-func' to
   ("M-à" . avy-goto-word-1) ;; quickly jump to word by pressing its first letter
   ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
 
-(use-package imenu-anywhere
-  :bind ("C-ç ." . helm-imenu-anywhere))
+(use-package imenu-anywhere)
 
 (use-package dumb-jump
   :bind (:map prog-mode-map
@@ -594,12 +593,16 @@ Set `spaceline-highlight-face-func' to
   :config
   (defhydra hydra-helm(:color blue :columns 5)
     "helm"
+    ("." helm-imenu-anywhere "imenu")
     ("a" my-do-ag-project-root-or-dir "grep project or dir")
     ("A" helm-apt "apt")
+    ("b" helm-descbinds "bindings")
     ("c" helm-org-capture-templates "org-capture")
     ("C-ç" my/helm-for-files "files (custom)")
+    ("d" helm-dash "dash")
     ("f" helm-for-files "files")
     ("g" helm-do-ag "grep")
+    ("G" helm-git-grep "git-grep")
     ("h" helm-apropos "apropos")
     ("m" helm-man-woman "man-woman")
     ("o" helm-occur "occur")
@@ -665,13 +668,9 @@ Set `spaceline-highlight-face-func' to
 
 (use-package ace-jump-helm-line
   :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
-(use-package helm-dash
-  :bind ("C-ç d" . helm-dash))
 
 (use-package helm-descbinds
-  :bind
-  ("C-ç b" . helm-descbinds)
-  ("C-h b" . helm-descbinds))
+  :bind ("C-h b" . helm-descbinds))
 
 (use-package wgrep
   :bind (:map grep-mode-map
@@ -697,27 +696,6 @@ Set `spaceline-highlight-face-func' to
       pcomplete-ignore-case t
       read-file-name-completion-ignore-case t
       read-buffer-completion-ignore-case t)
-
-;; IVY / SWIPER / COUNSEL
-(use-package ivy
-  :config (setq ivy-height 20))
-(use-package swiper
-  :bind ("C-S-s" . counsel-grep-or-swiper))
-;; (use-package counsel
-;;   :chords ("éè" . counsel-ag))
-
-(defhydra hydra-counsel (:color teal)
-  "call counsel functions"
-  ("é" counsel-recentf "recentf")
-  ("f" counsel-find-file "find file")
-  ("l" counsel-locate "locate")
-  ("r" ivy-resume "resume")
-  ("s" counsel-grep-or-swiper "grep or swiper")
-  ("u" counsel-unicode-char "unicode char")
-  ("x" counsel-M-x "M-x")
-  ("y" counsel-yank-pop "yank-pop")
-  ("q" nil "cancel" :color blue))
-(global-set-key (kbd "C-é") 'hydra-counsel/body)
 
 (use-package yasnippet
   :config (yas-global-mode 1))
@@ -909,9 +887,6 @@ Set `spaceline-highlight-face-func' to
   :config
   (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
   (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
-
-(use-package helm-git-grep
-  :bind ("C-ç G" . helm-git-grep))
 
 (use-package git-gutter
   :diminish git-gutter-mode
