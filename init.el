@@ -447,12 +447,6 @@ Set `spaceline-highlight-face-func' to
    ("C-M-s" . vr/isearch-forward))
   :config (require 'visual-regexp)) ;; TODO check if really necessary
 
-;; ;; file finder
-;; (use-package f3
-;;   :bind
-;;   ("C-ç f" . f3)
-;;   ("C-c h f" . f3))
-
 ;;;;;;;;;;;;;;;;
 ;; NAVIGATION ;;
 ;;;;;;;;;;;;;;;;
