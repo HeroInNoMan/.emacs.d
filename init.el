@@ -89,9 +89,11 @@
 (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
 (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
 
-(unless (display-graphic-p)
-  (global-unset-key (kbd "C-z")) ;; used for tmux (C-z z for suspend-frame)
-  (global-set-key (kbd "C-z z") 'suspend-frame)) ;; C-z is saved for tmux
+(global-unset-key (kbd "C-z")) ;; used for tmux
+
+;; repeat
+(global-set-key (kbd "C-z") 'repeat)
+(global-set-key (kbd "C-x C-z") 'repeat-complex-command)
 
 (use-package god-mode
   :diminish god-local-mode
