@@ -2,4 +2,8 @@
 # name: use-package
 # key: use
 # --
-(use-package $0)
+(use-package ${1:name}
+  :init ()
+  :bind ()
+  :config
+    ($0))
