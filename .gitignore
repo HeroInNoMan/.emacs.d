@@ -25,3 +25,5 @@ spu_log
 /recentf
 /.persistent-scratch
 /tutorial
+/emacs.el
+/emacs.html

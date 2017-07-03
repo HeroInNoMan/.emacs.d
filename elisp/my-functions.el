@@ -324,7 +324,7 @@ for the line number input"
 (defun ale-find-init-file ()
   "Find init file"
   (interactive)
-  (find-file (expand-file-name "init.el" user-emacs-directory)))
+  (find-file (expand-file-name "emacs.org" user-emacs-directory)))
 
 (defun ale-find-diary-file ()
   "Find work diary file"
