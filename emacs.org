@@ -1027,6 +1027,8 @@
 
       (defadvice kill-whole-line (after fix-cookies activate)
         (myorg-update-parent-cookie)))
+
+    (use-package htmlize)
   #+END_SRC
 
 * Date, time & calendar
