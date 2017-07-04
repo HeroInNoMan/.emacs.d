@@ -116,6 +116,7 @@ div.outline-2 {
 }
 
 div.outline-2 pre {
+    background-color: #2f4f40;
     width: 90em;
     overflow: auto;
 }
