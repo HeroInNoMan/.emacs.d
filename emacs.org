@@ -9,6 +9,7 @@
   #+END_SRC
 
 * Installation & loading
+  I use [[https://github.com/jwiegley/use-package][use-package]] and [[https://melpa.org/][melpa]] to manage my packages and modules.
   #+BEGIN_SRC emacs-lisp
     ;; package-style dependencies
     (when (>= emacs-major-version 24)
@@ -35,6 +36,7 @@
   #+END_SRC
 
 * Libs & tools
+  My custom (often stolen) lisp code is stored in elisp/my-functions.el.
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :ensure nil
@@ -58,9 +60,13 @@
   #+END_SRC
 
 * Defaults, ergonomy & keybindings
+  I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of shortcuts:
   #+BEGIN_SRC emacs-lisp
     (use-package hydra)
+  #+END_SRC
 
+  Let’s redefine some basic behaviour and shortcuts:
+  #+BEGIN_SRC emacs-lisp
     (use-package better-defaults)
 
     (use-package crux
@@ -72,57 +78,35 @@
       (crux-with-region-or-buffer indent-region)
       (crux-with-region-or-buffer untabify)
       (crux-with-region-or-buffer tabify))
+  #+END_SRC
 
-    (global-set-key (kbd "C-S-b") 'bookmark-set) ;; easier eclipse-style bookmark setting
+  Easier eclipse-style bookmark setting:
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-S-b") 'bookmark-set)
     (global-set-key (kbd "<f8>") 'bookmark-set)
     (global-set-key (kbd "<f9>") 'bookmark-jump)
+  #+END_SRC
 
+  ~M-«~ and ~M-»~ are easier than ~M-<~ and ~M->~ with a bépo keyboard:
+  #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "M-«") 'beginning-of-buffer)
     (global-set-key (kbd "M-»") 'end-of-buffer)
+  #+END_SRC
 
-
+  Killing emacs; default binding is too easy to hit by accident.
+  #+BEGIN_SRC emacs-lisp
     ;; Killing emacs
-    (global-unset-key (kbd "C-x C-c")) ;; too easy to hit by accident, use “M-x kill-emacs” instead
+    (global-unset-key (kbd "C-x C-c")) ;;
     (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
 
     (global-unset-key (kbd "C-z")) ;; used for tmux
+  #+END_SRC
 
+  I never use the minimise command, use the binding for repeat instead.
+  #+BEGIN_SRC emacs-lisp
     ;; repeat
     (global-set-key (kbd "C-z") 'repeat)
     (global-set-key (kbd "C-x C-z") 'repeat-complex-command)
-
-    (use-package god-mode
-      :diminish god-local-mode
-      :bind
-      (("C-c g" . toggle-god-mode)
-       ("<menu>" . toggle-god-mode)
-       :map god-local-mode-map
-       ("i" . toggle-god-mode)
-       ("z" . repeat)
-       ("." . repeat))
-      :chords ("ii" . toggle-god-mode)
-      :init (setq god-mode-colors nil)
-      :config
-      (defun toggle-god-mode ()
-        (interactive)
-        (god-mode-all)
-        (my-update-cursor))
-      (defun my-update-cursor ()
-        "change cursor colour if god-mode is activated/deactivated effectively."
-        (cond
-         ((and god-local-mode (not god-mode-colors))
-          (progn
-            (set-cursor-color "red")
-            (setq god-mode-colors t)))
-         ((and (not god-local-mode) god-mode-colors)
-          (progn
-            (set-cursor-color "yellow")
-            (setq god-mode-colors nil)))))
-      (defadvice select-window (after update-cursor-color activate)
-        (my-update-cursor))
-      (add-to-list 'god-exempt-major-modes 'helm-major-mode)
-      (add-to-list 'god-exempt-major-modes 'browse-kill-ring-mode)
-      (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
 
     ;; Answer questions with y/n
     (defalias 'yes-or-no-p 'y-or-n-p)
@@ -178,6 +162,42 @@
     (setq gnus-button-url 'browse-url-generic
           browse-url-generic-program "firefox"
           browse-url-browser-function gnus-button-url)
+  #+END_SRC
+
+  I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal way.
+  #+BEGIN_SRC emacs-lisp
+    (use-package god-mode
+      :diminish god-local-mode
+      :bind
+      (("C-c g" . toggle-god-mode)
+       ("<menu>" . toggle-god-mode)
+       :map god-local-mode-map
+       ("i" . toggle-god-mode)
+       ("z" . repeat)
+       ("." . repeat))
+      :chords ("ii" . toggle-god-mode)
+      :init (setq god-mode-colors nil)
+      :config
+      (defun toggle-god-mode ()
+        (interactive)
+        (god-mode-all)
+        (my-update-cursor))
+      (defun my-update-cursor ()
+        "change cursor colour if god-mode is activated/deactivated effectively."
+        (cond
+         ((and god-local-mode (not god-mode-colors))
+          (progn
+            (set-cursor-color "red")
+            (setq god-mode-colors t)))
+         ((and (not god-local-mode) god-mode-colors)
+          (progn
+            (set-cursor-color "yellow")
+            (setq god-mode-colors nil)))))
+      (defadvice select-window (after update-cursor-color activate)
+        (my-update-cursor))
+      (add-to-list 'god-exempt-major-modes 'helm-major-mode)
+      (add-to-list 'god-exempt-major-modes 'browse-kill-ring-mode)
+      (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
   #+END_SRC
 
 * Theme & appearance
