@@ -341,6 +341,9 @@
 
     (use-package highlight-line ;; highlight line in list buffers
       :ensure nil
+      :config
+      (global-hl-line-mode -1) ;; don’t highlight current line
+      (highlight-line-mode 1) ;; except in “list” modes
       :load-path "elisp/")
 
     (use-package fancy-narrow
@@ -370,8 +373,6 @@
     (global-font-lock-mode t) ;; enable syntax highlighting
     (setq font-lock-maximum-decoration t) ;; all possible colours
     (blink-cursor-mode -1) ;; no blinking cursor
-    (global-hl-line-mode -1) ;; don’t highlight current line
-    (highlight-line-mode 1) ;; except in “list” modes
     (fringe-mode 0) ;; remove fringes on the sides
 
     ;; Show me empty lines after buffer end
@@ -1574,6 +1575,8 @@
       ;; ("f"  "f")
       ("g" toggle-god-mode "god")
       ("G" gnus "gnus")
+      ("h" idle-highlight-mode "Idle HL")
+      ("H" hl-line-mode "Highlight line")
       ("i" ale-find-init-file "init file")
       ("I" highlight-indent-guides-mode "indent-guide")
       ("j" butler-status "jenkins")
