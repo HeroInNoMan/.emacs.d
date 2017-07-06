@@ -34,6 +34,14 @@
     (use-package use-package-chords
       :config (key-chord-mode 1))
   #+END_SRC
+  Let’s keep ~/.emacs.d tidy:
+  #+BEGIN_SRC emacs-lisp
+    (use-package no-littering
+      :config
+      (require 'recentf)
+      (add-to-list 'recentf-exclude no-littering-var-directory)
+      (add-to-list 'recentf-exclude no-littering-etc-directory))
+  #+END_SRC
 
 * Libs & tools
   My custom (often stolen) lisp code is stored in elisp/my-functions.el.
