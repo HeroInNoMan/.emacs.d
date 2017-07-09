@@ -65,8 +65,6 @@
     (use-package my-checks :ensure nil)
 
     (use-package describe-number)
-
-    (use-package swagger-to-org)
   #+END_SRC
 
 * Defaults, ergonomics & keybindings
@@ -1125,6 +1123,8 @@
         (myorg-update-parent-cookie)))
 
     (use-package htmlize)
+
+    (use-package swagger-to-org)
   #+END_SRC
 
 ** TODO install and try package: [[https://github.com/Kungsgeten/org-brain][org-brain]]
