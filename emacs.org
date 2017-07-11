@@ -73,6 +73,17 @@
     (use-package hydra)
   #+END_SRC
 
+  [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed.
+  #+BEGIN_SRC emacs-lisp
+    (use-package which-key ;; which-key (replacement for guide-key)
+      :diminish which-key-mode
+      :config (which-key-mode)
+      (setq which-key-idle-delay 0.3))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+  (use-package helpful)
+  #+END_SRC
   Let’s redefine some basic behaviour and shortcuts:
   #+BEGIN_SRC emacs-lisp
     (use-package better-defaults)
@@ -210,42 +221,37 @@
 
 * Appearance
 ** Decorations
-   Use fancy bullets in org-mode:
-   #+BEGIN_SRC emacs-lisp
-     (use-package org-bullets
-       :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-   #+END_SRC
-
-   Let’s have a visual feedback when performing cut/copy/paste operations.
-   #+BEGIN_SRC emacs-lisp
-     (use-package volatile-highlights
-       :diminish volatile-highlights-mode
-       :config (volatile-highlights-mode t))
-   #+END_SRC
-
-   Let’s have an indicator in the mode-line for search results:
-   #+BEGIN_SRC emacs-lisp
-     (use-package anzu
-       :diminish anzu-mode
-       :config
-       (global-anzu-mode t)
-       (setq-default anzu-cons-mode-line-p nil))
-   #+END_SRC
-
-   I use this package to increase/decrease the font size in the whole frame (not only in the buffer).
-   #+BEGIN_SRC emacs-lisp
+*** Zoom
+    I use this package to increase/decrease the font size in the whole frame (not only in the buffer).
+    #+BEGIN_SRC emacs-lisp
      (use-package zoom-frm
        :if (display-graphic-p)
        :bind
        ("C-+" . zoom-frm-in) ;; zoom-frm-out with "C-- C-+"
        ("C-=" . zoom-frm-unzoom))
-   #+END_SRC
+    #+END_SRC
 
-   More visual customisation…
-   #+BEGIN_SRC emacs-lisp
+*** Zen
+    #+BEGIN_SRC emacs-lisp
+      (use-package sublimity
+        :config
+        (require 'sublimity-scroll)
+        (require 'sublimity-map))
+    #+END_SRC
+
+*** Highlight feedback
+    Let’s have a visual feedback when performing cut/copy/paste operations.
+    #+BEGIN_SRC emacs-lisp
+      (use-package volatile-highlights
+        :diminish volatile-highlights-mode
+        :config (volatile-highlights-mode t))
+
      (use-package idle-highlight-mode)
+    #+END_SRC
 
-     (use-package highlight-line ;; highlight line in list buffers
+    Highlight current line in list buffers:
+    #+BEGIN_SRC emacs-lisp
+     (use-package highlight-line ;;
        :ensure nil
        :config
        (global-hl-line-mode -1) ;; don’t highlight current line
@@ -260,12 +266,20 @@
        :config
        (setq highlight-indent-guides-method 'character
              highlight-indent-guides-mode t))
+    #+END_SRC
 
-     (use-package sublimity
+*** More
+    Let’s have an indicator in the mode-line for search results:
+    #+BEGIN_SRC emacs-lisp
+     (use-package anzu
+       :diminish anzu-mode
        :config
-       (require 'sublimity-scroll)
-       (require 'sublimity-map))
+       (global-anzu-mode t)
+       (setq-default anzu-cons-mode-line-p nil))
+    #+END_SRC
 
+    More visual customisation…
+    #+BEGIN_SRC emacs-lisp
      ;; colors, appearance
      (use-package iso-transl ;; some environments don’t handle dead keys
        :ensure nil)
@@ -310,7 +324,7 @@
        '(("lambda"  . λ)
          ("!=" . ≠)
          ("..." . …)))
-   #+END_SRC
+    #+END_SRC
 
 ** Mode-line
    I use spaceline for my mode-line. It still needs some work, like including icons in it, and have the right information displayed for the battery.
@@ -407,7 +421,7 @@
            (line-column :priority 0)
            (point-position :priority 0)
            (buffer-size :priority 0)
-           (buffer-encoding-abbrev :priority 0 :when active)
+           ;; (buffer-encoding-abbrev :priority 0 :when active)
            (global :face spaceline-evil-visual :when active :priority 2)
            (window-number :priority 0)
            (workspace-number :priority 0)
@@ -467,9 +481,6 @@
 
     (use-package find-dired
       :config (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
-
-    (use-package disk
-      :chords ("<f5><f5>" . disk)) ;; cannot use function keys for chords
   #+END_SRC
 
   Standard isearch by default:
@@ -621,12 +632,6 @@
        (browse-kill-ring-default-keybindings)
        (setq browse-kill-ring-quit-action 'save-and-restore))
 
-     (use-package which-key ;; which-key (replacement for guide-key)
-       :diminish which-key-mode
-       :config (which-key-mode))
-
-     (use-package helpful)
-
      ;; case-insensitive policy
      (setq completion-ignore-case t
            pcomplete-ignore-case t
@@ -727,7 +732,7 @@
          ;; From file:elpa/helm-20160401.1302/helm-files.el::(with-helm-temp-hook%20'helm-after-initialize-hook
          ;; This lets me bring up results from locate without having to
          ;; exit and run a separate command.  Now I just have to remember
-         ;; to use it...
+         ;; to use it…
          (with-helm-temp-hook 'helm-after-initialize-hook
            (define-key helm-map (kbd "C-x C-l")
              'helm-multi-files-toggle-to-locate))
@@ -1031,6 +1036,7 @@
    #+END_SRC
 
 * Project management
+  I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (most of the time git projects).
   #+BEGIN_SRC emacs-lisp
     (use-package helm-projectile
       :diminish projectile-mode
@@ -1047,14 +1053,74 @@
         "Git fetch."
         (magit-status)
         (call-interactively #'magit-fetch-current)))
+  #+END_SRC
 
-    (use-package jenkins ;; TODO voir si c’est mieux que butler
+* Date, time & calendar
+  I want the date and time displayed in the French standard format, no M/D/Y nonsense.
+  #+BEGIN_SRC emacs-lisp
+    (setq display-time-day-and-date t ;; display date and time
+          display-time-24hr-format t ;; 24h time format
+          european-calendar-style t ;; day/month/year format for calendar
+          calendar-week-start-day 1 ;; start week on Monday
+          display-time-string-forms '((propertize
+                                       (format-time-string
+                                        (or display-time-format
+                                            (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
+                                        now)
+                                       'help-echo
+                                       (format-time-string "%A %e %b %Y (%V)" now)
+                                       'face '(:foreground "blue" :weight bold)
+                                       )
+                                      (if
+                                          (and
+                                           (not display-time-format)
+                                           display-time-day-and-date)
+                                          (format-time-string ", %A %e %b %Y (%V)" now)
+                                        "")))
+    (display-time)
+    (global-set-key (kbd "C-c d") 'insert-todays-date)
+
+    (use-package calfw) ;; à tester
+    (use-package calfw-gcal)
+    (use-package calfw-ical :ensure nil)
+    (defun open-calendar ()
+      (interactive)
+      (cfw:open-calendar-buffer
+       :contents-sources
+       (list
+        (cfw:ical-create-source "gcal AL" my-private-primary-gcal-url "Blue")
+        (cfw:ical-create-source "gcal hellfest" my-private-secondary-gcal-url "Brown"))))
+
+    ;; TODO configure weather in mode line
+    (use-package weatherline-mode
       :disabled t
+      :ensure nil
+      :load-path "elisp"
       :config
-      (setq jenkins-api-token "<api token can be found on user's configure page>"
-            jenkins-url "<jenkins url>"
-            jenkins-username "<your user name>"
-            jenkins-viewname "<viewname>"))
+      (setq weatherline-location-id "2988507")
+      (weatherline-mode))
+
+    ;; weather from wttr.in
+    (use-package wttrin
+      :commands (wttrin)
+      :config
+      (setq wttrin-default-cities
+            '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
+
+    ;; avandu (gateway to tiny tiny RSS)
+    (use-package avandu
+      :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
+                    avandu-user my-private-personal-tt-rss-username
+                    avandu-password my-private-personal-tt-rss-password)
+      :bind (:map avandu-article-mode-map
+                  ("p" . previous-line)
+                  ("n" . next-line)
+                  ("l" . recenter-top-bottom)
+                  :map avandu-overview-map
+                  ("<tab>" . avandu-next-feed)
+                  ("<backtab>" . avandu-previous-feed)
+                  ("l" . recenter-top-bottom)
+                  ("v" . scroll-up-command)))
   #+END_SRC
 
 * Org-mode
@@ -1127,74 +1193,13 @@
     (use-package swagger-to-org)
   #+END_SRC
 
-** TODO install and try package: [[https://github.com/Kungsgeten/org-brain][org-brain]]
-* Date, time & calendar
-  I want the date and time displayed in the French standard format, no M/D/Y nonsense.
+  Use fancy bullets in org-mode:
   #+BEGIN_SRC emacs-lisp
-    (setq display-time-day-and-date t ;; display date and time
-          display-time-24hr-format t ;; 24h time format
-          european-calendar-style t ;; day/month/year format for calendar
-          calendar-week-start-day 1 ;; start week on Monday
-          display-time-string-forms '((propertize
-                                       (format-time-string
-                                        (or display-time-format
-                                            (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
-                                        now)
-                                       'help-echo
-                                       (format-time-string "%A %e %b %Y (%V)" now)
-                                       'face '(:foreground "blue" :weight bold)
-                                       )
-                                      (if
-                                          (and
-                                           (not display-time-format)
-                                           display-time-day-and-date)
-                                          (format-time-string ", %A %e %b %Y (%V)" now)
-                                        "")))
-    (display-time)
-    (global-set-key (kbd "C-c d") 'insert-todays-date)
-
-    (use-package calfw) ;; à tester
-    (use-package calfw-gcal)
-    (use-package calfw-ical :ensure nil)
-    (defun open-calendar ()
-      (interactive)
-      (cfw:open-calendar-buffer
-       :contents-sources
-       (list
-        (cfw:ical-create-source "gcal AL" my-private-primary-gcal-url "Blue")
-        (cfw:ical-create-source "gcal hellfest" my-private-secondary-gcal-url "Brown"))))
-
-    ;; TODO configure weather in mode line
-    (use-package weatherline-mode
-      :disabled t
-      :ensure nil
-      :load-path "elisp"
-      :config
-      (setq weatherline-location-id "2988507")
-      (weatherline-mode))
-
-    ;; weather from wttr.in
-    (use-package wttrin
-      :commands (wttrin)
-      :config
-      (setq wttrin-default-cities
-            '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
-
-    ;; avandu (gateway to tiny tiny RSS)
-    (use-package avandu
-      :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
-                    avandu-user my-private-personal-tt-rss-username
-                    avandu-password my-private-personal-tt-rss-password)
-      :bind (:map avandu-article-mode-map
-                  ("p" . previous-line)
-                  ("n" . next-line)
-                  ("l" . recenter-top-bottom)
-                  :map avandu-overview-map
-                  ("<tab>" . avandu-next-feed)
-                  ("<backtab>" . avandu-previous-feed)
-                  ("l" . recenter-top-bottom)
-                  ("v" . scroll-up-command)))
+    (use-package org-bullets
+      :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
   #+END_SRC
+
+** TODO install and try package: [[https://github.com/Kungsgeten/org-brain][org-brain]]
 
 * Text
   #+BEGIN_SRC emacs-lisp
@@ -1263,7 +1268,6 @@
         (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
         (add-hook 'scheme-mode-hook           #'enable-paredit-mode))
     #+END_SRC
-
 
 ** Sql
    #+BEGIN_SRC emacs-lisp
@@ -1654,51 +1658,6 @@
       (add-hook 'after-init-hook 'edit-server-start t))
   #+END_SRC
 
-* Quick access
-  #+BEGIN_SRC emacs-lisp
-    (defhydra hydra-widgets (:color teal :columns 5)
-      "widgets"
-      ("a" avandu-overview "avandu RSS")
-      ("b" eww "eww-browser")
-      ("B" ecb-activate "code browser")
-      ("c" open-calendar "calendar")
-      ("C" flyspell-buffer "flycheck buffer")
-      ("d" ale-find-diary-file "diary")
-      ("e" eshell "eshell")
-      ("E" elfeed "elfeed RSS")
-      ;; ("f"  "f")
-      ("g" toggle-god-mode "god")
-      ("G" gnus "gnus")
-      ("h" idle-highlight-mode "Idle HL")
-      ("H" hl-line-mode "Highlight line")
-      ("i" ale-find-init-file "init file")
-      ("I" highlight-indent-guides-mode "indent-guide")
-      ("j" butler-status "jenkins")
-      ("l" linum-mode "line number")
-      ("m" minimap-mode "minimap")
-      ("M" helm-spotify-plus "spotify")
-      ("n" neotree-toggle "neotree")
-      ;; ("n" treemacs-toggle "tree")
-      ("o" org-mode "org-mode")
-      ("p" list-packages "packages")
-      ("P" prettify-symbols-mode "prettify symbols")
-      ("r" ale-find-rest-client-file "rest-client")
-      ("R" rainbow-blocks-mode "rainbow-blocks")
-      ("s" sublimity-mode "sublimity")
-      ("S" spray-mode "spritz")
-      ("t" crux-visit-term-buffer "ansi-term")
-      ("T" tomatinho "pomodoro (tomatinho)")
-      ("v" visual-line-mode "visual-line")
-      ("w" whitespace-mode "whitespace")
-      ("W" wttrin "weather")
-      ("y" play-youtube-video "youtube")
-      ("Y" w3m-play-youtube-video "youtube at point")
-      ("$" shell "shell")
-      ("%" ansi-term "term")
-      ("q" nil "cancel"))
-    (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
-  #+END_SRC
-
 * Other
 ** Pomodoro
    #+BEGIN_SRC emacs-lisp
@@ -1769,6 +1728,50 @@
       (use-package vimgolf :disabled t)
       (use-package slime-volleyball :disabled t)
     #+END_SRC
+* Quick access
+  #+BEGIN_SRC emacs-lisp
+    (defhydra hydra-widgets (:color teal :columns 5)
+      "widgets"
+      ("a" avandu-overview "avandu RSS")
+      ("b" eww "eww-browser")
+      ("B" ecb-activate "code browser")
+      ("c" open-calendar "calendar")
+      ("C" flyspell-buffer "flycheck buffer")
+      ("d" ale-find-diary-file "diary")
+      ("e" eshell "eshell")
+      ("E" elfeed "elfeed RSS")
+      ;; ("f"  "f")
+      ("g" toggle-god-mode "god")
+      ("G" gnus "gnus")
+      ("h" idle-highlight-mode "Idle HL")
+      ("H" hl-line-mode "Highlight line")
+      ("i" ale-find-init-file "init file")
+      ("I" highlight-indent-guides-mode "indent-guide")
+      ("j" butler-status "jenkins")
+      ("l" linum-mode "line number")
+      ("m" minimap-mode "minimap")
+      ("M" helm-spotify-plus "spotify")
+      ("n" neotree-toggle "neotree")
+      ;; ("n" treemacs-toggle "tree")
+      ("o" org-mode "org-mode")
+      ("p" list-packages "packages")
+      ("P" prettify-symbols-mode "prettify symbols")
+      ("r" ale-find-rest-client-file "rest-client")
+      ("R" rainbow-blocks-mode "rainbow-blocks")
+      ("s" sublimity-mode "sublimity")
+      ("S" spray-mode "spritz")
+      ("t" crux-visit-term-buffer "ansi-term")
+      ("T" tomatinho "pomodoro (tomatinho)")
+      ("v" visual-line-mode "visual-line")
+      ("w" whitespace-mode "whitespace")
+      ("W" wttrin "weather")
+      ("y" play-youtube-video "youtube")
+      ("Y" w3m-play-youtube-video "youtube at point")
+      ("$" shell "shell")
+      ("%" ansi-term "term")
+      ("q" nil "cancel"))
+    (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
+  #+END_SRC
 * Epilogue
   My init file (emacs.org) should always be open.
   #+BEGIN_SRC emacs-lisp

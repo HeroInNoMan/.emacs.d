@@ -63,6 +63,14 @@
                              (server-address . "https://jenkins.sfrdev.fr/view/ecomfixe-git/")
                              (auth-file . "~/.authinfo-jenkins.gpg")))) ;; machine SERVER-NAME login my_login password my_pass
 
+    (use-package jenkins ;; TODO compare to butler
+      :disabled t
+      :config
+      (setq jenkins-api-token "<api token can be found on user's configure page>"
+            jenkins-url "<jenkins url>"
+            jenkins-username "<your user name>"
+            jenkins-viewname "<viewname>"))
+
     ;; org-capture-templates
     (add-to-list 'org-capture-templates '("d" "SFR - work log" entry (file+datetree (concat terminalcity-dir "SFR.org") "Diary") "* %i%?"))
     (add-to-list 'org-capture-templates '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))
