@@ -1698,7 +1698,7 @@
 
 ** Music
    #+BEGIN_SRC emacs-lisp
-   (use-package helm-spotify-plus)
+     (use-package helm-spotify-plus)
    #+END_SRC
 
 ** Youtube
