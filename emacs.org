@@ -1158,6 +1158,7 @@
        ("\C-c t" . org-begin-template))
       :chords ("gx" . org-capture)
       :init (require 'org-agenda)
+      :ensure ob-restclient
       :config
       ;; ORG-CAPTURE
       (setq org-default-notes-file (concat user-emacs-directory "notes.org")
@@ -1169,7 +1170,7 @@
       (org-babel-do-load-languages
        'org-babel-load-languages
        '((R . nil)
-         ;; (sh . t)
+         (restclient . t)
          (emacs-lisp . t)))
 
       ;; org-capture-templates
@@ -1699,13 +1700,18 @@
 ** Pomodoro
    #+BEGIN_SRC emacs-lisp
      (use-package tomatinho)
+   #+END_SRC
 
+** Restclient
+   #+BEGIN_SRC emacs-lisp
      ;; REST client
      (use-package restclient
        :mode ("restclient" . restclient-mode)
        :bind
        (:map restclient-mode-map
              ("C-c n w" . widen)))
+
+     (use-package ob-restclient)
    #+END_SRC
 
 ** Spritz
