@@ -1631,6 +1631,12 @@
        ("q" nil "cancel"))
      (global-set-key (kbd "C-è") 'hydra-spell/body)
    #+END_SRC
+** Grammalecte
+   #+BEGIN_SRC emacs-lisp
+     (use-package grammalecte
+       :ensure nil
+       :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
+   #+END_SRC
 
 * Customisation & environment
   #+BEGIN_SRC emacs-lisp
