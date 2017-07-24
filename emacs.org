@@ -1792,6 +1792,7 @@
       ("S" spray-mode "spritz")
       ("t" crux-visit-term-buffer "ansi-term")
       ("T" tomatinho "pomodoro (tomatinho)")
+      ("u" hydra-toggle-minor-mode/body "toggle…")
       ("v" visual-line-mode "visual-line")
       ("w" whitespace-mode "whitespace")
       ("W" wttrin "weather")
@@ -1801,6 +1802,26 @@
       ("%" ansi-term "term")
       ("q" nil "cancel"))
     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
+
+    (defhydra hydra-toggle-minor-mode(:color teal :columns 4)
+      "toggle-minor-mode"
+      ("d" ido-mode "ido")
+      ("g" toggle-god-mode "god")
+      ("h" idle-highlight-mode "Idle HL")
+      ("H" hl-line-mode "Highlight line")
+      ("i" highlight-indent-guides-mode "indent-guide")
+      ("l" linum-mode "line number")
+      ("m" minimap-mode "minimap")
+      ("n" neotree-toggle "neotree")
+      ("p" prettify-symbols-mode "prettify symbols")
+      ("r" rainbow-blocks-mode "rainbow-blocks")
+      ("s" sublimity-mode "sublimity")
+      ("S" spray-mode "spritz")
+      ("v" visual-line-mode "visual-line")
+      ("w" whitespace-mode "whitespace")
+
+      ("q" nil "cancel"))
+    (global-set-key (kbd "C-x t") 'hydra-toggle-minor-mode/body)
   #+END_SRC
 * Epilogue
   My init file (emacs.org) should always be open.
