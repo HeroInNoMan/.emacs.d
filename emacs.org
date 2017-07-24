@@ -790,7 +790,10 @@
 ** Snippets
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
-       :config (yas-global-mode 1))
+       :config
+       (setq yas-snippet-dirs `(,(concat user-emacs-directory "etc/yasnippet/snippets") yas-installed-snippets-dir))
+       (yas-global-mode 1)
+       (yas-reload-all))
    #+END_SRC
 
 * Text manipulation
