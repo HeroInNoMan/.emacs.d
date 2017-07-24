@@ -4,7 +4,7 @@
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 
-#+LANGUAGE:  en
+#+LANGUAGE: en
 
 #+LINK_HOME: http://leothaud.eu
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="emacs.css" />
