@@ -1094,14 +1094,14 @@
                                             (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
                                         now)
                                        'help-echo
-                                       (format-time-string "%A %e %b %Y (%V)" now)
+                                       (format-time-string "%a %d/%m (%V)" now)
                                        'face '(:foreground "blue" :weight bold)
                                        )
                                       (if
                                           (and
                                            (not display-time-format)
                                            display-time-day-and-date)
-                                          (format-time-string ", %A %e %b %Y (%V)" now)
+                                          (format-time-string ", %a %d/%m (%V)" now)
                                         "")))
     (display-time)
     (global-set-key (kbd "C-c d") 'insert-todays-date)
