@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: add package
+# key: add
+# --
+add package: $0
