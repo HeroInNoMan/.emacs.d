@@ -1269,6 +1269,58 @@
     (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
   #+END_SRC
 
+  Let’s use emacs to read our mail (with mu4e) :
+  #+BEGIN_SRC emacs-lisp
+    (use-package mu4e
+      :load-path "/usr/share/emacs/site-lisp/mu4e"
+      :ensure nil
+      :config
+      (setq mu4e-maildir (expand-file-name "~/Maildir")
+            mu4e-drafts-folder "/[Gmail].Drafts"
+            mu4e-sent-folder   "/[Gmail].Sent Mail"
+            mu4e-trash-folder  "/[Gmail].Trash")
+
+      ;; don't save message to Sent Messages, GMail/IMAP will take care of this
+
+      (setq mu4e-sent-messages-behavior 'delete)
+
+      ;; setup some handy shortcuts
+
+      (setq mu4e-maildir-shortcuts
+            '(("/INBOX"             . ?i)
+              ("/[Gmail].Sent Mail" . ?s)
+              ("/[Gmail].Trash"     . ?t)))
+
+      ;; allow for updating mail using 'U' in the main view:
+
+      (setq mu4e-get-mail-command "offlineimap")
+
+      ;; something about ourselves
+
+      (setq user-mail-address my-private-mail-address
+            user-full-name my-private-full-name
+            ;; I don't use a signature…
+            ;; message-signature
+            ;;  (concat
+            ;;    "Foo X. Bar\n"
+            ;;    "http://www.example.com\n")
+            ))
+
+    ;; sending mail -- replace USERNAME with your gmail username
+    ;; also, make sure the gnutls command line utils are installed
+    ;; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
+    (use-package smtpmail
+      :ensure nil
+      :config (setq message-send-mail-function 'smtpmail-send-it
+                    starttls-use-gnutls t
+                    smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-server-port nil nil))
+                    smtpmail-auth-credentials (expand-file-name my-private-auth-file)
+                    smtpmail-default-smtp-server my-private-smtp-server
+                    smtpmail-smtp-server my-private-smtp-server
+                    smtpmail-smtp-service my-private-smtp-server-port
+                    smtpmail-debug-info t))
+  #+END_SRC
+
 * Programming
 ** Shell
    #+BEGIN_SRC emacs-lisp
@@ -1787,6 +1839,7 @@
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-widgets (:color teal :columns 5)
       "widgets"
+      ("(" mu4e "mu4e")
       ("a" avandu-overview "avandu RSS")
       ("b" eww "eww-browser")
       ("B" ecb-activate "code browser")
