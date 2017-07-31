@@ -9,34 +9,31 @@
 #+LINK_HOME: http://leothaud.eu
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="emacs.css" />
 
-* Private variables
-  All private information is stored in variables in =~/.emacs.d/private.el
+* Installation & loading
+  Start by “disabling” garbage collection while starting up:
   #+BEGIN_SRC emacs-lisp
-    (let ((private-file (expand-file-name "private.el" user-emacs-directory)))
-      (when (file-exists-p private-file)
-        (load-file private-file)))
+  (setq gc-cons-threshold 128000000)
+  (add-hook 'after-init-hook #'(lambda ()
+                                 ;; restore after startup (and don't be so stingy
+                                 ;; on the memory, we have lots now. It's the
+                                 ;; distant future)
+                                 (setq gc-cons-threshold 20000000)))
   #+END_SRC
 
-* Installation & loading
   I use [[https://github.com/jwiegley/use-package][use-package]] and [[https://melpa.org/][melpa]] to manage my packages and modules.
   #+BEGIN_SRC emacs-lisp
     ;; package-style dependencies
-    (when (>= emacs-major-version 24)
+    (eval-when-compile
       (require 'package)
       (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
       (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-      (package-initialize))
-
-    ;; Bootstrap `use-package'
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package))
-
-    (eval-when-compile
-      (require 'use-package))
-
-    (setq use-package-always-ensure t
-          use-package-verbose t)
+      (package-initialize)
+      (unless (package-installed-p 'use-package)
+        (package-refresh-contents)
+        (package-install 'use-package))
+      (require 'use-package)
+      (setq use-package-always-ensure t
+            use-package-verbose t))
 
     (require 'diminish) ;; for :diminish
 
@@ -51,6 +48,14 @@
       (require 'recentf)
       (add-to-list 'recentf-exclude no-littering-var-directory)
       (add-to-list 'recentf-exclude no-littering-etc-directory))
+  #+END_SRC
+
+* Private variables
+  All private information is stored in variables in =~/.emacs.d/private.el
+  #+BEGIN_SRC emacs-lisp
+    (let ((private-file (expand-file-name "private.el" user-emacs-directory)))
+      (when (file-exists-p private-file)
+        (load-file private-file)))
   #+END_SRC
 
 * Libraries & tools
