@@ -114,9 +114,8 @@
 
   Easier eclipse-style bookmark setting:
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-S-b") 'bookmark-set)
-    (global-set-key (kbd "<f8>") 'bookmark-set)
-    (global-set-key (kbd "<f9>") 'bookmark-jump)
+    (global-set-key (kbd "C-S-b") 'helm-bookmarks)
+    (global-set-key (kbd "<f8>") 'helm-bookmarks)
   #+END_SRC
 
   ~M-«~ and ~M-»~ are easier than ~M-<~ and ~M->~ with a BÉPO™ keyboard:
