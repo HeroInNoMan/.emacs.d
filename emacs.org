@@ -1153,14 +1153,43 @@
       :config
       (setq weatherline-location-id "2988507")
       (weatherline-mode))
+   #+END_SRC
 
+** Calendar widget
+   I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of my different calendars:
+   #+BEGIN_SRC emacs-lisp
+    (use-package calfw
+      :config
+      (use-package calfw-gcal)
+      (use-package calfw-cal)
+      (use-package calfw-ical)
+      (use-package calfw-org)
+      (defun open-calendar ()
+        (interactive)
+        (cfw:open-calendar-buffer
+         :contents-sources
+         (list
+          (cfw:ical-create-source "Google Calendar" my-private-primary-gcal-url "olive")
+          (cfw:ical-create-source "Vacances" "http://dynical.com/iCal/weather.ics/?lng=fr&zone=ile-de-france|paris|75100&zone_=E" "yellow")
+          (cfw:org-create-source "Green")  ; orgmode source
+          ;; (cfw:cal-create-source "Orange") ; diary source
+          (cfw:ical-create-source "hellfest" my-private-secondary-gcal-url "Brown")
+          (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "Gray")  ; ICS source1
+          ))))
+   #+END_SRC
+
+** Weather widget
+   Weather from wttr.in
+   #+BEGIN_SRC emacs-lisp
     ;; weather from wttr.in
     (use-package wttrin
       :commands (wttrin)
       :config
       (setq wttrin-default-cities
             '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
+   #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
     ;; avandu (gateway to tiny tiny RSS)
     (use-package avandu
       :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
