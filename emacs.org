@@ -1189,23 +1189,6 @@
             '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
    #+END_SRC
 
-   #+BEGIN_SRC emacs-lisp
-    ;; avandu (gateway to tiny tiny RSS)
-    (use-package avandu
-      :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
-                    avandu-user my-private-personal-tt-rss-username
-                    avandu-password my-private-personal-tt-rss-password)
-      :bind (:map avandu-article-mode-map
-                  ("p" . previous-line)
-                  ("n" . next-line)
-                  ("l" . recenter-top-bottom)
-                  :map avandu-overview-map
-                  ("<tab>" . avandu-next-feed)
-                  ("<backtab>" . avandu-previous-feed)
-                  ("l" . recenter-top-bottom)
-                  ("v" . scroll-up-command)))
-  #+END_SRC
-
 * Org-mode
   #+BEGIN_SRC emacs-lisp
     (use-package org
@@ -1944,12 +1927,36 @@
       (use-package vimgolf :disabled t)
       (use-package slime-volleyball :disabled t)
     #+END_SRC
+** News
+*** RSS feeds
+    #+BEGIN_SRC emacs-lisp
+    ;; avandu (gateway to tiny tiny RSS)
+    (use-package avandu
+      :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
+                    avandu-user my-private-personal-tt-rss-username
+                    avandu-password my-private-personal-tt-rss-password)
+      :bind (:map avandu-article-mode-map
+                  ("p" . previous-line)
+                  ("n" . next-line)
+                  ("l" . recenter-top-bottom)
+                  :map avandu-overview-map
+                  ("<tab>" . avandu-next-feed)
+                  ("<backtab>" . avandu-previous-feed)
+                  ("l" . recenter-top-bottom)
+                  ("v" . scroll-up-command)))
+    #+END_SRC
+*** Stories
+    #+BEGIN_SRC emacs-lisp
+      (use-package helm-lobsters)
+    #+END_SRC
+
 * Quick access
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-widgets (:color teal :columns 5)
       "widgets"
       ("(" mu4e "mu4e")
       ("a" avandu-overview "avandu RSS")
+      ("A" helm-lobsters "lobsters")
       ("b" eww "eww-browser")
       ("B" ecb-activate "code browser")
       ("c" open-calendar "calendar")
