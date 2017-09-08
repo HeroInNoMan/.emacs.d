@@ -472,7 +472,7 @@
 *** TODO install and try package: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
 
 * Dired
-  I use dired+ which gives a colourful way of displaying information (ls-lA way).
+  I use dired+ which gives a colourful way of displaying information (ls -lA way).
   #+BEGIN_SRC emacs-lisp
     (use-package dired+
       :config (unbind-key "M-b" dired-mode-map))
