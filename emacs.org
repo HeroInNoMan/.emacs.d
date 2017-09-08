@@ -655,10 +655,13 @@
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree ;; powerfull undo/redo mode
        :diminish undo-tree-mode
+       :bind ("C-M-/" . undo-tree-redo)
        :config
        (global-undo-tree-mode)
        (setq undo-tree-visualizer-timestamps t
-             undo-tree-visualizer-diff t))
+
+             undo-tree-visualizer-diff t
+             undo-outer-limit 300000000))
    #+END_SRC
 
 ** Helm
