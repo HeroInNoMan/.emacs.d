@@ -331,6 +331,11 @@ for the line number input"
   (interactive)
   (find-file (expand-file-name my-private-work-diary-org-file)))
 
+(defun ale-find-remote-diary-file ()
+  "Find remote diary file"
+  (interactive)
+  (find-file (expand-file-name my-private-remote-diary-org-file my-private-remote-home-dir)))
+
 (defun ale-toggle-selective-display (column)
   (interactive "P")
   (set-selective-display

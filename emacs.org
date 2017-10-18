@@ -1965,6 +1965,7 @@
       ("c" open-calendar "calendar")
       ("C" flyspell-buffer "flycheck buffer")
       ("d" ale-find-diary-file "diary")
+      ("D" ale-find-remote-diary-file "remote diary")
       ("e" eshell "eshell")
       ("E" elfeed "elfeed RSS")
       ;; ("f"  "f")
