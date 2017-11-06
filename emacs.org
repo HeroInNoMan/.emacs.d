@@ -116,6 +116,7 @@
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-S-b") 'helm-bookmarks)
     (global-set-key (kbd "<f8>") 'helm-bookmarks)
+    (global-set-key (kbd "<f9>") 'jump-to-register)
   #+END_SRC
 
   ~M-«~ and ~M-»~ are easier than ~M-<~ and ~M->~ with a BÉPO™ keyboard:
