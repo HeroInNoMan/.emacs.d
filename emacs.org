@@ -75,6 +75,8 @@
       ("C-x |" . ale-toggle-window-split)
       ("C-|" . ale-toggle-window-split))
 
+    (use-package validate)
+
     (use-package my-checks :ensure nil)
 
     (use-package describe-number)
