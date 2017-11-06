@@ -1342,6 +1342,41 @@
   #+END_SRC
 
 * Programming
+** Dealing with parens
+   I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
+   #+BEGIN_SRC emacs-lisp
+     (use-package smartparens-config
+       :ensure smartparens
+       :bind
+       ;; edition
+       ("C-j" . sp-newline)
+       ("C-k" . sp-kill-hybrid-sexp)
+       ("M-s M-s" . sp-splice-sexp)
+       ("M-s k" . sp-kill-sexp)
+       ("M-s w" . sp-rewrap-sexp)
+       ("M-s j" . sp-join-sexp)
+       ("M-s t" . sp-transpose-sexp)
+       ("M-s T" . sp-transpose-hybrid-sexp)
+       ("M-s DEL" . sp-splice-sexp-killing-backward)
+       ;; movement
+       ("M-s u" . sp-backward-up-sexp)
+       ("M-s d" . sp-down-sexp)
+       ("M-s f" . sp-forward-sexp)
+       ("M-s b" . sp-backward-sexp)
+       ("M-s n" . sp-next-sexp)
+       ("M-s p" . sp-previous-sexp)
+       ;; slurping and barfing
+       ("M-s (" . sp-backward-slurp-sexp)
+       ("M-s )" . sp-slurp-hybrid-sexp)
+       ("M-s «" . sp-backward-barf-sexp)
+       ("M-s »" . sp-forward-barf-sexp)
+       :config
+       (show-smartparens-global-mode t)
+       (add-hook 'prog-mode-hook #'turn-on-smartparens-mode)
+       (add-hook 'markdown-mode-hook #'turn-on-smartparens-mode)
+       (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
+   #+END_SRC
+
 ** Shell
    #+BEGIN_SRC emacs-lisp
      (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
@@ -1378,20 +1413,6 @@
        :diminish elisp-slime-nav-mode
        :config (add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t))))
    #+END_SRC
-
-*** Paredit
-    #+BEGIN_SRC emacs-lisp
-      (use-package paredit
-        :diminish (paredit-mode . ")(")
-        :config
-        (add-hook 'emacs-lisp-mode-hook                  #'enable-paredit-mode)
-        (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-        (add-hook 'ielm-mode-hook                        #'enable-paredit-mode)
-        (add-hook 'lisp-mode-hook                        #'enable-paredit-mode)
-        (add-hook 'lisp-interaction-mode-hook            #'enable-paredit-mode)
-        (add-hook 'clojure-mode-hook                     #'enable-paredit-mode)
-        (add-hook 'scheme-mode-hook                      #'enable-paredit-mode))
-    #+END_SRC
 
 ** Sql
    #+BEGIN_SRC emacs-lisp
@@ -1958,7 +1979,8 @@
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-widgets (:color teal :columns 5)
       "widgets"
-      ("(" mu4e "mu4e")
+      ("(" smartparens-global-mode "smartparen")
+      ("4" mu4e "mu4e")
       ("a" avandu-overview "avandu RSS")
       ("A" helm-lobsters "lobsters")
       ("b" eww "eww-browser")
