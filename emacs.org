@@ -1719,7 +1719,8 @@
 
      (use-package typescript-mode
        :disabled t
-       :mode ("\\.ts\\'"))
+       :mode ("\\.ts\\'"
+              "\\.json\\'"))
 
      (use-package sass-mode
        :mode ("\\.sass$" . sass-mode))
