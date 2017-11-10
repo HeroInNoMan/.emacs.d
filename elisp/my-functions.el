@@ -319,7 +319,7 @@ for the line number input"
 (defun ale-find-rest-client-file ()
   "Find rest-client file"
   (interactive)
-  (find-file "~/projets/restclient-buffer"))
+  (find-file "~/projets/restclient/restclient-buffer"))
 
 (defun ale-find-init-file ()
   "Find init file"
