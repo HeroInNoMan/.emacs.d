@@ -26,7 +26,9 @@
       (setq dumb-jump-default-project "~/projets"))
 
     ;; change theme
-    (color-theme-charcoal-black)))
+    (color-theme-oswald)
+    ;; (color-theme-charcoal-black)
+    ))
 
 (defun load-dijon-env ()
   (progn
