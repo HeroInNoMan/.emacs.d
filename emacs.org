@@ -1759,6 +1759,7 @@
 ** Crontab
    #+BEGIN_SRC emacs-lisp
      (use-package crontab-mode
+       :ensure nil
        :mode ("crontab$" . crontab-mode))
    #+END_SRC
 
