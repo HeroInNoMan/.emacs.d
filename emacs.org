@@ -2000,7 +2000,7 @@
       _t_: ansi-term  _b_: eww-browser          _r_: rest-client     ^ ^                    _h_: Idle HL %`idle-highlight-mode
       _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
       _%_: term       _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
-      ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number %`linum-mode
+      ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number
       ^ ^             _j_: jenkins              ^ ^                  ^ ^                    _m_: minimap
       ^ ^             _M_: spotify              ^ ^                  ^ ^                    _n_: neotree
       ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
