@@ -1053,7 +1053,6 @@
                    ("C-c" . vdiff-mode-prefix-map))
        :init (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
        :config
-       (require 'vdiff)
        (setq
         ;; Whether to lock scrolling by default when starting vdiff
         vdiff-lock-scrolling t
