@@ -656,13 +656,24 @@
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree ;; powerfull undo/redo mode
        :diminish undo-tree-mode
-       :bind ("C-M-/" . undo-tree-redo)
+       :bind (("C-M-/" . undo-tree-redo)
+              ("C-c u" . hydra-undo-tree/undo-tree-undo))
        :config
        (global-undo-tree-mode)
        (setq undo-tree-visualizer-timestamps t
-
              undo-tree-visualizer-diff t
-             undo-outer-limit 300000000))
+             undo-outer-limit 300000000)
+       (defhydra hydra-undo-tree
+         (:color yellow :hint nil)
+         "
+       _p_: undo  _n_: redo _s_: save _l_: load   "
+         ("p"   undo-tree-undo)
+         ("n"   undo-tree-redo)
+         ("s"   undo-tree-save-history)
+         ("l"   undo-tree-load-history)
+         ("u"   undo-tree-visualize "visualize" :color blue)
+         ("q"   nil "quit" :color blue)))
+
    #+END_SRC
 
 ** Helm
