@@ -174,9 +174,7 @@
     (global-set-key [remap fill-paragraph]
                     #'endless/fill-or-unfill)
 
-    ;; Don't be so stingy on the memory, we have lots now. It's the distant future.
-    (setq gc-cons-threshold 20000000
-          global-mark-ring-max 128
+    (setq global-mark-ring-max 128
           mark-ring-max 128
           kill-ring-max 128)
 
