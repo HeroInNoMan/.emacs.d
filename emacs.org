@@ -801,7 +801,9 @@
                     ("C-c C-c" . wgrep-finish-edit)))
 
       (use-package helm-swoop
-        :bind ("C-S-s" . helm-swoop))
+        :bind
+        ("C-s" . helm-swoop)
+        ("C-S-s" . isearch-forward))
 
       (use-package helm-git-grep)
     #+END_SRC
