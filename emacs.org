@@ -1924,6 +1924,14 @@
                    ("n" . spray-forward-word)))
    #+END_SRC
 
+** epub
+   It now seems possible to read epub documents (ebooks) from within emacs:
+   #+BEGIN_SRC emacs-lisp
+     (use-package nov
+       :disabled t
+       :config
+       ((add-to-list 'auto-mode-alist '(".epub$" . nov-mode))))
+   #+END_SRC
 ** Text filling
    Lorem ipsum text filler:
    #+BEGIN_SRC emacs-lisp
