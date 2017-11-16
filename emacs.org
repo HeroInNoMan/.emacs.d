@@ -676,6 +676,25 @@
 
    #+END_SRC
 
+** Ivy, counsel, swiper
+   One in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
+   #+BEGIN_SRC emacs-lisp
+     (use-package counsel
+       :disabled t
+       :init ()
+       :bind ()
+       :config
+       ())
+     (use-package ivy
+       :disabled t
+       :demand
+       :config
+       (setq ivy-use-virtual-buffers t
+             ivy-count-format "%d/%d "))
+     (use-package swiper
+       :disabled t)
+   #+END_SRC
+
 ** Helm
 *** Helm package
     #+BEGIN_SRC emacs-lisp
@@ -697,29 +716,43 @@
          ("M-«" . helm-beginning-of-buffer)
          ("M-»" . helm-end-of-buffer))
         :config
-        (defhydra hydra-helm(:color blue :columns 5)
-          "helm"
-          ("." helm-imenu-anywhere "imenu")
-          ("a" my-do-ag-project-root-or-dir "grep project or dir")
-          ("A" helm-apt "apt")
-          ("b" helm-descbinds "bindings")
-          ("c" helm-org-capture-templates "org-capture")
-          ("C-ç" my/helm-for-files "files (custom)")
-          ("d" helm-dash "dash")
-          ("f" helm-for-files "files")
-          ("g" helm-do-ag "grep")
-          ("G" helm-git-grep "git-grep")
-          ("h" helm-apropos "apropos")
-          ("m" helm-man-woman "man-woman")
-          ("o" helm-occur "occur")
-          ("p" helm-projectile-switch-project "switch project")
-          ("C-p" helm-projectile-switch-project "switch project")
-          ("P" helm-list-elisp-packages-no-fetch "elisp packages")
+        (defhydra hydra-helm(:color teal :hint nil)
+          "
+          ^Open^                   ^Search^                    ^Doc^             ^Run
+          ^----^-------------------^------^--------------------^---^-------------^---^--------------
+          _C-p_: switch project    _._: imenu                  _b_: bindings     _A_: apt
+          _p_: switch project      _G_: git-grep               _d_: dash         _P_: elisp packages
+          _f_: files               _a_: grep project or dir    _h_: apropos      _c_: org-capture
+          _C-ç_: files (custom)    _g_: grep                   _m_: man-woman    _t_: top
+          ^ ^                      _o_: occur                  _s_: google       _x_: run ext. cmd
+          ^ ^                      ^ ^                         _w_: wikipedia
+          "
+          ;; open
+          ("C-p" helm-projectile-switch-project)
+          ("p" helm-projectile-switch-project)
+          ("f" helm-for-files)
+          ("C-ç" helm-for-files)
+          ;; search
+          ("." helm-imenu-anywhere)
+          ("G" helm-git-grep)
+          ("a" my-do-ag-project-root-or-dir)
+          ("g" helm-do-ag)
+          ("o" helm-occur)
+          ;; doc
+          ("b" helm-descbinds)
+          ("d" helm-dash)
+          ("h" helm-apropos)
+          ("m" helm-man-woman)
+          ("s" helm-google-suggest)
+          ("w" helm-wikipedia-suggest)
+          ;; run
+          ("A" helm-apt)
+          ("P" helm-list-elisp-packages-no-fetch)
+          ("c" helm-org-capture-templates)
+          ("t" helm-top)
+          ("x" helm-run-external-command)
+          ;;
           ("r" helm-resume "resume")
-          ("s" helm-google-suggest "google")
-          ("t" helm-top "top")
-          ("w" helm-wikipedia-suggest "wikipedia")
-          ("x" helm-run-external-command "run ext. cmd")
           ("q" nil "cancel"))
         (defun my-do-ag-project-root-or-dir ()
           "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
