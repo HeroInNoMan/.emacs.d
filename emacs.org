@@ -835,8 +835,8 @@
 
       (use-package helm-swoop
         :bind
-        ("C-s" . helm-swoop)
-        ("C-S-s" . isearch-forward))
+        ("C-s" . isearch-forward)
+        ("C-S-s" . helm-swoop))
 
       (use-package helm-git-grep)
     #+END_SRC
@@ -2034,8 +2034,8 @@
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-widgets (:color teal :hint nil)
       "
-      ^Built-in…^     ^Widget…^                 ^Find files…^        ^Action…^              ^Toggle…
-      ^---------^-----^-------^-----------------^-----------^--------^-------^--------------^-------
+      ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
+      ^---------^-----^-------^-----------------^-----------^--------^-------^--------------^------^---------------
       _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
       _G_: gnus       _a_: avandu RSS           _D_: remote diary    _P_: prettify symbols  _f_: ido %`ido-mode
       _p_: packages   _A_: lobsters             _i_: init file       ^ ^                    _g_: god %`god-local-mode
@@ -2051,46 +2051,55 @@
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
       "
-      ("(" smartparens-global-mode)
+      ;; Built-in
+      ("e" eshell)
+      ("G" gnus)
+      ("p" list-packages)
+      ("t" crux-visit-term-buffer)
+      ("$" shell)
+      ("%" ansi-term)
+
+      ;; Widget
       ("4" mu4e)
       ("a" avandu-overview)
       ("A" helm-lobsters)
       ("b" eww)
       ("B" ecb-activate)
       ("c" open-calendar)
-      ("C" flyspell-buffer)
+      ("E" elfeed)
+      ("j" butler-status)
+      ("M" helm-spotify-plus)
+      ("T" tomatinho)
+
+      ;; Find files
       ("d" ale-find-diary-file)
       ("D" ale-find-remote-diary-file)
-      ("e" eshell)
-      ("E" elfeed)
-      ("f" ido-mode "ido")
+      ("i" ale-find-init-file)
+      ("r" ale-find-rest-client-file)
+
+      ;; Action
+      ("C" flyspell-buffer)
+      ("P" prettify-symbols-mode)
+
+      ;; Toggle
+      ("(" smartparens-global-mode)
+      ("f" ido-mode)
       ("g" toggle-god-mode)
-      ("G" gnus)
       ("h" idle-highlight-mode)
       ("H" hl-line-mode)
-      ("i" ale-find-init-file)
       ("I" highlight-indent-guides-mode)
-      ("j" butler-status)
       ("l" linum-mode)
       ("m" minimap-mode)
-      ("M" helm-spotify-plus)
       ("n" neotree-toggle)
       ("o" org-mode)
-      ("p" list-packages)
-      ("P" prettify-symbols-mode)
-      ("r" ale-find-rest-client-file)
       ("R" rainbow-blocks-mode)
       ("s" sublimity-mode)
       ;; ("S" spray-mode)
-      ("t" crux-visit-term-buffer)
-      ("T" tomatinho)
       ("v" visual-line-mode)
       ("w" whitespace-mode)
       ;; ("W" wttrin)
       ;; ("y" play-youtube-video)
       ;; ("Y" w3m-play-youtube-video)
-      ("$" shell)
-      ("%" ansi-term)
       ("q" nil "cancel"))
     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
   #+END_SRC
