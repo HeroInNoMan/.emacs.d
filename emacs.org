@@ -873,8 +873,8 @@
                (insert key)
                (yas-expand)))))
        (setq yas-snippet-dirs `(,(concat user-emacs-directory "etc/yasnippet/snippets") yas-installed-snippets-dir))
-       (yas-global-mode 1)
        (yas-reload-all))
+     (yas-global-mode 1)
    #+END_SRC
 
 * Text manipulation
@@ -1419,10 +1419,11 @@
        ("M-s «" . sp-backward-barf-sexp)
        ("M-s »" . sp-forward-barf-sexp)
        :config
-       (show-smartparens-global-mode t)
        (add-hook 'prog-mode-hook #'turn-on-smartparens-mode)
        (add-hook 'markdown-mode-hook #'turn-on-smartparens-mode)
        (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
+     (show-smartparens-global-mode t)
+
    #+END_SRC
 
 ** Shell
