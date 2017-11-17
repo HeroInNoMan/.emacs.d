@@ -190,6 +190,9 @@
     (put 'set-goal-column 'disabled nil)
     (put 'scroll-left 'disabled nil)
 
+    ;; ido-mode by default
+    (ido-mode)
+
     ;; set default browser to firefox
     (setq gnus-button-url 'browse-url-generic
           browse-url-generic-program "firefox"
