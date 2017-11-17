@@ -1178,9 +1178,21 @@
         (call-interactively #'magit-fetch-current)))
   #+END_SRC
 
-* Date, time & calendar
-  I want the date and time displayed in the French standard format, no M/D/Y nonsense.
+  Someone advocates for [[http://manuel-uberti.github.io/programming/2017/08/06/eyebrowse/][eye-browse]], which I need to try: (note: the validate-setq function requires the [[http://endlessparentheses.com/validate-el-schema-validation-for-emacs-lisp.html][validate.el]] package)
   #+BEGIN_SRC emacs-lisp
+    (use-package eyebrowse ;; Easy workspaces creation and switching
+      :ensure validate
+      :config
+      (validate-setq eyebrowse-mode-line-separator " "
+                     eyebrowse-new-workspace t)
+      (eyebrowse-mode t))
+
+  #+END_SRC
+
+* Date, time & calendar
+** Date & time in the mode-line
+   I want the date and time displayed in the French standard format, no M/D/Y nonsense.
+   #+BEGIN_SRC emacs-lisp
     (setq display-time-day-and-date t ;; display date and time
           display-time-24hr-format t ;; 24h time format
           european-calendar-style t ;; day/month/year format for calendar
@@ -1202,19 +1214,10 @@
                                         "")))
     (display-time)
     (global-set-key (kbd "C-c d") 'insert-todays-date)
+   #+END_SRC
 
-    (use-package calfw) ;; à tester
-    (use-package calfw-gcal)
-    (use-package calfw-ical :ensure nil)
-    (defun open-calendar ()
-      (interactive)
-      (cfw:open-calendar-buffer
-       :contents-sources
-       (list
-        (cfw:ical-create-source "gcal AL" my-private-primary-gcal-url "Blue")
-        (cfw:ical-create-source "gcal hellfest" my-private-secondary-gcal-url "Brown"))))
-
-    ;; TODO configure weather in mode line
+** TODO Weather widget in the mode-line
+   #+BEGIN_SRC emacs-lisp
     (use-package weatherline-mode
       :disabled t
       :ensure nil
@@ -1583,7 +1586,7 @@
         (require 'eclimd)
         (setq eclim-eclipse-dirs "~/outils/eclipse/eclipse-mars"
               eclim-executable "~/outils/eclipse/eclipse-mars/eclim")
-        (require 'company)
+        ;; (require 'company)
         (require 'company-emacs-eclim)
         (global-company-mode t)
         (company-emacs-eclim-setup)
@@ -1607,7 +1610,8 @@
 
       (use-package meghanada
         :defer t
-        :init
+        :ensure highlight-symbol
+        :config
         (add-hook 'java-mode-hook
                   (lambda ()
                     (google-set-c-style)
@@ -1618,7 +1622,6 @@
                     (highlight-symbol-mode t)
                     ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
                     ))
-        :config
         (use-package realgud)
         (setq indent-tabs-mode nil)
         (setq tab-width 4)
@@ -1805,6 +1808,7 @@
 ** Python
    #+BEGIN_SRC emacs-lisp
      (use-package elpy
+       :defer
        :config
        (elpy-enable)
        (setq elpy-rpc-backend "jedi"))
@@ -1817,8 +1821,6 @@
                    ("M-g M-n" . elpy-flymake-next-error)
                    ("C-x C-e " . python-shell-send-defun))
        :config
-       ;; (require 'elpy)
-       ;; (require 'jedi)
        (add-hook 'python-mode-hook 'elpy-enable)
        (add-hook 'python-mode-hook 'flycheck-mode)
        (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
