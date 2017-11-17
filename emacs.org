@@ -891,66 +891,67 @@
 
 ** Point movements
    #+BEGIN_SRC emacs-lisp
-    (use-package move-text
-      :config (move-text-default-bindings)) ;; M-up / M-down to move line or region
+     (use-package move-text
+       :config (move-text-default-bindings)) ;; M-up / M-down to move line or region
 
-    (use-package zop-to-char
-      :bind ("C-M-z" . zop-up-to-char))
+     (use-package zop-to-char
+       :bind ("C-M-z" . zop-up-to-char))
 
-    (use-package multiple-cursors
-      :bind
-      (("M-é" . set-rectangular-region-anchor)
-       :map region-bindings-mode-map
-       ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
-       ("d" . mc/mark-all-symbols-like-this-in-defun)
-       ("D" . mc/mark-all-dwim)
-       ("p" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
-       ("n" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
-       ("P" . mc/unmark-previous-like-this)
-       ("N" . mc/unmark-next-like-this)
-       ("é" . mc/edit-lines) ;; new cursor on each line of region
-       ("(" . mc/cycle-backward)
-       (")" . mc/cycle-forward)
-       ("m" . mc/mark-more-like-this-extended)
-       ("h" . mc-hide-unmatched-lines-mode)
-       ("v" . mc/vertical-align)
-       ("|" . mc/vertical-align-with-space)
-       ("r" . mc/reverse-regions)
-       ("s" . mc/sort-regions)
-       ("#" . mc/insert-numbers) ; use num prefix to set the starting number
-       ("^" . mc/edit-beginnings-of-lines)
-       ("$" . mc/edit-ends-of-lines)
-       ("<down>" . move-text-down)
-       ("<up>" . move-text-up)))
+     (use-package multiple-cursors
+       :demand mc-mark-more
+       :bind
+       (("M-é" . set-rectangular-region-anchor)
+        :map region-bindings-mode-map
+        ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
+        ("d" . mc/mark-all-symbols-like-this-in-defun)
+        ("D" . mc/mark-all-dwim)
+        ("p" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
+        ("n" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
+        ("P" . mc/unmark-previous-like-this)
+        ("N" . mc/unmark-next-like-this)
+        ("é" . mc/edit-lines) ;; new cursor on each line of region
+        ("(" . mc/cycle-backward)
+        (")" . mc/cycle-forward)
+        ("m" . mc/mark-more-like-this-extended)
+        ("h" . mc-hide-unmatched-lines-mode)
+        ("v" . mc/vertical-align)
+        ("|" . mc/vertical-align-with-space)
+        ("r" . mc/reverse-regions)
+        ("s" . mc/sort-regions)
+        ("#" . mc/insert-numbers) ; use num prefix to set the starting number
+        ("^" . mc/edit-beginnings-of-lines)
+        ("$" . mc/edit-ends-of-lines)
+        ("<down>" . move-text-down)
+        ("<up>" . move-text-up)))
 
-    (use-package smart-comment
-      :bind ("M-;" . smart-comment))
+     (use-package smart-comment
+       :bind ("M-;" . smart-comment))
 
-    ;; Remove text in active region if inserting text
-    (pending-delete-mode t)
+     ;; Remove text in active region if inserting text
+     (pending-delete-mode t)
 
-    ;; join lines below onto current line
-    (global-set-key (kbd "M-j")
-                    (lambda ()
-                      (interactive)
-                      (join-line -1)))
+     ;; join lines below onto current line
+     (global-set-key (kbd "M-j")
+                     (lambda ()
+                       (interactive)
+                       (join-line -1)))
 
-    ;; Allow pasting selection outside of Emacs
-    (setq-default select-enable-clipboard t
-                  x-select-enable-clipboard t)
+     ;; Allow pasting selection outside of Emacs
+     (setq-default select-enable-clipboard t
+                   x-select-enable-clipboard t)
 
-    (global-set-key (kbd "M-y") 'yank-pop)
-    ;; easier access to transposition commands
-    (global-set-key (kbd "C-x M-h") 'transpose-paragraphs)
-    (global-set-key (kbd "C-§") 'transpose-paragraphs)
-    (global-set-key (kbd "C-x M-s") 'transpose-sentences)
-    (global-set-key (kbd "C-x M-t") 'transpose-sexps)
+     (global-set-key (kbd "M-y") 'yank-pop)
+     ;; easier access to transposition commands
+     (global-set-key (kbd "C-x M-h") 'transpose-paragraphs)
+     (global-set-key (kbd "C-§") 'transpose-paragraphs)
+     (global-set-key (kbd "C-x M-s") 'transpose-sentences)
+     (global-set-key (kbd "C-x M-t") 'transpose-sexps)
 
-    (use-package repeatable
-      :ensure nil
-      :load-path "elisp")
+     (use-package repeatable
+       :ensure nil
+       :load-path "elisp")
 
-    (global-set-key (kbd "C-x _") 'ale-toggle-camel-snake-kebab-case)
+     (global-set-key (kbd "C-x _") 'ale-toggle-camel-snake-kebab-case)
    #+END_SRC
 
 * Buffer & window manipulation
