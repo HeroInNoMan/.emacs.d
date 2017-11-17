@@ -12,7 +12,7 @@
     (add-hook 'git-commit-setup-hook 'ale-switch-to-en-dict)
 
     ;; org-capture-templates
-    (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree my-private-work-diary-org-file "Diary") "* %i%?"))
+    (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree my-private-work-diary-org-file "2017") "* %i%?"))
     (add-to-list 'org-capture-templates '("t" "Renault - TODO" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i"))
 
     ;; display battery level
