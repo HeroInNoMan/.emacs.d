@@ -1206,7 +1206,7 @@
       :config
       (setq weatherline-location-id "2988507")
       (weatherline-mode))
-   #+END_SRC
+  #+END_SRC
 
 ** Calendar widget
    I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of my different calendars:
@@ -1369,15 +1369,11 @@
       (setq user-mail-address my-private-mail-address
             user-full-name my-private-full-name
             ;; I don't use a signature…
-            ;; message-signature
-            ;;  (concat
-            ;;    "Foo X. Bar\n"
-            ;;    "http://www.example.com\n")
-            ))
+            message-signature "\n-- \nArthur Léothaud"))
+  #+END_SRC
 
-    ;; sending mail -- replace USERNAME with your gmail username
-    ;; also, make sure the gnutls command line utils are installed
-    ;; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
+  I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
+  #+BEGIN_SRC emacs-lisp
     (use-package smtpmail
       :ensure nil
       :config (setq message-send-mail-function 'smtpmail-send-it
