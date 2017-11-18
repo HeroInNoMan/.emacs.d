@@ -1780,8 +1780,9 @@
        (add-hook 'python-mode-hook 'elpy-enable)
        (add-hook 'python-mode-hook 'flycheck-mode)
        (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
-       (setq jedi:complete-on-dot t)
-       (setq tab-always-indent t))
+       (setq jedi:complete-on-dot t
+             python-indent-offset 2
+             tab-always-indent t))
    #+END_SRC
 
 ** Yaml
