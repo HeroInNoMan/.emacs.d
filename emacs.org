@@ -1221,7 +1221,7 @@
       :config
       (setq weatherline-location-id "2988507")
       (weatherline-mode))
-  #+END_SRC
+   #+END_SRC
 
 ** Calendar widget
    I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of my different calendars:
