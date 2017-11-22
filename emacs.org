@@ -420,7 +420,7 @@
        ;; build mode line
        (spaceline-install
          'main
-         '(((remote-host buffer-id line) :face highlight-face :separator ":" :priority 1)
+         '(((remote-host buffer-id) :face highlight-face :separator ":" :priority 1)
            ((projectile-root ale/version-control) :separator " ⑂ " :face spaceline-evil-insert)
            (anzu :face mode-line)
            (process :when active :face spaceline-process-face)
