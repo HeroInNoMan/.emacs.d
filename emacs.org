@@ -727,14 +727,15 @@
           _p_: switch project      _G_: git-grep               _d_: dash         _P_: elisp packages
           _f_: files               _a_: grep project or dir    _h_: apropos      _c_: org-capture
           _C-ç_: files (custom)    _g_: grep                   _m_: man-woman    _t_: top
-          ^ ^                      _o_: occur                  _s_: google       _x_: run ext. cmd
+          _R_: register            _o_: occur                  _s_: google       _x_: run ext.
           ^ ^                      ^ ^                         _w_: wikipedia
           "
           ;; open
           ("C-p" helm-projectile-switch-project)
           ("p" helm-projectile-switch-project)
-          ("f" helm-for-files)
+          ("f" helm-find-files)
           ("C-ç" helm-for-files)
+          ("R" helm-register)
           ;; search
           ("." helm-imenu-anywhere)
           ("G" helm-git-grep)
