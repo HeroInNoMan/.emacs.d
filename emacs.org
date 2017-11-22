@@ -1455,7 +1455,7 @@
        ("q" nil "cancel"))
      (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
 
-     (show-smartparens-global-mode t)
+     ;; (show-smartparens-global-mode t)
 
    #+END_SRC
 
