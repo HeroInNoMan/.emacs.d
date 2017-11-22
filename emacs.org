@@ -1480,6 +1480,13 @@
                (lambda ()
                  (define-key shell-mode-map
                    (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
+
+     (use-package shell-pop
+       :config
+       (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+       (setq shell-pop-term-shell "/bin/bash")
+       ;; need to do this manually or not picked up by `shell-pop'
+       (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
    #+END_SRC
 
 ** Lisp
@@ -2078,7 +2085,7 @@
       _p_: packages   _A_: lobsters             _i_: init file       ^ ^                    _g_: god %`god-local-mode
       _t_: ansi-term  _b_: eww-browser          _r_: rest-client     ^ ^                    _h_: Idle HL %`idle-highlight-mode
       _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
-      _%_: term       _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
+      _%_: shell-pop  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
       ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number
       ^ ^             _j_: jenkins              ^ ^                  ^ ^                    _m_: minimap
       ^ ^             _M_: spotify              ^ ^                  ^ ^                    _n_: neotree
@@ -2092,9 +2099,9 @@
       ("e" eshell)
       ("G" gnus)
       ("p" list-packages)
-      ("t" crux-visit-term-buffer)
+      ("t" shell-pop)
       ("$" shell)
-      ("%" ansi-term)
+      ("%" crux-visit-term-buffer)
 
       ;; Widget
       ("4" mu4e)
