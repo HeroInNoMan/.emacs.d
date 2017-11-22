@@ -1407,33 +1407,53 @@
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens-config
        :ensure smartparens
-       :bind
-       ;; edition
-       ("C-j" . sp-newline)
-       ("C-k" . sp-kill-hybrid-sexp)
-       ("M-s M-s" . sp-splice-sexp)
-       ("M-s k" . sp-kill-sexp)
-       ("M-s w" . sp-rewrap-sexp)
-       ("M-s j" . sp-join-sexp)
-       ("M-s t" . sp-transpose-sexp)
-       ("M-s T" . sp-transpose-hybrid-sexp)
-       ("M-s DEL" . sp-splice-sexp-killing-backward)
-       ;; movement
-       ("M-s u" . sp-backward-up-sexp)
-       ("M-s d" . sp-down-sexp)
-       ("M-s f" . sp-forward-sexp)
-       ("M-s b" . sp-backward-sexp)
-       ("M-s n" . sp-next-sexp)
-       ("M-s p" . sp-previous-sexp)
-       ;; slurping and barfing
-       ("M-s (" . sp-backward-slurp-sexp)
-       ("M-s )" . sp-slurp-hybrid-sexp)
-       ("M-s «" . sp-backward-barf-sexp)
-       ("M-s »" . sp-forward-barf-sexp)
        :config
        (add-hook 'prog-mode-hook #'turn-on-smartparens-mode)
        (add-hook 'markdown-mode-hook #'turn-on-smartparens-mode)
        (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
+
+     (defhydra hydra-parens(:color teal :hint nil)
+       "
+         ^Edit^                               ^Move^                 ^Slurp & Barf^
+         ^----^-------------------------------^----^-----------------^------------^----------
+         _C-j_: newline                       _u_: backward-up-sexp  _(_: backward-slurp-sexp
+         _C-k_: kill-hybrid-sexp              _d_: down-sexp         _)_: slurp-hybrid-sexp
+         _M-s_: splice-sexp                   _f_: forward-sexp      _<_: backward-barf-sexp
+         _s_: splice-sexp                     _b_: backward-sexp     _>_: forward-barf-sexp
+         _k_: kill-sexp                       _n_: next-sexp
+         _w_: rewrap-sexp                     _p_: previous-sexp
+         _j_: join-sexp
+         _t_: transpose-sexp
+         _T_: transpose-hybrid-sexp
+         _DEL_: splice-sexp-killing-backward
+      "
+       ;; edition
+       ("C-j" sp-newline)
+       ("C-k" sp-kill-hybrid-sexp)
+       ("M-s" sp-splice-sexp)
+       ("s" sp-splice-sexp)
+       ("k" sp-kill-sexp)
+       ("w" sp-rewrap-sexp)
+       ("j" sp-join-sexp)
+       ("t" sp-transpose-sexp)
+       ("T" sp-transpose-hybrid-sexp)
+       ("DEL" sp-splice-sexp-killing-backward)
+       ;; movement
+       ("u" sp-backward-up-sexp)
+       ("d" sp-down-sexp)
+       ("f" sp-forward-sexp)
+       ("b" sp-backward-sexp)
+       ("n" sp-next-sexp)
+       ("p" sp-previous-sexp)
+       ;; slurping and barfing
+       ("(" sp-backward-slurp-sexp)
+       (")" sp-slurp-hybrid-sexp)
+       ("<" sp-backward-barf-sexp)
+       (">" sp-forward-barf-sexp)
+
+       ("q" nil "cancel"))
+     (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
+
      (show-smartparens-global-mode t)
 
    #+END_SRC
