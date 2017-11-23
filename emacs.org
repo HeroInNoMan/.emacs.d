@@ -1126,10 +1126,10 @@
      (defhydra hydra-git(:color blue :hint nil)
        "
       ^Gutter^           ^Log^               ^Other^
-      ^------^-----------^---^---------------^-----^----------
+      ^------^-----------^---^---------------^-----^--------
       _n_: next hunk     _b_: blame          _._: status
       _p_: prev. hunk    _l_: file history   _g_: message
-      _r_: revert hunk   _t_: time machine
+      _r_: revert hunk   _t_: time machine   _f_: file popup
       _s_: stage hunk
       _u_: gutter mode
 
@@ -1147,6 +1147,7 @@
        ;; other
        ("." magit-status)
        ("g" git-messenger:popup-message)
+       ("f" magit-file-popup)
 
        ("q" nil "cancel"))
 
