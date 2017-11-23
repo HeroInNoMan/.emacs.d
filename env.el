@@ -11,9 +11,9 @@
     (add-hook 'git-commit-setup-hook 'ale-insert-ticket-prefix)
     (add-hook 'git-commit-setup-hook 'ale-switch-to-en-dict)
 
-    ;; org-capture-templates
-    (add-to-list 'org-capture-templates '("d" "Renault - work log" entry (file+datetree my-private-work-diary-org-file "2017") "* %i%?"))
-    (add-to-list 'org-capture-templates '("t" "Renault - TODO" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i"))
+    ;; capture templates
+    (add-to-list 'org-capture-templates '("d" "work - log" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?") t)
+    (add-to-list 'org-capture-templates '("t" "work - TODO" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i") t)
 
     ;; display battery level
     (use-package fancy-battery
@@ -25,34 +25,21 @@
     (when (featurep 'dumb-jump)
       (setq dumb-jump-default-project "~/projets"))
 
-    ;; change theme
-    (color-theme-lethe)
-    ;; (color-theme-oswald)
-    ;; (color-theme-charcoal-black)
-    ))
-
-(defun load-dijon-env ()
-  (progn
-    ;; set default browser to chromium-browser
-    (setq browse-url-generic-program "chromium-browser")
-
-    ;; hooking for specific functions
-    (add-hook 'git-commit-setup-hook 'ale-insert-ticket-prefix)
+    ;; default browser
+    (setq browse-url-generic-program "firefox")
 
     ;; confluence search
     (when (featurep 'engine-mode)
-      (defengine confluence "http://confluence.sfrdev.fr/dosearchsite.action?queryString=%s" :keybinding "c"))
-
+      (defengine confluence my-private-work-confluence-url :keybinding "c"))
 
     ;; gitlab interaction
-    (use-package gitlab
+    (use-package helm-gitlab
+      :ensure gitlab
       :config
       (setq gitlab-host my-private-gitlab-host
             gitlab-username my-private-gitlab-username
             gitlab-password my-private-gitlab-password
             gitlab-token-id my-private-gitlab-token-id))
-
-    (use-package helm-gitlab)
 
     ;; jenkins interaction
     (use-package butler
@@ -62,9 +49,9 @@
       :config
       (add-to-list 'god-exempt-major-modes 'butler-mode)
       (add-to-list 'butler-server-list
-                   '(jenkins "SERVER-NAME"
-                             (server-address . "https://jenkins.sfrdev.fr/view/ecomfixe-git/")
-                             (auth-file . "~/.authinfo-jenkins.gpg")))) ;; machine SERVER-NAME login my_login password my_pass
+                   '(jenkins my-private-work-jenkins-url
+                             (server-address . my-private-work-server-address)
+                             (auth-file . my-private-work-auth-file)))) ;; machine SERVER-NAME login my_login password my_pass
 
     (use-package jenkins ;; TODO compare to butler
       :disabled t
@@ -74,27 +61,20 @@
             jenkins-username "<your user name>"
             jenkins-viewname "<viewname>"))
 
-    ;; org-capture-templates
-    (add-to-list 'org-capture-templates '("d" "SFR - work log" entry (file+datetree (concat terminalcity-dir "SFR.org") "Diary") "* %i%?"))
-    (add-to-list 'org-capture-templates '("t" "SFR - TODO" entry (file+headline (concat terminalcity-dir "SFR.org") "À faire") "* TODO %?\n\t%i"))
-
-    ;; smaller font by default on dijon
+    ;; smaller font size
     (when (featurep 'zoom-frm)
       (progn
         (zoom-frm-unzoom)
-        (dotimes (number 4) (zoom-frm-out))))
+        (dotimes (number 2) (zoom-frm-out))))
 
-    ;; default project root folder
-    (when (featurep 'dumb-jump)
-      (setq dumb-jump-default-project "~/projets"))
+    ;; change theme (oswald, charcoal-black)
+    (color-theme-lethe)
+    ))
 
-    ;; change theme
-    (color-theme-oswald)))
-
-;;;;;;;;;;;;;;;
-;; POLOPECHE ;;
-;;;;;;;;;;;;;;;
-(defun load-polopeche-env ()
+;;;;;;;;;;;;;;
+;; YUNOHOST ;;
+;;;;;;;;;;;;;;
+(defun load-yuno-env ()
   (progn
     ;; don’t highlight current line
     (global-hl-line-mode -1)
@@ -121,10 +101,9 @@
 
     (use-package transmission
       :config
-      (setq
-       transmission-host my-private-transmission-host
-       transmission-service my-private-transmission-service
-       transmission-rpc-path my-private-transmission-rpc-path))
+      (setq transmission-host my-private-transmission-host
+            transmission-service my-private-transmission-service
+            transmission-rpc-path my-private-transmission-rpc-path))
 
     ;; change theme
     (color-theme-charcoal-black)))
@@ -154,12 +133,11 @@
 ;; LOAD APPROPRIATE ENVIRONMENT ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (cond
- ((equal "dijon" (system-name))
-  (load-dijon-env))
  ((equal "kuutamo" (system-name))
   (load-kuutamo-env))
- ((equal "ns301170.ip-91-121-73.eu" (system-name))
-  (load-polopeche-env))
+ ((or (equal "scw-0f23ec" (system-name))
+      (equal "ns301170.ip-91-121-73.eu" (system-name)))
+  (load-yuno-env))
  ((equal "highlander" (system-name))
   (load-highlander-env))
  (t (load-default-env)))

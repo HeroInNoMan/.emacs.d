@@ -1272,11 +1272,6 @@
       :init (require 'org-agenda)
       :ensure ob-restclient
       :config
-      ;; ORG-CAPTURE
-      (setq org-default-notes-file (concat user-emacs-directory "notes.org")
-            terminalcity-dir "~/Terminalcity/"
-            polopeche-home-dir "/sshx:polopeche:/home/duncan/")
-
       ;; active Babel languages
       (setq org-confirm-babel-evaluate nil)
       (org-babel-do-load-languages
@@ -1285,15 +1280,19 @@
          (restclient . t)
          (emacs-lisp . t)))
 
-      ;; org-capture-templates
-      (setq org-capture-templates
+      ;; ORG-CAPTURE
+      (setq notes-file (concat user-emacs-directory "notes.org")
+            snippet-file (concat user-emacs-directory "code-snippets.txt")
+            diary-file (concat my-private-remote-home-dir my-private-remote-diary-org-file)
+            todo-file (concat my-private-remote-home-dir my-private-remote-todo-org-file)
+            org-capture-templates
             '(
               ;; local
-              ("n" "local - Note" entry (file+datetree org-default-notes-file) "* %<%Hh%M>\n\t%i%?")
-              ("y" "local - Code snippet" plain (file (concat user-emacs-directory "code-snippets.txt")) "\n%i%?")
+              ("n" "local - note" item (file+olp+datetree notes-file) "%i%?")
+              ("y" "local - code snippet" plain (file snippet-file) "\n%i%?")
               ;; remote
-              ("D" "polopeche - Diary entry" entry (file+datetree (concat polopeche-home-dir "Terminalcity/Textes/diary.org")) "* %<%Hh%M>\n\t%i%?")
-              ("T" "polopeche - TODO" entry (file+headline (concat polopeche-home-dir "Terminalcity/Todo/arthur.org") "VRAC") "* TODO %?\n\t%i")))
+              ("D" "remote - diary item" item (file+olp+datetree diary-file) "%i%?")
+              ("T" "remote - TODO" entry (file+headline todo-file "VRAC") "* TODO %?\n\t%i")))
 
       ;; specific agenda files
       (add-to-list 'org-agenda-files my-private-work-diary-org-file)
