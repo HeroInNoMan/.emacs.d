@@ -2085,23 +2085,24 @@
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-widgets (:color teal :hint nil)
       "
-      ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
-      ^---------^-----^-------^-----------------^-----------^--------^-------^--------------^------^---------------
-      _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
-      _G_: gnus       _a_: avandu RSS           _D_: remote diary    _P_: prettify symbols  _f_: ido %`ido-mode
-      _p_: packages   _A_: lobsters             _i_: init file       ^ ^                    _g_: god %`god-local-mode
-      _t_: ansi-term  _b_: eww-browser          _r_: rest-client     ^ ^                    _h_: Idle HL %`idle-highlight-mode
-      _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
-      _%_: shell-pop  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
-      ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number
-      ^ ^             _j_: jenkins              ^ ^                  ^ ^                    _m_: minimap
-      ^ ^             _M_: spotify              ^ ^                  ^ ^                    _n_: neotree
-      ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
-      "
+          ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
+          ^---------^-----^-------^-----------------^-----------^--------^-------^--------------^------^---------------
+          _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
+          _G_: gnus       _a_: avandu RSS           _D_: remote diary    ^ ^                    _f_: ido %`ido-mode
+          _p_: packages   _A_: lobsters             _i_: init file       _è_: spelling hydra    _g_: god %`god-local-mode
+          _t_: ansi-term  _b_: eww-browser          _r_: rest-client     _é_: char-menu         _h_: Idle HL %`idle-highlight-mode
+          _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
+          _%_: shell-pop  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
+          ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number
+          ^ ^             _j_: jenkins              ^ ^                  ^ ^                    _m_: minimap
+          ^ ^             _M_: spotify              ^ ^                  ^ ^                    _n_: neotree
+          ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _P_: prettify symbols
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
+          "
       ;; Built-in
       ("e" eshell)
       ("G" gnus)
@@ -2130,7 +2131,9 @@
 
       ;; Action
       ("C" flyspell-buffer)
-      ("P" prettify-symbols-mode)
+      ;;
+      ("è" hydra-spell/body)
+      ("é" char-menu)
 
       ;; Toggle
       ("(" smartparens-global-mode)
@@ -2143,6 +2146,7 @@
       ("m" minimap-mode)
       ("n" neotree-toggle)
       ("o" org-mode)
+      ("P" prettify-symbols-mode)
       ("R" rainbow-blocks-mode)
       ("s" sublimity-mode)
       ;; ("S" spray-mode)
