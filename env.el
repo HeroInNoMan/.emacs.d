@@ -2,9 +2,10 @@
 ;; environment specific customisations ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;
-;; KUUTAMO ;;
-;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;
+;; KUUTAMO (work)  ;;
+;;;;;;;;;;;;;;;;;;;;;
+
 (defun load-kuutamo-env ()
   (progn
     ;; hooking for specific functions
@@ -71,9 +72,9 @@
     (color-theme-lethe)
     ))
 
-;;;;;;;;;;;;;;
-;; YUNOHOST ;;
-;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+;; YUNOHOST (remote) ;;
+;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-yuno-env ()
   (progn
     ;; don’t highlight current line
@@ -82,9 +83,9 @@
     ;; change theme
     (color-theme-calm-forest)))
 
-;;;;;;;;;;;;;;;;
-;; HIGHLANDER ;;
-;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+;; HIGHLANDER (home) ;;
+;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-highlander-env ()
   (progn
     ;; bigger font by default on laptop
