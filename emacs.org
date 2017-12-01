@@ -2101,6 +2101,7 @@
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_: volatile-highlight %`volatile-highlights-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
           "
       ;; Built-in
@@ -2151,6 +2152,7 @@
       ("s" sublimity-mode)
       ;; ("S" spray-mode)
       ("v" visual-line-mode)
+      ("V" volatile-highlights-mode)
       ("w" whitespace-mode)
       ;; ("W" wttrin)
       ;; ("y" play-youtube-video)
