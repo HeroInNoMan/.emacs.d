@@ -1186,6 +1186,7 @@
   Someone advocates for [[http://manuel-uberti.github.io/programming/2017/08/06/eyebrowse/][eye-browse]], which I need to try: (note: the validate-setq function requires the [[http://endlessparentheses.com/validate-el-schema-validation-for-emacs-lisp.html][validate.el]] package)
   #+BEGIN_SRC emacs-lisp
     (use-package eyebrowse ;; Easy workspaces creation and switching
+      :disabled t
       :ensure validate
       :config
       (validate-setq eyebrowse-mode-line-separator " "
@@ -1364,6 +1365,7 @@
   Let’s use emacs to read our mail (with mu4e) :
   #+BEGIN_SRC emacs-lisp
     (use-package mu4e
+      :disabled t
       :load-path "/usr/share/emacs/site-lisp/mu4e"
       :ensure nil
       :config
@@ -1606,14 +1608,18 @@
     #+END_SRC
 *** TODO meghanada (à tester)
     #+BEGIN_SRC emacs-lisp
-      (use-package autodisass-java-bytecode :defer t)
+      (use-package autodisass-java-bytecode
+        :disabled t
+        :defer t)
 
       (use-package google-c-style
+        :disabled t
         :defer t
         :commands
         (google-set-c-style))
 
       (use-package meghanada
+        :disabled t
         :defer t
         :ensure highlight-symbol
         :config
