@@ -1479,6 +1479,12 @@
      (add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
      (add-to-list 'auto-mode-alist '(".*bash.*$" . sh-mode))
 
+     (use-package fish-mode
+       :mode ("\\.fish$" . fish-mode)
+       :config (setq tab-width 2
+                     sh-basic-offset 2
+                     indent-tabs-mode t))
+
      ;; Normal tab completion in Eshell
      (setq eshell-cmpl-cycle-completions nil)
 
