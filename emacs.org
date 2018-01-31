@@ -958,6 +958,10 @@
 
      (global-set-key (kbd "C-x _") 'ale-toggle-camel-snake-kebab-case)
    #+END_SRC
+** Diffing
+   #+BEGIN_SRC emacs-lisp
+     (use-package ztree)
+   #+END_SRC
 
 * Buffer & window manipulation
 ** Windows
@@ -1863,6 +1867,86 @@
      (use-package gradle-mode
        :mode ("\\.gradle\\'" . gradle-mode))
    #+END_SRC
+* Quick access
+  #+BEGIN_SRC emacs-lisp
+    (defhydra hydra-widgets (:color teal :hint nil)
+      "
+          ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
+          ^---------^-----^-------^-----------------^-----------^--------^-------^--------------^------^---------------
+          _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
+          _G_: gnus       _a_: avandu RSS           _D_: remote diary    ^ ^                    _f_: ido %`ido-mode
+          _p_: packages   _A_: lobsters             _i_: init file       _è_: spelling hydra    _g_: god %`god-local-mode
+          _t_: ansi-term  _b_: eww-browser          _r_: rest-client     _é_: char-menu         _h_: Idle HL %`idle-highlight-mode
+          _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
+          _%_: shell-pop  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
+          ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number
+          ^ ^             _j_: jenkins              ^ ^                  ^ ^                    _m_: minimap
+          ^ ^             _M_: spotify              ^ ^                  ^ ^                    _n_: sidebar
+          ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
+          ^ ^             _z_: ztree-diff           ^ ^                  ^ ^                    _P_: prettify symbols
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_: volatile-highlight %`volatile-highlights-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
+          "
+      ;; Built-in
+      ("e" eshell)
+      ("G" gnus)
+      ("p" list-packages)
+      ("t" shell-pop)
+      ("$" shell)
+      ("%" crux-visit-term-buffer)
+
+      ;; Widget
+      ("4" mu4e)
+      ("a" avandu-overview)
+      ("A" helm-lobsters)
+      ("b" eww)
+      ("B" ecb-activate)
+      ("c" open-calendar)
+      ("E" elfeed)
+      ("j" butler-status)
+      ("M" helm-spotify-plus)
+      ("T" tomatinho)
+      ("z" ztree-diff)
+
+      ;; Find files
+      ("d" ale-find-diary-file)
+      ("D" ale-find-remote-diary-file)
+      ("i" ale-find-init-file)
+      ("r" ale-find-rest-client-file)
+
+      ;; Action
+      ("C" flyspell-buffer)
+      ;;
+      ("è" hydra-spell/body)
+      ("é" char-menu)
+
+      ;; Toggle
+      ("(" smartparens-global-mode)
+      ("f" ido-mode)
+      ("g" toggle-god-mode)
+      ("h" idle-highlight-mode)
+      ("H" hl-line-mode)
+      ("I" highlight-indent-guides-mode)
+      ("l" linum-mode)
+      ("m" minimap-mode)
+      ("n" dired-sidebar-toggle-sidebar)
+      ("o" org-mode)
+      ("P" prettify-symbols-mode)
+      ("R" rainbow-blocks-mode)
+      ("s" sublimity-mode)
+      ;; ("S" spray-mode)
+      ("v" visual-line-mode)
+      ("V" volatile-highlights-mode)
+      ("w" whitespace-mode)
+      ;; ("W" wttrin)
+      ;; ("y" play-youtube-video)
+      ;; ("Y" w3m-play-youtube-video)
+      ("q" nil "cancel"))
+    (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
+  #+END_SRC
 
 * Special characters, spelling, i18n
 ** Special characters
@@ -2090,86 +2174,6 @@
     #+BEGIN_SRC emacs-lisp
       (use-package helm-lobsters)
     #+END_SRC
-
-* Quick access
-  #+BEGIN_SRC emacs-lisp
-    (defhydra hydra-widgets (:color teal :hint nil)
-      "
-          ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
-          ^---------^-----^-------^-----------------^-----------^--------^-------^--------------^------^---------------
-          _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
-          _G_: gnus       _a_: avandu RSS           _D_: remote diary    ^ ^                    _f_: ido %`ido-mode
-          _p_: packages   _A_: lobsters             _i_: init file       _è_: spelling hydra    _g_: god %`god-local-mode
-          _t_: ansi-term  _b_: eww-browser          _r_: rest-client     _é_: char-menu         _h_: Idle HL %`idle-highlight-mode
-          _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
-          _%_: shell-pop  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
-          ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number
-          ^ ^             _j_: jenkins              ^ ^                  ^ ^                    _m_: minimap
-          ^ ^             _M_: spotify              ^ ^                  ^ ^                    _n_: neotree
-          ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _P_: prettify symbols
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_: volatile-highlight %`volatile-highlights-mode
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
-          "
-      ;; Built-in
-      ("e" eshell)
-      ("G" gnus)
-      ("p" list-packages)
-      ("t" shell-pop)
-      ("$" shell)
-      ("%" crux-visit-term-buffer)
-
-      ;; Widget
-      ("4" mu4e)
-      ("a" avandu-overview)
-      ("A" helm-lobsters)
-      ("b" eww)
-      ("B" ecb-activate)
-      ("c" open-calendar)
-      ("E" elfeed)
-      ("j" butler-status)
-      ("M" helm-spotify-plus)
-      ("T" tomatinho)
-
-      ;; Find files
-      ("d" ale-find-diary-file)
-      ("D" ale-find-remote-diary-file)
-      ("i" ale-find-init-file)
-      ("r" ale-find-rest-client-file)
-
-      ;; Action
-      ("C" flyspell-buffer)
-      ;;
-      ("è" hydra-spell/body)
-      ("é" char-menu)
-
-      ;; Toggle
-      ("(" smartparens-global-mode)
-      ("f" ido-mode)
-      ("g" toggle-god-mode)
-      ("h" idle-highlight-mode)
-      ("H" hl-line-mode)
-      ("I" highlight-indent-guides-mode)
-      ("l" linum-mode)
-      ("m" minimap-mode)
-      ("n" neotree-toggle)
-      ("o" org-mode)
-      ("P" prettify-symbols-mode)
-      ("R" rainbow-blocks-mode)
-      ("s" sublimity-mode)
-      ;; ("S" spray-mode)
-      ("v" visual-line-mode)
-      ("V" volatile-highlights-mode)
-      ("w" whitespace-mode)
-      ;; ("W" wttrin)
-      ;; ("y" play-youtube-video)
-      ;; ("Y" w3m-play-youtube-video)
-      ("q" nil "cancel"))
-    (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
-  #+END_SRC
 * Epilogue
   My init file (emacs.org) should always be open.
   #+BEGIN_SRC emacs-lisp
