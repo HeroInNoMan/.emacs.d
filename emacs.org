@@ -683,7 +683,7 @@
    #+END_SRC
 
 ** Ivy, counsel, swiper
-   One in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
+   Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
    #+BEGIN_SRC emacs-lisp
      (use-package counsel
        :disabled t
