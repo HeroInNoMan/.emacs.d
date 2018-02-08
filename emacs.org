@@ -517,6 +517,16 @@
     (use-package dired-subtree)
   #+END_SRC
 
+  Package to try:
+  #+BEGIN_SRC emacs-lisp
+    (use-package phi-search
+      :disabled t
+      :bind
+      ("C-s" . phi-search)
+      ("C-r" . phi-search-backward))
+  #+END_SRC
+
+
   Standard isearch by default:
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-s") 'isearch-forward)
