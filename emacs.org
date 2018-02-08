@@ -881,6 +881,10 @@
      (yas-global-mode 1)
    #+END_SRC
 
+*** More grepping
+    #+BEGIN_SRC emacs-lisp
+      (use-package winnow)
+    #+END_SRC
 * Text manipulation
 ** Region
    #+BEGIN_SRC emacs-lisp
@@ -1877,7 +1881,7 @@
     (defhydra hydra-widgets (:color teal :hint nil)
       "
           ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
-          ^---------^-----^-------^-----------------^-----------^--------^-------^--------------^------^---------------
+          ^--------^------^------^------------------^----------^---------^------^---------------^------^---------------
           _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
           _G_: gnus       _a_: avandu RSS           _D_: remote diary    ^ ^                    _f_: ido %`ido-mode
           _p_: packages   _A_: lobsters             _i_: init file       _è_: spelling hydra    _g_: god %`god-local-mode
@@ -1894,6 +1898,7 @@
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_: volatile-highlight %`volatile-highlights-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _x_: winnow-mode %`winnow-mode
           "
       ;; Built-in
       ("e" eshell)
@@ -1946,6 +1951,7 @@
       ("v" visual-line-mode)
       ("V" volatile-highlights-mode)
       ("w" whitespace-mode)
+      ("x" winnow-mode)
       ;; ("W" wttrin)
       ;; ("y" play-youtube-video)
       ;; ("Y" w3m-play-youtube-video)
