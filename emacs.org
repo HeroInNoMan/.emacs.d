@@ -351,6 +351,12 @@
    #+BEGIN_SRC emacs-lisp
      (use-package all-the-icons)
 
+   #+END_SRC
+
+   TODO: try https://github.com/dbordak/telephone-line/
+
+   #+BEGIN_SRC emacs-lisp
+
      (use-package spaceline
        :ensure t
        :config
