@@ -502,6 +502,10 @@
       (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode t))))
   #+END_SRC
 
+  #+BEGIN_SRC emacs-lisp
+    (use-package dired-subtree)
+  #+END_SRC
+
   Standard isearch by default:
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-s") 'isearch-forward)
@@ -536,6 +540,18 @@
        ("C-M-r" . vr/isearch-backward)
        ("C-M-s" . vr/isearch-forward))
       :config (require 'visual-regexp)) ;; TODO check if really necessary
+  #+END_SRC
+
+* Side bar
+  #+BEGIN_SRC emacs-lisp
+  (use-package dired-sidebar
+    :ensure t
+    :commands (dired-sidebar-toggle-sidebar)
+    :config
+    (use-package all-the-icons-dired
+      ;; M-x all-the-icons-install-fonts
+      :ensure t
+      :commands (all-the-icons-dired-mode)))
   #+END_SRC
 
 * Navigation
@@ -576,39 +592,6 @@
       ("C-x /" . goto-last-change)
       :config (make-command-repeatable 'goto-last-change))
   #+END_SRC
-
-**  Tree view packages
-   #+BEGIN_SRC emacs-lisp
-     (use-package neotree
-       :bind (:map neotree-mode-map
-                   ("<f2>" . neotree-copy-filepath-to-yank-ring)
-                   ("<f5>" . neotree-refresh)
-                   ("e" . neotree-stretch-toggle))
-       :config (setq neo-window-width 50))
-
-     (use-package pfuture)
-     (use-package treemacs
-       :disabled t
-       :after pfuture
-       :load-path "~/projets/treemacs/"
-       :defer t
-       :config
-       (setq treemacs-header-function            #'treemacs--create-header-projectile
-             treemacs-follow-after-init          t
-             treemacs-width                      45
-             treemacs-indentation                2
-             treemacs-git-integration            t
-             treemacs-change-root-without-asking nil
-             treemacs-sorting                    'alphabetic-desc
-             treemacs-show-hidden-files          t
-             treemacs-never-persist              nil)
-       (treemacs-follow-mode t)
-       (treemacs-filewatch-mode t)
-       :bind
-       (:map
-        global-map
-        ([f8] . treemacs-toggle)))
-   #+END_SRC
 
 * Indentation, tabs, spaces & folding
   I just heard of editorconfig, which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
