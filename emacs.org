@@ -1428,6 +1428,12 @@
   #+END_SRC
 
 * Programming
+** DONE Formatting
+   #+BEGIN_SRC emacs-lisp
+  (use-package prog-fill
+    :config
+    (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "M-q") #'prog-fill))))
+   #+END_SRC
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
