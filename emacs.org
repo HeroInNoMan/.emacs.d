@@ -611,6 +611,11 @@
    #+END_SRC
 
 * Indentation, tabs, spaces & folding
+  I just heard of editorconfig, which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
+  #+BEGIN_SRC emacs-lisp
+    (use-package editorconfig)
+  #+END_SRC
+
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
