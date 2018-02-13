@@ -1717,18 +1717,26 @@
 ** Javascript
    #+BEGIN_SRC emacs-lisp
      (use-package js2-mode
-       :bind (:js2-mode-map ("C-c C-c" . compile))
-       ;; :mode ("\\.js\\'\\|\\.json\\'" . js2-mode)
+       ;; :bind (:js2-mode-map ("C-c C-c" . compile))
+       :mode ("\\.js\\'\\|\\.json\\'" . js2-mode)
        :config
+       (use-package js2-refactor
+         :config
+         (js2r-add-keybindings-with-prefix "C-c C-r")
+         (setq js2-skip-preprocessor-directives t))
        (setq js2-basic-offset 2
              js-indent-level 2
              js2-use-font-lock-faces t)
-       (add-hook 'json-mode-hook 'json-pretty-print)
-       (add-hook 'js-mode-hook (lambda () (flycheck-mode t)))
+       (add-hook 'json-mode-hook #'json-pretty-print)
+       (add-hook 'js2-mode-hook #'json-pretty-print-buffer)
+       (add-hook 'js2-mode-hook #'aggressive-indent-mode)
+       (add-hook 'js2-mode-hook #'js2-refactor-mode)
+       (add-hook 'js2-mode-hook (lambda () (flycheck-mode t)))
        (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
      ;; à tester
      (use-package js-comint
+       :disabled t
        :config  (defun inferior-js-mode-hook-setup ()
                   (add-hook 'comint-output-filter-functions 'js-comint-process-output))
        (add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
@@ -1745,8 +1753,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package web-mode ;; HTML, XML, JSP (using web-mode)
        :config
-       (setq web-mode-markup-indent-offset 4
-             web-mode-code-indent-offset 4
+       (setq web-mode-markup-indent-offset 2
+             web-mode-code-indent-offset 2
              web-mode-enable-auto-indentation t
              web-mode-enable-auto-quoting t
              web-mode-engines-alist '(("php" . "\\.phtml\\'")
@@ -1900,14 +1908,15 @@
           _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
           _G_: gnus       _a_: avandu RSS           _D_: remote diary    ^ ^                    _f_: ido %`ido-mode
           _p_: packages   _A_: lobsters             _i_: init file       _è_: spelling hydra    _g_: god %`god-local-mode
-          _t_: ansi-term  _b_: eww-browser          _r_: rest-client     _é_: char-menu         _h_: Idle HL %`idle-highlight-mode
+          _t_: shell-pop  _b_: eww-browser          _r_: rest-client     _é_: char-menu         _h_: Idle HL %`idle-highlight-mode
           _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
-          _%_: shell-pop  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
-          ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _l_: line number
-          ^ ^             _j_: jenkins              ^ ^                  ^ ^                    _m_: minimap
-          ^ ^             _M_: spotify              ^ ^                  ^ ^                    _n_: sidebar
-          ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
-          ^ ^             _z_: ztree-diff           ^ ^                  ^ ^                    _P_: prettify symbols
+          _%_: ansi-term  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
+          ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _j_: js2-mode
+          ^ ^             _J_: jenkins              ^ ^                  ^ ^                    _l_: line number
+          ^ ^             _M_: spotify              ^ ^                  ^ ^                    _m_: minimap
+          ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _n_: sidebar
+          ^ ^             _z_: ztree-diff           ^ ^                  ^ ^                    _o_: org-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _P_: prettify symbols
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
@@ -1931,7 +1940,7 @@
       ("B" ecb-activate)
       ("c" open-calendar)
       ("E" elfeed)
-      ("j" butler-status)
+      ("J" butler-status)
       ("M" helm-spotify-plus)
       ("T" tomatinho)
       ("z" ztree-diff)
@@ -1955,6 +1964,7 @@
       ("h" idle-highlight-mode)
       ("H" hl-line-mode)
       ("I" highlight-indent-guides-mode)
+      ("j" js2-mode)
       ("l" linum-mode)
       ("m" minimap-mode)
       ("n" dired-sidebar-toggle-sidebar)
