@@ -264,7 +264,7 @@
     #+BEGIN_SRC emacs-lisp
        (use-package volatile-highlights
          :diminish volatile-highlights-mode
-         :config (volatile-highlights-mode t))
+         :config (volatile-highlights-mode nil))
 
       (use-package idle-highlight-mode)
     #+END_SRC
