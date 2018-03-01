@@ -211,7 +211,6 @@
       :bind
       (("C-c g" . toggle-god-mode)
        :map god-local-mode-map
-       ("i" . toggle-god-mode)
        ("z" . repeat)
        ("." . repeat))
       :chords ("ii" . toggle-god-mode)
@@ -219,8 +218,9 @@
       :config
       (defun toggle-god-mode ()
         (interactive)
-        (god-mode-all)
-        (my-update-cursor))
+        (progn
+          (god-mode-all)
+          (my-update-cursor)))
       (defun my-update-cursor ()
         "change cursor colour if god-mode is activated/deactivated effectively."
         (cond
@@ -228,10 +228,11 @@
           (progn
             (set-cursor-color "red")
             (setq god-mode-colors t)))
-         ((and (not god-local-mode) god-mode-colors)
+         ((not god-local-mode)
           (progn
             (set-cursor-color "yellow")
             (setq god-mode-colors nil)))))
+
       (defadvice select-window (after update-cursor-color activate)
         (my-update-cursor))
       (add-to-list 'god-exempt-major-modes 'helm-major-mode)
@@ -558,8 +559,10 @@
        ;; if you use multiple-cursors, this is for you:
        ("M-s m" . vr/mc-mark)
        ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
-       ("C-M-r" . vr/isearch-backward)
-       ("C-M-s" . vr/isearch-forward))
+       ("C-r" . vr/isearch-backward)
+       ("C-s" . vr/isearch-forward)
+       ("C-M-r" . isearch-backward)
+       ("C-M-s" . isearch-forward))
       :config (require 'visual-regexp)) ;; TODO check if really necessary
   #+END_SRC
 
@@ -851,7 +854,6 @@
 
       (use-package helm-swoop
         :bind
-        ("C-s" . isearch-forward)
         ("C-S-s" . helm-swoop))
 
       (use-package helm-git-grep)
