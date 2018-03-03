@@ -2018,6 +2018,7 @@
 ** Grammalecte
    #+BEGIN_SRC emacs-lisp
      (use-package grammalecte
+       :disabled t
        :ensure nil
        :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
    #+END_SRC
