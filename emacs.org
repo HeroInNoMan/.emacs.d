@@ -1831,7 +1831,7 @@
        :bind (:map python-mode-map
                    ("M-g M-p" . elpy-flymake-previous-error)
                    ("M-g M-n" . elpy-flymake-next-error)
-                   ("C-x C-e " . python-shell-send-defun))
+                   ("C-x C-e" . python-shell-send-defun))
        :config
        (add-hook 'python-mode-hook 'elpy-enable)
        (add-hook 'python-mode-hook 'flycheck-mode)
