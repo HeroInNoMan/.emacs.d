@@ -35,6 +35,7 @@
 
     ;; gitlab interaction
     (use-package helm-gitlab
+      :disabled t
       :ensure gitlab
       :config
       (setq gitlab-host my-private-gitlab-host
