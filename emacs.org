@@ -1916,9 +1916,9 @@
           ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _j_: js2-mode
           ^ ^             _J_: jenkins              ^ ^                  ^ ^                    _l_: line number
           ^ ^             _M_: spotify              ^ ^                  ^ ^                    _m_: minimap
-          ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _n_: sidebar
-          ^ ^             _z_: ztree-diff           ^ ^                  ^ ^                    _o_: org-mode
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _P_: prettify symbols
+          ^ ^             _Q_: quick-calc           ^ ^                  ^ ^                    _n_: sidebar
+          ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
+          ^ ^             _z_: ztree-diff           ^ ^                  ^ ^                    _P_: prettify symbols
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
@@ -1944,6 +1944,7 @@
       ("E" elfeed)
       ("J" butler-status)
       ("M" helm-spotify-plus)
+      ("Q" quick-calc)
       ("T" tomatinho)
       ("z" ztree-diff)
 
