@@ -239,6 +239,26 @@
       (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
   #+END_SRC
 
+* Searching
+  #+BEGIN_SRC emacs-lisp
+    (defhydra hydra-search(:color teal :hint nil)
+      "
+    ^Toggle
+    ^------^-------------
+    _s_: search forward
+    _r_: search backward
+    _Q_: vr/query-replace
+    _Q_: vr/query-replace
+    _w_: helm-swoop
+    "
+      ("s" isearch-forward)
+      ("r" isearch-backward)
+      ("Q" vr/query-replace)
+      ("w" helm-swoop)
+
+      ("q" nil "cancel"))
+    (global-set-key (kbd "C-é") 'hydra-search/body)
+  #+END_SRC
 * Appearance
 ** Decorations
 *** Zoom
