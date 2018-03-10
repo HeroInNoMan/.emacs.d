@@ -50,6 +50,11 @@
       (add-to-list 'recentf-exclude no-littering-etc-directory))
   #+END_SRC
 
+  Try packages without installing them:
+  #+BEGIN_SRC emacs-lisp
+    (use-package try)
+  #+END_SRC
+
 * Private variables
   All private information is stored in variables in =~/.emacs.d/private.el
   #+BEGIN_SRC emacs-lisp
