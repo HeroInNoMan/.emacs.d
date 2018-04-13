@@ -596,7 +596,8 @@
 
   More navigation commands:
   #+BEGIN_SRC emacs-lisp
-    (use-package imenu-anywhere)
+    (use-package imenu-anywhere
+      :bind ("C-c ." . helm-imenu-anywhere))
 
     (use-package dumb-jump
       :bind (:map prog-mode-map
