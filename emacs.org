@@ -606,7 +606,8 @@
                   ("C-," . dumb-jump-back)
                   ("C-;" . dumb-jump-quick-look)))
 
-    (use-package minimap)
+    (use-package minimap
+      :disabled t)
 
     ;; Allow scrolling with mouse wheel
     (when (display-graphic-p) (progn(mouse-wheel-mode t)
