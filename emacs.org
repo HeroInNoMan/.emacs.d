@@ -1180,6 +1180,10 @@
      (setq ediff-diff-options "-w"
            ediff-split-window-function 'split-window-horizontally
            ediff-window-setup-function 'ediff-setup-windows-plain)
+
+     (use-package magit-org-todos
+       :config
+       (magit-org-todos-autoinsert))
    #+END_SRC
 
 * Project management
