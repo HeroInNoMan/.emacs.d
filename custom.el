@@ -141,6 +141,7 @@
      sass-mode
      shell-pop
      shrink-whitespace
+     slime
      smart-comment
      smart-mode-line
      smartparens
