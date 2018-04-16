@@ -35,7 +35,7 @@
       (setq use-package-always-ensure t
             use-package-verbose t))
 
-    (require 'diminish) ;; for :diminish
+    (use-package diminish) ;; for :diminish
 
     (use-package use-package-chords
       :config (key-chord-mode 1))

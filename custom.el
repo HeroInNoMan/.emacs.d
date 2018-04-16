@@ -46,6 +46,7 @@
      crux
      define-word
      describe-number
+     diminish
      dired-collapse
      dired-hacks
      dired-narrow
