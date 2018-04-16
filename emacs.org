@@ -648,6 +648,16 @@
     (global-set-key (kbd "C-%") 'ale-toggle-selective-display)
   #+END_SRC
 
+*** TODO Let’s try origami again:
+    #+BEGIN_SRC emacs-lisp
+      (use-package origami
+        :config (add-hook 'prog-mode-hook #'origami-mode)
+        :bind (:map origami-mode-map
+                    ("C-x x" . origami-toggle-all-nodes)
+                    ("C-x y" . origami-show-only-node)
+                    ("C-<tab>" . origami-recursively-toggle-node)))
+    #+END_SRC
+
 * Completion & help
 ** Completion
    #+BEGIN_SRC emacs-lisp

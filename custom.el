@@ -19,6 +19,7 @@
  '(magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100"))
  '(magit-stash-arguments '("--include-untracked"))
  '(org-agenda-files nil)
+ '(origami-fold-replacement "...")
  '(package-selected-packages
    '(
      ace-jump-helm-line
