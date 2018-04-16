@@ -490,7 +490,8 @@
   I use dired+ which gives a colourful way of displaying information (ls -lA way).
   #+BEGIN_SRC emacs-lisp
     (use-package dired+
-      :config (unbind-key "M-b" dired-mode-map))
+      :ensure nil
+      :load-path "elisp/dired+.el")
 
     (use-package dired-narrow
       :bind (:map dired-mode-map ("/" . dired-narrow)))
