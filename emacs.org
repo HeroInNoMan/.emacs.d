@@ -1207,6 +1207,7 @@
       (projectile-global-mode) ;; activate projectile-mode everywhere
       (helm-projectile-on)
       (setq projectile-completion-system 'helm
+            projectile-require-project-root nil
             projectile-enable-caching t ;; enable caching for projectile-mode
             projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
       (def-projectile-commander-method ?d
