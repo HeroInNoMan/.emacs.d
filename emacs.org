@@ -2136,7 +2136,8 @@
 ** Restclient
    #+BEGIN_SRC emacs-lisp
      ;; REST client
-     (use-package restclient
+     (use-package restclient-helm
+       :ensure restclient
        :mode ("restclient" . restclient-mode)
        :bind
        (:map restclient-mode-map
