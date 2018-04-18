@@ -68,7 +68,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :ensure nil
-      :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file)
+      :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file ale-open-project)
       :load-path "elisp/"
       :bind
       ("C-c i" . ale-indent-region-or-buffer) ;; indent whole buffer
@@ -790,7 +790,7 @@
               helm-buffers-fuzzy-matching t
               helm-recentf-fuzzy-match    t
               helm-ff-skip-boring-files t
-              helm-candidate-number-limit 500
+              helm-candidate-number-limit 300
               helm-ag-insert-at-point 'symbol
               helm-ag-base-command "ag --nocolor --nogroup --smart-case"
               helm-for-files-preferred-list '(helm-source-buffers-list

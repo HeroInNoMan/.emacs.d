@@ -352,5 +352,16 @@ for the line number input"
   (interactive)
   (ispell-change-dictionary "en_GB"))
 
+(defun ale-open-project (args)
+  "open project magit logs and status as split windows"
+  (interactive "D")
+  (progn
+    (find-file args)
+    (magit-log-all magit-log-arguments)
+    (delete-other-windows)
+    (magit-status-internal args)
+    (other-window 1)
+    (beginning-of-buffer)))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.
