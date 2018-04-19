@@ -2172,10 +2172,7 @@
    Lorem ipsum text filler:
    #+BEGIN_SRC emacs-lisp
      (use-package lorem-ipsum
-       :disabled t
-       :bind (("C-c C-l p" . lorem-ipsum-insert-paragraphs)
-              ("C-c C-l s" . lorem-ipsum-insert-sentences)
-              ("C-c C-l l" . lorem-ipsum-insert-list)))
+       :defer t)
    #+END_SRC
 
 ** Music

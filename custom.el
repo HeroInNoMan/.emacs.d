@@ -107,6 +107,7 @@
      js-comint
      js2-mode
      js2-refactor
+     lorem-ipsum
      magit
      magit-org-todos
      markdown-mode
