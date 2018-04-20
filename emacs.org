@@ -1,6 +1,8 @@
 #+TITLE: Emacs configuration file
 #+AUTHOR: Arthur Léothaud
 
+#+STARTUP: showall
+
 #+EXPORT_SELECT_TAGS: export
 #+EXPORT_EXCLUDE_TAGS: noexport
 
@@ -136,8 +138,6 @@
     ;; Killing emacs
     (global-unset-key (kbd "C-x C-c")) ;;
     (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
-
-    (global-unset-key (kbd "C-z")) ;; used for tmux
   #+END_SRC
 
   I never use the minimise command, use the binding for repeat instead.
@@ -1525,6 +1525,7 @@
        ("q" nil "cancel"))
      (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
 
+     (show-paren-mode)
      ;; (show-smartparens-global-mode t)
 
    #+END_SRC
