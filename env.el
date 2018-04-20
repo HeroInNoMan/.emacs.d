@@ -64,10 +64,10 @@
             jenkins-viewname "<viewname>"))
 
     ;; smaller font size
-    (when (featurep 'zoom-frm)
-      (progn
-        (zoom-frm-unzoom)
-        (dotimes (number 2) (zoom-frm-out))))
+    (progn
+      (zoom-frm-in)
+      (zoom-frm-unzoom)
+      (dotimes (number 3) (zoom-frm-out)))
 
     ;; change theme (oswald, charcoal-black)
     (when (featurep 'color-theme)
