@@ -14,7 +14,16 @@
 * Installation & loading
   Start by “disabling” garbage collection while starting up:
   #+BEGIN_SRC emacs-lisp
-    (setq gc-cons-threshold 128000000)
+    ;; Use a hook so the message doesn't get clobbered by other messages.
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                (message "Emacs ready in %s with %d garbage collections."
+                         (format "%.2f seconds"
+                                 (float-time
+                                  (time-subtract after-init-time before-init-time)))
+                         gcs-done)))
+
+    (setq gc-cons-threshold 1280000000000)
     (add-hook 'after-init-hook #'(lambda ()
                                    ;; restore after startup (and don't be so stingy
                                    ;; on the memory, we have lots now. It's the
