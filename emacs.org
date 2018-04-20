@@ -222,7 +222,6 @@
        ("z" . repeat)
        ("." . repeat))
       :chords ("ii" . toggle-god-mode)
-      :init (setq god-mode-colors nil)
       :config
       (defun toggle-god-mode ()
         (interactive)
@@ -292,16 +291,16 @@
 *** Highlight feedback
     Let’s have a visual feedback when performing cut/copy/paste operations.
     #+BEGIN_SRC emacs-lisp
-       (use-package volatile-highlights
-         :diminish volatile-highlights-mode
-         :config (volatile-highlights-mode nil))
+      (use-package volatile-highlights
+        :diminish volatile-highlights-mode
+        :config (volatile-highlights-mode nil))
 
       (use-package idle-highlight-mode)
     #+END_SRC
 
     Highlight current line in list buffers:
     #+BEGIN_SRC emacs-lisp
-      (use-package highlight-line ;;
+      (use-package highlight-line
         :ensure nil
         :config
         (global-hl-line-mode -1) ;; don’t highlight current line
@@ -314,9 +313,8 @@
         :config (fancy-narrow-mode t))
 
       (use-package highlight-indent-guides
-        :config
-        (setq highlight-indent-guides-method 'character
-              highlight-indent-guides-mode t))
+        :config (setq highlight-indent-guides-method 'character
+                      highlight-indent-guides-mode t))
     #+END_SRC
 
 *** More
@@ -381,8 +379,8 @@
 ** Mode-line
    I use spaceline for my mode-line. It still needs some work, like including icons in it, and have the right information displayed for the battery.
    #+BEGIN_SRC emacs-lisp
-     (use-package all-the-icons)
-
+     (use-package all-the-icons
+       :defer t)
    #+END_SRC
 
    TODO: try https://github.com/dbordak/telephone-line/
@@ -390,7 +388,7 @@
    #+BEGIN_SRC emacs-lisp
 
      (use-package spaceline
-       :ensure t
+       :defer t
        :config
        (defvar god-local-mode nil)
        (defun spaceline-face-func-god (face active)
@@ -493,15 +491,14 @@
    #+BEGIN_SRC emacs-lisp
      (use-package color-theme
        :config
-       (color-theme-initialize)
-       (color-theme-dark-laptop))
+       (color-theme-initialize))
    #+END_SRC
 
 ** Colours
    Colour parentheses according to nesting level:
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
-       :config (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+       :hook (prog-mode . rainbow-delimiters-mode))
    #+END_SRC
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
@@ -513,7 +510,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-mode
        :diminish rainbow-mode
-       :config (add-hook 'prog-mode-hook #'rainbow-mode))
+       :hook (prog-mode . rainbow-mode))
    #+END_SRC
 *** TODO install and try package: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
 
@@ -553,7 +550,7 @@
   Package to try:
   #+BEGIN_SRC emacs-lisp
     (use-package phi-search
-      :disabled t
+      :disabled
       :bind
       ("C-s" . phi-search)
       ("C-r" . phi-search-backward))
@@ -597,17 +594,16 @@
        ("C-M-s" . isearch-forward))
       :config (require 'visual-regexp)) ;; TODO check if really necessary
   #+END_SRC
+  Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
 
 * Side bar
   #+BEGIN_SRC emacs-lisp
   (use-package dired-sidebar
-    :ensure t
-    :commands (dired-sidebar-toggle-sidebar)
+    :commands dired-sidebar-toggle-sidebar
     :config
     (use-package all-the-icons-dired
       ;; M-x all-the-icons-install-fonts
-      :ensure t
-      :commands (all-the-icons-dired-mode)))
+      :commands all-the-icons-dired-mode))
   #+END_SRC
 
 * Navigation
@@ -638,7 +634,7 @@
                   ("C-;" . dumb-jump-quick-look)))
 
     (use-package minimap
-      :disabled t)
+      :disabled)
 
     ;; Allow scrolling with mouse wheel
     (when (display-graphic-p) (progn(mouse-wheel-mode t)
@@ -661,7 +657,7 @@
     (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
     (use-package aggressive-indent
-      :config (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode))
+      :hook (emacs-lisp-mode . aggressive-indent-mode))
 
     ;;Indentation
     (setq-default tab-width 4
@@ -681,15 +677,17 @@
     (global-set-key (kbd "C-%") 'ale-toggle-selective-display)
   #+END_SRC
 
-*** TODO Let’s try origami again:
+*** Folding
+    I use origami for code folding:
     #+BEGIN_SRC emacs-lisp
       (use-package origami
-        :config (add-hook 'prog-mode-hook #'origami-mode)
         :bind (:map origami-mode-map
                     ("C-x x" . origami-toggle-all-nodes)
                     ("C-x y" . origami-show-only-node)
-                    ("C-<tab>" . origami-recursively-toggle-node)))
+                    ("C-<tab>" . origami-recursively-toggle-node))
+        :hook (prog-mode . origami-mode))
     #+END_SRC
+    I also use “selective display” as a more generic folding method.
 
 * Completion & help
 ** Completion
@@ -698,9 +696,7 @@
        :diminish company-mode
        :config
        (global-company-mode) ;; enable company in all buffers
-       (setq company-show-numbers t)
-       (add-hook 'markdown-mode-hook 'company-mode)
-       (add-hook 'text-mode-hook 'company-mode))
+       (setq company-show-numbers t))
 
      (use-package browse-kill-ring
        :config
@@ -742,19 +738,19 @@
    Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
    #+BEGIN_SRC emacs-lisp
      (use-package counsel
-       :disabled t
+       :disabled
        :init ()
        :bind ()
        :config
        ())
      (use-package ivy
-       :disabled t
+       :disabled
        :demand
        :config
        (setq ivy-use-virtual-buffers t
              ivy-count-format "%d/%d "))
      (use-package swiper
-       :disabled t)
+       :disabled)
    #+END_SRC
 
 ** Helm
@@ -793,7 +789,8 @@
           ("C-p" helm-projectile-switch-project)
           ("p" helm-projectile-switch-project)
           ("f" helm-find-files)
-          ("C-ç" helm-for-files)
+          ("C-ç" helm-mini)
+          ("M-ç" helm-mini)
           ("R" helm-register)
           ;; search
           ("." helm-imenu-anywhere)
@@ -829,21 +826,29 @@
         (helm-autoresize-mode t)
         (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
               helm-adaptive-mode t
+              helm-ag-base-command "ag --nocolor --nogroup --smart-case"
+              helm-ag-insert-at-point 'symbol
               helm-buffer-max-length nil
               helm-buffers-fuzzy-matching t
-              helm-recentf-fuzzy-match    t
-              helm-ff-skip-boring-files t
               helm-candidate-number-limit 300
-              helm-ag-insert-at-point 'symbol
-              helm-ag-base-command "ag --nocolor --nogroup --smart-case"
-              helm-for-files-preferred-list '(helm-source-buffers-list
+              helm-echo-input-in-header-line nil
+              helm-ff-file-name-history-use-recentf t
+              helm-ff-skip-boring-files t
+              helm-net-prefer-curl t
+              helm-recentf-fuzzy-match t
+              helm-for-files-preferred-list '(
+                                              helm-source-buffers-list
+                                              helm-source-projectile-buffers-list
                                               helm-source-recentf
                                               helm-source-projectile-files-list
                                               helm-source-bookmarks
                                               helm-source-file-cache
                                               helm-source-files-in-current-dir
-                                              ;; helm-source-google-suggest
-                                              helm-source-locate))
+                                              helm-source-google-suggest
+                                              helm-source-locate
+                                              helm-source-projectile-projects
+                                              helm-source-file-name-history
+                                              ))
         (defun my/helm-find-files ()
           ;; https://stackoverflow.com/questions/11403862/how-to-have-emacs-helm-list-offer-files-in-current-directory-as-options
           (interactive)
@@ -908,6 +913,8 @@
      (use-package yasnippet
        :bind (:map yas-minor-mode-map
                    ("<backtab>" . yas-ido-expand))
+       :init
+       (setq yas-snippet-dirs `(,(concat user-emacs-directory "etc/yasnippet/snippets")))
        :config
        ;; Completing point by some yasnippet key
        (defun yas-ido-expand ()
@@ -931,7 +938,6 @@
                (delete-char (- init-word original-point))
                (insert key)
                (yas-expand)))))
-       (setq yas-snippet-dirs `(,(concat user-emacs-directory "etc/yasnippet/snippets") yas-installed-snippets-dir))
        (yas-reload-all))
      (yas-global-mode 1)
    #+END_SRC
@@ -1010,7 +1016,7 @@
      (global-set-key (kbd "C-x M-s") 'transpose-sentences)
      (global-set-key (kbd "C-x M-t") 'transpose-sexps)
 
-     (use-package repeatable
+     (use-package repeatable ;; TODO add repeatable commands (or replace package with easy-repeat
        :ensure nil
        :load-path "elisp")
 
@@ -1153,7 +1159,7 @@
 ** Diff
    #+BEGIN_SRC emacs-lisp
      (use-package vdiff
-       :disabled t
+       :disabled
        :bind (:map vdiff-mode-map
                    ("C-c" . vdiff-mode-prefix-map))
        :init (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
@@ -1254,7 +1260,7 @@
   Someone advocates for [[http://manuel-uberti.github.io/programming/2017/08/06/eyebrowse/][eye-browse]], which I need to try: (note: the validate-setq function requires the [[http://endlessparentheses.com/validate-el-schema-validation-for-emacs-lisp.html][validate.el]] package)
   #+BEGIN_SRC emacs-lisp
     (use-package eyebrowse ;; Easy workspaces creation and switching
-      :disabled t
+      :disabled
       :ensure validate
       :config
       (validate-setq eyebrowse-mode-line-separator " "
@@ -1293,7 +1299,7 @@
 ** TODO Weather widget in the mode-line
    #+BEGIN_SRC emacs-lisp
     (use-package weatherline-mode
-      :disabled t
+      :disabled
       :ensure nil
       :load-path "elisp"
       :config
@@ -1329,7 +1335,7 @@
    #+BEGIN_SRC emacs-lisp
     ;; weather from wttr.in
     (use-package wttrin
-      :commands (wttrin)
+      :commands wttrin
       :config
       (setq wttrin-default-cities
             '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
@@ -1433,7 +1439,7 @@
   Let’s use emacs to read our mail (with mu4e) :
   #+BEGIN_SRC emacs-lisp
     (use-package mu4e
-      :disabled t
+      :disabled
       :load-path "/usr/share/emacs/site-lisp/mu4e"
       :ensure nil
       :config
@@ -1491,26 +1497,24 @@
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens-config
        :ensure smartparens
-       :config
-       (add-hook 'prog-mode-hook #'turn-on-smartparens-mode)
-       (add-hook 'markdown-mode-hook #'turn-on-smartparens-mode)
-       (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
+       :hook ((prog-mode markdown-mode) . turn-on-smartparens-mode)
+       :config (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
 
      (defhydra hydra-parens(:color teal :hint nil)
        "
-         ^Edit^                               ^Move^                 ^Slurp & Barf^
-         ^----^-------------------------------^----^-----------------^------------^----------
-         _C-j_: newline                       _u_: backward-up-sexp  _(_: backward-slurp-sexp
-         _C-k_: kill-hybrid-sexp              _d_: down-sexp         _)_: slurp-hybrid-sexp
-         _M-s_: splice-sexp                   _f_: forward-sexp      _<_: backward-barf-sexp
-         _s_: splice-sexp                     _b_: backward-sexp     _>_: forward-barf-sexp
-         _k_: kill-sexp                       _n_: next-sexp
-         _w_: rewrap-sexp                     _p_: previous-sexp
-         _j_: join-sexp
-         _t_: transpose-sexp
-         _T_: transpose-hybrid-sexp
-         _DEL_: splice-sexp-killing-backward
-      "
+       ^Edit^                               ^Move^                 ^Slurp & Barf^
+       ^----^-------------------------------^----^-----------------^------------^----------
+       _C-j_: newline                       _u_: backward-up-sexp  _(_: backward-slurp-sexp
+       _C-k_: kill-hybrid-sexp              _d_: down-sexp         _)_: slurp-hybrid-sexp
+       _M-s_: splice-sexp                   _f_: forward-sexp      _<_: backward-barf-sexp
+       _s_: splice-sexp                     _b_: backward-sexp     _>_: forward-barf-sexp
+       _k_: kill-sexp                       _n_: next-sexp
+       _w_: rewrap-sexp                     _p_: previous-sexp
+       _j_: join-sexp
+       _t_: transpose-sexp
+       _T_: transpose-hybrid-sexp
+       _DEL_: splice-sexp-killing-backward
+       "
        ;; edition
        ("C-j" sp-newline)
        ("C-k" sp-kill-hybrid-sexp)
@@ -1645,7 +1649,7 @@
 *** TODO malabar-mode (à tester)
     #+BEGIN_SRC emacs-lisp
       (use-package malabar-mode
-        :disabled t
+        :disabled
         :config
         ;; JAVA (malabar-mode)
         ;; mimic the IDEish compile-on-save behaviour
@@ -1668,7 +1672,7 @@
 *** TODO eclim (à tester)
     #+BEGIN_SRC emacs-lisp
       (use-package eclim
-        :disabled t
+        :disabled
         :config
         (global-eclim-mode)
         (require 'eclimd)
@@ -1685,22 +1689,20 @@
 
 *** ecb (à tester)
     #+BEGIN_SRC emacs-lisp
-      (use-package ecb :disabled t)
+      (use-package ecb :disabled)
     #+END_SRC
 *** TODO meghanada (à tester)
     #+BEGIN_SRC emacs-lisp
       (use-package autodisass-java-bytecode
-        :disabled t
+        :disabled
         :defer t)
 
       (use-package google-c-style
-        :disabled t
-        :defer t
-        :commands
-        (google-set-c-style))
+        :disabled
+        :commands google-set-c-style)
 
       (use-package meghanada
-        :disabled t
+        :disabled
         :defer t
         :ensure highlight-symbol
         :config
@@ -1772,6 +1774,10 @@
      (use-package js2-mode
        ;; :bind (:js2-mode-map ("C-c C-c" . compile))
        :mode ("\\.js\\'\\|\\.json\\'" . js2-mode)
+       :hook ((json-mode . json-pretty-print)
+              (js2-mode . json-pretty-print-buffer)
+              (js2-mode . aggressive-indent-mode)
+              (js2-mode . js2-refactor-mode))
        :config
        (use-package js2-refactor
          :config
@@ -1780,16 +1786,12 @@
        (setq js2-basic-offset 2
              js-indent-level 2
              js2-use-font-lock-faces t)
-       (add-hook 'json-mode-hook #'json-pretty-print)
-       (add-hook 'js2-mode-hook #'json-pretty-print-buffer)
-       (add-hook 'js2-mode-hook #'aggressive-indent-mode)
-       (add-hook 'js2-mode-hook #'js2-refactor-mode)
        (add-hook 'js2-mode-hook (lambda () (flycheck-mode t)))
        (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
      ;; à tester
      (use-package js-comint
-       :disabled t
+       :disabled
        :config  (defun inferior-js-mode-hook-setup ()
                   (add-hook 'comint-output-filter-functions 'js-comint-process-output))
        (add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
@@ -1839,7 +1841,7 @@
                                 (current-buffer) t
                                 "*Xmllint Error Buffer*" t))
      (use-package web-beautify
-       :disabled t
+       :disabled
        :bind-keymap (
                      ;; :map js2-mode-map ("C-c b" . web-beautify-js)
                      ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
@@ -1858,12 +1860,17 @@
      (use-package tide
        :chords (:map tide-mode-map
                      ("+-" . bury-buffer))
-       :bind
-       (:map tide-mode-map
-             ("C-c k" . bury-buffer)
-             ("C-." . tide-jump-to-definition)
-             ("C-," . tide-jump-back)
-             ("C-c C-c" . hydra-tide/body))
+       :bind (:map tide-mode-map
+                   ("C-c k" . bury-buffer)
+                   ("C-." . tide-jump-to-definition)
+                   ("C-," . tide-jump-back)
+                   ("C-c C-c" . hydra-tide/body))
+       :hook
+       ;; formats the buffer before saving
+       (before-save . tide-format-before-save)
+       (typescript-mode . setup-tide-mode)
+       (typescript-mode . rainbow-blocks-mode)
+       (js2-mode . setup-tide-mode)
        :config
        (defun setup-tide-mode ()
          (interactive)
@@ -1877,14 +1884,10 @@
        (setq company-tooltip-align-annotations t  ;; aligns annotation to the right hand side
              typescript-indent-level 2
              ;; format options
-             tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t
-                                                                                         :placeOpenBraceOnNewLineForFunctions nil))
+             tide-format-options '(
+                                   :insertSpaceAfterFunctionKeywordForAnonymousFunctions t
+                                   :placeOpenBraceOnNewLineForFunctions nil))
 
-       ;; formats the buffer before saving
-       (add-hook 'before-save-hook 'tide-format-before-save)
-       (add-hook 'typescript-mode-hook #'setup-tide-mode)
-       (add-hook 'typescript-mode-hook #'rainbow-blocks-mode)
-       (add-hook 'js2-mode-hook #'setup-tide-mode)
        ;; (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file ~/projets/tss.log"))
 
        (defhydra hydra-tide(:color blue)
@@ -1897,7 +1900,7 @@
          ("q" nil "cancel")))
 
      (use-package typescript-mode
-       :disabled t
+       :disabled
        :mode ("\\.ts\\'"
               "\\.json\\'"))
 
@@ -1915,14 +1918,15 @@
      (use-package jedi)
      (use-package python
        :after (elpy jedi)
-
        :bind (:map python-mode-map
                    ("M-g M-p" . elpy-flymake-previous-error)
                    ("M-g M-n" . elpy-flymake-next-error)
                    ("C-x C-e" . python-shell-send-defun))
+       :hook
+       (python-mode . elpy-enable)
+       (python-mode . flycheck-mode)
+
        :config
-       (add-hook 'python-mode-hook 'elpy-enable)
-       (add-hook 'python-mode-hook 'flycheck-mode)
        (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
        (setq jedi:complete-on-dot t
              python-indent-offset 2
@@ -2109,7 +2113,7 @@
 ** Grammalecte
    #+BEGIN_SRC emacs-lisp
      (use-package grammalecte
-       :disabled t
+       :disabled
        :ensure nil
        :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
    #+END_SRC
@@ -2127,23 +2131,25 @@
 * Session saving & backups
   #+BEGIN_SRC emacs-lisp
     ;; Save a list of recent files visited.
-    ;; (desktop-read)
-    (setq recentf-max-saved-items 100  ;; just 20 is too recent
-          vc-make-backup-files t ;; make backups of files, even when they're in version control
-          delete-by-moving-to-trash t ;; move files to trash when deleting
-          ;; desktop-base-lock-name      "lock"
-          desktop-save                t
-          ;; desktop-dirname             user-emacs-directory
-          ;; desktop-path                (list desktop-dirname)
-          ;; desktop-files-not-to-save   "^$" ;reload tramp paths
-          ;; desktop-load-locked-desktop t
-          )
-    (add-to-list 'desktop-modes-not-to-save 'dired-mode)
-    (recentf-mode 1)
-    (desktop-save-mode 1)
-    (savehist-mode 1)
-    (setq savehist-additional-variables
-          '(register-alist))
+    (use-package desktop
+      :config
+      (setq recentf-max-saved-items 100  ;; just 20 is too recent
+            vc-make-backup-files t ;; make backups of files, even when they're in version control
+            delete-by-moving-to-trash t ;; move files to trash when deleting
+            desktop-save t
+            savehist-additional-variables '(register-alist)
+            ;; desktop-base-lock-name      "lock"
+            ;; desktop-dirname             user-emacs-directory
+            ;; desktop-path                (list desktop-dirname)
+            ;; desktop-files-not-to-save   "^$" ;reload tramp paths
+            ;; desktop-load-locked-desktop t
+            ;; (add-to-list 'desktop-modes-not-to-save 'dired-mode)
+            )
+      (recentf-mode 1)
+      (desktop-save-mode 1)
+      (savehist-mode 1)
+      (add-hook 'desktop-after-read-hook (lambda () (set-cursor-color "yellow")))
+      (desktop-read))
   #+END_SRC
 
 * Server mode
@@ -2198,7 +2204,7 @@
    It now seems possible to read epub documents (ebooks) from within emacs:
    #+BEGIN_SRC emacs-lisp
      (use-package nov
-       :disabled t
+       :disabled
        :config
        ((add-to-list 'auto-mode-alist '(".epub$" . nov-mode))))
    #+END_SRC
@@ -2211,7 +2217,7 @@
 
 ** Music
    #+BEGIN_SRC emacs-lisp
-     (use-package helm-spotify-plus)
+     (use-package helm-spotify-plus :disabled)
    #+END_SRC
 
 ** Youtube
@@ -2230,16 +2236,16 @@
 ** Games
 *** Typing
     #+BEGIN_SRC emacs-lisp
-      (use-package speed-type :disabled t)
-      (use-package typit :disabled t)
-      (use-package typing :disabled t)
+      (use-package speed-type :disabled)
+      (use-package typit :disabled)
+      (use-package typing :disabled)
     #+END_SRC
 
 *** Other
     #+BEGIN_SRC emacs-lisp
-      (use-package 2048-game :disabled t)
-      (use-package vimgolf :disabled t)
-      (use-package slime-volleyball :disabled t)
+      (use-package 2048-game :disabled)
+      (use-package vimgolf :disabled)
+      (use-package slime-volleyball :disabled)
     #+END_SRC
 ** News
 *** RSS feeds
@@ -2267,7 +2273,6 @@
   My init file (emacs.org) should always be open.
   #+BEGIN_SRC emacs-lisp
     (ale-find-init-file)
-    ;;; init.el ends here
   #+END_SRC
 * Useful links
   - https://mickael.kerjean.me/2017/03/18/emacs-tutorial-series-episode-0/
