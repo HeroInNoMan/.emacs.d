@@ -283,6 +283,7 @@
 *** Zen
     #+BEGIN_SRC emacs-lisp
       (use-package sublimity
+        :defer t
         :config
         (require 'sublimity-scroll)
         (require 'sublimity-map))
@@ -308,6 +309,7 @@
         :load-path "elisp/")
 
       (use-package fancy-narrow
+        :defer t
         :diminish fancy-narrow-mode
         :config (fancy-narrow-mode t))
 
@@ -321,6 +323,7 @@
     Let’s have an indicator in the mode-line for search results:
     #+BEGIN_SRC emacs-lisp
       (use-package anzu
+        :defer t
         :diminish anzu-mode
         :config
         (global-anzu-mode t)
@@ -1015,7 +1018,8 @@
    #+END_SRC
 ** Diffing
    #+BEGIN_SRC emacs-lisp
-     (use-package ztree)
+     (use-package ztree
+       :defer t)
    #+END_SRC
 
 * Buffer & window manipulation
