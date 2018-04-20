@@ -70,7 +70,10 @@
         (dotimes (number 2) (zoom-frm-out))))
 
     ;; change theme (oswald, charcoal-black)
-    (color-theme-lethe)
+    (when (featurep 'color-theme)
+      ;; (oswald)
+      ;; (charcoal-black)
+      (color-theme-lethe))
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -82,7 +85,8 @@
     (global-hl-line-mode -1)
 
     ;; change theme
-    (color-theme-calm-forest)))
+    (when (featurep 'color-theme)
+      (color-theme-calm-forest))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; HIGHLANDER (home) ;;
@@ -108,7 +112,8 @@
             transmission-rpc-path my-private-transmission-rpc-path))
 
     ;; change theme
-    (color-theme-charcoal-black)))
+    (when (featurep 'color-theme)
+      (color-theme-charcoal-black))))
 
 ;;;;;;;;;;;;;
 ;; DEFAULT ;;
@@ -129,7 +134,9 @@
           (equal "cygwin" system-type))
       (ale-load-windows-specific-conf)
       ;; useful when C-/ does not work (windows/putty)
-      (global-set-key (kbd "C-M-z") 'undo)))))
+      (global-set-key (kbd "C-M-z") 'undo)))
+    (when (featurep 'color-theme)
+      (color-theme-dark-laptop))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOAD APPROPRIATE ENVIRONMENT ;;
