@@ -525,7 +525,8 @@
       :bind (:map dired-mode-map ("/" . dired-narrow)))
 
     (put 'dired-find-alternate-file 'disabled nil)
-    (setq dired-listing-switches "-AlhF") ;; dired human readable size format
+    (setq dired-dwim-target t
+          dired-listing-switches "-AlhF") ;; dired human readable size format
     (unbind-key "M-b" dired-mode-map)
 
     ;; Auto refresh dired
