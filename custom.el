@@ -42,6 +42,7 @@
      calfw-org
      char-menu
      color-theme
+     counsel
      crontab
      crux
      define-word

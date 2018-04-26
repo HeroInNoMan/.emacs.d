@@ -251,14 +251,13 @@
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-search(:color teal :hint nil)
       "
-    ^Toggle
-    ^------^-------------
-    _s_: search forward
-    _r_: search backward
-    _Q_: vr/query-replace
-    _Q_: vr/query-replace
-    _w_: helm-swoop
-    "
+      ^Toggle
+      ^------^-------------
+      _s_: search forward
+      _r_: search backward
+      _Q_: vr/query-replace
+      _w_: helm-swoop
+      "
       ("s" isearch-forward)
       ("r" isearch-backward)
       ("Q" vr/query-replace)
@@ -562,9 +561,6 @@
 
   Standard isearch by default:
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-s") 'isearch-forward)
-    (global-set-key (kbd "C-r") 'isearch-backward)
-
     (use-package isearch-dabbrev
       :bind (:map isearch-mode-map
                   ("<tab>" . isearch-dabbrev-expand)
@@ -591,10 +587,10 @@
        ;; if you use multiple-cursors, this is for you:
        ("M-s m" . vr/mc-mark)
        ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
-       ("C-r" . vr/isearch-backward)
-       ("C-s" . vr/isearch-forward)
-       ("C-M-r" . isearch-backward)
-       ("C-M-s" . isearch-forward))
+       ("C-r" . isearch-backward)
+       ("C-s" . isearch-forward)
+       ("C-M-r" . vr/isearch-backward)
+       ("C-M-s" . vr/isearch-forward))
       :config (require 'visual-regexp)) ;; TODO check if really necessary
   #+END_SRC
   Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
@@ -740,20 +736,25 @@
 ** Ivy, counsel, swiper
    Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
    #+BEGIN_SRC emacs-lisp
-     (use-package counsel
-       :disabled
-       :init ()
-       :bind ()
-       :config
-       ())
      (use-package ivy
-       :disabled
-       :demand
+       :diminish (ivy-mode . "")
        :config
-       (setq ivy-use-virtual-buffers t
-             ivy-count-format "%d/%d "))
-     (use-package swiper
-       :disabled)
+       (ivy-mode nil)
+       ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+       (setq ivy-use-virtual-buffers t)
+       ;; number of result lines to display
+       (setq ivy-height 30)
+       ;; does not count candidates
+       (setq ivy-count-format "%d/%d ")
+       ;; no regexp by default
+       (setq ivy-initial-inputs-alist nil)
+       ;; configure regexp engine.
+       (setq ivy-re-builders-alist
+             ;; allow input not in order
+             '((t . ivy--regex-ignore-order))))
+
+     (use-package counsel
+       :bind ("M-s s" . counsel-grep-or-swiper))
    #+END_SRC
 
 ** Helm
@@ -905,8 +906,43 @@
                     ("C-c C-c" . wgrep-finish-edit)))
 
       (use-package helm-swoop
-        :bind
-        ("C-S-s" . helm-swoop))
+        :bind ((:map isearch-mode-map
+                     ;; When doing isearch, hand the word over to helm-swoop
+                     ("M-i" . helm-swoop-from-isearch))
+               (:map helm-swoop-map
+                     ;; From helm-swoop to helm-multi-swoop-all
+                     ("M-i" . helm-multi-swoop-all-from-helm-swoop)
+                     ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+                     ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
+                     ;; Move up and down like isearch
+                     ("C-r" . helm-previous-line)
+                     ("C-s" . helm-next-line)
+                     ("C-r" . helm-previous-line)
+                     ("C-s" . helm-next-line))
+               ("C-S-s" . helm-swoop))
+        :config
+        ;; Save buffer when helm-multi-swoop-edit complete
+        (setq helm-multi-swoop-edit-save t
+
+              ;; If this value is t, split window inside the current window
+              helm-swoop-split-with-multiple-windows nil
+
+              ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
+              helm-swoop-split-direction 'split-window-vertically
+
+              ;; If nil, you can slightly boost invoke speed in exchange for text color
+              helm-swoop-speed-or-color t
+
+              ;; ;; Go to the opposite side of line from the end or beginning of line
+              helm-swoop-move-to-line-cycle t
+
+              ;; Optional face for line numbers
+              ;; Face name is `helm-swoop-line-number-face`
+              helm-swoop-use-line-number-face t
+
+              ;; If you prefer fuzzy matching
+              helm-swoop-use-fuzzy-match nil))
+
 
       (use-package helm-git-grep)
     #+END_SRC
@@ -2049,8 +2085,7 @@
 ** Special characters
    #+BEGIN_SRC emacs-lisp
      (use-package char-menu
-       :bind (("<f7>" . char-menu)
-              ("C-é" . char-menu))
+       :bind (("<f7>" . char-menu))
        :config
        (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
                          ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
