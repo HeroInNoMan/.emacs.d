@@ -623,6 +623,9 @@
 
   More navigation commands:
   #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-S-p") 'up-arrow)
+    (global-set-key (kbd "C-S-n") 'down-arrow)
+
     (use-package imenu-anywhere
       :bind ("C-c ." . helm-imenu-anywhere))
 
