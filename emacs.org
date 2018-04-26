@@ -503,7 +503,9 @@
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
    #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-blocks)
+     (use-package rainbow-blocks
+       :disabled
+       :hook (python-mode . rainbow-blocks-mode))
    #+END_SRC
 
    When coding, colour codes and names should be displayed in the this colour.
