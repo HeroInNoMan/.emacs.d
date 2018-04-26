@@ -662,9 +662,9 @@
       :hook (emacs-lisp-mode . aggressive-indent-mode))
 
     ;;Indentation
-    (setq-default tab-width 4
+    (setq-default tab-width 2
                   c-auto-newline t
-                  c-basic-offset 4
+                  c-basic-offset 2
                   c-block-comment-prefix ""
                   c-default-style "k&r"
                   indent-tabs-mode nil ;; <tab> inserts spaces, not tabs and spaces
@@ -1591,7 +1591,7 @@
 
 ** Shell
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'sh-mode-hook (lambda () (setq tab-width 4 sh-basic-offset 4 indent-tabs-mode t)))
+     (add-hook 'sh-mode-hook (lambda () (setq tab-width 2 sh-basic-offset 2 indent-tabs-mode t)))
      (add-hook 'sh-mode-hook 'flycheck-mode)
      ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
      (add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
