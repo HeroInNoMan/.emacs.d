@@ -2024,6 +2024,7 @@
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_: volatile-highlight %`volatile-highlights-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_: whitespace %`global-whitespace-mode
+          ^ ^             ^ ^                       ^ ^                  ^ ^                    _W_: web-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _x_: winnow-mode %`winnow-mode
           "
       ;; Built-in
@@ -2079,6 +2080,7 @@
       ("v" visual-line-mode)
       ("V" volatile-highlights-mode)
       ("w" whitespace-mode)
+      ("W" web-mode)
       ("x" winnow-mode)
       ;; ("W" wttrin)
       ;; ("y" play-youtube-video)
