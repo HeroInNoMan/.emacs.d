@@ -1318,27 +1318,45 @@
 ** Date & time in the mode-line
    I want the date and time displayed in the French standard format, no M/D/Y nonsense.
    #+BEGIN_SRC emacs-lisp
-    (setq display-time-day-and-date t ;; display date and time
-          display-time-24hr-format t ;; 24h time format
-          european-calendar-style t ;; day/month/year format for calendar
-          calendar-week-start-day 1 ;; start week on Monday
-          display-time-string-forms '((propertize
-                                       (format-time-string
-                                        (or display-time-format
-                                            (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
-                                        now)
-                                       'help-echo
-                                       (format-time-string "%a %d/%m (%V)" now)
-                                       'face '(:foreground "blue" :weight bold)
-                                       )
-                                      (if
-                                          (and
-                                           (not display-time-format)
-                                           display-time-day-and-date)
-                                          (format-time-string ", %a %d/%m (%V)" now)
-                                        "")))
-    (display-time)
-    (global-set-key (kbd "C-c d") 'insert-todays-date)
+     (setq display-time-day-and-date t ;; display date and time
+           display-time-24hr-format t ;; 24h time format
+           european-calendar-style t ;; day/month/year format for calendar
+           calendar-week-start-day 1 ;; start week on Monday
+           display-time-string-forms '((propertize
+                                        (format-time-string
+                                         (or display-time-format
+                                             (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
+                                         now)
+                                        'help-echo
+                                        (format-time-string "%a %d/%m (%V)" now)
+                                        'face '(:foreground "blue" :weight bold)
+                                        )
+                                       (if
+                                           (and
+                                            (not display-time-format)
+                                            display-time-day-and-date)
+                                           (format-time-string ", %a %d/%m (%V)" now)
+                                         "")))
+     (display-time)
+
+     (defhydra hydra-dates (:color blue :hint nil)
+       "
+     ^
+     ^Dates^             ^Insert^            ^Insert with Time^
+     ^─────^─────────────^──────^────────────^────────────────^──
+     _q_ quit            _d_ short           _D_ short
+     ^ ^                 _i_ iso             _I_ iso
+     ^ ^                 _l_ long            _L_ long
+     ^ ^                 ^ ^                 ^ ^
+     "
+       ("q" nil)
+       ("d" ab/date-short)
+       ("D" ab/date-short-with-time)
+       ("i" ab/date-iso)
+       ("I" ab/date-iso-with-time)
+       ("l" ab/date-long)
+       ("L" ab/date-long-with-time))
+     (global-set-key (kbd "C-c d") 'hydra-dates/body)
    #+END_SRC
 
 ** TODO Weather widget in the mode-line
