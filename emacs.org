@@ -953,6 +953,7 @@
 ** Snippets
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
+       :defer 2
        :bind (:map yas-minor-mode-map
                    ("<backtab>" . yas-ido-expand))
        :init
@@ -980,8 +981,8 @@
                (delete-char (- init-word original-point))
                (insert key)
                (yas-expand)))))
-       (yas-reload-all))
-     (yas-global-mode 1)
+       (yas-reload-all)
+       (yas-global-mode 1))
    #+END_SRC
 
 *** More grepping
