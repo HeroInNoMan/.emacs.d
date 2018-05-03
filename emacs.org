@@ -1011,7 +1011,8 @@
      (use-package multiple-cursors
        :demand mc-mark-more
        :bind
-       (("M-é" . set-rectangular-region-anchor)
+       (
+        ;; ("M-é" . set-rectangular-region-anchor)
         :map region-bindings-mode-map
         ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
         ("d" . mc/mark-all-symbols-like-this-in-defun)
@@ -1106,6 +1107,8 @@
        :config (persistent-scratch-setup-default))
 
      ;; buffer & file handling
+     (global-set-key (kbd "M-é") 'previous-buffer) ;; call previous buffer
+     (global-set-key (kbd "M-è") 'next-buffer) ;; call next buffer
      (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
      (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
      (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
