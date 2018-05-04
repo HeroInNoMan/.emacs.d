@@ -1673,31 +1673,35 @@
 
 ** Sql
    #+BEGIN_SRC emacs-lisp
-     (add-to-list 'auto-mode-alist '(".sql$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".pks$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".pkb$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".mvw$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".con$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".ind$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".sqs$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".tab$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".trg$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".vw$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".prc$" . sql-mode))
-     (add-to-list 'auto-mode-alist '(".pk$" . sql-mode))
+     (use-package sql
+       :ensure nil
+       :hook
+       (sql-mode . (lambda () (setq-local truncate-lines nil)))
+       (sql-mode . (lambda () (setq-local linesize 9999)))
+       (sql-interactive-mode . sqli-add-hooks)
+       (sql-interactive-mode . (lambda ()
+                                 (setq-local comint-output-filter-functions 'comint-truncate-buffer
+                                             comint-buffer-maximum-size 5000
+                                             comint-scroll-show-maximum-output t
+                                             comint-input-ring-size 500)))
+       :interpreter "sql"
+       :mode
+       ("\\.sql\\'"
+        "\\.pks\\'"
+        "\\.pkb\\'"
+        "\\.mvw\\'"
+        "\\.con\\'"
+        "\\.ind\\'"
+        "\\.sqs\\'"
+        "\\.tab\\'"
+        "\\.trg\\'"
+        "\\.vw\\'"
+        "\\.prc\\'"
+        "\\.pk\\'"))
+
      ;;; sql-oracle connection without a tnsnames.ora
      ;; (description=(address_list=(address=(protocol=TCP)(host=myhost.example.com)(port=1521)))(connect_data=(SERVICE_NAME=myservicename)))
      ;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)
-     (add-hook 'sql-mode (setq truncate-lines nil))
-     (add-hook 'sql-mode (setq linesize 9999))
-
-     (add-hook 'sql-interactive-mode-hook 'sqli-add-hooks)
-     (add-hook 'sql-interactive-mode-hook
-               (function (lambda ()
-                           (setq comint-output-filter-functions 'comint-truncate-buffer
-                                 comint-buffer-maximum-size 5000
-                                 comint-scroll-show-maximum-output t
-                                 comint-input-ring-size 500))))
    #+END_SRC
 
 ** Groovy
