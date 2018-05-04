@@ -1585,16 +1585,20 @@
 * Programming
 ** DONE Formatting
    #+BEGIN_SRC emacs-lisp
-  (use-package prog-fill
-    :config
-    (add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "M-q") #'prog-fill))))
+     (use-package prog-fill
+       :bind
+       (:map prog-mode-map
+             ("M-q" . prog-fill)))
+
    #+END_SRC
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens-config
        :ensure smartparens
-       :hook ((prog-mode markdown-mode) . turn-on-smartparens-mode)
+       :hook
+       (show-paren-mode)
+       ((prog-mode markdown-mode) . turn-on-smartparens-mode)
        :config (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
 
      (defhydra hydra-parens(:color teal :hint nil)
@@ -1638,10 +1642,6 @@
 
        ("q" nil "cancel"))
      (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
-
-     (show-paren-mode)
-     ;; (show-smartparens-global-mode t)
-
    #+END_SRC
 
 ** Shell
