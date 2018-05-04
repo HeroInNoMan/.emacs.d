@@ -942,20 +942,21 @@
                     ("C-c C-c" . wgrep-finish-edit)))
 
       (use-package helm-swoop
-        :bind ((:map isearch-mode-map
-                     ;; When doing isearch, hand the word over to helm-swoop
-                     ("M-i" . helm-swoop-from-isearch))
-               (:map helm-swoop-map
-                     ;; From helm-swoop to helm-multi-swoop-all
-                     ("M-i" . helm-multi-swoop-all-from-helm-swoop)
-                     ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
-                     ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
-                     ;; Move up and down like isearch
-                     ("C-r" . helm-previous-line)
-                     ("C-s" . helm-next-line)
-                     ("C-r" . helm-previous-line)
-                     ("C-s" . helm-next-line))
-               ("C-S-s" . helm-swoop))
+        :bind
+        ("C-S-s" . helm-swoop)
+        (:map isearch-mode-map
+              ;; When doing isearch, hand the word over to helm-swoop
+              ("M-i" . helm-swoop-from-isearch))
+        (:map helm-swoop-map
+              ;; From helm-swoop to helm-multi-swoop-all
+              ("M-i" . helm-multi-swoop-all-from-helm-swoop)
+              ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+              ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
+              ;; Move up and down like isearch
+              ("C-r" . helm-previous-line)
+              ("C-s" . helm-next-line)
+              ("C-r" . helm-previous-line)
+              ("C-s" . helm-next-line))
         :config
         ;; Save buffer when helm-multi-swoop-edit complete
         (setq helm-multi-swoop-edit-save t
