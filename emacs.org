@@ -1649,15 +1649,26 @@
 
 ** Lisp
    #+BEGIN_SRC emacs-lisp
-     (define-key lisp-mode-map (kbd "C-c x") 'eval-and-replace) ;; eval sexp and replace it by its value
-     (define-key emacs-lisp-mode-map (kbd "C-c C-c") 'eval-region)
-     (define-key lisp-mode-map (kbd "C-c C-c") 'eval-region)
+     (use-package lisp-mode
+       :ensure nil
+       :bind (:map lisp-mode-map
+                   ("C-c C-c" . eval-region)
+                   ("C-c C-r" . eval-and-replace)))
 
-     ;; (global-set-key (kbd "C-c c") 'compile)
+     (use-package emacs-lisp-mode
+       :ensure nil
+       :bind (:map emacs-lisp-mode-map
+                   ("C-c C-c" . eval-region)
+                   ("C-c C-r" . eval-and-replace)))
+
+     (use-package ielm
+       :ensure nil
+       :hook (ielm-mode . (lambda () (setq-local scroll-margin 0))))
 
      (use-package elisp-slime-nav
+       :after emacs-lisp-mode
        :diminish elisp-slime-nav-mode
-       :config (add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t))))
+       :hook (emacs-lisp-mode-hook))
    #+END_SRC
 
 ** Sql
