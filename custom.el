@@ -163,6 +163,7 @@
      undo-tree
      use-package-chords
      validate
+     vimish-fold
      visual-regexp-steroids
      volatile-highlights
      web-beautify

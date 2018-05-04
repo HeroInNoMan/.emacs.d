@@ -690,6 +690,40 @@
     #+END_SRC
     I also use “selective display” as a more generic folding method.
 
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vimish-fold
+    :defer 1
+    :bind
+    (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
+          :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
+    :init
+    (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
+    (vimish-fold-global-mode 1)
+    :config
+    (setq-default vimish-fold-header-width 79))
+
+  (defhydra hydra-fold (:color pink)
+    "
+  ^
+  ^Fold^              ^Do^                ^Jump^              ^Toggle^
+  ^────^──────────────^──^────────────────^────^──────────────^──────^────────────
+  _q_ quit            _f_ fold            _p_ previous        _<tab>_ current
+  ^ ^                 _k_ kill            _n_ next            _a_ all
+  ^ ^                 _K_ kill all        ^ ^                 ^ ^
+  ^ ^                 ^ ^                 ^ ^                 ^ ^
+  "
+    ("q" nil)
+    ("<tab>" vimish-fold-toggle)
+    ("a" vimish-fold-toggle-all)
+    ("p" vimish-fold-previous-fold)
+    ("n" vimish-fold-next-fold)
+    ("f" vimish-fold)
+    ("k" vimish-fold-delete)
+    ("K" vimish-fold-delete-all))
+  (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
+#+END_SRC
+
 * Completion & help
 ** Completion
    #+BEGIN_SRC emacs-lisp
