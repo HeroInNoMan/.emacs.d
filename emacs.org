@@ -1711,9 +1711,9 @@
 
 ** Ruby
    #+BEGIN_SRC emacs-lisp
-     ;; Loads ruby mode when a .rb file is opened.
-     (autoload 'ruby-mode "ruby-mode" "Major mode for editing ruby scripts." t)
-     (add-to-list 'auto-mode-alist '(".rb$" . ruby-mode))
+     (use-package ruby-mode
+       :mode "\\.rb\\'"
+       :interpreter "ruby")
    #+END_SRC
 
 ** Java
