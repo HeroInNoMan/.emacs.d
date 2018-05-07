@@ -394,5 +394,12 @@ for the line number input"
   (interactive)
   (insert (format-time-string "%Y.%m.%d %H:%M")))
 
+(defun ale/apply-local-theme ()
+  "Apply locally-defined theme"
+  (when (featurep 'color-theme)
+    (if (boundp 'my-private-theme)
+        (funcall (read my-private-theme))
+      (message "my-private-theme is not set. No theme will be loaded"))))
+
 (provide 'my-functions)
 ;; misc-functions.el ends here.

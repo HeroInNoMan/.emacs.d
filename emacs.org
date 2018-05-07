@@ -73,12 +73,21 @@
         (load-file private-file)))
   #+END_SRC
 
+* Customisation
+  Custom file should be loaded early.
+  #+BEGIN_SRC emacs-lisp
+    (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+    (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
+    (when (file-exists-p custom-file)
+      (load custom-file))
+  #+END_SRC
+
 * Libraries & tools
   My custom (often stolen) lisp code is stored in elisp/my-functions.el.
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :ensure nil
-      :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file ale-open-project)
+      :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file ale-open-project ale/apply-local-theme)
       :load-path "elisp/"
       :bind
       ("C-c i" . ale-indent-region-or-buffer) ;; indent whole buffer
@@ -95,6 +104,15 @@
     (use-package my-checks :ensure nil)
 
     (use-package describe-number)
+  #+END_SRC
+
+* Theme
+  Apply a colour theme (uses the variable my-private-theme if defined)
+  #+BEGIN_SRC emacs-lisp
+    (use-package color-theme
+      :config
+      (color-theme-initialize)
+      (ale/apply-local-theme))
   #+END_SRC
 
 * Defaults, ergonomics & keybindings
@@ -326,7 +344,7 @@
         :diminish anzu-mode
         :config
         (global-anzu-mode t)
-        (setq-default anzu-cons-mode-line-p nil))
+        (setq-default anzu-cons-mode-line-p t))
     #+END_SRC
 
     More visual customisation…
@@ -376,124 +394,6 @@
           ("!=" . ≠)
           ("..." . …)))
     #+END_SRC
-
-** Mode-line
-   I use spaceline for my mode-line. It still needs some work, like including icons in it, and have the right information displayed for the battery.
-   #+BEGIN_SRC emacs-lisp
-     (use-package all-the-icons
-       :defer t)
-   #+END_SRC
-
-   TODO: try https://github.com/dbordak/telephone-line/
-
-   #+BEGIN_SRC emacs-lisp
-
-     (use-package spaceline
-       :defer t
-       :config
-       (defvar god-local-mode nil)
-       (defun spaceline-face-func-god (face active)
-         (cond
-          ((eq 'face1 face) (if active 'powerline-active1 'powerline-inactive1))
-          ((eq 'face2 face) (if active 'powerline-active2 'powerline-inactive2))
-          ((eq 'line face) (if active (if god-local-mode 'spaceline-god-face 'mode-line) 'mode-line-inactive))
-          ((eq 'highlight face) (if active (funcall spaceline-highlight-face-func) 'powerline-inactive1))))
-
-       (spaceline-define-segment ale/version-control
-         "Show the current version control branch."
-         (when vc-mode
-           (substring vc-mode (+ 2 (length (symbol-name (vc-backend buffer-file-name)))))))
-       (spaceline-define-segment ale/buffer-modified
-         "Buffer status (read-only, modified), with color"
-         (cond (buffer-read-only (propertize "" 'face 'spaceline-read-only))
-               ((buffer-modified-p) (propertize " " 'face 'spaceline-modified))
-               (t "")))
-       (spaceline-define-segment ale/major-mode
-         "The name of the major mode."
-         (if god-local-mode
-             (propertize (powerline-major-mode) 'face 'spaceline-god-face)
-           (powerline-major-mode)))
-
-       (spaceline-define-segment ale/battery
-         "Show battery information.  Requires `fancy-battery-mode' to be enabled.
-     This segment overrides the modeline functionality of
-     `fancy-battery-mode'."
-         (when (bound-and-true-p fancy-battery-mode)
-           (let ((text (spaceline--fancy-battery-mode-line)))
-             (and text (powerline-raw (s-trim text)
-                                      (spaceline--fancy-battery-face)))))
-         :global-override fancy-battery-mode-line)
-
-       (defface spaceline-god-face
-         `((t (:background "brown"
-                           :foreground "#3E3D31"
-                           :inherit 'mode-line)))
-         "Face for god mode."
-         :group 'spaceline)
-       (defface spaceline-process-face
-         `((t (:background "blue"
-                           :foreground "bold"
-                           :inherit 'mode-line)))
-         "Face for process segment."
-         :group 'spaceline)
-       (defun spaceline-highlight-face-modified ()
-         "Set the highlight face depending on the modified state.
-     Set `spaceline-highlight-face-func' to
-     `spaceline-highlight-face-modified' to use this."
-         (cond
-          (buffer-read-only 'spaceline-read-only)
-          ((buffer-modified-p) 'spaceline-modified)
-          (t 'spaceline-unmodified)))
-       (setq-default spaceline-face-func 'spaceline-face-func-god
-                     mode-line-format '("%e" (:eval (spaceline-ml-main)))))
-
-     (use-package spaceline-all-the-icons
-       :after spaceline)
-     (use-package spaceline-config
-       :ensure spaceline
-       :config
-       (spaceline-helm-mode)
-       (spaceline-info-mode)
-       (setq-default
-        spaceline-minor-modes-separator "⚫"
-        spaceline-highlight-face-func 'spaceline-highlight-face-modified
-        powerline-default-separator 'wave);; Valid Values: alternate, arrow, arrow-fade, bar, box, brace, butt, chamfer, contour, curve, rounded, roundstub, wave, zigzag, utf-8.
-       ;; build mode line
-       (spaceline-install
-         'main
-         '(((remote-host buffer-id) :face highlight-face :separator ":" :priority 1)
-           ((projectile-root ale/version-control) :separator " ⑂ " :face spaceline-evil-insert)
-           (anzu :face mode-line)
-           (process :when active :face spaceline-process-face)
-           (erc-track))
-         '((selection-info :face region :when mark-active)
-           ((flycheck-error flycheck-warning flycheck-info) :when active)
-           (python-pyenv)
-           (python-pyvenv)
-           (org-clock)
-           (org-pomodoro)
-           (major-mode :face spaceline-evil-insert :priority 1)
-           (minor-modes :face spaceline-evil-visual)
-           (which-function)
-           (line-column :priority 0)
-           (point-position :priority 0)
-           (buffer-size :priority 0)
-           ;; (buffer-encoding-abbrev :priority 0 :when active)
-           (global :face spaceline-evil-visual :when active :priority 2)
-           (window-number :priority 0)
-           (workspace-number :priority 0)
-           (ale/battery :face powerline-active1 :priority 0 :when active)
-           ;; (buffer-position :face highlight-face :priority 0)
-           (hud :priority 0))))
-   #+END_SRC
-
-** Theme
-   Define a colour theme (I override this in ~/.emacs.d/env.el)
-   #+BEGIN_SRC emacs-lisp
-     (use-package color-theme
-       :config
-       (color-theme-initialize))
-   #+END_SRC
 
 ** Colours
    Colour parentheses according to nesting level:
@@ -1356,27 +1256,35 @@
 
 * Date, time & calendar
 ** Date & time in the mode-line
-   I want the date and time displayed in the French standard format, no M/D/Y nonsense.
+   I want the date and time displayed in standard format, no M/D/Y nonsense.
    #+BEGIN_SRC emacs-lisp
      (setq display-time-day-and-date t ;; display date and time
            display-time-24hr-format t ;; 24h time format
            european-calendar-style t ;; day/month/year format for calendar
            calendar-week-start-day 1 ;; start week on Monday
-           display-time-string-forms '((propertize
-                                        (format-time-string
-                                         (or display-time-format
-                                             (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
-                                         now)
-                                        'help-echo
-                                        (format-time-string "%a %d/%m (%V)" now)
-                                        'face '(:foreground "blue" :weight bold)
-                                        )
-                                       (if
-                                           (and
-                                            (not display-time-format)
-                                            display-time-day-and-date)
-                                           (format-time-string ", %a %d/%m (%V)" now)
-                                         "")))
+           display-time-string-forms '((if (and (not display-time-format) display-time-day-and-date)
+                                           (format-time-string "%H:%M, %a %d %b (w%V) " now))))
+
+
+     ;; (setq display-time-day-and-date t ;; display date and time
+     ;;       display-time-24hr-format t ;; 24h time format
+     ;;       european-calendar-style t ;; day/month/year format for calendar
+     ;;       calendar-week-start-day 1 ;; start week on Monday
+     ;;       display-time-string-forms '((propertize
+     ;;                                    (format-time-string
+     ;;                                     (or display-time-format
+     ;;                                         (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
+     ;;                                     now)
+     ;;                                    'help-echo
+     ;;                                    (format-time-string "%a %d/%m (%V)" now)
+     ;;                                    'face '(:foreground "blue" :weight bold)
+     ;;                                    )
+     ;;                                   (if
+     ;;                                       (and
+     ;;                                        (not display-time-format)
+     ;;                                        display-time-day-and-date)
+     ;;                                       (format-time-string ", %a %d/%m (%V)" now)
+     ;;                                     "")))
      (display-time)
 
      (defhydra hydra-dates (:color blue :hint nil)
@@ -2235,14 +2143,25 @@
        :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
    #+END_SRC
 
-* Customisation & environment
+* Environment
   #+BEGIN_SRC emacs-lisp
-    (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-    (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
-    (when (file-exists-p custom-file)
-      (load custom-file))
-
     (load-file (expand-file-name "env.el" user-emacs-directory))
+  #+END_SRC
+
+* Mode-line
+  After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs.
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package smart-mode-line
+      :config
+      ;; for issues with theme loading
+      (setq sml/theme 'dark
+            sml/replacer-regexp-list '(("^~/projets/" ":p:")
+                                       ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
+                                       ("^~/\\.emacs\\.d/" ":ED:")
+                                       ("^/sudo:.*:" ":SU:")
+                                       ("^~/Terminalcity/" ":T:")))
+      (sml/setup))
   #+END_SRC
 
 * Session saving & backups

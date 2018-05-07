@@ -69,12 +69,6 @@
       (zoom-frm-unzoom)
       (dotimes (number 3) (zoom-frm-out)))
 
-    ;; change theme (oswald, charcoal-black)
-    (when (featurep 'color-theme)
-      ;; (oswald)
-      ;; (charcoal-black)
-      (color-theme-lethe))
-
     ;; let access projects quickly in a convenient layout
     (defhydra hydra-projects(:color teal :columns 3)
       "projects"
@@ -89,11 +83,7 @@
 (defun load-yuno-env ()
   (progn
     ;; don’t highlight current line
-    (global-hl-line-mode -1)
-
-    ;; change theme
-    (when (featurep 'color-theme)
-      (color-theme-calm-forest))))
+    (global-hl-line-mode -1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; HIGHLANDER (home) ;;
@@ -116,11 +106,7 @@
       :config
       (setq transmission-host my-private-transmission-host
             transmission-service my-private-transmission-service
-            transmission-rpc-path my-private-transmission-rpc-path))
-
-    ;; change theme
-    (when (featurep 'color-theme)
-      (color-theme-charcoal-black))))
+            transmission-rpc-path my-private-transmission-rpc-path))))
 
 ;;;;;;;;;;;;;
 ;; DEFAULT ;;
@@ -141,9 +127,7 @@
           (equal "cygwin" system-type))
       (ale-load-windows-specific-conf)
       ;; useful when C-/ does not work (windows/putty)
-      (global-set-key (kbd "C-M-z") 'undo)))
-    (when (featurep 'color-theme)
-      (color-theme-dark-laptop))))
+      (global-set-key (kbd "C-M-z") 'undo)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOAD APPROPRIATE ENVIRONMENT ;;

@@ -177,6 +177,7 @@
      zop-to-char
      ztree
      ))
+ '(sml/full-mode-string " …")
  '(sml/use-projectile-p 'before-prefixes)
  '(tramp-syntax 'default nil (tramp)))
 (custom-set-faces
