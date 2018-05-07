@@ -23,7 +23,7 @@
                                   (time-subtract after-init-time before-init-time)))
                          gcs-done)))
 
-    (setq gc-cons-threshold 1280000000000)
+    (setq gc-cons-threshold most-positive-fixnum)
     (add-hook 'after-init-hook #'(lambda ()
                                    ;; restore after startup (and don't be so stingy
                                    ;; on the memory, we have lots now. It's the
@@ -119,6 +119,7 @@
     (use-package better-defaults)
 
     (use-package crux
+      :defer 1
       :config
       (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
       (crux-reopen-as-root-mode)
@@ -215,6 +216,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package god-mode
       :diminish god-local-mode
+      :init (setq god-local-mode nil)
       :bind
       (("C-c g" . toggle-god-mode)
        :map god-local-mode-map
@@ -227,6 +229,7 @@
         (progn
           (god-mode-all)
           (my-update-cursor)))
+      (setq god-mode-colors nil)
       (defun my-update-cursor ()
         "change cursor colour if god-mode is activated/deactivated effectively."
         (cond
@@ -517,6 +520,21 @@
 * Dired
   I use dired+ which gives a colourful way of displaying information (ls -lA way).
   #+BEGIN_SRC emacs-lisp
+    (use-package dired
+      :ensure nil
+      :config
+      (put 'dired-find-alternate-file 'disabled nil)
+      (unbind-key "M-b" dired-mode-map)
+      (setq dired-dwim-target t
+            ;; dired human readable size format
+            dired-listing-switches "-AlhF"
+            ;; Auto refresh dired
+            global-auto-revert-non-file-buffers t
+            auto-revert-verbose nil
+            ;; always delete and copy recursively
+            dired-recursive-deletes 'always
+            dired-recursive-copies 'always))
+
     (use-package dired+
       :ensure nil
       :load-path "elisp/dired+.el")
@@ -524,27 +542,12 @@
     (use-package dired-narrow
       :bind (:map dired-mode-map ("/" . dired-narrow)))
 
-    (put 'dired-find-alternate-file 'disabled nil)
-    (setq dired-dwim-target t
-          dired-listing-switches "-AlhF") ;; dired human readable size format
-    (unbind-key "M-b" dired-mode-map)
-
-    ;; Auto refresh dired
-    (setq global-auto-revert-non-file-buffers t
-          auto-revert-verbose nil
-          ;; always delete and copy recursively
-          dired-recursive-deletes 'always
-          dired-recursive-copies 'always)
-
     (use-package find-dired
       :config (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
 
     (use-package dired-collapse
-      :config
-      (add-hook 'dired-mode-hook (lambda () (dired-collapse-mode t))))
-  #+END_SRC
+      :hook (dired-mode . (lambda () (dired-collapse-mode t))))
 
-  #+BEGIN_SRC emacs-lisp
     (use-package dired-subtree)
   #+END_SRC
 
@@ -691,38 +694,38 @@
     I also use “selective display” as a more generic folding method.
 
 
-#+BEGIN_SRC emacs-lisp
-  (use-package vimish-fold
-    :defer 1
-    :bind
-    (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
-          :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
-    :init
-    (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
-    (vimish-fold-global-mode 1)
-    :config
-    (setq-default vimish-fold-header-width 79))
+    #+BEGIN_SRC emacs-lisp
+      (use-package vimish-fold
+        :defer 1
+        :bind
+        (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
+              :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
+        :init
+        (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
+        (vimish-fold-global-mode 1)
+        :config
+        (setq-default vimish-fold-header-width 79))
 
-  (defhydra hydra-fold (:color pink)
-    "
-  ^
-  ^Fold^              ^Do^                ^Jump^              ^Toggle^
-  ^────^──────────────^──^────────────────^────^──────────────^──────^────────────
-  _q_ quit            _f_ fold            _p_ previous        _<tab>_ current
-  ^ ^                 _k_ kill            _n_ next            _a_ all
-  ^ ^                 _K_ kill all        ^ ^                 ^ ^
-  ^ ^                 ^ ^                 ^ ^                 ^ ^
-  "
-    ("q" nil)
-    ("<tab>" vimish-fold-toggle)
-    ("a" vimish-fold-toggle-all)
-    ("p" vimish-fold-previous-fold)
-    ("n" vimish-fold-next-fold)
-    ("f" vimish-fold)
-    ("k" vimish-fold-delete)
-    ("K" vimish-fold-delete-all))
-  (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
-#+END_SRC
+      (defhydra hydra-fold (:color pink)
+        "
+        ^
+        ^Fold^              ^Do^                ^Jump^              ^Toggle^
+        ^────^──────────────^──^────────────────^────^──────────────^──────^────────────
+        _q_ quit            _f_ fold            _p_ previous        _<tab>_ current
+        ^ ^                 _k_ kill            _n_ next            _a_ all
+        ^ ^                 _K_ kill all        ^ ^                 ^ ^
+        ^ ^                 ^ ^                 ^ ^                 ^ ^
+        "
+        ("q" nil)
+        ("<tab>" vimish-fold-toggle)
+        ("a" vimish-fold-toggle-all)
+        ("p" vimish-fold-previous-fold)
+        ("n" vimish-fold-next-fold)
+        ("f" vimish-fold)
+        ("k" vimish-fold-delete)
+        ("K" vimish-fold-delete-all))
+      (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
+    #+END_SRC
 
 * Completion & help
 ** Completion
@@ -987,11 +990,10 @@
 ** Snippets
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
-       :defer 2
        :bind (:map yas-minor-mode-map
                    ("<backtab>" . yas-ido-expand))
-       :init
-       (setq yas-snippet-dirs `(,(concat user-emacs-directory "etc/yasnippet/snippets")))
+       :init (setq yas-snippet-dirs `(,(concat user-emacs-directory "etc/yasnippet/snippets")))
+       :hook (prog-mode)
        :config
        ;; Completing point by some yasnippet key
        (defun yas-ido-expand ()
@@ -1211,11 +1213,11 @@
                    ("d" . git-messenger:popup-diff)
                    ("s" . git-messenger:)
                    ("c" . git-messenger:copy-commit-id))
-       :config
-       (add-hook 'git-messenger:popup-buffer-hook 'magit-commit-mode)
-       (setq git-messenger:show-detail t))
+       :hook (git-messenger:popup-buffer-hook . magit-commit-mode)
+       :config (setq git-messenger:show-detail t))
 
      (use-package gitignore-mode)
+
      (use-package gitconfig-mode
        :config
        (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
@@ -1223,6 +1225,7 @@
 
      (use-package git-gutter
        :diminish git-gutter-mode
+       :hook (prog-mode)
        :bind
        ("M-N" . git-gutter:next-hunk)
        ("M-P" . git-gutter:previous-hunk)
@@ -1271,6 +1274,7 @@
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
+       :defer t
        :chords ("qg" . magit-status) ;; run git status for current buffer)
        :config
        (setq magit-last-seen-setup-instructions "1.4.0")
@@ -1278,14 +1282,13 @@
 
      (defhydra hydra-git(:color blue :hint nil)
        "
-      ^Gutter^           ^Log^               ^Other^
-      ^------^-----------^---^---------------^-----^--------
-      _n_: next hunk     _b_: blame          _._: status
-      _p_: prev. hunk    _l_: file history   _g_: message
-      _r_: revert hunk   _t_: time machine   _f_: file popup
-      _s_: stage hunk
-      _u_: gutter mode
-
+       ^Gutter^           ^Log^               ^Other^
+       ^------^-----------^---^---------------^-----^--------
+       _n_: next hunk     _b_: blame          _._: status
+       _p_: prev. hunk    _l_: file history   _g_: message
+       _r_: revert hunk   _t_: time machine   _f_: file popup
+       _s_: stage hunk
+       _u_: gutter mode
        "
        ;; gutter
        ("n" git-gutter:next-hunk)
@@ -1312,6 +1315,8 @@
            ediff-window-setup-function 'ediff-setup-windows-plain)
 
      (use-package magit-org-todos
+       :defer t
+       :after magit
        :config
        (magit-org-todos-autoinsert))
    #+END_SRC
@@ -2087,7 +2092,6 @@
           ^ ^             _Q_: quick-calc           ^ ^                  ^ ^                    _n_: sidebar
           ^ ^             _T_: pomodoro (tomatinho) ^ ^                  ^ ^                    _o_: org-mode
           ^ ^             _z_: ztree-diff           ^ ^                  ^ ^                    _P_: prettify symbols
-          ^ ^             ^ ^                       ^ ^                  ^ ^                    _R_: rainbow-blocks %`rainbow-blocks-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_: sublimity %`sublimity-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_: visual-line %`visual-line-mode
           ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_: volatile-highlight %`volatile-highlights-mode
@@ -2142,7 +2146,6 @@
       ("n" dired-sidebar-toggle-sidebar)
       ("o" org-mode)
       ("P" prettify-symbols-mode)
-      ("R" rainbow-blocks-mode)
       ("s" sublimity-mode)
       ;; ("S" spray-mode)
       ("v" visual-line-mode)
@@ -2246,6 +2249,7 @@
   #+BEGIN_SRC emacs-lisp
     ;; Save a list of recent files visited.
     (use-package desktop
+      :defer t
       :config
       (setq recentf-max-saved-items 100  ;; just 20 is too recent
             vc-make-backup-files t ;; make backups of files, even when they're in version control
