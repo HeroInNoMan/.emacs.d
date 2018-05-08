@@ -271,19 +271,19 @@
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-search(:color teal :hint nil)
       "
-      ^Toggle
-      ^------^-------------
-      _s_: search forward
-      _r_: search backward
-      _Q_: vr/query-replace
-      _w_: helm-swoop
+      ^Search^     ^Toggle^
+      ^──────^─────^──────^────────────
+      _q_ quit     _s_ search forward
+      ^ ^          _r_ search backward
+      ^ ^          _Q_ vr/query-replace
+      ^ ^          _w_ helm-swoop
       "
+
       ("s" isearch-forward)
       ("r" isearch-backward)
       ("Q" vr/query-replace)
       ("w" helm-swoop)
-
-      ("q" nil "cancel"))
+      ("q" nil))
     (global-set-key (kbd "C-é") 'hydra-search/body)
   #+END_SRC
 * Appearance
@@ -719,14 +719,14 @@
         :config
         (defhydra hydra-helm(:color teal :hint nil)
           "
-          ^Open^                   ^Search^                    ^Doc^             ^Run
-          ^----^-------------------^------^--------------------^---^-------------^---^--------------
-          _C-p_: switch project    _._: imenu                  _b_: bindings     _A_: apt
-          _p_: switch project      _G_: git-grep               _d_: dash         _P_: elisp packages
-          _f_: files               _a_: grep project or dir    _h_: apropos      _c_: org-capture
-          _C-ç_: files (custom)    _g_: grep                   _m_: man-woman    _t_: top
-          _R_: register            _o_: occur                  _s_: google       _x_: run ext.
-          ^ ^                      ^ ^                         _w_: wikipedia
+          ^Helm^       ^Open^                 ^Search^                 ^Doc^            ^Run^
+          ^────^───────^────^─────────────────^──────^─────────────────^───^────────────^───^─────────────
+          _q_ quit     _C-p_ switch project   _._ imenu                _b_ bindings     _A_ apt
+          _r_ resume   _p_   switch project   _G_ git-grep             _d_ dash         _P_ elisp packages
+          ^ ^          _f_   files            _a_ grep project or dir  _h_ apropos      _c_ org-capture
+          ^ ^          _C-ç_ files (custom)   _g_ grep                 _m_ man-woman    _t_ top
+          ^ ^          _R_   register         _o_ occur                _s_ google       _x_ run ext.
+          ^ ^          ^ ^                    ^ ^                      _w_ wikipedia    ^ ^
           "
           ;; open
           ("C-p" helm-projectile-switch-project)
@@ -755,8 +755,8 @@
           ("t" helm-top)
           ("x" helm-run-external-command)
           ;;
-          ("r" helm-resume "resume")
-          ("q" nil "cancel"))
+          ("r" helm-resume)
+          ("q" nil))
         (defun my-do-ag-project-root-or-dir ()
           "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
           (interactive)
@@ -1182,13 +1182,13 @@
 
      (defhydra hydra-git(:color blue :hint nil)
        "
-       ^Gutter^           ^Log^               ^Other^
-       ^------^-----------^---^---------------^-----^--------
-       _n_: next hunk     _b_: blame          _._: status
-       _p_: prev. hunk    _l_: file history   _g_: message
-       _r_: revert hunk   _t_: time machine   _f_: file popup
-       _s_: stage hunk
-       _u_: gutter mode
+       ^Git^     ^Gutter^           ^Log^              ^Other^
+       ^───^─────^──────^───────────^───^──────────────^─────^───────
+       _q_ quit  _n_ next hunk      _b_ blame          _._ status
+       ^ ^       _p_ prev. hunk     _l_ file history   _g_ message
+       ^ ^       _r_ revert hunk    _t_ time machine   _f_ file popup
+       ^ ^       _s_ stage hunk     ^ ^                ^ ^
+       ^ ^       _u_ gutter mode    ^ ^                ^ ^
        "
        ;; gutter
        ("n" git-gutter:next-hunk)
@@ -1205,8 +1205,7 @@
        ("g" git-messenger:popup-message)
        ("f" magit-file-popup)
 
-       ("q" nil "cancel"))
-
+       ("q" nil))
      (global-set-key (kbd "C-x g") 'hydra-git/body)
 
      ;; A saner ediff
@@ -1291,7 +1290,7 @@
        "
      ^
      ^Dates^             ^Insert^            ^Insert with Time^
-     ^─────^─────────────^──────^────────────^────────────────^──
+     ^─────^─────────────^──────^────────────^────────────────^
      _q_ quit            _d_ short           _D_ short
      ^ ^                 _i_ iso             _I_ iso
      ^ ^                 _l_ long            _L_ long
@@ -1517,18 +1516,18 @@
 
      (defhydra hydra-parens(:color teal :hint nil)
        "
-       ^Edit^                               ^Move^                 ^Slurp & Barf^
-       ^----^-------------------------------^----^-----------------^------------^----------
-       _C-j_: newline                       _u_: backward-up-sexp  _(_: backward-slurp-sexp
-       _C-k_: kill-hybrid-sexp              _d_: down-sexp         _)_: slurp-hybrid-sexp
-       _M-s_: splice-sexp                   _f_: forward-sexp      _<_: backward-barf-sexp
-       _s_: splice-sexp                     _b_: backward-sexp     _>_: forward-barf-sexp
-       _k_: kill-sexp                       _n_: next-sexp
-       _w_: rewrap-sexp                     _p_: previous-sexp
-       _j_: join-sexp
-       _t_: transpose-sexp
-       _T_: transpose-hybrid-sexp
-       _DEL_: splice-sexp-killing-backward
+       ^Parens^     ^Edit^                               ^Move^                ^Slurp & Barf^
+       ^──────^─────^────^───────────────────────────────^────^────────────────^────────────^─────────
+       _q_ quit     _C-j_ newline                        _u_ backward-up-sexp  _(_ backward-slurp-sexp
+       ^ ^          _C-k_ kill-hybrid-sexp               _d_ down-sexp         _)_ slurp-hybrid-sexp
+       ^ ^          _M-s_ splice-sexp                    _f_ forward-sexp      _<_ backward-barf-sexp
+       ^ ^          _s_ splice-sexp                      _b_ backward-sexp     _>_ forward-barf-sexp
+       ^ ^          _k_ kill-sexp                        _n_ next-sexp
+       ^ ^          _w_ rewrap-sexp                      _p_ previous-sexp
+       ^ ^          _j_ join-sexp
+       ^ ^          _t_ transpose-sexp
+       ^ ^          _T_ transpose-hybrid-sexp
+       ^ ^          _DEL_ splice-sexp-killing-backward
        "
        ;; edition
        ("C-j" sp-newline)
@@ -1554,7 +1553,7 @@
        ("<" sp-backward-barf-sexp)
        (">" sp-forward-barf-sexp)
 
-       ("q" nil "cancel"))
+       ("q" nil))
      (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
    #+END_SRC
 
@@ -1750,18 +1749,17 @@
         (setq meghanada-javac-xlint "-Xlint:all,-processing")
         (defhydra hydra-meghanada (:hint nil :exit t)
           "
-           ^Edit^                           ^Tast or Task^
-           ^^^^^^-------------------------------------------------------
-           _f_: meghanada-compile-file      _m_: meghanada-restart
-           _c_: meghanada-compile-project   _t_: meghanada-run-task
-           _o_: meghanada-optimize-import   _j_: meghanada-run-junit-test-case
-           _s_: meghanada-switch-test-case  _J_: meghanada-run-junit-class
-           _v_: meghanada-local-variable    _R_: meghanada-run-junit-recent
-           _i_: meghanada-import-all        _r_: meghanada-reference
-           _g_: magit-status                _T_: meghanada-typeinfo
-           _l_: helm-ls-git-ls
-           _q_: exit
-           "
+          ^Meghanada^     ^Edit^                           ^Test or Task^
+          ^─────────^─────^────^───────────────────────────^────────────^───────────────────
+          _q_ exit        _f_ meghanada-compile-file       _m_ meghanada-restart
+          _z_ leave       _c_ meghanada-compile-project    _t_ meghanada-run-task
+          ^ ^             _o_ meghanada-optimize-import    _j_ meghanada-run-junit-test-case
+          ^ ^             _s_ meghanada-switch-test-case   _J_ meghanada-run-junit-class
+          ^ ^             _v_ meghanada-local-variable     _R_ meghanada-run-junit-recent
+          ^ ^             _i_ meghanada-import-all         _r_ meghanada-reference
+          ^ ^             _g_ magit-status                 _T_ meghanada-typeinfo
+          ^ ^             _l_ helm-ls-git-ls
+          "
           ("f" meghanada-compile-file)
           ("m" meghanada-restart)
 
@@ -1782,7 +1780,7 @@
           ("r" meghanada-reference)
 
           ("q" exit)
-          ("z" nil "leave"))
+          ("z" nil))
         :bind
         (:map meghanada-mode-map
               ("M-m t" . meghanada-switch-testcase)
