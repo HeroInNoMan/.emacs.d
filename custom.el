@@ -45,6 +45,7 @@
      counsel
      crontab
      crux
+     default-text-scale
      define-word
      describe-number
      diminish
@@ -173,7 +174,6 @@
      winnow
      wttrin
      yaml-mode
-     zoom-frm
      zop-to-char
      ztree
      ))

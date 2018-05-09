@@ -289,13 +289,12 @@
 * Appearance
 ** Decorations
 *** Zoom
-    I use this package to increase/decrease the font size in the whole frame (not only in the buffer).
+    I use [[https://github.com/purcell/default-text-scale][default-text-scale]] to zoom in and out the whole emacs frame.
     #+BEGIN_SRC emacs-lisp
-      (use-package zoom-frm
-        :if (display-graphic-p)
+      (use-package default-text-scale
         :bind
-        ("C-+" . zoom-frm-in) ;; zoom-frm-out with "C-- C-+"
-        ("C-=" . zoom-frm-unzoom))
+        ("C-+" . default-text-scale-increase)
+        ("C-=" . default-text-scale-decrease))
     #+END_SRC
 
 *** Zen

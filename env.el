@@ -63,12 +63,6 @@
             jenkins-username "<your user name>"
             jenkins-viewname "<viewname>"))
 
-    ;; smaller font size
-    (progn
-      (zoom-frm-in)
-      (zoom-frm-unzoom)
-      (dotimes (number 3) (zoom-frm-out)))
-
     ;; let access projects quickly in a convenient layout
     (defhydra hydra-projects(:color teal :columns 3)
       "projects"
@@ -90,12 +84,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-highlander-env ()
   (progn
-    ;; bigger font by default on laptop
-    (when (featurep 'zoom-frm)
-      (progn
-        (zoom-frm-unzoom)
-        (dotimes (number 3) (zoom-frm-in))))
-
     ;; display battery level
     (use-package fancy-battery
       :config
