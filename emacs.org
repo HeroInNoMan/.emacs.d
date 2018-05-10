@@ -1261,28 +1261,7 @@
            european-calendar-style t ;; day/month/year format for calendar
            calendar-week-start-day 1 ;; start week on Monday
            display-time-string-forms '((if (and (not display-time-format) display-time-day-and-date)
-                                           (format-time-string "%H:%M, %a %d %b (w%V) " now))))
-
-
-     ;; (setq display-time-day-and-date t ;; display date and time
-     ;;       display-time-24hr-format t ;; 24h time format
-     ;;       european-calendar-style t ;; day/month/year format for calendar
-     ;;       calendar-week-start-day 1 ;; start week on Monday
-     ;;       display-time-string-forms '((propertize
-     ;;                                    (format-time-string
-     ;;                                     (or display-time-format
-     ;;                                         (if display-time-24hr-format "%H:%M" "%-I:%M%p"))
-     ;;                                     now)
-     ;;                                    'help-echo
-     ;;                                    (format-time-string "%a %d/%m (%V)" now)
-     ;;                                    'face '(:foreground "blue" :weight bold)
-     ;;                                    )
-     ;;                                   (if
-     ;;                                       (and
-     ;;                                        (not display-time-format)
-     ;;                                        display-time-day-and-date)
-     ;;                                       (format-time-string ", %a %d/%m (%V)" now)
-     ;;                                     "")))
+                                           (format-time-string "%H:%M, %a %d %b " now))))
      (display-time)
 
      (defhydra hydra-dates (:color blue :hint nil)
@@ -2149,9 +2128,12 @@
   After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs.
 
   #+BEGIN_SRC emacs-lisp
+    (use-package sml-modeline)
+
     (use-package smart-mode-line
       :config
       ;; for issues with theme loading
+      (size-indication-mode)
       (setq sml/theme 'dark
             sml/replacer-regexp-list '(("^~/projets/" ":p:")
                                        ("^~/\\.emacs\\.d/elpa/" ":ELPA:")

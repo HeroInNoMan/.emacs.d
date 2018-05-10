@@ -18,6 +18,7 @@
  '(magit-fetch-arguments '("--prune"))
  '(magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100"))
  '(magit-stash-arguments '("--include-untracked"))
+ '(mc/list-file "/home/arthur/.emacs.d/var/mc-list.el")
  '(org-agenda-files nil)
  '(origami-fold-replacement "...")
  '(package-selected-packages
@@ -177,7 +178,18 @@
      zop-to-char
      ztree
      ))
+ '(sml-modeline-borders nil)
+ '(sml-modeline-mode t)
+ '(sml-modeline-numbers 'percentage)
+ '(sml/col-number-format "%1c")
  '(sml/full-mode-string " …")
+ '(sml/line-number-format "%1l")
+ '(sml/mule-info "%z")
+ '(sml/name-width '(25 . 44))
+ '(sml/pos-id-separator "")
+ '(sml/position-percentage-format nil)
+ '(sml/size-indication-format "(%I) ")
+ '(sml/theme 'dark)
  '(sml/use-projectile-p 'before-prefixes)
  '(tramp-syntax 'default nil (tramp)))
 (custom-set-faces
@@ -185,6 +197,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
  '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
  '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
  '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
@@ -193,4 +206,7 @@
  '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow1"))))
  '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "blue"))))
  '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "white"))))
- '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon")))))
+ '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon"))))
+ '(sml-modeline-end-face ((t (:inherit match :background "gray10"))))
+ '(sml-modeline-vis-face ((t (:inherit region :background "dark red"))))
+ '(sml/global ((t (:foreground "gray50" :inverse-video nil)))))
