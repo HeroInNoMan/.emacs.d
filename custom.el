@@ -42,7 +42,7 @@
      calfw-ical
      calfw-org
      char-menu
-     color-theme
+     color-theme-modern
      counsel
      crontab
      crux

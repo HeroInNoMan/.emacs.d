@@ -88,7 +88,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :ensure nil
-      :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file ale-open-project ale/apply-local-theme)
+      :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file ale-open-project ale/apply-local-theme-modern)
       :load-path "elisp/"
       :bind
       ("C-c i" . ale-indent-region-or-buffer) ;; indent whole buffer
@@ -110,10 +110,13 @@
 * Theme
   Apply a colour theme (uses the variable my-private-theme if defined)
   #+BEGIN_SRC emacs-lisp
-    (use-package color-theme
+    (use-package color-theme-modern
+      :demand
+      :init
+      (add-to-list 'custom-theme-load-path
+                   (file-name-as-directory (expand-file-name "themes" user-emacs-directory)))
       :config
-      (color-theme-initialize)
-      (ale/apply-local-theme))
+      (ale/apply-local-theme-modern))
   #+END_SRC
 
 * Defaults, ergonomics & keybindings
