@@ -1,5 +1,6 @@
 #+TITLE: Emacs configuration file
 #+AUTHOR: Arthur Léothaud
+#+EMAIL: arthur@leothaud.eu
 
 #+STARTUP: showall
 
@@ -233,7 +234,6 @@
   I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor and the mode-line become red when in god-mode to make it more visible.
   #+BEGIN_SRC emacs-lisp
     (use-package god-mode
-      :diminish god-local-mode
       :init (setq god-local-mode nil)
       :bind
       (("C-c g" . toggle-god-mode)
@@ -313,7 +313,7 @@
         :diminish volatile-highlights-mode
         :config (volatile-highlights-mode nil))
 
-      (use-package idle-highlight-mode)
+      (use-package idle-highlight-mode :defer t)
     #+END_SRC
 
     Highlight current line in list buffers:
@@ -331,15 +331,14 @@
         :config (fancy-narrow-mode t))
 
       (use-package highlight-indent-guides
-        :config (setq highlight-indent-guides-method 'character
-                      highlight-indent-guides-mode t))
+        :config (setq highlight-indent-guides-method 'character)
+        :hook (prog-mode . highlight-indent-guides-mode))
     #+END_SRC
 
 *** More
     Let’s have an indicator in the mode-line for search results:
     #+BEGIN_SRC emacs-lisp
       (use-package anzu
-        :defer t
         :diminish anzu-mode
         :config
         (global-anzu-mode t)
@@ -353,39 +352,28 @@
         :ensure nil)
 
       (global-font-lock-mode t) ;; enable syntax highlighting
-      (setq font-lock-maximum-decoration t) ;; all possible colours
       (blink-cursor-mode -1) ;; no blinking cursor
       (fringe-mode 0) ;; remove fringes on the sides
-
-      ;; Show me empty lines after buffer end
-      (set-default 'indicate-empty-lines t)
-
-      ;; No splash screen
-      (setq inhibit-startup-screen t)
-
-      ;; Show keystrokes in progress
-      (setq echo-keystrokes 0.1)
-
-      ;; Show active region
-      (setq-default transient-mark-mode t)
-
-      ;; No *scratch* message
-      (setq initial-scratch-message nil)
-
-      ;; Always display line and column numbers
-      (setq line-number-mode t
-            column-number-mode t)
 
       ;; don’t display linum except while goto-line
       (global-set-key [remap goto-line] 'goto-line-with-feedback)
 
-      ;; No flashing!
-      (setq visible-bell nil)
+      ;; Show me empty lines after buffer end
+      (set-default 'indicate-empty-lines t)
 
-      ;; Don't soft-break lines for me, please
-      (setq-default truncate-lines t)
+      (setq-default
+       transient-mark-mode t ;; Show active region
+       truncate-lines t ;; Don't soft-break lines for me, please
+       truncate-string-ellipsis "…")
 
-      (setq-default truncate-string-ellipsis "…")
+      (setq
+       font-lock-maximum-decoration t ;; all possible colours
+       inhibit-startup-screen t ;; No splash screen
+       echo-keystrokes 0.1 ;; Show keystrokes in progress
+       initial-scratch-message nil ;; No *scratch* message
+       visible-bell nil ;; No flashing!
+       line-number-mode t ;; Always display line and column numbers
+       column-number-mode t)
 
       ;; prettify-symbols
       (defconst lisp--prettify-symbols-alist
@@ -403,9 +391,7 @@
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
    #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-blocks
-       :disabled
-       :hook (python-mode . rainbow-blocks-mode))
+     (use-package rainbow-blocks :defer t)
    #+END_SRC
 
    When coding, colour codes and names should be displayed in the this colour.
@@ -414,13 +400,14 @@
        :diminish rainbow-mode
        :hook (prog-mode . rainbow-mode))
    #+END_SRC
-*** TODO install and try package: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
+   Note: If I ever need to work seriously with colours: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
 
 * Dired
   I use dired+ which gives a colourful way of displaying information (ls -lA way).
   #+BEGIN_SRC emacs-lisp
     (use-package dired
       :ensure nil
+      :diminish auto-revert-mode
       :config
       (put 'dired-find-alternate-file 'disabled nil)
       (unbind-key "M-b" dired-mode-map)
@@ -560,7 +547,7 @@
     (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
     (use-package aggressive-indent
-      :hook (emacs-lisp-mode . aggressive-indent-mode))
+      :hook (prog-mode . aggressive-indent-mode))
 
     ;;Indentation
     (setq-default tab-width 2
@@ -633,7 +620,8 @@
        :diminish company-mode
        :config
        (global-company-mode) ;; enable company in all buffers
-       (setq company-show-numbers t))
+       (setq company-dabbrev-downcase nil
+             company-show-numbers t))
 
      (use-package browse-kill-ring
        :config
@@ -675,6 +663,7 @@
    Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
+       :disabled
        :diminish (ivy-mode . "")
        :config
        (ivy-mode nil)
@@ -701,8 +690,8 @@
       (use-package helm
         :diminish helm-mode
         :chords
-        (("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
-         ("éè" . my-do-ag-project-root-or-dir)) ;; incremental grep in project
+        ("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
+        ("éè" . my-do-ag-project-root-or-dir) ;; incremental grep in project
         :bind
         (("M-x" . helm-M-x) ;; superior to M-x
          ("C-x M-x" . execute-extended-command)
@@ -786,7 +775,7 @@
                                               helm-source-bookmarks
                                               helm-source-file-cache
                                               helm-source-files-in-current-dir
-                                              helm-source-google-suggest
+                                              ;; helm-source-google-suggest
                                               helm-source-locate
                                               helm-source-projectile-projects
                                               helm-source-file-name-history
@@ -1173,8 +1162,8 @@
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
-       :defer t
-       :chords ("qg" . magit-status) ;; run git status for current buffer)
+       :chords ("qg" . magit-status) ;; run git status for current buffer
+       :bind (:map magit-file-mode-map ("C-x g" . hydra-git/body))
        :config
        (setq magit-last-seen-setup-instructions "1.4.0")
        (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
@@ -1213,7 +1202,6 @@
            ediff-window-setup-function 'ediff-setup-windows-plain)
 
      (use-package magit-org-todos
-       :defer t
        :after magit
        :config
        (magit-org-todos-autoinsert))
@@ -1852,9 +1840,6 @@
                      :map html-mode-map ("C-c b" . web-beautify-html)
                      :map web-mode-map ("C-c b" . web-beautify-html)
                      :map css-mode-map ("C-c b" . web-beautify-css)))
-
-     (use-package tidy
-       :config (setq sgml-validate-command "tidy"))
    #+END_SRC
 
 ** Typescript
@@ -1967,9 +1952,9 @@
           _e_: eshell     _4_: mu4e                 _d_: diary           _C_: flycheck buffer   _(_: smartparens %`smartparens-mode
           _G_: gnus       _a_: avandu RSS           _D_: remote diary    ^ ^                    _f_: ido %`ido-mode
           _p_: packages   _A_: lobsters             _i_: init file       _è_: spelling hydra    _g_: god %`god-local-mode
-          _t_: shell-pop  _b_: eww-browser          _r_: rest-client     _é_: char-menu         _h_: Idle HL %`idle-highlight-mode
+          _t_: shell-pop  _b_: eww-browser          _r_: rest-client     _é_: char-menu         _h_: Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
           _$_: shell      _B_: code browser         ^ ^                  ^ ^                    _H_: Highlight-line %`highlight-line-mode
-          _%_: ansi-term  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %`highlight-indent-guides-mode
+          _%_: ansi-term  _c_: calendar             ^ ^                  ^ ^                    _I_: indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
           ^ ^             _E_: elfeed RSS           ^ ^                  ^ ^                    _j_: js2-mode
           ^ ^             _J_: jenkins              ^ ^                  ^ ^                    _l_: line number
           ^ ^             _M_: spotify              ^ ^                  ^ ^                    _m_: minimap
@@ -2177,9 +2162,9 @@
             (not (fboundp 'server-running-p))
             (not (server-running-p))))
       :bind ("M-#" . server-edit) ;; send back to server, quicker than C-x #
-      :init
-      (add-hook 'after-init-hook 'server-start t)
-      (add-hook 'after-init-hook 'edit-server-start t))
+      :hook
+      (after-init-hook . server-start)
+      (after-init-hook . edit-server-start))
   #+END_SRC
 
 * Other

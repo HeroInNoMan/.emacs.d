@@ -198,6 +198,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
+ '(idle-highlight ((t (:box (:line-width 1 :color "gray10" :style released-button)))))
  '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
  '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
  '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
