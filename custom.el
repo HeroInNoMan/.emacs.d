@@ -175,6 +175,8 @@
      winnow
      wttrin
      yaml-mode
+     yasnippet
+     yasnippet-snippets
      zop-to-char
      ztree
      ))
