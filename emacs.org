@@ -352,6 +352,19 @@
     #+END_SRC
 
     More visual customisation…
+
+*** Icons in terminal:
+    #+BEGIN_SRC emacs-lisp
+      (use-package font-lock+
+        :ensure nil
+        :load-path "elisp")
+
+      (use-package icons-in-terminal
+        :ensure nil
+        :load-path "~/.local/share/icons-in-terminal/")
+      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
+    #+END_SRC
+
     #+BEGIN_SRC emacs-lisp
       ;; colors, appearance
       (use-package iso-transl ;; some environments don’t handle dead keys
@@ -453,9 +466,12 @@
       ("C-r" . phi-search-backward))
   #+END_SRC
 
-
   Standard isearch by default:
   #+BEGIN_SRC emacs-lisp
+    (use-package isearch
+      :ensure nil
+      :config (dim-minor-name 'isearch-mode (concat " " (icons-in-terminal 'linea_basic_magnifier :foreground "pink" :height 1.4))))
+
     (use-package isearch-dabbrev
       :bind (:map isearch-mode-map
                   ("<tab>" . isearch-dabbrev-expand)
