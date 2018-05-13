@@ -49,7 +49,7 @@
      default-text-scale
      define-word
      describe-number
-     diminish
+     dim
      dired-collapse
      dired-hacks
      dired-narrow

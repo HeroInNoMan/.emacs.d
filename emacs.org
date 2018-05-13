@@ -46,7 +46,7 @@
       (setq use-package-always-ensure t
             use-package-verbose t))
 
-    (use-package diminish) ;; for :diminish
+    (use-package dim) ;; to change mode display in mode line
 
     (use-package use-package-chords
       :config (key-chord-mode 1))
@@ -128,8 +128,9 @@
   [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed.
   #+BEGIN_SRC emacs-lisp
     (use-package which-key ;; which-key (replacement for guide-key)
-      :diminish which-key-mode
-      :config (which-key-mode)
+      :config
+      (which-key-mode)
+      (dim-minor-name 'which-key-mode nil)
       (setq which-key-idle-delay 0.3))
   #+END_SRC
 
@@ -245,6 +246,7 @@
        ("." . repeat))
       :chords ("ii" . toggle-god-mode)
       :config
+      (dim-minor-name 'god-local-mode (concat " " (icons-in-terminal 'linea_weather_cloud_lightning :weight "bold" :foreground "red")))
       (defun toggle-god-mode ()
         (interactive)
         (progn
@@ -313,8 +315,8 @@
     Let’s have a visual feedback when performing cut/copy/paste operations.
     #+BEGIN_SRC emacs-lisp
       (use-package volatile-highlights
-        :diminish volatile-highlights-mode
-        :config (volatile-highlights-mode nil))
+        :defer t
+        :config (dim-minor-name 'volatile-highlights-mode nil))
 
       (use-package idle-highlight-mode :defer t)
     #+END_SRC
@@ -330,8 +332,9 @@
 
       (use-package fancy-narrow
         :defer t
-        :diminish fancy-narrow-mode
-        :config (fancy-narrow-mode t))
+        :config
+        (dim-minor-name 'fancy-narrow-mode nil)
+        (fancy-narrow-mode t))
 
       (use-package highlight-indent-guides
         :config (setq highlight-indent-guides-method 'character)
@@ -342,8 +345,8 @@
     Let’s have an indicator in the mode-line for search results:
     #+BEGIN_SRC emacs-lisp
       (use-package anzu
-        :diminish anzu-mode
         :config
+        (dim-minor-name 'anzu-mode nil)
         (global-anzu-mode t)
         (setq-default anzu-cons-mode-line-p t))
     #+END_SRC
@@ -400,7 +403,7 @@
    When coding, colour codes and names should be displayed in the this colour.
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-mode
-       :diminish rainbow-mode
+       :config (dim-minor-name 'rainbow-mode nil)
        :hook (prog-mode . rainbow-mode))
    #+END_SRC
    Note: If I ever need to work seriously with colours: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
@@ -410,8 +413,9 @@
   #+BEGIN_SRC emacs-lisp
     (use-package dired
       :ensure nil
-      :diminish auto-revert-mode
+      :demand
       :config
+      (dim-minor-name 'auto-revert-mode " ↺")
       (put 'dired-find-alternate-file 'disabled nil)
       (unbind-key "M-b" dired-mode-map)
       (setq dired-dwim-target t
@@ -620,8 +624,8 @@
 ** Completion
    #+BEGIN_SRC emacs-lisp
      (use-package company
-       :diminish company-mode
        :config
+       (dim-minor-name 'company-mode nil)
        (global-company-mode) ;; enable company in all buffers
        (setq company-dabbrev-downcase nil
              company-show-numbers t))
@@ -641,10 +645,10 @@
 ** Undo
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree ;; powerfull undo/redo mode
-       :diminish undo-tree-mode
        :bind (("C-M-/" . undo-tree-redo)
               ("C-c u" . hydra-undo-tree/undo-tree-undo))
        :config
+       (dim-minor-name 'undo-tree-mode " ⇞")
        (global-undo-tree-mode)
        (setq undo-tree-visualizer-timestamps t
              undo-tree-visualizer-diff t
@@ -667,8 +671,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
        :disabled
-       :diminish (ivy-mode . "")
        :config
+       (dim-minor-name 'ivy-mode nil)
        (ivy-mode nil)
        ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
        (setq ivy-use-virtual-buffers t)
@@ -691,7 +695,6 @@
 *** Helm package
     #+BEGIN_SRC emacs-lisp
       (use-package helm
-        :diminish helm-mode
         :chords
         ("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
         ("éè" . my-do-ag-project-root-or-dir) ;; incremental grep in project
@@ -708,6 +711,7 @@
          ("M-«" . helm-beginning-of-buffer)
          ("M-»" . helm-end-of-buffer))
         :config
+        (dim-minor-name 'helm-mode nil)
         (defhydra hydra-helm(:color teal :hint nil)
           "
           ^Helm^       ^Open^                 ^Search^                 ^Doc^            ^Run^
@@ -1140,12 +1144,12 @@
        (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
 
      (use-package git-gutter
-       :diminish git-gutter-mode
        :hook (prog-mode)
        :bind
        ("M-N" . git-gutter:next-hunk)
        ("M-P" . git-gutter:previous-hunk)
        :config
+       (dim-minor-name 'git-gutter-mode nil)
        (global-git-gutter-mode +1)
        (setq git-gutter:ask-p nil
              git-gutter:hide-gutter t))
@@ -1239,8 +1243,8 @@
   I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (most of the time git projects).
   #+BEGIN_SRC emacs-lisp
     (use-package helm-projectile
-      :diminish projectile-mode
       :config
+      (dim-minor-name 'projectile-mode nil)
       (projectile-global-mode) ;; activate projectile-mode everywhere
       (helm-projectile-on)
       (setq projectile-completion-system 'helm
@@ -1427,8 +1431,11 @@
   #+BEGIN_SRC emacs-lisp
     (setq default-major-mode 'text-mode) ;; text-mode by default
     (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
+    (dim-minor-name 'flyspell-mode " ✓")
     (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
+    (dim-minor-name 'visual-line-mode " ↩")
     (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
+    (dim-minor-name 'dubcaps-mode " ⇧")
     (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
 
     (use-package define-word)
@@ -1503,8 +1510,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens-config
        :ensure smartparens
-       :hook ((prog-mode markdown-mode) . turn-on-smartparens-strict-mode)
-       :config (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
+       :hook ((prog-mode markdown-mode) . turn-on-smartparens-mode)
+       :init (dim-minor-name 'smartparens-mode " ()" 'smartparens)
+       :config
+       (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
 
      (defhydra hydra-parens(:color teal :hint nil)
        "
@@ -1588,6 +1597,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package lisp-mode
        :ensure nil
+       :config (flycheck-mode t)
        :bind (:map lisp-mode-map
                    ("C-c C-c" . eval-region)
                    ("C-c C-r" . eval-and-replace)))
@@ -1604,7 +1614,6 @@
 
      (use-package elisp-slime-nav
        :after emacs-lisp-mode
-       :diminish elisp-slime-nav-mode
        :hook (emacs-lisp-mode-hook))
    #+END_SRC
 

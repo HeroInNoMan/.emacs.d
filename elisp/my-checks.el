@@ -130,7 +130,7 @@ abort completely with `C-g'."
 
   (setq save-abbrevs 'silently)
   (setq-default abbrev-mode t)
-  (diminish 'abbrev-mode)
+  (dim-minor-name 'abbrev-mode " abrv")
 
   ;; more auto-correct: remove accidental double capitals
   (defun dcaps-to-scaps ()
