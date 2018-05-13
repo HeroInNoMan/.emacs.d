@@ -1584,6 +1584,7 @@
        :mode ("\\.fish$" . fish-mode)
        :config (setq tab-width 2
                      sh-basic-offset 2
+                     fish-indent-offset 2
                      indent-tabs-mode t))
 
      ;; Normal tab completion in Eshell
