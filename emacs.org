@@ -1500,49 +1500,45 @@
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens-config
        :ensure smartparens
-       :hook
-       (show-paren-mode)
-       ((prog-mode markdown-mode) . turn-on-smartparens-mode)
+       :hook ((prog-mode markdown-mode) . turn-on-smartparens-strict-mode)
        :config (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil))
 
      (defhydra hydra-parens(:color teal :hint nil)
        "
-       ^Parens^     ^Edit^                               ^Move^                ^Slurp & Barf^
-       ^──────^─────^────^───────────────────────────────^────^────────────────^────────────^─────────
-       _q_ quit     _C-j_ newline                        _u_ backward-up-sexp  _(_ backward-slurp-sexp
-       ^ ^          _C-k_ kill-hybrid-sexp               _d_ down-sexp         _)_ slurp-hybrid-sexp
-       ^ ^          _M-s_ splice-sexp                    _f_ forward-sexp      _<_ backward-barf-sexp
-       ^ ^          _s_ splice-sexp                      _b_ backward-sexp     _>_ forward-barf-sexp
-       ^ ^          _k_ kill-sexp                        _n_ next-sexp
-       ^ ^          _w_ rewrap-sexp                      _p_ previous-sexp
-       ^ ^          _j_ join-sexp
-       ^ ^          _t_ transpose-sexp
-       ^ ^          _T_ transpose-hybrid-sexp
-       ^ ^          _DEL_ splice-sexp-killing-backward
+       ^Parens^  ^Insert^    ^Delete^           ^Transpose^           ^Slurp^             ^Barf^
+       ^──────^──^──────^────^──────^───────────^─────────^───────────^─────^─────────────^────^───────────
+       _q_ quit  _c_ clone   _k_ kill           _t_ transpose         _a_ absorb          _e_ emit
+       ^ ^       _p_ split   _C-k_ kill hybrid  _T_ transpose hybrid  _j_ join            « barf backward
+       ^ ^       ^ ^         _r_ raise          ^ ^                   _(_ slurp backward  » barf forward
+       ^ ^       ^ ^         _s_ splice         ^ ^                   _)_ slurp hybrid
+       ^ ^       ^ ^         _M-s_ splice       ^ ^                   _w_ rewrap
        "
-       ;; edition
-       ("C-j" sp-newline)
-       ("C-k" sp-kill-hybrid-sexp)
-       ("M-s" sp-splice-sexp)
-       ("s" sp-splice-sexp)
+       ;; insert
+       ("c" sp-clone-sexp)
+       ("p" sp-split-sexp)
+
+       ;; delete
        ("k" sp-kill-sexp)
-       ("w" sp-rewrap-sexp)
-       ("j" sp-join-sexp)
+       ("C-k" sp-kill-hybrid-sexp)
+       ("r" sp-raise-sexp)
+       ("s" sp-splice-sexp)
+       ("M-s" sp-splice-sexp)
+
+       ;; transpose
        ("t" sp-transpose-sexp)
        ("T" sp-transpose-hybrid-sexp)
-       ("DEL" sp-splice-sexp-killing-backward)
-       ;; movement
-       ("u" sp-backward-up-sexp)
-       ("d" sp-down-sexp)
-       ("f" sp-forward-sexp)
-       ("b" sp-backward-sexp)
-       ("n" sp-next-sexp)
-       ("p" sp-previous-sexp)
-       ;; slurping and barfing
+
+       ;; slurp
+       ("a" sp-absorb-sexp)
+       ("j" sp-join-sexp)
        ("(" sp-backward-slurp-sexp)
        (")" sp-slurp-hybrid-sexp)
-       ("<" sp-backward-barf-sexp)
-       (">" sp-forward-barf-sexp)
+       ("w" sp-rewrap-sexp)
+
+       ;; barf
+       ("e" sp-emit-sexp)
+       ("«" sp-backward-barf-sexp)
+       ("»" sp-forward-barf-sexp)
 
        ("q" nil))
      (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
