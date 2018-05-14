@@ -155,6 +155,7 @@
      spaceline-all-the-icons
      spray
      sublimity
+     super-save
      swagger-to-org
      swiper-helm
      temporary-persistent

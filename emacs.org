@@ -2180,6 +2180,14 @@
 
 * Session saving & backups
   #+BEGIN_SRC emacs-lisp
+    ;; auto-save file-visiting buffers
+    (use-package super-save
+      :config
+      (super-save-mode +1)
+      (dim-minor-name 'super-save-mode (concat " " (icons-in-terminal 'linea_basic_floppydisk)))
+      (setq super-save-auto-save-when-idle t
+            auto-save-default nil))
+
     ;; Save a list of recent files visited.
     (use-package desktop
       :defer t
