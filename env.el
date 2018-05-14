@@ -94,7 +94,15 @@
       :config
       (setq transmission-host my-private-transmission-host
             transmission-service my-private-transmission-service
-            transmission-rpc-path my-private-transmission-rpc-path))))
+            transmission-rpc-path my-private-transmission-rpc-path))
+
+    ;; let access projects quickly in a convenient layout
+    (defhydra hydra-projects(:color teal :columns 3)
+      "projects"
+      ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
+      ("q" nil "cancel"))
+    (global-set-key (kbd "<f9>") 'hydra-projects/body)
+    (global-set-key (kbd "C-c C-j") 'hydra-projects/body)))
 
 ;;;;;;;;;;;;;
 ;; DEFAULT ;;
