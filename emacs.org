@@ -88,17 +88,17 @@
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :ensure nil
-      :commands (ale-insert-ticket-prefix ale-jirify ale-find-init-file ale-open-project ale/apply-local-theme-modern)
+      :commands (ale/insert-ticket-prefix ale/jirify ale/find-init-file ale/open-project ale/apply-local-theme-modern)
       :load-path "elisp/"
       :bind
-      ("C-c i" . ale-indent-region-or-buffer) ;; indent whole buffer
+      ("C-c i" . ale/indent-region-or-buffer) ;; indent whole buffer
       ("<C-M-down>" . duplicate-current-line)
-      ("<f5>" . ale-revert-buffer-no-confirm) ;; re-read file from disk
-      ("C-<f5>" . ale-copy-and-show-current-file-path) ;; copy current file path
+      ("<f5>" . ale/revert-buffer-no-confirm) ;; re-read file from disk
+      ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
       ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
       ("C-x C-r" . sudo-edit) ;; sudo open file
-      ("C-x |" . ale-toggle-window-split)
-      ("C-|" . ale-toggle-window-split))
+      ("C-x |" . ale/toggle-window-split)
+      ("C-|" . ale/toggle-window-split))
 
     (use-package validate)
 
@@ -587,7 +587,7 @@
     (use-package shrink-whitespace
       :bind ("C-x C-o" . shrink-whitespace))
 
-    (global-set-key (kbd "C-%") 'ale-toggle-selective-display)
+    (global-set-key (kbd "C-%") 'ale/toggle-selective-display)
   #+END_SRC
 
 *** Folding
@@ -1036,7 +1036,7 @@
        :ensure nil
        :load-path "elisp")
 
-     (global-set-key (kbd "C-x _") 'ale-toggle-camel-snake-kebab-case)
+     (global-set-key (kbd "C-x _") 'ale/toggle-camel-snake-kebab-case)
    #+END_SRC
 ** Diffing
    #+BEGIN_SRC emacs-lisp
@@ -1373,7 +1373,7 @@
        ("\C-c b" . org-iswitchb)
        :map org-mode-map
        ("\C-c l" . org-store-link)
-       ("\C-c j" . ale-jirify)
+       ("\C-c j" . ale/jirify)
        ("\C-c t" . org-begin-template))
       :chords ("gx" . org-capture)
       :init (require 'org-agenda)
@@ -2041,10 +2041,10 @@
       ("z" ztree-diff)
 
       ;; Find files
-      ("d" ale-find-diary-file)
-      ("D" ale-find-remote-diary-file)
-      ("i" ale-find-init-file)
-      ("r" ale-find-rest-client-file)
+      ("d" ale/find-diary-file)
+      ("D" ale/find-remote-diary-file)
+      ("i" ale/find-init-file)
+      ("r" ale/find-rest-client-file)
 
       ;; Action
       ("C" flyspell-buffer)
@@ -2332,7 +2332,7 @@
 * Epilogue
   My init file (emacs.org) should always be open.
   #+BEGIN_SRC emacs-lisp
-    (ale-find-init-file)
+    (ale/find-init-file)
   #+END_SRC
 * Useful links
   - https://mickael.kerjean.me/2017/03/18/emacs-tutorial-series-episode-0/

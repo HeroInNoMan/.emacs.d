@@ -9,8 +9,8 @@
 (defun load-kuutamo-env ()
   (progn
     ;; hooking for specific functions
-    (add-hook 'git-commit-setup-hook 'ale-insert-ticket-prefix)
-    (add-hook 'git-commit-setup-hook 'ale-switch-to-en-dict)
+    (add-hook 'git-commit-setup-hook 'ale/insert-ticket-prefix)
+    (add-hook 'git-commit-setup-hook 'ale/switch-to-en-dict)
 
     ;; capture templates
     (add-to-list 'org-capture-templates '("d" "work - log" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?") t)
@@ -66,7 +66,7 @@
     ;; let access projects quickly in a convenient layout
     (defhydra hydra-projects(:color teal :columns 3)
       "projects"
-      ("e" (lambda () (interactive)(ale-open-project user-emacs-directory)) "emacs")
+      ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
       ("q" nil "cancel"))
     (global-set-key (kbd "<f9>") 'hydra-projects/body)
     (global-set-key (kbd "C-c C-j") 'hydra-projects/body)))
@@ -113,7 +113,7 @@
      ((or (equal "ms-dos" system-type)
           (equal "windows-nt" system-type)
           (equal "cygwin" system-type))
-      (ale-load-windows-specific-conf)
+      (ale/load-windows-specific-conf)
       ;; useful when C-/ does not work (windows/putty)
       (global-set-key (kbd "C-M-z") 'undo)))))
 

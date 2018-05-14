@@ -2,13 +2,13 @@
 ;;                  Custom lisp functions                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun ale-revert-buffer-no-confirm ()
+(defun ale/revert-buffer-no-confirm ()
   ;; Source: http://www.emacswiki.org/emacs-en/download/misc-cmds.el
   "Revert buffer without confirmation."
   (interactive)
   (revert-buffer :ignore-auto :noconfirm))
 
-(defun ale-indent-region-or-buffer ()
+(defun ale/indent-region-or-buffer ()
   "Indent region or whole buffer"
   (interactive)
   (cond ((region-active-p)
@@ -55,7 +55,7 @@
   (interactive)
   (message (buffer-file-name)))
 
-(defun ale-copy-and-show-current-file-path ()
+(defun ale/copy-and-show-current-file-path ()
   "Add current file path to kill ring. Limits the filename to
    project root if possible. Show the full path file name in the
    minibuffer."
@@ -118,18 +118,7 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
-(defun ale-toggle-show-trailing-whitespace ()
-  "toggle display trailing whitespaces"
-  (interactive)
-  (if show-trailing-whitespace
-      (progn
-        (setq show-trailing-whitespace nil)
-        (message "trailing whitespaces disabled"))
-    (progn
-      (setq show-trailing-whitespace t)
-      (message "trailing whitespaces enabled"))))
-
-(defun ale-jirify ()
+(defun ale/jirify ()
   "creates an org link with a ticket ID using the URL in my-private-work-bugtracker-url."
   (interactive)
   (if (and
@@ -141,12 +130,6 @@
         (delete-region (car bounds) (cdr bounds))
         (insert org-link))
     (message "Var my-private-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
-
-(defun ale-reload-config ()
-  "reload init.el"
-  (interactive)
-  (load-file (expand-file-name "init.el" user-emacs-directory))
-  (message "Reloaded init.el file"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; function to wrap blocks of text in org templates                       ;;
@@ -192,7 +175,7 @@
               (insert "#+BEGIN_" choice "\n")
               (save-excursion (insert "#+END_" choice))))))))))
 
-(defun ale-load-windows-specific-conf ()
+(defun ale/load-windows-specific-conf ()
   "Loads all windows-nt specific conf"
   (set-clipboard-coding-system 'utf-16le-dos) ;; MS Windows clipboard is UTF-16LE
   ;; cygwin conf
@@ -221,10 +204,10 @@
                     (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
                     (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 
-(defun ale-add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
-(add-hook 'ediff-keymap-setup-hook 'ale-add-d-to-ediff-mode-map)
+(defun ale/add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+(add-hook 'ediff-keymap-setup-hook 'ale/add-d-to-ediff-mode-map)
 
-(defun ale-swap-buffers ()
+(defun ale/swap-buffers ()
   (interactive)
   (cond ((one-window-p) (display-buffer (other-buffer)))
         ((let* ((buffer-a (current-buffer))
@@ -234,7 +217,7 @@
            (switch-to-buffer buffer-b)
            (other-window 1)))))
 
-(defun ale-toggle-window-split ()
+(defun ale/toggle-window-split ()
   "Switch between vertical and horizontal split of windows. Swap buffers in the process"
   (interactive)
   (if (= (count-windows) 2)
@@ -253,7 +236,7 @@
                 'split-window-vertically)))
         (delete-other-windows)
         (funcall splitter)
-        (ale-swap-buffers)
+        (ale/swap-buffers)
         (let ((first-win (selected-window)))
           (set-window-buffer (selected-window) this-win-buffer)
           (if this-win-2nd (other-window 1))
@@ -282,7 +265,7 @@ for the line number input"
               (format-time-string "%d-%m-%Y")
             (format-time-string "%Y-%m-%d"))))
 
-(defun ale-insert-ticket-prefix ()
+(defun ale/insert-ticket-prefix ()
   "Inserts a prefix containing the number of the Jira ticket"
   (let* ((result  (re-search-forward "\\(?:US\\|RV\\|FEEDBACK\\|TASK\\|BUG\\)-\\([A-Z]+\\)-?\\([0-9]+\\).*$" nil t))
          (s (concat (match-string 1) "-" (match-string 2))))
@@ -293,7 +276,7 @@ for the line number input"
       (unless (string-match (concat "\\[.*\\]") (buffer-string))
         (insert (concat "[TECH] "))))))
 
-(defun ale-toggle-camel-snake-kebab-case ()
+(defun ale/toggle-camel-snake-kebab-case ()
   "Toggle between camelcase and underscore notation for the symbol at point."
   (interactive)
   (save-excursion
@@ -316,27 +299,27 @@ for the line number input"
                (replace-regexp "\\([A-Z]\\)" "-\\1" nil (1+ start) end)
                (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))))
 
-(defun ale-find-rest-client-file ()
+(defun ale/find-rest-client-file ()
   "Find rest-client file"
   (interactive)
   (find-file "~/projets/restclient/restclient-buffer"))
 
-(defun ale-find-init-file ()
+(defun ale/find-init-file ()
   "Find init file"
   (interactive)
   (find-file (expand-file-name "emacs.org" user-emacs-directory)))
 
-(defun ale-find-diary-file ()
+(defun ale/find-diary-file ()
   "Find work diary file"
   (interactive)
   (find-file (expand-file-name my-private-work-diary-org-file)))
 
-(defun ale-find-remote-diary-file ()
+(defun ale/find-remote-diary-file ()
   "Find remote diary file"
   (interactive)
   (find-file (expand-file-name my-private-remote-diary-org-file my-private-remote-home-dir)))
 
-(defun ale-toggle-selective-display (column)
+(defun ale/toggle-selective-display (column)
   (interactive "P")
   (set-selective-display
    (cond
@@ -347,12 +330,12 @@ for the line number input"
     ((equal selective-display 3) 4)
     ((equal selective-display 4) nil))))
 
-(defun ale-switch-to-en-dict ()
+(defun ale/switch-to-en-dict ()
   "Switch to English dictionary"
   (interactive)
   (ispell-change-dictionary "en_GB"))
 
-(defun ale-open-project (args)
+(defun ale/open-project (args)
   "open project magit logs and status as split windows"
   (interactive "D")
   (progn
