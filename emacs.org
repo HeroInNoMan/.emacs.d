@@ -595,7 +595,8 @@
     (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
     (use-package aggressive-indent
-      :hook (prog-mode . aggressive-indent-mode))
+      :hook (prog-mode . aggressive-indent-mode)
+      :config (dim-minor-name 'aggressive-indent-mode (concat " " (icons-in-terminal 'linea_arrows_move_right))))
 
     ;;Indentation
     (setq-default tab-width 2
@@ -1537,7 +1538,7 @@
   #+END_SRC
 
 * Programming
-** DONE Formatting
+** Formatting
    #+BEGIN_SRC emacs-lisp
      (use-package prog-fill
        :bind
@@ -1630,6 +1631,15 @@
 
    #+END_SRC
 
+** Syntax checking
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck-status-emoji
+       :disabled
+       :ensure flycheck
+       :config (set-fontset-font t nil "Symbola")
+       :hook (flycheck-mode . flycheck-status-emoji-mode))
+   #+END_SRC
+
 ** Shell
    #+BEGIN_SRC emacs-lisp
      (add-hook 'sh-mode-hook (lambda () (setq tab-width 2 sh-basic-offset 2 indent-tabs-mode t)))
@@ -1640,6 +1650,7 @@
 
      (use-package fish-mode
        :mode ("\\.fish$" . fish-mode)
+       :hook (fish-mode . flycheck-mode)
        :config (setq tab-width 2
                      sh-basic-offset 2
                      fish-indent-offset 2
@@ -1677,7 +1688,7 @@
                    ("C-c C-c" . eval-region)
                    ("C-c C-r" . eval-and-replace)))
 
-     (use-package emacs-lisp-mode
+     (use-package elisp-mode
        :ensure nil
        :bind (:map emacs-lisp-mode-map
                    ("C-c C-c" . eval-region)
@@ -2234,6 +2245,7 @@
       :load-path "elisp/"
       :config (load-library "modeline-posn.el"))
 
+
     (use-package sml-modeline)
 
     (use-package smart-mode-line
@@ -2246,6 +2258,52 @@
                                        ("^~/\\.emacs\\.d/" ":ED:")
                                        ("^/sudo:.*:" ":SU:")
                                        ("^~/Terminalcity/" ":T:")))
+    ;;;; Rich Minority
+      (use-package rich-minority
+        :config
+        (progn
+          (setq rm-blacklist
+                '(" WK"        ;which-key
+                  " AC"        ;auto-complete
+                  " vl"        ;global visual line mode enabled
+                  " Wrap"      ;shows up if visual-line-mode is enabled for that buffer
+                  " Omit"      ;omit mode in dired
+                  " VHl"       ;volatile highlights
+                  " ctagsU"    ;ctags update
+                  " Undo-Tree" ;undo tree
+                  " wr"        ;Wrap Region
+                  " SliNav"    ;elisp-slime-nav
+                  " PgLn"      ;page-line-break
+                  " ElDoc"     ;eldoc
+                  " GG"        ;ggtags
+                  " hs"        ;hideshow
+                  " hs+"       ;
+                  ))
+          (setq rm-text-properties '(("\\` Ovwrt\\'" 'face 'font-lock-warning-face) ;Overwrite
+                                     ("\\` mc:[0-9]+ *\\'" 'face 'font-lock-keyword-face) ;Multiple cursors
+                                     ("\\` rk\\'" 'display (propertize "​[]" 'face 'font-lock-warning-face)) ;Region bindings
+                                     ("\\` Abbrev\\'" 'display "​@")   ;Abbrev
+                                     ("\\` Ind\\'"    'display "​*>")  ;org indent
+                                     ("\\` Outl\\'"   'display "​ø")   ;outline
+                                     ("\\` Server\\'" 'display "​Σ")   ;Server
+                                     ("\\` μ\\'"      'display "​μ")   ;modi-mode
+                                     ("\\` Wg\\'"     'display "​w")   ;writegood
+                                     ("\\` Vis\\'"    'display "​V")   ;visible-mode
+                                     ("\\` Temp\\'"   'display "​t"))) ;temp-mode
+          (with-eval-after-load 'setup-font-check
+            (if font-symbola-p
+                (progn
+                  (add-to-list 'rm-text-properties '("\\` Hi\\'"   'display "​🞵")) ;Hi-Lock
+                  (add-to-list 'rm-text-properties '("\\` Tail\\'" 'display "​🢛")) ;Auto revert tail
+                  (add-to-list 'rm-text-properties '("\\` =>\\'"   'display "​➠")) ;aggressive indent
+                  (add-to-list 'rm-text-properties '("\\` ARev\\'" 'display "​⭮")) ;auto revert
+                  (add-to-list 'rm-text-properties '("\\` Fill\\'" 'display "​⮒"))) ;auto fill
+              (progn
+                (add-to-list 'rm-text-properties '("\\` Hi\\'"   'display "​H"))
+                (add-to-list 'rm-text-properties '("\\` Tail\\'" 'display "​Tail."))
+                (add-to-list 'rm-text-properties '("\\` =>\\'"   'display "​aI."))
+                (add-to-list 'rm-text-properties '("\\` ARev\\'" 'display "​aR."))
+                (add-to-list 'rm-text-properties '("\\` Fill\\'" 'display "​aF.")))))))
       (sml/setup))
   #+END_SRC
 
