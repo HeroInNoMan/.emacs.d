@@ -2239,6 +2239,12 @@
   After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs.
 
   #+BEGIN_SRC emacs-lisp
+    (use-package modeline-posn
+      :ensure nil
+      :demand
+      :load-path "elisp/"
+      :config (load-library "modeline-posn.el"))
+
     (use-package sml-modeline)
 
     (use-package smart-mode-line
