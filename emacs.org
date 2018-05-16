@@ -234,11 +234,6 @@
 
     ;; ido-mode by default
     (ido-mode)
-
-    ;; set default browser to firefox
-    (setq gnus-button-url 'browse-url-generic
-          browse-url-generic-program "firefox"
-          browse-url-browser-function gnus-button-url)
   #+END_SRC
 
   I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor and the mode-line become red when in god-mode to make it more visible.
@@ -1999,6 +1994,18 @@
      (use-package gradle-mode
        :mode ("\\.gradle\\'" . gradle-mode))
    #+END_SRC
+* Web browsing
+  I use eww to surf the web in emacs, for simple pages mostly:
+  #+BEGIN_SRC emacs-lisp
+    (use-package eww
+      :config
+      (setq browse-url-generic-program "firefox"
+            browse-url-browser-function 'eww-browse-url ;; set default browser to eww, then ‘&’ to open page firefox
+            shr-external-browser 'browse-url-firefox
+            shr-width 100 ;; keep sane layout
+            shr-use-fonts nil ;; no fancy fonts in text mode
+            gnus-button-url 'browse-url-generic))
+  #+END_SRC
 * Quick access
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-minor-modes(:color blue :hint nil)
@@ -2073,7 +2080,7 @@
       _t_ shell-pop   _b_ eww-browser           _r_ rest-client      _é_ char-menu          _h_ Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
       _$_ shell       _B_ code browser          ^ ^                  ^ ^                    _H_ Highlight-line %`highlight-line-mode
       _%_ ansi-term   _c_ calendar              ^ ^                  ^ ^                    _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
-      ^ ^             _E_ elfeed RSS            ^ ^                  ^ ^                    _j_ js2-mode
+      _w_ web browser _E_ elfeed RSS            ^ ^                  ^ ^                    _j_ js2-mode
       ^ ^             _J_ jenkins               ^ ^                  ^ ^                    _l_ line number
       ^ ^             _M_ spotify               ^ ^                  ^ ^                    _m_ minimap
       ^ ^             _Q_ quick-calc            ^ ^                  ^ ^                    _n_ sidebar
@@ -2082,7 +2089,6 @@
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _s_ sublimity %`sublimity-mode
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_ visual-line %`visual-line-mode
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_ volatile-highlight %`volatile-highlights-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _w_ whitespace %`global-whitespace-mode
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _W_ web-mode
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _x_ winnow-mode %`winnow-mode
       "
@@ -2093,6 +2099,7 @@
       ("t" shell-pop)
       ("$" shell)
       ("%" crux-visit-term-buffer)
+      ("w" eww)
 
       ;; Widget
       ("4" mu4e)
@@ -2137,7 +2144,6 @@
       ;; ("S" spray-mode)
       ("v" visual-line-mode)
       ("V" volatile-highlights-mode)
-      ("w" whitespace-mode)
       ("W" web-mode)
       ("x" winnow-mode)
       ;; ("W" wttrin)
