@@ -52,6 +52,12 @@
       :config (key-chord-mode 1))
   #+END_SRC
 
+  Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
+  #+BEGIN_SRC emacs-lisp
+    (use-package paradox)
+  #+END_SRC
+
+
   Let’s keep ~/.emacs.d tidy:
   #+BEGIN_SRC emacs-lisp
     (use-package no-littering
@@ -2021,7 +2027,7 @@
       ;; Built-in
       ("e" eshell)
       ("G" gnus)
-      ("p" list-packages)
+      ("p" paradox-list-packages)
       ("t" shell-pop)
       ("$" shell)
       ("%" crux-visit-term-buffer)

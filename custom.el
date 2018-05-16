@@ -129,6 +129,7 @@
      org
      org-bullets
      origami
+     paradox
      persistent-scratch
      pfuture
      pg
