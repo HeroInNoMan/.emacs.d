@@ -7,11 +7,15 @@ My emacs configuration.
     │
     ├── README.md     # info file with TODO-list
     │
-    ├── init.el       # main config file
+    ├── init.el       # bootstrap file, tangles emacs.org into emacs.el and loads it
     │
-    ├── custom.el     # customize file (mostly generated) called by init.el
+    ├── emacs.org     # main config file, literate style
     │
-    ├── env.el        # system-aware lisp config called by init.el
+    ├── emacs.el      # generated from emacs.org (not under vc)
+    │
+    ├── custom.el     # customize file (mostly generated) called by emacs.el
+    │
+    ├── env.el        # system-aware lisp config called by emacs.el
     │
     ├── elisp/        # plugins, modules (managed manually)
     │
