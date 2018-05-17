@@ -110,6 +110,7 @@
      js-comint
      js2-mode
      js2-refactor
+     json-reformat
      lorem-ipsum
      magit
      magit-org-todos

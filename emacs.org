@@ -1856,6 +1856,13 @@
                    (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
                    (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
    #+END_SRC
+** JSON
+   #+BEGIN_SRC emacs-lisp
+     (use-package json-reformat
+       :bind (:map prog-mode-map
+                   ("C-c j" . json-reformat-region))
+       :config (setq json-reformat:indent-width js2-basic-offset))
+   #+END_SRC
 
 ** Web
    #+BEGIN_SRC emacs-lisp
