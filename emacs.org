@@ -1240,10 +1240,10 @@
        ^ ^       _u_ gutter mode    ^ ^                ^ ^
        "
        ;; gutter
-       ("n" git-gutter:next-hunk)
-       ("p" git-gutter:previous-hunk)
-       ("r" git-gutter:revert-hunk)
-       ("s" git-gutter:stage-hunk)
+       ("n" git-gutter:next-hunk :color pink)
+       ("p" git-gutter:previous-hunk :color pink)
+       ("r" git-gutter:revert-hunk :color pink)
+       ("s" git-gutter:stage-hunk :color pink)
        ("u" git-gutter-mode)
        ;; log
        ("b" magit-blame)
