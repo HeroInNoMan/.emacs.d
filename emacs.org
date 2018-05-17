@@ -899,7 +899,11 @@
 ** Snippets
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
-       :init (setq yas-snippet-dirs `(,(concat user-emacs-directory "etc/yasnippet/snippets")))
+       :init (setq yas-snippet-dirs
+                   `(,(concat user-emacs-directory "elpa/yasnippet-snippets-20180503.657/snippets")
+                     ,(concat user-emacs-directory "etc/yasnippet/snippets")))
+       :commands yas-new-snippet yas-insert-snippet
+       :chords ("yq" . yas-insert-snippet)
        :bind
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
@@ -949,11 +953,18 @@
                    (signal 'quit "user quit!")
                  (cdr (assoc result rmap))))
            nil)))
-     (defhydra hydra-yasnippet(:color teal)
-       "yasnippet"
-       ("t" yas-describe-tables "yas-describe-tables")
-       ("<tab>" yas-ido-expand "yas-ido-expand")
-       ("q" nil "cancel"))
+     (defhydra hydra-yasnippet(:color teal :hint nil)
+       "
+       ^Snippet^     ^Insert^           ^Create^
+       ^───────^─────^──────^───────────^──────^─────
+       _t_ tables    _e_ ido expand     _n_ create
+       _q_ quit      _i_ insert
+       "
+       ("e" yas-ido-expand)
+       ("i" yas-insert-snippet)
+       ("n" yas-new-snippet)
+       ("t" yas-describe-tables)
+       ("q" nil))
      (global-set-key (kbd "C-c y") 'hydra-yasnippet/body)
    #+END_SRC
 
