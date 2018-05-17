@@ -1960,27 +1960,23 @@
 
 ** Python
    #+BEGIN_SRC emacs-lisp
-     (use-package elpy
-       :defer
-       :config
-       (elpy-enable)
-       (setq elpy-rpc-backend "jedi"))
-     (use-package jedi)
      (use-package python
-       :after (elpy jedi)
        :bind (:map python-mode-map
                    ("M-g M-p" . elpy-flymake-previous-error)
                    ("M-g M-n" . elpy-flymake-next-error)
                    ("C-x C-e" . python-shell-send-defun))
-       :hook
-       (python-mode . elpy-enable)
-       (python-mode . flycheck-mode)
-
+       :hook (python-mode . (lambda ()
+                              (progn
+                                (elpy-enable)
+                                (elpy-mode)
+                                (flycheck-mode))))
        :config
-       (setq elpy-rpc-backend "jedi") ;; fire up jedi in python env
-       (setq jedi:complete-on-dot t
-             python-indent-offset 2
-             tab-always-indent t))
+       (setq python-indent-offset 2
+             tab-always-indent t)
+       (use-package jedi
+         :config (setq jedi:complete-on-dot t))
+       (use-package elpy
+         :config (setq elpy-rpc-backend "jedi"))) ;; fire up jedi in python env
    #+END_SRC
 
 ** Yaml
