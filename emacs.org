@@ -395,8 +395,6 @@
        line-number-mode t ;; Always display line and column numbers
        column-number-mode t)
 
-      (dim-minor-name 'auto-revert-mode " ↺")
-
       ;; prettify-symbols
       (defconst lisp--prettify-symbols-alist
         '(("lambda"  . λ)
@@ -436,8 +434,6 @@
       (setq dired-dwim-target t
             ;; dired human readable size format
             dired-listing-switches "-AlhF"
-            ;; Auto refresh dired
-            global-auto-revert-non-file-buffers t
             auto-revert-verbose nil
             ;; always delete and copy recursively
             dired-recursive-deletes 'always
@@ -1131,8 +1127,10 @@
      (setq uniquify-buffer-name-style 'post-forward
            uniquify-separator ":")
 
-     ;; Auto refresh buffers
+     ;; Auto refresh all buffers
      (global-auto-revert-mode 1)
+     (dim-minor-name 'global-auto-revert-mode " ↺")
+     (dim-minor-name 'auto-revert-mode nil)
    #+END_SRC
 
 ** Minibuffer
