@@ -427,10 +427,10 @@
   #+BEGIN_SRC emacs-lisp
     (use-package dired
       :ensure nil
-      :demand
+      :init
+      (unbind-key "M-b" dired-mode-map)
       :config
       (put 'dired-find-alternate-file 'disabled nil)
-      (unbind-key "M-b" dired-mode-map)
       (setq dired-dwim-target t
             ;; dired human readable size format
             dired-listing-switches "-AlhF"
