@@ -183,6 +183,7 @@
      zop-to-char
      ztree
      ))
+ '(paradox-github-token t)
  '(sml-modeline-borders nil)
  '(sml-modeline-mode t)
  '(sml-modeline-numbers 'percentage)

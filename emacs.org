@@ -1696,8 +1696,10 @@
    Enable flycheck for Java:
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck-java ;; flycheck minor mode for java
+       :disabled
        :ensure nil
-       :load-path "elisp/")
+       :load-path "elisp/"
+       :hook (java-mode))
    #+END_SRC
 
 *** TODO malabar-mode (à tester)
@@ -1745,7 +1747,7 @@
     #+BEGIN_SRC emacs-lisp
       (use-package ecb :disabled)
     #+END_SRC
-*** TODO meghanada (à tester)
+*** meghanada
     #+BEGIN_SRC emacs-lisp
       (use-package autodisass-java-bytecode
         :disabled
@@ -1756,26 +1758,24 @@
         :commands google-set-c-style)
 
       (use-package meghanada
-        :disabled
-        :defer t
-        :ensure highlight-symbol
+        :hook
+        (java-mode . (lambda ()
+                       ;; meghanada-mode on
+                       (meghanada-mode t)
+                       (flycheck-mode +1)
+                       (setq c-basic-offset 4)))
+        (before-save-hook . meghanada-code-beautify-before-save)
         :config
-        (add-hook 'java-mode-hook
-                  (lambda ()
-                    (google-set-c-style)
-                    (google-make-newline-indent)
-                    (meghanada-mode t)
-                    (smartparens-mode t)
-                    (rainbow-delimiters-mode t)
-                    (highlight-symbol-mode t)
-                    ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
-                    ))
-        (use-package realgud)
-        (setq indent-tabs-mode nil)
-        (setq tab-width 4)
-        (setq c-basic-offset 4)
-        (setq meghanada-server-remote-debug t)
-        (setq meghanada-javac-xlint "-Xlint:all,-processing")
+        (use-package realgud ;; I don't even know what this package is or does
+          :disabled)
+        (setq indent-tabs-mode nil
+              tab-width 4
+              c-basic-offset 4
+              meghanada-server-remote-debug t
+              meghanada-javac-xlint "-Xlint:all,-processing"
+              meghanada-java-path "java"
+              meghanada-maven-path "mvn")
+
         (defhydra hydra-meghanada (:hint nil :exit t)
           "
           ^Meghanada^     ^Edit^                           ^Test or Task^
