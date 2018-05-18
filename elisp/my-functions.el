@@ -270,11 +270,9 @@ for the line number input"
   (let* ((result  (re-search-forward "\\(?:US\\|RV\\|FEEDBACK\\|TASK\\|BUG\\)-\\([A-Z]+\\)-?\\([0-9]+\\).*$" nil t))
          (s (concat (match-string 1) "-" (match-string 2))))
     (goto-char (point-min))
-    (if (and result
-             (not (string-match (concat "\\[" s "\\]") (buffer-string))))
-        (insert (concat "[" (upcase s) "] "))
-      (unless (string-match (concat "\\[.*\\]") (buffer-string))
-        (insert (concat "[TECH] "))))))
+    (when (and result
+               (not (string-match (concat "\\[" s "\\]") (buffer-string))))
+      (insert (concat "[" (upcase s) "] ")))))
 
 (defun ale/toggle-camel-snake-kebab-case ()
   "Toggle between camelcase and underscore notation for the symbol at point."
