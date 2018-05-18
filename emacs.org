@@ -702,6 +702,7 @@
              '((t . ivy--regex-ignore-order))))
 
      (use-package counsel
+       :disabled
        :bind ("M-s s" . counsel-grep-or-swiper))
    #+END_SRC
 
