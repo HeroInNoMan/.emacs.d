@@ -1480,7 +1480,6 @@
   Let’s use emacs to read our mail (with mu4e) :
   #+BEGIN_SRC emacs-lisp
     (use-package mu4e
-      :disabled
       :load-path "/usr/share/emacs/site-lisp/mu4e"
       :ensure nil
       :config
@@ -1490,22 +1489,19 @@
             mu4e-trash-folder  "/[Gmail].Trash")
 
       ;; don't save message to Sent Messages, GMail/IMAP will take care of this
-
       (setq mu4e-sent-messages-behavior 'delete)
 
       ;; setup some handy shortcuts
-
       (setq mu4e-maildir-shortcuts
             '(("/INBOX"             . ?i)
-              ("/[Gmail].Sent Mail" . ?s)
-              ("/[Gmail].Trash"     . ?t)))
+              ("/[Gmail].Starred"   . ?s)
+              ("/[Gmail].Sent Mail" . ?t)
+              ("/[Gmail].Trash"     . ?b)))
 
       ;; allow for updating mail using 'U' in the main view:
-
       (setq mu4e-get-mail-command "offlineimap")
 
       ;; something about ourselves
-
       (setq user-mail-address my-private-mail-address
             user-full-name my-private-full-name
             ;; I don't use a signature…
