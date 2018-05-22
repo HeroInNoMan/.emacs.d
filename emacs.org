@@ -712,74 +712,30 @@
     #+BEGIN_SRC emacs-lisp
       (use-package helm
         :chords
-        ("bf" . helm-for-files) ;; helm-for-file looks everywhere, no need for anything else
-        ("éè" . my-do-ag-project-root-or-dir) ;; incremental grep in project
+        ("bf" . helm-mini) ;; snappy helm instance
+        ("éè" . my-do-ag-project-root-or-dir) ;; grep in current project or dir
+        ("«»" . hydra-helm-config/body) ;; all (useful) helm commands in one hydra
         :bind
         (("M-x" . helm-M-x) ;; superior to M-x
          ("C-x M-x" . execute-extended-command)
+         ("C-c h" . hydra-helm-config/body)
          ("C-h a" . helm-apropos)
          ("C-h f" . helm-apropos)
          ("C-h v" . helm-apropos)
-         ("M-ç" . hydra-helm/body)
-         ("C-ç" . hydra-helm/body)
-         ("C-c h" . hydra-helm/body)
          :map helm-map
          ("M-«" . helm-beginning-of-buffer)
-         ("M-»" . helm-end-of-buffer))
+         ("M-»" . helm-end-of-buffer)
+         :map shell-mode-map
+         ("C-c C-l" . helm-comint-input-ring)
+         :map minibuffer-local-map
+         ("C-c C-l" . helm-minibuffer-history))
         :config
         (require 'helm-config)
         (dim-minor-name 'helm-mode nil)
-        (defhydra hydra-helm(:color teal :hint nil)
-          "
-          ^Helm^       ^Open^                 ^Search^                 ^Doc^            ^Run^
-          ^────^───────^────^─────────────────^──────^─────────────────^───^────────────^───^─────────────
-          _q_ quit     _C-p_ switch project   _._ imenu                _b_ bindings     _A_ apt
-          _r_ resume   _p_   switch project   _G_ git-grep             _d_ dash         _P_ elisp packages
-          ^ ^          _f_   files            _a_ grep project or dir  _h_ apropos      _c_ org-capture
-          ^ ^          _C-ç_ files (custom)   _g_ grep                 _m_ man-woman    _t_ top
-          ^ ^          _R_   register         _o_ occur                _s_ google       _x_ run ext.
-          ^ ^          ^ ^                    ^ ^                      _w_ wikipedia    ^ ^
-          "
-          ;; open
-          ("C-p" helm-projectile-switch-project)
-          ("p" helm-projectile-switch-project)
-          ("f" helm-find-files)
-          ("C-ç" helm-mini)
-          ("M-ç" helm-mini)
-          ("R" helm-register)
-          ;; search
-          ("." helm-imenu-anywhere)
-          ("G" helm-git-grep)
-          ("a" my-do-ag-project-root-or-dir)
-          ("g" helm-do-ag)
-          ("o" helm-occur)
-          ;; doc
-          ("b" helm-descbinds)
-          ("d" helm-dash)
-          ("h" helm-apropos)
-          ("m" helm-man-woman)
-          ("s" helm-google-suggest)
-          ("w" helm-wikipedia-suggest)
-          ;; run
-          ("A" helm-apt)
-          ("P" helm-list-elisp-packages-no-fetch)
-          ("c" helm-org-capture-templates)
-          ("t" helm-top)
-          ("x" helm-run-external-command)
-          ;;
-          ("r" helm-resume)
-          ("q" nil))
-        (defun my-do-ag-project-root-or-dir ()
-          "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
-          (interactive)
-          (require 'helm-ag)
-          (let ((rootdir (helm-ag--project-root)))
-            (unless rootdir (helm-do-ag))
-            (helm-do-ag rootdir)))
-        ;; activate additional features
-        (helm-mode 0) ;; helm-mode only on demand
+        (helm-mode 0) ;; only on demand
         (helm-autoresize-mode t)
-        (setq helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
+        (semantic-mode 1) ;; useful for imenu-like navigation
+        (setq helm-M-x-fuzzy-match t
               helm-adaptive-mode t
               helm-ag-base-command "ag --nocolor --nogroup --smart-case"
               helm-ag-insert-at-point 'symbol
@@ -791,42 +747,78 @@
               helm-ff-skip-boring-files t
               helm-net-prefer-curl t
               helm-recentf-fuzzy-match t
-              helm-for-files-preferred-list '(
-                                              helm-source-buffers-list
-                                              ;; helm-source-projectile-buffers-list
+              helm-split-window-default-side 'right
+              helm-for-files-preferred-list '(helm-source-buffers-list
                                               helm-source-bookmarks
                                               helm-source-recentf
                                               helm-source-files-in-current-dir
-                                              ;; helm-source-projectile-files-list
                                               helm-source-file-cache
-                                              ;; helm-source-google-suggest
                                               helm-source-locate
-                                              ;; helm-source-projectile-projects
-                                              ;; helm-source-file-name-history
-                                              ))
-        (defun my/helm-find-files ()
-          ;; https://stackoverflow.com/questions/11403862/how-to-have-emacs-helm-list-offer-files-in-current-directory-as-options
+                                              helm-source-find-files))
+        (defhydra hydra-helm-config(:color teal :hint nil)
+          "
+          ^Helm^    ^Find^         ^Search^      ^Navigate^       ^Complete^      ^Doc & Help^    ^Other^
+          ^────^────^────^─────────^──────^──────^────────^───────^───^───────────^──────────^────^─────^────────────
+          _r_esume  _l_ locate     _R_ regexp    _e_ etags        _<tab>_  lisp   _h e_ eldoc     _t_ top
+          _q_uit    _/_ find       _o_ occur     _i_ imenu        _g_    google   _h i_ info      _p_ process
+          ^ ^       _F_ files      _a_ ag grep   _I_ imenu all    _s_   surfraw   _h r_ emacs     _c_ colors
+          ^ ^       _f_ all files  ^ ^           _._ imenu any    _w_ wikipédia   _h g_ gnus      _8_ ucs
+          ^ ^       _m_ mini       ^ ^           _b_ bookmark     ^ ^             _h h_ doc       _,_ calcul
+          ^ ^       ^ ^            ^ ^           _'_ register     ^ ^             _h a_ apropos   _P_ packages
+          ^ ^       ^ ^            ^ ^           _y_ kill-ring    ^ ^             _h m_ woman     _X_ xfont
+          ^ ^       ^ ^            ^ ^           _<SPC>_ mark ring^ ^             ^ ^             _x_ run external
+          "
+          ;; find files & buffers
+          ("l"     helm-locate)
+          ("/"     helm-find)
+          ("F"     helm-find-files)
+          ("f"     helm-for-files) ;; like helm-multi-files but always run locate
+          ("m"     helm-mini)
+          ;; search
+          ("R"     helm-regexp)
+          ("o"     helm-occur)
+          ("a"     helm-do-grep-ag)
+          ;; navigate
+          ("e"     helm-etags-select)
+          ("i"     helm-semantic-or-imenu)
+          ("I"     helm-imenu-in-all-buffers)
+          ("."     helm-imenu-anywhere)
+          ("b"     helm-filtered-bookmarks)
+          ("'"     helm-register)
+          ("y"     helm-show-kill-ring)
+          ("<SPC>" helm-all-mark-rings)
+          ;; completion
+          ("<tab>" helm-lisp-completion-at-point)
+          ("g"     helm-google-suggest)
+          ("s"     helm-surfraw)
+          ("w"     helm-wikipedia-suggest)
+          ;; documentation & help
+          ("h e"   helm-eval-expression-with-eldoc)
+          ("h i"   helm-info-at-point)
+          ("h r"   helm-info-emacs)
+          ("h g"   helm-info-gnus)
+          ("h h"   helm-documentation)
+          ("h a"   helm-apropos)
+          ("h m"   helm-man-woman)
+          ;; other
+          ("t"     helm-top)
+          ("p"     helm-list-emacs-process)
+          (","     helm-calcul-expression)
+          ("P"     helm-list-elisp-packages)
+          ("c"     helm-colors)
+          ("X"     helm-select-xfont)
+          ("8"     helm-ucs)
+          ("x"     helm-run-external-command)
+          ;;
+          ("r"     helm-resume)
+          ("q"     nil))
+        (defun my-do-ag-project-root-or-dir ()
+          "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
           (interactive)
-
-          ;; From helm-buffers-list in helm-buffers.el
-          (unless helm-source-buffers-list
-            (setq helm-source-buffers-list
-                  (helm-make-source " Buffers" 'helm-source-buffers)))
-
-          ;; From file:elpa/helm-20160401.1302/helm-files.el::(with-helm-temp-hook%20'helm-after-initialize-hook
-          ;; This lets me bring up results from locate without having to
-          ;; exit and run a separate command.  Now I just have to remember
-          ;; to use it…
-          (with-helm-temp-hook 'helm-after-initialize-hook
-            (define-key helm-map (kbd "C-x C-l")
-              'helm-multi-files-toggle-to-locate))
-
-          (helm-other-buffer (list helm-source-buffers-list
-                                   helm-source-files-in-current-dir
-                                   helm-source-bookmarks
-                                   helm-source-recentf
-                                   helm-source-projectile-files-list)
-                             " * my/helm-find-files *")))
+          (require 'helm-ag)
+          (let ((rootdir (helm-ag--project-root)))
+            (unless rootdir (helm-do-ag default-directory))
+            (helm-do-ag rootdir))))
     #+END_SRC
 *** More tools with Helm
     #+BEGIN_SRC emacs-lisp
@@ -880,13 +872,13 @@
               helm-swoop-split-with-multiple-windows nil
 
               ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-              helm-swoop-split-direction 'split-window-vertically
+              helm-swoop-split-direction 'split-window-horizontally
 
               ;; If nil, you can slightly boost invoke speed in exchange for text color
               helm-swoop-speed-or-color t
 
               ;; ;; Go to the opposite side of line from the end or beginning of line
-              helm-swoop-move-to-line-cycle t
+              helm-swoop-move-to-line-cycle nil
 
               ;; Optional face for line numbers
               ;; Face name is `helm-swoop-line-number-face`
@@ -1096,7 +1088,7 @@
      ;; buffer & file handling
      (global-set-key (kbd "M-é") 'previous-buffer) ;; call previous buffer
      (global-set-key (kbd "M-è") 'next-buffer) ;; call next buffer
-     (key-chord-define-global (kbd "«»") 'ibuffer) ;; call ibuffer
+     (global-set-key (kbd "C-x M-b") 'ibuffer) ;; call ibuffer
      (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
      (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
      (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
