@@ -1699,7 +1699,6 @@
        :load-path "elisp/"
        :hook (java-mode))
    #+END_SRC
-
 *** TODO malabar-mode (à tester)
     #+BEGIN_SRC emacs-lisp
       (use-package malabar-mode
@@ -1764,6 +1763,8 @@
                        (setq c-basic-offset 4)))
         (before-save-hook . meghanada-code-beautify-before-save)
         :config
+        (dim-major-name 'java-mode "Java")
+        (dim-minor-name 'meghanada-mode " MEG")
         (use-package realgud ;; I don't even know what this package is or does
           :disabled)
         (setq indent-tabs-mode nil
