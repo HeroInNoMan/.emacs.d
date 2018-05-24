@@ -642,7 +642,9 @@
        (dim-minor-name 'company-mode nil)
        (dim-minor-name 'abbrev-mode " @")
        (global-company-mode) ;; enable company in all buffers
-       (setq company-dabbrev-downcase nil
+       (setq company-tooltip-limit 30
+             company-show-numbers t
+             company-dabbrev-downcase nil
              company-show-numbers t))
 
      (use-package browse-kill-ring
