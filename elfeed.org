@@ -1,0 +1,200 @@
+* Feeds                                                              :elfeed:
+** Notifs                                                            :notifs:
+*** [[https://www.facebook.com/feeds/notifications.php?id=667322941&amp;viewer=667322941&amp;key=AWimP5JqwaPDk0p1&amp;format=rss20][Arthur Léothaud's Facebook Notifications]]                         :ignore:
+*** [[http://elyseemontmartre.com/webtv/rss.php][Elysée Montmartre - Rendez-vous Live 2007]]                        :ignore:
+*** [[http://www.facebook.com/feeds/notifications.php?id=667322941&amp;viewer=667322941&amp;key=c21d409025&amp;format=rss20][Facebook Notifications]]                                           :ignore:
+*** [[http://www.hellfest.fr/web08/locale/french/rss.xml][HELLFEST]]                                                         :ignore:
+*** [[http://www.monde-de-thaanis.com/news.xml][MONDE DE THAANIS - News]]
+*** [[http://www.mountyhall.com/ScriptPublic/MH_News.xml][MountyHall - News]]
+*** [[http://tt-rss.org/releases.rss][Tiny Tiny RSS: New Releases]]                                      :ignore:
+** Actu                                                                :actu:
+*** [[http://www.acrimed.org/spip.php?page=backend][Acrimed | Action Critique Médias]]
+*** [[http://feeds.feedburner.com/mairie13][Mairie du 13e]]
+*** [[http://www.marianne2.fr/xml/syndication.rss][Marianne2.fr | le site de l'hebdomadaire Marianne]] :ignore:
+*** [[http://blogs.rtl.fr/usa/index.php/feed/rss2][Obama in America]] :ignore:
+*** [[http://www.stallman.org/rss/rss.xml][Political notes by RMS]]
+*** [[http://feeds.feedburner.com/refletsinfo][Reflets]]
+*** [[http://maitre-eolas.fr/rss.php][Journal d'un avocat]]
+*** [[http://www.ujfp.org/backend.php/][UJFP]]                                                             :ignore:
+*** [[http://www.superno.com/blog/feed/][Le blog de SuperNo]]
+*** [[http://petrole.blog.lemonde.fr/feed/][Oil Man]]
+*** [[http://mnouchkine.blogs.liberation.fr/le_fil_da/index.rdf][Le fil d'A.]]
+*** [[http://adriensaumier.fr/index.php?feed/atom][Yet Another Blog Politique]]
+** Blogs                                                              :blog:
+*** entry-title: \(blog\)
+*** [[http://feeds.feedburner.com/AbhijeetMaharana][Abhijeet Maharana]]
+*** [[http://www.dotnetguru2.org/xmlsrv/rss2.php?blog=35][Blog#9 (from outer space)]]                                        :ignore:
+*** [[http://fabien.bezagu.free.fr/rss.php][Fabien Bézagu]]
+*** [[http://www.gravedingo.com/feed][Gravedingo]]                                                       :ignore:
+*** [[http://i.got.nothing.to/feed/atom][I got nothing to blog.]]                                           :ignore:
+*** [[http://feeds.feedburner.com/jackslocum][Jack Slocum's Blog]]
+*** [[http://drorlof.blogspot.com/feeds/posts/default?alt=rss][La cave du Dr Orlof]]
+*** [[http://penseesderonde.mabulle.com/rss.php][Le blog de Caroline]]                                              :ignore:
+*** [[http://onsefechier-anatic6.blogspot.com/feeds/posts/default][Le blog de Jean-Pierre Martin, un petit cadre dans une grosse boiboite]]
+*** [[http://partipirate.org/blogs/maxime-rouquet/feed/][le blog de Maxime Rouquet]]                                        :ignore:
+*** [[http://misko.hevery.com/feed/][Miško Hevery]]
+*** [[http://blog.morpheuz.cc/feed/][MoRpHeUz's Blog]]
+*** [[http://www.nicollet.net/feed/][Nicollet.Net]]
+*** [[http://www.ripton.net/blog/?feed=atom][Not Even My Wife Reads This]]
+*** [[http://merome.net/dotclear/rss.php][On refait le blog]]                                                :ignore:
+*** [[http://purefuckingarmageddon.blogspot.com/feeds/posts/default][Pure Fucking Armageddon]]
+*** [[http://blog.romainriviere.fr/feed/][Romain Rivière]]                                                   :ignore:
+*** [[http://www.jroller.com/sjivan/feed/entries/rss][Sanjiv Jivan's Blog]]                                              :ignore:
+*** [[http://feeds.feedburner.com/tlb-articles][Talus' LaBlog]]                                                    :ignore:
+*** [[http://feeds.feedburner.com/thehappyseeker][The Happy Seeker - Happiness inner peace]]
+*** [[http://feeds.feedburner.com/thuss][Todd Huss]]
+*** [[http://feeds.feedburner.com/torrefaction][Torréfaction]]
+*** [[http://blog.tristramg.eu/feeds/all.atom.xml][Tristram: life and opinions]]                                      :ignore:
+*** [[http://tristramg.info/wiki/feed.php][Tristram's wiki]]                                                  :ignore:
+*** [[http://evesanctuary.free.fr/dotclear2/blog/feed/atom][Veeny's Wired]]                                                    :ignore:
+*** [[http://zenhabits.net/feed/][Zen Habits]]
+** Emacs                                                              :emacs:
+*** entry-title: \(emacs\)
+*** [[http://pipes.yahoo.com/pipes/pipe.run?_id=41ff1c5d2d98c068757bc2648c93e23e&amp;_render=rss][A Better Planet Emacs]]                                            :ignore:
+*** [[http://emacs-fu.blogspot.com/feeds/posts/default][emacs-fu]]
+*** [[http://emacsredux.com/atom.xml][Emacs Redux]]
+*** [[http://sachachua.com/blog/category/emacs/feed/][Emacs - Sacha Chua]]
+*** [[http://endlessparentheses.com/atom.xml][Endless Parentheses]]
+*** [[https://www.masteringemacs.org/feed][Mastering Emacs]]
+*** [[http://emacsblog.org/feed/][M-x all-things-emacs]]
+*** [[http://emacs-doctor.com/feed.xml][M-x doctor RET]]
+*** [[https://www.reddit.com/r/emacs/.rss][M-x emacs-reddit]]
+*** [[http://planet.emacsen.org/atom.xml][Planet Emacsen]]
+*** [[http://pragmaticemacs.com/feed/][Pragmatic Emacs]]
+*** [[http://whattheemacsd.com/atom.xml][What the .emacs.d!?]]
+*** [[http://oremacs.com/atom.xml][(or emacs]]
+*** [[http://ergoemacs.org/emacs/blog.xml][Xah Emacs Blog]]
+*** [[http://irreal.org/blog/?feed=rss2][Irreal]]
+** GND                                                                  :gnd:
+*** [[http://www.ccc.de/de/rss/updates.rdf][Chaos Computer Club: Updates]]                                     :ignore:
+*** [[http://www.cafzone.net/ipb/index.php?act=rssout&amp;id=1][GeekZone - News]]                                                  :ignore:
+*** [[http://news.ycombinator.com/rss][Hacker News]]
+*** [[http://www.siteduzero.com/Templates/xml/news_fr.xml][Le Site du Zéro]]                                                  :ignore:
+*** [[http://aperiodic.net/phil/archives/index.rss][Phil! Gold]]
+*** [[http://formats-ouverts.org/rss.php][Pour les formats ouverts !]]
+*** [[http://feeds.feedburner.com/RogerAlsingWeblog][Roger Alsing Weblog]]
+*** [[http://rss.slashdot.org/Slashdot/slashdot][Slashdot]]
+*** [[http://feeds.feedburner.com/tedtalks_video][TEDTalks (video)]]
+*** [[http://pisani.blog.lemonde.fr/pisani/index.rdf][Transnets]]                                                        :ignore:
+*** [[http://linuxfr.org/backend/news-homepage/rss20.rss][DLFP - Dépêches de page principale]]                               :ignore:
+*** [[http://www.generation-libre.com/index2.php?option=com_rss&amp;feed=RSS2.0&amp;no_html=1][Generation Libre]]                                                 :ignore:
+*** [[http://www.invox.org/backend.php3][Librothèque]]                                                      :ignore:
+*** [[http://www.nuxo.net/rss.php][Nuxo.net]]                                                         :ignore:
+*** [[http://www.linuxpourlesnuls.org/backend.php][LINUX POUR LES NULS]]                                              :ignore:
+*** [[http://www.pointblog.com/index.rdf][Pointblog]]                                                        :ignore:
+*** [[http://www.unixtech.be/?feed=atom][UnixTech]]
+*** [[http://www.application-servers.com/feed/rss2][application-servers]]                                              :ignore:
+*** [[http://www.application-servers.com/rss/appservers.rss][APPLICATION-SERVERS.COM]]                                          :ignore:
+*** [[http://feeds.feedburner.com/BirtWorld][BIRT World]]
+*** [[http://blog.objetdirect.com/feed][Blog Objet Direct]]
+*** [[http://www.eclipse-plugins.info/eclipse/plugins_backend.jsp?what=newandupdated][EclipsePlugins]]                                                   :ignore:
+*** [[http://gmailblog.blogspot.com/atom.xml][Gmail Blog]]
+*** [[http://feeds.feedburner.com/gtricksrss][Gtricks.com]]
+*** [[http://www.insideit.fr/feed/rss2][inside IT]]                                                        :ignore:
+*** [[http://www.insideit.fr/feed/rss2/comments][inside IT : Commentaires]]                                         :ignore:
+*** [[http://www.ongwt.com/feed/rss2][onGWT]]                                                            :ignore:
+*** [[http://feeds.codecommit.com/codecommit][Code Commit]]
+*** [[http://www.lamoooche.com/getRSS.php?idnews=32][Java Technology Headlines]]
+*** [[http://www.touilleur-express.fr/feed/][Le Touilleur Express]]
+*** [[http://blog.netapsys.fr/index.php/feed/rss2][Netapsys Blog]]                                                    :ignore:
+*** [[http://www.dng-consulting.com/blogs/index.php?blog=1&amp;tempskin=_rss2][Le blog de L'ami Sami]]                                            :ignore:
+*** [[http://googlereader.blogspot.com/atom.xml][Official Google Reader Blog]]
+*** [[http://www.strategieweb20.com/xml/syndication.rss][Stratégie Web 2.0]]                                                :ignore:
+*** [[http://feeds.feedburner.com/threeriversinstitute/khkV][Three Rivers Institute]]
+*** [[http://www.korben.info/feed][Korben]]
+*** [[http://sebsauvage.net/rhaa/rss_fulltext.php][sebsauvage.net]]
+*** [[http://www.aubryconseil.com/feed/rss2][Scrum, Agilité et Rock'n roll]]
+*** [[http://feeds.feedburner.com/schneier/fulltext][Schneier on Security]]
+*** [[http://feeds.feedburner.com/GeekPauvre][Le Geek Pauvre]]
+** Otium                                                              :otium:
+*** entry-title: \(comic\|strip\|BD\)                                 :comic:
+*** [[http://www.30joursdebd.com/mag/rss.php][30 jours de BD]]                                                   :ignore:
+*** [[https://www.commitstrip.com/en/feed/][CommitStrip]]
+*** [[http://dilbert.com/feed][Dilbert Daily Strip]]
+*** [[http://www.monkeyuser.com/feed.xml][MonkeyUser]]
+*** [[http://pbfcomics.com/feed/feed.xml][The Perry Bible Fellowship]]
+*** [[http://abstrusegoose.com/feed][Abstruse Goose]]
+*** [[http://accroche-toi-a-ton-sloup.over-blog.com/atom.php][Accroche toi à ton sloup !]]                                       :ignore:
+*** [[http://atravers.blogspot.com/feeds/posts/default][à travers]]
+*** [[http://crea.bib.free.fr/blog/rss.php][biboun attitude]]                                                  :ignore:
+*** [[http://www.fabricetarrin.com/blog/rss.php][Blog BD de Fabrice Tarrin]]
+*** [[http://www.bouletcorp.com/blog/fill_rss.php5][bouletcorp - le blog]]                                             :ignore:
+*** [[http://feeds.feedburner.com/bouletcorpen][bouletcorp - the blog]]
+*** [[http://bowwindow.canalblog.com/rss.xml][bow-window]]
+*** [[http://feeds.feedburner.com/Buttersafe][Buttersafe]]
+*** [[http://wdr1.com/blog/calvin_and_hobbes.rdf][Calvin and Hobbes (Unofficial)]]
+*** [[http://blog.zanorg.com/rss/fil_rss.xml][.chez kek.]]
+*** [[http://chezunter.free.fr/barblug/rss.php][ChezUnter]]                                                        :ignore:
+*** [[http://www.chicou-chicou.com/rss/fil_rss.xml][Chicou-Chicou]]
+*** [[http://feeds.feedburner.com/CommeDesGuilisDansLeBasDuVentre?format=xml][Comme des guilis dans le bas du ventre...]]
+*** [[http://feeds.feedburner.com/Croustination][Croustination]]
+*** [[http://ptitenezu.blogspot.com/feeds/posts/default][Débilités illustrées]]
+*** [[http://delfineblog.free.fr/blog/?feed=rss2][Delfine]]                                                          :ignore:
+*** [[http://www.caesar.nl/CaesarRSS/DilbertRSS.aspx][Dilbert]]                                                          :ignore:
+*** [[http://feeds.dilbert.com/DilbertDailyStrip][Dilbert Daily Strip]]
+*** [[http://feeds2.feedburner.com/thedoghousediaries/feed][DOGHOUSE]]
+*** [[http://feeds.feedburner.com/Explosm][Explosm.net]]
+*** [[http://filsdelacolere.com/rss.php][Fereus le Fleau]]                                                  :ignore:
+*** [[http://fernandlours.free.fr/rss.php][Fernand l'ours blanc]]
+*** [[http://feeds.feedburner.com/Pidjin][Fredo and Pidjin. The Webcomic. » Fredo &amp; Pid’Jin]]
+*** [[http://gallybox.com/blog/feed/][Gally blog]]
+*** [[http://feeds.feedburner.com/GeekAndPoke][Geek And Poke]]
+*** [[http://www.nojhan.net/geekscottes/rss.php][Geekscottes]]                                                      :ignore:
+*** [[http://beyondzedoodles.blogspot.com/atom.xml][Gribouillblog]]
+*** [[http://www.jeromeuh.net/index.xml][Jérômeuh]]
+*** [[http://www.johnandjohn.nl/rss.php][John &amp; John]]                                                  :ignore:
+*** [[http://blogdejulienneel.blogspot.com/feeds/posts/default][Julien Neel]]
+*** [[http://feeds.feedburner.com/labandepasdessinee][La Bande Pas Dessinée]]
+*** [[http://vidberg.blog.lemonde.fr/feed/][L'actu en patates]]
+*** [[http://maesterbd.wordpress.com/feed/][La Grande Tambouille de Maëster]]
+*** [[http://lanternebrisee.net/feed/rss2][La Lanterne Brisée]]                                               :ignore:
+*** [[http://jap-jap-jap-jap.blogspot.com/feeds/posts/default][La réception bonjour]]
+*** [[http://avosrisquesetperils.blogspot.com/feeds/posts/default][Le Blog d'Aspirine]]                                               :ignore:
+*** [[http://ceduniverse.blogspot.com/atom.xml][le blog de ced]]
+*** [[http://missgally.com/blog/rss.php][Le Blog de Gally]]                                                 :ignore:
+*** [[http://lindingre.com/?feed=rss2][Le blog de Lindingre]]
+*** [[http://yap-yap-yap-yap.blogspot.com/feeds/posts/default?alt=rss][le blog de pierrot]]
+*** [[http://puccafun.canalblog.com/rss.xml][Le blog de Puccafun]]
+*** [[http://www.fortuworld.com/blog/rss/fil_rss.xml][Le Fortublog]]
+*** [[http://journaldecamille.blogspot.com/feeds/posts/default][Le journal de Camille]]
+*** [[http://www.allanbarte.com/blog/rss.php][L'Elysée &amp; Moi - Président Darko]]                             :ignore:
+*** [[http://pleindhistoires.canalblog.com/rss.xml][le plein d'histoires]]
+*** [[http://maester.over-blog.com/rss2.php][Les aventures de Maëster sur le net]]
+*** [[http://www.lesbobodessins.fr/feed][les bobo dessins]]                                                 :ignore:
+*** [[http://marnette.canalblog.com/rss.xml][Les petits papiers]]
+*** [[http://www.maliki.com/rss.xml][Le webcomic de Maliki]]
+*** [[http://mamlynda.blogspot.com/feeds/posts/default?alt=rss][mamlynda]]
+*** [[http://maneggs.com/feed/rss/][Maneggs]]
+*** [[http://feeds.feedburner.com/BlogPenelopeJolicoeur][Ma vie est tout à fait fascinante]]
+*** [[http://blog.chabd.com/abonnement.xml][Ma vie est une bande dessinée]]
+*** [[http://www.melakarnets.com/rss.php][Melakarnets]]                                                      :ignore:
+*** [[http://deligne.over-blog.com/rss-articles.xml][Mes cartoons]]
+*** [[http://rss.monbeausapin.org/MonBeauSapin][Mon beau sapin]]                                                   :ignore:
+*** [[http://www.monsieur-le-chien.fr/rss.php][Monsieur Le Chien]]
+*** [[http://madeofstorm.free.fr/myheadupsidedown/?feed=rss2][My Head Upside down]]
+*** [[http://www.penelope-jolicoeur.com/feed/][Penelope Jolicoeur]]
+*** [[http://grumeautique.blogspot.com/feeds/posts/default][Petit précis de Grumeautique]]
+*** [[http://www.phdcomics.com/gradfeed.php][PHD Comics]]
+*** [[http://www.smbc-comics.com/rss.php][Saturday Morning Breakfast Cereal (updated daily)]]
+*** [[http://theoatmeal.com/feed/rss][The Oatmeal - Comics, Quizzes, &amp; Stories]]
+*** [[http://placeman.canalblog.com/rss.xml][Trentenaire, marié, 2 enfants]]
+*** [[http://tumourrasmoinsbete.blogspot.com/feeds/posts/default][Tu mourras moins bête]]
+*** [[http://wandrille.leroy.free.fr/blog/rss.php][wandrille]]
+*** [[http://zepworld.blog.lemonde.fr/feed/][What a wonderful world]]
+*** [[http://what-if.xkcd.com/feed.atom][What If?]]
+*** [[http://www.xkcd.com/rss.xml][xkcd.com]]
+*** [[http://feeds2.feedburner.com/yehudamoon][Yehuda Moon and the Kickstand Cyclery]]
+*** [[http://www.yodablog.net/?feed=rss2][YODABLOG]]
+*** [[http://feeds.feedburner.com/bashfr][BashFR]]
+*** [[http://www.geeek.org/feed/tag/geek/rss2][Blog de Geeek]]
+*** [[http://feeds2.feedburner.com/BonjourMadame][Bonjour Madame]]
+*** [[http://www.dafuckingblueboy.com/?feed=rss2][DaFuckingBlueBoy]]                                                 :ignore:
+*** [[http://maruk-and-slash.blogspot.com/feeds/posts/default?alt=rss][Hack and slash et compagnie]]
+*** [[http://www.labanane.org/humourabsurde.xml][LaBanane - Humour absurde]]
+*** [[http://www.labanane.org/humourdouteux.xml][LaBanane - Humour douteux]]
+*** [[http://www.labanane.org/humourgras.xml][LaBanane - Humour gras]]
+*** [[http://www.labanane.org/humournoir.xml][LaBanane - Humour noir]]
+*** [[http://lelombrik.net/news.rss][Les news du LoMBriK]]                                              :ignore:
+*** [[http://www.monpirecoup.fr/index/rss][Mon Pire Coup - Les derniers coups]]                               :ignore:
+*** [[http://motivateurself.wordpress.com/feed/][motivate u?]]
+*** [[http://syndication.thedailywtf.com/TheDailyWtf][The Daily WTF]]
