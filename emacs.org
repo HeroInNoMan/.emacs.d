@@ -1312,21 +1312,30 @@
 
      (defhydra hydra-dates (:color blue :hint nil)
        "
-     ^
-     ^Dates^             ^Insert^            ^Insert with Time^
-     ^─────^─────────────^──────^────────────^────────────────^
-     _q_ quit            _d_ short           _D_ short
-     ^ ^                 _i_ iso             _I_ iso
-     ^ ^                 _l_ long            _L_ long
-     ^ ^                 ^ ^                 ^ ^
-     "
+       ^
+       ^Dates^      ^Insert^                  ^Insert with Time^
+       ^─────^──────^──────^──────────────────^────────────────^──────────
+       _q_ quit     _s_ %(format-time-string \"%d/%m/%Y\")          _t_ %(format-time-string \"%Y/%m/%d %H:%M\")
+       ^ ^          ^ ^ ^^^^^^^^^^^^^^^^^^^^^^                      _T_ %(format-time-string \"%A %d %B %Y - %H:%M\")
+       ^ ^          _d_ %(format-time-string \"%F\")
+       ^ ^          _D_ %(format-time-string \"%F %A\") ^^^^^^^^^   _i_ %(format-time-string \"%FT%T%z\")
+       ^ ^          ^ ^
+       ^ ^          _l_ %(format-time-string \"%d %B %Y\")
+       ^ ^          _L_ %(format-time-string \"%A %d %B %Y\")
+
+       "
        ("q" nil)
-       ("d" ab/date-short)
-       ("D" ab/date-short-with-time)
-       ("i" ab/date-iso)
-       ("I" ab/date-iso-with-time)
+       ;; date
+       ("s" ab/date-short)
+       ("d" ab/date-iso)
+       ("D" ab/date-iso-with-day)
        ("l" ab/date-long)
-       ("L" ab/date-long-with-time))
+       ("L" ab/date-long-with-day)
+       ;; date + time
+       ("t" ab/date-short-with-time)
+       ("T" ab/date-long-with-time)
+       ("i" ab/date-iso-with-time))
+
      (global-set-key (kbd "C-c d") 'hydra-dates/body)
    #+END_SRC
 

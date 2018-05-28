@@ -344,11 +344,16 @@ for the line number input"
     (other-window 1)
     (beginning-of-buffer)))
 
-;; functions stolen to angrybacon
+;; functions stolen from angrybacon
 (defun ab/date-iso ()
   "Insert the current date, ISO format, eg. 2016-12-09."
   (interactive)
   (insert (format-time-string "%F")))
+
+(defun ab/date-iso-with-day ()
+  "Insert the current date, ISO format, with day, eg. 2016-12-09 lundi."
+  (interactive)
+  (insert (format-time-string "%F %A")))
 
 (defun ab/date-iso-with-time ()
   "Insert the current date, ISO format with time, eg. 2016-12-09T14:34:54+0100."
@@ -360,20 +365,25 @@ for the line number input"
   (interactive)
   (insert (format-time-string "%d %B %Y")))
 
-(defun ab/date-long-with-time ()
-  "Insert the current date, long format, eg. 09 December 2016 - 14:34."
+(defun ab/date-long-with-day ()
+  "Insert the current date, long format, with day, eg. lundi 09 December 2016."
   (interactive)
-  (insert (capitalize (format-time-string "%d %B %Y - %H:%M"))))
+  (insert (format-time-string "%A %d %B %Y")))
+
+(defun ab/date-long-with-time ()
+  "Insert the current date, long format, eg. lundi 09 December 2016 - 14:34."
+  (interactive)
+  (insert (format-time-string "%A %d %B %Y - %H:%M")))
 
 (defun ab/date-short ()
-  "Insert the current date, short format, eg. 2016.12.09."
+  "Insert the current date, short format, eg. 09/12/2016."
   (interactive)
-  (insert (format-time-string "%Y.%m.%d")))
+  (insert (format-time-string "%d/%m/%Y")))
 
 (defun ab/date-short-with-time ()
-  "Insert the current date, short format with time, eg. 2016.12.09 14:34"
+  "Insert the current date, short format with time, eg. 2016/12/09 14:34"
   (interactive)
-  (insert (format-time-string "%Y.%m.%d %H:%M")))
+  (insert (format-time-string "%Y/%m/%d %H:%M")))
 
 (defun ale/apply-local-theme-modern ()
   "Apply locally-defined modern theme"
