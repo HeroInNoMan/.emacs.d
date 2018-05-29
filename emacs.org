@@ -762,10 +762,10 @@
           ^Helm^    ^Find^         ^Search^      ^Navigate^       ^Complete^      ^Doc & Help^    ^Other^
           ^────^────^────^─────────^──────^──────^────────^───────^───^───────────^──────────^────^─────^────────────
           _r_esume  _l_ locate     _R_ regexp    _e_ etags        _<tab>_  lisp   _h e_ eldoc     _t_ top
-          _q_uit    _/_ find       _o_ occur     _i_ imenu        _g_    google   _h i_ info      _p_ process
-          ^ ^       _F_ files      _a_ ag grep   _I_ imenu all    _s_   surfraw   _h r_ emacs     _c_ colors
-          ^ ^       _f_ all files  ^ ^           _._ imenu any    _w_ wikipédia   _h g_ gnus      _8_ ucs
-          ^ ^       _m_ mini       ^ ^           _b_ bookmark     ^ ^             _h h_ doc       _,_ calcul
+          _q_uit    _/_ find       _o_ occur     _i_ imenu        _$_     lines   _h i_ info      _p_ process
+          ^ ^       _F_ files      _a_ ag grep   _I_ imenu all    _g_    google   _h r_ emacs     _c_ colors
+          ^ ^       _f_ all files  ^ ^           _._ imenu any    _s_   surfraw   _h g_ gnus      _8_ ucs
+          ^ ^       _m_ mini       ^ ^           _b_ bookmark     _w_ wikipédia   _h h_ doc       _,_ calcul
           ^ ^       ^ ^            ^ ^           _'_ register     ^ ^             _h a_ apropos   _P_ packages
           ^ ^       ^ ^            ^ ^           _y_ kill-ring    ^ ^             _h m_ woman     _X_ xfont
           ^ ^       ^ ^            ^ ^           _<SPC>_ mark ring^ ^             ^ ^             _x_ run external
@@ -791,6 +791,7 @@
           ("<SPC>" helm-all-mark-rings)
           ;; completion
           ("<tab>" helm-lisp-completion-at-point)
+          ("$"     helm-lines)
           ("g"     helm-google-suggest)
           ("s"     helm-surfraw)
           ("w"     helm-wikipedia-suggest)
@@ -891,6 +892,9 @@
 
 
       (use-package helm-git-grep)
+
+      (use-package helm-lines
+        :commands (helm-lines))
     #+END_SRC
 
 ** Snippets

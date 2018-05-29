@@ -86,6 +86,7 @@
      helm-git
      helm-git-grep
      helm-gitlab
+     helm-lines
      helm-lobsters
      helm-ls-git
      helm-projectile
