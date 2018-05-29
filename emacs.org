@@ -2279,6 +2279,12 @@
        ("q" nil "cancel"))
      (global-set-key (kbd "C-è") 'hydra-spell/body)
    #+END_SRC
+** Synonyms
+   #+BEGIN_SRC emacs-lisp
+     (use-package powerthesaurus
+     :defer t)
+   #+END_SRC
+
 ** Grammalecte
    #+BEGIN_SRC emacs-lisp
      (use-package grammalecte

@@ -133,6 +133,7 @@
      persistent-scratch
      pfuture
      pg
+     powerthesaurus
      prog-fill
      rainbow-blocks
      rainbow-delimiters
