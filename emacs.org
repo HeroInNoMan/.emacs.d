@@ -10,7 +10,7 @@
 #+LANGUAGE: en
 
 #+LINK_HOME: http://leothaud.eu
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="emacs.css" />
+#+HTML_HEAD: <link rel=stylesheet type=text/css href=solarized-light.css />
 
 * Installation & loading
   Start by “disabling” garbage collection while starting up:
@@ -1402,6 +1402,13 @@
       :init (require 'org-agenda)
       :ensure ob-restclient
       :config
+      ;; html export
+      (setq org-export-html-style-include-scripts nil
+            org-export-html-style-include-default nil)
+      (setq org-export-html-style
+            "<link rel=\"stylesheet\" type=\"text/css\" href=\"solarized-dark.css\" />")
+      (setq org-html-htmlize-output-type 'css)
+
       ;; active Babel languages
       (setq org-confirm-babel-evaluate nil)
       (org-babel-do-load-languages
