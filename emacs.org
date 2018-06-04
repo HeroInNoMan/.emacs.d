@@ -2372,6 +2372,16 @@
   #+END_SRC
 
 * Other
+** Accounting
+   I use [[http://out.easycounter.com/external/ledger-cli.org][ledger]] to manage my money. There is a corresponding major-mode:
+   #+BEGIN_SRC emacs-lisp
+     (use-package ledger-mode
+       :mode ("\\.dat$" . ledger-mode)
+       :init (setq ledger-font-xact-highlight-face
+                   '(((t (:background "gray10")))))
+       :hook (after-save . ale/indent-region-or-buffer))
+   #+END_SRC
+
 ** Pomodoro
    #+BEGIN_SRC emacs-lisp
      (use-package tomatinho :disabled)
