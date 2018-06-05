@@ -236,6 +236,18 @@
     (ido-mode)
   #+END_SRC
 
+  Vim’s “dot” is a cool macro-like feature. I want that.
+  #+BEGIN_SRC emacs-lisp
+    (use-package dot-mode
+      :chords (".." . dot-mode-execute)
+      :config
+      (dim-minor-name 'dot-mode nil)
+      ;; default bindings I already use
+      (unbind-key "C-." dot-mode-map)
+      (unbind-key "C-c ." dot-mode-map)
+      (global-dot-mode))
+  #+END_SRC
+
   I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor and the mode-line become red when in god-mode to make it more visible.
   #+BEGIN_SRC emacs-lisp
     (use-package god-mode
