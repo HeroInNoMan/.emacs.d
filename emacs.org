@@ -255,6 +255,7 @@
       :bind
       (("C-c g" . toggle-god-mode)
        :map god-local-mode-map
+       ("i" . toggle-god-mode)
        ("z" . repeat)
        ("." . repeat))
       :chords ("ii" . toggle-god-mode)
