@@ -464,7 +464,14 @@
     (use-package dired-collapse
       :hook (dired-mode . (lambda () (dired-collapse-mode t))))
 
-    (use-package dired-subtree)
+    (use-package dired-subtree
+      :bind
+      (:map dired-mode-map
+            ("U" . dired-subtree-up)
+            ("e" . dired-subtree-narrow)
+            ("i" . dired-subtree-toggle)
+            ("«" . dired-subtree-beginning)
+            ("»" . dired-subtree-end)))
   #+END_SRC
 
   Package to try:
