@@ -124,7 +124,7 @@
   (if (and
        (boundp 'my-private-work-bugtracker-url)
        (not (null my-private-work-bugtracker-url)))
-      (let* ((id (thing-at-point 'symbol))
+      (let* ((id (upcase (thing-at-point 'symbol)))
              (bounds (bounds-of-thing-at-point 'symbol))
              (org-link (concat "[[" my-private-work-bugtracker-url id "][" id "]]")))
         (delete-region (car bounds) (cdr bounds))
