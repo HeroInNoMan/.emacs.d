@@ -174,6 +174,7 @@
      volatile-highlights
      web-beautify
      web-mode
+     webpaste
      wgrep
      which-key
      winnow

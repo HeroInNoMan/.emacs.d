@@ -2166,8 +2166,8 @@
       _p_ packages    _A_ lobsters              _i_ init file        _è_ spelling hydra     _g_ god %`god-local-mode
       _t_ shell-pop   _b_ eww-browser           _r_ rest-client      _é_ char-menu          _h_ Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
       _$_ shell       _B_ code browser          ^ ^                  ^ ^                    _H_ Highlight-line %`highlight-line-mode
-      _%_ ansi-term   _c_ calendar              ^ ^                  ^ ^                    _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
-      _w_ web browser _E_ elfeed RSS            ^ ^                  ^ ^                    _j_ js2-mode
+      _%_ ansi-term   _c_ calendar              ^ ^                  _w_ webpaste-region    _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
+      _W_ web browser _E_ elfeed RSS            ^ ^                  ^ ^                    _j_ js2-mode
       ^ ^             _J_ jenkins               ^ ^                  ^ ^                    _l_ line number
       ^ ^             _M_ spotify               ^ ^                  ^ ^                    _n_ sidebar
       ^ ^             _Q_ quick-calc            ^ ^                  ^ ^                    _o_ org-mode
@@ -2175,8 +2175,7 @@
       ^ ^             _z_ ztree-diff            ^ ^                  ^ ^                    _s_ sublimity %`sublimity-mode
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_ visual-line %`visual-line-mode
       ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_ volatile-highlight %`volatile-highlights-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _W_ web-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _x_ winnow-mode %`winnow-mode
+      ^ ^             ^ ^                       ^ ^                                         _x_ winnow-mode %`winnow-mode
       "
       ;; Built-in
       ("e" eshell)
@@ -2185,7 +2184,7 @@
       ("t" shell-pop)
       ("$" shell)
       ("%" crux-visit-term-buffer)
-      ("w" eww)
+      ("W" eww)
 
       ;; Widget
       ("m" mu4e)
@@ -2213,6 +2212,7 @@
       ;;
       ("è" hydra-spell/body)
       ("é" char-menu)
+      ("w" webpaste-paste-region)
 
       ;; Toggle
       ("(" smartparens-global-mode)
@@ -2230,7 +2230,6 @@
       ;; ("S" spray-mode)
       ("v" visual-line-mode)
       ("V" volatile-highlights-mode)
-      ("W" web-mode)
       ("x" winnow-mode)
       ;; ("W" wttrin)
       ;; ("y" play-youtube-video)
@@ -2427,6 +2426,13 @@
      (use-package ob-restclient)
    #+END_SRC
 
+** Web pasting
+   #+BEGIN_SRC emacs-lisp
+     (use-package webpaste
+       :config
+       ;; Open recently created pastes in an external browser
+       (setq webpaste-open-in-browser t))
+   #+END_SRC
 ** Spritz
    [[http://spritzinc.com/][spritz]] is a reading technique. [[https://github.com/emacsmirror/spray][Spray-mode]] implements it for any emacs buffer.
    #+BEGIN_SRC emacs-lisp
