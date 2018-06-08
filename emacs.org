@@ -2239,59 +2239,6 @@
   #+END_SRC
 
 * Special characters, spelling, i18n
-** Special characters
-   #+BEGIN_SRC emacs-lisp
-     (use-package char-menu
-       :bind (("<f7>" . char-menu))
-       :config
-       (setq char-menu '(("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
-                         ("Math"       "≈" "≡" "∞" "√" "∀" "∃")
-                         ("cyrillic"   "а" "б" "в" "г" "д" "е" "ж" "ѕ" "з" "и" "і" "к" "л" "м" "н" "о" "п" "р" "с" "т" "ꙋ" "ф" "х" "ѡ" "ц" "ч" "ш" "щ" "ъ" "ы" "ь" "ѣ" "ю" "ꙗ" "ѥ" "ѧ" "ѫ" "ѩ" "ѭ" "ѯ" "ѱ" "ѳ" "ѵ")
-                         ("cyril. maj" "А" "Б" "В" "Г" "Д" "Е" "Ж" "Ѕ" "З" "И" "І" "К" "Л" "М" "Н" "О" "П" "Р" "С" "Т" "Ꙋ" "Ф" "Х" "Ѡ" "Ц" "Ч" "Ш" "Щ" "Ъ" "Ы" "Ь" "Ѣ" "Ю" "Ꙗ" "Ѥ" "Ѧ" "Ѫ" "Ѩ" "Ѭ" "Ѯ" "Ѱ" "Ѳ" "Ѵ")
-                         ("arabic"     "ﺎ" "ﺍ" "ﺐ" "ﺒ" "ﺑ" "ﺏ" "ﺖ" "ﺘ" "ﺗ" "ﺕ" "ﺚ" "ﺜ" "ﺛ" "ﺙ" "ﺞ" "ﺠ" "ﺟ" "ﺝ" "ﺢ" "ﺤ" "ﺣ" "ﺡ" "ﺦ" "ﺨ" "ﺧ" "ﺥ" "ﺪ" "ﺩ" "ﺬ" "ﺫ" "ﺮ" "ﺭ" "ﺰ" "ﺯ" "ﺲ" "ﺴ" "ﺳ" "ﺱ" "ﺶ" "ﺸ" "ﺷ" "ﺵ" "ﺺ" "ﺼ" "ﺻ" "ﺹ" "ﺾ" "ﻀ" "ﺿ" "ﺽ" "ﻂ" "ﻄ" "ﻃ" "ﻁ" "ﻆ" "ﻈ" "ﻇ" "ﻅ" "ﻊ" "ﻌ" "ﻋ" "ﻉ" "ﻎ" "ﻐ" "ﻏ" "ﻍ" "ﻒ" "ﻔ" "ﻓ" "ﻑ" "ﻖ" "ﻘ" "ﻗ" "ﻕ" "ﻚ" "ﻜ" "ﻛ" "ﻙ" "ﻞ" "ﻠ" "ﻟ" "ﻝ" "ﻢ" "ﻤ" "ﻣ" "ﻡ" "ﻦ" "ﻨ" "ﻧ" "ﻥ" "ﻪ" "ﻬ" "ﻫ" "ﻩ" "ﻮ" "ﻭ" "ﻲ" "ﻴ" "ﻳ" "ﻱ")
-                         ("Greek"      "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
-                         ("Greek Maj"  "Α" "Β" "Y" "Δ" "Ε" "Ζ" "Η" "Θ" "Ι" "Κ" "Λ" "Μ" "Ν" "Ξ" "Ο" "Π" "Ρ" "Σ" "Τ" "Υ" "Φ" "Χ" "Ψ" "Ω")
-                         ("Smileys"    "☺" "☹")
-                         ("Arrows"     "←" "→" "↑" "↓" "↔" "↕" "⇔" "⇐" "⇒"))))
-     (global-set-key (kbd "<f6>") 'hydra-arabic/body)
-   #+END_SRC
-
-** Arabic
-   #+BEGIN_SRC emacs-lisp
-     (defhydra hydra-arabic (:color pink)
-       "type in arabic"
-       ("a" (insert-char 1575) "ا") ;; ARABIC LETTER ALEF
-       ("b" (insert-char 1576) "ب") ;; ARABIC LETTER BEH
-       ("t" (insert-char 1578) "ت") ;; ARABIC LETTER TEH
-       ("þ" (insert-char 1579) "ث") ;; ARABIC LETTER THEH
-       ("j" (insert-char 1580) "ج") ;; ARABIC LETTER JEEM
-       ("H" (insert-char 1581) "ح") ;; ARABIC LETTER HAH
-       ("†" (insert-char 1582) "خ") ;; ARABIC LETTER KHAH
-       ("d" (insert-char 1583) "د") ;; ARABIC LETTER DAL
-       ("ð" (insert-char 1584) "ذ") ;; ARABIC LETTER THAL
-       ("r" (insert-char 1585) "ر") ;; ARABIC LETTER REH
-       ("z" (insert-char 1586) "ز") ;; ARABIC LETTER ZAIN
-       ("s" (insert-char 1587) "س") ;; ARABIC LETTER SEEN
-       ("ß" (insert-char 1588) "ش") ;; ARABIC LETTER SHEEN
-       ("S" (insert-char 1589) "ص") ;; ARABIC LETTER SAD
-       ("D" (insert-char 1590) "ض") ;; ARABIC LETTER DAD
-       ("T" (insert-char 1591) "ط") ;; ARABIC LETTER TAH
-       ("Z" (insert-char 1592) "ظ") ;; ARABIC LETTER ZAH
-       ("g" (insert-char 1593) "ع") ;; ARABIC LETTER AIN
-       ("®" (insert-char 1594) "غ") ;; ARABIC LETTER GHAIN
-       ("f" (insert-char 1601) "ف") ;; ARABIC LETTER FEH
-       ("Q" (insert-char 1602) "ق") ;; ARABIC LETTER QAF
-       ("k" (insert-char 1603) "ك") ;; ARABIC LETTER KAF
-       ("l" (insert-char 1604) "ل") ;; ARABIC LETTER LAM
-       ("m" (insert-char 1605) "م") ;; ARABIC LETTER MEEM
-       ("n" (insert-char 1606) "ن") ;; ARABIC LETTER NOON
-       ("h" (insert-char 1607) "ه") ;; ARABIC LETTER HEH
-       ("w" (insert-char 1608) "و") ;; ARABIC LETTER WAW
-       ("y" (insert-char 1610) "ي") ;; ARABIC LETTER YEH
-       ("'" (insert-char 1569) "ء") ;; ARABIC LETTER HAMZA
-       ("q" nil "cancel" :color blue))
-   #+END_SRC
-
 ** Spell checking
    #+BEGIN_SRC emacs-lisp
      (defhydra hydra-spell (:color teal)
