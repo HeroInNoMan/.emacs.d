@@ -1788,13 +1788,18 @@
         :commands google-set-c-style)
 
       (use-package meghanada
+        :commands
+        (meghanada-mode)
+        :bind
+        (:map meghanada-mode-map
+              ("M-m" . hydra-meghanada/body))
         :hook
         (java-mode . (lambda ()
                        ;; meghanada-mode on
                        (meghanada-mode t)
                        (flycheck-mode +1)
                        (setq c-basic-offset 4)))
-        (before-save-hook . meghanada-code-beautify-before-save)
+        (before-save . meghanada-code-beautify-before-save)
         :config
         (dim-major-name 'java-mode "Java")
         (dim-minor-name 'meghanada-mode " MEG")
@@ -1807,51 +1812,30 @@
               meghanada-javac-xlint "-Xlint:all,-processing"
               meghanada-java-path "java"
               meghanada-maven-path "mvn")
+        (defhydra hydra-meghanada (:color teal)
+          ;;
+          ("q" nil "quit" :column "Meghanada")
+          ("M-m" meghanada-restart "restart")
 
-        (defhydra hydra-meghanada (:hint nil :exit t)
-          "
-          ^Meghanada^     ^Edit^                           ^Test or Task^
-          ^─────────^─────^────^───────────────────────────^────────────^───────────────────
-          _q_ exit        _f_ meghanada-compile-file       _m_ meghanada-restart
-          _z_ leave       _c_ meghanada-compile-project    _t_ meghanada-run-task
-          ^ ^             _o_ meghanada-optimize-import    _j_ meghanada-run-junit-test-case
-          ^ ^             _s_ meghanada-switch-test-case   _J_ meghanada-run-junit-class
-          ^ ^             _v_ meghanada-local-variable     _R_ meghanada-run-junit-recent
-          ^ ^             _i_ meghanada-import-all         _r_ meghanada-reference
-          ^ ^             _g_ magit-status                 _T_ meghanada-typeinfo
-          ^ ^             _l_ helm-ls-git-ls
-          "
-          ("f" meghanada-compile-file)
-          ("m" meghanada-restart)
+          ;; compile
+          ("f" meghanada-compile-file "file" :column "Compile")
+          ("c" meghanada-compile-project "project")
 
-          ("c" meghanada-compile-project)
-          ("o" meghanada-optimize-import)
-          ("s" meghanada-switch-test-case)
+          ;; edit
+          ("o" meghanada-optimize-import "organise imports" :column "Edit")
+          ("i" meghanada-import-all "import all")
           ("v" meghanada-local-variable)
-          ("i" meghanada-import-all)
 
-          ("g" magit-status)
-          ("l" helm-ls-git-ls)
+          ;; run & test
+          ("R" meghanada-run-task "run task" :column "Run & test")
+          ("t" meghanada-run-junit-test-case "run JUnit test case")
+          ("T" meghanada-run-junit-class "run JUnit class")
+          ("r" meghanada-run-junit-recent "run JUnit recent")
+          ("s" meghanada-switch-test-case "switch test case")
 
-          ("t" meghanada-run-task)
-          ("T" meghanada-typeinfo)
-          ("j" meghanada-run-junit-test-case)
-          ("J" meghanada-run-junit-class)
-          ("R" meghanada-run-junit-recent)
-          ("r" meghanada-reference)
-
-          ("q" exit)
-          ("z" nil))
-        :bind
-        (:map meghanada-mode-map
-              ("M-m t" . meghanada-switch-testcase)
-              ("M-m RET" . meghanada-local-variable)
-              ("M-m ." . helm-imenu)
-              ("M-m r" . meghanada-reference)
-              ("M-m i" . meghanada-typeinfo)
-              ("M-m M-m" . hydra-meghanada/body))
-        :commands
-        (meghanada-mode))
+          ;; doc & help
+          ("." meghanada-reference :column "Doc & Help")
+          ("h" meghanada-typeinfo)))
 
     #+END_SRC
 ** Javascript
