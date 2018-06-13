@@ -328,6 +328,11 @@ for the line number input"
     ((equal selective-display 3) 4)
     ((equal selective-display 4) nil))))
 
+(defun ale/switch-to-fr-dict ()
+  "Switch to French dictionary"
+  (interactive)
+  (ispell-change-dictionary "fr_FR"))
+
 (defun ale/switch-to-en-dict ()
   "Switch to English dictionary"
   (interactive)

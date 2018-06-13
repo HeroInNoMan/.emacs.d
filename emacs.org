@@ -2176,14 +2176,16 @@
 ** Spell checking
    #+BEGIN_SRC emacs-lisp
      (defhydra hydra-spell (:color teal)
-       "spelling"
-       ("t" endless/ispell-word-then-abbrev "corr. & add")
-       ("f" flyspell-mode "flyspell")
-       ("c" flyspell-buffer "flycheck buffer")
-       ("F" flyspell-buffer "flycheck buffer")
-       ("d" ispell-change-dictionary "change dictionary")
-       ("w" define-word-at-point "word definition")
-       ("q" nil "cancel"))
+       ("t" flyspell-mode "toggle" :column "Spelling")
+       ("q" nil "quit")
+       ;; Flyspell
+       ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
+       ("c" flyspell-buffer "check buffer")
+       ("w" define-word-at-point "lookup word")
+       ;; dictionary
+       ("d" ispell-change-dictionary "switch…" :column "Dictionary")
+       ("f" ale/switch-to-fr-dict "switch to fr_FR")
+       ("e" ale/switch-to-en-dict "switch to en_GB"))
      (global-set-key (kbd "C-è") 'hydra-spell/body)
    #+END_SRC
 ** Synonyms
