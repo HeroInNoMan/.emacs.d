@@ -440,6 +440,8 @@
   #+BEGIN_SRC emacs-lisp
     (use-package dired
       :ensure nil
+      :demand
+      :bind ("C-x C-j". dired-jump)
       :init
       (unbind-key "M-b" dired-mode-map)
       :config
@@ -452,9 +454,10 @@
             dired-recursive-deletes 'always
             dired-recursive-copies 'always))
 
-    (use-package dired+
-      :ensure nil
-      :load-path "elisp/dired+.el")
+    ;; (use-package dired+
+    ;;   :after dired
+    ;;   :ensure nil
+    ;;   :load-path "elisp/dired+.el")
 
     (use-package dired-narrow
       :bind (:map dired-mode-map ("/" . dired-narrow)))
