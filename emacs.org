@@ -288,21 +288,14 @@
 
 * Searching
   #+BEGIN_SRC emacs-lisp
-    (defhydra hydra-search(:color teal :hint nil)
-      "
-      ^Search^     ^Toggle^
-      ^──────^─────^──────^────────────
-      _q_ quit     _s_ search forward
-      ^ ^          _r_ search backward
-      ^ ^          _Q_ vr/query-replace
-      ^ ^          _w_ helm-swoop
-      "
-
-      ("s" isearch-forward)
-      ("r" isearch-backward)
-      ("Q" vr/query-replace)
-      ("w" helm-swoop)
-      ("q" nil))
+    (defhydra hydra-search(:color teal)
+      ;;
+      ("q" nil "quit" :column "Search")
+      ;;
+      ("s" isearch-forward "forward" :column "Toggle")
+      ("r" isearch-backward "backward")
+      ("Q" vr/query-replace "query-replace")
+      ("w" helm-swoop "swoop"))
     (global-set-key (kbd "C-é") 'hydra-search/body)
   #+END_SRC
 * Appearance
