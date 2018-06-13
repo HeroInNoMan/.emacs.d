@@ -1583,44 +1583,36 @@
        (global-set-key (kbd "C-c ‘") 'wrap-with-curly-single-quotes)
        (global-set-key (kbd "C-c `") 'wrap-with-back-quotes))
 
-     (defhydra hydra-parens(:color teal :hint nil)
-       "
-       ^Parens^  ^Insert^    ^Delete^           ^Transpose^           ^Slurp^             ^Barf^
-       ^──────^──^──────^────^──────^───────────^─────────^───────────^─────^─────────────^────^───────────
-       _q_ quit  _c_ clone   _k_ kill           _t_ transpose         _a_ absorb          _e_ emit
-       ^ ^       _p_ split   _C-k_ kill hybrid  _T_ transpose hybrid  _j_ join            « barf backward
-       ^ ^       ^ ^         _r_ raise          ^ ^                   _(_ slurp backward  » barf forward
-       ^ ^       ^ ^         _s_ splice         ^ ^                   _)_ slurp hybrid
-       ^ ^       ^ ^         _M-s_ splice       ^ ^                   _w_ rewrap
-       "
+     (defhydra hydra-parens(:color teal)
+       ;;
+       ("q" nil "quit" :column "Parens")
+
        ;; insert
-       ("c" sp-clone-sexp)
-       ("p" sp-split-sexp)
+       ("c" sp-clone-sexp "clone" :column "Insert")
+       ("p" sp-split-sexp "split")
 
        ;; delete
-       ("k" sp-kill-sexp)
-       ("C-k" sp-kill-hybrid-sexp)
-       ("r" sp-raise-sexp)
-       ("s" sp-splice-sexp)
-       ("M-s" sp-splice-sexp)
+       ("k" sp-kill-sexp "kill" :column "Delete")
+       ("C-k" sp-kill-hybrid-sexp "kill hybrid")
+       ("r" sp-raise-sexp "raise")
+       ("s" sp-splice-sexp "splice")
+       ("M-s" sp-splice-sexp "splice")
 
        ;; transpose
-       ("t" sp-transpose-sexp)
-       ("T" sp-transpose-hybrid-sexp)
+       ("t" sp-transpose-sexp "transpose" :column "Transpose")
+       ("T" sp-transpose-hybrid-sexp "transpose hybrid")
 
        ;; slurp
-       ("a" sp-absorb-sexp)
-       ("j" sp-join-sexp)
-       ("(" sp-backward-slurp-sexp)
-       (")" sp-slurp-hybrid-sexp)
-       ("w" sp-rewrap-sexp)
+       ("a" sp-absorb-sexp "absorb" :column "Slurp")
+       ("j" sp-join-sexp "join")
+       ("(" sp-backward-slurp-sexp "slurp backward")
+       (")" sp-slurp-hybrid-sexp "slurp hybrid")
+       ("w" sp-rewrap-sexp "rewrap")
 
        ;; barf
-       ("e" sp-emit-sexp)
-       ("«" sp-backward-barf-sexp)
-       ("»" sp-forward-barf-sexp)
-
-       ("q" nil))
+       ("e" sp-emit-sexp "emit" :column "Barf")
+       ("«" sp-backward-barf-sexp "barf backward")
+       ("»" sp-forward-barf-sexp "barf forward"))
      (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
    #+END_SRC
 
