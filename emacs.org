@@ -956,18 +956,13 @@
                    (signal 'quit "user quit!")
                  (cdr (assoc result rmap))))
            nil)))
-     (defhydra hydra-yasnippet(:color teal :hint nil)
-       "
-       ^Snippet^     ^Insert^           ^Create^
-       ^───────^─────^──────^───────────^──────^─────
-       _t_ tables    _e_ ido expand     _n_ create
-       _q_ quit      _i_ insert
-       "
-       ("e" yas-ido-expand)
-       ("i" yas-insert-snippet)
-       ("n" yas-new-snippet)
-       ("t" yas-describe-tables)
-       ("q" nil))
+     (defhydra hydra-yasnippet(:color teal)
+       ("t" yas-describe-tables "tables" :column "Snippet")
+       ("q" nil "quit")
+       ("e" yas-ido-expand "ido expand" :column "Insert")
+       ("i" yas-insert-snippet "insert")
+       ("n" yas-new-snippet "create" :column "Create")
+       )
      (global-set-key (kbd "C-c y") 'hydra-yasnippet/body)
    #+END_SRC
 
