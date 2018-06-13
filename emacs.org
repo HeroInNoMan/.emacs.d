@@ -2082,23 +2082,13 @@
       ("q" nil "cancel"))
     (global-set-key (kbd "C-c m") 'hydra-minor-modes/body)
 
-    (defhydra hydra-major-modes(:color blue :hint nil)
-      "
-      ^Major mode^           ^Toggle
-      ^──────────^───────────^──────^──────
-      _q_  quit              _j_ js2-mode
-      ^ ^                    _l_ lisp-mode
-      ^ ^                    _o_ org-mode
-      ^ ^                    _t_ text-mode
-      ^ ^                    _w_ web-mode
-      "
-
-      ("j" js2-mode)
-      ("l" lisp-mode)
-      ("o" org-mode)
-      ("t" text-mode)
-      ("w" web-mode)
-      ("q" nil "cancel"))
+    (defhydra hydra-major-modes(:color blue)
+      ("q" nil "quit" :column "Major mode")
+      ("j" js2-mode "js2-mode" :column "Toggle")
+      ("l" lisp-mode "lisp-mode")
+      ("o" org-mode "org-mode")
+      ("t" text-mode "text-mode")
+      ("w" web-mode "web-mode"))
     (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
 
     (defhydra hydra-widgets (:color teal :hint nil)
