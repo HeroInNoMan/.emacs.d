@@ -1227,32 +1227,23 @@
        (setq magit-last-seen-setup-instructions "1.4.0")
        (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
 
-     (defhydra hydra-git(:color blue :hint nil)
-       "
-       ^Git^     ^Gutter^           ^Log^              ^Other^
-       ^───^─────^──────^───────────^───^──────────────^─────^───────
-       _q_ quit  _n_ next hunk      _b_ blame          _._ status
-       ^ ^       _p_ prev. hunk     _l_ file history   _g_ message
-       ^ ^       _r_ revert hunk    _t_ time machine   _f_ file popup
-       ^ ^       _s_ stage hunk     ^ ^                ^ ^
-       ^ ^       _u_ gutter mode    ^ ^                ^ ^
-       "
+     (defhydra hydra-git(:color blue)
+       ;;
+       ("q" nil "quit" :column "Git")
        ;; gutter
-       ("n" git-gutter:next-hunk :color pink)
-       ("p" git-gutter:previous-hunk :color pink)
-       ("r" git-gutter:revert-hunk :color pink)
-       ("s" git-gutter:stage-hunk :color pink)
-       ("u" git-gutter-mode)
+       ("n" git-gutter:next-hunk "next hunk" :color pink :column "Gutter")
+       ("p" git-gutter:previous-hunk "prev hunk" :color pink)
+       ("r" git-gutter:revert-hunk "revert hunk" :color pink)
+       ("s" git-gutter:stage-hunk "stage hunk" :color pink)
+       ("u" git-gutter-mode "gutter mode")
        ;; log
-       ("b" magit-blame)
-       ("l" magit-log-buffer-file)
-       ("t" git-timemachine)
+       ("b" magit-blame "blame" :column "Log")
+       ("l" magit-log-buffer-file "file history")
+       ("t" git-timemachine "time machine")
        ;; other
-       ("." magit-status)
-       ("g" git-messenger:popup-message)
-       ("f" magit-file-popup)
-
-       ("q" nil))
+       ("." magit-status "status" :column "Other")
+       ("g" git-messenger:popup-message "message")
+       ("f" magit-file-popup "file popup"))
      (global-set-key (kbd "C-x g") 'hydra-git/body)
 
      ;; A saner ediff
