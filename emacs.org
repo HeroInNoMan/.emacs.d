@@ -1965,12 +1965,14 @@
 
        (defhydra hydra-tide(:color blue)
          "tide"
-         ("e" tide-project-errors "errors")
+         ("s" tide-restart-server "restart server" :column "Tide")
+         ("q" nil "quit")
+         ;; edit
+         ("r" tide-rename-symbol "rename" :column "Edit")
          ("f" tide-format "format")
-         ("g" tide-references "references")
-         ("r" tide-rename-symbol "rename")
-         ("s" tide-restart-server "restart server")
-         ("q" nil "cancel")))
+         ;; navigate
+         ("e" tide-project-errors "errors" :column "Navigate")
+         ("g" tide-references "references")))
 
      (use-package typescript-mode
        :disabled
