@@ -776,7 +776,7 @@
           ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
           ("m"     helm-mini "mini")
           ;; search
-          ("R"     helm-regexp :column "Search")
+          ("R"     helm-regexp "regexp" :column "Search")
           ("o"     helm-occur "occur")
           ("a"     helm-do-grep-ag "ag grep")
           ;; navigate
