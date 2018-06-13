@@ -637,23 +637,14 @@
         (setq-default vimish-fold-header-width 79))
 
       (defhydra hydra-fold (:color pink)
-        "
-        ^
-        ^Fold^              ^Do^                ^Jump^              ^Toggle^
-        ^────^──────────────^──^────────────────^────^──────────────^──────^────────────
-        _q_ quit            _f_ fold            _p_ previous        _<tab>_ current
-        ^ ^                 _k_ kill            _n_ next            _a_ all
-        ^ ^                 _K_ kill all        ^ ^                 ^ ^
-        ^ ^                 ^ ^                 ^ ^                 ^ ^
-        "
-        ("q" nil)
-        ("<tab>" vimish-fold-toggle)
-        ("a" vimish-fold-toggle-all)
-        ("p" vimish-fold-previous-fold)
-        ("n" vimish-fold-next-fold)
-        ("f" vimish-fold)
-        ("k" vimish-fold-delete)
-        ("K" vimish-fold-delete-all))
+        ("q" nil "quit" :column "Fold")
+        ("f" vimish-fold "fold" :column "Do")
+        ("k" vimish-fold-delete "kill")
+        ("K" vimish-fold-delete-all "kill all")
+        ("p" vimish-fold-previous-fold "previous" :column "Jump")
+        ("n" vimish-fold-next-fold "next")
+        ("<tab>" vimish-fold-toggle "current" :column "Toggle")
+        ("a" vimish-fold-toggle-all "all"))
       (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
     #+END_SRC
 
