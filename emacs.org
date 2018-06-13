@@ -771,64 +771,52 @@
                                               helm-source-file-cache
                                               helm-source-locate
                                               helm-source-find-files))
-        (defhydra hydra-helm-config(:color teal :hint nil)
-          "
-          ^Helm^    ^Find^         ^Search^      ^Navigate^       ^Complete^      ^Doc & Help^    ^Other^
-          ^────^────^────^─────────^──────^──────^────────^───────^───^───────────^──────────^────^─────^────────────
-          _r_esume  _l_ locate     _R_ regexp    _e_ etags        _<tab>_  lisp   _h e_ eldoc     _t_ top
-          _q_uit    _/_ find       _o_ occur     _i_ imenu        _$_     lines   _h i_ info      _p_ process
-          ^ ^       _F_ files      _a_ ag grep   _I_ imenu all    _g_    google   _h r_ emacs     _c_ colors
-          ^ ^       _f_ all files  ^ ^           _._ imenu any    _s_   surfraw   _h g_ gnus      _8_ ucs
-          ^ ^       _m_ mini       ^ ^           _b_ bookmark     _w_ wikipédia   _h h_ doc       _,_ calcul
-          ^ ^       ^ ^            ^ ^           _'_ register     ^ ^             _h a_ apropos   _P_ packages
-          ^ ^       ^ ^            ^ ^           _y_ kill-ring    ^ ^             _h m_ woman     _X_ xfont
-          ^ ^       ^ ^            ^ ^           _<SPC>_ mark ring^ ^             ^ ^             _x_ run external
-          "
-          ;; find files & buffers
-          ("l"     helm-locate)
-          ("/"     helm-find)
-          ("F"     helm-find-files)
-          ("f"     helm-for-files) ;; like helm-multi-files but always run locate
-          ("m"     helm-mini)
-          ;; search
-          ("R"     helm-regexp)
-          ("o"     helm-occur)
-          ("a"     helm-do-grep-ag)
-          ;; navigate
-          ("e"     helm-etags-select)
-          ("i"     helm-semantic-or-imenu)
-          ("I"     helm-imenu-in-all-buffers)
-          ("."     helm-imenu-anywhere)
-          ("b"     helm-filtered-bookmarks)
-          ("'"     helm-register)
-          ("y"     helm-show-kill-ring)
-          ("<SPC>" helm-all-mark-rings)
-          ;; completion
-          ("<tab>" helm-lisp-completion-at-point)
-          ("$"     helm-lines)
-          ("g"     helm-google-suggest)
-          ("s"     helm-surfraw)
-          ("w"     helm-wikipedia-suggest)
-          ;; documentation & help
-          ("h e"   helm-eval-expression-with-eldoc)
-          ("h i"   helm-info-at-point)
-          ("h r"   helm-info-emacs)
-          ("h g"   helm-info-gnus)
-          ("h h"   helm-documentation)
-          ("h a"   helm-apropos)
-          ("h m"   helm-man-woman)
-          ;; other
-          ("t"     helm-top)
-          ("p"     helm-list-emacs-process)
-          (","     helm-calcul-expression)
-          ("P"     helm-list-elisp-packages)
-          ("c"     helm-colors)
-          ("X"     helm-select-xfont)
-          ("8"     helm-ucs)
-          ("x"     helm-run-external-command)
+        (defhydra hydra-helm-config(:color teal)
           ;;
-          ("r"     helm-resume)
-          ("q"     nil))
+          ("r"     helm-resume "resume" :column "Helm")
+          ("q"     nil "quit")
+          ;; find files & buffers
+          ("l"     helm-locate "locate" :column "Find")
+          ("/"     helm-find "find")
+          ("F"     helm-find-files "files")
+          ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
+          ("m"     helm-mini "mini")
+          ;; search
+          ("R"     helm-regexp :column "Search")
+          ("o"     helm-occur "occur")
+          ("a"     helm-do-grep-ag "ag grep")
+          ;; navigate
+          ("e"     helm-etags-select "etags" :column "Navigate")
+          ("i"     helm-semantic-or-imenu "imenu")
+          ("I"     helm-imenu-in-all-buffers "imenu all")
+          ("."     helm-imenu-anywhere "imenu any")
+          ("b"     helm-filtered-bookmarks "bookmark")
+          ("'"     helm-register "register")
+          ("y"     helm-show-kill-ring "kill-ring")
+          ("<SPC>" helm-all-mark-rings "all mark rings")
+          ;; completion
+          ("<tab>" helm-lisp-completion-at-point "lisp" :column "Complete")
+          ("$"     helm-lines "lines")
+          ("g"     helm-google-suggest "google")
+          ("s"     helm-surfraw "surfraw")
+          ("w"     helm-wikipedia-suggest "wikipedia")
+          ;; documentation & help
+          ("h e"   helm-eval-expression-with-eldoc "eldoc" :column "Doc & Help")
+          ("h i"   helm-info-at-point "info")
+          ("h r"   helm-info-emacs "emacs")
+          ("h g"   helm-info-gnus "gnus")
+          ("h h"   helm-documentation "doc")
+          ("h a"   helm-apropos "a propos")
+          ("h m"   helm-man-woman "woman")
+          ;; other
+          ("t"     helm-top "top" :column "Other")
+          ("p"     helm-list-emacs-process "process")
+          ("c"     helm-colors "colours")
+          ("8"     helm-ucs "ucs")
+          (","     helm-calcul-expression "calcul")
+          ("P"     helm-list-elisp-packages "packages")
+          ("X"     helm-select-xfont "xfont")
+          ("x"     helm-run-external-command "run external"))
         (defun my-do-ag-project-root-or-dir ()
           "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
           (interactive)
