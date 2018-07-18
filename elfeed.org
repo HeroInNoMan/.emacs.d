@@ -34,7 +34,7 @@
 *** [[http://partipirate.org/blogs/maxime-rouquet/feed/][le blog de Maxime Rouquet]]                                        :ignore:
 *** [[http://misko.hevery.com/feed/][Miško Hevery]]
 *** [[http://blog.morpheuz.cc/feed/][MoRpHeUz's Blog]]
-*** [[http://www.nicollet.net/feed/][Nicollet.Net]]
+*** [[http://www.nicollet.net/feed/][Nicollet.Net]] :ignore:
 *** [[http://www.ripton.net/blog/?feed=atom][Not Even My Wife Reads This]]
 *** [[http://merome.net/dotclear/rss.php][On refait le blog]]                                                :ignore:
 *** [[http://purefuckingarmageddon.blogspot.com/feeds/posts/default][Pure Fucking Armageddon]]
@@ -86,7 +86,7 @@
 *** [[http://www.application-servers.com/feed/rss2][application-servers]]                                              :ignore:
 *** [[http://www.application-servers.com/rss/appservers.rss][APPLICATION-SERVERS.COM]]                                          :ignore:
 *** [[http://feeds.feedburner.com/BirtWorld][BIRT World]]
-*** [[http://blog.objetdirect.com/feed][Blog Objet Direct]]
+*** [[http://blog.objetdirect.com/feed][Blog Objet Direct]] :ignore:
 *** [[http://www.eclipse-plugins.info/eclipse/plugins_backend.jsp?what=newandupdated][EclipsePlugins]]                                                   :ignore:
 *** [[http://gmailblog.blogspot.com/atom.xml][Gmail Blog]]
 *** [[http://feeds.feedburner.com/gtricksrss][Gtricks.com]]
@@ -100,7 +100,7 @@
 *** [[http://www.dng-consulting.com/blogs/index.php?blog=1&amp;tempskin=_rss2][Le blog de L'ami Sami]]                                            :ignore:
 *** [[http://googlereader.blogspot.com/atom.xml][Official Google Reader Blog]]
 *** [[http://www.strategieweb20.com/xml/syndication.rss][Stratégie Web 2.0]]                                                :ignore:
-*** [[http://feeds.feedburner.com/threeriversinstitute/khkV][Three Rivers Institute]]
+*** [[http://feeds.feedburner.com/threeriversinstitute/khkV][Three Rivers Institute]] :ignore:
 *** [[http://www.korben.info/feed][Korben]]
 *** [[http://sebsauvage.net/rhaa/rss_fulltext.php][sebsauvage.net]]
 *** [[http://www.aubryconseil.com/feed/rss2][Scrum, Agilité et Rock'n roll]]
@@ -119,7 +119,7 @@
 *** [[http://crea.bib.free.fr/blog/rss.php][biboun attitude]]                                                  :ignore:
 *** [[http://www.fabricetarrin.com/blog/rss.php][Blog BD de Fabrice Tarrin]]
 *** [[http://www.bouletcorp.com/blog/fill_rss.php5][bouletcorp - le blog]]                                             :ignore:
-*** [[http://feeds.feedburner.com/bouletcorpen][bouletcorp - the blog]]
+*** [[http://feeds.feedburner.com/bouletcorpen][bouletcorp - the blog]] :ignore:
 *** [[http://bowwindow.canalblog.com/rss.xml][bow-window]]
 *** [[http://feeds.feedburner.com/Buttersafe][Buttersafe]]
 *** [[http://wdr1.com/blog/calvin_and_hobbes.rdf][Calvin and Hobbes (Unofficial)]]
@@ -132,7 +132,7 @@
 *** [[http://delfineblog.free.fr/blog/?feed=rss2][Delfine]]                                                          :ignore:
 *** [[http://www.caesar.nl/CaesarRSS/DilbertRSS.aspx][Dilbert]]                                                          :ignore:
 *** [[http://feeds.dilbert.com/DilbertDailyStrip][Dilbert Daily Strip]]
-*** [[http://feeds2.feedburner.com/thedoghousediaries/feed][DOGHOUSE]]
+*** [[http://feeds2.feedburner.com/thedoghousediaries/feed][DOGHOUSE]] :ignore:
 *** [[http://feeds.feedburner.com/Explosm][Explosm.net]]
 *** [[http://filsdelacolere.com/rss.php][Fereus le Fleau]]                                                  :ignore:
 *** [[http://fernandlours.free.fr/rss.php][Fernand l'ours blanc]]
@@ -171,7 +171,7 @@
 *** [[http://deligne.over-blog.com/rss-articles.xml][Mes cartoons]]
 *** [[http://rss.monbeausapin.org/MonBeauSapin][Mon beau sapin]]                                                   :ignore:
 *** [[http://www.monsieur-le-chien.fr/rss.php][Monsieur Le Chien]]
-*** [[http://madeofstorm.free.fr/myheadupsidedown/?feed=rss2][My Head Upside down]]
+*** [[http://madeofstorm.free.fr/myheadupsidedown/?feed=rss2][My Head Upside down]] :ignore:
 *** [[http://www.penelope-jolicoeur.com/feed/][Penelope Jolicoeur]]
 *** [[http://grumeautique.blogspot.com/feeds/posts/default][Petit précis de Grumeautique]]
 *** [[http://www.phdcomics.com/gradfeed.php][PHD Comics]]
