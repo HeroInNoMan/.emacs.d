@@ -1550,6 +1550,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens-config
        :ensure smartparens
+       :demand
        :hook ((prog-mode markdown-mode text-mode) . turn-on-smartparens-mode)
        :init (dim-minor-name 'smartparens-mode " ()" 'smartparens)
        :config
@@ -1581,17 +1582,17 @@
                    (curly-double-quote . "“")
                    (curly-single-quote . "‘")
                    (back-quote . "`")))
-       (global-set-key (kbd "C-c (") 'wrap-with-parens)
-       (global-set-key (kbd "C-c [") 'wrap-with-brackets)
-       (global-set-key (kbd "C-c {") 'wrap-with-braces)
-       (global-set-key (kbd "C-c <") 'wrap-with-angles)
-       (global-set-key (kbd "C-c ≤") 'wrap-with-angle-eqs)
-       (global-set-key (kbd "C-c '") 'wrap-with-single-quotes)
-       (global-set-key (kbd "C-c \"") 'wrap-with-double-quotes)
-       (global-set-key (kbd "C-c «") 'wrap-with-guillemets)
-       (global-set-key (kbd "C-c “") 'wrap-with-curly-double-quotes)
-       (global-set-key (kbd "C-c ‘") 'wrap-with-curly-single-quotes)
-       (global-set-key (kbd "C-c `") 'wrap-with-back-quotes))
+       (global-set-key (kbd "M-s (") 'wrap-with-parens)
+       (global-set-key (kbd "M-s [") 'wrap-with-brackets)
+       (global-set-key (kbd "M-s {") 'wrap-with-braces)
+       (global-set-key (kbd "M-s <") 'wrap-with-angles)
+       (global-set-key (kbd "M-s ≤") 'wrap-with-angle-eqs)
+       (global-set-key (kbd "M-s '") 'wrap-with-single-quotes)
+       (global-set-key (kbd "M-s \"") 'wrap-with-double-quotes)
+       (global-set-key (kbd "M-s «") 'wrap-with-guillemets)
+       (global-set-key (kbd "M-s “") 'wrap-with-curly-double-quotes)
+       (global-set-key (kbd "M-s ‘") 'wrap-with-curly-single-quotes)
+       (global-set-key (kbd "M-s `") 'wrap-with-back-quotes))
 
      (defhydra hydra-parens(:color teal)
        ;;
