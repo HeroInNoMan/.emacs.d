@@ -1941,6 +1941,7 @@
 ** Typescript
    #+BEGIN_SRC emacs-lisp
      (use-package tide
+       :disabled
        :chords (:map tide-mode-map
                      ("+-" . bury-buffer))
        :bind (:map tide-mode-map
