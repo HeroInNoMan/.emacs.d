@@ -1402,6 +1402,7 @@
       (org-babel-do-load-languages
        'org-babel-load-languages
        '((R . nil)
+         (ledger . t)
          (restclient . t)
          (emacs-lisp . t)))
 
@@ -2413,6 +2414,12 @@
     #+BEGIN_SRC emacs-lisp
       (use-package helm-lobsters)
     #+END_SRC
+** Ledger
+   #+BEGIN_SRC emacs-lisp
+     (use-package ledger-mode
+       :config (setq ledger-clear-whole-transactions 1)
+       :mode "\\.dat\\'")
+   #+END_SRC
 * Epilogue
   My init file (emacs.org) should always be open.
   #+BEGIN_SRC emacs-lisp

@@ -12,6 +12,12 @@
  '(helm-boring-file-regexp-list
    '("\\.o$" "~$" "\\.bin$" "\\.lbin$" "\\.so$" "\\.a$" "\\.ln$" "\\.blg$" "\\.bbl$" "\\.elc$" "\\.lof$" "\\.glo$" "\\.idx$" "\\.lot$" "\\.svn\\(/\\|$\\)" "\\.hg\\(/\\|$\\)" "\\.git\\(/\\|$\\)" "\\.bzr\\(/\\|$\\)" "CVS\\(/\\|$\\)" "_darcs\\(/\\|$\\)" "_MTN\\(/\\|$\\)" "\\.fmt$" "\\.tfm$" "\\.class$" "\\.fas$" "\\.lib$" "\\.mem$" "\\.x86f$" "\\.sparcf$" "\\.dfsl$" "\\.pfsl$" "\\.d64fsl$" "\\.p64fsl$" "\\.lx64fsl$" "\\.lx32fsl$" "\\.dx64fsl$" "\\.dx32fsl$" "\\.fx64fsl$" "\\.fx32fsl$" "\\.sx64fsl$" "\\.sx32fsl$" "\\.wx64fsl$" "\\.wx32fsl$" "\\.fasl$" "\\.ufsl$" "\\.fsl$" "\\.dxl$" "\\.lo$" "\\.la$" "\\.gmo$" "\\.mo$" "\\.toc$" "\\.aux$" "\\.cp$" "\\.fn$" "\\.ky$" "\\.pg$" "\\.tp$" "\\.vr$" "\\.cps$" "\\.fns$" "\\.kys$" "\\.pgs$" "\\.tps$" "\\.vrs$" "\\.pyc$" "\\.pyo$" "\\.egradle/sdk\\(/\\|$\\)" "\\.gradle\\(/\\|$\\)" "\\.cache/mozilla\\(/\\|$\\)" "\\.local/share/Trash/files\\(/\\|$\\)" "\\.cache/\\(chromium\\|google\\-chrome\\)/Default/Cache\\(/\\|$\\)"))
  '(helm-external-programs-associations '(("mp3" . "audacious")))
+ '(ledger-reports
+   '(("courant" "ledger ")
+     ("bal" "%(binary) -f %(ledger-file) bal")
+     ("reg" "%(binary) -f %(ledger-file) reg")
+     ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+     ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(magit-branch-arguments nil)
  '(magit-fetch-arguments '("--prune"))
  '(magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100"))
@@ -208,6 +214,7 @@
  ;; If there is more than one, they won't work right.
  '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
  '(idle-highlight ((t (:box (:line-width 1 :color "gray10" :style released-button)))))
+ '(ledger-font-xact-highlight-face ((t (:background "gray12"))))
  '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
  '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
  '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
