@@ -2290,7 +2290,8 @@
        :mode ("\\.dat$" . ledger-mode)
        :init (setq ledger-font-xact-highlight-face
                    '(((t (:background "gray10")))))
-       :hook (after-save . ale/indent-region-or-buffer))
+       ;; :hook (after-save . ale/indent-region-or-buffer)
+       )
    #+END_SRC
 
 ** Pomodoro
