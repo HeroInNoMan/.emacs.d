@@ -195,6 +195,15 @@
     ;; Transparently open compressed files
     (auto-compression-mode t)
 
+    ;; some more config
+    (setq recentf-max-saved-items 100  ;; just 20 is too recent
+          vc-make-backup-files t ;; make backups of files, even when they're in version control
+          delete-by-moving-to-trash t ;; move files to trash when deleting
+          savehist-additional-variables '(register-alist))
+    (recentf-mode 1)
+    (savehist-mode 1)
+
+
     ;; UTF-8 everywhere
     (prefer-coding-system       'utf-8)
     (set-default-coding-systems 'utf-8)
@@ -2250,11 +2259,7 @@
     (use-package desktop
       :defer t
       :config
-      (setq recentf-max-saved-items 100  ;; just 20 is too recent
-            vc-make-backup-files t ;; make backups of files, even when they're in version control
-            delete-by-moving-to-trash t ;; move files to trash when deleting
-            desktop-save t
-            savehist-additional-variables '(register-alist)
+      (setq desktop-save t
             ;; desktop-base-lock-name      "lock"
             ;; desktop-dirname             user-emacs-directory
             ;; desktop-path                (list desktop-dirname)
@@ -2262,9 +2267,7 @@
             ;; desktop-load-locked-desktop t
             ;; (add-to-list 'desktop-modes-not-to-save 'dired-mode)
             )
-      (recentf-mode 1)
       (desktop-save-mode 1)
-      (savehist-mode 1)
       (add-hook 'desktop-after-read-hook (lambda () (set-cursor-color "yellow")))
       (desktop-read))
   #+END_SRC
