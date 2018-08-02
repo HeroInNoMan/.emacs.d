@@ -1059,6 +1059,9 @@
    Revert windows on ediff exit - needs winner mode.
    #+BEGIN_SRC emacs-lisp
      (use-package winner
+       :bind
+       ("M-é" . winner-undo)
+       ("M-è" . winner-redo)
        :config
        (winner-mode)
        (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
