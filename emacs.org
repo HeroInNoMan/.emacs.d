@@ -745,6 +745,7 @@
         (helm-autoresize-mode t)
         (semantic-mode 1) ;; useful for imenu-like navigation
         (setq helm-M-x-fuzzy-match t
+              helm-locate-command "locate %s -e -A --regex %s -d ~/var/mlocate.db:/var/lib/mlocate/mlocate.db"
               helm-adaptive-mode t
               helm-ag-base-command "ag --nocolor --nogroup --smart-case"
               helm-ag-insert-at-point 'symbol
