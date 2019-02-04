@@ -1472,6 +1472,18 @@
 
   TODO install and try package: [[https://github.com/Kungsgeten/org-brain][org-brain]]
 
+* LaTeX
+  #+BEGIN_SRC emacs-lisp
+    (use-package tex
+      :defer t
+      :ensure auctex
+      :config
+      (use-package auctex-latexmk
+        :config
+        (auctex-latexmk-setup)
+        (TeX-global-PDF-mode t)))
+  #+END_SRC
+
 * Text
   #+BEGIN_SRC emacs-lisp
     (setq default-major-mode 'text-mode) ;; text-mode by default
