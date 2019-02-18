@@ -82,6 +82,13 @@
         (load-file private-file)))
   #+END_SRC
 
+* Extra load directory
+  Let’s load all files from the “extra” directory (will happen after init is finished).
+  #+BEGIN_SRC emacs-lisp
+    (use-package load-dir
+      :config (setq load-dirs (expand-file-name "extra/" user-emacs-directory)))
+  #+END_SRC
+
 * Customisation
   Custom file should be loaded early.
   #+BEGIN_SRC emacs-lisp
