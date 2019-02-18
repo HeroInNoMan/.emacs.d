@@ -2229,6 +2229,8 @@
        ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
        ("c" flyspell-buffer "check buffer")
        ("w" define-word-at-point "lookup word")
+       ("n" flyspell-goto-next-error "next error" :color pink)
+       ("p" flyspell-goto-previous-error "previous error" :color pink)
        ;; dictionary
        ("d" ispell-change-dictionary "switch…" :column "Dictionary")
        ("f" ale/switch-to-fr-dict "switch to fr_FR")
