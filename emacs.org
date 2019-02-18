@@ -13,7 +13,8 @@
 #+HTML_HEAD: <link rel=stylesheet type=text/css href=org.css />
 
 * Installation & loading
-  Start by “disabling” garbage collection while starting up:
+
+  Display emacs startup time, with the number of garbage collections during the process.
   #+BEGIN_SRC emacs-lisp
     ;; Use a hook so the message doesn't get clobbered by other messages.
     (add-hook 'emacs-startup-hook
@@ -23,7 +24,10 @@
                                  (float-time
                                   (time-subtract after-init-time before-init-time)))
                          gcs-done)))
+  #+END_SRC
 
+  Start by “disabling” garbage collection while starting up:
+  #+BEGIN_SRC emacs-lisp
     (setq gc-cons-threshold most-positive-fixnum)
     (add-hook 'after-init-hook #'(lambda ()
                                    ;; restore after startup (and don't be so stingy
