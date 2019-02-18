@@ -49,7 +49,9 @@
     (use-package dim) ;; to change mode display in mode line
 
     (use-package use-package-chords
-      :config (key-chord-mode 1))
+      :config (key-chord-mode 1)
+      (setq key-chord-one-key-delay 0.15)
+      (setq key-chord-two-keys-delay 0.05))
   #+END_SRC
 
   Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
