@@ -84,11 +84,25 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-highlander-env ()
   (progn
+    ;; hooking for specific functions
+    (add-hook 'git-commit-setup-hook 'ale/switch-to-en-dict)
+
     ;; display battery level
     (use-package fancy-battery
       :config
       (setq fancy-battery-show-percentage t)
       (fancy-battery-mode))
+
+    ;; capture templates
+    (add-to-list 'org-capture-templates '("d" "work - log" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?") t)
+    (add-to-list 'org-capture-templates '("t" "work - TODO" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i") t)
+
+    ;; default project root folder
+    (when (featurep 'dumb-jump)
+      (setq dumb-jump-default-project "~/projets"))
+
+    ;; default browser
+    (setq browse-url-generic-program "firefox")
 
     (use-package transmission
       :config
@@ -100,7 +114,9 @@
     (defhydra hydra-projects(:color teal :columns 3)
       "projects"
       ("d" (lambda () (interactive)(ale/open-project "~/Terminalcity/dotfiles")) "dotfiles")
+      ("c" (lambda () (interactive)(ale/open-project "~/Terminalcity/curriculum")) "curriculum")
       ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
+      ("E" (lambda () (interactive)(ale/open-project "~/outils/emacs")) "emacs source")
       ("q" nil "cancel"))
     (global-set-key (kbd "<f9>") 'hydra-projects/body)
     (global-set-key (kbd "C-c C-j") 'hydra-projects/body)))
