@@ -2255,7 +2255,8 @@
          ;; dictionary
          ("d" ispell-change-dictionary "switch…" :column "Dictionary")
          ("f" ale/switch-to-fr-dict "switch to fr_FR")
-         ("e" ale/switch-to-en-dict "switch to en_GB"))
+         ("e" ale/switch-to-en-dict "switch to en_GB")
+         ("u" ale/switch-to-us-dict "switch to en_US"))
        (global-set-key (kbd "C-è") 'hydra-spell/body))
    #+END_SRC
 ** Synonyms

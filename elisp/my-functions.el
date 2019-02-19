@@ -334,9 +334,14 @@ for the line number input"
   (ispell-change-dictionary "fr_FR"))
 
 (defun ale/switch-to-en-dict ()
-  "Switch to English dictionary"
+  "Switch to British English dictionary"
   (interactive)
   (ispell-change-dictionary "en_GB"))
+
+(defun ale/switch-to-us-dict ()
+  "Switch to American English dictionary"
+  (interactive)
+  (ispell-change-dictionary "en_US"))
 
 (defun ale/open-project (args)
   "open project magit logs and status as split windows"
