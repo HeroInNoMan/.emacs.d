@@ -121,8 +121,6 @@
 
     (use-package validate)
 
-    (use-package my-checks :ensure nil)
-
     (use-package describe-number)
   #+END_SRC
 
@@ -1496,15 +1494,9 @@
 * Text
   #+BEGIN_SRC emacs-lisp
     (setq default-major-mode 'text-mode) ;; text-mode by default
-    (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
-    (dim-minor-name 'flyspell-mode " ✓")
     (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
     (dim-minor-name 'visual-line-mode " ↩")
-    (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
-    (dim-minor-name 'dubcaps-mode " ⇧")
     (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
-
-    (use-package define-word)
   #+END_SRC
 
 * Mail
@@ -1650,15 +1642,6 @@
        ("»" sp-forward-barf-sexp "barf forward"))
      (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
 
-   #+END_SRC
-
-** Syntax checking
-   #+BEGIN_SRC emacs-lisp
-     (use-package flycheck-status-emoji
-       :disabled
-       :ensure flycheck
-       :config (set-fontset-font t nil "Symbola")
-       :hook (flycheck-mode . flycheck-status-emoji-mode))
    #+END_SRC
 
 ** Shell
@@ -2144,9 +2127,9 @@
       "
       ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
       ^────────^──────^──────^──────────────────^──────────^─────────^──────^───────────────^──────^───────────────
-      _e_ eshell      _m_ mu4e                  _d_ diary            _C_ flycheck buffer    _(_ smartparens %`smartparens-mode
-      _G_ gnus        _a_ avandu RSS            _D_ remote diary     ^ ^                    _f_ ido %`ido-mode
-      _p_ packages    _A_ lobsters              _i_ init file        _è_ spelling hydra     _g_ god %`god-local-mode
+      _e_ eshell      _m_ mu4e                  _d_ diary            ^ ^                    _(_ smartparens %`smartparens-mode
+      _G_ gnus        _a_ avandu RSS            _D_ remote diary     _è_ spelling hydra     _f_ ido %`ido-mode
+      _p_ packages    _A_ lobsters              _i_ init file        ^ ^                    _g_ god %`god-local-mode
       _t_ shell-pop   _b_ eww-browser           _r_ rest-client      _é_ char-menu          _h_ Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
       _$_ shell       _B_ code browser          ^ ^                  ^ ^                    _H_ Highlight-line %`highlight-line-mode
       _%_ ansi-term   _c_ calendar              ^ ^                  _w_ webpaste-region    _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
@@ -2191,9 +2174,8 @@
       ("r" ale/find-rest-client-file)
 
       ;; Action
-      ("C" flyspell-buffer)
-      ;;
       ("è" hydra-spell/body)
+      ;;
       ("é" char-menu)
       ("w" webpaste-paste-region)
 
@@ -2224,20 +2206,29 @@
 * Special characters, spelling, i18n
 ** Spell checking
    #+BEGIN_SRC emacs-lisp
-     (defhydra hydra-spell (:color teal)
-       ("t" flyspell-mode "toggle" :column "Spelling")
-       ("q" nil "quit")
-       ;; Flyspell
-       ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
-       ("c" flyspell-buffer "check buffer")
-       ("w" define-word-at-point "lookup word")
-       ("n" flyspell-goto-next-error "next error" :color pink)
-       ("p" flyspell-goto-previous-error "previous error" :color pink)
-       ;; dictionary
-       ("d" ispell-change-dictionary "switch…" :column "Dictionary")
-       ("f" ale/switch-to-fr-dict "switch to fr_FR")
-       ("e" ale/switch-to-en-dict "switch to en_GB"))
-     (global-set-key (kbd "C-è") 'hydra-spell/body)
+     (use-package my-checks
+       :ensure nil
+       :config
+       (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
+       (dim-minor-name 'flyspell-mode " ✓")
+       (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
+       (dim-minor-name 'dubcaps-mode " ⇧")
+       (use-package define-word :defer t)
+
+       (defhydra hydra-spell (:color teal)
+         ("t" flyspell-mode "toggle" :column "Spelling")
+         ("q" nil "quit")
+         ;; Flyspell
+         ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
+         ("c" flyspell-buffer "check buffer")
+         ("w" define-word-at-point "lookup word")
+         ("n" flyspell-goto-next-error "next error" :color pink)
+         ("p" flyspell-goto-previous-error "previous error" :color pink)
+         ;; dictionary
+         ("d" ispell-change-dictionary "switch…" :column "Dictionary")
+         ("f" ale/switch-to-fr-dict "switch to fr_FR")
+         ("e" ale/switch-to-en-dict "switch to en_GB"))
+       (global-set-key (kbd "C-è") 'hydra-spell/body))
    #+END_SRC
 ** Synonyms
    #+BEGIN_SRC emacs-lisp
