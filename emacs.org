@@ -816,6 +816,7 @@
           ("F"     helm-find-files "files")
           ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
           ("m"     helm-mini "mini")
+          ("p"     helm-projectile "projectile")
           ;; search
           ("R"     helm-regexp "regexp" :column "Search")
           ("o"     helm-occur "occur")
@@ -836,7 +837,8 @@
           ("s"     helm-surfraw "surfraw")
           ("w"     helm-wikipedia-suggest "wikipedia")
           ;; documentation & help
-          ("h e"   helm-eval-expression-with-eldoc "eldoc" :column "Doc & Help")
+          ("h b"   helm-descbinds "bindings" :column "Doc & Help")
+          ("h e"   helm-eval-expression-with-eldoc "eldoc")
           ("h i"   helm-info-at-point "info")
           ("h r"   helm-info-emacs "emacs")
           ("h g"   helm-info-gnus "gnus")
@@ -845,11 +847,11 @@
           ("h m"   helm-man-woman "woman")
           ;; other
           ("t"     helm-top "top" :column "Other")
-          ("p"     helm-list-emacs-process "process")
+          ("P"     helm-list-emacs-process "process")
           ("c"     helm-colors "colours")
           ("8"     helm-ucs "ucs")
           (","     helm-calcul-expression "calcul")
-          ("P"     helm-list-elisp-packages "packages")
+          ("k"     helm-list-elisp-packages "packages")
           ("X"     helm-select-xfont "xfont")
           ("x"     helm-run-external-command "run external"))
         (defun my-do-ag-project-root-or-dir ()
