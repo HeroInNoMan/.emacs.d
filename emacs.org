@@ -121,7 +121,7 @@
 
     (use-package validate)
 
-    (use-package describe-number)
+    (use-package describe-number :defer t)
   #+END_SRC
 
 * Theme
