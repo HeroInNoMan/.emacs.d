@@ -1384,6 +1384,7 @@
    I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of my different calendars:
    #+BEGIN_SRC emacs-lisp
     (use-package calfw
+      :commands open-calendar
       :config
       (use-package calfw-gcal)
       (use-package calfw-cal)
