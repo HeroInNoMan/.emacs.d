@@ -642,14 +642,12 @@
 
     #+BEGIN_SRC emacs-lisp
       (use-package vimish-fold
-        :defer 1
         :bind
         (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
               :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
-        :init
+        :config
         (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
         (vimish-fold-global-mode 1)
-        :config
         (setq-default vimish-fold-header-width 79))
 
       (defhydra hydra-fold (:color pink)
