@@ -938,20 +938,19 @@
 ** Snippets
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
-       :init (setq yas-snippet-dirs
-                   `(,(concat user-emacs-directory "elpa/yasnippet-snippets-20180503.657/snippets")
-                     ,(concat user-emacs-directory "etc/yasnippet/snippets")))
        :commands yas-new-snippet yas-insert-snippet
        :chords ("yq" . yas-insert-snippet)
        :bind
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
+       ("C-c y" . hydra-yasnippet/body)
        :config
-       (use-package yasnippet-snippets)
-       (yas-reload-all)
-       (yas-global-mode 1)
+       (setq yas-snippet-dirs
+             `(,(concat user-emacs-directory "etc/yasnippet/snippets")
+               ,(concat user-emacs-directory "elpa/yasnippet-snippets-20190202.2145/snippets")))
        (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
+
        (defun yas-ido-expand ()
          "Lets you select (and expand) a yasnippet key"
          (interactive)
@@ -973,6 +972,7 @@
                (delete-char (- init-word original-point))
                (insert key)
                (yas-expand)))))
+
        (defun yas-helm-prompt (prompt choices &optional display-fn)
          "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
          (interactive)
@@ -991,15 +991,18 @@
                (if (null result)
                    (signal 'quit "user quit!")
                  (cdr (assoc result rmap))))
-           nil)))
-     (defhydra hydra-yasnippet(:color teal)
-       ("t" yas-describe-tables "tables" :column "Snippet")
-       ("q" nil "quit")
-       ("e" yas-ido-expand "ido expand" :column "Insert")
-       ("i" yas-insert-snippet "insert")
-       ("n" yas-new-snippet "create" :column "Create")
-       )
-     (global-set-key (kbd "C-c y") 'hydra-yasnippet/body)
+           nil))
+
+       (defhydra hydra-yasnippet(:color teal)
+         ("t" yas-describe-tables "tables" :column "Snippet")
+         ("q" nil "quit")
+         ("e" yas-ido-expand "ido expand" :column "Insert")
+         ("i" yas-insert-snippet "insert")
+         ("n" yas-new-snippet "create" :column "Create")
+         )
+       (use-package yasnippet-snippets)
+       (yas-reload-all)
+       (yas-global-mode 1))
    #+END_SRC
 
 *** More grepping
