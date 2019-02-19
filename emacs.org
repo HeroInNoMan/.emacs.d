@@ -183,7 +183,6 @@
     (use-package better-defaults)
 
     (use-package crux
-      :defer 1
       :config
       (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
       (crux-reopen-as-root-mode)
