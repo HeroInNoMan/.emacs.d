@@ -868,7 +868,7 @@
 
     Documentation with helm
     #+BEGIN_SRC emacs-lisp
-      (use-package helm-dash)
+      (use-package helm-dash :defer t)
     #+END_SRC
 
 *** Searching with Helm
@@ -928,7 +928,8 @@
               helm-swoop-use-fuzzy-match nil))
 
 
-      (use-package helm-git-grep)
+      (use-package helm-git-grep
+        :after helm)
 
       (use-package helm-lines
         :commands (helm-lines))
@@ -1299,6 +1300,7 @@
   I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (most of the time git projects).
   #+BEGIN_SRC emacs-lisp
     (use-package helm-projectile
+      :defer t
       :config
       (dim-minor-name 'projectile-mode nil)
       (projectile-global-mode) ;; activate projectile-mode everywhere
@@ -2515,7 +2517,8 @@
      #+END_SRC
 *** Stories
     #+BEGIN_SRC emacs-lisp
-      (use-package helm-lobsters)
+      (use-package helm-lobsters
+      :commands helm-lobsters)
     #+END_SRC
 ** Ledger
    #+BEGIN_SRC emacs-lisp
