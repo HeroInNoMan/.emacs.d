@@ -152,8 +152,32 @@
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
-    (use-package helpful)
+    (use-package helpful
+      :bind
+      ;; Note that the built-in `describe-function' includes both functions
+      ;; and macros. `helpful-function' is functions only, so we provide
+      ;; `helpful-callable' as a drop-in replacement.
+      ("C-h f" . helpful-callable)
+      ("C-h v" . helpful-variable)
+      ("C-h k" . helpful-key)
+      ;; Lookup the current symbol at point. C-c C-d is a common keybinding
+      ;; for this in lisp modes.
+      ("C-c C-d" . helpful-at-point)
+
+      ;; Look up *F*unctions (excludes macros).
+      ;;
+      ;; By default, C-h F is bound to `Info-goto-emacs-command-node'. Helpful
+      ;; already links to the manual, if a function is referenced there.
+      ("C-h F" . helpful-function)
+
+      ;; Look up *C*ommands.
+      ;;
+      ;; By default, C-h C is bound to describe `describe-coding-system'. I
+      ;; don't find this very useful, but it's frequently useful to only
+      ;; look at interactive functions.
+      ("C-h C" . helpful-command))
   #+END_SRC
+
   Let’s redefine some basic behaviour and shortcuts:
   #+BEGIN_SRC emacs-lisp
     (use-package better-defaults)
@@ -748,8 +772,6 @@
          ("C-x M-x" . execute-extended-command)
          ("C-c h" . hydra-helm-config/body)
          ("C-h a" . helm-apropos)
-         ("C-h f" . helm-apropos)
-         ("C-h v" . helm-apropos)
          :map helm-map
          ("M-«" . helm-beginning-of-buffer)
          ("M-»" . helm-end-of-buffer)
