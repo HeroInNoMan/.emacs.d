@@ -2179,90 +2179,49 @@
 
     (defhydra hydra-major-modes(:color blue)
       ("q" nil "quit" :column "Major mode")
-      ("j" js2-mode "js2-mode" :column "Toggle")
-      ("l" lisp-mode "lisp-mode")
-      ("o" org-mode "org-mode")
-      ("t" text-mode "text-mode")
-      ("w" web-mode "web-mode"))
+      ("e" emacs-lisp-mode "elisp" :column "Toggle")
+      ("h" html-mode "html")
+      ("j" js2-mode "js2")
+      ("l" lisp-mode "lisp")
+      ("o" org-mode "org")
+      ("t" text-mode "text")
+      ("w" web-mode "web"))
     (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
 
-    (defhydra hydra-widgets (:color teal :hint nil)
-      "
-      ^Built-in^      ^Widget^                  ^Find files^         ^Action^               ^Toggle
-      ^────────^──────^──────^──────────────────^──────────^─────────^──────^───────────────^──────^───────────────
-      _e_ eshell      _m_ mu4e                  _d_ diary            ^ ^                    _(_ smartparens %`smartparens-mode
-      _G_ gnus        _a_ avandu RSS            _D_ remote diary     _è_ spelling hydra     _f_ ido %`ido-mode
-      _p_ packages    _A_ lobsters              _i_ init file        ^ ^                    _g_ god %`god-local-mode
-      _t_ shell-pop   _b_ eww-browser           _r_ rest-client      _é_ char-menu          _h_ Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
-      _$_ shell       _B_ code browser          ^ ^                  ^ ^                    _H_ Highlight-line %`highlight-line-mode
-      _%_ ansi-term   _c_ calendar              ^ ^                  _w_ webpaste-region    _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
-      _W_ web browser _E_ elfeed RSS            ^ ^                  ^ ^                    _j_ js2-mode
-      ^ ^             _J_ jenkins               ^ ^                  ^ ^                    _l_ line number
-      ^ ^             _M_ spotify               ^ ^                  ^ ^                    _n_ sidebar
-      ^ ^             _Q_ quick-calc            ^ ^                  ^ ^                    _o_ org-mode
-      ^ ^             _T_ pomodoro (tomatinho)  ^ ^                  ^ ^                    _P_ prettify symbols
-      ^ ^             _z_ ztree-diff            ^ ^                  ^ ^                    _s_ sublimity %`sublimity-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _v_ visual-line %`visual-line-mode
-      ^ ^             ^ ^                       ^ ^                  ^ ^                    _V_ volatile-highlight %`volatile-highlights-mode
-      ^ ^             ^ ^                       ^ ^                                         _x_ winnow-mode %`winnow-mode
-      "
+    (defhydra hydra-widgets (:color teal)
+      ;;
+      ("q" nil "cancel" :column "Menu")
+
       ;; Built-in
-      ("e" eshell)
-      ("G" gnus)
-      ("p" paradox-list-packages)
-      ("t" shell-pop)
-      ("$" shell)
-      ("%" crux-visit-term-buffer)
-      ("W" eww)
+      ("e" eshell "eshell" :column "Built-in")
+      ("G" gnus "Gnus")
+      ("p" paradox-list-packages "packages")
+      ("t" shell-pop "shell-pop")
+      ("$" shell "shell")
+      ("%" crux-visit-term-buffer "ansi-term")
+      ("W" eww "web browser")
 
       ;; Widget
-      ("m" mu4e)
-      ("a" avandu-overview)
-      ("a" avandu-overview)
-      ("A" helm-lobsters)
-      ("b" eww)
-      ("B" ecb-activate)
-      ("c" open-calendar)
-      ("E" elfeed)
-      ("J" butler-status)
-      ("M" helm-spotify-plus)
-      ("Q" quick-calc)
-      ("T" tomatinho)
-      ("z" ztree-diff)
+      ("m" mu4e "mu4e" :column "Widget")
+      ("a" avandu-overview "avandu RSS")
+      ("A" helm-lobsters "lobsters")
+      ("b" ecb-activate "code browser")
+      ("c" open-calendar "calendar")
+      ("E" elfeed "elfeed RSS")
+      ("J" butler-status "jenkins")
+      ("M" helm-spotify-plus "spotify")
+      ("Q" quick-calc "quick-calc")
+      ("T" tomatinho "pomodoro")
+      ("z" ztree-diff "ztree-diff")
 
       ;; Find files
-      ("d" ale/find-diary-file)
-      ("D" ale/find-remote-diary-file)
-      ("i" ale/find-init-file)
-      ("r" ale/find-rest-client-file)
+      ("d" ale/find-diary-file "diary" :column "Find files")
+      ("D" ale/find-remote-diary-file "remote diary")
+      ("i" ale/find-init-file "init file")
+      ("r" ale/find-rest-client-file "rest-client")
 
       ;; Action
-      ("è" hydra-spell/body)
-      ;;
-      ("é" char-menu)
-      ("w" webpaste-paste-region)
-
-      ;; Toggle
-      ("(" smartparens-global-mode)
-      ("f" ido-mode)
-      ("g" toggle-god-mode)
-      ("h" idle-highlight-mode)
-      ("H" hl-line-mode)
-      ("I" highlight-indent-guides-mode)
-      ("j" js2-mode)
-      ("l" linum-mode)
-      ("n" dired-sidebar-toggle-sidebar)
-      ("o" org-mode)
-      ("P" prettify-symbols-mode)
-      ("s" sublimity-mode)
-      ;; ("S" spray-mode)
-      ("v" visual-line-mode)
-      ("V" volatile-highlights-mode)
-      ("x" winnow-mode)
-      ;; ("W" wttrin)
-      ;; ("y" play-youtube-video)
-      ;; ("Y" w3m-play-youtube-video)
-      ("q" nil "cancel"))
+      ("w" webpaste-paste-region "webpaste" :column "Action"))
     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
   #+END_SRC
 
