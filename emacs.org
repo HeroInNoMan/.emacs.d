@@ -2498,8 +2498,12 @@
 *** Other
     #+BEGIN_SRC emacs-lisp
       (use-package 2048-game :disabled)
-      (use-package vimgolf :disabled)
       (use-package slime-volleyball :disabled)
+      (use-package vimgolf
+        :ensure nil
+        :defer t
+        :load-path "elisp/")
+      (use-package slime-volleyball :defer t)
     #+END_SRC
 ** News
 *** RSS feeds
