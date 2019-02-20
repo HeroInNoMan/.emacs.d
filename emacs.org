@@ -2321,11 +2321,11 @@
    I use [[http://out.easycounter.com/external/ledger-cli.org][ledger]] to manage my money. There is a corresponding major-mode:
    #+BEGIN_SRC emacs-lisp
      (use-package ledger-mode
-       :mode ("\\.dat$" . ledger-mode)
-       :init (setq ledger-font-xact-highlight-face
-                   '(((t (:background "gray10")))))
-       ;; :hook (after-save . ale/indent-region-or-buffer)
-       )
+       :mode ("\\.dat$")
+       :config
+       (setq ledger-clear-whole-transactions 1
+             ledger-font-xact-highlight-face
+             '(((t (:background "gray10"))))))
    #+END_SRC
 
 ** Pomodoro
@@ -2461,12 +2461,6 @@
       (use-package helm-lobsters
       :commands helm-lobsters)
     #+END_SRC
-** Ledger
-   #+BEGIN_SRC emacs-lisp
-     (use-package ledger-mode
-       :config (setq ledger-clear-whole-transactions 1)
-       :mode "\\.dat\\'")
-   #+END_SRC
 * Epilogue
   My init file (emacs.org) should always be open.
   #+BEGIN_SRC emacs-lisp
