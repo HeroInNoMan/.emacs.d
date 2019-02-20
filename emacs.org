@@ -1680,6 +1680,21 @@
        :hook (emacs-lisp-mode-hook))
    #+END_SRC
 
+* Clojure
+
+  #+BEGIN_SRC emacs-lisp
+  (use-package clojure-mode
+    :disabled
+    :config
+    (use-package cider)
+    (use-package helm-cider)
+
+    ;; (setq cider-font-lock-dynamically nil)
+    (setq cider-repl-use-pretty-printing t
+          helm-cider-mode t))
+
+  #+END_SRC
+
 ** Sql
    #+BEGIN_SRC emacs-lisp
      (use-package sql
