@@ -177,9 +177,8 @@
   Let’s redefine some basic behaviour and shortcuts:
   #+BEGIN_SRC emacs-lisp
     (progn
-      (unless (fboundp 'helm-mode)
-        (ido-mode t)
-        (setq ido-enable-flex-matching t))
+      (ido-mode t)
+      (setq ido-enable-flex-matching t)
 
       (menu-bar-mode -1)
       (when (fboundp 'tool-bar-mode)
@@ -192,9 +191,6 @@
       (autoload 'zap-up-to-char "misc"
         "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-      (require 'uniquify)
-      (setq uniquify-buffer-name-style 'forward)
-
       (require 'saveplace)
       (setq-default save-place t)
 
@@ -206,7 +202,6 @@
             apropos-do-all t
             mouse-yank-at-point t
             require-final-newline t
-            visible-bell t
             load-prefer-newer t
             ediff-window-setup-function 'ediff-setup-windows-plain
             save-place-file (concat user-emacs-directory "places")
@@ -224,12 +219,6 @@
       (crux-with-region-or-buffer indent-region)
       (crux-with-region-or-buffer untabify)
       (crux-with-region-or-buffer tabify))
-  #+END_SRC
-
-  Easier eclipse-style bookmark setting:
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-S-b") 'helm-bookmarks)
-    (global-set-key (kbd "<f8>") 'helm-bookmarks)
   #+END_SRC
 
   ~M-«~ and ~M-»~ are easier than ~M-<~ and ~M->~ with a BÉPO™ keyboard:
@@ -307,9 +296,6 @@
     (put 'narrow-to-page 'disabled nil)
     (put 'set-goal-column 'disabled nil)
     (put 'scroll-left 'disabled nil)
-
-    ;; ido-mode by default
-    (ido-mode)
   #+END_SRC
 
   Vim’s “dot” is a cool macro-like feature. I want that.
@@ -324,7 +310,7 @@
       (global-dot-mode))
   #+END_SRC
 
-  I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor and the mode-line become red when in god-mode to make it more visible.
+  I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor becomes red when in god-mode to make it more visible.
   #+BEGIN_SRC emacs-lisp
     (use-package god-mode
       :init (setq god-local-mode nil)
@@ -362,18 +348,6 @@
       (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
   #+END_SRC
 
-* Searching
-  #+BEGIN_SRC emacs-lisp
-    (defhydra hydra-search(:color teal)
-      ;;
-      ("q" nil "quit" :column "Search")
-      ;;
-      ("s" isearch-forward "forward" :column "Toggle")
-      ("r" isearch-backward "backward")
-      ("Q" vr/query-replace "query-replace")
-      ("w" helm-swoop "swoop"))
-    (global-set-key (kbd "C-é") 'hydra-search/body)
-  #+END_SRC
 * Appearance
 ** Decorations
 *** Zoom
@@ -383,15 +357,6 @@
         :bind
         ("C-+" . default-text-scale-increase)
         ("C-=" . default-text-scale-decrease))
-    #+END_SRC
-
-*** Zen
-    #+BEGIN_SRC emacs-lisp
-      (use-package sublimity
-        :defer t
-        :config
-        (require 'sublimity-scroll)
-        (require 'sublimity-map))
     #+END_SRC
 
 *** Highlight feedback
@@ -459,22 +424,17 @@
       ;; don’t display linum except while goto-line
       (global-set-key [remap goto-line] 'goto-line-with-feedback)
 
-      ;; Show me empty lines after buffer end
-      (set-default 'indicate-empty-lines t)
+      (setq-default transient-mark-mode t ;; Show active region
+                    truncate-lines t ;; Don't soft-break lines for me, please
+                    truncate-string-ellipsis "…")
 
-      (setq-default
-       transient-mark-mode t ;; Show active region
-       truncate-lines t ;; Don't soft-break lines for me, please
-       truncate-string-ellipsis "…")
-
-      (setq
-       font-lock-maximum-decoration t ;; all possible colours
-       inhibit-startup-screen t ;; No splash screen
-       echo-keystrokes 0.1 ;; Show keystrokes in progress
-       initial-scratch-message nil ;; No *scratch* message
-       visible-bell nil ;; No flashing!
-       line-number-mode t ;; Always display line and column numbers
-       column-number-mode t)
+      (setq font-lock-maximum-decoration t ;; all possible colours
+            inhibit-startup-screen t ;; No splash screen
+            echo-keystrokes 0.1 ;; Show keystrokes in progress
+            initial-scratch-message nil ;; No *scratch* message
+            visible-bell nil ;; No flashing!
+            line-number-mode t ;; Always display line and column numbers
+            column-number-mode t)
 
       ;; prettify-symbols
       (defconst lisp--prettify-symbols-alist
@@ -495,7 +455,7 @@
      (use-package rainbow-blocks :defer t)
    #+END_SRC
 
-   When coding, colour codes and names should be displayed in the this colour.
+   When coding, colour codes and names should be displayed in this colour.
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-mode
        :config (dim-minor-name 'rainbow-mode nil)
@@ -504,13 +464,12 @@
    Note: If I ever need to work seriously with colours: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
 
 * Dired
-  I use dired+ which gives a colourful way of displaying information (ls -lA way).
   #+BEGIN_SRC emacs-lisp
     (use-package dired
       :ensure nil
-      :init (unbind-key "M-b" dired-mode-map)
       :bind ("C-x C-j". dired-jump)
       :config
+      (unbind-key "M-b" dired-mode-map)
       (put 'dired-find-alternate-file 'disabled nil)
       (setq dired-dwim-target t
             ;; dired human readable size format
@@ -519,11 +478,6 @@
             ;; always delete and copy recursively
             dired-recursive-deletes 'always
             dired-recursive-copies 'always))
-
-    ;; (use-package dired+
-    ;;   :after dired
-    ;;   :ensure nil
-    ;;   :load-path "elisp/dired+.el")
 
     (use-package dired-narrow
       :bind (:map dired-mode-map ("/" . dired-narrow)))
@@ -547,7 +501,8 @@
   #+BEGIN_SRC emacs-lisp
     (use-package isearch
       :ensure nil
-      :config (dim-minor-name 'isearch-mode (concat " " (icons-in-terminal 'linea_basic_magnifier :foreground "pink" :height 1.4))))
+      :config
+      (dim-minor-name 'isearch-mode (concat " " (icons-in-terminal 'linea_basic_magnifier :foreground "pink" :height 1.4))))
 
     (use-package isearch-dabbrev
       :bind (:map isearch-mode-map
@@ -584,16 +539,6 @@
   #+END_SRC
   Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
 
-* Side bar
-  #+BEGIN_SRC emacs-lisp
-  (use-package dired-sidebar
-    :commands dired-sidebar-toggle-sidebar
-    :config
-    (use-package all-the-icons-dired
-      ;; M-x all-the-icons-install-fonts
-      :commands all-the-icons-dired-mode))
-  #+END_SRC
-
 * Navigation
   I use [[https://github.com/abo-abo/ace-window][ace-window]] to quickly switch windows…
   #+BEGIN_SRC emacs-lisp
@@ -624,8 +569,7 @@
                   ("C-," . dumb-jump-back)
                   ("C-;" . dumb-jump-quick-look)))
 
-    (use-package minimap
-      :disabled)
+    (use-package minimap :disabled)
 
     ;; Allow scrolling with mouse wheel
     (when (display-graphic-p) (progn(mouse-wheel-mode t)
@@ -1121,8 +1065,7 @@
    #+END_SRC
 ** Diffing
    #+BEGIN_SRC emacs-lisp
-     (use-package ztree
-       :defer t)
+     (use-package ztree :defer t)
    #+END_SRC
 
 * Buffer & window manipulation
@@ -1138,9 +1081,6 @@
    Revert windows on ediff exit - needs winner mode.
    #+BEGIN_SRC emacs-lisp
      (use-package winner
-       :bind
-       ("M-é" . winner-undo)
-       ("M-è" . winner-redo)
        :config
        (winner-mode)
        (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
@@ -1208,6 +1148,7 @@
                      filename-and-process))))
 
      ;; Change how buffer names are made unique
+     (require 'uniquify)
      (setq uniquify-buffer-name-style 'post-forward
            uniquify-separator ":")
 
@@ -1333,7 +1274,7 @@
    #+END_SRC
 
 * Project management
-  I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (most of the time git projects).
+  I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (mostly git projects).
   #+BEGIN_SRC emacs-lisp
     (use-package helm-projectile
       :defer t
@@ -1352,18 +1293,6 @@
         "Git fetch."
         (magit-status)
         (call-interactively #'magit-fetch-current)))
-  #+END_SRC
-
-  Someone advocates for [[http://manuel-uberti.github.io/programming/2017/08/06/eyebrowse/][eye-browse]], which I need to try: (note: the validate-setq function requires the [[http://endlessparentheses.com/validate-el-schema-validation-for-emacs-lisp.html][validate.el]] package)
-  #+BEGIN_SRC emacs-lisp
-    (use-package eyebrowse ;; Easy workspaces creation and switching
-      :disabled
-      :ensure validate
-      :config
-      (validate-setq eyebrowse-mode-line-separator " "
-                     eyebrowse-new-workspace t)
-      (eyebrowse-mode t))
-
   #+END_SRC
 
 * Date, time & calendar
@@ -1407,17 +1336,6 @@
      (global-set-key (kbd "C-c d") 'hydra-dates/body)
    #+END_SRC
 
-** TODO Weather widget in the mode-line
-   #+BEGIN_SRC emacs-lisp
-    (use-package weatherline-mode
-      :disabled
-      :ensure nil
-      :load-path "elisp/"
-      :config
-      (setq weatherline-location-id "2988507")
-      (weatherline-mode))
-   #+END_SRC
-
 ** Calendar widget
    I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of my different calendars:
    #+BEGIN_SRC emacs-lisp
@@ -1440,17 +1358,6 @@
           (cfw:ical-create-source "hellfest" my-private-secondary-gcal-url "Brown")
           (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "Gray")  ; ICS source1
           ))))
-   #+END_SRC
-
-** Weather widget
-   Weather from wttr.in
-   #+BEGIN_SRC emacs-lisp
-    ;; weather from wttr.in
-    (use-package wttrin
-      :commands wttrin
-      :config
-      (setq wttrin-default-cities
-            '("Paris" "Londres" "Nantes" "Lyon" "Berlin" "Manchester" "Nice")))
    #+END_SRC
 
 * Org-mode
@@ -1537,8 +1444,6 @@
       :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
   #+END_SRC
 
-  TODO install and try package: [[https://github.com/Kungsgeten/org-brain][org-brain]]
-
 * LaTeX
   #+BEGIN_SRC emacs-lisp
     (use-package tex
@@ -1594,7 +1499,7 @@
             user-mail-address my-private-mail-address
             user-full-name my-private-full-name
             ;; I don't use a signature…
-            message-signature "\n-- \nArthur Léothaud"))
+            message-signature (concat "\n-- \n" my-private-full-name)))
   #+END_SRC
 
   I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
@@ -2150,7 +2055,6 @@
       ^ ^                    _n_ sidebar
       ^ ^                    _o_ overwrite-mode %`overwrite-mode
       ^ ^                    _p_ prettify symbols
-      ^ ^                    _s_ sublimity %`sublimity-mode
       ^ ^                    _v_ visual-line %`visual-line-mode
       ^ ^                    _V_ volatile-highlight %`volatile-highlights-mode
       ^ ^                    _w_ whitespace %`global-whitespace-mode
