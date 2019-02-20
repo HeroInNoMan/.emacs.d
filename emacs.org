@@ -2533,7 +2533,7 @@
 * Epilogue
   My init file (emacs.org) should always be open.
   #+BEGIN_SRC emacs-lisp
-    (ale/find-init-file)
+    ;; (ale/find-init-file)
   #+END_SRC
 * Useful links
 ** blogs
