@@ -74,7 +74,7 @@
 
   Try packages without installing them:
   #+BEGIN_SRC emacs-lisp
-    (use-package try)
+    (use-package try :defer t)
   #+END_SRC
 
 * Private variables
@@ -118,7 +118,7 @@
       ("C-x |" . ale/toggle-window-split)
       ("C-|" . ale/toggle-window-split))
 
-    (use-package validate)
+    (use-package validate :defer t)
 
     (use-package describe-number :defer t)
   #+END_SRC
@@ -127,18 +127,15 @@
   Apply a colour theme (uses the variable my-private-theme if defined)
   #+BEGIN_SRC emacs-lisp
     (use-package color-theme-modern
-      :demand
-      :init
-      (add-to-list 'custom-theme-load-path
+      :init (add-to-list 'custom-theme-load-path
                    (file-name-as-directory (expand-file-name "themes" user-emacs-directory)))
-      :config
-      (ale/apply-local-theme-modern))
+      :config (ale/apply-local-theme-modern))
   #+END_SRC
 
 * Defaults, ergonomics & keybindings
   I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of shortcuts:
   #+BEGIN_SRC emacs-lisp
-    (use-package hydra)
+    (use-package hydra :defer t)
   #+END_SRC
 
   [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed.
@@ -179,8 +176,45 @@
 
   Let’s redefine some basic behaviour and shortcuts:
   #+BEGIN_SRC emacs-lisp
-    (use-package better-defaults)
+    (progn
+      (unless (fboundp 'helm-mode)
+        (ido-mode t)
+        (setq ido-enable-flex-matching t))
 
+      (menu-bar-mode -1)
+      (when (fboundp 'tool-bar-mode)
+        (tool-bar-mode -1))
+      (when (fboundp 'scroll-bar-mode)
+        (scroll-bar-mode -1))
+      (when (fboundp 'horizontal-scroll-bar-mode)
+        (horizontal-scroll-bar-mode -1))
+
+      (autoload 'zap-up-to-char "misc"
+        "Kill up to, but not including ARGth occurrence of CHAR." t)
+
+      (require 'uniquify)
+      (setq uniquify-buffer-name-style 'forward)
+
+      (require 'saveplace)
+      (setq-default save-place t)
+
+      (global-set-key (kbd "M-/") 'hippie-expand)
+      (global-set-key (kbd "M-z") 'zap-up-to-char)
+
+      (show-paren-mode 1)
+      (setq save-interprogram-paste-before-kill t
+            apropos-do-all t
+            mouse-yank-at-point t
+            require-final-newline t
+            visible-bell t
+            load-prefer-newer t
+            ediff-window-setup-function 'ediff-setup-windows-plain
+            save-place-file (concat user-emacs-directory "places")
+            backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                     "backups")))))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
     (use-package crux
       :config
       (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
@@ -380,7 +414,6 @@
         :load-path "elisp/")
 
       (use-package fancy-narrow
-        :defer t
         :config
         (dim-minor-name 'fancy-narrow-mode nil)
         (fancy-narrow-mode t))
@@ -406,7 +439,7 @@
     #+BEGIN_SRC emacs-lisp
       (use-package font-lock+
         :ensure nil
-        :load-path "elisp")
+        :load-path "elisp/")
 
       (use-package icons-in-terminal
         :ensure nil
@@ -475,10 +508,8 @@
   #+BEGIN_SRC emacs-lisp
     (use-package dired
       :ensure nil
-      :demand
+      :init (unbind-key "M-b" dired-mode-map)
       :bind ("C-x C-j". dired-jump)
-      :init
-      (unbind-key "M-b" dired-mode-map)
       :config
       (put 'dired-find-alternate-file 'disabled nil)
       (setq dired-dwim-target t
@@ -504,22 +535,12 @@
       :hook (dired-mode . (lambda () (dired-collapse-mode t))))
 
     (use-package dired-subtree
-      :bind
-      (:map dired-mode-map
-            ("U" . dired-subtree-up)
-            ("e" . dired-subtree-narrow)
-            ("i" . dired-subtree-toggle)
-            ("«" . dired-subtree-beginning)
-            ("»" . dired-subtree-end)))
-  #+END_SRC
-
-  Package to try:
-  #+BEGIN_SRC emacs-lisp
-    (use-package phi-search
-      :disabled
-      :bind
-      ("C-s" . phi-search)
-      ("C-r" . phi-search-backward))
+      :bind (:map dired-mode-map
+                  ("U" . dired-subtree-up)
+                  ("e" . dired-subtree-narrow)
+                  ("i" . dired-subtree-toggle)
+                  ("«" . dired-subtree-beginning)
+                  ("»" . dired-subtree-end)))
   #+END_SRC
 
   Standard isearch by default:
@@ -544,6 +565,7 @@
   #+BEGIN_SRC emacs-lisp
     ;; regexp-builder
     (use-package re-builder
+      :defer t
       :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
 
     (use-package visual-regexp-steroids
@@ -619,7 +641,7 @@
 * Indentation, tabs, spaces & folding
   I just heard of editorconfig, which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
   #+BEGIN_SRC emacs-lisp
-    (use-package editorconfig)
+    (use-package editorconfig :defer t)
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
@@ -686,6 +708,7 @@
 ** Completion
    #+BEGIN_SRC emacs-lisp
      (use-package company
+       :defer t
        :config
        (dim-minor-name 'company-mode nil)
        (dim-minor-name 'abbrev-mode " @")
@@ -1092,7 +1115,7 @@
 
      (use-package repeatable ;; TODO add repeatable commands (or replace package with easy-repeat
        :ensure nil
-       :load-path "elisp")
+       :load-path "elisp/")
 
      (global-set-key (kbd "C-x _") 'ale/toggle-camel-snake-kebab-case)
    #+END_SRC
@@ -1127,7 +1150,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package multi-scratch ;; scratch
        :ensure nil
-       :load-path "elisp"
+       :load-path "elisp/"
        :bind
        ("C-x \"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
        ("M-\"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
@@ -1389,7 +1412,7 @@
     (use-package weatherline-mode
       :disabled
       :ensure nil
-      :load-path "elisp"
+      :load-path "elisp/"
       :config
       (setq weatherline-location-id "2988507")
       (weatherline-mode))
@@ -1441,9 +1464,9 @@
        ("\C-c j" . ale/jirify)
        ("\C-c t" . org-begin-template))
       :chords ("gx" . org-capture)
-      :init (require 'org-agenda)
-      :ensure ob-restclient
       :config
+      (require 'ob-restclient)
+      (require 'org-agenda)
       ;; html export
       (setq org-export-html-style-include-scripts nil
             org-export-html-style-include-default nil)
@@ -1503,9 +1526,9 @@
       (defadvice kill-whole-line (after fix-cookies activate)
         (myorg-update-parent-cookie)))
 
-    (use-package htmlize)
+    (use-package htmlize :defer t)
 
-    (use-package swagger-to-org)
+    (use-package swagger-to-org :defer t)
   #+END_SRC
 
   Use fancy bullets in org-mode:
@@ -1578,6 +1601,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package smtpmail
       :ensure nil
+      :defer t
       :config (setq message-send-mail-function 'smtpmail-send-it
                     starttls-use-gnutls t
                     smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-server-port nil nil))
@@ -1592,21 +1616,19 @@
 ** Formatting
    #+BEGIN_SRC emacs-lisp
      (use-package prog-fill
-       :bind
-       (:map prog-mode-map
+       :bind (:map prog-mode-map
              ("M-q" . prog-fill)))
 
    #+END_SRC
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
-     (use-package smartparens-config
-       :ensure smartparens
-       :demand
+     (use-package smartparens
        :hook ((prog-mode markdown-mode text-mode) . turn-on-smartparens-mode)
        :init (dim-minor-name 'smartparens-mode " ()" 'smartparens)
        :commands smartparens-mode
        :config
+       (require 'smartparens-config)
        (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
        (defmacro def-pairs (pairs)
          `(progn
@@ -1646,39 +1668,39 @@
        (global-set-key (kbd "M-s “") 'wrap-with-curly-double-quotes)
        (global-set-key (kbd "M-s ‘") 'wrap-with-curly-single-quotes)
        (global-set-key (kbd "M-s `") 'wrap-with-back-quotes)
-       (global-set-key (kbd "M-s w") 'sp-rewrap-sexp))
+       (global-set-key (kbd "M-s w") 'sp-rewrap-sexp)
 
-     (defhydra hydra-parens(:color teal)
-       ;;
-       ("q" nil "quit" :column "Parens")
+       (defhydra hydra-parens(:color teal)
+         ;;
+         ("q" nil "quit" :column "Parens")
 
-       ;; insert
-       ("c" sp-clone-sexp "clone" :column "Insert")
-       ("p" sp-split-sexp "split")
+         ;; insert
+         ("c" sp-clone-sexp "clone" :column "Insert")
+         ("p" sp-split-sexp "split")
 
-       ;; delete
-       ("k" sp-kill-sexp "kill" :column "Delete")
-       ("C-k" sp-kill-hybrid-sexp "kill hybrid")
-       ("r" sp-raise-sexp "raise")
-       ("s" sp-splice-sexp "splice")
-       ("M-s" sp-splice-sexp "splice")
+         ;; delete
+         ("k" sp-kill-sexp "kill" :column "Delete")
+         ("C-k" sp-kill-hybrid-sexp "kill hybrid")
+         ("r" sp-raise-sexp "raise")
+         ("s" sp-splice-sexp "splice")
+         ("M-s" sp-splice-sexp "splice")
 
-       ;; transpose
-       ("t" sp-transpose-sexp "transpose" :column "Transpose")
-       ("T" sp-transpose-hybrid-sexp "transpose hybrid")
-       ("w" sp-rewrap-sexp "rewrap")
+         ;; transpose
+         ("t" sp-transpose-sexp "transpose" :column "Transpose")
+         ("T" sp-transpose-hybrid-sexp "transpose hybrid")
+         ("w" sp-rewrap-sexp "rewrap")
 
-       ;; slurp
-       ("a" sp-absorb-sexp "absorb" :column "Slurp")
-       ("j" sp-join-sexp "join")
-       ("(" sp-backward-slurp-sexp "slurp backward")
-       (")" sp-slurp-hybrid-sexp "slurp hybrid")
+         ;; slurp
+         ("a" sp-absorb-sexp "absorb" :column "Slurp")
+         ("j" sp-join-sexp "join")
+         ("(" sp-backward-slurp-sexp "slurp backward")
+         (")" sp-slurp-hybrid-sexp "slurp hybrid")
 
-       ;; barf
-       ("e" sp-emit-sexp "emit" :column "Barf")
-       ("«" sp-backward-barf-sexp "barf backward")
-       ("»" sp-forward-barf-sexp "barf forward"))
-     (global-set-key (kbd "M-s M-s") 'hydra-parens/body)
+         ;; barf
+         ("e" sp-emit-sexp "emit" :column "Barf")
+         ("«" sp-backward-barf-sexp "barf backward")
+         ("»" sp-forward-barf-sexp "barf forward"))
+       (global-set-key (kbd "M-s M-s") 'hydra-parens/body))
 
    #+END_SRC
 
@@ -1714,6 +1736,7 @@
                    (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
 
      (use-package shell-pop
+       :defer t
        :config
        (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
        (setq shell-pop-term-shell "/bin/bash")
@@ -1780,7 +1803,7 @@
 
 ** Groovy
    #+BEGIN_SRC emacs-lisp
-     (use-package groovy-mode)
+     (use-package groovy-mode :defer t)
    #+END_SRC
 
 ** Ruby
@@ -2075,7 +2098,7 @@
 ** Yaml
    #+BEGIN_SRC emacs-lisp
      (use-package yaml-mode
-       :config (add-to-list 'auto-mode-alist '(".yml$" . yaml-mode)))
+       :mode (".yml$" . yaml-mode))
    #+END_SRC
 
 ** Crontab
@@ -2087,7 +2110,8 @@
 
 ** Markdown
    #+BEGIN_SRC emacs-lisp
-     (use-package markdown-mode)
+     (use-package markdown-mode
+       :mode (".md$" . markdown-mode))
    #+END_SRC
 
 ** Gradle
@@ -2099,6 +2123,7 @@
   I use eww to surf the web in emacs, for simple pages mostly:
   #+BEGIN_SRC emacs-lisp
     (use-package eww
+      :defer t
       :config
       (setq browse-url-generic-program "firefox"
             browse-url-browser-function 'eww-browse-url ;; set default browser to eww, then ‘&’ to open page firefox
@@ -2294,7 +2319,6 @@
   #+BEGIN_SRC emacs-lisp
     (use-package modeline-posn
       :ensure nil
-      :demand
       :load-path "elisp/"
       :config (load-library "modeline-posn.el"))
 
@@ -2435,6 +2459,7 @@
 ** Web pasting
    #+BEGIN_SRC emacs-lisp
      (use-package webpaste
+       :defer t
        :config
        ;; Open recently created pastes in an external browser
        (setq webpaste-open-in-browser t))
@@ -2490,15 +2515,14 @@
 ** Games
 *** Typing
     #+BEGIN_SRC emacs-lisp
-      (use-package speed-type :disabled)
-      (use-package typit :disabled)
-      (use-package typing :disabled)
+      (use-package speed-type :defer t)
+      (use-package typit :defer t)
+      (use-package typing :defer t)
     #+END_SRC
 
 *** Other
     #+BEGIN_SRC emacs-lisp
-      (use-package 2048-game :disabled)
-      (use-package slime-volleyball :disabled)
+      (use-package 2048-game :defer t)
       (use-package vimgolf
         :ensure nil
         :defer t
@@ -2509,25 +2533,28 @@
 *** RSS feeds
 **** Avandu (gateway to tiny tiny RSS):
      #+BEGIN_SRC emacs-lisp
-        (use-package avandu
-          :defer t
-          :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
-                        avandu-user my-private-personal-tt-rss-username
-                        avandu-password my-private-personal-tt-rss-password)
-          :bind (:map avandu-article-mode-map
-                      ("p" . previous-line)
-                      ("n" . next-line)
-                      ("l" . recenter-top-bottom)
-                      :map avandu-overview-map
-                      ("<tab>" . avandu-next-feed)
-                      ("<backtab>" . avandu-previous-feed)
-                      ("l" . recenter-top-bottom)
-                      ("v" . scroll-up-command)))
+       (use-package avandu
+         :bind (:map avandu-article-mode-map
+                     ("p" . previous-line)
+                     ("n" . next-line)
+                     ("l" . recenter-top-bottom)
+                     :map avandu-overview-map
+                     ("<tab>" . avandu-next-feed)
+                     ("<backtab>" . avandu-previous-feed)
+                     ("l" . recenter-top-bottom)
+                     ("v" . scroll-up-command))
+         :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
+                       avandu-user my-private-personal-tt-rss-username
+                       avandu-password my-private-personal-tt-rss-password))
      #+END_SRC
+
 **** Elfeed
      #+BEGIN_SRC emacs-lisp
-       (use-package elfeed
-         :ensure elfeed-org
+       (use-package elfeed :defer t)
+
+       (use-package elfeed-org
+         :defer t
+         :after elfeed
          :config
          (elfeed-org)
          (setq rmh-elfeed-org-auto-ignore-invalid-feeds t
