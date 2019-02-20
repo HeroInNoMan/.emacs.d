@@ -60,9 +60,8 @@
 
   Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
   #+BEGIN_SRC emacs-lisp
-    (use-package paradox)
+    (use-package paradox :defer t)
   #+END_SRC
-
 
   Let’s keep ~/.emacs.d tidy:
   #+BEGIN_SRC emacs-lisp
