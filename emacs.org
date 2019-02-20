@@ -2107,36 +2107,39 @@
       ;;
       ("q" nil "cancel" :column "Menu")
 
-      ;; Built-in
-      ("e" eshell "eshell" :column "Built-in")
-      ("G" gnus "Gnus")
-      ("p" paradox-list-packages "packages")
+      ;; Shells
+      ("e" eshell "eshell" :column "Shells")
       ("t" shell-pop "shell-pop")
       ("$" shell "shell")
       ("%" crux-visit-term-buffer "ansi-term")
+
+      ;; Reading
+      ("a" avandu-overview "avandu RSS" :column "Reading")
+      ("A" helm-lobsters "lobsters")
+      ("E" elfeed "elfeed RSS")
+      ("G" gnus "Gnus")
       ("W" eww "web browser")
 
-      ;; Widget
-      ("m" mu4e "mu4e" :column "Widget")
-      ("a" avandu-overview "avandu RSS")
-      ("A" helm-lobsters "lobsters")
-      ("b" ecb-activate "code browser")
+      ;; Management
+      ("m" mu4e "mu4e" :column "Management")
       ("c" open-calendar "calendar")
-      ("E" elfeed "elfeed RSS")
-      ("J" butler-status "jenkins")
-      ("M" helm-spotify-plus "spotify")
-      ("Q" quick-calc "quick-calc")
       ("T" tomatinho "pomodoro")
-      ("z" ztree-diff "ztree-diff")
 
-      ;; Find files
-      ("d" ale/find-diary-file "diary" :column "Find files")
+      ;; View
+      ("b" ecb-activate "code browser" :column "View")
+      ("z" ztree-diff "ztree-diff")
+      ("w" webpaste-paste-region "webpaste")
+
+      ;; Tools
+      ("p" paradox-list-packages "packages" :column "Tools")
+      ("Q" quick-calc "quick-calc")
+
+      ;; files
+      ("d" ale/find-diary-file "diary" :column "Files")
       ("D" ale/find-remote-diary-file "remote diary")
       ("i" ale/find-init-file "init file")
-      ("r" ale/find-rest-client-file "rest-client")
+      ("r" ale/find-rest-client-file "rest-client"))
 
-      ;; Action
-      ("w" webpaste-paste-region "webpaste" :column "Action"))
     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
   #+END_SRC
 
