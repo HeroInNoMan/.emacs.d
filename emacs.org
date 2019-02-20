@@ -1165,7 +1165,7 @@
 * Version control
 ** General
    #+BEGIN_SRC emacs-lisp
-     (use-package git-timemachine)
+     (use-package git-timemachine :defer t)
 
      (use-package git-messenger
        :bind (:map git-messenger-map
@@ -1175,12 +1175,11 @@
        :hook (git-messenger:popup-buffer-hook . magit-commit-mode)
        :config (setq git-messenger:show-detail t))
 
-     (use-package gitignore-mode)
+     (use-package gitignore-mode
+       :mode ".gitignore$")
 
      (use-package gitconfig-mode
-       :config
-       (autoload 'gitconfig-mode "gitconfig-mode" "Major mode for editing gitconfig files." t)
-       (add-to-list 'auto-mode-alist '(".gitconfig$" . gitconfig-mode)))
+       :mode ".gitconfig$")
 
      (use-package git-gutter
        :hook (prog-mode)
@@ -1195,6 +1194,7 @@
 
      ;; always follow symbolic links for files under VC
      (use-package vc
+       :defer t
        :config (setq vc-follow-symlinks t))
    #+END_SRC
 
