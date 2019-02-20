@@ -2320,6 +2320,12 @@
      (use-package tomatinho :disabled)
    #+END_SRC
 
+* Demos
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package command-log-mode :defer t)
+  #+END_SRC
+
 ** Restclient
    #+BEGIN_SRC emacs-lisp
      ;; REST client
