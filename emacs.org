@@ -1305,17 +1305,15 @@
 
      (defhydra hydra-dates (:color blue :hint nil)
        "
-       ^
-       ^Dates^      ^Insert^                  ^Insert with Time^
-       ^─────^──────^──────^──────────────────^────────────────^──────────
-       _q_ quit     _s_ %(format-time-string \"%d/%m/%Y\")          _t_ %(format-time-string \"%Y/%m/%d %H:%M\")
-       ^ ^          ^ ^ ^^^^^^^^^^^^^^^^^^^^^^                      _T_ %(format-time-string \"%A %d %B %Y - %H:%M\")
-       ^ ^          _d_ %(format-time-string \"%F\")
-       ^ ^          _D_ %(format-time-string \"%F %A\") ^^^^^^^^^   _i_ %(format-time-string \"%FT%T%z\")
-       ^ ^          ^ ^
-       ^ ^          _l_ %(format-time-string \"%d %B %Y\")
-       ^ ^          _L_ %(format-time-string \"%A %d %B %Y\")
-
+       ^Today^     ^Date^                       ^Date & Time^
+       ^─────^─────^────^───────────────────────^───────────^──────────
+       _q_ quit    _s_ %(format-time-string \"%d/%m/%Y\")             _t_ %(format-time-string \"%Y/%m/%d %H:%M\")
+       ^ ^         ^ ^ ^^^^^^^^^^^^^^^^^^^^^^                         _T_ %(format-time-string \"%A %d %B %Y - %H:%M\")
+       ^ ^         _d_ %(format-time-string \"%F\")
+       ^ ^         _D_ %(format-time-string \"%F %A\")
+       ^ ^         ^ ^ ^^^^^^^^^^^^^^^^^^^^^^                         _i_ %(format-time-string \"%FT%T%z\")
+       ^ ^         _l_ %(format-time-string \"%d %B %Y\")
+       ^ ^         _L_ %(format-time-string \"%A %d %B %Y\")
        "
        ("q" nil)
        ;; date
@@ -2050,25 +2048,25 @@
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-minor-modes(:color blue :hint nil)
       "
-      ^Minor mode^           ^Toggle
-      ^──────────^───────────^──────^───────────────────
-      _q_  quit              _(_ smartparens %(when (boundp 'idle-highlight-mode) (smartparens-mode))
-      ^ ^                    _)_ smartparens strict %(when (boundp 'idle-highlight-mode) (smartparens-strict-mode))
-      ^ ^                    _g_ god %`god-local-mode
-      ^ ^                    _h_ Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
-      ^ ^                    _H_ Highlight-line %`highlight-line-mode
-      ^ ^                    _i_ ido %`ido-mode
-      ^ ^                    _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
-      ^ ^                    _l_ line number
-      ^ ^                    _m_ minimap
-      ^ ^                    _n_ sidebar
-      ^ ^                    _o_ overwrite-mode %`overwrite-mode
-      ^ ^                    _p_ prettify symbols %`prettify-symbols-mode
-      ^ ^                    _r_ rainbow-blocks-mode %(when (boundp 'rainbow-blocks-mode) (rainbow-blocks-mode))
-      ^ ^                    _v_ visual-line %`visual-line-mode
-      ^ ^                    _V_ volatile-highlight %`volatile-highlights-mode
-      ^ ^                    _w_ whitespace %`global-whitespace-mode
-      ^ ^                    _x_ winnow-mode %`winnow-mode
+      ^Minor mode^    ^Toggle
+      ^──────────^────^──────^───────────────────
+      _q_  quit       _(_ smartparens %(when (boundp 'idle-highlight-mode) (smartparens-mode))
+      ^ ^             _)_ smartparens strict %(when (boundp 'idle-highlight-mode) (smartparens-strict-mode))
+      ^ ^             _g_ god %`god-local-mode
+      ^ ^             _h_ Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
+      ^ ^             _H_ Highlight-line %`highlight-line-mode
+      ^ ^             _i_ ido %`ido-mode
+      ^ ^             _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
+      ^ ^             _l_ line number
+      ^ ^             _m_ minimap
+      ^ ^             _n_ sidebar
+      ^ ^             _o_ overwrite-mode %`overwrite-mode
+      ^ ^             _p_ prettify symbols %`prettify-symbols-mode
+      ^ ^             _r_ rainbow-blocks-mode %(when (boundp 'rainbow-blocks-mode) (rainbow-blocks-mode))
+      ^ ^             _v_ visual-line %`visual-line-mode
+      ^ ^             _V_ volatile-highlight %`volatile-highlights-mode
+      ^ ^             _w_ whitespace %`global-whitespace-mode
+      ^ ^             _x_ winnow-mode %`winnow-mode
       "
 
       ("(" smartparens-global-mode)
@@ -2089,7 +2087,7 @@
       ("V" volatile-highlights-mode)
       ("w" whitespace-mode)
       ("x" winnow-mode)
-      ("q" nil "cancel"))
+      ("q" nil))
     (global-set-key (kbd "C-c m") 'hydra-minor-modes/body)
 
     (defhydra hydra-major-modes(:color blue)
