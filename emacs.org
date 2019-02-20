@@ -845,6 +845,7 @@
           ("h h"   helm-documentation "doc")
           ("h a"   helm-apropos "a propos")
           ("h m"   helm-man-woman "woman")
+          ("-"     helm-dash-at-point "dash")
           ;; other
           ("t"     helm-top "top" :column "Other")
           ("P"     helm-list-emacs-process "process")
@@ -870,7 +871,15 @@
 
     Documentation with helm
     #+BEGIN_SRC emacs-lisp
-      (use-package helm-dash :defer t)
+      (use-package helm-dash
+        :defer t
+        :config
+        (setq helm-dash-browser-func 'eww)
+        (add-hook 'clojure-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Clojure"))))
+        (add-hook 'java-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Java"))))
+        (add-hook 'js-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Javascript"))))
+        (add-hook 'rust-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Rust")))))
+
     #+END_SRC
 
 *** Searching with Helm
