@@ -447,7 +447,8 @@
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
    #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-blocks :defer t)
+     (use-package rainbow-blocks
+       :commands rainbow-blocks-mode)
    #+END_SRC
 
    When coding, colour codes and names should be displayed in this colour.
@@ -2063,6 +2064,7 @@
       ^ ^                    _n_ sidebar
       ^ ^                    _o_ overwrite-mode %`overwrite-mode
       ^ ^                    _p_ prettify symbols %`prettify-symbols-mode
+      ^ ^                    _r_ rainbow-blocks-mode %(when (boundp 'rainbow-blocks-mode) (rainbow-blocks-mode))
       ^ ^                    _v_ visual-line %`visual-line-mode
       ^ ^                    _V_ volatile-highlight %`volatile-highlights-mode
       ^ ^                    _w_ whitespace %`global-whitespace-mode
@@ -2081,6 +2083,7 @@
       ("n" dired-sidebar-toggle-sidebar)
       ("o" overwrite-mode)
       ("p" prettify-symbols-mode)
+      ("r" rainbow-blocks-mode)
       ("s" sublimity-mode)
       ("v" visual-line-mode)
       ("V" volatile-highlights-mode)
