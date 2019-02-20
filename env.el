@@ -105,6 +105,7 @@
     (setq browse-url-generic-program "firefox")
 
     (use-package transmission
+      :defer t
       :config
       (setq transmission-host my-private-transmission-host
             transmission-service my-private-transmission-service
