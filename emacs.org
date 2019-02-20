@@ -436,11 +436,6 @@
             line-number-mode t ;; Always display line and column numbers
             column-number-mode t)
 
-      ;; prettify-symbols
-      (defconst lisp--prettify-symbols-alist
-        '(("lambda"  . λ)
-          ("!=" . ≠)
-          ("..." . …)))
     #+END_SRC
 
 ** Colours
@@ -1522,9 +1517,22 @@
    #+BEGIN_SRC emacs-lisp
      (use-package prog-fill
        :bind (:map prog-mode-map
-             ("M-q" . prog-fill)))
+                   ("M-q" . prog-fill)))
 
+     ;; prettify-symbols
+     (defconst prettify-symbols-alist
+       '(("lambda"  . ?λ)
+         ("!=" . ?≠)
+         ("<=" . ?≤)
+         (">=" . ?≥)
+         ("!=" . ?≠)
+         ("->" . ?→)
+         ("<-" . ?←)
+         ("=>" . ?⇒)
+         ("..." . ?…)))
+     (add-hook 'prog-mode-hook 'prettify-symbols-mode)
    #+END_SRC
+
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
@@ -2054,7 +2062,7 @@
       ^ ^                    _m_ minimap
       ^ ^                    _n_ sidebar
       ^ ^                    _o_ overwrite-mode %`overwrite-mode
-      ^ ^                    _p_ prettify symbols
+      ^ ^                    _p_ prettify symbols %`prettify-symbols-mode
       ^ ^                    _v_ visual-line %`visual-line-mode
       ^ ^                    _V_ volatile-highlight %`volatile-highlights-mode
       ^ ^                    _w_ whitespace %`global-whitespace-mode
