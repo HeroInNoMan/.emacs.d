@@ -10,7 +10,7 @@
 #+LANGUAGE: en
 
 #+LINK_HOME: http://leothaud.eu
-#+HTML_HEAD: <link rel=stylesheet type=text/css href=solarized-light.css />
+#+HTML_HEAD: <link rel=stylesheet type=text/css href=org.css />
 
 * Installation & loading
   Start by “disabling” garbage collection while starting up:
@@ -1391,7 +1391,7 @@
       (setq org-export-html-style-include-scripts nil
             org-export-html-style-include-default nil)
       (setq org-export-html-style
-            "<link rel=\"stylesheet\" type=\"text/css\" href=\"solarized-dark.css\" />")
+            "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />")
       (setq org-html-htmlize-output-type 'css)
 
       ;; active Babel languages
