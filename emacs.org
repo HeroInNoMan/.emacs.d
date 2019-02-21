@@ -1645,11 +1645,11 @@
        (sql-mode . (lambda () (setq-local truncate-lines nil)))
        (sql-mode . (lambda () (setq-local linesize 9999)))
        (sql-interactive-mode . sqli-add-hooks)
-       (sql-interactive-mode . (lambda ()
-                                 (setq-local comint-output-filter-functions 'comint-truncate-buffer
-                                             comint-buffer-maximum-size 5000
-                                             comint-scroll-show-maximum-output t
-                                             comint-input-ring-size 500)))
+       (sql-interactive-mode . (lambda () (progn
+                                       (setq-local comint-output-filter-functions 'comint-truncate-buffer)
+                                       (setq-local comint-buffer-maximum-size 5000)
+                                       (setq-local comint-scroll-show-maximum-output t)
+                                       (setq-local comint-input-ring-size 500))))
        :interpreter "sql"
        :mode
        ("\\.sql\\'"
