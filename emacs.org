@@ -12,8 +12,7 @@
 #+LINK_HOME: http://leothaud.eu
 #+HTML_HEAD: <link rel=stylesheet type=text/css href=org.css />
 
-* Installation & loading
-
+* Startup
   Display emacs startup time, with the number of garbage collections during the process.
   #+BEGIN_SRC emacs-lisp
     ;; Use a hook so the message doesn't get clobbered by other messages.
@@ -29,84 +28,83 @@
   Start by “disabling” garbage collection while starting up:
   #+BEGIN_SRC emacs-lisp
     (setq gc-cons-threshold most-positive-fixnum)
-    (add-hook 'after-init-hook #'(lambda ()
-                                   ;; restore after startup (and don't be so stingy
-                                   ;; on the memory, we have lots now. It's the
-                                   ;; distant future)
-                                   (setq gc-cons-threshold 20000000)))
+    ;; restore after startup
+    (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 20000000)))
   #+END_SRC
 
+* Package Management
   I use [[https://github.com/jwiegley/use-package][use-package]] and [[https://melpa.org/][melpa]] to manage my packages and modules.
   #+BEGIN_SRC emacs-lisp
-    ;; package-style dependencies
-    (eval-when-compile
-      (require 'package)
-      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-      (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-      (unless (package-installed-p 'use-package)
-        (package-refresh-contents)
-        (package-install 'use-package))
-      (require 'use-package)
-      (setq use-package-always-ensure t
-            use-package-verbose t))
+   ;; package-style dependencies
+   (eval-when-compile
+     (require 'package)
+     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+     (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
+     (require 'use-package)
+     (setq use-package-always-ensure t
+           use-package-verbose t))
 
-    (use-package dim) ;; to change mode display in mode line
+   (use-package dim) ;; to change mode display in mode line
 
-    (use-package use-package-chords
-      :config (key-chord-mode 1)
-      (setq key-chord-one-key-delay 0.15)
-      (setq key-chord-two-keys-delay 0.05))
+   (use-package use-package-chords
+     :config (key-chord-mode 1)
+     (setq key-chord-one-key-delay 0.15)
+     (setq key-chord-two-keys-delay 0.05))
   #+END_SRC
 
   Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
   #+BEGIN_SRC emacs-lisp
-    (use-package paradox :defer t)
-  #+END_SRC
-
-  Let’s keep ~/.emacs.d tidy:
-  #+BEGIN_SRC emacs-lisp
-    (use-package no-littering
-      :config
-      (require 'recentf)
-      (add-to-list 'recentf-exclude no-littering-var-directory)
-      (add-to-list 'recentf-exclude no-littering-etc-directory))
+   (use-package paradox :defer t)
   #+END_SRC
 
   Try packages without installing them:
   #+BEGIN_SRC emacs-lisp
-    (use-package try :defer t)
+   (use-package try :defer t)
   #+END_SRC
 
-* Private variables
-  All private information is stored in variables in =~/.emacs.d/private.el
+* Emacs directory
+  Let’s keep =~/.emacs.d= tidy:
+  #+BEGIN_SRC emacs-lisp
+   (use-package no-littering
+     :config
+     (require 'recentf)
+     (add-to-list 'recentf-exclude no-littering-var-directory)
+     (add-to-list 'recentf-exclude no-littering-etc-directory))
+  #+END_SRC
+
+  Private information is stored in variables in =~/.emacs.d/private.el=
   #+BEGIN_SRC emacs-lisp
     (let ((private-file (expand-file-name "private.el" user-emacs-directory)))
       (when (file-exists-p private-file)
         (load-file private-file)))
   #+END_SRC
 
-* Extra load directory
   Let’s load all files from the “extra” directory (will happen after init is finished).
   #+BEGIN_SRC emacs-lisp
     (use-package load-dir
       :config (setq load-dirs (expand-file-name "extra/" user-emacs-directory)))
   #+END_SRC
 
-* Customisation
   Custom file should be loaded early.
   #+BEGIN_SRC emacs-lisp
-    (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
     (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
     (when (file-exists-p custom-file)
       (load custom-file))
   #+END_SRC
 
-* Libraries & tools
-  My custom (often stolen) lisp code is stored in elisp/my-functions.el.
+* Custom functions
+  My custom (often stolen) lisp code is stored in =elisp/my-functions.el=.
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :ensure nil
-      :commands (ale/insert-ticket-prefix ale/jirify ale/find-init-file ale/open-project ale/apply-local-theme-modern)
+      :commands (ale/insert-ticket-prefix
+                 ale/jirify
+                 ale/find-init-file
+                 ale/open-project
+                 ale/apply-local-theme-modern)
       :load-path "elisp/"
       :bind
       ("C-c i" . ale/indent-region-or-buffer) ;; indent whole buffer
@@ -117,27 +115,9 @@
       ("C-x C-r" . sudo-edit) ;; sudo open file
       ("C-x |" . ale/toggle-window-split)
       ("C-|" . ale/toggle-window-split))
-
-    (use-package validate :defer t)
-
-    (use-package describe-number :defer t)
   #+END_SRC
 
-* Theme
-  Apply a colour theme (uses the variable my-private-theme if defined)
-  #+BEGIN_SRC emacs-lisp
-    (use-package color-theme-modern
-      :init (add-to-list 'custom-theme-load-path
-                   (file-name-as-directory (expand-file-name "themes" user-emacs-directory)))
-      :config (ale/apply-local-theme-modern))
-  #+END_SRC
-
-* Defaults, ergonomics & keybindings
-  I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of shortcuts:
-  #+BEGIN_SRC emacs-lisp
-    (use-package hydra :defer t)
-  #+END_SRC
-
+* Help
   [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed.
   #+BEGIN_SRC emacs-lisp
     (use-package which-key ;; which-key (replacement for guide-key)
@@ -147,6 +127,7 @@
       (setq which-key-idle-delay 0.3))
   #+END_SRC
 
+  [[https://github.com/Wilfred/helpful][Helpful]] adds more contextual information to the built-in help.
   #+BEGIN_SRC emacs-lisp
     (use-package helpful
       :bind
@@ -174,72 +155,40 @@
       ("C-h C" . helpful-command))
   #+END_SRC
 
-  Let’s redefine some basic behaviour and shortcuts:
   #+BEGIN_SRC emacs-lisp
-    (progn
-      (ido-mode t)
-      (setq ido-enable-flex-matching t)
-
-      (menu-bar-mode -1)
-      (when (fboundp 'tool-bar-mode)
-        (tool-bar-mode -1))
-      (when (fboundp 'scroll-bar-mode)
-        (scroll-bar-mode -1))
-      (when (fboundp 'horizontal-scroll-bar-mode)
-        (horizontal-scroll-bar-mode -1))
-
-      (autoload 'zap-up-to-char "misc"
-        "Kill up to, but not including ARGth occurrence of CHAR." t)
-
-      (require 'saveplace)
-      (setq-default save-place t)
-
-      (global-set-key (kbd "M-/") 'hippie-expand)
-      (global-set-key (kbd "M-z") 'zap-up-to-char)
-
-      (show-paren-mode 1)
-      (setq save-interprogram-paste-before-kill t
-            apropos-do-all t
-            mouse-yank-at-point t
-            require-final-newline t
-            load-prefer-newer t
-            ediff-window-setup-function 'ediff-setup-windows-plain
-            save-place-file (concat user-emacs-directory "places")
-            backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                                     "backups")))))
+    (use-package describe-number :defer t)
   #+END_SRC
 
+* Defaults
+  Let’s redefine some basic behaviour:
   #+BEGIN_SRC emacs-lisp
-    (use-package crux
-      :config
-      (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
-      (crux-reopen-as-root-mode)
-      ;; advices
-      (crux-with-region-or-buffer comment-or-uncomment-region)
-      (crux-with-region-or-buffer indent-region)
-      (crux-with-region-or-buffer untabify)
-      (crux-with-region-or-buffer tabify))
-  #+END_SRC
+    (ido-mode t)
+    (setq ido-enable-flex-matching t)
 
-  ~M-«~ and ~M-»~ are easier than ~M-<~ and ~M->~ with a BÉPO™ keyboard:
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "M-«") 'beginning-of-buffer)
-    (global-set-key (kbd "M-»") 'end-of-buffer)
-  #+END_SRC
+    (menu-bar-mode -1)
+    (when (fboundp 'tool-bar-mode)
+      (tool-bar-mode -1))
+    (when (fboundp 'scroll-bar-mode)
+      (scroll-bar-mode -1))
+    (when (fboundp 'horizontal-scroll-bar-mode)
+      (horizontal-scroll-bar-mode -1))
 
-  Killing emacs; default binding is too easy to hit by accident.
-  #+BEGIN_SRC emacs-lisp
-    ;; Killing emacs
-    (global-unset-key (kbd "C-x C-c")) ;;
-    (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
-  #+END_SRC
+    (autoload 'zap-up-to-char "misc"
+      "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-  I never use the minimise command, use the binding for repeat instead.
-  #+BEGIN_SRC emacs-lisp
-    ;; repeat
-    (global-set-key (kbd "C-z") 'repeat)
-    (global-set-key (kbd "C-x C-z") 'repeat-complex-command)
+    (require 'saveplace)
+    (setq-default save-place t)
 
+    (show-paren-mode 1)
+    (setq save-interprogram-paste-before-kill t
+          apropos-do-all t
+          mouse-yank-at-point t
+          require-final-newline t
+          load-prefer-newer t
+          ediff-window-setup-function 'ediff-setup-windows-plain
+          save-place-file (concat user-emacs-directory "places")
+          backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                   "backups"))))
     ;; Answer questions with y/n
     (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -296,6 +245,66 @@
     (put 'narrow-to-page 'disabled nil)
     (put 'set-goal-column 'disabled nil)
     (put 'scroll-left 'disabled nil)
+
+    (use-package iso-transl ;; some environments don’t handle dead keys
+      :ensure nil)
+
+    (global-font-lock-mode t) ;; enable syntax highlighting
+    (blink-cursor-mode -1) ;; no blinking cursor
+    (fringe-mode 0) ;; remove fringes on the sides
+
+    ;; don’t display linum except while goto-line
+    (global-set-key [remap goto-line] 'goto-line-with-feedback)
+
+    (setq-default transient-mark-mode t ;; Show active region
+                  truncate-lines t ;; Don't soft-break lines for me, please
+                  truncate-string-ellipsis "…")
+
+    (setq font-lock-maximum-decoration t ;; all possible colours
+          inhibit-startup-screen t ;; No splash screen
+          echo-keystrokes 0.1 ;; Show keystrokes in progress
+          initial-scratch-message nil ;; No *scratch* message
+          visible-bell nil ;; No flashing!
+          line-number-mode t ;; Always display line and column numbers
+          column-number-mode t)
+  #+END_SRC
+
+  [[https://github.com/bbatsov/crux][Crux]] brings a lot of better default behaviour and functions.
+  #+BEGIN_SRC emacs-lisp
+    (use-package crux
+      :config
+      (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
+      (crux-reopen-as-root-mode)
+      ;; advices
+      (crux-with-region-or-buffer comment-or-uncomment-region)
+      (crux-with-region-or-buffer indent-region)
+      (crux-with-region-or-buffer untabify)
+      (crux-with-region-or-buffer tabify))
+  #+END_SRC
+
+* Keybindings
+  I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
+  #+BEGIN_SRC emacs-lisp
+    (use-package hydra :defer t)
+  #+END_SRC
+
+  Killing emacs; default binding is too easy to hit by accident.
+  #+BEGIN_SRC emacs-lisp
+    (global-unset-key (kbd "C-x C-c"))
+    (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
+  #+END_SRC
+
+  =M-«= and =M-»= are easier than =M-<= and =M->= with a BÉPO™ keyboard:
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "M-«") 'beginning-of-buffer)
+    (global-set-key (kbd "M-»") 'end-of-buffer)
+  #+END_SRC
+
+  I never use the minimise command, use the binding for =repeat= instead.
+  #+BEGIN_SRC emacs-lisp
+    ;; repeat
+    (global-set-key (kbd "C-z") 'repeat)
+    (global-set-key (kbd "C-x C-z") 'repeat-complex-command)
   #+END_SRC
 
   Vim’s “dot” is a cool macro-like feature. I want that.
@@ -310,6 +319,13 @@
       (global-dot-mode))
   #+END_SRC
 
+  More custom bindings :
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "M-/") 'hippie-expand)
+    (global-set-key (kbd "M-z") 'zap-up-to-char)
+  #+END_SRC
+
+* Modal editing
   I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor becomes red when in god-mode to make it more visible.
   #+BEGIN_SRC emacs-lisp
     (use-package god-mode
@@ -318,7 +334,6 @@
       (("C-c g" . toggle-god-mode)
        :map god-local-mode-map
        ("i" . toggle-god-mode)
-       ("z" . repeat)
        ("." . repeat))
       :chords ("ii" . toggle-god-mode)
       :config
@@ -349,94 +364,64 @@
   #+END_SRC
 
 * Appearance
-** Decorations
-*** Zoom
-    I use [[https://github.com/purcell/default-text-scale][default-text-scale]] to zoom in and out the whole emacs frame.
-    #+BEGIN_SRC emacs-lisp
-      (use-package default-text-scale
-        :bind
-        ("C-+" . default-text-scale-increase)
-        ("C-=" . default-text-scale-decrease))
-    #+END_SRC
+** Theme
+   Apply a colour theme (uses the variable =my-private-theme= if defined)
+   #+BEGIN_SRC emacs-lisp
+     (use-package color-theme-modern
+       :init (add-to-list 'custom-theme-load-path
+                          (file-name-as-directory (expand-file-name "themes" user-emacs-directory)))
+       :config (ale/apply-local-theme-modern))
+   #+END_SRC
 
-*** Highlight feedback
-    Let’s have a visual feedback when performing cut/copy/paste operations.
-    #+BEGIN_SRC emacs-lisp
-      (use-package volatile-highlights
-        :defer t
-        :config (dim-minor-name 'volatile-highlights-mode nil))
+** Zoom
+   I use [[https://github.com/purcell/default-text-scale][default-text-scale]] to zoom in and out the whole emacs frame.
+   #+BEGIN_SRC emacs-lisp
+     (use-package default-text-scale
+       :bind
+       ("C-+" . default-text-scale-increase)
+       ("C-=" . default-text-scale-decrease))
+   #+END_SRC
 
-      (use-package idle-highlight-mode :defer t)
-    #+END_SRC
+** Highlight feedback
+   Let’s have a visual feedback when performing cut/copy/paste operations.
+   #+BEGIN_SRC emacs-lisp
+     (use-package volatile-highlights
+       :defer t
+       :config (dim-minor-name 'volatile-highlights-mode nil))
 
-    Highlight current line in list buffers:
-    #+BEGIN_SRC emacs-lisp
-      (use-package highlight-line
-        :ensure nil
-        :config
-        (global-hl-line-mode -1) ;; don’t highlight current line
-        (highlight-line-mode 1) ;; except in “list” modes
-        :load-path "elisp/")
+     (use-package idle-highlight-mode :defer t)
+   #+END_SRC
 
-      (use-package fancy-narrow
-        :config
-        (dim-minor-name 'fancy-narrow-mode nil)
-        (fancy-narrow-mode t))
+   Highlight current line in list buffers:
+   #+BEGIN_SRC emacs-lisp
+     (use-package highlight-line
+       :ensure nil
+       :config
+       (global-hl-line-mode -1) ;; don’t highlight current line
+       (highlight-line-mode 1) ;; except in “list” modes
+       :load-path "elisp/")
 
-      (use-package highlight-indent-guides
-        :config (setq highlight-indent-guides-method 'character)
-        :hook (prog-mode . highlight-indent-guides-mode))
-    #+END_SRC
+     (use-package fancy-narrow
+       :config
+       (dim-minor-name 'fancy-narrow-mode nil)
+       (fancy-narrow-mode t))
 
-*** More
-    Let’s have an indicator in the mode-line for search results:
-    #+BEGIN_SRC emacs-lisp
-      (use-package anzu
-        :config
-        (dim-minor-name 'anzu-mode nil)
-        (global-anzu-mode t)
-        (setq-default anzu-cons-mode-line-p t))
-    #+END_SRC
+     (use-package highlight-indent-guides
+       :config (setq highlight-indent-guides-method 'character)
+       :hook (prog-mode . highlight-indent-guides-mode))
+   #+END_SRC
 
-    More visual customisation…
+** Icons in terminal:
+   #+BEGIN_SRC emacs-lisp
+     (use-package font-lock+
+       :ensure nil
+       :load-path "elisp/")
 
-*** Icons in terminal:
-    #+BEGIN_SRC emacs-lisp
-      (use-package font-lock+
-        :ensure nil
-        :load-path "elisp/")
-
-      (use-package icons-in-terminal
-        :ensure nil
-        :load-path "~/.local/share/icons-in-terminal/")
-      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
-    #+END_SRC
-
-    #+BEGIN_SRC emacs-lisp
-      ;; colors, appearance
-      (use-package iso-transl ;; some environments don’t handle dead keys
-        :ensure nil)
-
-      (global-font-lock-mode t) ;; enable syntax highlighting
-      (blink-cursor-mode -1) ;; no blinking cursor
-      (fringe-mode 0) ;; remove fringes on the sides
-
-      ;; don’t display linum except while goto-line
-      (global-set-key [remap goto-line] 'goto-line-with-feedback)
-
-      (setq-default transient-mark-mode t ;; Show active region
-                    truncate-lines t ;; Don't soft-break lines for me, please
-                    truncate-string-ellipsis "…")
-
-      (setq font-lock-maximum-decoration t ;; all possible colours
-            inhibit-startup-screen t ;; No splash screen
-            echo-keystrokes 0.1 ;; Show keystrokes in progress
-            initial-scratch-message nil ;; No *scratch* message
-            visible-bell nil ;; No flashing!
-            line-number-mode t ;; Always display line and column numbers
-            column-number-mode t)
-
-    #+END_SRC
+     (use-package icons-in-terminal
+       :ensure nil
+       :load-path "~/.local/share/icons-in-terminal/")
+     ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
+   #+END_SRC
 
 ** Colours
    Colour parentheses according to nesting level:
@@ -493,8 +478,10 @@
                   ("»" . dired-subtree-end)))
   #+END_SRC
 
-  Standard isearch by default:
-  #+BEGIN_SRC emacs-lisp
+* Search & Navigation
+** isearch
+   Standard isearch by default:
+   #+BEGIN_SRC emacs-lisp
     (use-package isearch
       :ensure nil
       :config
@@ -510,30 +497,30 @@
       ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
       ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
       ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
-  #+END_SRC
+   #+END_SRC
 
-* Regular expressions
-  #+BEGIN_SRC emacs-lisp
-    ;; regexp-builder
-    (use-package re-builder
-      :defer t
-      :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
+** Regular expressions
+   #+BEGIN_SRC emacs-lisp
+     ;; regexp-builder
+     (use-package re-builder
+       :defer t
+       :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
 
-    (use-package visual-regexp-steroids
-      :bind
-      (("M-s r" . vr/replace)
-       ("M-s q" . vr/query-replace)
-       ("C-M-%" . vr/query-replace)
-       ;; if you use multiple-cursors, this is for you:
-       ("M-s m" . vr/mc-mark)
-       ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
-       ("C-r" . isearch-backward)
-       ("C-s" . isearch-forward)
-       ("C-M-r" . vr/isearch-backward)
-       ("C-M-s" . vr/isearch-forward))
-      :config (require 'visual-regexp)) ;; TODO check if really necessary
-  #+END_SRC
-  Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
+     (use-package visual-regexp-steroids
+       :bind
+       (("M-s r" . vr/replace)
+        ("M-s q" . vr/query-replace)
+        ("C-M-%" . vr/query-replace)
+        ;; if you use multiple-cursors, this is for you:
+        ("M-s m" . vr/mc-mark)
+        ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
+        ("C-r" . isearch-backward)
+        ("C-s" . isearch-forward)
+        ("C-M-r" . vr/isearch-backward)
+        ("C-M-s" . vr/isearch-forward))
+       :config (require 'visual-regexp)) ;; TODO check if really necessary
+   #+END_SRC
+   Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
 
 * Navigation
   I use [[https://github.com/abo-abo/ace-window][ace-window]] to quickly switch windows…
@@ -579,7 +566,7 @@
   #+END_SRC
 
 * Indentation, tabs, spaces & folding
-  I just heard of editorconfig, which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
+  I just heard of [[https://github.com/editorconfig/editorconfig-emacs][editorconfig]], which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
   #+BEGIN_SRC emacs-lisp
     (use-package editorconfig :defer t)
   #+END_SRC
@@ -605,12 +592,10 @@
 
     (use-package shrink-whitespace
       :bind ("C-x C-o" . shrink-whitespace))
-
-    (global-set-key (kbd "C-%") 'ale/toggle-selective-display)
   #+END_SRC
 
 *** Folding
-    I use origami for code folding:
+    I use [[https://github.com/gregsexton/origami.el][origami]]…
     #+BEGIN_SRC emacs-lisp
       (use-package origami
         :bind (:map origami-mode-map
@@ -619,9 +604,8 @@
                     ("C-<tab>" . origami-recursively-toggle-node))
         :hook (prog-mode . origami-mode))
     #+END_SRC
-    I also use “selective display” as a more generic folding method.
 
-
+    … and [[https://github.com/mrkkrp/vimish-fold][vimish-fold]].
     #+BEGIN_SRC emacs-lisp
       (use-package vimish-fold
         :bind
@@ -642,6 +626,11 @@
         ("<tab>" vimish-fold-toggle "current" :column "Toggle")
         ("a" vimish-fold-toggle-all "all"))
       (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
+    #+END_SRC
+
+    I also use =selective-display= as a more simple folding method.
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-%") 'ale/toggle-selective-display)
     #+END_SRC
 
 * Completion & help
@@ -834,7 +823,7 @@
     Documentation with helm
     #+BEGIN_SRC emacs-lisp
       (use-package helm-dash
-        :defer t
+        :after helm
         :config
         (setq helm-dash-browser-func 'eww)
         (add-hook 'clojure-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Clojure"))))
@@ -982,6 +971,7 @@
     #+BEGIN_SRC emacs-lisp
       (use-package winnow)
     #+END_SRC
+
 * Text manipulation
 ** Region
    #+BEGIN_SRC emacs-lisp
@@ -1059,6 +1049,7 @@
 
      (global-set-key (kbd "C-x _") 'ale/toggle-camel-snake-kebab-case)
    #+END_SRC
+
 ** Diffing
    #+BEGIN_SRC emacs-lisp
      (use-package ztree :defer t)
@@ -1109,125 +1100,107 @@
      (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
    #+END_SRC
 
-** iBuffer
+** Buffer Management
+   Change how buffer names are made unique.
    #+BEGIN_SRC emacs-lisp
-     ;; (setq ibuffer-formats
-     ;;       '((mark modified read-only " "
-     ;;               (name 30 30 :left :elide) " "
-     ;;               (size 9 -1 :right) " "
-     ;;               (mode 16 16 :left :elide) " " filename-and-process)
-     ;;         (mark " " (name 16 -1) " " filename)))
-
-     (use-package ibuffer-vc
-       :config
-       ;; Use human readable Size column instead of original one
-       (define-ibuffer-column size-h
-         (:name "Size" :inline t)
-         (cond
-          ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-          ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
-          ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-          (t (format "%8d" (buffer-size)))))
-
-
-       (add-hook 'ibuffer-hook
-                 (lambda ()
-                   (ibuffer-vc-set-filter-groups-by-vc-root)
-                   (unless (eq ibuffer-sorting-mode 'alphabetic)
-                     (ibuffer-do-sort-by-alphabetic))))
-       (setq ibuffer-formats
-             '((mark modified " " read-only " " vc-status-mini " "
-                     (name 50 50 :left :elide) " "
-                     (size-h 9 -1 :right) " "
-                     (mode 16 16 :left :elide) " "
-                     ;; (vc-status 14 14 :left) " "
-                     filename-and-process))))
-
-     ;; Change how buffer names are made unique
      (require 'uniquify)
      (setq uniquify-buffer-name-style 'post-forward
            uniquify-separator ":")
+   #+END_SRC
 
-     ;; Auto refresh all buffers
+   Auto-refresh all buffers.
+   #+BEGIN_SRC emacs-lisp
      (global-auto-revert-mode 1)
      (dim-minor-name 'global-auto-revert-mode " ↺")
      (dim-minor-name 'auto-revert-mode nil)
    #+END_SRC
 
-** Minibuffer
-   #+BEGIN_SRC emacs-lisp
-     ;; C-M-e to edit minibuffer in a full-size buffer
-     (use-package miniedit
-       :commands minibuffer-edit
-       :init (miniedit-install))
-   #+END_SRC
+*** Minibuffer
+    #+BEGIN_SRC emacs-lisp
+      ;; C-M-e to edit minibuffer in a full-size buffer
+      (use-package miniedit
+        :commands minibuffer-edit
+        :init (miniedit-install))
+    #+END_SRC
 
 * Version control
-** General
-   #+BEGIN_SRC emacs-lisp
-     (use-package git-timemachine :defer t)
 
-     (use-package git-messenger
-       :bind (:map git-messenger-map
-                   ("d" . git-messenger:popup-diff)
-                   ("s" . git-messenger:)
-                   ("c" . git-messenger:copy-commit-id))
-       :hook (git-messenger:popup-buffer-hook . magit-commit-mode)
-       :config (setq git-messenger:show-detail t))
-
-     (use-package gitignore-mode
-       :mode ".gitignore$")
-
-     (use-package gitconfig-mode
-       :mode ".gitconfig$")
-
-     (use-package git-gutter
-       :hook (prog-mode)
-       :bind
-       ("M-N" . git-gutter:next-hunk)
-       ("M-P" . git-gutter:previous-hunk)
-       :config
-       (dim-minor-name 'git-gutter-mode nil)
-       (global-git-gutter-mode +1)
-       (setq git-gutter:ask-p nil
-             git-gutter:hide-gutter t))
-
-     ;; always follow symbolic links for files under VC
+  Always follow symbolic links for files under VC.
+  #+BEGIN_SRC emacs-lisp
      (use-package vc
        :defer t
        :config (setq vc-follow-symlinks t))
-   #+END_SRC
+  #+END_SRC
 
 ** Diff
+*** vdiff
+    #+BEGIN_SRC emacs-lisp
+      (use-package vdiff
+        :disabled
+        :bind (:map vdiff-mode-map
+                    ("C-c" . vdiff-mode-prefix-map))
+        :init (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
+        :config
+        (setq
+         ;; Whether to lock scrolling by default when starting vdiff
+         vdiff-lock-scrolling t
+         ;; external diff program/command to use
+         vdiff-diff-program "diff"
+         ;; Extra arguments to pass to diff. If this is set wrong, you may break vdiff.
+         vdiff-diff-program-args ""
+         ;; Commands that should be executed in other vdiff buffer to keep lines in
+         ;; sync. There is no need to include commands that scroll the buffer here,
+         ;; because those are handled differently.
+         vdiff-mirrored-commands '(next-line
+                                   previous-line
+                                   beginning-of-buffer
+                                   end-of-buffer)
+         ;; Minimum number of lines to fold
+         vdiff-fold-padding 2
+         ;; Unchanged lines to leave unfolded around a fold
+         vdiff-min-fold-size 4
+         ;; Function that returns the string printed for a closed fold. The arguments
+         ;; passed are the number of lines folded, the text on the first line, and the
+         ;; width of the buffer.
+         vdiff-fold-string-function 'vdiff-fold-string-default))
+    #+END_SRC
+
+*** ediff
+    #+BEGIN_SRC emacs-lisp
+      ;; A saner ediff
+      (setq ediff-diff-options "-w"
+            ediff-split-window-function 'split-window-horizontally
+            ediff-window-setup-function 'ediff-setup-windows-plain)
+    #+END_SRC
+
+** Git tools
    #+BEGIN_SRC emacs-lisp
-     (use-package vdiff
-       :disabled
-       :bind (:map vdiff-mode-map
-                   ("C-c" . vdiff-mode-prefix-map))
-       :init (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
-       :config
-       (setq
-        ;; Whether to lock scrolling by default when starting vdiff
-        vdiff-lock-scrolling t
-        ;; external diff program/command to use
-        vdiff-diff-program "diff"
-        ;; Extra arguments to pass to diff. If this is set wrong, you may break vdiff.
-        vdiff-diff-program-args ""
-        ;; Commands that should be executed in other vdiff buffer to keep lines in
-        ;; sync. There is no need to include commands that scroll the buffer here,
-        ;; because those are handled differently.
-        vdiff-mirrored-commands '(next-line
-                                  previous-line
-                                  beginning-of-buffer
-                                  end-of-buffer)
-        ;; Minimum number of lines to fold
-        vdiff-fold-padding 2
-        ;; Unchanged lines to leave unfolded around a fold
-        vdiff-min-fold-size 4
-        ;; Function that returns the string printed for a closed fold. The arguments
-        ;; passed are the number of lines folded, the text on the first line, and the
-        ;; width of the buffer.
-        vdiff-fold-string-function 'vdiff-fold-string-default))
+      (use-package git-timemachine :defer t)
+
+      (use-package git-messenger
+        :bind (:map git-messenger-map
+                    ("d" . git-messenger:popup-diff)
+                    ("s" . git-messenger:)
+                    ("c" . git-messenger:copy-commit-id))
+        :hook (git-messenger:popup-buffer-hook . magit-commit-mode)
+        :config (setq git-messenger:show-detail t))
+
+      (use-package gitignore-mode
+        :mode ".gitignore$")
+
+      (use-package gitconfig-mode
+        :mode ".gitconfig$")
+
+      (use-package git-gutter
+        :hook (prog-mode)
+        :bind
+        ("M-N" . git-gutter:next-hunk)
+        ("M-P" . git-gutter:previous-hunk)
+        :config
+        (dim-minor-name 'git-gutter-mode nil)
+        (global-git-gutter-mode +1)
+        (setq git-gutter:ask-p nil
+              git-gutter:hide-gutter t))
    #+END_SRC
 
 ** Magit
@@ -1235,9 +1208,7 @@
      (use-package magit
        :chords ("qg" . magit-status) ;; run git status for current buffer
        :bind (:map magit-file-mode-map ("C-x g" . hydra-git/body))
-       :config
-       (setq magit-last-seen-setup-instructions "1.4.0")
-       (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
+       :config (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
 
      (defhydra hydra-git(:color blue)
        ;;
@@ -1258,11 +1229,6 @@
        ("f" magit-file-popup "file popup"))
      (global-set-key (kbd "C-x g") 'hydra-git/body)
 
-     ;; A saner ediff
-     (setq ediff-diff-options "-w"
-           ediff-split-window-function 'split-window-horizontally
-           ediff-window-setup-function 'ediff-setup-windows-plain)
-
      (use-package magit-org-todos
        :after magit
        :config
@@ -1273,7 +1239,7 @@
   I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (mostly git projects).
   #+BEGIN_SRC emacs-lisp
     (use-package helm-projectile
-      :defer t
+      :after helm
       :config
       (dim-minor-name 'projectile-mode nil)
       (projectile-global-mode) ;; activate projectile-mode everywhere
@@ -1291,10 +1257,9 @@
         (call-interactively #'magit-fetch-current)))
   #+END_SRC
 
-* Date, time & calendar
-** Date & time in the mode-line
-   I want the date and time displayed in standard format, no M/D/Y nonsense.
-   #+BEGIN_SRC emacs-lisp
+* Date
+  Date and time should be displayed in standard format, no M/D/Y nonsense.
+  #+BEGIN_SRC emacs-lisp
      (setq display-time-day-and-date t ;; display date and time
            display-time-24hr-format t ;; 24h time format
            european-calendar-style t ;; day/month/year format for calendar
@@ -1302,7 +1267,10 @@
            display-time-string-forms '((if (and (not display-time-format) display-time-day-and-date)
                                            (format-time-string "%H:%M, %a %d %b " now))))
      (display-time)
+  #+END_SRC
 
+  Add a hydra to insert the current date (and time) in various formats.
+  #+BEGIN_SRC emacs-lisp
      (defhydra hydra-dates (:color blue :hint nil)
        "
        ^Today^     ^Date^                       ^Date & Time^
@@ -1328,11 +1296,10 @@
        ("i" ab/date-iso-with-time))
 
      (global-set-key (kbd "C-c d") 'hydra-dates/body)
-   #+END_SRC
+  #+END_SRC
 
-** Calendar widget
-   I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of my different calendars:
-   #+BEGIN_SRC emacs-lisp
+  I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of calendars.
+  #+BEGIN_SRC emacs-lisp
     (use-package calfw
       :commands open-calendar
       :config
@@ -1349,10 +1316,17 @@
           (cfw:ical-create-source "Vacances" "http://dynical.com/iCal/weather.ics/?lng=fr&zone=ile-de-france|paris|75100&zone_=E" "yellow")
           (cfw:org-create-source "Green")  ; orgmode source
           ;; (cfw:cal-create-source "Orange") ; diary source
-          (cfw:ical-create-source "hellfest" my-private-secondary-gcal-url "Brown")
           (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "Gray")  ; ICS source1
           ))))
-   #+END_SRC
+  #+END_SRC
+
+* Text
+  #+BEGIN_SRC emacs-lisp
+    (setq default-major-mode 'text-mode) ;; text-mode by default
+    (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
+    (dim-minor-name 'visual-line-mode " ↩")
+    (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
+  #+END_SRC
 
 * Org-mode
   #+BEGIN_SRC emacs-lisp
@@ -1438,78 +1412,47 @@
       :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
   #+END_SRC
 
-* LaTeX
-  #+BEGIN_SRC emacs-lisp
-    (use-package tex
-      :defer t
-      :ensure auctex
-      :config
-      (use-package auctex-latexmk
-        :config
-        (auctex-latexmk-setup)
-        (TeX-global-PDF-mode t)))
-  #+END_SRC
+* Special characters, spelling, i18n
+** Spell checking
+   #+BEGIN_SRC emacs-lisp
+     (use-package my-checks
+       :ensure nil
+       :config
+       (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
+       (dim-minor-name 'flyspell-mode " ✓")
+       (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
+       (dim-minor-name 'dubcaps-mode " ⇧")
+       (use-package define-word :defer t)
 
-* Text
-  #+BEGIN_SRC emacs-lisp
-    (setq default-major-mode 'text-mode) ;; text-mode by default
-    (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
-    (dim-minor-name 'visual-line-mode " ↩")
-    (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
-  #+END_SRC
+       (defhydra hydra-spell (:color teal)
+         ("t" flyspell-mode "toggle" :column "Spelling")
+         ("q" nil "quit")
+         ;; Flyspell
+         ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
+         ("c" flyspell-buffer "check buffer")
+         ("l" define-word-at-point "lookup word")
+         ("n" flyspell-goto-next-error "next error" :color pink)
+         ("p" flyspell-goto-previous-error "previous error" :color pink)
+         ;; dictionary
+         ("d" ispell-change-dictionary "switch…" :column "Dictionary")
+         ("f" ale/switch-to-fr-dict "switch to fr_FR")
+         ("e" ale/switch-to-en-dict "switch to en_GB")
+         ("u" ale/switch-to-us-dict "switch to en_US"))
+       (global-set-key (kbd "C-è") 'hydra-spell/body))
+   #+END_SRC
 
-* Mail
-  #+BEGIN_SRC emacs-lisp
-    ;; (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
-    (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
-  #+END_SRC
+** Synonyms
+   #+BEGIN_SRC emacs-lisp
+     (use-package powerthesaurus :defer t)
+   #+END_SRC
 
-  Let’s use emacs to read our mail (with mu4e) :
-  #+BEGIN_SRC emacs-lisp
-    (use-package mu4e
-      :load-path "/usr/share/emacs/site-lisp/mu4e"
-      :ensure nil
-      :commands mu4e
-      :config
-      (setq mu4e-maildir (expand-file-name "~/Maildir")
-            mu4e-drafts-folder "/[Gmail].Drafts"
-            mu4e-sent-folder   "/[Gmail].Sent Mail"
-            mu4e-trash-folder  "/[Gmail].Trash"
-
-            ;; don't save message to Sent Messages, GMail/IMAP will take care of this
-            mu4e-sent-messages-behavior 'delete
-
-            ;; setup some handy shortcuts
-            mu4e-maildir-shortcuts
-            '(("/INBOX"             . ?i)
-              ("/[Gmail].Starred"   . ?s)
-              ("/[Gmail].Sent Mail" . ?t)
-              ("/[Gmail].Trash"     . ?b))
-
-            ;; allow for updating mail using 'U' in the main view:
-            mu4e-get-mail-command "offlineimap"
-
-            ;; something about ourselves
-            user-mail-address my-private-mail-address
-            user-full-name my-private-full-name
-            ;; I don't use a signature…
-            message-signature (concat "\n-- \n" my-private-full-name)))
-  #+END_SRC
-
-  I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
-  #+BEGIN_SRC emacs-lisp
-    (use-package smtpmail
-      :ensure nil
-      :defer t
-      :config (setq message-send-mail-function 'smtpmail-send-it
-                    starttls-use-gnutls t
-                    smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-server-port nil nil))
-                    smtpmail-auth-credentials (expand-file-name my-private-auth-file)
-                    smtpmail-default-smtp-server my-private-smtp-server
-                    smtpmail-smtp-server my-private-smtp-server
-                    smtpmail-smtp-service my-private-smtp-server-port
-                    smtpmail-debug-info t))
-  #+END_SRC
+** Grammalecte
+   #+BEGIN_SRC emacs-lisp
+     (use-package grammalecte
+       :disabled
+       :ensure nil
+       :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
+   #+END_SRC
 
 * Programming
 ** Formatting
@@ -1680,20 +1623,19 @@
        :hook (emacs-lisp-mode-hook))
    #+END_SRC
 
-* Clojure
+** Clojure
 
-  #+BEGIN_SRC emacs-lisp
-  (use-package clojure-mode
-    :disabled
-    :config
-    (use-package cider)
-    (use-package helm-cider)
+   #+BEGIN_SRC emacs-lisp
+   (use-package clojure-mode
+     :disabled
+     :config
+     (use-package cider)
+     (use-package helm-cider)
 
-    ;; (setq cider-font-lock-dynamically nil)
-    (setq cider-repl-use-pretty-printing t
-          helm-cider-mode t))
-
-  #+END_SRC
+     ;; (setq cider-font-lock-dynamically nil)
+     (setq cider-repl-use-pretty-printing t
+           helm-cider-mode t))
+   #+END_SRC
 
 ** Sql
    #+BEGIN_SRC emacs-lisp
@@ -1722,15 +1664,12 @@
         "\\.vw\\'"
         "\\.prc\\'"
         "\\.pk\\'"))
-
-     ;;; sql-oracle connection without a tnsnames.ora
-     ;; (description=(address_list=(address=(protocol=TCP)(host=myhost.example.com)(port=1521)))(connect_data=(SERVICE_NAME=myservicename)))
-     ;; GÉO : (description=(address_list=(address=(protocol=TCP)(host=DEV-GEO-BACK)(port=1521)))(connect_data=(SID=GEODEV1)
    #+END_SRC
 
 ** Groovy
    #+BEGIN_SRC emacs-lisp
-     (use-package groovy-mode :defer t)
+     (use-package groovy-mode
+       :mode "\\.groovy\\'$")
    #+END_SRC
 
 ** Ruby
@@ -1749,6 +1688,7 @@
        :load-path "elisp/"
        :hook (java-mode))
    #+END_SRC
+
 *** TODO malabar-mode (à tester)
     #+BEGIN_SRC emacs-lisp
       (use-package malabar-mode
@@ -1794,6 +1734,7 @@
     #+BEGIN_SRC emacs-lisp
       (use-package ecb :disabled)
     #+END_SRC
+
 *** meghanada
     #+BEGIN_SRC emacs-lisp
       (use-package autodisass-java-bytecode
@@ -1855,6 +1796,7 @@
           ("h" meghanada-typeinfo)))
 
     #+END_SRC
+
 ** Javascript
    #+BEGIN_SRC emacs-lisp
      (use-package js2-mode
@@ -1889,6 +1831,7 @@
                    (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
                    (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
    #+END_SRC
+
 ** JSON
    #+BEGIN_SRC emacs-lisp
      (use-package json-reformat
@@ -2041,11 +1984,77 @@
        :mode (".md$" . markdown-mode))
    #+END_SRC
 
+** LaTeX
+   #+BEGIN_SRC emacs-lisp
+     (use-package tex
+       :defer t
+       :ensure auctex
+       :config
+       (use-package auctex-latexmk
+         :config
+         (auctex-latexmk-setup)
+         (TeX-global-PDF-mode t)))
+   #+END_SRC
+
 ** Gradle
    #+BEGIN_SRC emacs-lisp
      (use-package gradle-mode
        :mode ("\\.gradle\\'" . gradle-mode))
    #+END_SRC
+
+* Mail
+  #+BEGIN_SRC emacs-lisp
+    ;; (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
+    (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
+  #+END_SRC
+
+  Let’s use emacs to read our mail (with mu4e) :
+  #+BEGIN_SRC emacs-lisp
+    (use-package mu4e
+      :load-path "/usr/share/emacs/site-lisp/mu4e"
+      :ensure nil
+      :commands mu4e
+      :config
+      (setq mu4e-maildir (expand-file-name "~/Maildir")
+            mu4e-drafts-folder "/[Gmail].Drafts"
+            mu4e-sent-folder   "/[Gmail].Sent Mail"
+            mu4e-trash-folder  "/[Gmail].Trash"
+
+            ;; don't save message to Sent Messages, GMail/IMAP will take care of this
+            mu4e-sent-messages-behavior 'delete
+
+            ;; setup some handy shortcuts
+            mu4e-maildir-shortcuts
+            '(("/INBOX"             . ?i)
+              ("/[Gmail].Starred"   . ?s)
+              ("/[Gmail].Sent Mail" . ?t)
+              ("/[Gmail].Trash"     . ?b))
+
+            ;; allow for updating mail using 'U' in the main view:
+            mu4e-get-mail-command "offlineimap"
+
+            ;; something about ourselves
+            user-mail-address my-private-mail-address
+            user-full-name my-private-full-name
+            ;; I don't use a signature…
+            message-signature (concat "\n-- \n" my-private-full-name)))
+  #+END_SRC
+
+  I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
+  #+BEGIN_SRC emacs-lisp
+    (use-package smtpmail
+      :ensure nil
+      :defer t
+      :config (setq message-send-mail-function 'smtpmail-send-it
+                    starttls-use-gnutls t
+                    smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-server-port nil nil))
+                    smtpmail-auth-credentials (expand-file-name my-private-auth-file)
+                    smtpmail-default-smtp-server my-private-smtp-server
+                    smtpmail-smtp-server my-private-smtp-server
+                    smtpmail-smtp-service my-private-smtp-server-port
+                    smtpmail-debug-info t))
+  #+END_SRC
+
 * Web browsing
   I use eww to surf the web in emacs, for simple pages mostly:
   #+BEGIN_SRC emacs-lisp
@@ -2056,9 +2065,10 @@
             browse-url-browser-function 'eww-browse-url ;; set default browser to eww, then ‘&’ to open page firefox
             shr-external-browser 'browse-url-firefox
             shr-width 100 ;; keep sane layout
-            shr-use-fonts nil ;; no fancy fonts in text mode
+            shr-use-fonts t ;; no fancy fonts in text mode
             gnus-button-url 'browse-url-generic))
   #+END_SRC
+
 * Quick access
   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-minor-modes(:color blue :hint nil)
@@ -2156,63 +2166,31 @@
     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
   #+END_SRC
 
-* Special characters, spelling, i18n
-** Spell checking
-   #+BEGIN_SRC emacs-lisp
-     (use-package my-checks
-       :ensure nil
-       :config
-       (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
-       (dim-minor-name 'flyspell-mode " ✓")
-       (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
-       (dim-minor-name 'dubcaps-mode " ⇧")
-       (use-package define-word :defer t)
-
-       (defhydra hydra-spell (:color teal)
-         ("t" flyspell-mode "toggle" :column "Spelling")
-         ("q" nil "quit")
-         ;; Flyspell
-         ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
-         ("c" flyspell-buffer "check buffer")
-         ("w" define-word-at-point "lookup word")
-         ("n" flyspell-goto-next-error "next error" :color pink)
-         ("p" flyspell-goto-previous-error "previous error" :color pink)
-         ;; dictionary
-         ("d" ispell-change-dictionary "switch…" :column "Dictionary")
-         ("f" ale/switch-to-fr-dict "switch to fr_FR")
-         ("e" ale/switch-to-en-dict "switch to en_GB")
-         ("u" ale/switch-to-us-dict "switch to en_US"))
-       (global-set-key (kbd "C-è") 'hydra-spell/body))
-   #+END_SRC
-** Synonyms
-   #+BEGIN_SRC emacs-lisp
-     (use-package powerthesaurus
-     :defer t)
-   #+END_SRC
-
-** Grammalecte
-   #+BEGIN_SRC emacs-lisp
-     (use-package grammalecte
-       :disabled
-       :ensure nil
-       :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
-   #+END_SRC
-
 * Environment
   #+BEGIN_SRC emacs-lisp
     (load-file (expand-file-name "env.el" user-emacs-directory))
   #+END_SRC
 
 * Mode-line
-  After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs.
-
   #+BEGIN_SRC emacs-lisp
     (use-package modeline-posn
       :ensure nil
       :load-path "elisp/"
       :config (load-library "modeline-posn.el"))
+  #+END_SRC
 
+  Let’s have an indicator in the mode-line for search results:
+  #+BEGIN_SRC emacs-lisp
+    (use-package anzu
+      :config
+      (dim-minor-name 'anzu-mode nil)
+      (global-anzu-mode t)
+      (setq-default anzu-cons-mode-line-p t))
+  #+END_SRC
 
+  After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs. [[https://github.com/Malabarba/rich-minority][rich-minority]] manages what minor modes should be displayed in the modeline
+
+  #+BEGIN_SRC emacs-lisp
     (use-package sml-modeline)
 
     (use-package smart-mode-line
@@ -2225,6 +2203,7 @@
                                        ("^~/\\.emacs\\.d/" ":ED:")
                                        ("^/sudo:.*:" ":SU:")
                                        ("^~/Terminalcity/" ":T:")))
+
     ;;;; Rich Minority
       (use-package rich-minority
         :config
@@ -2333,11 +2312,10 @@
      (use-package tomatinho :disabled)
    #+END_SRC
 
-* Demos
-
-  #+BEGIN_SRC emacs-lisp
-    (use-package command-log-mode :defer t)
-  #+END_SRC
+** Demos
+   #+BEGIN_SRC emacs-lisp
+     (use-package command-log-mode :defer t)
+   #+END_SRC
 
 ** Restclient
    #+BEGIN_SRC emacs-lisp
@@ -2360,6 +2338,7 @@
        ;; Open recently created pastes in an external browser
        (setq webpaste-open-in-browser t))
    #+END_SRC
+
 ** Spritz
    [[http://spritzinc.com/][spritz]] is a reading technique. [[https://github.com/emacsmirror/spray][Spray-mode]] implements it for any emacs buffer.
    #+BEGIN_SRC emacs-lisp
@@ -2380,10 +2359,9 @@
    It now seems possible to read epub documents (ebooks) from within emacs:
    #+BEGIN_SRC emacs-lisp
      (use-package nov
-       :disabled
-       :config
-       ((add-to-list 'auto-mode-alist '(".epub$" . nov-mode))))
+       :mode ("\\.epub\\'" . nov-mode))
    #+END_SRC
+
 ** Text filling
    Lorem ipsum text filler:
    #+BEGIN_SRC emacs-lisp
@@ -2425,7 +2403,8 @@
     #+END_SRC
 ** News
 *** RSS feeds
-**** Avandu (gateway to tiny tiny RSS):
+**** Avandu
+     Avandu is a gateway to Tiny Tiny RSS.
      #+BEGIN_SRC emacs-lisp
        (use-package avandu
          :bind (:map avandu-article-mode-map
@@ -2453,6 +2432,7 @@
          (setq rmh-elfeed-org-auto-ignore-invalid-feeds t
                rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org")))
      #+END_SRC
+
 *** Stories
     #+BEGIN_SRC emacs-lisp
       (use-package helm-lobsters
