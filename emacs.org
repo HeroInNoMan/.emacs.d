@@ -2412,8 +2412,6 @@
 *** Typing
     #+BEGIN_SRC emacs-lisp
       (use-package speed-type :defer t)
-      (use-package typit :defer t)
-      (use-package typing :defer t)
     #+END_SRC
 
 *** Other
@@ -2449,7 +2447,6 @@
        (use-package elfeed :defer t)
 
        (use-package elfeed-org
-         :defer t
          :after elfeed
          :config
          (elfeed-org)
@@ -2461,11 +2458,7 @@
       (use-package helm-lobsters
       :commands helm-lobsters)
     #+END_SRC
-* Epilogue
-  My init file (emacs.org) should always be open.
-  #+BEGIN_SRC emacs-lisp
-    ;; (ale/find-init-file)
-  #+END_SRC
+
 * Useful links
 ** blogs
    - http://sachachua.com/blog/
