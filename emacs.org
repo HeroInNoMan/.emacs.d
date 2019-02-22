@@ -1632,7 +1632,6 @@
    #+END_SRC
 
 ** Clojure
-
    #+BEGIN_SRC emacs-lisp
    (use-package clojure-mode
      :disabled
@@ -2433,6 +2432,7 @@
        (use-package elfeed :defer t)
 
        (use-package elfeed-org
+         :defer t
          :after elfeed
          :config
          (elfeed-org)
