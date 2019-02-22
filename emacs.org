@@ -785,13 +785,14 @@
           ("."     helm-imenu-anywhere "imenu any")
           ("b"     helm-filtered-bookmarks "bookmark")
           ("'"     helm-register "register")
-          ("y"     helm-show-kill-ring "kill-ring")
+          ("k"     helm-show-kill-ring "kill-ring")
           ("<SPC>" helm-all-mark-rings "all mark rings")
           ;; completion
           ("<tab>" helm-lisp-completion-at-point "lisp" :column "Complete")
           ("$"     helm-lines "lines")
           ("g"     helm-google-suggest "google")
           ("s"     helm-surfraw "surfraw")
+          ("y"     yas-insert-snippet "yasnippet")
           ("w"     helm-wikipedia-suggest "wikipedia")
           ;; documentation & help
           ("h b"   helm-descbinds "bindings" :column "Doc & Help")
@@ -809,7 +810,7 @@
           ("c"     helm-colors "colours")
           ("8"     helm-ucs "ucs")
           (","     helm-calcul-expression "calcul")
-          ("k"     helm-list-elisp-packages "packages")
+          ("j"     helm-list-elisp-packages "packages")
           ("X"     helm-select-xfont "xfont")
           ("x"     helm-run-external-command "run external"))
         (defun my-do-ag-project-root-or-dir ()
@@ -907,12 +908,15 @@
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
        :commands yas-new-snippet yas-insert-snippet
-       :chords ("yq" . yas-insert-snippet)
+       :chords ("yq" . hydra-yasnippet/body)
        :bind
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
        ("C-c y" . hydra-yasnippet/body)
        :config
+       (use-package auto-yasnippet
+         :config
+         (setq aya-persist-snippets-dir (concat user-emacs-directory "etc/yasnippet/snippets")))
        (setq yas-snippet-dirs
              `(,(concat user-emacs-directory "etc/yasnippet/snippets")
                ,(concat user-emacs-directory "elpa/yasnippet-snippets-20190202.2145/snippets")))
@@ -963,11 +967,15 @@
 
        (defhydra hydra-yasnippet(:color teal)
          ("t" yas-describe-tables "tables" :column "Snippet")
+         ("r" yas-reload-all "reload")
          ("q" nil "quit")
          ("e" yas-ido-expand "ido expand" :column "Insert")
          ("i" yas-insert-snippet "insert")
-         ("n" yas-new-snippet "create" :column "Create")
-         )
+         ("n" yas-new-snippet "new" :column "Create")
+         ("c" aya-create "create (with $, ~ or `')" :column "Auto-yasnippet")
+         ("a" aya-expand "apply")
+         ("p" aya-persist-snippet "persist"))
+
        (use-package yasnippet-snippets)
        (yas-reload-all)
        (yas-global-mode 1))
