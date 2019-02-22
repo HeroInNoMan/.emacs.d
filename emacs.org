@@ -107,7 +107,6 @@
                  ale/apply-local-theme-modern)
       :load-path "elisp/"
       :bind
-      ("C-c i" . ale/indent-region-or-buffer) ;; indent whole buffer
       ("<C-M-down>" . duplicate-current-line)
       ("<f5>" . ale/revert-buffer-no-confirm) ;; re-read file from disk
       ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
@@ -272,11 +271,18 @@
   [[https://github.com/bbatsov/crux][Crux]] brings a lot of better default behaviour and functions.
   #+BEGIN_SRC emacs-lisp
     (use-package crux
+      ;; replace some commands
+      :bind
+      ("C-M-<down>" . crux-duplicate-current-line-or-region)
+      ("M-j" . crux-top-join-line)
+      ("C-c i" . crux-cleanup-buffer-or-region)
       :config
+      (global-set-key [remap move-beginning-of-line] #'crux-move-beginning-of-line)
       (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
       (crux-reopen-as-root-mode)
-      ;; advices
-      (crux-with-region-or-buffer comment-or-uncomment-region)
+      ;; advices to make region-aware commands act on whole line if no region
+      (crux-with-region-or-line comment-or-uncomment-region)
+      ;; advices to make region-aware commands act on whole buffer if no region
       (crux-with-region-or-buffer indent-region)
       (crux-with-region-or-buffer untabify)
       (crux-with-region-or-buffer tabify))
@@ -1026,12 +1032,6 @@
      ;; Remove text in active region if inserting text
      (pending-delete-mode t)
 
-     ;; join lines below onto current line
-     (global-set-key (kbd "M-j")
-                     (lambda ()
-                       (interactive)
-                       (join-line -1)))
-
      ;; Allow pasting selection outside of Emacs
      (setq-default select-enable-clipboard t
                    x-select-enable-clipboard t)
@@ -1606,13 +1606,13 @@
        :config (flycheck-mode t)
        :bind (:map lisp-mode-map
                    ("C-c C-c" . eval-region)
-                   ("C-c C-r" . eval-and-replace)))
+                   ("C-c C-r" . crux-eval-and-replace)))
 
      (use-package elisp-mode
        :ensure nil
        :bind (:map emacs-lisp-mode-map
                    ("C-c C-c" . eval-region)
-                   ("C-c C-r" . eval-and-replace)))
+                   ("C-c C-r" . crux-eval-and-replace)))
 
      (use-package ielm
        :ensure nil

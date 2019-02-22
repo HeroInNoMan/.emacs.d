@@ -8,22 +8,6 @@
   (interactive)
   (revert-buffer :ignore-auto :noconfirm))
 
-(defun ale/indent-region-or-buffer ()
-  "Indent region or whole buffer"
-  (interactive)
-  (cond ((region-active-p)
-         (let ((start (region-beginning))
-               (end (region-end)))
-           (indent-region start end nil)
-           (delete-trailing-whitespace start end)
-           (untabify start end)
-           (message "Region indented.")))
-        (t
-         (indent-region (point-min) (point-max) nil)
-         (delete-trailing-whitespace (point-min) (point-max))
-         (untabify (point-min) (point-max))
-         (message "Buffer indented."))))
-
 (unless (fboundp 'prefix-region)
   (defun prefix-region (prefix)
     "Add a prefix string to each line between mark and point."
