@@ -2366,8 +2366,7 @@
 ** epub
    It now seems possible to read epub documents (ebooks) from within emacs:
    #+BEGIN_SRC emacs-lisp
-     (use-package nov
-       :mode ("\\.epub\\'" . nov-mode))
+     (use-package nov)
    #+END_SRC
 
 ** Text filling
