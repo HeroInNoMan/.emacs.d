@@ -417,7 +417,7 @@
        :hook (prog-mode . highlight-indent-guides-mode))
    #+END_SRC
 
-** Icons in terminal:
+** Icons in terminal
    #+BEGIN_SRC emacs-lisp
      (use-package font-lock+
        :ensure nil
