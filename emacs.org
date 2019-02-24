@@ -484,50 +484,6 @@
                   ("»" . dired-subtree-end)))
   #+END_SRC
 
-* Search & Navigation
-** isearch
-   Standard isearch by default:
-   #+BEGIN_SRC emacs-lisp
-    (use-package isearch
-      :ensure nil
-      :config
-      (dim-minor-name 'isearch-mode (concat " " (icons-in-terminal 'linea_basic_magnifier :foreground "pink" :height 1.4))))
-
-    (use-package isearch-dabbrev
-      :bind (:map isearch-mode-map
-                  ("<tab>" . isearch-dabbrev-expand)
-                  ("M-/" . isearch-dabbrev-expand)))
-
-    (use-package smartscan
-      :bind
-      ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
-      ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
-      ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
-   #+END_SRC
-
-** Regular expressions
-   #+BEGIN_SRC emacs-lisp
-     ;; regexp-builder
-     (use-package re-builder
-       :defer t
-       :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
-
-     (use-package visual-regexp-steroids
-       :bind
-       (("M-s r" . vr/replace)
-        ("M-s q" . vr/query-replace)
-        ("C-M-%" . vr/query-replace)
-        ;; if you use multiple-cursors, this is for you:
-        ("M-s m" . vr/mc-mark)
-        ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
-        ("C-r" . isearch-backward)
-        ("C-s" . isearch-forward)
-        ("C-M-r" . vr/isearch-backward)
-        ("C-M-s" . vr/isearch-forward))
-       :config (require 'visual-regexp)) ;; TODO check if really necessary
-   #+END_SRC
-   Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
-
 * Navigation
   I use [[https://github.com/abo-abo/ace-window][ace-window]] to quickly switch windows…
   #+BEGIN_SRC emacs-lisp
@@ -571,7 +527,7 @@
       :config (make-command-repeatable 'goto-last-change))
   #+END_SRC
 
-* Indentation, tabs, spaces & folding
+* Whitespace
   I just heard of [[https://github.com/editorconfig/editorconfig-emacs][editorconfig]], which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
   #+BEGIN_SRC emacs-lisp
     (use-package editorconfig :defer t)
@@ -600,44 +556,88 @@
       :bind ("C-x C-o" . shrink-whitespace))
   #+END_SRC
 
-*** Folding
-    I use [[https://github.com/gregsexton/origami.el][origami]]…
-    #+BEGIN_SRC emacs-lisp
-      (use-package origami
-        :bind (:map origami-mode-map
-                    ("C-x x" . origami-toggle-all-nodes)
-                    ("C-x y" . origami-show-only-node)
-                    ("C-<tab>" . origami-recursively-toggle-node))
-        :hook (prog-mode . origami-mode))
-    #+END_SRC
+* Folding
+  I use [[https://github.com/gregsexton/origami.el][origami]]…
+  #+BEGIN_SRC emacs-lisp
+    (use-package origami
+      :bind (:map origami-mode-map
+                  ("C-x x" . origami-toggle-all-nodes)
+                  ("C-x y" . origami-show-only-node)
+                  ("C-<tab>" . origami-recursively-toggle-node))
+      :hook (prog-mode . origami-mode))
+  #+END_SRC
 
-    … and [[https://github.com/mrkkrp/vimish-fold][vimish-fold]].
-    #+BEGIN_SRC emacs-lisp
-      (use-package vimish-fold
-        :bind
-        (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
-              :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
-        :config
-        (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
-        (vimish-fold-global-mode 1)
-        (setq-default vimish-fold-header-width 79))
+  … and [[https://github.com/mrkkrp/vimish-fold][vimish-fold]].
+  #+BEGIN_SRC emacs-lisp
+    (use-package vimish-fold
+      :bind
+      (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
+            :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
+      :config
+      (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
+      (vimish-fold-global-mode 1)
+      (setq-default vimish-fold-header-width 79))
 
-      (defhydra hydra-fold (:color pink)
-        ("q" nil "quit" :column "Fold")
-        ("f" vimish-fold "fold" :column "Do")
-        ("k" vimish-fold-delete "kill")
-        ("K" vimish-fold-delete-all "kill all")
-        ("p" vimish-fold-previous-fold "previous" :column "Jump")
-        ("n" vimish-fold-next-fold "next")
-        ("<tab>" vimish-fold-toggle "current" :column "Toggle")
-        ("a" vimish-fold-toggle-all "all"))
-      (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
-    #+END_SRC
+    (defhydra hydra-fold (:color pink)
+      ("q" nil "quit" :column "Fold")
+      ("f" vimish-fold "fold" :column "Do")
+      ("k" vimish-fold-delete "kill")
+      ("K" vimish-fold-delete-all "kill all")
+      ("p" vimish-fold-previous-fold "previous" :column "Jump")
+      ("n" vimish-fold-next-fold "next")
+      ("<tab>" vimish-fold-toggle "current" :column "Toggle")
+      ("a" vimish-fold-toggle-all "all"))
+    (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
+  #+END_SRC
 
-    I also use =selective-display= as a more simple folding method.
-    #+BEGIN_SRC emacs-lisp
-      (global-set-key (kbd "C-%") 'ale/toggle-selective-display)
-    #+END_SRC
+  I also use =selective-display= as a more simple folding method.
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-%") 'ale/toggle-selective-display)
+  #+END_SRC
+
+* Search & Navigation
+** isearch
+   Standard isearch by default:
+   #+BEGIN_SRC emacs-lisp
+    (use-package isearch
+      :ensure nil
+      :config
+      (dim-minor-name 'isearch-mode (concat " " (icons-in-terminal 'linea_basic_magnifier :foreground "pink" :height 1.4))))
+
+    (use-package isearch-dabbrev
+      :bind (:map isearch-mode-map
+                  ("<tab>" . isearch-dabbrev-expand)
+                  ("M-/" . isearch-dabbrev-expand)))
+
+    (use-package smartscan
+      :bind
+      ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
+      ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
+      ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
+   #+END_SRC
+
+** Regular expressions
+   #+BEGIN_SRC emacs-lisp
+     ;; regexp-builder
+     (use-package re-builder
+       :defer t
+       :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
+
+     (use-package visual-regexp-steroids
+       :bind
+       (("M-s r" . vr/replace)
+        ("M-s q" . vr/query-replace)
+        ("C-M-%" . vr/query-replace)
+        ;; if you use multiple-cursors, this is for you:
+        ("M-s m" . vr/mc-mark)
+        ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
+        ("C-r" . isearch-backward)
+        ("C-s" . isearch-forward)
+        ("C-M-r" . vr/isearch-backward)
+        ("C-M-s" . vr/isearch-forward))
+       :config (require 'visual-regexp)) ;; TODO check if really necessary
+   #+END_SRC
+   Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
 
 * Completion & help
 ** Completion
@@ -716,119 +716,119 @@
    #+END_SRC
 
 ** Helm
-*** Helm package
-    #+BEGIN_SRC emacs-lisp
-      (use-package helm
-        :chords
-        ("bf" . helm-for-files) ;; snappy helm instance
-        ("éè" . my-do-ag-project-root-or-dir) ;; grep in current project or dir
-        ("«»" . hydra-helm-config/body) ;; all (useful) helm commands in one hydra
-        :bind
-        (("M-x" . helm-M-x) ;; superior to M-x
-         ("C-x M-x" . execute-extended-command)
-         ("C-c h" . hydra-helm-config/body)
-         ("C-h a" . helm-apropos)
-         :map helm-map
-         ("M-«" . helm-beginning-of-buffer)
-         ("M-»" . helm-end-of-buffer)
-         :map shell-mode-map
-         ("C-c C-l" . helm-comint-input-ring)
-         :map minibuffer-local-map
-         ("C-c C-l" . helm-minibuffer-history))
-        :config
-        (require 'helm-config)
-        (dim-minor-name 'helm-mode nil)
-        (helm-mode 0) ;; only on demand
-        (helm-autoresize-mode t)
-        (semantic-mode 1) ;; useful for imenu-like navigation
-        (setq helm-M-x-fuzzy-match t
-              helm-locate-command "locate %s -e -A --regex %s -d ~/var/mlocate.db:/var/lib/mlocate/mlocate.db"
-              helm-adaptive-mode t
-              helm-ag-base-command "ag --nocolor --nogroup --smart-case"
-              helm-ag-insert-at-point 'symbol
-              helm-buffer-max-length nil
-              helm-buffers-fuzzy-matching t
-              helm-candidate-number-limit 300
-              helm-echo-input-in-header-line nil
-              helm-ff-file-name-history-use-recentf t
-              helm-ff-skip-boring-files t
-              helm-net-prefer-curl t
-              helm-recentf-fuzzy-match t
-              helm-split-window-default-side 'right
-              helm-for-files-preferred-list '(helm-source-buffers-list
-                                              helm-source-bookmarks
-                                              helm-source-recentf
-                                              helm-source-files-in-current-dir
-                                              helm-source-file-cache
-                                              ;; helm-source-file-name-history
-                                              helm-source-locate
-                                              helm-source-find-files))
-        (defhydra hydra-helm-config(:color teal)
-          ;;
-          ("r"     helm-resume "resume" :column "Helm")
-          ("q"     nil "quit")
-          ;; find files & buffers
-          ("l"     helm-locate "locate" :column "Find")
-          ("/"     helm-find "find")
-          ("F"     helm-find-files "files")
-          ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
-          ("m"     helm-mini "mini")
-          ("p"     helm-projectile "projectile")
-          ;; search
-          ("R"     helm-regexp "regexp" :column "Search")
-          ("o"     helm-occur "occur")
-          ("a"     helm-do-grep-ag "ag grep")
-          ;; navigate
-          ("e"     helm-etags-select "etags" :column "Navigate")
-          ("i"     helm-semantic-or-imenu "imenu")
-          ("I"     helm-imenu-in-all-buffers "imenu all")
-          ("."     helm-imenu-anywhere "imenu any")
-          ("b"     helm-filtered-bookmarks "bookmark")
-          ("'"     helm-register "register")
-          ("k"     helm-show-kill-ring "kill-ring")
-          ("<SPC>" helm-all-mark-rings "all mark rings")
-          ;; completion
-          ("<tab>" helm-lisp-completion-at-point "lisp" :column "Complete")
-          ("$"     helm-lines "lines")
-          ("g"     helm-google-suggest "google")
-          ("s"     helm-surfraw "surfraw")
-          ("y"     yas-insert-snippet "yasnippet")
-          ("w"     helm-wikipedia-suggest "wikipedia")
-          ;; documentation & help
-          ("h b"   helm-descbinds "bindings" :column "Doc & Help")
-          ("h e"   helm-eval-expression-with-eldoc "eldoc")
-          ("h i"   helm-info-at-point "info")
-          ("h r"   helm-info-emacs "emacs")
-          ("h g"   helm-info-gnus "gnus")
-          ("h h"   helm-documentation "doc")
-          ("h a"   helm-apropos "a propos")
-          ("h m"   helm-man-woman "woman")
-          ("-"     helm-dash-at-point "dash")
-          ;; other
-          ("t"     helm-top "top" :column "Other")
-          ("P"     helm-list-emacs-process "process")
-          ("c"     helm-colors "colours")
-          ("8"     helm-ucs "ucs")
-          (","     helm-calcul-expression "calcul")
-          ("j"     helm-list-elisp-packages "packages")
-          ("X"     helm-select-xfont "xfont")
-          ("x"     helm-run-external-command "run external"))
-        (defun my-do-ag-project-root-or-dir ()
-          "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
-          (interactive)
-          (require 'helm-ag)
-          (let ((rootdir (helm-ag--project-root)))
-            (unless rootdir (helm-do-ag default-directory))
-            (helm-do-ag rootdir))))
-    #+END_SRC
-*** More tools with Helm
-    #+BEGIN_SRC emacs-lisp
+   Main =helm= configuration, with a big hydra as an entry point for almost all helm commands I use.
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm
+       :chords
+       ("bf" . helm-for-files) ;; snappy helm instance
+       ("éè" . my-do-ag-project-root-or-dir) ;; grep in current project or dir
+       ("«»" . hydra-helm-config/body) ;; all (useful) helm commands in one hydra
+       :bind
+       (("M-x" . helm-M-x) ;; superior to M-x
+        ("C-x M-x" . execute-extended-command)
+        ("C-c h" . hydra-helm-config/body)
+        ("C-h a" . helm-apropos)
+        :map helm-map
+        ("M-«" . helm-beginning-of-buffer)
+        ("M-»" . helm-end-of-buffer)
+        :map minibuffer-local-map
+        ("C-c C-l" . helm-minibuffer-history))
+       :config
+       (require 'helm-config)
+       (dim-minor-name 'helm-mode nil)
+       (helm-mode 0) ;; only on demand
+       (helm-autoresize-mode t)
+       (semantic-mode 1) ;; useful for imenu-like navigation
+       (setq helm-M-x-fuzzy-match t
+             helm-locate-command "locate %s -e -A --regex %s -d ~/var/mlocate.db:/var/lib/mlocate/mlocate.db"
+             helm-adaptive-mode t
+             helm-ag-base-command "ag --nocolor --nogroup --smart-case"
+             helm-ag-insert-at-point 'symbol
+             helm-buffer-max-length nil
+             helm-buffers-fuzzy-matching t
+             helm-candidate-number-limit 300
+             helm-echo-input-in-header-line nil
+             helm-ff-file-name-history-use-recentf t
+             helm-ff-skip-boring-files t
+             helm-net-prefer-curl t
+             helm-recentf-fuzzy-match t
+             helm-split-window-default-side 'right
+             helm-for-files-preferred-list '(helm-source-buffers-list
+                                             helm-source-bookmarks
+                                             helm-source-recentf
+                                             helm-source-files-in-current-dir
+                                             helm-source-file-cache
+                                             ;; helm-source-file-name-history
+                                             helm-source-locate
+                                             helm-source-find-files))
+       (defhydra hydra-helm-config(:color teal)
+         ;;
+         ("r"     helm-resume "resume" :column "Helm")
+         ("q"     nil "quit")
+         ;; find files & buffers
+         ("l"     helm-locate "locate" :column "Find")
+         ("/"     helm-find "find")
+         ("F"     helm-find-files "files")
+         ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
+         ("m"     helm-mini "mini")
+         ("p"     helm-projectile "projectile")
+         ;; search
+         ("R"     helm-regexp "regexp" :column "Search")
+         ("o"     helm-occur "occur")
+         ("a"     helm-do-grep-ag "ag grep")
+         ("G"     helm-git-grep "git grep")
+         ;; navigate
+         ("e"     helm-etags-select "etags" :column "Navigate")
+         ("i"     helm-semantic-or-imenu "imenu")
+         ("I"     helm-imenu-in-all-buffers "imenu all")
+         ("."     helm-imenu-anywhere "imenu any")
+         ("b"     helm-filtered-bookmarks "bookmark")
+         ("'"     helm-register "register")
+         ("k"     helm-show-kill-ring "kill-ring")
+         ("<SPC>" helm-all-mark-rings "all mark rings")
+         ;; completion
+         ("<tab>" helm-lisp-completion-at-point "lisp" :column "Complete")
+         ("$"     helm-lines "lines")
+         ("g"     helm-google-suggest "google")
+         ("s"     helm-surfraw "surfraw")
+         ("y"     yas-insert-snippet "yasnippet")
+         ("w"     helm-wikipedia-suggest "wikipedia")
+         ;; documentation & help
+         ("h b"   helm-descbinds "bindings" :column "Doc & Help")
+         ("h e"   helm-eval-expression-with-eldoc "eldoc")
+         ("h i"   helm-info-at-point "info")
+         ("h r"   helm-info-emacs "emacs")
+         ("h g"   helm-info-gnus "gnus")
+         ("h h"   helm-documentation "doc")
+         ("h a"   helm-apropos "a propos")
+         ("h m"   helm-man-woman "woman")
+         ("-"     helm-dash-at-point "dash")
+         ;; other
+         ("t"     helm-top "top" :column "Other")
+         ("P"     helm-list-emacs-process "process")
+         ("c"     helm-colors "colours")
+         ("8"     helm-ucs "ucs")
+         (","     helm-calcul-expression "calcul")
+         ("j"     helm-list-elisp-packages "packages")
+         ("X"     helm-select-xfont "xfont")
+         ("x"     helm-run-external-command "run external"))
+       (defun my-do-ag-project-root-or-dir ()
+         "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
+         (interactive)
+         (require 'helm-ag)
+         (let ((rootdir (helm-ag--project-root)))
+           (unless rootdir (helm-do-ag default-directory))
+           (helm-do-ag rootdir))))
+   #+END_SRC
+
+   =helm-descbinds= lets me browse all user-defined keybindings.
+   #+BEGIN_SRC emacs-lisp
       (use-package helm-descbinds
         :bind ("C-h b" . helm-descbinds))
-    #+END_SRC
+   #+END_SRC
 
-    Documentation with helm
-    #+BEGIN_SRC emacs-lisp
+   =helm-dash= allows access to the full documentation of a language.
+   #+BEGIN_SRC emacs-lisp
       (use-package helm-dash
         :after helm
         :config
@@ -837,14 +837,16 @@
         (add-hook 'java-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Java"))))
         (add-hook 'js-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Javascript"))))
         (add-hook 'rust-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Rust")))))
+   #+END_SRC
 
-    #+END_SRC
-
-*** Searching with Helm
-    #+BEGIN_SRC emacs-lisp
+   Let’s make =ace-jump-mode= also available during a helm session.
+   #+BEGIN_SRC emacs-lisp
       (use-package ace-jump-helm-line
         :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
+   #+END_SRC
 
+   Let’s add some grepping facilities.
+   #+BEGIN_SRC emacs-lisp
       (use-package wgrep
         :bind (:map grep-mode-map
                     ("C-x C-q" . wgrep-change-to-wgrep-mode)
@@ -856,53 +858,61 @@
                     ("n" . next-line)
                     ("C-x C-q" . wgrep-change-to-wgrep-mode)
                     ("C-c C-c" . wgrep-finish-edit)))
+   #+END_SRC
 
-      (use-package helm-swoop
-        :bind
-        ("C-S-s" . helm-swoop)
-        (:map isearch-mode-map
-              ;; When doing isearch, hand the word over to helm-swoop
-              ("M-i" . helm-swoop-from-isearch))
-        (:map helm-swoop-map
-              ;; From helm-swoop to helm-multi-swoop-all
-              ("M-i" . helm-multi-swoop-all-from-helm-swoop)
-              ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
-              ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
-              ;; Move up and down like isearch
-              ("C-r" . helm-previous-line)
-              ("C-s" . helm-next-line)
-              ("C-r" . helm-previous-line)
-              ("C-s" . helm-next-line))
-        :config
-        ;; Save buffer when helm-multi-swoop-edit complete
-        (setq helm-multi-swoop-edit-save t
+   =Helm-swoop= can be called during =isearch= to make searching easier with big files or big number of occurences.
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-swoop
+       :bind
+       ("C-S-s" . helm-swoop)
+       (:map isearch-mode-map
+             ;; When doing isearch, hand the word over to helm-swoop
+             ("M-i" . helm-swoop-from-isearch))
+       (:map helm-swoop-map
+             ;; From helm-swoop to helm-multi-swoop-all
+             ("M-i" . helm-multi-swoop-all-from-helm-swoop)
+             ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+             ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
+             ;; Move up and down like isearch
+             ("C-r" . helm-previous-line)
+             ("C-s" . helm-next-line)
+             ("C-r" . helm-previous-line)
+             ("C-s" . helm-next-line))
+       :config
+       ;; Save buffer when helm-multi-swoop-edit complete
+       (setq helm-multi-swoop-edit-save t
 
-              ;; If this value is t, split window inside the current window
-              helm-swoop-split-with-multiple-windows nil
+             ;; If this value is t, split window inside the current window
+             helm-swoop-split-with-multiple-windows nil
 
-              ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-              helm-swoop-split-direction 'split-window-horizontally
+             ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
+             helm-swoop-split-direction 'split-window-horizontally
 
-              ;; If nil, you can slightly boost invoke speed in exchange for text color
-              helm-swoop-speed-or-color t
+             ;; If nil, you can slightly boost invoke speed in exchange for text color
+             helm-swoop-speed-or-color t
 
-              ;; ;; Go to the opposite side of line from the end or beginning of line
-              helm-swoop-move-to-line-cycle nil
+             ;; ;; Go to the opposite side of line from the end or beginning of line
+             helm-swoop-move-to-line-cycle nil
 
-              ;; Optional face for line numbers
-              ;; Face name is `helm-swoop-line-number-face`
-              helm-swoop-use-line-number-face t
+             ;; Optional face for line numbers
+             ;; Face name is `helm-swoop-line-number-face`
+             helm-swoop-use-line-number-face t
 
-              ;; If you prefer fuzzy matching
-              helm-swoop-use-fuzzy-match nil))
+             ;; If you prefer fuzzy matching
+             helm-swoop-use-fuzzy-match nil))
+   #+END_SRC
 
+   Let’s enable a git-aware grep search
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-git-grep
+       :after helm)
+   #+END_SRC
 
-      (use-package helm-git-grep
-        :after helm)
-
-      (use-package helm-lines
-        :commands (helm-lines))
-    #+END_SRC
+   Let’s add a helm module to auto-complete full lines.
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-lines
+       :commands (helm-lines))
+   #+END_SRC
 
 ** Snippets
    #+BEGIN_SRC emacs-lisp
@@ -1081,33 +1091,6 @@
        (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
    #+END_SRC
 
-** Scratch
-   #+BEGIN_SRC emacs-lisp
-     (use-package multi-scratch ;; scratch
-       :ensure nil
-       :load-path "elisp/"
-       :bind
-       ("C-x \"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
-       ("M-\"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
-       ("C-x «" . multi-scratch-prev) ;; jump to previous scratch buffer
-       ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
-       :config (setq multi-scratch-buffer-name "new"))
-
-     (use-package temporary-persistent)
-
-     (use-package persistent-scratch
-       :config (persistent-scratch-setup-default))
-
-     ;; buffer & file handling
-     (global-set-key (kbd "M-é") 'previous-buffer) ;; call previous buffer
-     (global-set-key (kbd "M-è") 'next-buffer) ;; call next buffer
-     (global-set-key (kbd "C-x M-b") 'ibuffer) ;; call ibuffer
-     (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
-     (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
-     (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
-     (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
-   #+END_SRC
-
 ** Buffer Management
    Change how buffer names are made unique.
    #+BEGIN_SRC emacs-lisp
@@ -1122,6 +1105,35 @@
      (dim-minor-name 'global-auto-revert-mode " ↺")
      (dim-minor-name 'auto-revert-mode nil)
    #+END_SRC
+
+   Some more buffer manipulation bindings.
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "M-é") 'previous-buffer) ;; call previous buffer
+     (global-set-key (kbd "M-è") 'next-buffer) ;; call next buffer
+     (global-set-key (kbd "C-x M-b") 'ibuffer) ;; call ibuffer
+     (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
+     (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
+     (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
+     (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
+   #+END_SRC
+
+*** Scratch
+    #+BEGIN_SRC emacs-lisp
+      (use-package multi-scratch ;; scratch
+        :ensure nil
+        :load-path "elisp/"
+        :bind
+        ("C-x \"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
+        ("M-\"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
+        ("C-x «" . multi-scratch-prev) ;; jump to previous scratch buffer
+        ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
+        :config (setq multi-scratch-buffer-name "new"))
+
+      (use-package temporary-persistent)
+
+      (use-package persistent-scratch
+        :config (persistent-scratch-setup-default))
+    #+END_SRC
 
 *** Minibuffer
     #+BEGIN_SRC emacs-lisp
