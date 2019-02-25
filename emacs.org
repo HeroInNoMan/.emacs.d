@@ -1411,26 +1411,30 @@
    #+BEGIN_SRC emacs-lisp
      (use-package my-checks
        :ensure nil
+       :bind ("C-è" . hydra-spell/body)
        :config
        (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
        (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
+
        (use-package define-word :defer t)
+       (use-package guess-language :defer t)
 
        (defhydra hydra-spell (:color teal)
-         ("t" flyspell-mode "toggle" :column "Spelling")
+         ("t" flyspell-mode "toggle flyspell" :column "Spelling")
+         ("T" guess-language-mode "toggle guess")
          ("q" nil "quit")
          ;; Flyspell
          ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
          ("c" flyspell-buffer "check buffer")
-         ("l" define-word-at-point "lookup word")
          ("n" flyspell-goto-next-error "next error" :color pink)
          ("p" flyspell-goto-previous-error "previous error" :color pink)
+         ("l" define-word-at-point "lookup word")
          ;; dictionary
-         ("d" ispell-change-dictionary "switch…" :column "Dictionary")
-         ("f" ale/switch-to-fr-dict "switch to fr_FR")
-         ("e" ale/switch-to-en-dict "switch to en_GB")
-         ("u" ale/switch-to-us-dict "switch to en_US"))
-       (global-set-key (kbd "C-è") 'hydra-spell/body))
+         ("d" ispell-change-dictionary "choose" :column "Dictionary")
+         ("f" ale/switch-to-fr-dict "fr_FR")
+         ("e" ale/switch-to-en-dict "en_GB")
+         ("u" ale/switch-to-us-dict "en_US")
+         ("g" guess-language "guess")))
    #+END_SRC
 
 ** Synonyms
@@ -2245,6 +2249,7 @@
                                      ("\\` mc:[0-9]+ *\\'" 'face 'font-lock-keyword-face) ; Multiple cursors
                                      ("\\` Projectile\\[.+\\]\\'" 'display "") ;  projectile
                                      ("\\` rk\\'"          'display (concat " " (propertize "[]" 'face 'font-lock-warning-face))) ; Region bindings
+                                     ("\\` ([a-z]+)\\'"      'face '((:foreground "darkgreen" :weight bold))) ; guess-language-mode
                                      ))
           (sml/setup))))
   #+END_SRC
