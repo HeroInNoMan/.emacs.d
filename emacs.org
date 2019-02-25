@@ -47,8 +47,6 @@
      (setq use-package-always-ensure t
            use-package-verbose t))
 
-   (use-package dim) ;; to change mode display in mode line
-
    (use-package use-package-chords
      :config (key-chord-mode 1)
      (setq key-chord-one-key-delay 0.15)
@@ -122,7 +120,6 @@
     (use-package which-key ;; which-key (replacement for guide-key)
       :config
       (which-key-mode)
-      (dim-minor-name 'which-key-mode nil)
       (setq which-key-idle-delay 0.3))
   #+END_SRC
 
@@ -318,7 +315,6 @@
     (use-package dot-mode
       :chords (".." . dot-mode-execute)
       :config
-      (dim-minor-name 'dot-mode nil)
       ;; default bindings I already use
       (unbind-key "C-." dot-mode-map)
       (unbind-key "C-c ." dot-mode-map)
@@ -343,7 +339,6 @@
        ("." . repeat))
       :chords ("ii" . toggle-god-mode)
       :config
-      (dim-minor-name 'god-local-mode (concat " " (icons-in-terminal 'linea_weather_cloud_lightning :weight "bold" :foreground "red")))
       (defun toggle-god-mode ()
         (interactive)
         (progn
@@ -391,9 +386,7 @@
 ** Highlight feedback
    Let’s have a visual feedback when performing cut/copy/paste operations.
    #+BEGIN_SRC emacs-lisp
-     (use-package volatile-highlights
-       :defer t
-       :config (dim-minor-name 'volatile-highlights-mode nil))
+     (use-package volatile-highlights :defer t)
 
      (use-package idle-highlight-mode :defer t)
    #+END_SRC
@@ -408,9 +401,7 @@
        :load-path "elisp/")
 
      (use-package fancy-narrow
-       :config
-       (dim-minor-name 'fancy-narrow-mode nil)
-       (fancy-narrow-mode t))
+       :config (fancy-narrow-mode t))
 
      (use-package highlight-indent-guides
        :config (setq highlight-indent-guides-method 'character)
@@ -445,7 +436,6 @@
    When coding, colour codes and names should be displayed in this colour.
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-mode
-       :config (dim-minor-name 'rainbow-mode nil)
        :hook (prog-mode . rainbow-mode))
    #+END_SRC
    Note: If I ever need to work seriously with colours: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
@@ -537,8 +527,7 @@
     (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
     (use-package aggressive-indent
-      :hook (prog-mode . aggressive-indent-mode)
-      :config (dim-minor-name 'aggressive-indent-mode (concat " " (icons-in-terminal 'linea_arrows_move_right))))
+      :hook (prog-mode . aggressive-indent-mode))
 
     ;;Indentation
     (setq-default tab-width 2
@@ -599,11 +588,6 @@
 ** isearch
    Standard isearch by default:
    #+BEGIN_SRC emacs-lisp
-    (use-package isearch
-      :ensure nil
-      :config
-      (dim-minor-name 'isearch-mode (concat " " (icons-in-terminal 'linea_basic_magnifier :foreground "pink" :height 1.4))))
-
     (use-package isearch-dabbrev
       :bind (:map isearch-mode-map
                   ("<tab>" . isearch-dabbrev-expand)
@@ -645,8 +629,6 @@
      (use-package company
        :defer t
        :config
-       (dim-minor-name 'company-mode nil)
-       (dim-minor-name 'abbrev-mode " @")
        (global-company-mode) ;; enable company in all buffers
        (setq company-tooltip-limit 30
              company-show-numbers t
@@ -671,7 +653,6 @@
        :bind (("C-M-/" . undo-tree-redo)
               ("C-c u" . hydra-undo-tree/undo-tree-undo))
        :config
-       (dim-minor-name 'undo-tree-mode " ⇞")
        (global-undo-tree-mode)
        (setq undo-tree-visualizer-timestamps t
              undo-tree-visualizer-diff t
@@ -695,7 +676,6 @@
      (use-package ivy
        :disabled
        :config
-       (dim-minor-name 'ivy-mode nil)
        (ivy-mode nil)
        ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
        (setq ivy-use-virtual-buffers t)
@@ -735,7 +715,6 @@
         ("C-c C-l" . helm-minibuffer-history))
        :config
        (require 'helm-config)
-       (dim-minor-name 'helm-mode nil)
        (helm-mode 0) ;; only on demand
        (helm-autoresize-mode t)
        (semantic-mode 1) ;; useful for imenu-like navigation
@@ -1102,8 +1081,6 @@
    Auto-refresh all buffers.
    #+BEGIN_SRC emacs-lisp
      (global-auto-revert-mode 1)
-     (dim-minor-name 'global-auto-revert-mode " ↺")
-     (dim-minor-name 'auto-revert-mode nil)
    #+END_SRC
 
    Some more buffer manipulation bindings.
@@ -1217,7 +1194,6 @@
         ("M-N" . git-gutter:next-hunk)
         ("M-P" . git-gutter:previous-hunk)
         :config
-        (dim-minor-name 'git-gutter-mode nil)
         (global-git-gutter-mode +1)
         (setq git-gutter:ask-p nil
               git-gutter:hide-gutter t))
@@ -1261,7 +1237,6 @@
     (use-package helm-projectile
       :after helm
       :config
-      (dim-minor-name 'projectile-mode nil)
       (projectile-global-mode) ;; activate projectile-mode everywhere
       (helm-projectile-on)
       (setq projectile-completion-system 'helm
@@ -1344,7 +1319,6 @@
   #+BEGIN_SRC emacs-lisp
     (setq default-major-mode 'text-mode) ;; text-mode by default
     (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
-    (dim-minor-name 'visual-line-mode " ↩")
     (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
   #+END_SRC
 
@@ -1439,9 +1413,7 @@
        :ensure nil
        :config
        (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
-       (dim-minor-name 'flyspell-mode " ✓")
        (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
-       (dim-minor-name 'dubcaps-mode " ⇧")
        (use-package define-word :defer t)
 
        (defhydra hydra-spell (:color teal)
@@ -1500,7 +1472,6 @@
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens
        :hook ((prog-mode markdown-mode text-mode) . turn-on-smartparens-mode)
-       :init (dim-minor-name 'smartparens-mode " ()" 'smartparens)
        :commands smartparens-mode
        :config
        (require 'smartparens-config)
@@ -1778,8 +1749,6 @@
                        (setq c-basic-offset 4)))
         (before-save . meghanada-code-beautify-before-save)
         :config
-        (dim-major-name 'java-mode "Java")
-        (dim-minor-name 'meghanada-mode " MEG")
         (use-package realgud ;; I don't even know what this package is or does
           :disabled)
         (setq indent-tabs-mode nil
@@ -2202,7 +2171,6 @@
   #+BEGIN_SRC emacs-lisp
     (use-package anzu
       :config
-      (dim-minor-name 'anzu-mode nil)
       (global-anzu-mode t)
       (setq-default anzu-cons-mode-line-p t))
   #+END_SRC
@@ -2228,48 +2196,57 @@
         :config
         (progn
           (setq rm-blacklist
-                '(" WK"        ;which-key
-                  " AC"        ;auto-complete
-                  " vl"        ;global visual line mode enabled
-                  " Wrap"      ;shows up if visual-line-mode is enabled for that buffer
-                  " Omit"      ;omit mode in dired
-                  " VHl"       ;volatile highlights
-                  " ctagsU"    ;ctags update
-                  " Undo-Tree" ;undo tree
-                  " wr"        ;Wrap Region
-                  " SliNav"    ;elisp-slime-nav
-                  " PgLn"      ;page-line-break
-                  " ElDoc"     ;eldoc
-                  " GG"        ;ggtags
-                  " hs"        ;hideshow
-                  " hs+"       ;
+                '(" AC"         ; auto-complete
+                  " Anzu"       ; anzu mode
+                  " company"    ; comppany-mode
+                  " GitGutter"  ; git-gutter-mode
+                  " Omit"       ; omit mode in dired
+                  " VHl"        ; volatile highlights
+                  " ctagsU"     ; ctags update
+                  " wr"         ; Wrap Region
+                  " SliNav"     ; elisp-slime-nav
+                  " Rbow"       ; rainbow-mode
+                  " PgLn"       ; page-line-break
+                  " ElDoc"      ; eldoc
+                  " GG"         ; ggtags
+                  " hs"         ; hideshow
+                  " hs+"        ;
+                  " WK"         ; which-key
+                  " h-i-g"      ; highlight-indent-guides
+                  " *"          ; fancy narrow
+                  " Projectile" ; projectile
                   ))
-          (setq rm-text-properties '(("\\` Ovwrt\\'" 'face 'font-lock-warning-face) ;Overwrite
-                                     ("\\` mc:[0-9]+ *\\'" 'face 'font-lock-keyword-face) ;Multiple cursors
-                                     ("\\` rk\\'" 'display (propertize "​[]" 'face 'font-lock-warning-face)) ;Region bindings
-                                     ("\\` Abbrev\\'" 'display "​@")   ;Abbrev
-                                     ("\\` Ind\\'"    'display "​*>")  ;org indent
-                                     ("\\` Outl\\'"   'display "​ø")   ;outline
-                                     ("\\` Server\\'" 'display "​Σ")   ;Server
-                                     ("\\` μ\\'"      'display "​μ")   ;modi-mode
-                                     ("\\` Wg\\'"     'display "​w")   ;writegood
-                                     ("\\` Vis\\'"    'display "​V")   ;visible-mode
-                                     ("\\` Temp\\'"   'display "​t"))) ;temp-mode
-          (with-eval-after-load 'setup-font-check
-            (if font-symbola-p
-                (progn
-                  (add-to-list 'rm-text-properties '("\\` Hi\\'"   'display "​🞵")) ;Hi-Lock
-                  (add-to-list 'rm-text-properties '("\\` Tail\\'" 'display "​🢛")) ;Auto revert tail
-                  (add-to-list 'rm-text-properties '("\\` =>\\'"   'display "​➠")) ;aggressive indent
-                  (add-to-list 'rm-text-properties '("\\` ARev\\'" 'display "​⭮")) ;auto revert
-                  (add-to-list 'rm-text-properties '("\\` Fill\\'" 'display "​⮒"))) ;auto fill
-              (progn
-                (add-to-list 'rm-text-properties '("\\` Hi\\'"   'display "​H"))
-                (add-to-list 'rm-text-properties '("\\` Tail\\'" 'display "​Tail."))
-                (add-to-list 'rm-text-properties '("\\` =>\\'"   'display "​aI."))
-                (add-to-list 'rm-text-properties '("\\` ARev\\'" 'display "​aR."))
-                (add-to-list 'rm-text-properties '("\\` Fill\\'" 'display "​aF.")))))))
-      (sml/setup))
+          (setq rm-text-properties '(
+                                     ("\\` =>\\'"          'display "​ ➠") ; aggressive indent
+                                     ("\\` Undo-Tree\\'"   'display (concat " " (propertize "⎌" 'face '((:foreground "darkolivegreen" :weight "bold")))))
+                                     ("\\` God\\'"         'display (concat " " (icons-in-terminal 'linea_weather_cloud_lightning :weight "bold" :foreground "red" :background "black")))
+                                     ("\\` ARev\\'"        'display " ↺") ; auto revert
+                                     ("\\` DC\\'"          'display " ⇧") ; dup caps
+                                     ("\\` Dot\\'"         'display " •") ; Dot-mode
+                                     ("\\` Fill\\'"        'display " aF.")
+                                     ("\\` Fly\\'"         'display (concat " " (propertize "✓" 'face '((:foreground "darkgreen" :weight "bold"))))) ; flyspell
+                                     ("\\` FlyC\\*\\'"     'display (concat " " (propertize "✓…" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
+                                     ("\\` FlyC\\!\\'"     'display (concat " " (propertize "✓!" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
+                                     ("\\` FlyC\\?\\'"     'display (concat " " (propertize "✓?" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
+                                     ("\\` FlyC\\-\\'"     'display (concat " " (propertize "✓-" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
+                                     ("\\` FlyC\\'"        'display (concat " " (propertize "✓" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
+                                     ("\\` FlyC:0/.*\\'" 'face '((:foreground "orange" :weight "bold"))) ; flycheck
+                                     ("\\` FlyC.*\\'"       'face '((:foreground "red" :weight "bold"))) ; flycheck
+                                     ("\\` Ovwrt\\'"       'display (concat " " (propertize "Ovwrt" 'face '((:foreground "white" :background "red"))))) ; Overwrite
+                                     ("\\` SP/s\\'"        'display (concat " " (propertize "()" 'face '((:foreground "red")))))   ; smartparens-strict
+                                     ("\\` SP\\'"          'display " ()")   ; smartparens
+                                     ("\\` Server\\'"      'display " Σ")   ; Server
+                                     ("\\` super-save\\'"  'display (concat " " (icons-in-terminal 'linea_basic_floppydisk)))   ; Server
+                                     ("\\` Tail\\'"        'display " Tail.")
+                                     ("\\` Temp\\'"        'display " t") ; temp-mode
+                                     ("\\` Vis\\'"         'display " V")   ; visible-mode
+                                     ("\\` Wrap\\'"        'display " ↩")   ; visual-line
+                                     ("\\` abrv\\'"        'display " @")   ; Abbrev
+                                     ("\\` mc:[0-9]+ *\\'" 'face 'font-lock-keyword-face) ; Multiple cursors
+                                     ("\\` Projectile\\[.+\\]\\'" 'display "") ;  projectile
+                                     ("\\` rk\\'"          'display (concat " " (propertize "[]" 'face 'font-lock-warning-face))) ; Region bindings
+                                     ))
+          (sml/setup))))
   #+END_SRC
 
 * Session saving & backups
@@ -2279,7 +2256,6 @@
       :disabled
       :config
       (super-save-mode +1)
-      (dim-minor-name 'super-save-mode (concat " " (icons-in-terminal 'linea_basic_floppydisk)))
       (setq super-save-auto-save-when-idle t
             auto-save-default nil))
 
