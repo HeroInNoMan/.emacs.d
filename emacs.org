@@ -105,11 +105,9 @@
                  ale/apply-local-theme-modern)
       :load-path "elisp/"
       :bind
-      ("<C-M-down>" . duplicate-current-line)
       ("<f5>" . ale/revert-buffer-no-confirm) ;; re-read file from disk
       ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
       ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
-      ("C-x C-r" . sudo-edit) ;; sudo open file
       ("C-x |" . ale/toggle-window-split)
       ("C-|" . ale/toggle-window-split))
   #+END_SRC

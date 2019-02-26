@@ -48,21 +48,6 @@ Show the full path file name in the minibuffer."
     (kill-new filename))
   (message (buffer-file-name)))
 
-(defun duplicate-current-line (&optional n)
-  "Duplicate current line, make more than 1 copy given a numeric argument"
-  (interactive "p")
-  (save-excursion
-    (let ((nb (or n 1))
-          (current-line (thing-at-point 'line)))
-      ;; when on last line, insert a newline first
-      (when (or (= 1 (forward-line 1)) (eq (point) (point-max)))
-        (insert "\n"))
-
-      ;; now insert as many time as requested
-      (while (> n 0)
-        (insert current-line)
-        (decf n)))))
-
 ;; sql related functions
 (defvar sql-last-prompt-pos 1
   "Position of last prompt when added recording started.")
