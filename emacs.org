@@ -2179,7 +2179,7 @@
       (setq-default anzu-cons-mode-line-p t))
   #+END_SRC
 
-  After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs. [[https://github.com/Malabarba/rich-minority][rich-minority]] manages what minor modes should be displayed in the modeline
+  After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs. [[https://github.com/Malabarba/rich-minority][rich-minority]] manages what minor modes should be displayed in the modeline.
 
   #+BEGIN_SRC emacs-lisp
     (use-package sml-modeline)

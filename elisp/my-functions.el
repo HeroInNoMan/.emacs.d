@@ -23,13 +23,13 @@
             (forward-char 1))))))
 
 (defun up-arrow ()
-  "Move cursor up one line and buffer down one"
+  "Move cursor up one line and buffer down one."
   (interactive)
   (forward-line -1)
   (scroll-down 1))
 
 (defun down-arrow ()
-  "Move cursor down one line and buffer up one"
+  "Move cursor down one line and buffer up one."
   (interactive)
   (forward-line)
   (scroll-up 1))
@@ -40,9 +40,9 @@
   (message (buffer-file-name)))
 
 (defun ale/copy-and-show-current-file-path ()
-  "Add current file path to kill ring. Limits the filename to
-   project root if possible. Show the full path file name in the
-   minibuffer."
+  "Add current file path to kill ring.
+Limits the filename to project root if possible.
+Show the full path file name in the minibuffer."
   (interactive)
   (let ((filename (buffer-file-name)))
     (kill-new filename))
@@ -65,7 +65,7 @@
 
 ;; sql related functions
 (defvar sql-last-prompt-pos 1
-  "Position of last prompt when added recording started")
+  "Position of last prompt when added recording started.")
 (make-variable-buffer-local 'sql-last-prompt-pos)
 (put 'sql-last-prompt-pos 'permanent-local t)
 
@@ -389,4 +389,4 @@ for the line number input"
       (message "my-private-theme is not set. No theme will be loaded"))))
 
 (provide 'my-functions)
-;; misc-functions.el ends here.
+;;; my-functions.el ends here
