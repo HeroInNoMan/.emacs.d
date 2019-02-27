@@ -363,6 +363,14 @@
   #+END_SRC
 
 * Appearance
+
+  Always start in full screen.
+  #+BEGIN_SRC emacs-lisp
+    (if (eq window-system 'ns)
+        (toggle-frame-maximized)
+      (toggle-frame-fullscreen))
+  #+END_SRC
+
 ** Theme
    Apply a colour theme (uses the variable =my-private-theme= if defined)
    #+BEGIN_SRC emacs-lisp
