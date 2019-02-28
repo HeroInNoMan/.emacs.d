@@ -193,19 +193,6 @@
      ztree
      ))
  '(paradox-github-token t)
- '(sml-modeline-borders nil)
- '(sml-modeline-mode t)
- '(sml-modeline-numbers 'percentage)
- '(sml/col-number-format "%1c")
- '(sml/full-mode-string " …")
- '(sml/line-number-format "%1l")
- '(sml/mule-info "%z")
- '(sml/name-width '(25 . 44))
- '(sml/pos-id-separator "")
- '(sml/position-percentage-format nil)
- '(sml/size-indication-format "(%I) ")
- '(sml/theme 'dark)
- '(sml/use-projectile-p 'before-prefixes)
  '(tramp-syntax 'default nil (tramp)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

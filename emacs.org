@@ -35,22 +35,24 @@
 * Package Management
   I use [[https://github.com/jwiegley/use-package][use-package]] and [[https://melpa.org/][melpa]] to manage my packages and modules.
   #+BEGIN_SRC emacs-lisp
-   ;; package-style dependencies
-   (eval-when-compile
-     (require 'package)
-     (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-     (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-     (unless (package-installed-p 'use-package)
-       (package-refresh-contents)
-       (package-install 'use-package))
-     (require 'use-package)
-     (setq use-package-always-ensure t
-           use-package-verbose t))
+    ;; package-style dependencies
+    (eval-when-compile
+      (require 'package)
+      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+      (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+      (unless (package-installed-p 'use-package)
+        (package-refresh-contents)
+        (package-install 'use-package))
+      (require 'use-package)
+      (setq use-package-always-ensure t
+            use-package-verbose t))
 
-   (use-package use-package-chords
-     :config (key-chord-mode 1)
-     (setq key-chord-one-key-delay 0.15)
-     (setq key-chord-two-keys-delay 0.05))
+    (use-package delight)
+
+    (use-package use-package-chords
+      :config (key-chord-mode 1)
+      (setq key-chord-one-key-delay 0.15)
+      (setq key-chord-two-keys-delay 0.05))
   #+END_SRC
 
   Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
@@ -1241,11 +1243,13 @@
   I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (mostly git projects).
   #+BEGIN_SRC emacs-lisp
     (use-package helm-projectile
+      :delight (projectile-mode)
       :after helm
       :config
-      (projectile-global-mode) ;; activate projectile-mode everywhere
+      (projectile-mode) ;; activate projectile-mode everywhere
       (helm-projectile-on)
-      (setq projectile-completion-system 'helm
+      (setq projectile-mode-line-prefix " "
+            projectile-completion-system 'helm
             projectile-require-project-root nil
             projectile-enable-caching t ;; enable caching for projectile-mode
             projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
@@ -2074,7 +2078,8 @@
   #+END_SRC
 
 * Quick access
-  #+BEGIN_SRC emacs-lisp
+** Custom menu
+   #+BEGIN_SRC emacs-lisp
     (defhydra hydra-minor-modes(:color blue :hint nil)
       "
       ^Minor mode^    ^Toggle
@@ -2194,28 +2199,52 @@
   After several attempts to switch to fancier packages such as [[https://github.com/milkypostman/powerline][powerline]], [[https://github.com/TheBB/spaceline][spaceline]] or [[https://github.com/dbordak/telephone-line][telephone-line]], I went back to [[https://github.com/Malabarba/smart-mode-line][smart-mode-line]], which loads faster and fulfils most of my needs. [[https://github.com/Malabarba/rich-minority][rich-minority]] manages what minor modes should be displayed in the modeline.
 
   #+BEGIN_SRC emacs-lisp
-    (use-package sml-modeline)
+    (use-package sml-modeline
+      :config
+      (setq sml-modeline-borders nil
+            sml-modeline-mode t
+            sml-modeline-numbers 'percentage))
 
     (use-package smart-mode-line
       :config
       ;; for issues with theme loading
       (size-indication-mode)
-      (setq sml/theme 'dark
-            sml/replacer-regexp-list '(("^~/projets/" ":p:")
-                                       ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
-                                       ("^~/\\.emacs\\.d/" ":ED:")
-                                       ("^/sudo:.*:" ":SU:")
-                                       ("^~/Terminalcity/" ":T:")))
+      (setq
+       sml/battery-format "%p"
+       sml/col-number-format "%1c"
+       sml/extra-filler 0
+       sml/full-mode-string " …"
+       sml/line-number-format "%1l"
+       sml/mule-info "%z"
+       sml/name-width '(15 . 44)
+       sml/pos-id-separator ""
+       sml/position-percentage-format nil
+       sml/shorten-mode-string ""
+       sml/shorten-modes nil
+       sml/size-indication-format "(%I) "
+       sml/theme 'dark
+       sml/use-projectile-p 'before-prefixes
+       sml/replacer-regexp-list '(("^~/projets/" ":p:")
+                                  ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
+                                  ("^~/\\.emacs\\.d/" ":ED:")
+                                  ("^/sudo:.*:" ":SU:")
+                                  ("^~/Terminalcity/" ":T:")))
 
-    ;;;; Rich Minority
+        ;;;; Rich Minority
       (use-package rich-minority
         :config
         (progn
           (setq rm-blacklist
-                '(" AC"         ; auto-complete
+                '(" =>"         ; aggressive-indent-mode
+                  " AC"         ; auto-complete
                   " Anzu"       ; anzu mode
+                  " abrv"       ; abbrev-mode
+                  " ARev"       ; auto-revert
                   " company"    ; comppany-mode
+                  " DC"         ; dup caps
+                  " Dot"        ; dot mode
                   " GitGutter"  ; git-gutter-mode
+                  " God"        ; god-mode
                   " Omit"       ; omit mode in dired
                   " VHl"        ; volatile highlights
                   " ctagsU"     ; ctags update
@@ -2228,26 +2257,23 @@
                   " hs"         ; hideshow
                   " hs+"        ;
                   " WK"         ; which-key
+                  " Undo-Tree"  ; undo-tree
                   " h-i-g"      ; highlight-indent-guides
                   " *"          ; fancy narrow
                   " Projectile" ; projectile
+                  " Wrap"       ; visual-line-mode
+                  " yas"       ; yasnippet
                   ))
           (setq rm-text-properties '(
-                                     ("\\` =>\\'"          'display "​ ➠") ; aggressive indent
-                                     ("\\` Undo-Tree\\'"   'display (concat " " (propertize "⎌" 'face '((:foreground "darkolivegreen" :weight "bold")))))
-                                     ("\\` God\\'"         'display (concat " " (icons-in-terminal 'linea_weather_cloud_lightning :weight "bold" :foreground "red" :background "black")))
-                                     ("\\` ARev\\'"        'display " ↺") ; auto revert
-                                     ("\\` DC\\'"          'display " ⇧") ; dup caps
-                                     ("\\` Dot\\'"         'display " •") ; Dot-mode
                                      ("\\` Fill\\'"        'display " aF.")
-                                     ("\\` Fly\\'"         'display (concat " " (propertize "✓" 'face '((:foreground "darkgreen" :weight "bold"))))) ; flyspell
-                                     ("\\` FlyC\\*\\'"     'display (concat " " (propertize "✓…" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
-                                     ("\\` FlyC\\!\\'"     'display (concat " " (propertize "✓!" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
-                                     ("\\` FlyC\\?\\'"     'display (concat " " (propertize "✓?" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
-                                     ("\\` FlyC\\-\\'"     'display (concat " " (propertize "✓-" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
-                                     ("\\` FlyC\\'"        'display (concat " " (propertize "✓" 'face '((:foreground "red" :weight "bold"))))) ; flycheck
-                                     ("\\` FlyC:0/.*\\'" 'face '((:foreground "orange" :weight "bold"))) ; flycheck
-                                     ("\\` FlyC.*\\'"       'face '((:foreground "red" :weight "bold"))) ; flycheck
+                                     ("\\` Fly\\'"         'display (concat " " (propertize "✔" 'face '((:foreground "darkgreen" :weight bold))))) ; flyspell
+                                     ("\\` FlyC\\*\\'"     'display (concat " " (propertize "✓…" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\!\\'"     'display (concat " " (propertize "✓!" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\?\\'"     'display (concat " " (propertize "✓?" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\-\\'"     'display (concat " " (propertize "✓-" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\'"        'display (concat " " (propertize "✓" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC:0/.*\\'" 'face '((:foreground "orange" :weight bold))) ; flycheck
+                                     ("\\` FlyC.*\\'"       'face '((:foreground "red" :weight bold))) ; flycheck
                                      ("\\` Ovwrt\\'"       'display (concat " " (propertize "Ovwrt" 'face '((:foreground "white" :background "red"))))) ; Overwrite
                                      ("\\` SP/s\\'"        'display (concat " " (propertize "()" 'face '((:foreground "red")))))   ; smartparens-strict
                                      ("\\` SP\\'"          'display " ()")   ; smartparens
@@ -2256,12 +2282,9 @@
                                      ("\\` Tail\\'"        'display " Tail.")
                                      ("\\` Temp\\'"        'display " t") ; temp-mode
                                      ("\\` Vis\\'"         'display " V")   ; visible-mode
-                                     ("\\` Wrap\\'"        'display " ↩")   ; visual-line
-                                     ("\\` abrv\\'"        'display " @")   ; Abbrev
+                                     ("\\` rk\\'"          'display (concat " " (propertize "[]" 'face 'region))) ; Region bindings
                                      ("\\` mc:[0-9]+ *\\'" 'face 'font-lock-keyword-face) ; Multiple cursors
-                                     ("\\` Projectile\\[.+\\]\\'" 'display "") ;  projectile
-                                     ("\\` rk\\'"          'display (concat " " (propertize "[]" 'face 'font-lock-warning-face))) ; Region bindings
-                                     ("\\` ([a-z]+)\\'"      'face '((:foreground "darkgreen" :weight bold))) ; guess-language-mode
+                                     ("\\` ([a-z]+)\\'"    'face '((:foreground "darkgreen" :weight bold))) ; guess-language-mode
                                      ))
           (sml/setup))))
   #+END_SRC
