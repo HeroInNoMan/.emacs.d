@@ -55,9 +55,8 @@ Show the full path file name in the minibuffer."
 (put 'sql-last-prompt-pos 'permanent-local t)
 
 (defun sql-add-newline-first (output)
-  "Add newline to beginning of OUTPUT for `comint-preoutput-filter-functions'
-    This fixes up the display of queries sent to the inferior buffer
-    programatically."
+  "Add newline to beginning of OUTPUT for `comint-preoutput-filter-functions'.
+This fixes up the display of queries sent to the inferior buffer programatically."
   (let ((begin-of-prompt
          (or (and comint-last-prompt-overlay
                   ;; sometimes this overlay is not on prompt
@@ -88,7 +87,7 @@ Show the full path file name in the minibuffer."
            (insert (current-kill 0)))))
 
 (defun ale/jirify ()
-  "creates an org link with a ticket ID using the URL in my-private-work-bugtracker-url."
+  "Create an org link with a ticket ID using the URL in my-private-work-bugtracker-url."
   (interactive)
   (if (and
        (boundp 'my-private-work-bugtracker-url)
@@ -145,7 +144,7 @@ Show the full path file name in the minibuffer."
               (save-excursion (insert "#+END_" choice))))))))))
 
 (defun ale/load-windows-specific-conf ()
-  "Loads all windows-nt specific conf"
+  "Load all windows-nt specific conf."
   (set-clipboard-coding-system 'utf-16le-dos) ;; MS Windows clipboard is UTF-16LE
   ;; cygwin conf
   (setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
@@ -173,10 +172,12 @@ Show the full path file name in the minibuffer."
                     (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
                     (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 
-(defun ale/add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
+(defun ale/add-d-to-ediff-mode-map ()
+  (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'ale/add-d-to-ediff-mode-map)
 
 (defun ale/swap-buffers ()
+  "Swap the contents of windows in the frame."
   (interactive)
   (cond ((one-window-p) (display-buffer (other-buffer)))
         ((let* ((buffer-a (current-buffer))
@@ -187,7 +188,8 @@ Show the full path file name in the minibuffer."
            (other-window 1)))))
 
 (defun ale/toggle-window-split ()
-  "Switch between vertical and horizontal split of windows. Swap buffers in the process"
+  "Switch between vertical and horizontal split of windows.
+Swap buffers in the process"
   (interactive)
   (if (= (count-windows) 2)
       (let* ((this-win-buffer (window-buffer))
@@ -214,28 +216,20 @@ Show the full path file name in the minibuffer."
           (if this-win-2nd (other-window 1))))))
 
 (defun goto-line-with-feedback ()
-  "Show line numbers and whitespaces temporarily, while prompting
-for the line number input"
+  "Show line numbers and whitespaces temporarily, while prompting for the line number input."
   (interactive)
   (unwind-protect
       (progn
         (linum-mode 1)
         (whitespace-mode 1)
-        (goto-line (read-number "Goto line: ")))
+        (forward-line (read-number "Goto line: ")))
     (progn
       (linum-mode -1)
       (git-gutter-mode +1)
       (whitespace-mode -1))))
 
-;; from http://emacswiki.org/emacs/InsertingTodaysDate
-(defun insert-todays-date (arg)
-  (interactive "P")
-  (insert (if arg
-              (format-time-string "%d-%m-%Y")
-            (format-time-string "%Y-%m-%d"))))
-
 (defun ale/insert-ticket-prefix ()
-  "Inserts a prefix containing the number of the Jira ticket"
+  "Insert a prefix containing the number of the Jira ticket."
   (let* ((result  (re-search-forward "\\(?:US\\|RV\\|FEEDBACK\\|TASK\\|BUG\\)-\\([A-Z]+\\)-?\\([0-9]+\\).*$" nil t))
          (s (concat (match-string 1) "-" (match-string 2))))
     (goto-char (point-min))
@@ -267,22 +261,22 @@ for the line number input"
                (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))))
 
 (defun ale/find-rest-client-file ()
-  "Find rest-client file"
+  "Find rest-client file."
   (interactive)
   (find-file "~/projets/restclient/restclient-buffer"))
 
 (defun ale/find-init-file ()
-  "Find init file"
+  "Find init file."
   (interactive)
   (find-file (expand-file-name "emacs.org" user-emacs-directory)))
 
 (defun ale/find-diary-file ()
-  "Find work diary file"
+  "Find work diary file."
   (interactive)
   (find-file (expand-file-name my-private-work-diary-org-file)))
 
 (defun ale/find-remote-diary-file ()
-  "Find remote diary file"
+  "Find remote diary file."
   (interactive)
   (find-file (expand-file-name my-private-remote-diary-org-file my-private-remote-home-dir)))
 
@@ -298,22 +292,22 @@ for the line number input"
     ((equal selective-display 4) nil))))
 
 (defun ale/switch-to-fr-dict ()
-  "Switch to French dictionary"
+  "Switch to French dictionary."
   (interactive)
   (ispell-change-dictionary "fr_FR"))
 
 (defun ale/switch-to-en-dict ()
-  "Switch to British English dictionary"
+  "Switch to British English dictionary."
   (interactive)
   (ispell-change-dictionary "en_GB"))
 
 (defun ale/switch-to-us-dict ()
-  "Switch to American English dictionary"
+  "Switch to American English dictionary."
   (interactive)
   (ispell-change-dictionary "en_US"))
 
 (defun ale/open-project (args)
-  "open project magit logs and status as split windows"
+  "Open ARGS project magit logs and status as split windows."
   (interactive "D")
   (progn
     (find-file args)
@@ -321,7 +315,7 @@ for the line number input"
     (delete-other-windows)
     (magit-status-internal args)
     (other-window 1)
-    (beginning-of-buffer)))
+    (goto-char (point-min))))
 
 ;; functions stolen from angrybacon
 (defun ab/date-iso ()
@@ -360,12 +354,12 @@ for the line number input"
   (insert (format-time-string "%d/%m/%Y")))
 
 (defun ab/date-short-with-time ()
-  "Insert the current date, short format with time, eg. 2016/12/09 14:34"
+  "Insert the current date, short format with time, eg. 2016/12/09 14:34."
   (interactive)
   (insert (format-time-string "%Y/%m/%d %H:%M")))
 
 (defun ale/apply-local-theme-modern ()
-  "Apply locally-defined modern theme"
+  "Apply locally-defined modern theme."
   (when (featurep 'color-theme-modern)
     (if (boundp 'my-private-theme)
         (progn
