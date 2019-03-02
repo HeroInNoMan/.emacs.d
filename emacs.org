@@ -2173,8 +2173,12 @@
       ("r" ale/find-rest-client-file "rest-client"))
 
     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
-  #+END_SRC
+   #+END_SRC
 
+** Bookmarks and registers
+   #+BEGIN_SRC emacs-lisp
+     (key-chord-define-global (kbd "jj") 'jump-to-register)
+   #+END_SRC
 * Environment
   #+BEGIN_SRC emacs-lisp
     (load-file (expand-file-name "env.el" user-emacs-directory))
