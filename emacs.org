@@ -916,7 +916,7 @@
          (setq aya-persist-snippets-dir (concat user-emacs-directory "etc/yasnippet/snippets")))
        (setq yas-snippet-dirs
              `(,(concat user-emacs-directory "etc/yasnippet/snippets")
-               ,(concat user-emacs-directory "elpa/yasnippet-snippets-20190202.2145/snippets")))
+               ,(concat user-emacs-directory (car (file-expand-wildcards "elpa/yasnippet-snippets-20*/snippets")))))
        (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
 
