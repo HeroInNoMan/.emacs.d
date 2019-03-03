@@ -2266,18 +2266,18 @@
                   " *"          ; fancy narrow
                   " Projectile" ; projectile
                   " Wrap"       ; visual-line-mode
-                  " yas"       ; yasnippet
+                  " yas"        ; yasnippet
+                  " OrgSrc"     ; org source code
                   ))
           (setq rm-text-properties '(
                                      ("\\` Fill\\'"        'display " aF.")
-                                     ("\\` Fly\\'"         'display (concat " " (propertize "✔" 'face '((:foreground "darkgreen" :weight bold))))) ; flyspell
-                                     ("\\` FlyC\\*\\'"     'display (concat " " (propertize "✓…" 'face '((:foreground "red" :weight bold))))) ; flycheck
-                                     ("\\` FlyC\\!\\'"     'display (concat " " (propertize "✓!" 'face '((:foreground "red" :weight bold))))) ; flycheck
-                                     ("\\` FlyC\\?\\'"     'display (concat " " (propertize "✓?" 'face '((:foreground "red" :weight bold))))) ; flycheck
-                                     ("\\` FlyC\\-\\'"     'display (concat " " (propertize "✓-" 'face '((:foreground "red" :weight bold))))) ; flycheck
-                                     ("\\` FlyC\\'"        'display (concat " " (propertize "✓" 'face '((:foreground "red" :weight bold))))) ; flycheck
-                                     ("\\` FlyC:0/.*\\'" 'face '((:foreground "orange" :weight bold))) ; flycheck
-                                     ("\\` FlyC.*\\'"       'face '((:foreground "red" :weight bold))) ; flycheck
+                                     ("\\` Fly\\'"         'display (concat " " (propertize "🗹" 'face '((:foreground "darkgreen" :weight bold))))) ; flyspell
+                                     ("\\` FlyC\\*\\'"     'display (concat " " (propertize "✔…" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\!\\'"     'display (concat " " (propertize "✔!" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\?\\'"     'display (concat " " (propertize "✔?" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\-\\'"     'display (concat " " (propertize "✔-" 'face '((:foreground "red" :weight bold))))) ; flycheck
+                                     ("\\` FlyC\\'"        'display (concat " " (propertize "✔" 'face '((:foreground "darkgreen" :weight bold))))) ; flycheck
+                                     ("\\` FlyC.*\\'"      'display (concat " " (ale/flycheck-mode-line))) ; flycheck
                                      ("\\` Ovwrt\\'"       'display (concat " " (propertize "Ovwrt" 'face '((:foreground "white" :background "red"))))) ; Overwrite
                                      ("\\` SP/s\\'"        'display (concat " " (propertize "()" 'face '((:foreground "red")))))   ; smartparens-strict
                                      ("\\` SP\\'"          'display " ()")   ; smartparens

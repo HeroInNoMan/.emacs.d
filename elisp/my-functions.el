@@ -367,5 +367,25 @@ Swap buffers in the process"
           (enable-theme (intern my-private-theme)))
       (message "my-private-theme is not set. No theme will be loaded"))))
 
+(defun ale/get-color-for-level (level)
+  "Map a color on LEVEL."
+  (cond ((eq level (intern "error")) "red")
+        ((eq level (intern "warning")) "orange")
+        ((eq level (intern "info")) "blue")
+        (t "white")))
+
+(defun ale/flycheck-format-level (errors level)
+  "Return the mode-line string with ERRORS for this LEVEL."
+  (let* ((count (alist-get level errors)))
+    (when count
+      (propertize (concat "✘" (number-to-string count)) 'face `(:foreground ,(ale/get-color-for-level level))))))
+
+(defun ale/flycheck-mode-line ()
+  "Build the mode-line string for flycheck-mode."
+  (when (flycheck-has-current-errors-p)
+    (let* ((all-errors (flycheck-count-errors flycheck-current-errors)))
+      (string-join (cl-remove-if #'null
+                                 (mapcar (apply-partially #'ale/flycheck-format-level all-errors) '(error warning info))) " "))))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here
