@@ -816,14 +816,14 @@
 
    =helm-dash= allows access to the full documentation of a language.
    #+BEGIN_SRC emacs-lisp
-      (use-package helm-dash
-        :after helm
-        :config
-        (setq helm-dash-browser-func 'eww)
-        (add-hook 'clojure-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Clojure"))))
-        (add-hook 'java-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Java"))))
-        (add-hook 'js-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Javascript"))))
-        (add-hook 'rust-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Rust")))))
+     (use-package helm-dash
+       :after helm
+       :config
+       (setq helm-dash-browser-func 'eww)
+       (add-hook 'clojure-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Clojure"))))
+       (add-hook 'java-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Java"))))
+       (add-hook 'js-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Javascript"))))
+       (add-hook 'rust-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Rust")))))
    #+END_SRC
 
    Let’s make =ace-jump-mode= also available during a helm session.
