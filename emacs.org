@@ -498,6 +498,12 @@
       ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
   #+END_SRC
 
+  I use the nice ~beginend~ package to enhance ~beginning-of-buffer~ and ~end-of-buffer~ commands.
+  #+BEGIN_SRC emacs-lisp
+    (use-package beginend
+      :config (beginend-global-mode))
+  #+END_SRC
+
   More navigation commands:
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-S-p") 'up-arrow)
@@ -1567,7 +1573,6 @@
          ("«" sp-backward-barf-sexp "barf backward")
          ("»" sp-forward-barf-sexp "barf forward"))
        (global-set-key (kbd "M-s M-s") 'hydra-parens/body))
-
    #+END_SRC
 
 ** Shell
@@ -2244,6 +2249,7 @@
                   " Anzu"       ; anzu mode
                   " abrv"       ; abbrev-mode
                   " ARev"       ; auto-revert
+                  " be"         ; beginend
                   " company"    ; comppany-mode
                   " DC"         ; dup caps
                   " Dot"        ; dot mode
