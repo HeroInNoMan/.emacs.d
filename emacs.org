@@ -1725,6 +1725,7 @@
        (use-package flycheck-rust)
        (use-package racer
          :config
+         (setq company-tooltip-align-annotations t)
          (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
          ;; (setq racer-rust-src-path (concat (getenv "HOME") "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"))
          )
@@ -2325,6 +2326,8 @@
                                      ("\\` Ovwrt\\'"       'display (concat " " (propertize "Ovwrt" 'face '((:foreground "white" :background "red"))))) ; Overwrite
                                      ("\\` SP/s\\'"        'display (concat " " (propertize "()" 'face '((:foreground "red")))))   ; smartparens-strict
                                      ("\\` SP\\'"          'display " ()")   ; smartparens
+                                     ("\\` racer\\'"          'display " 🚄")   ; racer
+                                     ("\\` cargo\\'"          'display " 🚢")   ; cargo
                                      ("\\` Server\\'"      'display " Σ")   ; Server
                                      ("\\` super-save\\'"  'display (concat " " (icons-in-terminal 'linea_basic_floppydisk)))   ; Server
                                      ("\\` Tail\\'"        'display " Tail.")
