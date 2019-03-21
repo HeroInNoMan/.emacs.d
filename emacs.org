@@ -2212,7 +2212,8 @@
       :config
       (setq sml-modeline-borders nil
             sml-modeline-mode t
-            sml-modeline-numbers 'percentage))
+            sml-modeline-numbers 'percentage)
+      (sml-modeline-mode))
 
     (use-package smart-mode-line
       :config
