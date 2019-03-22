@@ -85,7 +85,7 @@
 (defun load-highlander-env ()
   (progn
     ;; hooking for specific functions
-    (add-hook 'git-commit-setup-hook 'ale/switch-to-en-dict)
+    (add-hook 'git-commit-setup-hook 'ale/switch-to-us-dict)
 
     ;; display battery level
     (use-package fancy-battery
