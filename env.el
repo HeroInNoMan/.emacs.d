@@ -66,8 +66,8 @@
     ;; let access projects quickly in a convenient layout
     (defhydra hydra-projects(:color teal)
       ("q" nil "cancel" :column "Projets")
-      ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs" :column "Perso")
-      ("E" (lambda () (interactive)(ale/open-project "~/outils/emacs")) "emacs source"))
+      ("e" (lambda () (ale/open-project user-emacs-directory)) "emacs" :column "Perso")
+      ("E" (lambda () (ale/open-project "~/outils/emacs")) "emacs source"))
     (global-set-key (kbd "<f9>") 'hydra-projects/body)
     (global-set-key (kbd "C-c C-j") 'hydra-projects/body)))
 
