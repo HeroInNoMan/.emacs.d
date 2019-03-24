@@ -2412,6 +2412,7 @@
        ;; View
        ("b" ecb-activate "code browser" :column "View")
        ("z" ztree-diff "ztree-diff")
+       ("y" ale/diff-last-2-yanks "diff yanks")
        ("w" webpaste-paste-region "webpaste")
 
        ;; Tools

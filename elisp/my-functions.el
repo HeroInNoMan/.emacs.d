@@ -387,5 +387,26 @@ Swap buffers in the process"
       (string-join (cl-remove-if #'null
                                  (mapcar (apply-partially #'ale/flycheck-format-level all-errors) '(error warning info))) " "))))
 
+(defun ale/diff-last-2-yanks ()
+  "Run ediff on latest two entries in `kill-ring'."
+  (interactive)
+  ;; Implementation depends on `lexical-binding' being t, otherwise #'clean-up
+  ;; will not be saved as closure to `ediff-cleanup-hook' and thus will lose
+  ;; reference to itself.
+  (setq-local lexical-binding t)
+  (let ((a (generate-new-buffer "*diff-yank*"))
+        (b (generate-new-buffer "*diff-yank*")))
+    (cl-labels ((clean-up ()
+                          (kill-buffer a)
+                          (kill-buffer b)
+                          (remove-hook 'ediff-cleanup-hook #'clean-up)
+                          (winner-undo)))
+      (add-hook 'ediff-cleanup-hook #'clean-up)
+      (with-current-buffer a
+        (insert (elt kill-ring 0)))
+      (with-current-buffer b
+        (insert (elt kill-ring 1)))
+      (ediff-buffers a b))))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here
