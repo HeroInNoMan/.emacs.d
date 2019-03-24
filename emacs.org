@@ -75,6 +75,7 @@
             calfw-ical
             calfw-org
             cargo
+            color-identifiers-mode
             color-theme-modern
             command-log-mode
             crux
@@ -563,8 +564,12 @@
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
    #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-blocks
-       :commands rainbow-blocks-mode)
+     (use-package rainbow-blocks)
+   #+END_SRC
+
+   Or according to symbol names.
+   #+BEGIN_SRC emacs-lisp
+     (use-package color-identifiers-mode)
    #+END_SRC
 
    When coding, colour codes and names should be displayed in this colour.
@@ -2330,99 +2335,96 @@
 * Quick access
 ** Custom menu
    #+BEGIN_SRC emacs-lisp
-    (defhydra hydra-minor-modes(:color blue :hint nil)
-      "
-      ^Minor mode^    ^Toggle
-      ^──────────^────^──────^───────────────────
-      _q_  quit       _(_ smartparens %(when (boundp 'idle-highlight-mode) (smartparens-mode))
-      ^ ^             _)_ smartparens strict %(when (boundp 'idle-highlight-mode) (smartparens-strict-mode))
-      ^ ^             _g_ god %`god-local-mode
-      ^ ^             _h_ Idle HL %(when (boundp 'idle-highlight-mode) (idle-highlight-mode))
-      ^ ^             _H_ Highlight-line %`highlight-line-mode
-      ^ ^             _i_ ido %`ido-mode
-      ^ ^             _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) (highlight-indent-guides-mode))
-      ^ ^             _l_ line number
-      ^ ^             _m_ minimap
-      ^ ^             _n_ sidebar
-      ^ ^             _o_ overwrite-mode %`overwrite-mode
-      ^ ^             _p_ prettify symbols %`prettify-symbols-mode
-      ^ ^             _r_ rainbow-blocks-mode %(when (boundp 'rainbow-blocks-mode) (rainbow-blocks-mode))
-      ^ ^             _v_ visual-line %`visual-line-mode
-      ^ ^             _V_ volatile-highlight %`volatile-highlights-mode
-      ^ ^             _w_ whitespace %`global-whitespace-mode
-      ^ ^             _x_ winnow-mode %`winnow-mode
-      "
+     (defhydra hydra-minor-modes(:color blue :hint nil)
+       "
+       ^Minor mode^    ^Toggle
+       ^──────────^────^──────^───────────────────
+       _q_  quit       _(_ smartparens %(when (boundp 'smartparens-mode) smartparens-mode)
+       ^ ^             _)_ smartparens strict %(when (boundp 'smartparens-mode) smartparens-strict-mode)
+       ^ ^             _c_ color-identifiers-mode %(when (boundp 'color-identifiers-mode) color-identifiers-mode)
+       ^ ^             _g_ god %(when (boundp 'god-local-mode) god-local-mode)
+       ^ ^             _h_ Idle HL %(when (boundp 'idle-highlight-mode) idle-highlight-mode)
+       ^ ^             _H_ Highlight-line %(when (boundp 'highlight-line-mode) highlight-line-mode)
+       ^ ^             _i_ ido %(when (boundp 'ido-mode) ido-mode)
+       ^ ^             _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) highlight-indent-guides-mode)
+       ^ ^             _l_ line number
+       ^ ^             _o_ overwrite-mode %`overwrite-mode
+       ^ ^             _p_ prettify symbols %`prettify-symbols-mode
+       ^ ^             _r_ rainbow-blocks-mode %(when (boundp 'rainbow-blocks-mode) rainbow-blocks-mode)
+       ^ ^             _v_ visual-line %`visual-line-mode
+       ^ ^             _V_ volatile-highlight %(when (boundp 'volatile-highlights-mode) volatile-highlights-mode)
+       ^ ^             _w_ whitespace %`global-whitespace-mode
+       ^ ^             _x_ winnow-mode %(when (boundp 'winnow-mode) winnow-mode)
+       "
 
-      ("(" smartparens-global-mode)
-      (")" smartparens-global-strict-mode)
-      ("g" toggle-god-mode)
-      ("h" idle-highlight-mode)
-      ("H" hl-line-mode)
-      ("i" ido-mode)
-      ("I" highlight-indent-guides-mode)
-      ("l" linum-mode)
-      ("m" minimap-mode)
-      ("n" dired-sidebar-toggle-sidebar)
-      ("o" overwrite-mode)
-      ("p" prettify-symbols-mode)
-      ("r" rainbow-blocks-mode)
-      ("s" sublimity-mode)
-      ("v" visual-line-mode)
-      ("V" volatile-highlights-mode)
-      ("w" whitespace-mode)
-      ("x" winnow-mode)
-      ("q" nil))
-    (global-set-key (kbd "C-c m") 'hydra-minor-modes/body)
+       ("(" smartparens-global-mode)
+       (")" smartparens-global-strict-mode)
+       ("c" color-identifiers-mode)
+       ("g" toggle-god-mode)
+       ("h" idle-highlight-mode)
+       ("H" hl-line-mode)
+       ("i" ido-mode)
+       ("I" highlight-indent-guides-mode)
+       ("l" linum-mode)
+       ("o" overwrite-mode)
+       ("p" prettify-symbols-mode)
+       ("r" rainbow-blocks-mode)
+       ("v" visual-line-mode)
+       ("V" volatile-highlights-mode)
+       ("w" whitespace-mode)
+       ("x" winnow-mode)
+       ("q" nil))
+     (global-set-key (kbd "C-c m") 'hydra-minor-modes/body)
 
-    (defhydra hydra-major-modes(:color blue)
-      ("q" nil "quit" :column "Major mode")
-      ("e" emacs-lisp-mode "elisp" :column "Toggle")
-      ("h" html-mode "html")
-      ("j" js2-mode "js2")
-      ("l" lisp-mode "lisp")
-      ("o" org-mode "org")
-      ("t" text-mode "text")
-      ("w" web-mode "web"))
-    (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
+     (defhydra hydra-major-modes(:color blue)
+       ("q" nil "quit" :column "Major mode")
+       ("e" emacs-lisp-mode "elisp" :column "Toggle")
+       ("h" html-mode "html")
+       ("j" js2-mode "js2")
+       ("l" lisp-mode "lisp")
+       ("o" org-mode "org")
+       ("t" text-mode "text")
+       ("w" web-mode "web"))
+     (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
 
-    (defhydra hydra-widgets (:color teal)
-      ;;
-      ("q" nil "cancel" :column "Menu")
+     (defhydra hydra-widgets (:color teal)
+       ;;
+       ("q" nil "cancel" :column "Menu")
 
-      ;; Shells
-      ("e" eshell "eshell" :column "Shells")
-      ("t" shell-pop "shell-pop")
-      ("$" shell "shell")
-      ("%" crux-visit-term-buffer "ansi-term")
+       ;; Shells
+       ("e" eshell "eshell" :column "Shells")
+       ("t" shell-pop "shell-pop")
+       ("$" shell "shell")
+       ("%" crux-visit-term-buffer "ansi-term")
 
-      ;; Reading
-      ("a" avandu-overview "avandu RSS" :column "Reading")
-      ("A" helm-lobsters "lobsters")
-      ("E" elfeed "elfeed RSS")
-      ("G" gnus "Gnus")
-      ("W" eww "web browser")
+       ;; Reading
+       ("a" avandu-overview "avandu RSS" :column "Reading")
+       ("A" helm-lobsters "lobsters")
+       ("E" elfeed "elfeed RSS")
+       ("G" gnus "Gnus")
+       ("W" eww "web browser")
 
-      ;; Management
-      ("m" mu4e "mu4e" :column "Management")
-      ("c" open-calendar "calendar")
-      ("T" tomatinho "pomodoro")
+       ;; Management
+       ("m" mu4e "mu4e" :column "Management")
+       ("c" open-calendar "calendar")
+       ("T" tomatinho "pomodoro")
 
-      ;; View
-      ("b" ecb-activate "code browser" :column "View")
-      ("z" ztree-diff "ztree-diff")
-      ("w" webpaste-paste-region "webpaste")
+       ;; View
+       ("b" ecb-activate "code browser" :column "View")
+       ("z" ztree-diff "ztree-diff")
+       ("w" webpaste-paste-region "webpaste")
 
-      ;; Tools
-      ("p" paradox-list-packages "packages" :column "Tools")
-      ("Q" quick-calc "quick-calc")
+       ;; Tools
+       ("p" paradox-list-packages "packages" :column "Tools")
+       ("Q" quick-calc "quick-calc")
 
-      ;; files
-      ("d" ale/find-diary-file "diary" :column "Files")
-      ("D" ale/find-remote-diary-file "remote diary")
-      ("i" ale/find-init-file "init file")
-      ("r" ale/find-rest-client-file "rest-client"))
+       ;; files
+       ("d" ale/find-diary-file "diary" :column "Files")
+       ("D" ale/find-remote-diary-file "remote diary")
+       ("i" ale/find-init-file "init file")
+       ("r" ale/find-rest-client-file "rest-client"))
 
-    (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
+     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
    #+END_SRC
 
 ** Bookmarks and registers
