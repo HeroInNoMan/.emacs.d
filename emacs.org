@@ -150,6 +150,7 @@
             sass-mode
             shell-pop
             shrink-whitespace
+            shx
             slime-volleyball
             smart-comment
             smart-mode-line
@@ -1799,6 +1800,8 @@
    #+BEGIN_SRC emacs-lisp
      (add-hook 'sh-mode-hook (lambda () (setq tab-width 2 sh-basic-offset 2 indent-tabs-mode t)))
      (add-hook 'sh-mode-hook 'flycheck-mode)
+     (use-package shx
+       :config (shx-global-mode 1))
      ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
      (add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
      (add-to-list 'auto-mode-alist '(".*bash.*$" . sh-mode))
