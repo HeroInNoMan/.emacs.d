@@ -55,9 +55,134 @@
       (setq key-chord-two-keys-delay 0.05))
   #+END_SRC
 
+  This is the list of my (user-selected) packages:
+  #+BEGIN_SRC emacs-lisp
+    (setq package-selected-packages
+          '(2048-game
+            ace-jump-helm-line
+            ace-window
+            aggressive-indent
+            anzu
+            auctex-latexmk
+            auto-yasnippet
+            avandu
+            beginend
+            browse-kill-ring
+            butler
+            calfw
+            calfw-cal
+            calfw-gcal
+            calfw-ical
+            calfw-org
+            cargo
+            color-theme-modern
+            command-log-mode
+            crux
+            default-text-scale
+            define-word
+            delight
+            describe-number
+            dired-collapse
+            dired-narrow
+            dot-mode
+            dumb-jump
+            edit-server
+            editorconfig
+            elfeed-org
+            elisp-slime-nav
+            elpy
+            expand-region
+            fancy-battery
+            fancy-narrow
+            fish-mode
+            flycheck-rust
+            git-gutter
+            git-messenger
+            git-timemachine
+            gitconfig-mode
+            gitignore-mode
+            god-mode
+            goto-last-change
+            gradle-mode
+            groovy-mode
+            guess-language
+            helm-ag
+            helm-cider
+            helm-dash
+            helm-descbinds
+            helm-git-grep
+            helm-gitlab
+            helm-lines
+            helm-lobsters
+            helm-projectile
+            helm-swoop
+            helpful
+            highlight-indent-guides
+            htmlize
+            idle-highlight-mode
+            imenu-anywhere
+            isearch-dabbrev
+            jedi
+            jenkins
+            js2-refactor
+            json-reformat
+            ledger-mode
+            load-dir
+            lorem-ipsum
+            magit-org-todos
+            meghanada
+            miniedit
+            move-text
+            no-littering
+            nov
+            ob-restclient
+            org-bullets
+            origami
+            paradox
+            persistent-scratch
+            powerthesaurus
+            prog-fill
+            racer
+            rainbow-blocks
+            rainbow-delimiters
+            rainbow-mode
+            region-bindings-mode
+            sass-mode
+            shell-pop
+            shrink-whitespace
+            slime-volleyball
+            smart-comment
+            smart-mode-line
+            smartparens
+            smartscan
+            sml-modeline
+            speed-type
+            super-save
+            swagger-to-org
+            temporary-persistent
+            tide
+            transmission
+            try
+            undo-tree
+            use-package-chords
+            vimish-fold
+            visual-regexp-steroids
+            volatile-highlights
+            web-mode
+            webpaste
+            wgrep
+            which-key
+            winnow
+            yaml-mode
+            yasnippet-snippets
+            zop-to-char
+            ztree))
+  #+END_SRC
+
   Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
   #+BEGIN_SRC emacs-lisp
-   (use-package paradox :defer t)
+    (use-package paradox :defer t
+      :config (setq paradox-github-token t))
   #+END_SRC
 
   Try packages without installing them:
@@ -495,7 +620,9 @@
       :chords ("àà" . avy-goto-char-timer)
       :bind
       ("M-à" . avy-goto-word-1) ;; quickly jump to word by pressing its first letter
-      ("C-à" . avy-goto-char-timer)) ;; quickly jump to any char in word
+      ("C-à" . avy-goto-char-timer) ;; quickly jump to any char in word
+      :config
+      (setq avy-keys '(97 117 105 101 98 233 112 111 116 115 114 110 109 118 100 108 106 99 113 103 104 102)))
   #+END_SRC
 
   I use the nice ~beginend~ package to enhance ~beginning-of-buffer~ and ~end-of-buffer~ commands.
@@ -567,7 +694,8 @@
                   ("C-x x" . origami-toggle-all-nodes)
                   ("C-x y" . origami-show-only-node)
                   ("C-<tab>" . origami-recursively-toggle-node))
-      :hook (prog-mode . origami-mode))
+      :hook (prog-mode . origami-mode)
+      :config (setq origami-fold-replacement "..."))
   #+END_SRC
 
   … and [[https://github.com/mrkkrp/vimish-fold][vimish-fold]].
@@ -741,6 +869,7 @@
              helm-buffers-fuzzy-matching t
              helm-candidate-number-limit 300
              helm-echo-input-in-header-line nil
+             helm-external-programs-associations '(("mp3" . "audacious"))
              helm-ff-file-name-history-use-recentf t
              helm-ff-skip-boring-files t
              helm-net-prefer-curl t
@@ -753,7 +882,79 @@
                                              helm-source-file-cache
                                              ;; helm-source-file-name-history
                                              helm-source-locate
-                                             helm-source-find-files))
+                                             helm-source-find-files)
+             helm-boring-file-regexp-list '("\\.o$"
+                                            "~$"
+                                            "\\.bin$"
+                                            "\\.lbin$"
+                                            "\\.so$"
+                                            "\\.a$"
+                                            "\\.ln$"
+                                            "\\.blg$"
+                                            "\\.bbl$"
+                                            "\\.elc$"
+                                            "\\.lof$"
+                                            "\\.glo$"
+                                            "\\.idx$"
+                                            "\\.lot$"
+                                            "\\.svn\\(/\\|$\\)"
+                                            "\\.hg\\(/\\|$\\)"
+                                            "\\.git\\(/\\|$\\)"
+                                            "\\.bzr\\(/\\|$\\)"
+                                            "CVS\\(/\\|$\\)"
+                                            "_darcs\\(/\\|$\\)"
+                                            "_MTN\\(/\\|$\\)"
+                                            "\\.fmt$"
+                                            "\\.tfm$"
+                                            "\\.class$"
+                                            "\\.fas$"
+                                            "\\.lib$"
+                                            "\\.mem$"
+                                            "\\.x86f$"
+                                            "\\.sparcf$"
+                                            "\\.dfsl$"
+                                            "\\.pfsl$"
+                                            "\\.d64fsl$"
+                                            "\\.p64fsl$"
+                                            "\\.lx64fsl$"
+                                            "\\.lx32fsl$"
+                                            "\\.dx64fsl$"
+                                            "\\.dx32fsl$"
+                                            "\\.fx64fsl$"
+                                            "\\.fx32fsl$"
+                                            "\\.sx64fsl$"
+                                            "\\.sx32fsl$"
+                                            "\\.wx64fsl$"
+                                            "\\.wx32fsl$"
+                                            "\\.fasl$"
+                                            "\\.ufsl$"
+                                            "\\.fsl$"
+                                            "\\.dxl$"
+                                            "\\.lo$"
+                                            "\\.la$"
+                                            "\\.gmo$"
+                                            "\\.mo$"
+                                            "\\.toc$"
+                                            "\\.aux$"
+                                            "\\.cp$"
+                                            "\\.fn$"
+                                            "\\.ky$"
+                                            "\\.pg$"
+                                            "\\.tp$"
+                                            "\\.vr$"
+                                            "\\.cps$"
+                                            "\\.fns$"
+                                            "\\.kys$"
+                                            "\\.pgs$"
+                                            "\\.tps$"
+                                            "\\.vrs$"
+                                            "\\.pyc$"
+                                            "\\.pyo$"
+                                            "\\.egradle/sdk\\(/\\|$\\)"
+                                            "\\.gradle\\(/\\|$\\)"
+                                            "\\.cache/mozilla\\(/\\|$\\)"
+                                            "\\.local/share/Trash/files\\(/\\|$\\)"
+                                            "\\.cache/\\(chromium\\|google\\-chrome\\)/Default/Cache\\(/\\|$\\)"))
        (defhydra hydra-helm-config(:color teal)
          ;;
          ("r"     helm-resume "resume" :column "Helm")
@@ -1011,34 +1212,32 @@
 
      (use-package multiple-cursors
        :demand mc-mark-more
-       :bind
-       (
-        ;; ("M-é" . set-rectangular-region-anchor)
-        :map region-bindings-mode-map
-        ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
-        ("d" . mc/mark-all-symbols-like-this-in-defun)
-        ("D" . mc/mark-all-dwim)
-        ("p" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
-        ("n" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
-        ("P" . mc/unmark-previous-like-this)
-        ("N" . mc/unmark-next-like-this)
-        ("é" . mc/edit-lines) ;; new cursor on each line of region
-        ("(" . mc/cycle-backward)
-        (")" . mc/cycle-forward)
-        ("m" . mc/mark-more-like-this-extended)
-        ("h" . mc-hide-unmatched-lines-mode)
-        ("v" . mc/vertical-align)
-        ("|" . mc/vertical-align-with-space)
-        ("r" . mc/reverse-regions)
-        ("s" . mc/sort-regions)
-        ("#" . mc/insert-numbers) ; use num prefix to set the starting number
-        ("^" . mc/edit-beginnings-of-lines)
-        ("$" . mc/edit-ends-of-lines)
-        ("<down>" . move-text-down)
-        ("<up>" . move-text-up)))
+       :bind (:map region-bindings-mode-map
+                   ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
+                   ("d" . mc/mark-all-symbols-like-this-in-defun)
+                   ("D" . mc/mark-all-dwim)
+                   ("p" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
+                   ("n" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
+                   ("P" . mc/unmark-previous-like-this)
+                   ("N" . mc/unmark-next-like-this)
+                   ("é" . mc/edit-lines) ;; new cursor on each line of region
+                   ("(" . mc/cycle-backward)
+                   (")" . mc/cycle-forward)
+                   ("m" . mc/mark-more-like-this-extended)
+                   ("h" . mc-hide-unmatched-lines-mode)
+                   ("v" . mc/vertical-align)
+                   ("|" . mc/vertical-align-with-space)
+                   ("r" . mc/reverse-regions)
+                   ("s" . mc/sort-regions)
+                   ("#" . mc/insert-numbers) ; use num prefix to set the starting number
+                   ("^" . mc/edit-beginnings-of-lines)
+                   ("$" . mc/edit-ends-of-lines)
+                   ("<down>" . move-text-down)
+                   ("<up>" . move-text-up))
+       :config (setq mc/list-file (concat user-emacs-directory "var/mc-list.el")))
 
-     (use-package smart-comment
-       :bind ("M-;" . smart-comment))
+       (use-package smart-comment
+         :bind ("M-;" . smart-comment))
 
      ;; Remove text in active region if inserting text
      (pending-delete-mode t)
@@ -1218,7 +1417,11 @@
      (use-package magit
        :chords ("qg" . magit-status) ;; run git status for current buffer
        :bind (:map magit-file-mode-map ("C-x g" . hydra-git/body))
-       :config (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order"))
+       :config (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order")
+       (setq magit-branch-arguments nil
+             magit-fetch-arguments  '("--prune")
+             magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100")
+             magit-stash-arguments  '("--include-untracked")))
 
      (defhydra hydra-git(:color blue)
        ;;
@@ -1785,7 +1988,8 @@
 
 *** ecb (à tester)
     #+BEGIN_SRC emacs-lisp
-      (use-package ecb :disabled)
+      (use-package ecb :disabled
+        :config  (setq ecb-options-version "2.40"))
     #+END_SRC
 
 *** meghanada
@@ -2257,28 +2461,27 @@
       :config
       ;; for issues with theme loading
       (size-indication-mode)
-      (setq
-       sml/battery-format "%p"
-       sml/col-number-format "%1c"
-       sml/extra-filler 0
-       sml/full-mode-string " …"
-       sml/line-number-format "%1l"
-       sml/mule-info "%z"
-       sml/name-width '(15 . 44)
-       sml/pos-id-separator ""
-       sml/position-percentage-format nil
-       sml/shorten-mode-string ""
-       sml/shorten-modes nil
-       sml/size-indication-format "(%I) "
-       sml/theme 'dark
-       sml/use-projectile-p 'before-prefixes
-       sml/replacer-regexp-list '(("^~/projets/" ":p:")
-                                  ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
-                                  ("^~/\\.emacs\\.d/" ":ED:")
-                                  ("^/sudo:.*:" ":SU:")
-                                  ("^~/Terminalcity/" ":T:")))
+      (setq sml/battery-format "%p"
+            sml/col-number-format "%1c"
+            sml/extra-filler 0
+            sml/full-mode-string " …"
+            sml/line-number-format "%1l"
+            sml/mule-info "%z"
+            sml/name-width '(15 . 44)
+            sml/pos-id-separator ""
+            sml/position-percentage-format nil
+            sml/shorten-mode-string ""
+            sml/shorten-modes nil
+            sml/size-indication-format "(%I) "
+            sml/theme 'dark
+            sml/use-projectile-p 'before-prefixes
+            sml/replacer-regexp-list '(("^~/projets/" ":p:")
+                                       ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
+                                       ("^~/\\.emacs\\.d/" ":ED:")
+                                       ("^/sudo:.*:" ":SU:")
+                                       ("^~/Terminalcity/" ":T:")))
 
-        ;;;; Rich Minority
+            ;;;; Rich Minority
       (use-package rich-minority
         :config
         (progn
@@ -2389,8 +2592,11 @@
        :mode ("\\.dat$")
        :config
        (setq ledger-clear-whole-transactions 1
-             ledger-font-xact-highlight-face
-             '(((t (:background "gray10"))))))
+             ledger-reports (("courant" "ledger ")
+                             ("bal" "%(binary) -f %(ledger-file) bal")
+                             ("reg" "%(binary) -f %(ledger-file) reg")
+                             ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+                             ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
    #+END_SRC
 
 ** Pomodoro
@@ -2508,7 +2714,8 @@
 
 **** Elfeed
      #+BEGIN_SRC emacs-lisp
-       (use-package elfeed :defer t)
+       (use-package elfeed :defer t
+         :config (setq elfeed-feeds my-private-feeds))
 
        (use-package elfeed-org
          :defer t
