@@ -78,7 +78,10 @@
             color-identifiers-mode
             color-theme-modern
             command-log-mode
+            company-lsp
             crux
+            dap-java
+            dap-mode
             default-text-scale
             define-word
             delight
@@ -115,6 +118,7 @@
             helm-gitlab
             helm-lines
             helm-lobsters
+            helm-lsp
             helm-projectile
             helm-swoop
             helpful
@@ -130,6 +134,10 @@
             ledger-mode
             load-dir
             lorem-ipsum
+            lsp-helm
+            lsp-java
+            lsp-java-treemacs
+            lsp-ui
             magit-org-todos
             meghanada
             miniedit
@@ -164,6 +172,7 @@
             temporary-persistent
             tide
             transmission
+            treemacs
             try
             undo-tree
             use-package-chords
@@ -2000,6 +2009,35 @@
         :config  (setq ecb-options-version "2.40"))
     #+END_SRC
 
+*** lsp-java
+    #+BEGIN_SRC emacs-lisp
+      (use-package lsp-mode)
+      (use-package company-lsp)
+      (use-package lsp-ui
+        :config (setq lsp-ui-sideline-update-mode 'point))
+      (use-package treemacs)
+
+      (use-package helm-lsp)
+
+      (use-package lsp-java
+        ;; :delight (java-mode "🅹" :major)
+        :bind ("C-S-o" . lsp-execute-code-action)
+        :after lsp
+        :config (add-hook 'java-mode-hook 'lsp))
+
+      (use-package dap-mode
+        :after lsp-mode
+        :config
+        (dap-mode t)
+        (dap-ui-mode t))
+
+      (use-package dap-java
+        :ensure nil
+        :after lsp-java)
+
+      (use-package lsp-java-treemacs :ensure nil :after treemacs)
+    #+END_SRC
+
 *** meghanada
     #+BEGIN_SRC emacs-lisp
       (use-package autodisass-java-bytecode
@@ -2011,6 +2049,7 @@
         :commands google-set-c-style)
 
       (use-package meghanada
+        :disabled
         :commands
         (meghanada-mode)
         :bind
@@ -2496,6 +2535,7 @@
                   " AC"         ; auto-complete
                   " Anzu"       ; anzu mode
                   " abrv"       ; abbrev-mode
+                  " Abbrev"     ; abbrev-mode
                   " ARev"       ; auto-revert
                   " be"         ; beginend
                   " company"    ; comppany-mode
