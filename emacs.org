@@ -808,23 +808,24 @@
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree ;; powerfull undo/redo mode
        :bind (("C-M-/" . undo-tree-redo)
-              ("C-c u" . hydra-undo-tree/undo-tree-undo))
+              ("C-c u" . hydra-undo-tree/body))
        :config
        (global-undo-tree-mode)
        (setq undo-tree-visualizer-timestamps t
              undo-tree-visualizer-diff t
              undo-outer-limit 3000000)
        (defhydra hydra-undo-tree (:color teal)
-         ;;
-         ("u" undo-tree-visualize "visualize" :column "Undo")
+         ("u" undo-tree-visualize "visualize" :column "Tree")
+         ("v" undo-tree-visualize :bind nil)
          ("q" nil "quit")
          ;; navigate
-         ("p" undo-tree-undo "undo" :color red :column "Navigate")
-         ("n" undo-tree-redo "redo" :color red)
+         ("p" undo-tree-undo :color red :column "Undo ↶")
+         ("u" undo-tree-undo :bind nil :color red)
+         ("n" undo-tree-redo :color red :column "Redo ↷")
+         ("r" undo-tree-redo :bind nil :color red)
          ;; manage
          ("s" undo-tree-save-history "save" :column "Manage")
          ("l" undo-tree-load-history "load")))
-
    #+END_SRC
 
 ** Ivy, counsel, swiper
