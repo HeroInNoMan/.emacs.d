@@ -127,6 +127,7 @@
             idle-highlight-mode
             imenu-anywhere
             isearch-dabbrev
+            iy-go-to-char
             jedi
             jenkins
             js2-refactor
@@ -638,6 +639,12 @@
       ("C-à" . avy-goto-char-timer) ;; quickly jump to any char in word
       :config
       (setq avy-keys '(97 117 105 101 98 233 112 111 116 115 114 110 109 118 100 108 106 99 113 103 104 102)))
+  #+END_SRC
+
+  Equivalent of ~f~ key in vim:
+  #+BEGIN_SRC emacs-lisp
+    (use-package iy-go-to-char
+      :bind ("M-m" . iy-go-up-to-char))
   #+END_SRC
 
   I use the nice ~beginend~ package to enhance ~beginning-of-buffer~ and ~end-of-buffer~ commands.
