@@ -1501,31 +1501,19 @@
 
   Add a hydra to insert the current date (and time) in various formats.
   #+BEGIN_SRC emacs-lisp
-     (defhydra hydra-dates (:color blue :hint nil)
-       "
-       ^Today^     ^Date^                       ^Date & Time^
-       ^─────^─────^────^───────────────────────^───────────^──────────
-       _q_ quit    _s_ %(format-time-string \"%d/%m/%Y\")             _t_ %(format-time-string \"%Y/%m/%d %H:%M\")
-       ^ ^         ^ ^ ^^^^^^^^^^^^^^^^^^^^^^                         _T_ %(format-time-string \"%A %d %B %Y - %H:%M\")
-       ^ ^         _d_ %(format-time-string \"%F\")
-       ^ ^         _D_ %(format-time-string \"%F %A\")
-       ^ ^         ^ ^ ^^^^^^^^^^^^^^^^^^^^^^                         _i_ %(format-time-string \"%FT%T%z\")
-       ^ ^         _l_ %(format-time-string \"%d %B %Y\")
-       ^ ^         _L_ %(format-time-string \"%A %d %B %Y\")
-       "
-       ("q" nil)
-       ;; date
-       ("s" ab/date-short)
-       ("d" ab/date-iso)
-       ("D" ab/date-iso-with-day)
-       ("l" ab/date-long)
-       ("L" ab/date-long-with-day)
-       ;; date + time
-       ("t" ab/date-short-with-time)
-       ("T" ab/date-long-with-time)
-       ("i" ab/date-iso-with-time))
-
-     (global-set-key (kbd "C-c d") 'hydra-dates/body)
+    (defhydra hydra-dates (:color blue)
+      ("q" nil "quit" :column "Today")
+      ;; date
+      ("s" ab/date-short (format-time-string "%d/%m/%Y") :column "Date")
+      ("d" ab/date-iso (format-time-string "%F"))
+      ("D" ab/date-iso-with-day (format-time-string "%F %A"))
+      ("l" ab/date-long (format-time-string "%d %B %Y"))
+      ("L" ab/date-long-with-day (format-time-string "%A %d %B %Y"))
+      ;; date + time
+      ("t" ab/date-short-with-time (format-time-string "%Y/%m/%d %H:%M") :column "Date & Time")
+      ("T" ab/date-long-with-time (format-time-string "%A %d %B %Y - %H:%M"))
+      ("i" ab/date-iso-with-time (format-time-string "%FT%T%z")))
+    (global-set-key (kbd "C-c d") 'hydra-dates/body)
   #+END_SRC
 
   I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of calendars.
@@ -2375,45 +2363,27 @@
 * Quick access
 ** Custom menu
    #+BEGIN_SRC emacs-lisp
-     (defhydra hydra-minor-modes(:color blue :hint nil)
-       "
-       ^Minor mode^    ^Toggle
-       ^──────────^────^──────^───────────────────
-       _q_  quit       _(_ smartparens %(when (boundp 'smartparens-mode) smartparens-mode)
-       ^ ^             _)_ smartparens strict %(when (boundp 'smartparens-mode) smartparens-strict-mode)
-       ^ ^             _c_ color-identifiers-mode %(when (boundp 'color-identifiers-mode) color-identifiers-mode)
-       ^ ^             _g_ god %(when (boundp 'god-local-mode) god-local-mode)
-       ^ ^             _h_ Idle HL %(when (boundp 'idle-highlight-mode) idle-highlight-mode)
-       ^ ^             _H_ Highlight-line %(when (boundp 'highlight-line-mode) highlight-line-mode)
-       ^ ^             _i_ ido %(when (boundp 'ido-mode) ido-mode)
-       ^ ^             _I_ indent-guide %(when (boundp 'highlight-indent-guides-mode) highlight-indent-guides-mode)
-       ^ ^             _l_ line number
-       ^ ^             _o_ overwrite-mode %`overwrite-mode
-       ^ ^             _p_ prettify symbols %`prettify-symbols-mode
-       ^ ^             _r_ rainbow-blocks-mode %(when (boundp 'rainbow-blocks-mode) rainbow-blocks-mode)
-       ^ ^             _v_ visual-line %`visual-line-mode
-       ^ ^             _V_ volatile-highlight %(when (boundp 'volatile-highlights-mode) volatile-highlights-mode)
-       ^ ^             _w_ whitespace %`global-whitespace-mode
-       ^ ^             _x_ winnow-mode %(when (boundp 'winnow-mode) winnow-mode)
-       "
-
-       ("(" smartparens-global-mode)
-       (")" smartparens-global-strict-mode)
-       ("c" color-identifiers-mode)
-       ("g" toggle-god-mode)
-       ("h" idle-highlight-mode)
-       ("H" hl-line-mode)
-       ("i" ido-mode)
-       ("I" highlight-indent-guides-mode)
-       ("l" linum-mode)
-       ("o" overwrite-mode)
-       ("p" prettify-symbols-mode)
-       ("r" rainbow-blocks-mode)
-       ("v" visual-line-mode)
-       ("V" volatile-highlights-mode)
-       ("w" whitespace-mode)
-       ("x" winnow-mode)
-       ("q" nil))
+     (defhydra hydra-minor-modes(:color blue)
+       ("q" nil "quit" :column "Toggle mode")
+       ;; Writing
+       ("(" smartparens-global-mode (format "smartparens %s" (when (boundp 'smartparens-mode) smartparens-mode)) :column "Writing")
+       (")" smartparens-global-strict-mode (format "smartparens strict %s" (when (boundp 'smartparens-strict-mode) smartparens-strict-mode)))
+       ("g" toggle-god-mode (format "god %s" (when (boundp 'god-local-mode) god-local-mode)))
+       ("o" overwrite-mode (format "overwrite-mode %s" (when (boundp 'overwrite-mode) overwrite-mode)))
+       ;; Decoration
+       ("c" color-identifiers-mode (format "color-identifiers %s" (when (boundp 'color-identifiers-mode) color-identifiers-mode)) :column "Decoration")
+       ("h" idle-highlight-mode (format "Idle HL %s" (when (boundp 'idle-highlight-mode) idle-highlight-mode)))
+       ("H" hl-line-mode (format "Highlight-line %s" (when (boundp 'highlight-line-mode) highlight-line-mode)))
+       ("I" highlight-indent-guides-mode (format "indent-guide %s" (when (boundp 'highlight-indent-guides-mode) highlight-indent-guides-mode)))
+       ("p" prettify-symbols-mode (format "prettify symbols %s" (when (boundp 'prettify-symbols-mode) prettify-symbols-mode)))
+       ("r" rainbow-blocks-mode (format "rainbow-blocks-mode %s" (when (boundp 'rainbow-blocks-mode) rainbow-blocks-mode)))
+       ("V" volatile-highlights-mode (format "volatile-highlight %s" (when (boundp 'volatile-highlights-mode) volatile-highlights-mode)))
+       ("w" whitespace-mode (format "whitespace %s" (when (boundp 'global-whitespace-mode) global-whitespace-mode)))
+       ;; Navigation
+       ("i" ido-mode (format "ido %s" (when (boundp 'ido-mode) ido-mode)) :column "Navigation")
+       ("l" linum-mode "line number")
+       ("v" visual-line-mode (format "visual-line %s" (when (boundp 'visual-line-mode) visual-line-mode)))
+       ("x" winnow-mode (format "winnow %s" (when (boundp 'winnow-mode) winnow-mode))))
      (global-set-key (kbd "C-c m") 'hydra-minor-modes/body)
 
      (defhydra hydra-major-modes(:color blue)
