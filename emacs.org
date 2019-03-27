@@ -1439,33 +1439,35 @@
    #+BEGIN_SRC emacs-lisp
      (use-package magit
        :chords ("qg" . magit-status) ;; run git status for current buffer
-       :bind (:map magit-file-mode-map ("C-x g" . hydra-git/body))
+       :bind
+       ("C-x g" . hydra-git/body)
+       (:map magit-file-mode-map ("C-x g" . hydra-git/body))
        :config (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order")
        (setq magit-branch-arguments nil
              magit-fetch-arguments  '("--prune")
              magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100")
-             magit-stash-arguments  '("--include-untracked")))
+             magit-stash-arguments  '("--include-untracked"))
 
-     (defhydra hydra-git(:color blue)
-       ;;
-       ("q" nil "quit" :column "Git")
-       ;; gutter
-       ("n" git-gutter:next-hunk "next hunk" :color pink :column "Gutter")
-       ("p" git-gutter:previous-hunk "prev hunk" :color pink)
-       ("r" git-gutter:revert-hunk "revert hunk" :color pink)
-       ("s" git-gutter:stage-hunk "stage hunk" :color pink)
-       ("u" git-gutter-mode "gutter mode")
-       ;; log
-       ("b" magit-blame "blame" :column "Log")
-       ("l" magit-log-buffer-file "file history")
-       ("t" git-timemachine "time machine")
-       ;; other
-       ("." magit-status "status" :column "Other")
-       ("g" git-messenger:popup-message "message")
-       ("f" magit-file-popup "file popup"))
-     (global-set-key (kbd "C-x g") 'hydra-git/body)
+       (defhydra hydra-git(:color blue)
+         ;;
+         ("q" nil "quit" :column "Git")
+         ;; gutter
+         ("n" git-gutter:next-hunk "next hunk" :color pink :column "Gutter")
+         ("p" git-gutter:previous-hunk "prev hunk" :color pink)
+         ("r" git-gutter:revert-hunk "revert hunk" :color pink)
+         ("s" git-gutter:stage-hunk "stage hunk" :color pink)
+         ("u" git-gutter-mode "gutter mode")
+         ;; log
+         ("b" magit-blame "blame" :column "Log")
+         ("l" magit-log-buffer-file "file history")
+         ("t" git-timemachine "time machine")
+         ;; other
+         ("." magit-status "status" :column "Other")
+         ("g" git-messenger:popup-message "message")
+         ("f" magit-file-popup "file popup")))
 
      (use-package magit-org-todos
+       :defer t
        :after magit
        :config
        (magit-org-todos-autoinsert))
