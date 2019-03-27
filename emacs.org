@@ -1285,7 +1285,13 @@
 
 ** Diffing
    #+BEGIN_SRC emacs-lisp
-     (use-package ztree :defer t)
+     (use-package ztree
+       :defer t
+       :bind (:map ztree-mode-map
+                   ("o" . ztree-jump-side)
+                   ("l" . recenter-top-bottom)
+                   ("n" . ztree-next-line)
+                   ("p" . ztree-previous-line)))
    #+END_SRC
 
 * Buffer & window manipulation
