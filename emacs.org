@@ -724,23 +724,23 @@
   #+BEGIN_SRC emacs-lisp
     (use-package vimish-fold
       :bind
+      ("C-c <tab>" . hydra-fold/body)
       (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
             :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
       :config
       (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
       (vimish-fold-global-mode 1)
-      (setq-default vimish-fold-header-width 79))
+      (setq-default vimish-fold-header-width 79)
 
-    (defhydra hydra-fold (:color pink)
-      ("q" nil "quit" :column "Fold")
-      ("f" vimish-fold "fold" :column "Do")
-      ("k" vimish-fold-delete "kill")
-      ("K" vimish-fold-delete-all "kill all")
-      ("p" vimish-fold-previous-fold "previous" :column "Jump")
-      ("n" vimish-fold-next-fold "next")
-      ("<tab>" vimish-fold-toggle "current" :column "Toggle")
-      ("a" vimish-fold-toggle-all "all"))
-    (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
+      (defhydra hydra-fold (:color pink)
+        ("q" nil "quit" :column "Fold")
+        ("f" vimish-fold "fold" :column "Do")
+        ("k" vimish-fold-delete "kill")
+        ("K" vimish-fold-delete-all "kill all")
+        ("p" vimish-fold-previous-fold "previous" :column "Jump")
+        ("n" vimish-fold-next-fold "next")
+        ("<tab>" vimish-fold-toggle "current" :column "Toggle")
+        ("a" vimish-fold-toggle-all "all")))
   #+END_SRC
 
   I also use =selective-display= as a more simple folding method.
