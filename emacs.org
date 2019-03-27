@@ -2007,13 +2007,14 @@
 
 *** lsp-java
     #+BEGIN_SRC emacs-lisp
-      (use-package lsp-mode)
-      (use-package company-lsp)
+      (use-package lsp-mode :defer t)
+      (use-package company-lsp :defer t)
       (use-package lsp-ui
+        :defer t
         :config (setq lsp-ui-sideline-update-mode 'point))
-      (use-package treemacs)
+      (use-package treemacs :defer t)
 
-      (use-package helm-lsp)
+      (use-package helm-lsp :defer t)
 
       (use-package lsp-java
         ;; :delight (java-mode "🅹" :major)
@@ -2022,16 +2023,21 @@
         :config (add-hook 'java-mode-hook 'lsp))
 
       (use-package dap-mode
+        :defer t
         :after lsp-mode
         :config
         (dap-mode t)
         (dap-ui-mode t))
 
       (use-package dap-java
+        :defer t
         :ensure nil
         :after lsp-java)
 
-      (use-package lsp-java-treemacs :ensure nil :after treemacs)
+      (use-package lsp-java-treemacs
+        :defer t
+        :ensure nil
+        :after treemacs)
     #+END_SRC
 
 *** meghanada
