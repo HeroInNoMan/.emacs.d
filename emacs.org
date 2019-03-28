@@ -146,6 +146,7 @@
             no-littering
             nov
             ob-restclient
+            ob-shell
             org-bullets
             origami
             paradox
@@ -1573,6 +1574,7 @@
       :chords ("gx" . org-capture)
       :config
       (use-package ob-restclient :defer t)
+      (use-package ob-shell :ensure nil :defer t)
       (use-package htmlize :defer t)
       (use-package swagger-to-org :defer t)
       (require 'org-agenda)
@@ -1594,6 +1596,7 @@
        org-confirm-babel-evaluate nil)
       (org-babel-do-load-languages 'org-babel-load-languages
                                    '((ledger . t)
+                                     (shell . t)
                                      (restclient . t)
                                      (emacs-lisp . t)))
       ;; ORG-CAPTURE
