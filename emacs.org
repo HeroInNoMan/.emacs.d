@@ -95,6 +95,7 @@
             elfeed-org
             elisp-slime-nav
             elpy
+            ensime
             expand-region
             fancy-battery
             fancy-narrow
@@ -160,6 +161,8 @@
             rainbow-mode
             region-bindings-mode
             sass-mode
+            sbt-mode
+            scala-mode
             shell-pop
             shrink-whitespace
             shx
@@ -1958,6 +1961,13 @@
          ;; (setq racer-rust-src-path (concat (getenv "HOME") "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"))
          )
        (flycheck-rust-setup))
+   #+END_SRC
+
+** Scala
+   #+BEGIN_SRC emacs-lisp
+     (use-package ensime :defer t)
+     (use-package sbt-mode :defer t)
+     (use-package scala-mode :defer t)
    #+END_SRC
 
 ** Java
