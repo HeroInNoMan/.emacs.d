@@ -149,6 +149,7 @@
             ob-shell
             org-bullets
             origami
+            page-break-lines
             paradox
             persistent-scratch
             powerthesaurus
@@ -552,6 +553,12 @@
      (use-package highlight-indent-guides
        :config (setq highlight-indent-guides-method 'character)
        :hook (prog-mode . highlight-indent-guides-mode))
+   #+END_SRC
+
+   Prettify those ugly ==
+   #+BEGIN_SRC emacs-lisp
+     (use-package page-break-lines
+       :config (global-page-break-lines-mode))
    #+END_SRC
 
 ** Icons in terminal
