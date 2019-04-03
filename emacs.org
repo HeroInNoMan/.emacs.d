@@ -551,6 +551,7 @@
        :load-path "elisp/")
 
      (use-package fancy-narrow
+       :disabled t
        :config (fancy-narrow-mode t))
 
      (use-package highlight-indent-guides
