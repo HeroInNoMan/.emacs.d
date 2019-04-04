@@ -2312,22 +2312,26 @@
    #+BEGIN_SRC emacs-lisp
      (use-package python
        :bind (:map python-mode-map
-                   ("M-g M-p" . elpy-flymake-previous-error)
-                   ("M-g M-n" . elpy-flymake-next-error)
+                   ("M-g M-p" . flycheck-previous-error)
+                   ("M-g M-n" . flycheck-next-error)
                    ("C-x C-e" . python-shell-send-defun))
        :hook (python-mode . (lambda () (progn
                                     (elpy-enable)
                                     (elpy-mode)
                                     (flycheck-mode))))
        :config
-       (setq python-indent-offset 2
+       (setq python-indent-offset 4
              tab-always-indent t)
+
        (use-package jedi
          :defer t
          :config (setq jedi:complete-on-dot t))
+
        (use-package elpy
          :defer t
-         :config (setq elpy-rpc-backend "jedi"))) ;; fire up jedi in python env
+         :config
+         (delete "elpy-module-flymake" elpy-modules) ;; use flycheck instead
+         (setq elpy-rpc-backend "jedi"))) ;; fire up jedi in python env
    #+END_SRC
 
 ** Yaml
