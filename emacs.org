@@ -82,6 +82,7 @@
             crux
             dap-java
             dap-mode
+            dap-ui-mode
             default-text-scale
             define-word
             delight
@@ -1724,6 +1725,50 @@
        :hook (prog-mode . flycheck-mode))
    #+END_SRC
 
+** LSP
+
+   TODO: describe lsp
+   #+BEGIN_SRC emacs-lisp
+     (use-package lsp-mode
+       :defer t
+       :config
+       (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
+
+     (use-package company-lsp
+       :defer t
+       :requires lsp company)
+
+     (use-package lsp-ui
+       :defer t
+       :requires lsp-mode flycheck
+       :hook (lsp-mode . lsp-ui-mode)
+       :config
+       (setq lsp-ui-doc-enable t
+             lsp-ui-doc-use-childframe t
+             lsp-ui-doc-position 'top
+             lsp-ui-doc-include-signature t
+             lsp-ui-sideline-enable nil
+             lsp-ui-sideline-update-mode 'point
+             lsp-ui-sideline-ignore-duplicate t
+             lsp-ui-flycheck-enable t
+             lsp-ui-flycheck-list-position 'right
+             lsp-ui-flycheck-live-reporting t
+             lsp-ui-peek-enable t
+             lsp-ui-peek-list-width 60
+             lsp-ui-peek-peek-height 25))
+
+     (use-package treemacs :defer t)
+
+     (use-package helm-lsp :defer t)
+
+     (use-package dap-mode
+       :defer t
+       :requires lsp-mode
+       :config
+       (dap-mode 1)
+       (dap-ui-mode 1))
+   #+END_SRC
+
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
@@ -2031,27 +2076,11 @@
 
 *** lsp-java
     #+BEGIN_SRC emacs-lisp
-      (use-package lsp-mode :defer t)
-      (use-package company-lsp :defer t)
-      (use-package lsp-ui
-        :defer t
-        :config (setq lsp-ui-sideline-update-mode 'point))
-      (use-package treemacs :defer t)
-
-      (use-package helm-lsp :defer t)
-
       (use-package lsp-java
         ;; :delight (java-mode "🅹" :major)
         :bind ("C-S-o" . lsp-execute-code-action)
         :after lsp
         :config (add-hook 'java-mode-hook 'lsp))
-
-      (use-package dap-mode
-        :defer t
-        :after lsp-mode
-        :config
-        (dap-mode t)
-        (dap-ui-mode t))
 
       (use-package dap-java
         :defer t
