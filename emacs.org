@@ -2009,6 +2009,7 @@
        :config
        (use-package flycheck-rust)
        (use-package racer
+         :defer t
          :config
          (setq company-tooltip-align-annotations t)
          (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
