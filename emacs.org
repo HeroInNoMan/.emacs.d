@@ -2437,27 +2437,47 @@
 * Quick access
 ** Custom menu
    #+BEGIN_SRC emacs-lisp
+     (defun format-mode-state (label mode)
+       "Return the LABEL and MODE state enriched with font."
+       (if (and (boundp mode)
+                (symbol-value mode))
+           (concat label " " (propertize (format "%s" (when (boundp mode) (symbol-value mode))) 'face '((:foreground "darkgreen" :weight bold))))
+         (concat label " " (propertize (format "%s" (when (boundp mode) (symbol-value mode))) 'face '((:foreground "grey15" :weight bold))))))
+
      (defhydra hydra-minor-modes(:color blue)
-       ("q" nil "quit" :column "Toggle mode")
-       ;; Writing
-       ("(" smartparens-global-mode (format "smartparens %s" (when (boundp 'smartparens-mode) smartparens-mode)) :column "Writing")
-       (")" smartparens-global-strict-mode (format "smartparens strict %s" (when (boundp 'smartparens-strict-mode) smartparens-strict-mode)))
-       ("g" toggle-god-mode (format "god %s" (when (boundp 'god-local-mode) god-local-mode)))
-       ("o" overwrite-mode (format "overwrite-mode %s" (when (boundp 'overwrite-mode) overwrite-mode)))
-       ;; Decoration
-       ("c" color-identifiers-mode (format "color-identifiers %s" (when (boundp 'color-identifiers-mode) color-identifiers-mode)) :column "Decoration")
-       ("h" idle-highlight-mode (format "Idle HL %s" (when (boundp 'idle-highlight-mode) idle-highlight-mode)))
-       ("H" hl-line-mode (format "Highlight-line %s" (when (boundp 'highlight-line-mode) highlight-line-mode)))
-       ("I" highlight-indent-guides-mode (format "indent-guide %s" (when (boundp 'highlight-indent-guides-mode) highlight-indent-guides-mode)))
-       ("p" prettify-symbols-mode (format "prettify symbols %s" (when (boundp 'prettify-symbols-mode) prettify-symbols-mode)))
-       ("r" rainbow-blocks-mode (format "rainbow-blocks-mode %s" (when (boundp 'rainbow-blocks-mode) rainbow-blocks-mode)))
-       ("V" volatile-highlights-mode (format "volatile-highlight %s" (when (boundp 'volatile-highlights-mode) volatile-highlights-mode)))
-       ("w" whitespace-mode (format "whitespace %s" (when (boundp 'global-whitespace-mode) global-whitespace-mode)))
+       ("m" hydra-major-modes/body "major modes" :column "Toggle mode")
+       ("q" nil "quit")
+
        ;; Navigation
-       ("i" ido-mode (format "ido %s" (when (boundp 'ido-mode) ido-mode)) :column "Navigation")
-       ("l" linum-mode "line number")
-       ("v" visual-line-mode (format "visual-line %s" (when (boundp 'visual-line-mode) visual-line-mode)))
-       ("x" winnow-mode (format "winnow %s" (when (boundp 'winnow-mode) winnow-mode))))
+       ("i" ido-mode (format-mode-state "ido" 'ido-mode) :column "Navigation")
+       ("l" linum-mode (format-mode-state "line number" 'global-linum-mode))
+       ("v" visual-line-mode (format-mode-state "visual line" 'visual-line-mode))
+       ("x" winnow-mode (format-mode-state "winnow" 'winnow-mode))
+
+       ;; Highlighting
+       ("h" idle-highlight-mode (format-mode-state "Idle HL" 'idle-highlight-mode) :column "Highlighting")
+       ("H" hl-line-mode (format-mode-state "highlight line" 'highlight-line-mode))
+       ("I" highlight-indent-guides-mode (format-mode-state "indent guide" 'highlight-indent-guides-mode))
+       ("V" volatile-highlights-mode (format-mode-state "volatile highlight" 'volatile-highlights-mode))
+
+       ;; Decoration
+       ("C" color-identifiers-mode (format-mode-state "color identifiers" 'color-identifiers-mode) :column "Decoration")
+       ("p" prettify-symbols-mode (format-mode-state "prettify symbols" 'prettify-symbols-mode))
+       ("r" rainbow-blocks-mode (format-mode-state "rainbow blocks" 'rainbow-blocks-mode))
+       ("w" whitespace-mode (format-mode-state "whitespace" 'global-whitespace-mode))
+
+       ;; Coding
+       ("(" smartparens-global-mode (format-mode-state "smartparens" 'smartparens-mode) :column "Coding")
+       (")" smartparens-global-strict-mode (format-mode-state "smartparens strict" 'smartparens-strict-mode))
+       ("f" flycheck-mode (format-mode-state "flycheck" 'flycheck-mode))
+       ("L" litable-mode (format-mode-state "litable" 'litable-mode))
+
+       ;; Writing
+       ("c" company-mode (format-mode-state "company" 'company-mode) :column "Writing")
+       ("F" flyspell-mode (format-mode-state "flyspell" 'flyspell-mode))
+       ("g" toggle-god-mode (format-mode-state "god" 'god-local-mode))
+       ("o" overwrite-mode (format-mode-state "overwrite" 'overwrite-mode)))
+
      (global-set-key (kbd "C-c m") 'hydra-minor-modes/body)
 
      (defhydra hydra-major-modes(:color blue)
