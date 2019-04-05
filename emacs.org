@@ -1088,17 +1088,16 @@
 
    Let’s add some grepping facilities.
    #+BEGIN_SRC emacs-lisp
-      (use-package wgrep
-        :bind (:map grep-mode-map
-                    ("C-x C-q" . wgrep-change-to-wgrep-mode)
-                    ("C-c C-c" . wgrep-finish-edit)))
-
-      (use-package helm-ag
-        :bind (:map helm-ag-mode-map
-                    ("p" . previous-line)
-                    ("n" . next-line)
-                    ("C-x C-q" . wgrep-change-to-wgrep-mode)
-                    ("C-c C-c" . wgrep-finish-edit)))
+     (use-package wgrep
+       :bind (:map grep-mode-map
+                   ("C-x C-q" . wgrep-change-to-wgrep-mode)
+                   ("C-c C-c" . wgrep-finish-edit)))
+     (use-package helm-ag
+       :bind (:map helm-ag-mode-map
+                   ("p" . previous-line)
+                   ("n" . next-line)
+                   ("C-x C-q" . wgrep-change-to-wgrep-mode)
+                   ("C-c C-c" . wgrep-finish-edit)))
    #+END_SRC
 
    =Helm-swoop= can be called during =isearch= to make searching easier with big files or big number of occurences.
