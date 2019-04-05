@@ -135,6 +135,7 @@
             js2-refactor
             json-reformat
             ledger-mode
+            litable
             load-dir
             lorem-ipsum
             lsp-helm
@@ -1932,6 +1933,12 @@
      (use-package elisp-slime-nav
        :after emacs-lisp-mode
        :hook (emacs-lisp-mode-hook))
+   #+END_SRC
+
+   Litable mode allows quick elisp code evaluation.
+   #+BEGIN_SRC emacs-lisp
+     (use-package litable
+       :hook (lisp-interaction-mode . litable-mode))
    #+END_SRC
 
 ** Clojure
