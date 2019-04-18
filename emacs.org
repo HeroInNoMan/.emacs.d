@@ -125,6 +125,7 @@
             helm-projectile
             helm-swoop
             helpful
+            hide-mode-line
             highlight-indent-guides
             htmlize
             idle-highlight-mode
@@ -2512,6 +2513,7 @@
        ("h" idle-highlight-mode (format-mode-state "Idle HL" 'idle-highlight-mode) :column "Highlighting")
        ("H" hl-line-mode (format-mode-state "highlight line" 'highlight-line-mode))
        ("I" highlight-indent-guides-mode (format-mode-state "indent guide" 'highlight-indent-guides-mode))
+       ("M" hide-mode-line-mode (format-mode-state "hide mode-line" 'hide-mode-line-mode))
        ("V" volatile-highlights-mode (format-mode-state "volatile highlight" 'volatile-highlights-mode))
 
        ;; Decoration
@@ -2596,6 +2598,11 @@
   #+END_SRC
 
 * Mode-line
+  I want to be able to hide the mode-line entirely.
+  #+BEGIN_SRC emacs-lisp
+    (use-package hide-mode-line)
+  #+END_SRC
+
   #+BEGIN_SRC emacs-lisp
     (use-package modeline-posn
       :ensure nil
