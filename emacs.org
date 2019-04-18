@@ -102,6 +102,7 @@
             fancy-narrow
             fish-mode
             flycheck-rust
+            forge
             git-gutter
             git-messenger
             git-timemachine
@@ -1499,8 +1500,10 @@
          ("g" git-messenger:popup-message "message")
          ("f" magit-file-popup "file popup")))
 
+     (use-package forge
+       :after magit)
+
      (use-package magit-org-todos
-       :defer t
        :after magit
        :config
        (magit-org-todos-autoinsert))
