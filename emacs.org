@@ -1647,15 +1647,19 @@
       ;; ORG-CAPTURE
       (setq notes-file (concat user-emacs-directory "notes.org")
             snippet-file (concat user-emacs-directory "code-snippets.txt")
-            diary-file (concat my-private-remote-home-dir my-private-remote-diary-org-file)
-            todo-file (concat my-private-remote-home-dir my-private-remote-todo-org-file)
+            diary-local-file my-private-local-diary-file
+            diary-remote-file (concat my-private-remote-home-dir my-private-remote-diary-org-file)
+            todo-local-file my-private-local-todo-org-file
+            todo-remote-file (concat my-private-remote-home-dir my-private-remote-todo-org-file)
             org-capture-templates
             '(;; local
+              ("d" "local - diary item" item (file+olp+datetree diary-local-file) "%i%?")
               ("n" "local - note" item (file+olp+datetree notes-file) "%i%?")
-              ("y" "local - code snippet" plain (file snippet-file) "\n%i%?")
+              ("t" "local - TODO" entry (file todo-local-file) "* TODO %?\n\t%i")
+              ("y" "local - code snippet" plain (file snippet-file) "\n--\n%i%?")
               ;; remote
-              ("D" "remote - diary item" item (file+olp+datetree diary-file) "%i%?")
-              ("T" "remote - TODO" entry (file+headline todo-file "VRAC") "* TODO %?\n\t%i")))
+              ("D" "remote - diary item" item (file+olp+datetree diary-remote-file) "%i%?")
+              ("T" "remote - TODO" entry (file+headline todo-remote-file "VRAC") "* TODO %?\n\t%i")))
 
       ;; font and faces customization
       (setq org-todo-keyword-faces
