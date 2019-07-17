@@ -94,7 +94,7 @@ Show the full path file name in the minibuffer."
        (not (null my-private-work-bugtracker-url)))
       (let* ((id (upcase (thing-at-point 'symbol)))
              (bounds (bounds-of-thing-at-point 'symbol))
-             (org-link (concat "[[" my-private-work-bugtracker-url id "][" id "]]")))
+             (org-link (concat "[[" my-private-work-bugtracker-url id "][#" id "]]")))
         (delete-region (car bounds) (cdr bounds))
         (insert org-link))
     (message "Var my-private-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
@@ -208,13 +208,14 @@ Swap buffers in the process"
       (whitespace-mode -1))))
 
 (defun ale/insert-ticket-prefix ()
-  "Insert a prefix containing the number of the Jira ticket."
-  (let* ((result  (re-search-forward "\\(?:US\\|RV\\|FEEDBACK\\|TASK\\|BUG\\)-\\([A-Z]+\\)-?\\([0-9]+\\).*$" nil t))
-         (s (concat (match-string 1) "-" (match-string 2))))
+  "Insert a prefix containing the number of the ticket."
+  (interactive)
+  (let* ((result  (re-search-forward "\\([0-9]\\{4\\}\\)[_-].+$" nil t))
+         (s (match-string 1)))
     (goto-char (point-min))
     (when (and result
-               (not (string-match (concat "\\[" s "\\]") (buffer-string))))
-      (insert (concat "[" (upcase s) "] ")))))
+               (not (string-match (concat "#" s ) (buffer-string))))
+      (insert (concat "#" s " ")))))
 
 (defun ale/toggle-camel-snake-kebab-case ()
   "Toggle between camelcase and underscore notation for the symbol at point."

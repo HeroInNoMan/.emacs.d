@@ -10,7 +10,7 @@
   (progn
     ;; hooking for specific functions
     (add-hook 'git-commit-setup-hook 'ale/insert-ticket-prefix)
-    (add-hook 'git-commit-setup-hook 'ale/switch-to-en-dict)
+    ;; (add-hook 'git-commit-setup-hook 'ale/switch-to-en-dict)
 
     ;; capture templates
     (add-to-list 'org-capture-templates '("d" "work - log" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?") t)
@@ -66,10 +66,14 @@
     ;; let access projects quickly in a convenient layout
     (defhydra hydra-projects(:color teal)
       ("q" nil "cancel" :column "Projets")
-      ("e" (lambda () (ale/open-project user-emacs-directory)) "emacs" :column "Perso")
-      ("E" (lambda () (ale/open-project "~/outils/emacs")) "emacs source"))
+      ("c" (lambda () (interactive)(ale/open-project "~/projets/Coopener")) "Coopener" :column "Enercoop")
+      ("d" (lambda () (interactive)(ale/open-project my-private-dotfiles)) "dotfiles" :column "Perso")
+      ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
+      ("E" (lambda () (interactive)(ale/open-project "~/outils/emacs")) "emacs source"))
     (global-set-key (kbd "<f9>") 'hydra-projects/body)
-    (global-set-key (kbd "C-c C-j") 'hydra-projects/body)))
+    (global-set-key (kbd "C-c C-j") 'hydra-projects/body)
+
+    (server-start)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; YUNOHOST (remote) ;;
@@ -147,7 +151,7 @@
 ;; LOAD APPROPRIATE ENVIRONMENT ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (cond
- ((equal "kuutamo" (system-name))
+ ((equal "ene-natl-pc-075" (system-name))
   (load-kuutamo-env))
  ((or (equal "scw-0f23ec" (system-name))
       (equal "ns301170.ip-91-121-73.eu" (system-name)))

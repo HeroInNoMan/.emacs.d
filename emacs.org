@@ -575,7 +575,7 @@
        :ensure nil
        :load-path "elisp/")
 
-     (use-package icons-in-terminal
+     (use-package icons-in-terminal :disabled t
        :ensure nil
        :load-path "~/.local/share/icons-in-terminal/")
      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
@@ -901,7 +901,7 @@
        (helm-autoresize-mode t)
        (semantic-mode 1) ;; useful for imenu-like navigation
        (setq helm-M-x-fuzzy-match t
-             helm-locate-command "locate %s -e -A --regex %s -d ~/var/mlocate.db:/var/lib/mlocate/mlocate.db"
+             helm-locate-command "locate %s -e -A --regex %s -d ~/mlocate.db"
              helm-adaptive-mode t
              helm-ag-base-command "ag --nocolor --nogroup --smart-case"
              helm-ag-insert-at-point 'symbol
