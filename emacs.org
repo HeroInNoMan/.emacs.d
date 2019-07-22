@@ -1297,6 +1297,12 @@
        :load-path "elisp/")
 
      (global-set-key (kbd "C-x _") 'ale/toggle-camel-snake-kebab-case)
+
+     (use-package change-inner
+       :bind ("M-s i" . change-inner)
+       ("M-s o" . change-outer))
+     ;;     (global-set-key (kbd "M-i") 'change-inner)
+     ;;     (global-set-key (kbd "M-o") 'change-outer)
    #+END_SRC
 
 ** Diffing
