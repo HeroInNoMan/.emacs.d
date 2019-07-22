@@ -1911,6 +1911,14 @@
        (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
    #+END_SRC
 
+   Just in case, make sure we can edit with ed, the one editor, the true honorable…
+   #+BEGIN_SRC emacs-lisp
+     (use-package ed-mode
+       :ensure nil
+       :commands ed
+       :load-path "elisp/")
+   #+END_SRC
+
 ** Lisp
    #+BEGIN_SRC emacs-lisp
      (use-package lisp-mode
