@@ -2380,6 +2380,12 @@
        :mode ("\\.gradle\\'" . gradle-mode))
    #+END_SRC
 
+** Docker
+   #+BEGIN_SRC emacs-lisp
+     (use-package docker :defer t)
+     (use-package dockerfile-mode :defer t)
+   #+END_SRC
+
 * Mail
   #+BEGIN_SRC emacs-lisp
     ;; (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
