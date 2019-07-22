@@ -1603,6 +1603,7 @@
       (use-package ob-shell :ensure nil :defer t)
       (use-package htmlize :defer t)
       (use-package swagger-to-org :defer t)
+      (require 'ox-md nil t)
       (require 'org-agenda)
       ;; specific agenda files
       (add-to-list 'org-agenda-files my-private-work-diary-org-file)
