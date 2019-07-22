@@ -1981,27 +1981,46 @@
        :ensure nil
        :hook
        (sql-mode . (lambda () (setq-local truncate-lines nil)))
+       (sql-mode . (lambda () (aggressive-indent-mode 0)))
        (sql-mode . (lambda () (setq-local linesize 9999)))
-       (sql-interactive-mode . sqli-add-hooks)
        (sql-interactive-mode . (lambda () (progn
                                        (setq-local comint-output-filter-functions 'comint-truncate-buffer)
                                        (setq-local comint-buffer-maximum-size 5000)
                                        (setq-local comint-scroll-show-maximum-output t)
                                        (setq-local comint-input-ring-size 500))))
-       :interpreter "sql"
-       :mode
-       ("\\.sql\\'"
-        "\\.pks\\'"
-        "\\.pkb\\'"
-        "\\.mvw\\'"
-        "\\.con\\'"
-        "\\.ind\\'"
-        "\\.sqs\\'"
-        "\\.tab\\'"
-        "\\.trg\\'"
-        "\\.vw\\'"
-        "\\.prc\\'"
-        "\\.pk\\'"))
+       :mode (("\\.sql\\'" . sql-mode)
+              ("\\.pks\\'" . sql-mode)
+              ("\\.pkb\\'" . sql-mode)
+              ("\\.mvw\\'" . sql-mode)
+              ("\\.con\\'" . sql-mode)
+              ("\\.ind\\'" . sql-mode)
+              ("\\.sqs\\'" . sql-mode)
+              ("\\.tab\\'" . sql-mode)
+              ("\\.trg\\'" . sql-mode)
+              ("\\.vw\\'" .  sql-mode)
+              ("\\.prc\\'" . sql-mode)
+              ("\\.pk\\'" .  sql-mode)))
+
+     (use-package sqlformat)
+
+     (use-package sql-indent
+       :ensure nil
+       :load-path "elisp/")
+
+     (use-package sql-upcase
+       :ensure nil
+       :load-path "elisp/"
+       :hook (sql-mode . sql-upcase-mode))
+
+     (defhydra hydra-format-sql(:color blue)
+       ("q" nil "quit" :column "SQL")
+       ("f" sqlformat "paragraph" :column "Format")
+       ("b" sqlformat-buffer "buffer")
+       ("r" sqlformat-region "region")
+       ("i" sql-indent-buffer "indent")
+       ("u" sql-upcase-buffer "buffer" :column "Upcase")
+       ("U" sql-upcase-region "region"))
+     (global-set-key (kbd "C-c C-f") 'hydra-format-sql/body)
    #+END_SRC
 
 ** Groovy
