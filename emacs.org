@@ -1275,8 +1275,8 @@
                    ("<up>" . move-text-up))
        :config (setq mc/list-file (concat user-emacs-directory "var/mc-list.el")))
 
-       (use-package smart-comment
-         :bind ("M-;" . smart-comment))
+     (use-package smart-comment
+       :bind ("M-;" . smart-comment))
 
      ;; Remove text in active region if inserting text
      (pending-delete-mode t)
