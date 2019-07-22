@@ -1303,6 +1303,11 @@
        ("M-s o" . change-outer))
      ;;     (global-set-key (kbd "M-i") 'change-inner)
      ;;     (global-set-key (kbd "M-o") 'change-outer)
+
+     (use-package emacs-surround
+       :ensure nil
+       :bind ("M-s s" . emacs-surround)
+       :load-path "elisp/")
    #+END_SRC
 
 ** Diffing
