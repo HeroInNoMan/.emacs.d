@@ -143,28 +143,6 @@ Show the full path file name in the minibuffer."
               (insert "#+BEGIN_" choice "\n")
               (save-excursion (insert "#+END_" choice))))))))))
 
-(defun ale/load-windows-specific-conf ()
-  "Load all windows-nt specific conf."
-  (set-clipboard-coding-system 'utf-16le-dos) ;; MS Windows clipboard is UTF-16LE
-  ;; cygwin conf
-  (setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
-  (setq exec-path (cons "c:/cygwin/bin/" exec-path))
-  (require 'cygwin-mount)
-  (cygwin-mount-activate)
-  (require 'dos) ;; batch scripts
-  (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/")
-  (setq ispell-personal-dictionary "C:/Program Files (x86)/Aspell/dict/")
-  (setq python-shell-interpreter "c:/cygwin/bin/python3.2m.exe")
-
-  ;; Prevent issues with the Windows null device (NUL)
-  ;; when using cygwin find with rgrep.
-  (defadvice grep-compute-defaults (around grep-compute-defaults-advice-null-device)
-    "Use cygwin's /dev/null as the null-device."
-    (let ((null-device "/dev/null"))
-      ad-do-it))
-  (ad-activate 'grep-compute-defaults)
-  )
-
 (defun ediff-copy-both-to-C ()
   (interactive)
   (ediff-copy-diff ediff-current-difference nil 'C nil
