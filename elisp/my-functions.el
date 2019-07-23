@@ -396,5 +396,39 @@ Swap buffers in the process"
       (narrow-to-region start end))
     (switch-to-buffer buf)))
 
+(defun next-user-buffer ()
+  "Switch to next user buffer."
+  (interactive)
+  (next-buffer)
+  (let ((i 0))
+    (while (< i 30)
+      (if (not (user-buffer-p))
+          (progn (next-buffer)
+                 (setq i (1+ i)))
+        (progn (setq i 100))))))
+
+(defun previous-user-buffer ()
+  "Switch to previous user buffer."
+  (interactive)
+  (previous-buffer)
+  (let ((i 0))
+    (while (< i 30)
+      (if (not (user-buffer-p))
+          (progn (previous-buffer)
+                 (setq i (1+ i)))
+        (progn (setq i 100))))))
+
+(defun user-buffer-p ()
+  "Return t if current buffer is a user buffer, else nil."
+  (interactive)
+  (cond
+   ((string-prefix-p "*scratch*" (buffer-name)) t)
+   ((string-prefix-p "*Org Src" (buffer-name)) t)
+   ((string-prefix-p "*" (buffer-name)) nil)
+   ((string-prefix-p "magit" (buffer-name)) nil)
+   ((string-equal major-mode "dired-mode") nil)
+   (t t)))
+
+
 (provide 'my-functions)
 ;;; my-functions.el ends here

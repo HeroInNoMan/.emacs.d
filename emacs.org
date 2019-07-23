@@ -251,6 +251,8 @@
                  ale/apply-local-theme-modern)
       :load-path "elisp/"
       :bind
+      ("M-é" . previous-user-buffer) ;; call previous buffer
+      ("M-è" . next-user-buffer) ;; call next buffer
       ("<f5>" . ale/revert-buffer-no-confirm) ;; re-read file from disk
       ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
       ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
@@ -1354,8 +1356,6 @@
 
    Some more buffer manipulation bindings.
    #+BEGIN_SRC emacs-lisp
-     (global-set-key (kbd "M-é") 'previous-buffer) ;; call previous buffer
-     (global-set-key (kbd "M-è") 'next-buffer) ;; call next buffer
      (global-set-key (kbd "C-x M-b") 'ibuffer) ;; call ibuffer
      (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
      (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
@@ -1365,15 +1365,9 @@
 
 *** Scratch
     #+BEGIN_SRC emacs-lisp
-      (use-package multi-scratch ;; scratch
-        :ensure nil
-        :load-path "elisp/"
-        :bind
-        ("C-x \"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
-        ("M-\"" . multi-scratch-new) ;; create new scratch buffer named “new<#>”
-        ("C-x «" . multi-scratch-prev) ;; jump to previous scratch buffer
-        ("C-x »" . multi-scratch-next) ;; jump to next scratch buffer
-        :config (setq multi-scratch-buffer-name "new"))
+      (setq initial-major-mode 'text-mode)
+      (global-set-key (kbd "C-x \"") 'crux-create-scratch-buffer)
+      (global-set-key (kbd "M-\"") 'crux-create-scratch-buffer)
 
       (use-package temporary-persistent)
 
