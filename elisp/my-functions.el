@@ -144,6 +144,7 @@ Show the full path file name in the minibuffer."
               (save-excursion (insert "#+END_" choice))))))))))
 
 (defun ediff-copy-both-to-C ()
+  "In ediff session, copy both versions to merge buffer."
   (interactive)
   (ediff-copy-diff ediff-current-difference nil 'C nil
                    (concat
