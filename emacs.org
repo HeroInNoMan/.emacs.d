@@ -2752,10 +2752,7 @@
            (or
             (not (fboundp 'server-running-p))
             (not (server-running-p))))
-      :bind ("M-#" . server-edit) ;; send back to server, quicker than C-x #
-      :hook
-      (after-init-hook . server-start)
-      (after-init-hook . edit-server-start))
+      :bind ("M-#" . server-edit)) ;; send back to server, quicker than C-x #
   #+END_SRC
 
 * Other
