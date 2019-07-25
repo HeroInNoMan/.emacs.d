@@ -1630,6 +1630,7 @@
       (org-babel-do-load-languages 'org-babel-load-languages
                                    '((ledger . t)
                                      (shell . t)
+                                     (sql . t)
                                      (restclient . t)
                                      (emacs-lisp . t)))
       ;; ORG-CAPTURE
