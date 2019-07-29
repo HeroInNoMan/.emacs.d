@@ -96,8 +96,16 @@ Show the full path file name in the minibuffer."
              (bounds (bounds-of-thing-at-point 'symbol))
              (org-link (concat "[[" my-private-work-bugtracker-url id "][#" id "]]")))
         (delete-region (car bounds) (cdr bounds))
+        (ale/delete-hash-at-point)
         (insert org-link))
     (message "Var my-private-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
+
+(defun ale/delete-hash-at-point ()
+  "delete # symbol if present under point"
+  (save-excursion
+    (backward-char)
+    (when (looking-at "#")
+      (delete-char 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; function to wrap blocks of text in org templates                       ;;
