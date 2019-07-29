@@ -1555,11 +1555,13 @@
       ("D" ab/date-iso-with-day (format-time-string "%F %A"))
       ("l" ab/date-long (format-time-string "%d %B %Y"))
       ("L" ab/date-long-with-day (format-time-string "%A %d %B %Y"))
+      ("o" ale/org-date (format-time-string "<%F %a>"))
       ;; date + time
       ("t" ab/date-short-with-time (format-time-string "%Y/%m/%d %H:%M") :column "Date & Time")
       ("T" ab/date-long-with-time (format-time-string "%A %d %B %Y - %H:%M"))
-      ("i" ab/date-iso-with-time (format-time-string "%FT%T%z")))
-    (global-set-key (kbd "C-c d") 'hydra-dates/body)
+      ("i" ab/date-iso-with-time (format-time-string "%FT%T%z"))
+      ("O" ale/org-date-time (format-time-string "<%F %a %H:%M>")))
+      (global-set-key (kbd "C-c d") 'hydra-dates/body)
   #+END_SRC
 
   I use [[https://github.com/kiwanami/emacs-calfw][calfw]] for a nice display of calendars.

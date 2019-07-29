@@ -346,6 +346,16 @@ Swap buffers in the process"
   (interactive)
   (insert (format-time-string "%Y/%m/%d %H:%M")))
 
+(defun ale/org-date ()
+  "Insert the current date, org timestamp format eg. <2019-07-29 lun.>."
+  (interactive)
+  (insert (format-time-string "<%F %a>")))
+
+(defun ale/org-date-time ()
+  "Insert the current date and time, org timestamp format eg. <2019-07-29 lun. 14:09>."
+  (interactive)
+  (insert (format-time-string "<%F %a %H:%M>")))
+
 (defun ale/apply-local-theme-modern ()
   "Apply locally-defined modern theme."
   (when (featurep 'color-theme-modern)
