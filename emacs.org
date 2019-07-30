@@ -1932,8 +1932,13 @@
      (use-package shell-pop
        :bind (:map shell-mode-map ("C-c C-l" . helm-comint-input-ring))
        :config
-       (setq shell-pop-shell-type (quote ("shell" "*shell*" (lambda nil (shell shell-pop-term-shell)))))
+       (setq shell-pop-default-directory nil)
+       (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell)))))
        (setq shell-pop-term-shell "/bin/bash")
+       ;;(setq shell-pop-universal-key "C-t")
+       (setq shell-pop-window-size 30)
+       (setq shell-pop-full-span t)
+       (setq shell-pop-window-position "bottom")
        ;; need to do this manually or not picked up by `shell-pop'
        (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
    #+END_SRC
