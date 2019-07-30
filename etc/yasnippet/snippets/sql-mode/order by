@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: order by
+# key: o
+# --
+ORDER by $1
