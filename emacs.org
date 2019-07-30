@@ -80,6 +80,7 @@
             command-log-mode
             company-lsp
             crux
+            csv-mode
             dap-java
             dap-mode
             dap-ui-mode
@@ -1591,6 +1592,12 @@
     (setq default-major-mode 'text-mode) ;; text-mode by default
     (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
     (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
+  #+END_SRC
+
+  Sometimes CSV mode can be useful:
+  #+BEGIN_SRC emacs-lisp
+    (use-package csv-mode
+      :mode ".csv$")
   #+END_SRC
 
 * Org-mode
