@@ -90,6 +90,7 @@
             describe-number
             dired-collapse
             dired-narrow
+            dired-subtree
             dot-mode
             dumb-jump
             edit-server
