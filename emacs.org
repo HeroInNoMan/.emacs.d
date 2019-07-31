@@ -813,9 +813,9 @@
 ** Completion
    #+BEGIN_SRC emacs-lisp
      (use-package company
-       :defer t
+       :hook (prog-mode . global-company-mode)
        :config
-       (global-company-mode) ;; enable company in all buffers
+       (global-company-mode 1) ;; enable company in all buffers
        (setq company-tooltip-limit 30
              company-show-numbers t
              company-dabbrev-downcase nil
@@ -1162,6 +1162,7 @@
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
        ("C-c y" . hydra-yasnippet/body)
+       :hook (prog-mode . yas-global-mode)
        :config
        (use-package auto-yasnippet
          :config
