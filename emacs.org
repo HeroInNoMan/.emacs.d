@@ -149,6 +149,7 @@
             magit-org-todos
             meghanada
             miniedit
+            minimap
             move-text
             no-littering
             nov
@@ -690,7 +691,7 @@
                   ("C-," . dumb-jump-back)
                   ("C-;" . dumb-jump-quick-look)))
 
-    (use-package minimap :disabled)
+    (use-package minimap :defer t)
 
     ;; Allow scrolling with mouse wheel
     (when (display-graphic-p) (progn(mouse-wheel-mode t)
@@ -2523,15 +2524,18 @@
      (pretty-hydra-define hydra-toggles
        (:color blue :quit-key "q")
        ("Navigation"
-        (("i" ido-mode "ido" :toggle t)
+        (("b" beginend-global-mode "begin-end" :toggle t)
+         ("i" ido-mode "ido" :toggle t)
          ("l" linum-mode "line number" :toggle t)
+         ("M" minimap-mode "minimap" :toggle t)
+         ("t" treemacs "treemacs")
          ("v" visual-line-mode "visual line" :toggle t)
          ("x" winnow-mode "winnow" :toggle t))
         "Highlighting"
         (("h" idle-highlight-mode "Idle HL" :toggle t)
          ("H" hl-line-mode "highlight line" :toggle t)
          ("I" highlight-indent-guides-mode "indent guide" :toggle t)
-         ("M" hide-mode-line-mode "hide mode-line" :toggle t)
+         ("m" hide-mode-line-mode "hide mode-line" :toggle t)
          ("V" volatile-highlights-mode "volatile highlight" :toggle t))
         "Decoration"
         (("C" color-identifiers-mode "color identifiers" :toggle t)
@@ -2545,11 +2549,13 @@
          ("f" flycheck-mode "flycheck" :toggle t)
          ("L" litable-mode "litable" :toggle t))
         "Writing"
-        (("c" company-mode "company" :toggle t)
+        (("A" global-auto-revert-mode "auto-revert" :toggle t)
+         ("c" company-mode "company" :toggle t)
          ("F" flyspell-mode "flyspell" :toggle t)
          ("g" toggle-god-mode "god" :toggle god-local-mode)
          ("o" overwrite-mode "overwrite" :toggle t))))
      (global-set-key (kbd "C-c m") 'hydra-toggles/body)
+     (global-set-key (kbd "C-é") 'hydra-toggles/body)
 
      (pretty-hydra-define hydra-major-modes
        (:color blue :quit-key "q")
