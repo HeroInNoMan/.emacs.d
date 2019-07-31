@@ -1615,6 +1615,7 @@
        ("\C-c j" . ale/jirify)
        ("\C-c t" . org-begin-template))
       :chords ("gx" . org-capture)
+      :hook (org-mode . visual-line-mode)
       :config
       (use-package ob-restclient :defer t)
       (use-package ob-shell :ensure nil :defer t)
@@ -1624,6 +1625,7 @@
       (require 'org-agenda)
       ;; specific agenda files
       (add-to-list 'org-agenda-files my-private-work-diary-org-file)
+      (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
       (setq
        ;; general settings
        org-completion-use-ido t
