@@ -2509,59 +2509,49 @@
 * Quick access
 ** Custom menu
    #+BEGIN_SRC emacs-lisp
-     (defun format-mode-state (label mode)
-       "Return the LABEL and MODE state enriched with font."
-       (if (and (boundp mode)
-                (symbol-value mode))
-           (concat label " " (propertize (format "%s" (when (boundp mode) (symbol-value mode))) 'face '((:foreground "darkgreen" :weight bold))))
-         (concat label " " (propertize (format "%s" (when (boundp mode) (symbol-value mode))) 'face '((:foreground "grey15" :weight bold))))))
+     (pretty-hydra-define hydra-toggles
+       (:color blue :quit-key "q")
+       ("Navigation"
+        (("i" ido-mode "ido" :toggle t)
+         ("l" linum-mode "line number" :toggle t)
+         ("v" visual-line-mode "visual line" :toggle t)
+         ("x" winnow-mode "winnow" :toggle t))
+        "Highlighting"
+        (("h" idle-highlight-mode "Idle HL" :toggle t)
+         ("H" hl-line-mode "highlight line" :toggle t)
+         ("I" highlight-indent-guides-mode "indent guide" :toggle t)
+         ("M" hide-mode-line-mode "hide mode-line" :toggle t)
+         ("V" volatile-highlights-mode "volatile highlight" :toggle t))
+        "Decoration"
+        (("C" color-identifiers-mode "color identifiers" :toggle t)
+         ("p" prettify-symbols-mode "prettify symbols" :toggle t)
+         ("r" rainbow-blocks-mode "rainbow blocks" :toggle t)
+         ("w" whitespace-mode "whitespace" :toggle t))
+        "Coding"
+        (("a" aggressive-indent-mode "aggressive indent" :toggle t)
+         ("(" smartparens-global-mode "smartparens" :toggle t)
+         (")" smartparens-global-strict-mode "smartparens strict" :toggle t)
+         ("f" flycheck-mode "flycheck" :toggle t)
+         ("L" litable-mode "litable" :toggle t))
+        "Writing"
+        (("c" company-mode "company" :toggle t)
+         ("F" flyspell-mode "flyspell" :toggle t)
+         ("g" toggle-god-mode "god" :toggle god-local-mode)
+         ("o" overwrite-mode "overwrite" :toggle t))))
+     (global-set-key (kbd "C-c m") 'hydra-toggles/body)
 
-     (defhydra hydra-minor-modes(:color blue)
-       ("m" hydra-major-modes/body "major modes" :column "Toggle mode")
-       ("q" nil "quit")
-
-       ;; Navigation
-       ("i" ido-mode (format-mode-state "ido" 'ido-mode) :column "Navigation")
-       ("l" linum-mode (format-mode-state "line number" 'global-linum-mode))
-       ("v" visual-line-mode (format-mode-state "visual line" 'visual-line-mode))
-       ("x" winnow-mode (format-mode-state "winnow" 'winnow-mode))
-
-       ;; Highlighting
-       ("h" idle-highlight-mode (format-mode-state "Idle HL" 'idle-highlight-mode) :column "Highlighting")
-       ("H" hl-line-mode (format-mode-state "highlight line" 'highlight-line-mode))
-       ("I" highlight-indent-guides-mode (format-mode-state "indent guide" 'highlight-indent-guides-mode))
-       ("M" hide-mode-line-mode (format-mode-state "hide mode-line" 'hide-mode-line-mode))
-       ("V" volatile-highlights-mode (format-mode-state "volatile highlight" 'volatile-highlights-mode))
-
-       ;; Decoration
-       ("C" color-identifiers-mode (format-mode-state "color identifiers" 'color-identifiers-mode) :column "Decoration")
-       ("p" prettify-symbols-mode (format-mode-state "prettify symbols" 'prettify-symbols-mode))
-       ("r" rainbow-blocks-mode (format-mode-state "rainbow blocks" 'rainbow-blocks-mode))
-       ("w" whitespace-mode (format-mode-state "whitespace" 'global-whitespace-mode))
-
-       ;; Coding
-       ("(" smartparens-global-mode (format-mode-state "smartparens" 'smartparens-mode) :column "Coding")
-       (")" smartparens-global-strict-mode (format-mode-state "smartparens strict" 'smartparens-strict-mode))
-       ("f" flycheck-mode (format-mode-state "flycheck" 'flycheck-mode))
-       ("L" litable-mode (format-mode-state "litable" 'litable-mode))
-
-       ;; Writing
-       ("c" company-mode (format-mode-state "company" 'company-mode) :column "Writing")
-       ("F" flyspell-mode (format-mode-state "flyspell" 'flyspell-mode))
-       ("g" toggle-god-mode (format-mode-state "god" 'god-local-mode))
-       ("o" overwrite-mode (format-mode-state "overwrite" 'overwrite-mode)))
-
-     (global-set-key (kbd "C-c m") 'hydra-minor-modes/body)
-
-     (defhydra hydra-major-modes(:color blue)
-       ("q" nil "quit" :column "Major mode")
-       ("e" emacs-lisp-mode "elisp" :column "Toggle")
-       ("h" html-mode "html")
-       ("j" js2-mode "js2")
-       ("l" lisp-mode "lisp")
-       ("o" org-mode "org")
-       ("t" text-mode "text")
-       ("w" web-mode "web"))
+     (pretty-hydra-define hydra-major-modes
+       (:color blue :quit-key "q")
+       ("Prog"
+        (("e" emacs-lisp-mode "elisp")
+         ("h" html-mode "html")
+         ("j" js2-mode "js2")
+         ("l" lisp-mode "lisp")
+         ("w" web-mode "web"))
+        "Text"
+        (("c" csv-mode "csv")
+         ("o" org-mode "org")
+         ("t" text-mode "text"))))
      (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
 
      (defhydra hydra-widgets (:color teal)
