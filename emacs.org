@@ -1754,6 +1754,13 @@
      (use-package format-all :defer t)
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (reformatter-define xml-format
+       :program "xmllint"
+       :args '("--format" "-")
+       :mode nil)
+   #+END_SRC
+
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
