@@ -104,6 +104,7 @@
             fish-mode
             flycheck-rust
             forge
+            format-all
             git-gutter
             git-messenger
             git-timemachine
@@ -1750,6 +1751,10 @@
      (add-hook 'prog-mode-hook 'prettify-symbols-mode)
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package format-all :defer t)
+   #+END_SRC
+
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
@@ -2586,6 +2591,7 @@
        ;; Tools
        ("p" paradox-list-packages "packages" :column "Tools")
        ("Q" quick-calc "quick-calc")
+       ("f" format-all-buffer "format buffer")
 
        ;; files
        ("d" ale/find-diary-file "diary" :column "Files")
