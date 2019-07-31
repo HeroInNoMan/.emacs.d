@@ -159,6 +159,7 @@
             paradox
             persistent-scratch
             powerthesaurus
+            pretty-hydra
             prog-fill
             racer
             rainbow-blocks
@@ -438,6 +439,7 @@
   I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
   #+BEGIN_SRC emacs-lisp
     (use-package hydra :defer t)
+    (use-package pretty-hydra :defer t)
   #+END_SRC
 
   Killing emacs; default binding is too easy to hit by accident.
