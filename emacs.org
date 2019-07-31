@@ -1322,7 +1322,6 @@
 ** Diffing
    #+BEGIN_SRC emacs-lisp
      (use-package ztree
-       :defer t
        :bind (:map ztree-mode-map
                    ("o" . ztree-jump-side)
                    ("l" . recenter-top-bottom)
@@ -1775,7 +1774,6 @@
        :requires lsp company)
 
      (use-package lsp-ui
-       :defer t
        :requires lsp-mode flycheck
        :hook (lsp-mode . lsp-ui-mode)
        :config
