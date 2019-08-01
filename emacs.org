@@ -2722,7 +2722,7 @@
                   ))
           (setq rm-text-properties '(
                                      ("\\` Fill\\'"        'display " aF.")
-                                     ("\\` Fly\\'"         'display (concat " " (propertize "🗹" 'face '((:foreground "darkgreen" :weight bold))))) ; flyspell
+                                     ("\\` Fly\\'"         'display (concat " " (propertize "abc" 'face '((:foreground "darkgreen" :weight bold))))) ; flyspell
                                      ("\\` FlyC\\*\\'"     'display (concat " " (propertize "✔…" 'face '((:foreground "red" :weight bold))))) ; flycheck
                                      ("\\` FlyC\\!\\'"     'display (concat " " (propertize "✔!" 'face '((:foreground "red" :weight bold))))) ; flycheck
                                      ("\\` FlyC\\?\\'"     'display (concat " " (propertize "✔?" 'face '((:foreground "red" :weight bold))))) ; flycheck
