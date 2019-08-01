@@ -415,27 +415,29 @@ Swap buffers in the process"
       (narrow-to-region start end))
     (switch-to-buffer buf)))
 
-(defun next-user-buffer ()
-  "Switch to next user buffer."
-  (interactive)
+(defun next-user-buffer (&optional arg)
+  "Switch to next user buffer. If ARG is non-nil, simply switch to next buffer."
+  (interactive "P")
   (next-buffer)
-  (let ((i 0))
-    (while (< i 30)
-      (if (not (user-buffer-p))
-          (progn (next-buffer)
-                 (setq i (1+ i)))
-        (progn (setq i 100))))))
+  (unless arg
+    (let ((i 0))
+      (while (< i 30)
+        (if (not (user-buffer-p))
+            (progn (next-buffer)
+                   (setq i (1+ i)))
+          (progn (setq i 100)))))))
 
-(defun previous-user-buffer ()
-  "Switch to previous user buffer."
-  (interactive)
+(defun previous-user-buffer (&optional arg)
+  "Switch to previous user buffer. If ARG is non-nil, simply switch to previous buffer."
+  (interactive "P")
   (previous-buffer)
-  (let ((i 0))
-    (while (< i 30)
-      (if (not (user-buffer-p))
-          (progn (previous-buffer)
-                 (setq i (1+ i)))
-        (progn (setq i 100))))))
+  (unless arg
+    (let ((i 0))
+      (while (< i 30)
+        (if (not (user-buffer-p))
+            (progn (previous-buffer)
+                   (setq i (1+ i)))
+          (progn (setq i 100)))))))
 
 (defun user-buffer-p ()
   "Return t if current buffer is a user buffer, else nil."
