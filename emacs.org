@@ -2575,44 +2575,37 @@
          ("t" text-mode "text"))))
      (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
 
-     (defhydra hydra-widgets (:color teal)
-       ;;
-       ("q" nil "cancel" :column "Menu")
-
-       ;; Shells
-       ("e" eshell "eshell" :column "Shells")
-       ("t" shell-pop "shell-pop")
-       ("$" shell "shell")
-       ("%" crux-visit-term-buffer "ansi-term")
-
-       ;; Reading
-       ("a" avandu-overview "avandu RSS" :column "Reading")
-       ("A" helm-lobsters "lobsters")
-       ("E" elfeed "elfeed RSS")
-       ("G" gnus "Gnus")
-       ("W" eww "web browser")
-
-       ;; Management
-       ("m" mu4e "mu4e" :column "Management")
-       ("c" open-calendar "calendar")
-       ("T" tomatinho "pomodoro")
-
-       ;; View
-       ("b" ecb-activate "code browser" :column "View")
-       ("z" ztree-diff "ztree-diff")
-       ("y" ale/diff-last-2-yanks "diff yanks")
-       ("w" webpaste-paste-region "webpaste")
-
-       ;; Tools
-       ("p" paradox-list-packages "packages" :column "Tools")
-       ("Q" quick-calc "quick-calc")
-       ("f" format-all-buffer "format buffer")
-
-       ;; files
-       ("d" ale/find-diary-file "diary" :column "Files")
-       ("D" ale/find-remote-diary-file "remote diary")
-       ("i" ale/find-init-file "init file")
-       ("r" ale/find-rest-client-file "rest-client"))
+     (pretty-hydra-define hydra-widgets
+       (:color blue :quit-key "q")
+       ("Shells"
+        (("e" eshell "eshell")
+         ("t" shell-pop "shell-pop")
+         ("$" shell "shell")
+         ("%" crux-visit-term-buffer "ansi-term"))
+        "Reading"
+        (("a" avandu-overview "avandu RSS")
+         ("A" helm-lobsters "lobsters")
+         ("E" elfeed "elfeed RSS")
+         ("G" gnus "Gnus")
+         ("W" eww "web browser"))
+        "Management"
+        (("m" mu4e "mu4e")
+         ("c" open-calendar "calendar")
+         ("T" tomatinho "pomodoro"))
+        "View"
+        (("b" ecb-activate "code browser")
+         ("z" ztree-diff "ztree-diff")
+         ("y" ale/diff-last-2-yanks "diff yanks")
+         ("w" webpaste-paste-region "webpaste"))
+        "Tools"
+        (("p" paradox-list-packages "packages")
+         ("Q" quick-calc "quick-calc")
+         ("f" format-all-buffer "format buffer"))
+        "Files"
+        (("d" ale/find-diary-file "diary" :column "Files")
+         ("D" ale/find-remote-diary-file "remote diary")
+         ("i" ale/find-init-file "init file")
+         ("r" ale/find-rest-client-file "rest-client"))))
 
      (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
    #+END_SRC
