@@ -1001,57 +1001,58 @@
                                             "\\.cache/mozilla\\(/\\|$\\)"
                                             "\\.local/share/Trash/files\\(/\\|$\\)"
                                             "\\.cache/\\(chromium\\|google\\-chrome\\)/Default/Cache\\(/\\|$\\)"))
-       (defhydra hydra-helm-config(:color teal)
-         ;;
-         ("r"     helm-resume "resume" :column "Helm")
-         ("q"     nil "quit")
-         ;; find files & buffers
-         ("l"     helm-locate "locate" :column "Find")
-         ("/"     helm-find "find")
-         ("F"     helm-find-files "files")
-         ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
-         ("m"     helm-mini "mini")
-         ("p"     helm-projectile "projectile")
-         ;; search
-         ("R"     helm-regexp "regexp" :column "Search")
-         ("o"     helm-occur "occur")
-         ("a"     helm-do-grep-ag "ag grep")
-         ("G"     helm-git-grep "git grep")
-         ;; navigate
-         ("e"     helm-etags-select "etags" :column "Navigate")
-         ("i"     helm-semantic-or-imenu "imenu")
-         ("I"     helm-imenu-in-all-buffers "imenu all")
-         ("."     helm-imenu-anywhere "imenu any")
-         ("b"     helm-filtered-bookmarks "bookmark")
-         ("'"     helm-register "register")
-         ("k"     helm-show-kill-ring "kill-ring")
-         ("<SPC>" helm-all-mark-rings "all mark rings")
-         ;; completion
-         ("<tab>" helm-lisp-completion-at-point "lisp" :column "Complete")
-         ("$"     helm-lines "lines")
-         ("g"     helm-google-suggest "google")
-         ("s"     helm-surfraw "surfraw")
-         ("y"     yas-insert-snippet "yasnippet")
-         ("w"     helm-wikipedia-suggest "wikipedia")
-         ;; documentation & help
-         ("h b"   helm-descbinds "bindings" :column "Doc & Help")
-         ("h e"   helm-eval-expression-with-eldoc "eldoc")
-         ("h i"   helm-info-at-point "info")
-         ("h r"   helm-info-emacs "emacs")
-         ("h g"   helm-info-gnus "gnus")
-         ("h h"   helm-documentation "doc")
-         ("h a"   helm-apropos "a propos")
-         ("h m"   helm-man-woman "woman")
-         ("-"     helm-dash-at-point "dash")
-         ;; other
-         ("t"     helm-top "top" :column "Other")
-         ("P"     helm-list-emacs-process "process")
-         ("c"     helm-colors "colours")
-         ("8"     helm-ucs "ucs")
-         (","     helm-calcul-expression "calcul")
-         ("j"     helm-list-elisp-packages "packages")
-         ("X"     helm-select-xfont "xfont")
-         ("x"     helm-run-external-command "run external"))
+
+       (pretty-hydra-define hydra-helm-config
+         (:color teal :quit-key "q")
+         ("Find"
+          (("l"     helm-locate "locate")
+           ("/"     helm-find "find")
+           ("F"     helm-find-files "files")
+           ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
+           ("m"     helm-mini "mini")
+           ("p"     helm-projectile "projectile"))
+          "Search"
+          (("R"     helm-regexp "regexp" :column "Search")
+           ("o"     helm-occur "occur")
+           ("a"     helm-do-grep-ag "ag grep")
+           ("G"     helm-git-grep "git grep"))
+          "Navigate"
+          (("e"     helm-etags-select "etags")
+           ("i"     helm-semantic-or-imenu "imenu")
+           ("I"     helm-imenu-in-all-buffers "imenu all")
+           ("."     helm-imenu-anywhere "imenu any")
+           ("b"     helm-filtered-bookmarks "bookmark")
+           ("'"     helm-register "register")
+           ("k"     helm-show-kill-ring "kill-ring")
+           ("<SPC>" helm-all-mark-rings "all mark rings"))
+          "Completion"
+          (("<tab>" helm-lisp-completion-at-point "lisp")
+           ("$"     helm-lines "lines")
+           ("g"     helm-google-suggest "google")
+           ("s"     helm-surfraw "surfraw")
+           ("y"     yas-insert-snippet "yasnippet")
+           ("w"     helm-wikipedia-suggest "wikipedia"))
+          "Doc & Help"
+          (("h b"   helm-descbinds "bindings")
+           ("h e"   helm-eval-expression-with-eldoc "eldoc")
+           ("h i"   helm-info-at-point "info")
+           ("h r"   helm-info-emacs "emacs")
+           ("h g"   helm-info-gnus "gnus")
+           ("h h"   helm-documentation "doc")
+           ("h a"   helm-apropos "a propos")
+           ("h m"   helm-man-woman "woman")
+           ("-"     helm-dash-at-point "dash"))
+          "Other"
+          (("r"     helm-resume "resume" :column "Helm")
+           ("t"     helm-top "top")
+           ("P"     helm-list-emacs-process "process")
+           ("c"     helm-colors "colours")
+           ("8"     helm-ucs "ucs")
+           (","     helm-calcul-expression "calcul")
+           ("j"     helm-list-elisp-packages "packages")
+           ("X"     helm-select-xfont "xfont")
+           ("x"     helm-run-external-command "run external"))))
+
        (defun my-do-ag-project-root-or-dir ()
          "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
          (interactive)
@@ -2524,6 +2525,8 @@
 
 * Quick access
 ** Custom menu
+
+   Let’s define a few hydras to manage global settings. First, a general hydra for all minor modes that can be toggled:
    #+BEGIN_SRC emacs-lisp
      (pretty-hydra-define hydra-toggles
        (:color blue :quit-key "q")
@@ -2560,21 +2563,36 @@
          ("o" overwrite-mode "overwrite" :toggle t))))
      (global-set-key (kbd "C-c m") 'hydra-toggles/body)
      (global-set-key (kbd "C-é") 'hydra-toggles/body)
+   #+END_SRC
 
+   Then an other hydra for quickly switching to the major modes I use the most:
+   #+BEGIN_SRC emacs-lisp
      (pretty-hydra-define hydra-major-modes
        (:color blue :quit-key "q")
        ("Prog"
         (("e" emacs-lisp-mode "elisp")
-         ("h" html-mode "html")
-         ("j" js2-mode "js2")
          ("l" lisp-mode "lisp")
+         ("J" java-mode "Java")
+         ("p" python-mode "python")
+         ("r" ruby-mode "ruby")
+         ("R" rust-mode "rust")
+         ("s" sql-mode "SQL")
+         )
+        "Web"
+        (("h" html-mode "html")
+         ("c" css-mode "css")
+         ("j" js2-mode "js2")
+         ("n" nxml-mode "nXml")
          ("w" web-mode "web"))
         "Text"
-        (("c" csv-mode "csv")
+        (("," csv-mode "csv")
          ("o" org-mode "org")
          ("t" text-mode "text"))))
      (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
+   #+END_SRC
 
+   Finally, a last hydra to manage all kinds of stuff I use often: opening shell buffers, some specific files…
+   #+BEGIN_SRC emacs-lisp
      (pretty-hydra-define hydra-widgets
        (:color blue :quit-key "q")
        ("Shells"
@@ -2592,15 +2610,15 @@
         (("m" mu4e "mu4e")
          ("c" open-calendar "calendar")
          ("T" tomatinho "pomodoro"))
-        "View"
-        (("b" ecb-activate "code browser")
+        "Diff"
+        (("E" ediff "ediff")
          ("z" ztree-diff "ztree-diff")
-         ("y" ale/diff-last-2-yanks "diff yanks")
-         ("w" webpaste-paste-region "webpaste"))
+         ("y" ale/diff-last-2-yanks "diff yanks"))
         "Tools"
         (("p" paradox-list-packages "packages")
          ("Q" quick-calc "quick-calc")
-         ("f" format-all-buffer "format buffer"))
+         ("f" format-all-buffer "format buffer")
+         ("w" webpaste-paste-region "webpaste"))
         "Files"
         (("d" ale/find-diary-file "diary" :column "Files")
          ("D" ale/find-remote-diary-file "remote diary")
