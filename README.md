@@ -31,6 +31,5 @@ My emacs configuration.
 
 * eclipse-style formatting system
 * ctags with projectile
-* auto-save draft buffers
 * complete IDE for javascript
 * spaceline: manage battery status
