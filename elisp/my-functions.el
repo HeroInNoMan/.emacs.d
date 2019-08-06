@@ -415,6 +415,14 @@ Swap buffers in the process"
       (narrow-to-region start end))
     (switch-to-buffer buf)))
 
+(defun ale/ediff-current-buffers ()
+  "If frame is split in two windows, call ‘ediff-buffers’ on the two buffers."
+  (interactive)
+  (when (= (count-windows) 2)
+    (let* ((this-win-buffer (buffer-name))
+           (next-win-buffer (buffer-name (window-buffer (next-window)))))
+      (ediff-buffers this-win-buffer next-win-buffer))))
+
 (defun next-user-buffer (&optional arg)
   "Switch to next user buffer. If ARG is non-nil, simply switch to next buffer."
   (interactive "P")

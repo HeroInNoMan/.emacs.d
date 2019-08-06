@@ -2614,6 +2614,7 @@
         "Diff"
         (("E" ediff "ediff")
          ("z" ztree-diff "ztree-diff")
+         ("b" ale/ediff-current-buffers "quick diff")
          ("y" ale/diff-last-2-yanks "diff yanks"))
         "Tools"
         (("p" paradox-list-packages "packages")
