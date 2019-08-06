@@ -450,6 +450,10 @@ Swap buffers in the process"
    ((string-equal major-mode "dired-mode") nil)
    (t t)))
 
+(defun crontab-e ()
+  "Run `crontab -e' in a emacs buffer."
+  (interactive)
+  (with-editor-async-shell-command "crontab -e"))
 
 (provide 'my-functions)
 ;;; my-functions.el ends here
