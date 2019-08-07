@@ -738,10 +738,6 @@
   I use [[https://github.com/gregsexton/origami.el][origami]]…
   #+BEGIN_SRC emacs-lisp
     (use-package origami
-      :bind (:map origami-mode-map
-                  ("C-x x" . origami-toggle-all-nodes)
-                  ("C-x y" . origami-show-only-node)
-                  ("C-<tab>" . origami-recursively-toggle-node))
       :hook (prog-mode . origami-mode)
       :config (setq origami-fold-replacement "..."))
   #+END_SRC
@@ -750,23 +746,12 @@
   #+BEGIN_SRC emacs-lisp
     (use-package vimish-fold
       :bind
-      ("C-c <tab>" . hydra-fold/body)
       (:map vimish-fold-folded-keymap ("<tab>" . vimish-fold-unfold)
             :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
       :config
-      (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory))
       (vimish-fold-global-mode 1)
-      (setq-default vimish-fold-header-width 79)
-
-      (defhydra hydra-fold (:color pink)
-        ("q" nil "quit" :column "Fold")
-        ("f" vimish-fold "fold" :column "Do")
-        ("k" vimish-fold-delete "kill")
-        ("K" vimish-fold-delete-all "kill all")
-        ("p" vimish-fold-previous-fold "previous" :column "Jump")
-        ("n" vimish-fold-next-fold "next")
-        ("<tab>" vimish-fold-toggle "current" :column "Toggle")
-        ("a" vimish-fold-toggle-all "all")))
+      (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory)
+                    vimish-fold-header-width 79))
   #+END_SRC
 
   I also use =selective-display= as a more simple folding method.
@@ -774,6 +759,28 @@
     (global-set-key (kbd "C-%") 'ale/toggle-selective-display)
   #+END_SRC
 
+  I use a hydra to have all those commands in one place.
+  #+BEGIN_SRC emacs-lisp
+    (pretty-hydra-define hydra-fold
+      (:color pink :quit-key "q")
+      ("built-in"
+       (("s" ale/toggle-selective-display "selective display")
+        ("n" narrow-to-defun "narrow"))
+       "vimish fold"
+       (("f" vimish-fold "fold")
+        ("k" vimish-fold-delete "kill")
+        ("K" vimish-fold-delete-all "kill all")
+        ("p" vimish-fold-previous-fold "go previous")
+        ("n" vimish-fold-next-fold "go next")
+        ("<tab>" vimish-fold-toggle "toggle current")
+        ("a" vimish-fold-toggle-all "toggle all"))
+       "origami"
+       (("x" origami-toggle-all-nodes "toggle all")
+        ("y" origami-show-only-node "show only node")
+        ("c" origami-recursively-toggle-node "cycle"))
+       ))
+    (global-set-key (kbd "C-c <tab>") 'hydra-fold/body)
+  #+END_SRC
 * Search & Navigation
 ** isearch
    Standard isearch by default:
