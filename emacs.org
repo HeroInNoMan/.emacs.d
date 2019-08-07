@@ -79,6 +79,7 @@
             color-theme-modern
             command-log-mode
             company-lsp
+            company-prescient
             crontab-mode
             crux
             csv-mode
@@ -831,6 +832,12 @@
              company-show-numbers t
              company-dabbrev-downcase nil
              company-show-numbers t))
+
+     (use-package company-prescient
+       :after company
+       :config
+       (company-prescient-mode)
+       (prescient-persist-mode))
 
      (use-package browse-kill-ring
        :config
