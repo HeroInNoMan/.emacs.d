@@ -93,6 +93,8 @@
             dired-collapse
             dired-narrow
             dired-subtree
+            dokuwiki
+            dokuwiki-mode
             dot-mode
             dumb-jump
             edit-server
@@ -2445,6 +2447,14 @@
    #+BEGIN_SRC emacs-lisp
      (use-package markdown-mode
        :mode (".md$" . markdown-mode))
+   #+END_SRC
+
+** Dokuwiki
+   #+BEGIN_SRC emacs-lisp
+     (use-package dokuwiki-mode
+       :defer t)
+     (use-package dokuwiki
+       :hook dokuwiki-mode)
    #+END_SRC
 
 ** LaTeX
