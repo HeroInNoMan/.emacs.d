@@ -55,6 +55,11 @@
                              (server-address . my-private-work-server-address)
                              (auth-file . my-private-work-auth-file)))) ;; machine SERVER-NAME login my_login password my_pass
 
+    (use-package travis
+      :config (setq travis--token-id my-private-work-travis-token-id
+                    travis-website my-private-work-travis-website
+                    travis--host my-private-work-travis-host))
+
     (use-package jenkins ;; TODO compare to butler
       :disabled t
       :config
