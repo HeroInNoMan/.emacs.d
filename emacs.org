@@ -672,9 +672,11 @@
   Equivalent of ~f~ key in vim:
   #+BEGIN_SRC emacs-lisp
     (use-package iy-go-to-char
-      :chords ("àà" . iy-go-up-to-char)
+      :chords
+      ("àà" . iy-go-up-to-char)
+      ("éé" . iy-go-to-char)
       ("êê" . iy-go-to-char-backward)
-      :bind ("M-m" . iy-go-up-to-char))
+      :bind ("M-m" . iy-go-to-char))
   #+END_SRC
 
   I use the nice ~beginend~ package to enhance ~beginning-of-buffer~ and ~end-of-buffer~ commands.
