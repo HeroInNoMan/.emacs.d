@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: duncan
+# name: no push
+# key: np
+# --
+[NO PUSH] $0
