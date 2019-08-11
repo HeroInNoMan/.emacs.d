@@ -315,10 +315,9 @@
 
 * Defaults
   Let’s redefine some basic behaviour:
-  #+BEGIN_SRC emacs-lisp
-    (ido-mode t)
-    (setq ido-enable-flex-matching t)
 
+  First, let’s remove menus, toolbar, scrollbar, fringes.
+  #+BEGIN_SRC emacs-lisp
     (menu-bar-mode -1)
     (when (fboundp 'tool-bar-mode)
       (tool-bar-mode -1))
@@ -326,12 +325,50 @@
       (scroll-bar-mode -1))
     (when (fboundp 'horizontal-scroll-bar-mode)
       (horizontal-scroll-bar-mode -1))
+    (fringe-mode 0)
+  #+END_SRC
 
-    (autoload 'zap-up-to-char "misc"
-      "Kill up to, but not including ARGth occurrence of CHAR." t)
+  Although I mainly use helm, ido is nice in some cases.
+  #+BEGIN_SRC emacs-lisp
+    (ido-mode t)
+    (setq ido-enable-flex-matching t)
+  #+END_SRC
 
+  Let’s use UTF-8 everywhere:
+  #+BEGIN_SRC emacs-lisp
+    (prefer-coding-system       'utf-8)
+    (set-default-coding-systems 'utf-8)
+    (set-terminal-coding-system 'utf-8)
+    (set-keyboard-coding-system 'utf-8)
+    (setq default-buffer-file-coding-system 'utf-8)
+
+    (use-package iso-transl ;; some environments don’t handle dead keys
+      :ensure nil)
+  #+END_SRC
+
+  Some commands are disabled by default, let’s enable them:
+  #+BEGIN_SRC emacs-lisp
+    (put 'downcase-region 'disabled nil)
+    (put 'upcase-region 'disabled nil)
+    (put 'narrow-to-region 'disabled nil)
+    (put 'narrow-to-page 'disabled nil)
+    (put 'set-goal-column 'disabled nil)
+    (put 'scroll-left 'disabled nil)
+  #+END_SRC
+
+  Let’s add some auto-backup configuration:
+  #+BEGIN_SRC emacs-lisp
     (require 'saveplace)
     (setq-default save-place t)
+    (setq save-place-file (concat user-emacs-directory "places")
+          vc-make-backup-files t ;; make backups of files, even when they're in version control
+          backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                   "backups"))))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (autoload 'zap-up-to-char "misc"
+      "Kill up to, but not including ARGth occurrence of CHAR." t)
 
     (show-paren-mode 1)
     (setq save-interprogram-paste-before-kill t
@@ -339,34 +376,19 @@
           mouse-yank-at-point t
           require-final-newline t
           load-prefer-newer t
-          ediff-window-setup-function 'ediff-setup-windows-plain
-          save-place-file (concat user-emacs-directory "places")
-          backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                                   "backups"))))
+          ediff-window-setup-function 'ediff-setup-windows-plain)
     ;; Answer questions with y/n
     (defalias 'yes-or-no-p 'y-or-n-p)
-
-    ;; Real emacs knights don't use shift to mark things
-    (setq shift-select-mode nil)
 
     ;; Transparently open compressed files
     (auto-compression-mode t)
 
     ;; some more config
     (setq recentf-max-saved-items 100  ;; just 20 is too recent
-          vc-make-backup-files t ;; make backups of files, even when they're in version control
           delete-by-moving-to-trash t ;; move files to trash when deleting
           savehist-additional-variables '(register-alist))
     (recentf-mode 1)
     (savehist-mode 1)
-
-
-    ;; UTF-8 everywhere
-    (prefer-coding-system       'utf-8)
-    (set-default-coding-systems 'utf-8)
-    (set-terminal-coding-system 'utf-8)
-    (set-keyboard-coding-system 'utf-8)
-    (setq default-buffer-file-coding-system 'utf-8)
 
     ;; Lines should be 80 characters wide, not 70
     (setq-default fill-column 80)
@@ -392,20 +414,8 @@
     ;; if no region is selected
     (global-set-key (kbd "M-=") 'count-words)
 
-    ;; enable commands disabled by default
-    (put 'downcase-region 'disabled nil)
-    (put 'upcase-region 'disabled nil)
-    (put 'narrow-to-region 'disabled nil)
-    (put 'narrow-to-page 'disabled nil)
-    (put 'set-goal-column 'disabled nil)
-    (put 'scroll-left 'disabled nil)
-
-    (use-package iso-transl ;; some environments don’t handle dead keys
-      :ensure nil)
-
     (global-font-lock-mode t) ;; enable syntax highlighting
     (blink-cursor-mode -1) ;; no blinking cursor
-    (fringe-mode 0) ;; remove fringes on the sides
 
     ;; don’t display linum except while goto-line
     (global-set-key [remap goto-line] 'goto-line-with-feedback)
@@ -419,8 +429,9 @@
           echo-keystrokes 0.1 ;; Show keystrokes in progress
           initial-scratch-message nil ;; No *scratch* message
           visible-bell nil ;; No flashing!
-          line-number-mode t ;; Always display line and column numbers
-          column-number-mode t)
+          line-number-mode t ;; Always display line number
+          column-number-mode t ;; and column number
+          shift-select-mode nil) ;; don't use shift to mark things
   #+END_SRC
 
   [[https://github.com/bbatsov/crux][Crux]] brings a lot of better default behaviour and functions.
