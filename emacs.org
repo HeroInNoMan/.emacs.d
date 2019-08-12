@@ -1028,7 +1028,6 @@
                                             "\\.pyc$"
                                             "\\.pyo$"
                                             "\\.egradle/sdk\\(/\\|$\\)"
-                                            "\\.gradle\\(/\\|$\\)"
                                             "\\.cache/mozilla\\(/\\|$\\)"
                                             "\\.local/share/Trash/files\\(/\\|$\\)"
                                             "\\.cache/\\(chromium\\|google\\-chrome\\)/Default/Cache\\(/\\|$\\)"))
@@ -2095,7 +2094,10 @@
 ** Groovy
    #+BEGIN_SRC emacs-lisp
      (use-package groovy-mode
-       :mode "\\.groovy\\'$")
+       :mode
+       ("\\.groovy\\'" . groovy-mode)
+       ("\\.gradle\\'" . groovy-mode)
+       :config (setq groovy-indent-offset 2))
    #+END_SRC
 
 ** Ruby
