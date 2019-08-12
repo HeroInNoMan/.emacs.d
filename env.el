@@ -45,6 +45,7 @@
 
     ;; jenkins interaction
     (use-package butler
+      :disabled t
       :bind (:map butler-mode-map
                   ("n" . next-line)
                   ("p" . previous-line))
