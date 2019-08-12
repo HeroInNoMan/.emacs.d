@@ -87,18 +87,32 @@ Show the full path file name in the minibuffer."
            (insert (current-kill 0)))))
 
 (defun ale/jirify ()
-  "Create an org link with a ticket ID using the URL in my-private-work-bugtracker-url."
+  "Create an org link with a ticket ID using the URL in my-private-primary-work-bugtracker-url."
   (interactive)
   (if (and
-       (boundp 'my-private-work-bugtracker-url)
-       (not (null my-private-work-bugtracker-url)))
+       (boundp 'my-private-primary-work-bugtracker-url)
+       (not (null my-private-primary-work-bugtracker-url)))
       (let* ((id (upcase (thing-at-point 'symbol)))
              (bounds (bounds-of-thing-at-point 'symbol))
-             (org-link (concat "[[" my-private-work-bugtracker-url id "][#" id "]]")))
+             (org-link (concat "[[" my-private-primary-work-bugtracker-url id "][#" id "]]")))
         (delete-region (car bounds) (cdr bounds))
         (ale/delete-hash-at-point)
         (insert org-link))
-    (message "Var my-private-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
+    (message "Var my-private-primary-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
+
+(defun ale/rtify ()
+  "Create an org link with a ticket ID using the URL in my-private-secondary-work-bugtracker-url."
+  (interactive)
+  (if (and
+       (boundp 'my-private-secondary-work-bugtracker-url)
+       (not (null my-private-secondary-work-bugtracker-url)))
+      (let* ((id (upcase (thing-at-point 'symbol)))
+             (bounds (bounds-of-thing-at-point 'symbol))
+             (org-link (concat "[[" my-private-secondary-work-bugtracker-url id "][n°" id "]]")))
+        (delete-region (car bounds) (cdr bounds))
+        (ale/delete-hash-at-point)
+        (insert org-link))
+    (message "Var my-private-secondary-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
 
 (defun ale/delete-hash-at-point ()
   "delete # symbol if present under point"

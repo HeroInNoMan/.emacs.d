@@ -1642,6 +1642,7 @@
        :map org-mode-map
        ("\C-c l" . org-store-link)
        ("\C-c j" . ale/jirify)
+       ("\C-c r" . ale/rtify)
        ("\C-c t" . org-begin-template))
       :chords ("gx" . org-capture)
       :hook (org-mode . visual-line-mode)
