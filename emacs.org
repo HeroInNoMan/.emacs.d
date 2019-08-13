@@ -2248,30 +2248,25 @@
               meghanada-javac-xlint "-Xlint:all,-processing"
               meghanada-java-path "java"
               meghanada-maven-path "mvn")
-        (defhydra hydra-meghanada (:color teal)
-          ;;
-          ("q" nil "quit" :column "Meghanada")
-          ("M-m" meghanada-restart "restart")
-
-          ;; compile
-          ("f" meghanada-compile-file "file" :column "Compile")
-          ("c" meghanada-compile-project "project")
-
-          ;; edit
-          ("o" meghanada-optimize-import "organise imports" :column "Edit")
-          ("i" meghanada-import-all "import all")
-          ("v" meghanada-local-variable)
-
-          ;; run & test
-          ("R" meghanada-run-task "run task" :column "Run & test")
-          ("t" meghanada-run-junit-test-case "run JUnit test case")
-          ("T" meghanada-run-junit-class "run JUnit class")
-          ("r" meghanada-run-junit-recent "run JUnit recent")
-          ("s" meghanada-switch-test-case "switch test case")
-
-          ;; doc & help
-          ("." meghanada-reference :column "Doc & Help")
-          ("h" meghanada-typeinfo)))
+        :pretty-hydra
+        ((:color teal :quit-key "q")
+         ("Meghanada"
+          (("M-m" meghanada-restart "restart")
+           ("." meghanada-reference "reference")
+           ("h" meghanada-typeinfo "type info"))
+          "Compile"
+          (("f" meghanada-compile-file "file")
+           ("c" meghanada-compile-project "project"))
+          "Edit"
+          (("o" meghanada-optimize-import "organise imports")
+           ("i" meghanada-import-all "import all")
+           ("v" meghanada-local-variable))
+          "Run & test"
+          (("R" meghanada-run-task "run task")
+           ("t" meghanada-run-junit-test-case "run JUnit test case")
+           ("T" meghanada-run-junit-class "run JUnit class")
+           ("r" meghanada-run-junit-recent "run JUnit recent")
+           ("s" meghanada-switch-test-case "switch test case")))))
 
     #+END_SRC
 
