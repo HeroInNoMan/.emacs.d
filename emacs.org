@@ -1246,17 +1246,21 @@
                  (cdr (assoc result rmap))))
            nil))
 
-       (defhydra hydra-yasnippet(:color teal)
-         ("t" yas-describe-tables "tables" :column "Snippet")
-         ("r" yas-reload-all "reload")
-         ("q" nil "quit")
-         ("e" yas-ido-expand "ido expand" :column "Insert")
-         ("i" yas-insert-snippet "insert")
-         ("n" yas-new-snippet "new" :column "Edit")
-         ("v" yas-visit-snippet-file "visit file")
-         ("c" aya-create "create (with $, ~ or `')" :column "Auto-yasnippet")
-         ("a" aya-expand "apply")
-         ("p" aya-persist-snippet "persist"))
+       (pretty-hydra-define hydra-yasnippet
+         (:color teal :quit-key "q")
+         ("Snippet"
+          (("t" yas-describe-tables "tables")
+           ("r" yas-reload-all "reload"))
+          "Insert"
+          (("e" yas-ido-expand "ido expand")
+           ("i" yas-insert-snippet "insert"))
+          "Edit"
+          (("n" yas-new-snippet "new")
+           ("v" yas-visit-snippet-file "visit file"))
+          "Auto-yasnippet"
+          (("c" aya-create "create (with $, ~ or `')")
+           ("a" aya-expand "apply")
+           ("p" aya-persist-snippet "persist"))))
 
        (use-package yasnippet-snippets)
        (yas-reload-all)
