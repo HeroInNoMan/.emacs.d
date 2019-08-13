@@ -1521,23 +1521,22 @@
              magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100")
              magit-stash-arguments  '("--include-untracked"))
 
-       (defhydra hydra-git(:color blue)
-         ;;
-         ("q" nil "quit" :column "Git")
-         ;; gutter
-         ("n" git-gutter:next-hunk "next hunk" :color pink :column "Gutter")
-         ("p" git-gutter:previous-hunk "prev hunk" :color pink)
-         ("r" git-gutter:revert-hunk "revert hunk" :color pink)
-         ("s" git-gutter:stage-hunk "stage hunk" :color pink)
-         ("u" git-gutter-mode "gutter mode")
-         ;; log
-         ("b" magit-blame "blame" :column "Log")
-         ("l" magit-log-buffer-file "file history")
-         ("t" git-timemachine "time machine")
-         ;; other
-         ("." magit-status "status" :column "Other")
-         ("g" git-messenger:popup-message "message")
-         ("f" magit-file-popup "file popup")))
+       (pretty-hydra-define hydra-git
+         (:color blue :quit-key "q")
+         ("Gutter"
+          (("n" git-gutter:next-hunk "next hunk" :color pink)
+           ("p" git-gutter:previous-hunk "prev hunk" :color pink)
+           ("r" git-gutter:revert-hunk "revert hunk" :color pink)
+           ("s" git-gutter:stage-hunk "stage hunk" :color pink)
+           ("u" git-gutter-mode "gutter mode"))
+          "Log"
+          (("b" magit-blame "blame")
+           ("l" magit-log-buffer-file "file history")
+           ("t" git-timemachine "time machine"))
+          "Other"
+          (("." magit-status "status")
+           ("g" git-messenger:popup-message "message")
+           ("f" magit-file-popup "file popup")))))
 
      (use-package forge
        :after magit)
