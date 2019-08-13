@@ -2080,14 +2080,16 @@
        :load-path "elisp/"
        :hook (sql-mode . sql-upcase-mode))
 
-     (defhydra hydra-format-sql(:color blue)
-       ("q" nil "quit" :column "SQL")
-       ("f" sqlformat "paragraph" :column "Format")
-       ("b" sqlformat-buffer "buffer")
-       ("r" sqlformat-region "region")
-       ("i" sql-indent-buffer "indent")
-       ("u" sql-upcase-buffer "buffer" :column "Upcase")
-       ("U" sql-upcase-region "region"))
+     (pretty-hydra-define hydra-format-sql
+       (:color blue :quit-key "q")
+       ("Format"
+        (("f" sqlformat "paragraph")
+         ("b" sqlformat-buffer "buffer")
+         ("r" sqlformat-region "region")
+         ("i" sql-indent-buffer "indent"))
+        "Upcase"
+        (("u" sql-upcase-buffer "buffer")
+         ("U" sql-upcase-region "region"))))
      (global-set-key (kbd "C-c C-f") 'hydra-format-sql/body)
    #+END_SRC
 
