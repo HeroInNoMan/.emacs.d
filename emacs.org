@@ -1739,22 +1739,23 @@
        (use-package define-word :defer t)
        (use-package guess-language :defer t)
 
-       (defhydra hydra-spell (:color teal)
-         ("t" flyspell-mode "toggle flyspell" :column "Spelling")
-         ("T" guess-language-mode "toggle guess")
-         ("q" nil "quit")
-         ;; Flyspell
-         ("a" endless/ispell-word-then-abbrev "Correct & add" :column "Flyspell")
-         ("c" flyspell-buffer "check buffer")
-         ("n" flyspell-goto-next-error "next error" :color pink)
-         ("p" flyspell-goto-previous-error "previous error" :color pink)
-         ("l" define-word-at-point "lookup word")
-         ;; dictionary
-         ("d" ispell-change-dictionary "choose" :column "Dictionary")
-         ("f" ale/switch-to-fr-dict "fr_FR")
-         ("e" ale/switch-to-en-dict "en_GB")
-         ("u" ale/switch-to-us-dict "en_US")
-         ("g" guess-language "guess")))
+       (pretty-hydra-define hydra-spell
+         (:color teal :quit-key "q")
+         ("Spelling"
+          (("t" flyspell-mode "toggle flyspell")
+           ("T" guess-language-mode "toggle guess"))
+          "Flyspell"
+          (("a" endless/ispell-word-then-abbrev "Correct & add")
+           ("c" flyspell-buffer "check buffer")
+           ("n" flyspell-goto-next-error "next error" :color pink)
+           ("p" flyspell-goto-previous-error "previous error" :color pink)
+           ("l" define-word-at-point "lookup word"))
+          "Dictionary"
+          (("d" ispell-change-dictionary "choose")
+           ("f" ale/switch-to-fr-dict "fr_FR")
+           ("e" ale/switch-to-en-dict "en_GB")
+           ("u" ale/switch-to-us-dict "en_US")
+           ("g" guess-language "guess")))))
    #+END_SRC
 
 ** Synonyms
