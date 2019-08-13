@@ -2397,17 +2397,16 @@
                                    :placeOpenBraceOnNewLineForFunctions nil))
 
        ;; (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file ~/projets/tss.log"))
-
-       (defhydra hydra-tide(:color blue)
-         "tide"
-         ("s" tide-restart-server "restart server" :column "Tide")
-         ("q" nil "quit")
-         ;; edit
-         ("r" tide-rename-symbol "rename" :column "Edit")
-         ("f" tide-format "format")
-         ;; navigate
-         ("e" tide-project-errors "errors" :column "Navigate")
-         ("g" tide-references "references")))
+       :pretty-hydra
+       ((:color blue :quit-key "q")
+        ("Tide"
+         (("s" tide-restart-server "restart server"))
+         "Edit"
+         (("r" tide-rename-symbol "rename")
+          ("f" tide-format "format"))
+         "Navigate"
+         (("e" tide-project-errors "errors")
+          ("g" tide-references "references")))))
 
      (use-package typescript-mode
        :disabled
