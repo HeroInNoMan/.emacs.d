@@ -868,8 +868,9 @@
    #+END_SRC
 
 ** Undo
+   [[http://www.dr-qubit.org/undo-tree.html][undo-tree]] is a powerful undo/redo mode that treats undo history as a tree.
    #+BEGIN_SRC emacs-lisp
-     (use-package undo-tree ;; powerfull undo/redo mode
+     (use-package undo-tree
        :pretty-hydra
        ((:color teal :quit-key "q")
         ("Navigate"
