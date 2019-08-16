@@ -1194,7 +1194,6 @@
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
        ("C-c y" . hydra-yasnippet/body)
-       :hook (prog-mode . yas-global-mode)
        :config
        (use-package auto-yasnippet
          :config
