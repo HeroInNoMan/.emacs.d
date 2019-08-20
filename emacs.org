@@ -845,7 +845,6 @@
        :config
        (global-company-mode 1) ;; enable company in all buffers
        (setq company-tooltip-limit 30
-             company-show-numbers t
              company-dabbrev-downcase nil
              company-show-numbers t))
 
