@@ -131,28 +131,27 @@ abort completely with `C-g'."
   (setq save-abbrevs 'silently)
   (setq-default abbrev-mode t)
 
-  ;; more auto-correct: remove accidental double capitals
-  (defun dcaps-to-scaps ()
-    "Convert word in DOuble CApitals to Single Capitals."
-    (interactive)
-    (and (= ?w (char-syntax (char-before)))
-         (save-excursion
-           (and (if (called-interactively-p)
-                    (skip-syntax-backward "w")
-                  (= -3 (skip-syntax-backward "w")))
-                (let (case-fold-search)
-                  (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
-                (capitalize-word 1)))))
-
-  (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
   (define-minor-mode dubcaps-mode
     "Toggle `dubcaps-mode'.  Converts words in DOuble CApitals to
 Single Capitals as you type."
     :init-value nil
     :lighter (" DC")
-    (if dubcaps-mode
-        (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
-      (remove-hook 'post-self-insert-hook #'dcaps-to-scaps 'local)))
+    ;; more auto-correct: remove accidental double capitals
+    (progn
+      (defun dcaps-to-scaps ()
+        "Convert word in DOuble CApitals to Single Capitals."
+        (interactive)
+        (and (= ?w (char-syntax (char-before)))
+             (save-excursion
+               (and (if (called-interactively-p)
+                        (skip-syntax-backward "w")
+                      (= -3 (skip-syntax-backward "w")))
+                    (let (case-fold-search)
+                      (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
+                    (capitalize-word 1)))))
+      (if dubcaps-mode
+          (add-hook 'post-self-insert-hook #'dcaps-to-scaps nil 'local)
+        (remove-hook 'post-self-insert-hook #'dcaps-to-scaps 'local))))
 
   ;; move point to previous error
   ;; based on code by hatschipuh at

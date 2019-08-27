@@ -1731,7 +1731,9 @@
    #+BEGIN_SRC emacs-lisp
      (use-package my-checks
        :ensure nil
+       :load-path "elisp/"
        :bind ("C-è" . hydra-spell/body)
+       :commands dubcaps-mode
        :config
        (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
        (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
@@ -2595,6 +2597,7 @@
         "Writing"
         (("A" global-auto-revert-mode "auto-revert" :toggle t)
          ("c" company-mode "company" :toggle t)
+         ("d" dubcaps-mode "dubcaps" :toggle t)
          ("F" flyspell-mode "flyspell" :toggle t)
          ("g" toggle-god-mode "god" :toggle god-local-mode)
          ("o" overwrite-mode "overwrite" :toggle t))))
