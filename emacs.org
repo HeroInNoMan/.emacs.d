@@ -144,6 +144,7 @@
             js2-refactor
             json-reformat
             ledger-mode
+            linum-relative
             litable
             load-dir
             lorem-ipsum
@@ -417,9 +418,6 @@
     (global-font-lock-mode t) ;; enable syntax highlighting
     (blink-cursor-mode -1) ;; no blinking cursor
 
-    ;; don’t display linum except while goto-line
-    (global-set-key [remap goto-line] 'goto-line-with-feedback)
-
     (setq-default transient-mark-mode t ;; Show active region
                   truncate-lines t ;; Don't soft-break lines for me, please
                   truncate-string-ellipsis "…")
@@ -432,6 +430,15 @@
           line-number-mode t ;; Always display line number
           column-number-mode t ;; and column number
           shift-select-mode nil) ;; don't use shift to mark things
+  #+END_SRC
+
+
+  I don’t usually display line numbers, but I want the abilitity to do so, and also to display relative line numbering, which is handy to navigate using numeric arguments.
+  #+BEGIN_SRC emacs-lisp
+    ;; don’t display linum except while goto-line
+    (global-set-key [remap goto-line] 'goto-line-with-feedback)
+
+    (use-package linum-relative :defer t)
   #+END_SRC
 
   [[https://github.com/bbatsov/crux][Crux]] brings a lot of better default behaviour and functions.
@@ -2573,6 +2580,7 @@
         (("b" beginend-global-mode "begin-end" :toggle t)
          ("i" ido-mode "ido" :toggle t)
          ("l" linum-mode "line number" :toggle t)
+         ("r" linum-relative-global-mode "relative line numbers" :toggle t)
          ("M" minimap-mode "minimap" :toggle t)
          ("t" treemacs "treemacs")
          ("v" visual-line-mode "visual line" :toggle t)
@@ -2586,7 +2594,7 @@
         "Decoration"
         (("C" color-identifiers-mode "color identifiers" :toggle t)
          ("p" prettify-symbols-mode "prettify symbols" :toggle t)
-         ("r" rainbow-blocks-mode "rainbow blocks" :toggle t)
+         ("R" rainbow-blocks-mode "rainbow blocks" :toggle t)
          ("w" whitespace-mode "whitespace" :toggle t))
         "Coding"
         (("a" aggressive-indent-mode "aggressive indent" :toggle t)
