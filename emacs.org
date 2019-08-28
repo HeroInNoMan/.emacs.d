@@ -137,6 +137,7 @@
             htmlize
             idle-highlight-mode
             imenu-anywhere
+            impatient-mode
             isearch-dabbrev
             iy-go-to-char
             jedi
@@ -2369,6 +2370,11 @@
                      :map html-mode-map ("C-c b" . web-beautify-html)
                      :map web-mode-map ("C-c b" . web-beautify-html)
                      :map css-mode-map ("C-c b" . web-beautify-css)))
+   #+END_SRC
+
+   [[https://github.com/skeeto/impatient-mode][Impatient-mode]] enables live editing of html files.
+   #+BEGIN_SRC emacs-lisp
+     (use-package impatient-mode :defer t)
    #+END_SRC
 
 ** Typescript
