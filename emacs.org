@@ -1698,13 +1698,13 @@
             todo-remote-file (concat my-private-remote-home-dir my-private-remote-todo-org-file)
             org-capture-templates
             '(;; local
-              ("d" "local - diary item" item (file+olp+datetree diary-local-file) "%i%?")
-              ("n" "local - note" item (file+olp+datetree notes-file) "%i%?")
-              ("t" "local - TODO" entry (file todo-local-file) "* TODO %?\n\t%i")
-              ("y" "local - code snippet" plain (file snippet-file) "\n--\n%i%?")
+              ("d" "diary item (local)" item (file+olp+datetree diary-local-file) "%i%?" :time-prompt t)
+              ("n" "note       (local)" item (file+olp+datetree notes-file) "%i%?")
+              ("t" "TODO       (local)" entry (file todo-local-file) "* TODO %?\n\t%i")
+              ("y" "snippet    (local)\n" plain (file snippet-file) "\n--\n%i%?")
               ;; remote
-              ("D" "remote - diary item" item (file+olp+datetree diary-remote-file) "%i%?")
-              ("T" "remote - TODO" entry (file+headline todo-remote-file "VRAC") "* TODO %?\n\t%i")))
+              ("D" "diary item (remote)" item (file+olp+datetree diary-remote-file) "%i%?" :time-prompt t)
+              ("T" "TODO       (remote)\n" entry (file+headline todo-remote-file "VRAC") "* TODO %?\n\t%i")))
 
       ;; font and faces customization
       (setq org-todo-keyword-faces
