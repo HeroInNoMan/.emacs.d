@@ -118,6 +118,7 @@
             god-mode
             goto-last-change
             gradle-mode
+            grip-mode
             groovy-mode
             guess-language
             helm-ag
@@ -2476,6 +2477,10 @@
        :mode (".md$" . markdown-mode))
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package grip-mode :defer t)
+   #+END_SRC
+
 ** Dokuwiki
    #+BEGIN_SRC emacs-lisp
      (use-package dokuwiki-mode
@@ -2599,6 +2604,7 @@
          ("V" volatile-highlights-mode "volatile highlight" :toggle t))
         "Decoration"
         (("C" color-identifiers-mode "color identifiers" :toggle t)
+         ("G" grip-mode "md/org preview" :toggle t)
          ("p" prettify-symbols-mode "prettify symbols" :toggle t)
          ("R" rainbow-blocks-mode "rainbow blocks" :toggle t)
          ("w" whitespace-mode "whitespace" :toggle t))
