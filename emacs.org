@@ -230,6 +230,7 @@
    (use-package no-littering
      :config
      (require 'recentf)
+     (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
      (add-to-list 'recentf-exclude no-littering-var-directory)
      (add-to-list 'recentf-exclude no-littering-etc-directory))
   #+END_SRC
