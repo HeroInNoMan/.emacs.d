@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: usage
+# key: u
+# --
+
+usage() {
+cat <<EOF
+Usage:
+$1
+EOF
+}
