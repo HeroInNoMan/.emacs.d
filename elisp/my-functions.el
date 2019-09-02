@@ -467,9 +467,9 @@ Swap buffers in the process"
   (cond
    ((string-prefix-p "*scratch*" (buffer-name)) t)
    ((string-prefix-p "*Org Src" (buffer-name)) t)
+   ((string-prefix-p "*eww" (buffer-name)) t)
    ((string-prefix-p "*" (buffer-name)) nil)
    ((string-prefix-p "magit" (buffer-name)) nil)
-   ((string-equal major-mode "dired-mode") nil)
    (t t)))
 
 (defun crontab-e ()
