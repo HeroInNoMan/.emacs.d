@@ -3035,7 +3035,7 @@
       (use-package 2048-game :defer t)
       (use-package vimgolf
         :ensure nil
-        :defer t
+        :commands vimgolf
         :load-path "elisp/")
       (use-package slime-volleyball :defer t)
     #+END_SRC
