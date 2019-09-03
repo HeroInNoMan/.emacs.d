@@ -1580,6 +1580,21 @@
         (call-interactively #'magit-fetch-current)))
   #+END_SRC
 
+* Tramp
+
+  #+BEGIN_SRC emacs-lisp
+    ;; cache file-name forever
+    (setq remote-file-name-inhibit-cache nil)
+
+    ;; make sure vc stuff is not making tramp slower
+    (setq vc-ignore-dir-regexp
+          (format "%s\\|%s"
+                  vc-ignore-dir-regexp
+                  tramp-file-name-regexp))
+
+    (setq tramp-verbose 1) ;; only log errors
+  #+END_SRC
+
 * Date
   Date and time should be displayed in standard format, no M/D/Y nonsense.
   #+BEGIN_SRC emacs-lisp
