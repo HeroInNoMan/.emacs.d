@@ -221,7 +221,7 @@
 
   Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
   #+BEGIN_SRC emacs-lisp
-    (use-package paradox :defer t
+    (use-package paradox :disabled t
       :config (setq paradox-github-token t))
   #+END_SRC
 
@@ -2794,7 +2794,7 @@
          ("b" ale/ediff-current-buffers "quick diff")
          ("y" ale/diff-last-2-yanks "diff yanks"))
         "Tools"
-        (("p" paradox-list-packages "packages")
+        (("p" package-list-packages "packages")
          ("Q" quick-calc "quick-calc")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
