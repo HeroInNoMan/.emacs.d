@@ -156,6 +156,7 @@
             lsp-java-treemacs
             lsp-ui
             magit-org-todos
+            magit-todos
             meghanada
             miniedit
             minimap
@@ -1559,6 +1560,10 @@
 
      (use-package forge
        :after magit)
+
+     (use-package magit-todos
+       :after magit
+       :config (setq magit-todos-max-items 30))
 
      (use-package magit-org-todos
        :after magit
