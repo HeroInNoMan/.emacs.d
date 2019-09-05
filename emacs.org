@@ -132,6 +132,7 @@
             helm-lsp
             helm-projectile
             helm-swoop
+            helm-tramp
             helpful
             hide-mode-line
             highlight-indent-guides
@@ -1051,7 +1052,8 @@
            ("F"     helm-find-files "files")
            ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
            ("m"     helm-mini "mini")
-           ("p"     helm-projectile "projectile"))
+           ("p"     helm-projectile "projectile")
+           ("t"     helm-tramp "tramp"))
           "Search"
           (("R"     helm-regexp "regexp" :column "Search")
            ("o"     helm-occur "occur")
@@ -1085,7 +1087,7 @@
            ("-"     helm-dash-at-point "dash"))
           "Other"
           (("r"     helm-resume "resume" :column "Helm")
-           ("t"     helm-top "top")
+           ("T"     helm-top "top")
            ("P"     helm-list-emacs-process "process")
            ("c"     helm-colors "colours")
            ("8"     helm-ucs "ucs")
@@ -1193,6 +1195,13 @@
    #+BEGIN_SRC emacs-lisp
      (use-package helm-lines
        :commands (helm-lines))
+   #+END_SRC
+
+   Finally, let’s use helm for connecting to remote hosts (via TRAMP).
+   #+BEGIN_SRC emacs-lisp
+     ;; (use-package helm-tramp
+     ;;   :config
+     ;;   (setq tramp-default-method "ssh"))
    #+END_SRC
 
 ** Snippets
