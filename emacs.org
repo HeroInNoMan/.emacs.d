@@ -2094,7 +2094,14 @@
        (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
    #+END_SRC
 
-   Just in case, make sure we can edit with ed, the one editor, the true honorable…
+   Just in case, make sure we can edit with:
+   #+BEGIN_QUOTE
+   The One True,\\
+   The Right honorable,\\
+   The Standard Editor,\\
+   Edward '[[https://lambdaisland.com/episodes/ultimate-dev-setup][ed(1)]]' Editor
+   #+END_QUOTE
+
    #+BEGIN_SRC emacs-lisp
      (use-package ed-mode
        :ensure nil
