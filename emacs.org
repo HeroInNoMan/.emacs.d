@@ -679,7 +679,8 @@
   I use [[https://github.com/abo-abo/ace-window][ace-window]] to quickly switch windows…
   #+BEGIN_SRC emacs-lisp
     (use-package ace-window
-      :bind ("M-o" . ace-window))
+      :bind ("M-o" . ace-window)
+      ("<s-down>" . other-window))
   #+END_SRC
 
   … and avy to directly jump to a char.
@@ -1396,9 +1397,10 @@
    Revert windows on ediff exit - needs winner mode.
    #+BEGIN_SRC emacs-lisp
      (use-package winner
-       :config
-       (winner-mode)
-       (add-hook 'ediff-after-quit-hook-internal 'winner-undo))
+       :bind
+       ("<s-left>" . winner-undo)
+       ("<s-right>" . winner-redo)
+       :config (winner-mode))
    #+END_SRC
 
 ** Buffer Management
