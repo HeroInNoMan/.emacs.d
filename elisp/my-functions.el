@@ -108,7 +108,7 @@ Show the full path file name in the minibuffer."
        (not (null my-private-secondary-work-bugtracker-url)))
       (let* ((id (upcase (thing-at-point 'symbol)))
              (bounds (bounds-of-thing-at-point 'symbol))
-             (org-link (concat "[[" my-private-secondary-work-bugtracker-url id "][n°" id "]]")))
+             (org-link (concat "[[" my-private-secondary-work-bugtracker-url id "][RT-" id "]]")))
         (delete-region (car bounds) (cdr bounds))
         (ale/delete-hash-at-point)
         (insert org-link))
