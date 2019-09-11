@@ -105,8 +105,8 @@
       (fancy-battery-mode))
 
     ;; capture templates
-    (add-to-list 'org-capture-templates '("d" "work - log" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?") t)
-    (add-to-list 'org-capture-templates '("t" "work - TODO" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i") t)
+    (add-to-list 'org-capture-templates '("w" "diary item (work)" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?" :time-prompt t) t)
+    (add-to-list 'org-capture-templates '("W" "TODO       (work)\n" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i") t)
 
     ;; default project root folder
     (when (featurep 'dumb-jump)
