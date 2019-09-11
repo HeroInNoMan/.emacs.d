@@ -648,6 +648,28 @@
    #+END_SRC
    Note: If I ever need to work seriously with colours: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
 
+** Fringes
+   This is a “zen” mode that I took from [[https://bzg.fr/en/emacs-strip-tease.html/][Bastien’s config]]:
+   #+BEGIN_SRC emacs-lisp
+     ;; A small minor mode to use a big fringe
+     (defvar bzg-big-fringe-mode nil)
+     (define-minor-mode bzg-big-fringe-mode
+       "Minor mode to use big fringe in the current buffer."
+       :init-value nil
+       :global t
+       :variable bzg-big-fringe-mode
+       :group 'editing-basics
+       (if (not bzg-big-fringe-mode)
+           (progn
+             (fringe-mode 0))
+         (progn (delete-other-windows)
+                (custom-set-faces '(fringe ((t (:background "black")))))
+                (set-fringe-mode
+                 (/ (- (frame-pixel-width)
+                       (* 100 (frame-char-width)))
+                    2)))))
+   #+END_SRC
+
 * Dired
   #+BEGIN_SRC emacs-lisp
     (use-package dired
@@ -2729,7 +2751,8 @@
          ("p" prettify-symbols-mode "prettify symbols" :toggle t)
          ("R" rainbow-blocks-mode "rainbow blocks" :toggle t)
          ("P" prism-mode "prism" :toggle t)
-         ("w" whitespace-mode "whitespace" :toggle t))
+         ("w" whitespace-mode "whitespace" :toggle t)
+         ("z" bzg-big-fringe-mode "zen" :toggle t))
         "Coding"
         (("a" aggressive-indent-mode "aggressive indent" :toggle t)
          ("(" smartparens-global-mode "smartparens" :toggle t)
