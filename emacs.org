@@ -175,6 +175,7 @@
             persistent-scratch
             powerthesaurus
             pretty-hydra
+            prism
             prog-fill
             racer
             rainbow-blocks
@@ -631,6 +632,8 @@
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-blocks)
+
+     (use-package prism)
    #+END_SRC
 
    Or according to symbol names.
@@ -2725,6 +2728,7 @@
          ("G" grip-mode "md/org preview" :toggle t)
          ("p" prettify-symbols-mode "prettify symbols" :toggle t)
          ("R" rainbow-blocks-mode "rainbow blocks" :toggle t)
+         ("P" prism-mode "prism" :toggle t)
          ("w" whitespace-mode "whitespace" :toggle t))
         "Coding"
         (("a" aggressive-indent-mode "aggressive indent" :toggle t)
