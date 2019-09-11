@@ -75,6 +75,7 @@
             calfw-ical
             calfw-org
             cargo
+            change-inner
             color-identifiers-mode
             color-theme-modern
             command-log-mode
