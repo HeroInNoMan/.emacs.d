@@ -94,6 +94,8 @@
             dired-collapse
             dired-narrow
             dired-subtree
+            docker
+            dockerfile-mode
             dokuwiki
             dokuwiki-mode
             dot-mode
