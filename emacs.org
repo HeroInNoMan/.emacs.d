@@ -192,6 +192,7 @@
             smartscan
             sml-modeline
             speed-type
+            sqlformat
             super-save
             swagger-to-org
             temporary-persistent
