@@ -2738,7 +2738,8 @@
          ("d" dubcaps-mode "dubcaps" :toggle t)
          ("F" flyspell-mode "flyspell" :toggle t)
          ("g" toggle-god-mode "god" :toggle god-local-mode)
-         ("o" overwrite-mode "overwrite" :toggle t))))
+         ("o" overwrite-mode "overwrite" :toggle t)
+         ("s" superword-mode "super-word" :toggle t))))
      (global-set-key (kbd "C-c m") 'hydra-toggles/body)
      (global-set-key (kbd "C-é") 'hydra-toggles/body)
    #+END_SRC
