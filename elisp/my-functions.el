@@ -240,7 +240,7 @@ Swap buffers in the process"
       (insert (concat "#" s " ")))))
 
 (defun ale/toggle-camel-snake-kebab-case ()
-  "Toggle between camelcase and underscore notation for the symbol at point."
+  "Cycle between camelCase, snake_case and kebab-case for the symbol at point."
   (interactive)
   (save-excursion
     (let* ((bounds (bounds-of-thing-at-point 'symbol))
@@ -250,7 +250,7 @@ Swap buffers in the process"
                                                  (re-search-forward "_" end t)))
            (currently-using-dashes-p (progn (goto-char start)
                                             (re-search-forward "-" end t))))
-      (cond (currently-using-underscores-p ;; snake-case → camel-case
+      (cond (currently-using-underscores-p ;; snake_case → camelCase
              (progn
                (upcase-initials-region start end)
                (replace-string "_" "" nil start end)
@@ -473,7 +473,7 @@ Swap buffers in the process"
    (t t)))
 
 (defun crontab-e ()
-  "Run `crontab -e' in a emacs buffer."
+  "Run `crontab -e' in an Emacs buffer."
   (interactive)
   (with-editor-async-shell-command "crontab -e"))
 
