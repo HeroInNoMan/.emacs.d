@@ -198,6 +198,7 @@
             sqlformat
             super-save
             swagger-to-org
+            syslog-mode
             temporary-persistent
             tide
             transmission
@@ -2654,6 +2655,15 @@
    #+BEGIN_SRC emacs-lisp
      (use-package docker :defer t)
      (use-package dockerfile-mode :defer t)
+   #+END_SRC
+
+** Logs
+   #+BEGIN_SRC emacs-lisp
+     (use-package syslog-mode
+       :mode ("\\.log\\'" "\\.out\\'")
+       :config
+       (add-to-list 'revert-without-query "\\.log\\'")
+       (add-to-list 'revert-without-query "\\.out\\'"))
    #+END_SRC
 
 * Mail
