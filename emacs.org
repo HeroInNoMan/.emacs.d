@@ -80,6 +80,7 @@
             color-identifiers-mode
             color-theme-modern
             command-log-mode
+            company-box
             company-lsp
             company-prescient
             crontab-mode
@@ -899,6 +900,9 @@
        :config
        (company-prescient-mode)
        (prescient-persist-mode))
+
+     (use-package company-box
+       :after company)
 
      (use-package browse-kill-ring
        :config
