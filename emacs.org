@@ -2260,9 +2260,7 @@
 ** Groovy
    #+BEGIN_SRC emacs-lisp
      (use-package groovy-mode
-       :mode
-       ("\\.groovy\\'" . groovy-mode)
-       ("\\.gradle\\'" . groovy-mode)
+       :mode ("\\.groovy\\'" "\\.gradle\\'")
        :config (setq groovy-indent-offset 2))
    #+END_SRC
 
@@ -2656,8 +2654,7 @@
 
 ** Gradle
    #+BEGIN_SRC emacs-lisp
-     (use-package gradle-mode
-       :mode ("\\.gradle\\'" . gradle-mode))
+     (use-package gradle-mode :defer t)
    #+END_SRC
 
 ** Docker
