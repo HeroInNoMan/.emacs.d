@@ -477,5 +477,12 @@ Swap buffers in the process"
   (interactive)
   (with-editor-async-shell-command "crontab -e"))
 
+(defun ale/org-diary-goto-today ()
+  "Move point to current date in an org file."
+  (interactive)
+  (let ((date (format-time-string "%F")))
+    (unless (search-forward date nil t nil)
+      (search-backward date))))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here
