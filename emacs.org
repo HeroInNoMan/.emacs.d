@@ -62,6 +62,7 @@
             ace-jump-helm-line
             ace-window
             aggressive-indent
+            all-the-icons
             anzu
             auctex-latexmk
             auto-yasnippet
@@ -617,10 +618,12 @@
        :ensure nil
        :load-path "elisp/")
 
-     (use-package icons-in-terminal :disabled t
+     (use-package icons-in-terminal
        :ensure nil
        :load-path "~/.local/share/icons-in-terminal/")
      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
+
+     (use-package all-the-icons)
    #+END_SRC
 
 ** Colours
@@ -2948,7 +2951,7 @@
                   ))
           (setq rm-text-properties '(
                                      ("\\` Fill\\'"        'display " aF.")
-                                     ("\\` Fly\\'"         'display (concat " " (propertize "abc" 'face '((:foreground "darkgreen" :weight bold))))) ; flyspell
+                                     ("\\` Fly\\'"         'display (concat " " (propertize "🗹" 'face '((:foreground "darkgreen" :weight bold))))) ; flyspell
                                      ("\\` FlyC\\*\\'"     'display (concat " " (propertize "✔…" 'face '((:foreground "red" :weight bold))))) ; flycheck
                                      ("\\` FlyC\\!\\'"     'display (concat " " (propertize "✔!" 'face '((:foreground "red" :weight bold))))) ; flycheck
                                      ("\\` FlyC\\?\\'"     'display (concat " " (propertize "✔?" 'face '((:foreground "red" :weight bold))))) ; flycheck
