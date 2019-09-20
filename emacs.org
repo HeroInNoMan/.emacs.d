@@ -67,6 +67,7 @@
             auctex-latexmk
             auto-yasnippet
             avandu
+            beacon
             beginend
             browse-kill-ring
             butler
@@ -611,6 +612,12 @@
    #+BEGIN_SRC emacs-lisp
      (use-package page-break-lines
        :config (global-page-break-lines-mode))
+   #+END_SRC
+
+   Beacon gives a nice visual feedback when the cursor moves around.
+   #+BEGIN_SRC emacs-lisp
+     (use-package beacon
+     :defer t)
    #+END_SRC
 
 ** Icons in terminal
@@ -2747,7 +2754,7 @@
      (pretty-hydra-define hydra-toggles
        (:color blue :quit-key "q")
        ("Navigation"
-        (("b" beginend-global-mode "begin-end" :toggle t)
+        (("B" beginend-global-mode "begin-end" :toggle t)
          ("i" ido-mode "ido" :toggle t)
          ("l" linum-mode "line number" :toggle t)
          ("r" linum-relative-global-mode "relative line numbers" :toggle t)
@@ -2756,7 +2763,8 @@
          ("v" visual-line-mode "visual line" :toggle t)
          ("x" winnow-mode "winnow" :toggle t))
         "Highlighting"
-        (("h" idle-highlight-mode "Idle HL" :toggle t)
+        (("b" beacon-mode "beacon" :toggle t)
+         ("h" idle-highlight-mode "Idle HL" :toggle t)
          ("H" hl-line-mode "highlight line" :toggle t)
          ("I" highlight-indent-guides-mode "indent guide" :toggle t)
          ("m" hide-mode-line-mode "hide mode-line" :toggle t)
@@ -2927,6 +2935,7 @@
                   " Abbrev"     ; abbrev-mode
                   " ARev"       ; auto-revert
                   " be"         ; beginend
+                  " (*)"        ; beacon
                   " company"    ; comppany-mode
                   " DC"         ; dup caps
                   " Dot"        ; dot mode
