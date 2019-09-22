@@ -2620,19 +2620,19 @@
 ** Yaml
    #+BEGIN_SRC emacs-lisp
      (use-package yaml-mode
-       :mode (".yml$" . yaml-mode))
+       :mode ("\\.yml\\'" . yaml-mode))
    #+END_SRC
 
 ** Crontab
    #+BEGIN_SRC emacs-lisp
      (use-package crontab-mode
-       :mode ("crontab$" . crontab-mode))
+       :mode ("\\.crontab\\'" . crontab-mode))
    #+END_SRC
 
 ** Markdown
    #+BEGIN_SRC emacs-lisp
      (use-package markdown-mode
-       :mode (".md$" . markdown-mode))
+       :mode ("\\.md\\'" . markdown-mode))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
