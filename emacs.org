@@ -504,7 +504,7 @@
   Vim’s “dot” is a cool macro-like feature. I want that.
   #+BEGIN_SRC emacs-lisp
     (use-package dot-mode
-      :chords (".." . dot-mode-execute)
+      :bind ("M-." . dot-mode-execute)
       :config
       ;; default bindings I already use
       (unbind-key "C-." dot-mode-map)
