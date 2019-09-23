@@ -1785,6 +1785,12 @@
               ("T" "TODO       (remote)\n" entry (file+headline todo-remote-file "VRAC") "* TODO %?\n\t%i")))
 
       ;; font and faces customization
+      (setq org-fontify-done-headline t)
+      (custom-set-faces
+       '(org-done ((t (:foreground "PaleGreen" :weight bold :strike-through t))))
+       '(org-headline-done
+         ((((class color) (min-colors 16) (background dark))
+           (:foreground "dim grey" :strike-through t)))))
       (setq org-todo-keyword-faces
             '(("INPR" . (:foreground "yellow" :weight bold))
               ("STARTED" . (:foreground "yellow" :weight bold))
