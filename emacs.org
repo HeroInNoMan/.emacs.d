@@ -2807,6 +2807,7 @@
        (:color blue :quit-key "q")
        ("Prog"
         (("e" emacs-lisp-mode "elisp")
+         ("g" groovy-mode "groovy")
          ("l" lisp-mode "lisp")
          ("J" java-mode "Java")
          ("p" python-mode "python")
