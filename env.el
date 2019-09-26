@@ -76,6 +76,7 @@
       ("a" (lambda () (interactive)(ale/open-project "~/outils/axelor-development-kit")) "ADK")
       ("b" (lambda () (interactive)(ale/open-project "~/projets/coopener-build")) "Coopener-build")
       ("p" (lambda () (interactive)(ale/open-project "~/projets/coopener-printer")) "EDI (printer)")
+      ("s" (lambda () (interactive)(ale/open-project "~/projets/schema-si")) "Schema SI")
       ("d" (lambda () (interactive)(ale/open-project my-private-dotfiles)) "dotfiles" :column "Perso")
       ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
       ("E" (lambda () (interactive)(ale/open-project "~/outils/emacs")) "emacs source"))
