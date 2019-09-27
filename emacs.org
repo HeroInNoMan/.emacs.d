@@ -2840,7 +2840,7 @@
         "Reading"
         (("a" avandu-overview "avandu RSS")
          ("A" helm-lobsters "lobsters")
-         ("E" elfeed "elfeed RSS")
+         ("R" elfeed "elfeed RSS")
          ("G" gnus "Gnus")
          ("W" eww "web browser"))
         "Management"
