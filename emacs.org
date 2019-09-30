@@ -3167,7 +3167,6 @@
          :config (setq elfeed-feeds my-private-feeds))
 
        (use-package elfeed-org
-         :defer t
          :after elfeed
          :config
          (elfeed-org)
