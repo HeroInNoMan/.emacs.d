@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: select count(*)
+# key: sc
+# --
+SELECT COUNT(*) FROM $1
