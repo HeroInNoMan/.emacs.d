@@ -712,6 +712,8 @@
                   ("U" . dired-subtree-up)
                   ("e" . dired-subtree-narrow)
                   ("i" . dired-subtree-toggle)
+                  ("<tab>" . dired-subtree-cycle)
+                  ("<backtab>" . dired-subtree-cycle)
                   ("«" . dired-subtree-beginning)
                   ("»" . dired-subtree-end)))
   #+END_SRC
