@@ -722,8 +722,10 @@
   I use [[https://github.com/abo-abo/ace-window][ace-window]] to quickly switch windows…
   #+BEGIN_SRC emacs-lisp
     (use-package ace-window
-      :bind ("M-o" . ace-window)
-      ("<s-down>" . other-window))
+      :bind
+      ("M-o" . other-window)
+      ;; ("-o" . ace-window)
+      )
   #+END_SRC
 
   … and avy to directly jump to a char.
