@@ -2775,8 +2775,8 @@
          ("x" winnow-mode "winnow" :toggle t))
         "Highlighting"
         (("b" beacon-mode "beacon" :toggle t)
-         ("h" idle-highlight-mode "Idle HL" :toggle t)
-         ("H" hl-line-mode "highlight line" :toggle t)
+         ("H" idle-highlight-mode "Idle HL" :toggle t)
+         ("h" hl-line-mode "highlight line" :toggle t)
          ("I" highlight-indent-guides-mode "indent guide" :toggle t)
          ("m" hide-mode-line-mode "hide mode-line" :toggle t)
          ("V" volatile-highlights-mode "volatile highlight" :toggle t))
@@ -2845,7 +2845,7 @@
         "Reading"
         (("a" avandu-overview "avandu RSS")
          ("A" helm-lobsters "lobsters")
-         ("R" elfeed "elfeed RSS")
+         ("r" elfeed "elfeed RSS")
          ("G" gnus "Gnus")
          ("W" eww "web browser"))
         "Management"
@@ -2866,7 +2866,7 @@
         (("d" ale/find-diary-file "diary" :column "Files")
          ("D" ale/find-remote-diary-file "remote diary")
          ("i" ale/find-init-file "init file")
-         ("r" ale/find-rest-client-file "rest-client"))))
+         ("R" ale/find-rest-client-file "rest-client"))))
 
      (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
    #+END_SRC
