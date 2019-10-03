@@ -3169,7 +3169,8 @@
 **** Elfeed
      #+BEGIN_SRC emacs-lisp
        (use-package elfeed :defer t
-         :config (setq elfeed-feeds my-private-feeds))
+         :config (setq elfeed-feeds my-private-feeds
+         elfeed-search-title-max-width 120))
 
        (use-package elfeed-org
          :after elfeed
