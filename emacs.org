@@ -61,6 +61,7 @@
           '(2048-game
             ace-jump-helm-line
             ace-window
+            adoc-mode
             aggressive-indent
             all-the-icons
             anzu
@@ -173,6 +174,7 @@
             ob-shell
             org-bullets
             origami
+            ox-asciidoc
             page-break-lines
             paradox
             persistent-scratch
@@ -1730,6 +1732,10 @@
       :mode ".csv$")
   #+END_SRC
 
+  #+BEGIN_SRC emacs-lisp
+    (use-package adoc-mode)
+  #+END_SRC
+
 * Org-mode
   #+BEGIN_SRC emacs-lisp
     (use-package org
@@ -1749,6 +1755,7 @@
       (use-package htmlize :defer t)
       (use-package swagger-to-org :defer t)
       (require 'ox-md nil t)
+      (use-package ox-asciidoc)
       (require 'org-agenda)
       ;; specific agenda files
       (add-to-list 'org-agenda-files my-private-work-diary-org-file)
