@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Leothaud
+# name: sysout
+# key: sysout
+# --
+System.out.println("$1");
