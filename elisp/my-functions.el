@@ -296,17 +296,21 @@ Swap buffers in the process"
 (defun ale/switch-to-fr-dict ()
   "Switch to French dictionary."
   (interactive)
-  (ispell-change-dictionary "fr_FR"))
+  (progn
+    (flyspell-mode)
+    (ispell-change-dictionary "fr_FR")))
 
 (defun ale/switch-to-en-dict ()
   "Switch to British English dictionary."
   (interactive)
-  (ispell-change-dictionary "en_GB"))
+  (progn  (flyspell-mode)
+          (ispell-change-dictionary "en_GB")))
 
 (defun ale/switch-to-us-dict ()
   "Switch to American English dictionary."
   (interactive)
-  (ispell-change-dictionary "en_US"))
+  (progn  (flyspell-mode)
+          (ispell-change-dictionary "en_US")))
 
 (defun ale/open-project (args)
   "Open ARGS project magit logs and status as split windows."
