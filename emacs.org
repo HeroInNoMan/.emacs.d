@@ -113,6 +113,7 @@
             expand-region
             fancy-battery
             fancy-narrow
+            fireplace
             fish-mode
             flycheck-rust
             forge
@@ -3177,6 +3178,8 @@
         :commands vimgolf
         :load-path "elisp/")
       (use-package slime-volleyball :defer t)
+
+      (use-package fireplace :defer t)
     #+END_SRC
 ** News
 *** RSS feeds
