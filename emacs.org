@@ -659,6 +659,7 @@
        :load-path "elisp/")
 
      (use-package icons-in-terminal
+       :disabled t
        :ensure nil
        :load-path "~/.local/share/icons-in-terminal/")
      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
@@ -988,7 +989,7 @@
    Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
-       :disabled
+       :disabled t
        :config
        (ivy-mode nil)
        ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
@@ -1005,7 +1006,7 @@
              '((t . ivy--regex-ignore-order))))
 
      (use-package counsel
-       :disabled
+       :disabled t
        :bind ("M-s s" . counsel-grep-or-swiper))
    #+END_SRC
 
