@@ -3111,6 +3111,8 @@
    #+END_SRC
 
 ** Restclient
+   See if [[https://github.com/abrochard/walkman/][walkman]] might not be a bit better (because integrated in org-files!)
+
    #+BEGIN_SRC emacs-lisp
      ;; REST client
      (use-package restclient-helm
