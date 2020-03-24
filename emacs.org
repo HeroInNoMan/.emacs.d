@@ -113,6 +113,7 @@
             expand-region
             fancy-battery
             fancy-narrow
+            feather
             fireplace
             fish-mode
             flycheck-rust
@@ -177,7 +178,6 @@
             origami
             ox-asciidoc
             page-break-lines
-            paradox
             persistent-scratch
             powerthesaurus
             pretty-hydra
@@ -228,10 +228,11 @@
             ztree))
   #+END_SRC
 
-  Let’s use [[https://github.com/Malabarba/paradox][paradox]] to manage packages in a fancier way:
+  Let’s use [[https://github.com/conao3/feather.el][feather]] to manage packages in an asynchronous, multi-threaded way:
   #+BEGIN_SRC emacs-lisp
-    (use-package paradox :disabled t
-      :config (setq paradox-github-token t))
+    (use-package feather
+    :delight
+    :hook (package-menu-mode . feather-mode))
   #+END_SRC
 
   Try packages without installing them:
@@ -2898,7 +2899,7 @@
          ("b" ale/ediff-current-buffers "quick diff")
          ("y" ale/diff-last-2-yanks "diff yanks"))
         "Tools"
-        (("p" package-list-packages "packages")
+        (("p" list-packages "packages")
          ("Q" quick-calc "quick-calc")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
