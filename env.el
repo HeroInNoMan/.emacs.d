@@ -13,8 +13,8 @@
     (add-hook 'git-commit-setup-hook 'ale/switch-to-fr-dict)
 
     ;; capture templates
-    (add-to-list 'org-capture-templates '("w" "diary item (work)" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?" :time-prompt t) t)
-    (add-to-list 'org-capture-templates '("W" "TODO       (work)\n" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i" :prepend t) t)
+    (add-to-list 'org-capture-templates '("w" "diary item (work)"   entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?" :time-prompt t :kill-buffer t) t)
+    (add-to-list 'org-capture-templates '("W" "TODO       (work)\n" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i" :prepend t :kill-buffer t) t)
 
     ;; display battery level
     (use-package fancy-battery
