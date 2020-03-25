@@ -1798,6 +1798,7 @@
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
       (setq
        ;; general settings
+       org-log-done 'time
        org-completion-use-ido t
        org-ellipsis " ▼"
 
@@ -1817,26 +1818,71 @@
                                      (restclient . t)
                                      (emacs-lisp . t)))
       ;; ORG-CAPTURE
+      (defun add-property-with-date-captured ()
+        "Add CREATED property to the current item."
+        (interactive)
+        (org-set-property "CREATED" (format-time-string "[%F %a %R]")))
+      (add-hook 'org-capture-before-finalize-hook 'add-property-with-date-captured)
+
       (setq notes-file (concat user-emacs-directory "notes.org")
             snippet-file (concat user-emacs-directory "code-snippets.txt")
             diary-local-file my-private-local-diary-file
             diary-remote-file (concat my-private-remote-home-dir my-private-remote-diary-org-file)
             todo-local-file my-private-local-todo-org-file
+            todo-ideas-file my-private-local-ideas-org-file
+            todo-media-file my-private-local-media-org-file
             todo-remote-file (concat my-private-remote-home-dir my-private-remote-todo-org-file)
             org-capture-templates
-            '(;; local
-              ("d" "diary item (local)" item (file+olp+datetree diary-local-file) "%i%?" :time-prompt t)
-              ("n" "note       (local)" item (file+olp+datetree notes-file) "%i%?")
-              ("t" "TODO       (local)" entry (file todo-local-file) "* TODO %?\n\t%i")
-              ("y" "snippet    (local)\n" plain (file snippet-file) "\n--\n%i%?")
-              ;; remote
-              ("D" "diary item (remote)" item (file+olp+datetree diary-remote-file) "%i%?" :time-prompt t)
-              ("T" "TODO       (remote)\n" entry (file+headline todo-remote-file "VRAC") "* TODO %?\n\t%i")))
+            '(;; LOCAL
+              ("b" "book" ;; add a book in to-read list
+               entry (file+headline todo-media-file "Lecture")
+               "* LIRE %i%?%^{Author}p%^{Date}p"
+               :prepend t :kill-buffer t)
+
+              ("d" "diary" ;; add a diary entry
+               item (file+olp+datetree diary-local-file)
+               "%i%?"
+               :time-prompt t :kill-buffer t)
+
+              ("e" "emprunt" ;; add a borrow entry
+               entry (file+headline  todo-local-file "Prêts / emprunts")
+               "* EMPRUNT %i%?"
+               :kill-buffer t)
+
+              ("p" "prêt" ;; add a lend entry
+               entry (file+headline  todo-local-file "Prêts / emprunts")
+               "* PRÊT %i%?"
+               :kill-buffer t)
+
+              ("f" "film" ;; add a film in to-watch list
+               entry (file+headline todo-media-file "Films")
+               "* VOIR %i%?%^{Date}p"
+               :prepend t :kill-buffer t)
+
+              ("i" "idea" ;; add an idea entry
+               item (file+headline todo-ideas-file "Pêle-mêle")
+               "%i%?"
+               :kill-buffer t)
+
+              ("n" "note" ;; add a note
+               item (file+olp+datetree notes-file)
+               "%i%?"
+               :kill-buffer t)
+
+              ("t" "todo" ;; add a TODO entry
+               entry (file todo-local-file)
+               "* TODO %i%?\n\tSCHEDULED: %t"
+               :kill-buffer t)
+
+              ("y" "snippet\n" ;; add a (code) snippet
+               plain (file snippet-file)
+               "\n--\n%i%?"
+               :kill-buffer t)))
 
       ;; font and faces customization
       (setq org-fontify-done-headline t)
       (custom-set-faces
-       '(org-done ((t (:foreground "PaleGreen" :weight bold :strike-through t))))
+       '(org-done ((t (:foreground "PaleGreen" :weight bold))))
        '(org-headline-done
          ((((class color) (min-colors 16) (background dark))
            (:foreground "dim grey" :strike-through t)))))
