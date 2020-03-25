@@ -483,7 +483,8 @@
     ;; don’t display linum except while goto-line
     (global-set-key [remap goto-line] 'goto-line-with-feedback)
 
-    (use-package linum-relative :defer t)
+    (use-package linum-relative
+      :config (setq linum-relative-current-symbol ""))
   #+END_SRC
 
   [[https://github.com/bbatsov/crux][Crux]] brings a lot of better default behaviour and functions.
