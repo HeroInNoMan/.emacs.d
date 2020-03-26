@@ -2034,15 +2034,18 @@
    TODO: describe lsp
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
+       :disabled t
        :defer t
        :config
        (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
 
      (use-package company-lsp
+       :disabled t
        :defer t
        :requires lsp company)
 
      (use-package lsp-ui
+       :disabled t
        :requires lsp-mode flycheck
        :hook (lsp-mode . lsp-ui-mode)
        :config
@@ -2062,9 +2065,10 @@
 
      (use-package treemacs :defer t)
 
-     (use-package helm-lsp :defer t)
+     (use-package helm-lsp :disabled t :defer t)
 
      (use-package dap-mode
+       :disabled t
        :defer t
        :requires lsp-mode
        :config
@@ -2422,17 +2426,20 @@
 *** lsp-java
     #+BEGIN_SRC emacs-lisp
       (use-package lsp-java
+        :disabled t
         ;; :delight (java-mode "🅹" :major)
         :bind ("C-S-o" . lsp-execute-code-action)
         :after lsp
         :config (add-hook 'java-mode-hook 'lsp))
 
       (use-package dap-java
+        :disabled t
         :defer t
         :ensure nil
         :after lsp-java)
 
       (use-package lsp-java-treemacs
+        :disabled t
         :defer t
         :ensure nil
         :after treemacs)
