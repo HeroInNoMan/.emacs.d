@@ -112,7 +112,6 @@
             ensime
             expand-region
             fancy-battery
-            fancy-narrow
             feather
             fireplace
             fish-mode
@@ -631,10 +630,6 @@
        (global-hl-line-mode -1) ;; don’t highlight current line
        (highlight-line-mode 1) ;; except in “list” modes
        :load-path "elisp/")
-
-     (use-package fancy-narrow
-       :disabled t
-       :config (fancy-narrow-mode t))
 
      (use-package highlight-indent-guides
        :config (setq highlight-indent-guides-method 'character)
