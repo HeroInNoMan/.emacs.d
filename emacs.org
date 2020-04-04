@@ -221,6 +221,7 @@
             webpaste
             wgrep
             which-key
+            wiki-summary
             winnow
             yaml-mode
             yasnippet-snippets
@@ -1156,7 +1157,7 @@
            ("g"     helm-google-suggest "google")
            ("s"     helm-surfraw "surfraw")
            ("y"     yas-insert-snippet "yasnippet")
-           ("w"     helm-wikipedia-suggest "wikipedia"))
+           ("w"     wiki-summary "wikipedia"))
           "Doc & Help"
           (("h b"   helm-descbinds "bindings")
            ("h e"   helm-eval-expression-with-eldoc "eldoc")
@@ -2796,6 +2797,11 @@
             shr-width 100 ;; keep sane layout
             shr-use-fonts t ;; no fancy fonts in text mode
             gnus-button-url 'browse-url-generic))
+  #+END_SRC
+
+  I use [[https://github.com/jozefg/wiki-summary.el][wiki-summary]] to quickly lookup the abstract of a wikipedia entry:
+  #+BEGIN_SRC emacs-lisp
+    (use-package wiki-summary)
   #+END_SRC
 
 * Quick access
