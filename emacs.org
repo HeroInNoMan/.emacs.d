@@ -2139,6 +2139,7 @@
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens
+       :demand
        :hook ((prog-mode markdown-mode) . turn-on-smartparens-mode)
        :commands smartparens-mode
        :bind (
@@ -2163,28 +2164,24 @@
                     collect
                     `(defun ,(read (concat
                                     "wrap-with-"
-                                    (prin1-to-string key)
+                                    (prin1-to-string key t)
                                     "s"))
                          (&optional arg)
                        (interactive "p")
                        (sp-wrap-with-pair ,val)))))
        ;; (sp-local-pair 'emacs-lisp-mode "`" "'") ;; adds `' as a local pair in emacs-lisp-mode
-       ;; (sp-local-pair 'emacs-lisp-mode "`" "'") ;; adds `' as a local pair in emacs-lisp-mode
-       ;; (sp-local-pair '(tex-mode latex-mode) "{" "}") ;; adds `' as a local pair in emacs-lisp-mode
-       ;; (sp-pair '(tex-mode latex-mode) "{" "}") ;; adds `' as a local pair in emacs-lisp-mode
+       ;; (sp-local-pair '(tex-mode latex-mode) "{" "}") ;; adds {} as a local pair in latex-mode
        (sp-pair "<" ">")
-       (sp-pair "≤" "≥")
-       (sp-pair "«" "»")
+       (sp-pair "« " " »" :trigger "«")
        (sp-pair "“" "”")
        (sp-pair "‘" "’")
        (def-pairs ((paren . "(")
                    (bracket . "[")
                    (brace . "{")
                    (angle . "<")
-                   (angle-eq . "≤")
                    (single-quote . "'")
                    (double-quote . "\"")
-                   (guillemet . "«")
+                   (guillemet . "« ")
                    (curly-double-quote . "“")
                    (curly-single-quote . "‘")
                    (back-quote . "`")))
@@ -2192,14 +2189,19 @@
        (global-set-key (kbd "M-s [") 'wrap-with-brackets)
        (global-set-key (kbd "M-s {") 'wrap-with-braces)
        (global-set-key (kbd "M-s <") 'wrap-with-angles)
-       (global-set-key (kbd "M-s ≤") 'wrap-with-angle-eqs)
        (global-set-key (kbd "M-s '") 'wrap-with-single-quotes)
        (global-set-key (kbd "M-s \"") 'wrap-with-double-quotes)
        (global-set-key (kbd "M-s «") 'wrap-with-guillemets)
        (global-set-key (kbd "M-s “") 'wrap-with-curly-double-quotes)
        (global-set-key (kbd "M-s ‘") 'wrap-with-curly-single-quotes)
        (global-set-key (kbd "M-s `") 'wrap-with-back-quotes)
+
        (global-set-key (kbd "M-s w") 'sp-rewrap-sexp)
+       (global-set-key (kbd "M-s a") 'sp-absorb-sexp)
+       (global-set-key (kbd "M-s j") 'sp-join-sexp)
+       (global-set-key (kbd "M-s |") 'sp-split-sexp)
+       (global-set-key (kbd "M-s R") 'sp-raise-sexp)
+       (global-set-key (kbd "M-s s") 'sp-splice-sexp)
 
        (pretty-hydra-define hydra-parens
          (:color teal :quit-key "q")
