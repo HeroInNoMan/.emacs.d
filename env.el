@@ -115,10 +115,6 @@
       (setq fancy-battery-show-percentage t)
       (fancy-battery-mode))
 
-    ;; capture templates
-    (add-to-list 'org-capture-templates '("w" "diary item (work)" entry (file+olp+datetree my-private-work-diary-org-file) "* TODO %i%?" :time-prompt t) t)
-    (add-to-list 'org-capture-templates '("W" "TODO       (work)\n" entry (file+headline my-private-work-diary-org-file "À faire") "* TODO %?\n\t%i") t)
-
     ;; default project root folder
     (when (featurep 'dumb-jump)
       (setq dumb-jump-default-project "~/projets"))
