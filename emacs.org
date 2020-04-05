@@ -51,7 +51,7 @@
 
     (use-package use-package-chords
       :config (key-chord-mode 1)
-      (setq key-chord-one-key-delay 0.15)
+      (setq key-chord-one-key-delay 0.25)
       (setq key-chord-two-keys-delay 0.05))
   #+END_SRC
 
@@ -559,7 +559,6 @@
        :map god-local-mode-map
        ("i" . toggle-god-mode)
        ("." . repeat))
-      :chords ("ii" . toggle-god-mode)
       :config
       (defun toggle-god-mode ()
         (interactive)
