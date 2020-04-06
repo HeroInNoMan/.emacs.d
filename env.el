@@ -17,9 +17,13 @@
                                           entry (file+olp+datetree my-private-work-diary-org-file)
                                           "* TODO %i%?"
                                           :time-prompt t :kill-buffer t) t)
-    (add-to-list 'org-capture-templates '("w" "TODO           (work)\n"
+    (add-to-list 'org-capture-templates '("w" "TODO           (work)"
                                           entry (file+headline my-private-work-diary-org-file "À faire")
                                           "* TODO %i%?\n\tSCHEDULED: %t"
+                                          :prepend t :kill-buffer t) t)
+    (add-to-list 'org-capture-templates '("r" "Référence      (work)\n"
+                                          entry (file+headline my-private-work-diary-org-file "Références")
+                                          "* %?\n%i"
                                           :prepend t :kill-buffer t) t)
     (add-to-list 'org-refile-targets '(my-private-work-diary-org-file :maxlevel . 3))
     (add-to-list 'org-refile-targets '(my-private-local-todo-org-file :maxlevel . 2))
