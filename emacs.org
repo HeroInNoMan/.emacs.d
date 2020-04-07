@@ -1841,39 +1841,39 @@
 
             org-capture-templates
             '(;; LOCAL
-              ("b" "book" ;; add a book in to-read list
+              ("b" "Book" ;; add a book in to-read list
                entry (file+headline todo-media-file "Lecture")
                "* LIRE %i%?%^{Author}p%^{Date}p"
                :prepend t :kill-buffer t)
 
-              ("d" "diary" ;; add a diary entry
-               item (file+olp+datetree diary-local-file)
-               "%i%?"
-               :time-prompt t :kill-buffer t)
-
-              ("e" "emprunt" ;; add a borrow entry
-               entry (file+headline  todo-local-file "Prêts / emprunts")
-               "* EMPRUNT %i%?"
-               :kill-buffer t)
-
-              ("p" "prêt" ;; add a lend entry
-               entry (file+headline  todo-local-file "Prêts / emprunts")
-               "* PRÊT %i%?"
-               :kill-buffer t)
-
-              ("f" "film" ;; add a film in to-watch list
+              ("f" "Film\n" ;; add a film in to-watch list
                entry (file+headline todo-media-file "Films")
                "* VOIR %i%?%^{Date}p"
                :prepend t :kill-buffer t)
 
-              ("i" "idea" ;; add an idea entry
-               item (file+headline todo-notes-file "Pêle-mêle")
-               "%i%?"
+              ("e" "Emprunt" ;; add a borrow entry
+               entry (file+headline  todo-local-file "Prêts / emprunts")
+               "* EMPRUNT %i%?"
                :kill-buffer t)
 
-              ("t" "todo" ;; add a TODO entry
+              ("p" "Prêt\n" ;; add a lend entry
+               entry (file+headline  todo-local-file "Prêts / emprunts")
+               "* PRÊT %i%?"
+               :kill-buffer t)
+
+              ("t" "Todo" ;; add a TODO entry
                entry (file todo-local-file)
                "* TODO %i%?\n\tSCHEDULED: %t"
+               :kill-buffer t)
+
+              ("d" "Diary" ;; add a diary entry
+               item (file+olp+datetree diary-local-file)
+               "%i%?"
+               :time-prompt t :kill-buffer t)
+
+              ("i" "Idée" ;; add an idea entry
+               item (file+headline todo-notes-file "Pêle-mêle")
+               "%i%?"
                :kill-buffer t)
 
               ("y" "snippet\n" ;; add a (code) snippet

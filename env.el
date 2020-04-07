@@ -13,15 +13,15 @@
     (add-hook 'git-commit-setup-hook 'ale/switch-to-fr-dict)
 
     ;; capture templates
-    (add-to-list 'org-capture-templates '("l" "log diary item (work)"
+    (add-to-list 'org-capture-templates '("l" "Log       (work)"
                                           entry (file+olp+datetree my-private-work-diary-org-file)
                                           "* TODO %i%?"
                                           :time-prompt t :kill-buffer t) t)
-    (add-to-list 'org-capture-templates '("w" "TODO           (work)"
+    (add-to-list 'org-capture-templates '("w" "TODO      (work)"
                                           entry (file+headline my-private-work-diary-org-file "À faire")
                                           "* TODO %i%?\n\tSCHEDULED: %t"
                                           :prepend t :kill-buffer t) t)
-    (add-to-list 'org-capture-templates '("r" "Référence      (work)\n"
+    (add-to-list 'org-capture-templates '("r" "Référence (work)\n"
                                           entry (file+headline my-private-work-diary-org-file "Références")
                                           "* %?\n%i"
                                           :prepend t :kill-buffer t) t)
