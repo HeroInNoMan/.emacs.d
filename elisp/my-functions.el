@@ -222,12 +222,10 @@ Swap buffers in the process"
   (unwind-protect
       (progn
         (linum-mode 1)
-        (whitespace-mode 1)
         (forward-line (read-number "Goto line: ")))
     (progn
       (linum-mode -1)
-      (git-gutter-mode +1)
-      (whitespace-mode -1))))
+      (git-gutter-mode +1))))
 
 (defun ale/insert-ticket-prefix ()
   "Insert a prefix containing the number of the ticket."
