@@ -403,6 +403,12 @@
     (put 'scroll-left 'disabled nil)
   #+END_SRC
 
+  This is supposed to improve performances when dealing with very long lines:
+  #+BEGIN_SRC emacs-lisp
+    (setq bidi-paragraph-direction 'left-to-right)
+    (setq bidi-inhibit-bpa t)
+  #+END_SRC
+
   Let’s add some auto-backup configuration:
   #+BEGIN_SRC emacs-lisp
     (require 'saveplace)
