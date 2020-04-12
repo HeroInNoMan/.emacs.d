@@ -64,7 +64,7 @@
             adoc-mode
             aggressive-indent
             all-the-icons
-            anzu
+            ;; anzu
             auctex-latexmk
             auto-yasnippet
             avandu
@@ -88,6 +88,7 @@
             crontab-mode
             crux
             csv-mode
+            ctrlf
             dap-java
             dap-mode
             dap-ui-mode
@@ -912,16 +913,25 @@
        (("M-s r" . vr/replace)
         ("M-s q" . vr/query-replace)
         ("C-M-%" . vr/query-replace)
-        ;; if you use multiple-cursors, this is for you:
-        ("M-s m" . vr/mc-mark)
-        ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
-        ("C-r" . isearch-backward)
-        ("C-s" . isearch-forward)
-        ("C-M-r" . vr/isearch-backward)
-        ("C-M-s" . vr/isearch-forward))
+        ("M-s m" . vr/mc-mark) ;; useful with multiple-cursors
+        ("M-s R" . vr/isearch-backward)
+        ("M-s S" . vr/isearch-forward))
        :config (require 'visual-regexp)) ;; TODO check if really necessary
    #+END_SRC
    Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
+
+** CTRLF
+
+   Just found [[https://github.com/raxod502/ctrlf.git][this new attempt]] at improving standard searching:
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package ctrlf
+       :bind (("C-s" . ctrlf-forward-literal)
+              ("C-r" . ctrlf-backward-literal)
+              ("C-M-s" . ctrlf-forward-regexp)
+              ("C-M-r" . ctrlf-backward-regexp))
+       :config (ctrlf-mode +1))
+   #+END_SRC
 
 * Completion & help
 ** Completion
@@ -1175,6 +1185,9 @@
            ("X"     helm-select-xfont "xfont")
            ("x"     helm-run-external-command "run external"))))
 
+       (define-key minibuffer-local-map (kbd "C-s") 'ctrlf-forward-literal)
+       (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
+
        (defun my-do-ag-project-root-or-dir ()
          "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
          (interactive)
@@ -1236,8 +1249,6 @@
              ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
              ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
              ;; Move up and down like isearch
-             ("C-r" . helm-previous-line)
-             ("C-s" . helm-next-line)
              ("C-r" . helm-previous-line)
              ("C-s" . helm-next-line))
        :config
@@ -3012,6 +3023,7 @@
   Let’s have an indicator in the mode-line for search results:
   #+BEGIN_SRC emacs-lisp
     (use-package anzu
+      :disabled ;; I use ctrlf now
       :config
       (global-anzu-mode t)
       (setq-default anzu-cons-mode-line-p t))
