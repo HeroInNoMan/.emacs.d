@@ -272,15 +272,20 @@ Swap buffers in the process"
   (interactive)
   (find-file (expand-file-name "emacs.org" user-emacs-directory)))
 
+(defun ale/find-todo-file ()
+  "Find TODO file."
+  (interactive)
+  (find-file (expand-file-name my-private-local-todo-org-file)))
+
+(defun ale/find-diary-file ()
+  "Find diary file."
+  (interactive)
+  (find-file (expand-file-name my-private-local-diary-file)))
+
 (defun ale/find-diary-file ()
   "Find work diary file."
   (interactive)
   (find-file (expand-file-name my-private-work-diary-org-file)))
-
-(defun ale/find-remote-diary-file ()
-  "Find remote diary file."
-  (interactive)
-  (find-file (expand-file-name my-private-remote-diary-org-file my-private-remote-home-dir)))
 
 (defun ale/toggle-selective-display (column)
   (interactive "P")

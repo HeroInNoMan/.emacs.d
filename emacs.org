@@ -2970,11 +2970,11 @@
          ("$" shell "shell")
          ("%" crux-visit-term-buffer "ansi-term"))
         "Reading"
-        (("a" avandu-overview "avandu RSS")
-         ("A" helm-lobsters "lobsters")
-         ("r" elfeed "elfeed RSS")
-         ("G" gnus "Gnus")
-         ("W" eww "web browser"))
+        (("r r" avandu-overview "avandu RSS")
+         ("r l" helm-lobsters "lobsters")
+         ("r e" elfeed "elfeed RSS")
+         ("r g" gnus "Gnus")
+         ("r w" eww "web browser"))
         "Management"
         (("m" mu4e "mu4e")
          ("c" open-calendar "calendar")
@@ -2990,10 +2990,11 @@
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
         "Files"
-        (("d" ale/find-diary-file "diary" :column "Files")
-         ("D" ale/find-remote-diary-file "remote diary")
+        (("d a" ale/find-todo-file "TODO file" :column "Files")
+         ("d d" ale/find-diary-file "diary")
+         ("d w" ale/find-work-file "work TODO file")
          ("i" ale/find-init-file "init file")
-         ("R" ale/find-rest-client-file "rest-client"))))
+         ("d r" ale/find-rest-client-file "rest-client"))))
 
      (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
    #+END_SRC
