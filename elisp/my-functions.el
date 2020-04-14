@@ -280,7 +280,7 @@ Swap buffers in the process"
   (interactive)
   (find-file (expand-file-name my-private-local-diary-file)))
 
-(defun ale/find-diary-file ()
+(defun ale/find-work-file ()
   "Find work diary file."
   (interactive)
   (find-file (expand-file-name my-private-work-diary-org-file)))
