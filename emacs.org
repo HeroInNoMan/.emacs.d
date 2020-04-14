@@ -255,7 +255,7 @@
 
   Private information is stored in variables in =~/.emacs.d/private.el=
   #+BEGIN_SRC emacs-lisp
-    (let ((private-file (expand-file-name "private.el" user-emacs-directory)))
+    (let ((private-file (expand-file-name "private.el" base-emacs-directory)))
       (when (file-exists-p private-file)
         (load-file private-file)))
   #+END_SRC
@@ -263,12 +263,12 @@
   Let’s load all files from the “extra” directory (will happen after init is finished).
   #+BEGIN_SRC emacs-lisp
     (use-package load-dir
-      :config (setq load-dirs (expand-file-name "extra/" user-emacs-directory)))
+      :config (setq load-dirs (expand-file-name "extra/" base-emacs-directory)))
   #+END_SRC
 
   Custom file should be loaded early.
   #+BEGIN_SRC emacs-lisp
-    (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
+    (setq-default custom-file (expand-file-name "custom.el" base-emacs-directory))
     (when (file-exists-p custom-file)
       (load custom-file))
   #+END_SRC
@@ -413,9 +413,9 @@
   #+BEGIN_SRC emacs-lisp
     (require 'saveplace)
     (setq-default save-place t)
-    (setq save-place-file (concat user-emacs-directory "places")
+    (setq save-place-file (concat base-emacs-directory "places")
           vc-make-backup-files t ;; make backups of files, even when they're in version control
-          backup-directory-alist `(("." . ,(concat user-emacs-directory
+          backup-directory-alist `(("." . ,(concat base-emacs-directory
                                                    "backups"))))
   #+END_SRC
 
@@ -607,7 +607,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package color-theme-modern
        :init (add-to-list 'custom-theme-load-path
-                          (file-name-as-directory (expand-file-name "themes" user-emacs-directory)))
+                          (file-name-as-directory (expand-file-name "themes" base-emacs-directory)))
        :config (ale/apply-local-theme-modern))
    #+END_SRC
 
@@ -861,7 +861,7 @@
             :map vimish-fold-unfolded-keymap ("<tab>" . vimish-fold-refold))
       :config
       (vimish-fold-global-mode 1)
-      (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" user-emacs-directory)
+      (setq-default vimish-fold-dir (expand-file-name ".vimish-fold/" base-emacs-directory)
                     vimish-fold-header-width 79))
   #+END_SRC
 
@@ -1318,10 +1318,10 @@
        :config
        (use-package auto-yasnippet
          :config
-         (setq aya-persist-snippets-dir (concat user-emacs-directory "etc/yasnippet/snippets")))
+         (setq aya-persist-snippets-dir (concat base-emacs-directory "etc/yasnippet/snippets")))
        (setq yas-snippet-dirs
-             `(,(concat user-emacs-directory "etc/yasnippet/snippets")
-               ,(car (file-expand-wildcards (concat user-emacs-directory "elpa/yasnippet-snippets-20*/snippets")))))
+             `(,(concat base-emacs-directory "etc/yasnippet/snippets")
+               ,(car (file-expand-wildcards (concat base-emacs-directory "elpa/yasnippet-snippets-20*/snippets")))))
        (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
 
@@ -1437,7 +1437,7 @@
                    ("$" . mc/edit-ends-of-lines)
                    ("<down>" . move-text-down)
                    ("<up>" . move-text-up))
-       :config (setq mc/list-file (concat user-emacs-directory "var/mc-list.el")))
+       :config (setq mc/list-file (concat base-emacs-directory "var/mc-list.el")))
 
      (use-package smart-comment
        :bind ("M-;" . smart-comment))
@@ -1901,7 +1901,7 @@
         (org-set-property "CREATED" (format-time-string "[%F %a %R]")))
       (add-hook 'org-capture-before-finalize-hook 'add-property-with-date-captured)
 
-      (setq snippet-file (concat user-emacs-directory "code-snippets.txt")
+      (setq snippet-file (concat base-emacs-directory "code-snippets.txt")
             diary-local-file my-private-local-diary-file
             todo-local-file my-private-local-todo-org-file
             todo-notes-file my-private-local-notes-org-file
@@ -3080,7 +3080,7 @@
    #+END_SRC
 * Environment
   #+BEGIN_SRC emacs-lisp
-    (load-file (expand-file-name "env.el" user-emacs-directory))
+    (load-file (expand-file-name "env.el" base-emacs-directory))
   #+END_SRC
 
 * Mode-line
@@ -3219,7 +3219,7 @@
       :config
       (setq desktop-save t
             ;; desktop-base-lock-name      "lock"
-            ;; desktop-dirname             user-emacs-directory
+            ;; desktop-dirname             base-emacs-directory
             ;; desktop-path                (list desktop-dirname)
             ;; desktop-files-not-to-save   "^$" ;reload tramp paths
             ;; desktop-load-locked-desktop t
