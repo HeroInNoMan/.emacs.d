@@ -45,12 +45,15 @@
         (package-install 'use-package))
       (require 'use-package)
       (setq use-package-always-ensure t
+            use-package-always-defer t
             use-package-verbose t))
 
     (use-package delight)
 
     (use-package use-package-chords
-      :config (key-chord-mode 1)
+      :demand
+      :config
+      (key-chord-mode 1)
       (setq key-chord-one-key-delay 0.25)
       (setq key-chord-two-keys-delay 0.05))
   #+END_SRC
@@ -239,13 +242,14 @@
 
   Try packages without installing them:
   #+BEGIN_SRC emacs-lisp
-   (use-package try :defer t)
+   (use-package try)
   #+END_SRC
 
 * Emacs directory
   Let’s keep =~/.emacs.d= tidy:
   #+BEGIN_SRC emacs-lisp
    (use-package no-littering
+     :demand
      :config
      (require 'recentf)
      (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
@@ -334,7 +338,7 @@
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
-    (use-package describe-number :defer t)
+    (use-package describe-number)
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
@@ -519,8 +523,8 @@
 * Keybindings
   I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
   #+BEGIN_SRC emacs-lisp
-    (use-package hydra :defer t)
-    (use-package pretty-hydra :defer t)
+    (use-package hydra)
+    (use-package pretty-hydra)
   #+END_SRC
 
   Killing emacs; default binding is too easy to hit by accident.
@@ -608,6 +612,7 @@
    Apply a colour theme (uses the variable =my-private-theme= if defined)
    #+BEGIN_SRC emacs-lisp
      (use-package color-theme-modern
+       :demand
        :init (add-to-list 'custom-theme-load-path
                           (file-name-as-directory (expand-file-name "themes" base-emacs-directory)))
        :config (ale/apply-local-theme-modern))
@@ -625,9 +630,9 @@
 ** Highlight feedback
    Let’s have a visual feedback when performing cut/copy/paste operations.
    #+BEGIN_SRC emacs-lisp
-     (use-package volatile-highlights :defer t)
+     (use-package volatile-highlights)
 
-     (use-package idle-highlight-mode :defer t)
+     (use-package idle-highlight-mode)
    #+END_SRC
 
    Highlight current line in list buffers:
@@ -653,8 +658,7 @@
 
    Beacon gives a nice visual feedback when the cursor moves around.
    #+BEGIN_SRC emacs-lisp
-     (use-package beacon
-     :defer t)
+     (use-package beacon)
    #+END_SRC
 
 ** Icons in terminal
@@ -798,6 +802,7 @@
     (global-set-key (kbd "C-S-n") 'down-arrow)
 
     (use-package imenu-anywhere
+      :demand
       :bind ("C-c ." . helm-imenu-anywhere))
 
     (use-package dumb-jump
@@ -806,7 +811,7 @@
                   ("C-," . dumb-jump-back)
                   ("C-;" . dumb-jump-quick-look)))
 
-    (use-package minimap :defer t)
+    (use-package minimap)
 
     ;; Allow scrolling with mouse wheel
     (when (display-graphic-p) (progn(mouse-wheel-mode t)
@@ -822,7 +827,7 @@
 * Whitespace
   I just heard of [[https://github.com/editorconfig/editorconfig-emacs][editorconfig]], which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
   #+BEGIN_SRC emacs-lisp
-    (use-package editorconfig :defer t)
+    (use-package editorconfig)
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
@@ -914,7 +919,6 @@
    #+BEGIN_SRC emacs-lisp
      ;; regexp-builder
      (use-package re-builder
-       :defer t
        :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
 
      (use-package visual-regexp-steroids
@@ -963,6 +967,7 @@
        :after company)
 
      (use-package browse-kill-ring
+       :demand
        :config
        (browse-kill-ring-default-keybindings)
        (setq browse-kill-ring-quit-action 'save-and-restore))
@@ -1405,20 +1410,24 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-    (use-package region-bindings-mode
-      :config (region-bindings-mode-enable))
+     (use-package region-bindings-mode
+       :demand
+       :config (region-bindings-mode-enable))
    #+END_SRC
 
 ** Point movements
    #+BEGIN_SRC emacs-lisp
      (use-package move-text
+       :demand
        :config (move-text-default-bindings)) ;; M-up / M-down to move line or region
 
      (use-package zop-to-char
        :bind ("C-M-z" . zop-up-to-char))
 
      (use-package multiple-cursors
-       :demand mc-mark-more
+       :demand
+       :functions multiple-cursors
+       :hook (text-mode . multiple-cursors-mode)
        :bind (:map region-bindings-mode-map
                    ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
                    ("d" . mc/mark-all-symbols-like-this-in-defun)
@@ -1533,6 +1542,7 @@
       (use-package temporary-persistent)
 
       (use-package persistent-scratch
+        :demand
         :config
         (persistent-scratch-setup-default)
         (defun persistent-scratch-numbered-scratch-buffer-p ()
@@ -1622,7 +1632,6 @@
   Always follow symbolic links for files under VC.
   #+BEGIN_SRC emacs-lisp
      (use-package vc
-       :defer t
        :config (setq vc-follow-symlinks t))
   #+END_SRC
 
@@ -1669,7 +1678,7 @@
 
 ** Git tools
    #+BEGIN_SRC emacs-lisp
-      (use-package git-timemachine :defer t)
+      (use-package git-timemachine)
 
       (use-package git-messenger
         :bind (:map git-messenger-map
@@ -1864,10 +1873,10 @@
       :chords ("gx" . org-capture)
       :hook (org-mode . visual-line-mode)
       :config
-      (use-package ob-restclient :defer t)
-      (use-package ob-shell :ensure nil :defer t)
-      (use-package htmlize :defer t)
-      (use-package swagger-to-org :defer t)
+      (use-package ob-restclient)
+      (use-package ob-shell :ensure nil)
+      (use-package htmlize)
+      (use-package swagger-to-org)
       (require 'ox-md nil t)
       (use-package ox-asciidoc)
       (require 'org-agenda)
@@ -2098,8 +2107,8 @@
        (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
        (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
 
-       (use-package define-word :defer t)
-       (use-package guess-language :defer t)
+       (use-package define-word)
+       (use-package guess-language)
 
        (pretty-hydra-define hydra-spell
          (:color teal :quit-key "q")
@@ -2122,7 +2131,7 @@
 
 ** Synonyms
    #+BEGIN_SRC emacs-lisp
-     (use-package powerthesaurus :defer t)
+     (use-package powerthesaurus)
    #+END_SRC
 
 ** Grammalecte
@@ -2156,7 +2165,7 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-     (use-package format-all :defer t)
+     (use-package format-all)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
@@ -2178,13 +2187,11 @@
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
        :disabled t
-       :defer t
        :config
        (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
 
      (use-package company-lsp
        :disabled t
-       :defer t
        :requires lsp company)
 
      (use-package lsp-ui
@@ -2206,13 +2213,12 @@
              lsp-ui-peek-list-width 60
              lsp-ui-peek-peek-height 25))
 
-     (use-package treemacs :defer t)
+     (use-package treemacs)
 
-     (use-package helm-lsp :disabled t :defer t)
+     (use-package helm-lsp :disabled t)
 
      (use-package dap-mode
        :disabled t
-       :defer t
        :requires lsp-mode
        :config
        (dap-mode 1)
@@ -2244,7 +2250,7 @@
        (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
        (defmacro def-pairs (pairs)
          `(progn
-            ,@(loop for (key . val) in pairs
+            ,@(cl-loop for (key . val) in pairs
                     collect
                     `(defun ,(read (concat
                                     "wrap-with-"
@@ -2318,7 +2324,7 @@
    #+BEGIN_SRC emacs-lisp
      (add-hook 'sh-mode-hook (lambda () (setq tab-width 2 sh-basic-offset 2 indent-tabs-mode t)))
      (add-hook 'sh-mode-hook 'flycheck-mode)
-     (use-package shx :defer t)
+     (use-package shx)
      ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
      (add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
      (add-to-list 'auto-mode-alist '(".*bash.*$" . sh-mode))
@@ -2495,7 +2501,6 @@
        :config
        (use-package flycheck-rust)
        (use-package racer
-         :defer t
          :config
          (setq company-tooltip-align-annotations t)
          (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
@@ -2506,9 +2511,9 @@
 
 ** Scala
    #+BEGIN_SRC emacs-lisp
-     (use-package ensime :defer t)
-     (use-package sbt-mode :defer t)
-     (use-package scala-mode :defer t)
+     (use-package ensime)
+     (use-package sbt-mode)
+     (use-package scala-mode)
    #+END_SRC
 
 ** Java
@@ -2579,13 +2584,11 @@
 
       (use-package dap-java
         :disabled t
-        :defer t
         :ensure nil
         :after lsp-java)
 
       (use-package lsp-java-treemacs
         :disabled t
-        :defer t
         :ensure nil
         :after treemacs)
 
@@ -2652,8 +2655,7 @@
 *** meghanada
     #+BEGIN_SRC emacs-lisp
       (use-package autodisass-java-bytecode
-        :disabled
-        :defer t)
+        :disabled)
 
       (use-package google-c-style
         :disabled
@@ -2799,7 +2801,7 @@
 
    [[https://github.com/skeeto/impatient-mode][Impatient-mode]] enables live editing of html files.
    #+BEGIN_SRC emacs-lisp
-     (use-package impatient-mode :defer t)
+     (use-package impatient-mode)
    #+END_SRC
 
 ** Typescript
@@ -2873,11 +2875,9 @@
              tab-always-indent t)
 
        (use-package jedi
-         :defer t
          :config (setq jedi:complete-on-dot t))
 
        (use-package elpy
-         :defer t
          :config
          (delete "elpy-module-flymake" elpy-modules) ;; use flycheck instead
          (setq elpy-rpc-backend "jedi"))) ;; fire up jedi in python env
@@ -2907,13 +2907,12 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-     (use-package grip-mode :defer t)
+     (use-package grip-mode)
    #+END_SRC
 
 ** Dokuwiki
    #+BEGIN_SRC emacs-lisp
-     (use-package dokuwiki-mode
-       :defer t)
+     (use-package dokuwiki-mode)
      (use-package dokuwiki
        :hook dokuwiki-mode)
    #+END_SRC
@@ -2921,7 +2920,6 @@
 ** LaTeX
    #+BEGIN_SRC emacs-lisp
      (use-package tex
-       :defer t
        :ensure auctex
        :config
        (use-package auctex-latexmk
@@ -2932,13 +2930,13 @@
 
 ** Gradle
    #+BEGIN_SRC emacs-lisp
-     (use-package gradle-mode :defer t)
+     (use-package gradle-mode)
    #+END_SRC
 
 ** Docker
    #+BEGIN_SRC emacs-lisp
-     (use-package docker :defer t)
-     (use-package dockerfile-mode :defer t)
+     (use-package docker)
+     (use-package dockerfile-mode)
    #+END_SRC
 
 ** Logs
@@ -2992,7 +2990,6 @@
   #+BEGIN_SRC emacs-lisp
     (use-package smtpmail
       :ensure nil
-      :defer t
       :config (setq message-send-mail-function 'smtpmail-send-it
                     starttls-use-gnutls t
                     smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-server-port nil nil))
@@ -3007,7 +3004,6 @@
   I use eww to surf the web in emacs, for simple pages mostly:
   #+BEGIN_SRC emacs-lisp
     (use-package eww
-      :defer t
       :config
       (setq browse-url-generic-program "eww" ;; set default browser to eww
             browse-url-browser-function 'eww-browse-url
@@ -3173,6 +3169,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package sml-modeline
+      :demand
       :config
       (setq sml-modeline-borders nil
             sml-modeline-mode t
@@ -3180,6 +3177,7 @@
       (sml-modeline-mode))
 
     (use-package smart-mode-line
+      :demand
       :config
       ;; for issues with theme loading
       (size-indication-mode)
@@ -3205,6 +3203,7 @@
 
             ;;;; Rich Minority
       (use-package rich-minority
+        :demand
         :config
         (progn
           (setq rm-blacklist
@@ -3279,7 +3278,6 @@
 
     ;; Save a list of recent files visited.
     (use-package desktop
-      :defer t
       :config
       (setq desktop-save t
             ;; desktop-base-lock-name      "lock"
@@ -3327,7 +3325,7 @@
 
 ** Demos
    #+BEGIN_SRC emacs-lisp
-     (use-package command-log-mode :defer t)
+     (use-package command-log-mode)
    #+END_SRC
 
 ** Restclient
@@ -3348,7 +3346,6 @@
 ** Web pasting
    #+BEGIN_SRC emacs-lisp
      (use-package webpaste
-       :defer t
        :config
        ;; Open recently created pastes in an external browser
        (setq webpaste-open-in-browser t))
@@ -3379,7 +3376,7 @@
 ** Text filling
    Lorem ipsum text filler:
    #+BEGIN_SRC emacs-lisp
-     (use-package lorem-ipsum :defer t)
+     (use-package lorem-ipsum)
    #+END_SRC
 
 ** Music
@@ -3403,19 +3400,19 @@
 ** Games
 *** Typing
     #+BEGIN_SRC emacs-lisp
-      (use-package speed-type :defer t)
+      (use-package speed-type)
     #+END_SRC
 
 *** Other
     #+BEGIN_SRC emacs-lisp
-      (use-package 2048-game :defer t)
+      (use-package 2048-game)
       (use-package vimgolf
         :ensure nil
         :commands vimgolf
         :load-path "elisp/")
-      (use-package slime-volleyball :defer t)
+      (use-package slime-volleyball)
 
-      (use-package fireplace :defer t)
+      (use-package fireplace)
     #+END_SRC
 ** News
 *** RSS feeds
@@ -3439,7 +3436,7 @@
 
 **** Elfeed
      #+BEGIN_SRC emacs-lisp
-       (use-package elfeed :defer t
+       (use-package elfeed
          :config (setq elfeed-feeds my-private-feeds
          elfeed-search-title-max-width 120))
 
