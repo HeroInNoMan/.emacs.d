@@ -2148,6 +2148,7 @@
          ("=>" . ?⇒)
          ("..." . ?…)))
      (add-hook 'prog-mode-hook 'prettify-symbols-mode)
+     (add-hook 'org-mode-hook 'prettify-symbols-mode)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
