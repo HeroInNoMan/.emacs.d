@@ -18,6 +18,7 @@
  '(hl-line ((t (:background "grey7"))))
  '(idle-highlight ((t (:background "gray10"))))
  '(ledger-font-xact-highlight-face ((t (:background "gray12"))))
+ '(magit-branch-current ((t (:foreground "#51afef" :box (:line-width (1 . 1) :color "#51afef" :style released-button)))))
  '(org-done ((t (:foreground "PaleGreen" :weight bold :strike-through t))))
  '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "dim grey" :strike-through t))))
  '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
