@@ -643,7 +643,9 @@
    #+BEGIN_SRC emacs-lisp
      (use-package volatile-highlights)
 
-     (use-package idle-highlight-mode)
+     (use-package idle-highlight-mode
+     :hook (prog-mode)
+     :config (setq idle-highlight-idle-time 0.3)) ;; default 0.5
    #+END_SRC
 
    Highlight current line in list buffers:

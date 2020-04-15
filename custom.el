@@ -15,7 +15,7 @@
  '(fringe ((t (:background "black"))))
  '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
  '(hl-line ((t (:background "grey7"))))
- '(idle-highlight ((t (:box (:line-width 1 :color "gray10" :style released-button)))))
+ '(idle-highlight ((t (:background "gray10"))))
  '(ledger-font-xact-highlight-face ((t (:background "gray12"))))
  '(org-done ((t (:foreground "PaleGreen" :weight bold :strike-through t))))
  '(org-headline-done ((((class color) (min-colors 16) (background dark)) (:foreground "dim grey" :strike-through t))))
