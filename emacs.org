@@ -298,6 +298,8 @@
   [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed.
   #+BEGIN_SRC emacs-lisp
     (use-package which-key ;; which-key (replacement for guide-key)
+      :hook ((prog-mode . which-key-mode)
+             (text-mode . which-key-mode))
       :config
       (which-key-mode)
       (setq which-key-idle-delay 0.3))
