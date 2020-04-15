@@ -317,6 +317,7 @@ Swap buffers in the process"
   (interactive "D")
   (progn
     (find-file args)
+    (magit-status)
     (magit-log-all magit-log-arguments)
     (delete-other-windows)
     (magit-status-internal args)
