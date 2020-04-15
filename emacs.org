@@ -587,7 +587,7 @@
             (setq god-mode-colors t)))
          ((not god-local-mode)
           (progn
-            (set-cursor-color "yellow")
+            (set-cursor-color "#51afef") ;; TODO aller choper dynamiquement la couleur de base du curseur (ou mieux définir une face cursor-color-god ou un truc comme ça)
             (setq god-mode-colors nil)))))
 
       (defadvice select-window (after update-cursor-color activate)
