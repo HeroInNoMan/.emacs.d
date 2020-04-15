@@ -477,7 +477,7 @@ Swap buffers in the process"
    ((string-prefix-p "*Org Src" (buffer-name)) t)
    ((string-prefix-p "*eww" (buffer-name)) t)
    ((string-prefix-p "*" (buffer-name)) nil)
-   ((string-prefix-p "magit" (buffer-name)) nil)
+   ((string-prefix-p "magit" (buffer-name)) t)
    (t t)))
 
 (defun crontab-e ()
