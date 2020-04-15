@@ -1781,7 +1781,7 @@
            european-calendar-style t ;; day/month/year format for calendar
            calendar-week-start-day 1 ;; start week on Monday
            display-time-string-forms '((if (and (not display-time-format) display-time-day-and-date)
-                                           (format-time-string "%H:%M, %a %d %b " now))))
+                                           (format-time-string "%H:%M" now))))
      (display-time)
   #+END_SRC
 
