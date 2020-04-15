@@ -43,7 +43,7 @@
 
     ;; default browser
     (setq browse-url-generic-program "firefox")
-
+    (setq browse-url-browser-function 'browse-url-firefox)
     ;; confluence search
     (when (featurep 'engine-mode)
       (defengine confluence my-private-work-confluence-url :keybinding "c"))

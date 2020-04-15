@@ -3005,9 +3005,9 @@
     (use-package eww
       :defer t
       :config
-      (setq browse-url-generic-program "firefox"
-            browse-url-browser-function 'eww-browse-url ;; set default browser to eww, then ‘&’ to open page firefox
-            shr-external-browser 'browse-url-firefox
+      (setq browse-url-generic-program "eww" ;; set default browser to eww
+            browse-url-browser-function 'eww-browse-url
+            shr-external-browser 'browse-url-firefox ;; use ‘&’ to open page in firefox
             shr-width 100 ;; keep sane layout
             shr-use-fonts t ;; no fancy fonts in text mode
             gnus-button-url 'browse-url-generic))
