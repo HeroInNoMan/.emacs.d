@@ -1313,6 +1313,8 @@
      (use-package yasnippet
        :commands yas-new-snippet yas-insert-snippet
        :chords ("yq" . hydra-yasnippet/body)
+       :hook ((prog-mode . yas-minor-mode)
+              (text-mode . yas-minor-mode))
        :bind
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
