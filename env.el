@@ -28,6 +28,9 @@
     (add-to-list 'org-refile-targets '(my-private-work-diary-org-file :maxlevel . 3))
     (add-to-list 'org-refile-targets '(my-private-local-todo-org-file :maxlevel . 2))
 
+    (add-to-list 'org-agenda-files my-private-work-diary-org-file)
+    (add-to-list 'org-agenda-files my-private-local-notes-org-file)
+
     ;; display battery level
     (use-package fancy-battery
       :config
