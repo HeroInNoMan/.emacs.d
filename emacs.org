@@ -67,7 +67,6 @@
             adoc-mode
             aggressive-indent
             all-the-icons
-            ;; anzu
             auctex-latexmk
             auto-yasnippet
             avandu
