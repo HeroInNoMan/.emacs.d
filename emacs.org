@@ -3161,23 +3161,6 @@
     (use-package hide-mode-line)
   #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    (use-package modeline-posn
-      :disabled ;; I use doom-modeline now
-      :ensure nil
-      :load-path "elisp/"
-      :config (load-library "modeline-posn.el"))
-  #+END_SRC
-
-  Let’s have an indicator in the mode-line for search results:
-  #+BEGIN_SRC emacs-lisp
-    (use-package anzu
-      :disabled ;; I use ctrlf now
-      :config
-      (global-anzu-mode t)
-      (setq-default anzu-cons-mode-line-p t))
-  #+END_SRC
-
   Aaaand we’re back to trying [[https://github.com/seagle0128/doom-modeline][doom-modeline]] this time:
   #+BEGIN_SRC emacs-lisp
     (use-package doom-modeline
