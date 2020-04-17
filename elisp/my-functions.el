@@ -327,6 +327,12 @@ Swap buffers in the process"
     (other-window 1)
     (goto-char (point-min))))
 
+(defun set-fira-font-if-possible ()
+  "Set the font to “Fira Code” in it is available."
+  (interactive)
+  (when (member "Fira Code" (font-family-list))
+    (set-frame-font "Fira Code" t t)))
+
 ;; functions stolen from angrybacon
 (defun ab/date-iso ()
   "Insert the current date, ISO format, eg. 2016-12-09."

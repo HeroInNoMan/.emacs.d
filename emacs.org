@@ -283,7 +283,8 @@
       :commands (ale/insert-ticket-prefix
                  ale/jirify
                  ale/find-init-file
-                 ale/open-project)
+                 ale/open-project
+                 set-fira-font-if-possible)
       :load-path "elisp/"
       :bind
       ("M-é" . previous-user-buffer) ;; call previous buffer
@@ -634,7 +635,11 @@
      (use-package default-text-scale
        :bind
        ("C-+" . default-text-scale-increase)
-       ("C-=" . default-text-scale-decrease))
+       ("C-=" . default-text-scale-decrease)
+       :config
+       (defadvice default-text-scale-increase (after fix-font activate) (set-fira-font-if-possible))
+       (defadvice default-text-scale-decrease (after fix-font activate) (set-fira-font-if-possible))
+       (defadvice default-text-scale-reset (after fix-font activate) (set-fira-font-if-possible)))
    #+END_SRC
 
 ** Highlight feedback
