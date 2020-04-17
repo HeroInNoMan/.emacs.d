@@ -3288,6 +3288,9 @@
       ;; Whether display the IRC notifications. It requires `circe' or `erc' package.
       (setq doom-modeline-irc t)
 
+      ;; battery status
+      ;; (setq doom-modeline--battery-status t)
+
       ;; Function to stylize the irc buffer names.
       (setq doom-modeline-irc-stylize 'identity)
 
