@@ -3135,6 +3135,7 @@
         "Tools"
         (("p" list-packages "packages")
          ("Q" quick-calc "quick-calc")
+         ("n" describe-number-at-point "describe number")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
         "Files"
