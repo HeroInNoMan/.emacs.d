@@ -3046,7 +3046,7 @@
          ("M" minimap-mode "minimap" :toggle t)
          ("t" treemacs "treemacs")
          ("T" centaur-tabs-mode "tabs" :toggle t)
-         ("x" winnow-mode "winnow" :toggle t))
+         ("W" mouse-wheel-mode "mouse wheel" :toggle t))
         "Highlighting"
         (("b" beacon-mode "beacon" :toggle t)
          ("H" idle-highlight-mode "Idle HL" :toggle t)
@@ -3068,7 +3068,8 @@
          ("(" smartparens-global-mode "smartparens" :toggle t)
          (")" smartparens-global-strict-mode "smartparens strict" :toggle t)
          ("f" flycheck-mode "flycheck" :toggle t)
-         ("L" litable-mode "litable" :toggle t))
+         ("L" litable-mode "litable" :toggle t)
+         ("x" winnow-mode "winnow" :toggle t))
         "Writing"
         (("A" global-auto-revert-mode "auto-revert" :toggle t)
          ("c" company-mode "company" :toggle t)
