@@ -116,6 +116,10 @@
     ;; hooking for specific functions
     (add-hook 'git-commit-setup-hook 'ale/switch-to-us-dict)
 
+    ;; org
+    (add-to-list 'org-refile-targets '(my-private-local-notes-org-file :maxlevel . 2))
+    (add-to-list 'org-agenda-files my-private-local-todo-org-file)
+
     ;; display battery level
     (use-package fancy-battery
       :config
