@@ -300,8 +300,7 @@
   [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed.
   #+BEGIN_SRC emacs-lisp
     (use-package which-key ;; which-key (replacement for guide-key)
-      :hook ((prog-mode . which-key-mode)
-             (text-mode . which-key-mode))
+      :hook ((prog-mode text-mode) . which-key-mode)
       :config
       (which-key-mode)
       (setq which-key-idle-delay 0.3))
@@ -1335,8 +1334,7 @@
      (use-package yasnippet
        :commands yas-new-snippet yas-insert-snippet
        :chords ("yq" . hydra-yasnippet/body)
-       :hook ((prog-mode . yas-minor-mode)
-              (text-mode . yas-minor-mode))
+       :hook ((prog-mode text-mode) . yas-minor-mode)
        :bind
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
