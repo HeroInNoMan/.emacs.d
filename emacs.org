@@ -3342,7 +3342,6 @@
             ;; (add-to-list 'desktop-modes-not-to-save 'dired-mode)
             )
       (desktop-save-mode 1)
-      (add-hook 'desktop-after-read-hook (lambda () (set-cursor-color "yellow")))
       (desktop-read))
   #+END_SRC
 
