@@ -1897,8 +1897,6 @@
       (require 'ox-md nil t)
       (use-package ox-asciidoc)
       (require 'org-agenda)
-      ;; specific agenda files
-      (add-to-list 'org-agenda-files my-private-work-diary-org-file)
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
       (setq
        ;; general settings
