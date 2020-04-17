@@ -115,7 +115,7 @@ Show the full path file name in the minibuffer."
     (message "Var my-private-secondary-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
 
 (defun ale/delete-hash-at-point ()
-  "delete # symbol if present under point"
+  "Delete # symbol if present under point."
   (save-excursion
     (backward-char)
     (when (looking-at "#")
@@ -174,6 +174,7 @@ Show the full path file name in the minibuffer."
                     (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 
 (defun ale/add-d-to-ediff-mode-map ()
+  "Add an option for keeping both sides."
   (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'ale/add-d-to-ediff-mode-map)
 
@@ -286,6 +287,7 @@ Swap buffers in the process"
   (find-file (expand-file-name my-private-work-diary-org-file)))
 
 (defun ale/toggle-selective-display (column)
+  "Hide lines indented as far as COLUMN."
   (interactive "P")
   (set-selective-display
    (cond
