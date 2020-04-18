@@ -1554,10 +1554,12 @@
       (global-set-key (kbd "C-x \"") 'crux-create-scratch-buffer)
       (global-set-key (kbd "M-\"") 'crux-create-scratch-buffer)
 
-      (use-package temporary-persistent)
+      (use-package temporary-persistent
+        :config (setq temporary-persistent-buffer-name-template "temp")
+        (setq temporary-persistent-store-folder (expand-file-name "temp" base-emacs-directory)))
+
 
       (use-package persistent-scratch
-        :demand
         :config
         (persistent-scratch-setup-default)
         (defun persistent-scratch-numbered-scratch-buffer-p ()
