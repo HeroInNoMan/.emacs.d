@@ -1440,8 +1440,6 @@
        :bind ("C-M-z" . zop-up-to-char))
 
      (use-package multiple-cursors
-       :demand
-       :functions multiple-cursors
        :hook (text-mode . multiple-cursors-mode)
        :bind (:map region-bindings-mode-map
                    ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
