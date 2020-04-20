@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Leothaud
+# name: use-package simple
+# key: up
+# --
+(use-package $1)
