@@ -503,8 +503,8 @@
       ;; replace some commands
       :bind
       ("C-M-<down>" . crux-duplicate-current-line-or-region)
+      ("C-M-<up>" . crux-duplicate-and-comment-current-line-or-region)
       ("M-j" . crux-top-join-line)
-      ("C-c i" . crux-cleanup-buffer-or-region)
       :config
       (global-set-key [remap move-beginning-of-line] #'crux-move-beginning-of-line)
       (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
@@ -853,6 +853,7 @@
       :hook (prog-mode . aggressive-indent-mode))
 
     ;;Indentation
+    (global-set-key (kbd "C-c i") #'indent-region)
     (setq-default tab-width 2
                   c-auto-newline t
                   c-basic-offset 2
@@ -3136,6 +3137,7 @@
         (("p" list-packages "packages")
          ("Q" quick-calc "quick-calc")
          ("n" describe-number-at-point "describe number")
+         ("I" crux-cleanup-buffer-or-region "cleanup buffer")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
         "Files"
