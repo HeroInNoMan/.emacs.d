@@ -209,6 +209,7 @@
             swagger-to-org
             syslog-mode
             temporary-persistent
+            ten-hundred-mode
             tide
             transmission
             travis
@@ -3077,7 +3078,8 @@
          ("F" flyspell-mode "flyspell" :toggle t)
          ("g" toggle-god-mode "god" :toggle god-local-mode)
          ("o" overwrite-mode "overwrite" :toggle t)
-         ("s" superword-mode "super-word" :toggle t))))
+         ("s" superword-mode "super-word" :toggle t)
+         ("1" ten-hundred-mode "1000 words" :toggle t))))
      (global-set-key (kbd "C-c m") 'hydra-toggles/body)
      (global-set-key (kbd "C-é") 'hydra-toggles/body)
    #+END_SRC
@@ -3432,6 +3434,12 @@
    Lorem ipsum text filler:
    #+BEGIN_SRC emacs-lisp
      (use-package lorem-ipsum)
+   #+END_SRC
+
+** Writing in English
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package ten-hundred-mode)
    #+END_SRC
 
 ** Music
