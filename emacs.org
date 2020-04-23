@@ -2246,7 +2246,7 @@
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
      (use-package smartparens
-       :hook ((prog-mode text-mode) . turn-on-smartparens-mode)
+       :hook (prog-mode . turn-on-smartparens-mode)
        :commands smartparens-mode
        :bind (
               :map lisp-mode-map
