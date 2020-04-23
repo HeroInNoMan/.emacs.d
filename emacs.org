@@ -178,6 +178,7 @@
             nov
             ob-restclient
             ob-shell
+            olivetti
             org-bullets
             origami
             ox-asciidoc
@@ -3065,19 +3066,20 @@
          ("w" whitespace-mode "whitespace" :toggle t)
          ("z" bzg-big-fringe-mode "zen" :toggle t))
         "Coding"
-        (("a" aggressive-indent-mode "aggressive indent" :toggle t)
-         ("(" smartparens-global-mode "smartparens" :toggle t)
+        (("(" smartparens-global-mode "smartparens" :toggle t)
          (")" smartparens-global-strict-mode "smartparens strict" :toggle t)
+         ("a" aggressive-indent-mode "aggressive indent" :toggle t)
+         ("c" company-mode "company" :toggle t)
          ("f" flycheck-mode "flycheck" :toggle t)
          ("L" litable-mode "litable" :toggle t)
          ("x" winnow-mode "winnow" :toggle t))
         "Writing"
         (("A" global-auto-revert-mode "auto-revert" :toggle t)
-         ("c" company-mode "company" :toggle t)
          ("d" dubcaps-mode "dubcaps" :toggle t)
          ("F" flyspell-mode "flyspell" :toggle t)
          ("g" toggle-god-mode "god" :toggle god-local-mode)
-         ("o" overwrite-mode "overwrite" :toggle t)
+         ("o" olivetti-mode "olivetti" :toggle t)
+         ("O" overwrite-mode "overwrite" :toggle t)
          ("s" superword-mode "super-word" :toggle t)
          ("1" ten-hundred-mode "1000 words" :toggle t))))
      (global-set-key (kbd "C-c m") 'hydra-toggles/body)
@@ -3436,10 +3438,16 @@
      (use-package lorem-ipsum)
    #+END_SRC
 
-** Writing in English
+** Writing
 
+   Writing simple English:
    #+BEGIN_SRC emacs-lisp
      (use-package ten-hundred-mode)
+   #+END_SRC
+
+   Zen environment for writing:
+   #+BEGIN_SRC emacs-lisp
+     (use-package olivetti)
    #+END_SRC
 
 ** Music
