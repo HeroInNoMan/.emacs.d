@@ -8,6 +8,8 @@
 
 (defun load-kuutamo-env ()
   (progn
+    (set-fira-font-if-possible)
+
     ;; hooking for specific functions
     (add-hook 'git-commit-setup-hook 'ale/insert-ticket-prefix)
     (add-hook 'git-commit-setup-hook 'ale/switch-to-fr-dict)
