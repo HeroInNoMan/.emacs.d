@@ -653,8 +653,9 @@
        :hook (prog-mode . volatile-highlights-mode))
 
      (use-package idle-highlight-mode
-     :hook (prog-mode)
-     :config (setq idle-highlight-idle-time 0.3)) ;; default 0.5
+       :hook (prog-mode)
+       :custom-face (idle-highlight ((t (:background "gray10"))))
+       :config (setq idle-highlight-idle-time 0.3)) ;; default 0.5
    #+END_SRC
 
    Highlight current line in list buffers:
@@ -662,15 +663,16 @@
      (use-package highlight-line
        :ensure nil
        :defer t
+       :load-path "elisp/"
+       :custom-face (hl-line ((t (:background "grey7"))))
        :config
-       (custom-set-faces '(hl-line ((t (:background "grey7")))))
        (global-hl-line-mode -1) ;; don’t highlight current line
-       (highlight-line-mode 1) ;; except in “list” modes
-       :load-path "elisp/")
+       (highlight-line-mode 1)) ;; except in “list” modes
 
      (use-package highlight-indent-guides
-       :config (setq highlight-indent-guides-method 'character)
-       :hook (prog-mode . highlight-indent-guides-mode))
+       :hook (prog-mode . highlight-indent-guides-mode)
+       :custom-face (highlight-indent-guides-character-face ((t (:foreground "gray15"))))
+       :config (setq highlight-indent-guides-method 'character))
    #+END_SRC
 
    Prettify those ugly ==
@@ -705,7 +707,17 @@
    Colour parentheses according to nesting level:
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
-       :hook (prog-mode . rainbow-delimiters-mode))
+       :hook (prog-mode . rainbow-delimiters-mode)
+       :custom-face
+       (rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
+       (rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
+       (rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
+       (rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark turquoise"))))
+       (rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "deep pink"))))
+       (rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow1"))))
+       (rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "blue"))))
+       (rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "white"))))
+       (rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon")))))
    #+END_SRC
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
@@ -969,7 +981,8 @@
               ("C-r" . ctrlf-backward-literal)
               ("C-M-s" . ctrlf-forward-regexp)
               ("C-M-r" . ctrlf-backward-regexp))
-       :config (ctrlf-mode +1))
+       :config (ctrlf-mode +1)
+       :custom-face (ctrlf-highlight-active ((t (:inherit isearch :background "dark orange")))))
    #+END_SRC
 
 * Completion & help
@@ -1738,6 +1751,7 @@
        :bind
        ("C-x g" . hydra-git/body)
        (:map magit-file-mode-map ("C-x g" . hydra-git/body))
+       :custom-face (magit-branch-current ((t (:foreground "#51afef" :box (:line-width (1 . 1) :color "#51afef" :style released-button)))))
        :config (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order")
        (setq magit-branch-arguments nil
              magit-fetch-arguments  '("--prune")
@@ -1810,6 +1824,8 @@
                   tramp-file-name-regexp))
 
     (setq tramp-verbose 1) ;; only log errors
+
+    (setq tramp-syntax 'default)
   #+END_SRC
 
 * Date
@@ -3381,6 +3397,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ledger-mode
        :mode ("\\.dat$")
+       :custom-face (ledger-font-xact-highlight-face ((t (:background "gray12"))))
        :config
        (setq ledger-clear-whole-transactions 1
              ledger-reports (("courant" "ledger ")
