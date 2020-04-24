@@ -34,10 +34,7 @@
     (add-to-list 'org-agenda-files my-private-local-notes-org-file)
 
     ;; display battery level
-    (use-package fancy-battery
-      :config
-      (setq fancy-battery-show-percentage t)
-      (fancy-battery-mode))
+    (display-battery-mode)
 
     ;; default project root folder
     (when (featurep 'dumb-jump)
@@ -123,10 +120,9 @@
     (add-to-list 'org-agenda-files my-private-local-todo-org-file)
 
     ;; display battery level
-    (use-package fancy-battery
-      :config
-      (setq fancy-battery-show-percentage t)
-      (fancy-battery-mode))
+    (display-battery-mode)
+
+    (mouse-wheel-mode -1)
 
     ;; default project root folder
     (when (featurep 'dumb-jump)
