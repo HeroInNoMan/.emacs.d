@@ -3367,6 +3367,7 @@
 
     ;; Save a list of recent files visited.
     (use-package desktop
+      :disabled t
       :defer t
       :config
       (setq desktop-save t
