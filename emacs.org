@@ -1870,7 +1870,7 @@
     (use-package calfw
       :commands open-calendar
       :config
-      (use-package calfw-gcal)
+      ;; (use-package calfw-gcal)
       (use-package calfw-cal)
       (use-package calfw-ical)
       (use-package calfw-org)
@@ -1879,12 +1879,11 @@
         (cfw:open-calendar-buffer
          :contents-sources
          (list
-          (cfw:ical-create-source "Google Calendar" my-private-primary-gcal-url "olive")
           (cfw:ical-create-source "Vacances" "http://dynical.com/iCal/weather.ics/?lng=fr&zone=ile-de-france|paris|75100&zone_=E" "yellow")
-          (cfw:org-create-source "Green")  ; orgmode source
+          (cfw:org-create-source "DarkOliveGreen4")  ; orgmode source
           ;; (cfw:cal-create-source "Orange") ; diary source
           (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "Gray")  ; ICS source1
-          ))))
+          (cfw:ical-create-source "Perso" "https://framagenda.org/apps/calendar/p/KpjTmX4M9FX3QSYR" "DeepSkyBlue")))))
   #+END_SRC
 
 * Text
