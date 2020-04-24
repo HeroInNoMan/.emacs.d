@@ -2559,9 +2559,9 @@
 
 ** Scala
    #+BEGIN_SRC emacs-lisp
-     (use-package ensime :defer t)
-     (use-package sbt-mode :defer t)
-     (use-package scala-mode :defer t)
+     (use-package ensime :disabled t)
+     (use-package sbt-mode :disabled t)
+     (use-package scala-mode :disabled t)
    #+END_SRC
 
 ** Java
