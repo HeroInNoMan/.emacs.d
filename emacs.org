@@ -289,6 +289,8 @@
       :bind
       ("M-é" . previous-user-buffer) ;; call previous buffer
       ("M-è" . next-user-buffer) ;; call next buffer
+      ("C-M-é" . previous-buffer) ;; call previous buffer
+      ("C-M-è" . next-buffer) ;; call next buffer
       ("<f5>" . ale/revert-buffer-no-confirm) ;; re-read file from disk
       ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
       ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
@@ -804,7 +806,7 @@
     (use-package ace-window
       :bind
       ("M-o" . other-window)
-      ;; ("-o" . ace-window)
+      ;; ("M-o" . ace-window)
       )
   #+END_SRC
 
@@ -857,8 +859,8 @@
     (use-package goto-last-change
       :bind
       ("C-x C-/" . goto-last-change)
-      ("C-x /" . goto-last-change)
-      :config (make-command-repeatable 'goto-last-change))
+      ("C-x /" . goto-last-change))
+    ;; :config (make-command-repeatable 'goto-last-change)
   #+END_SRC
 
 * Whitespace
@@ -1514,10 +1516,11 @@
      (global-set-key (kbd "C-x _") 'ale/toggle-camel-snake-kebab-case)
 
      (use-package change-inner
-       :bind ("M-s i" . change-inner)
+       :bind
+       ("M-s i" . change-inner)
        ("M-s o" . change-outer))
-     ;;     (global-set-key (kbd "M-i") 'change-inner)
-     ;;     (global-set-key (kbd "M-o") 'change-outer)
+     ;; (global-set-key (kbd "M-i") 'change-inner)
+     ;; (global-set-key (kbd "M-o") 'change-outer)
    #+END_SRC
 
 ** Diffing
@@ -3113,7 +3116,6 @@
          ("O" overwrite-mode "overwrite" :toggle t)
          ("s" superword-mode "super-word" :toggle t)
          ("1" ten-hundred-mode "1000 words" :toggle t))))
-     (global-set-key (kbd "C-c m") 'hydra-toggles/body)
      (global-set-key (kbd "C-é") 'hydra-toggles/body)
    #+END_SRC
 
@@ -3141,7 +3143,7 @@
         (("," csv-mode "csv")
          ("o" org-mode "org")
          ("t" text-mode "text"))))
-     (global-set-key (kbd "C-c M") 'hydra-major-modes/body)
+     (global-set-key (kbd "C-c m") 'hydra-major-modes/body)
    #+END_SRC
 
    Finally, a last hydra to manage all kinds of stuff I use often: opening shell buffers, some specific files…
