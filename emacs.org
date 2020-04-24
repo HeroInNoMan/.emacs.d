@@ -507,6 +507,10 @@
       ("C-M-<down>" . crux-duplicate-current-line-or-region)
       ("C-M-<up>" . crux-duplicate-and-comment-current-line-or-region)
       ("M-j" . crux-top-join-line)
+      ("C-x C-r" . crux-sudo-edit)
+      ("C-S-d" . kill-whole-line)
+      ("C-c i" . indent-region)
+      ("M-\"" . crux-create-scratch-buffer)
       :config
       (global-set-key [remap move-beginning-of-line] #'crux-move-beginning-of-line)
       (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
@@ -858,7 +862,6 @@
       :hook (prog-mode . aggressive-indent-mode))
 
     ;;Indentation
-    (global-set-key (kbd "C-c i") #'indent-region)
     (setq-default tab-width 2
                   c-auto-newline t
                   c-basic-offset 2
@@ -1557,10 +1560,6 @@
 
 *** Scratch
     #+BEGIN_SRC emacs-lisp
-      (setq initial-major-mode 'text-mode)
-      (global-set-key (kbd "C-x \"") 'crux-create-scratch-buffer)
-      (global-set-key (kbd "M-\"") 'crux-create-scratch-buffer)
-
       (use-package temporary-persistent
         :defer t
         :config (setq temporary-persistent-buffer-name-template "temp")
