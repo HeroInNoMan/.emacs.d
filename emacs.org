@@ -190,6 +190,7 @@
             rainbow-blocks
             rainbow-delimiters
             rainbow-mode
+            reformatter
             region-bindings-mode
             sass-mode
             sbt-mode
@@ -2214,10 +2215,11 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-     (reformatter-define xml-format
-       :program "xmllint"
-       :args '("--format" "-")
-       :mode nil)
+     (use-package reformatter
+       :config (reformatter-define xml-format
+                 :program "xmllint"
+                 :args '("--format" "-")
+                 :mode nil))
    #+END_SRC
 
 ** Flycheck
