@@ -858,6 +858,8 @@
 
     (use-package minimap :defer t)
 
+    (use-package treemacs :defer t)
+
     ;; Allow scrolling with mouse wheel
     (when (display-graphic-p) (progn(mouse-wheel-mode t)
                                     (mouse-avoidance-mode 'none)))
@@ -1876,10 +1878,6 @@
     (use-package calfw
       :commands open-calendar
       :config
-      ;; (use-package calfw-gcal)
-      (use-package calfw-cal)
-      (use-package calfw-ical)
-      (use-package calfw-org)
       (defun open-calendar ()
         (interactive)
         (cfw:open-calendar-buffer
@@ -1890,6 +1888,13 @@
           ;; (cfw:cal-create-source "Orange") ; diary source
           (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "Gray")  ; ICS source1
           (cfw:ical-create-source "Perso" "https://framagenda.org/apps/calendar/p/KpjTmX4M9FX3QSYR" "DeepSkyBlue")))))
+
+    (use-package calfw-cal
+      :after calfw)
+    (use-package calfw-ical
+      :after calfw)
+    (use-package calfw-org
+      :after calfw)
   #+END_SRC
 
 * Text
@@ -1912,23 +1917,19 @@
 * Org-mode
   #+BEGIN_SRC emacs-lisp
     (use-package org
-      :bind
-      (("\C-c a" . org-agenda)
-       ("\C-c b" . org-iswitchb)
-       :map org-mode-map
-       ("\C-c l" . org-store-link)
-       ("\C-c j" . ale/jirify)
-       ("\C-c r" . ale/rtify)
-       ("\C-c t" . org-begin-template))
+      :bind (("\C-c a" . org-agenda)
+             ("\C-c b" . org-iswitchb)
+             :map org-mode-map
+             ("\C-c +" . increment-number-decimal)
+             ("\C-c -" . decrement-number-decimal)
+             ("\C-c l" . org-store-link)
+             ("\C-c j" . ale/jirify)
+             ("\C-c r" . ale/rtify)
+             ("\C-c t" . org-begin-template))
       :chords ("gx" . org-capture)
       :hook (org-mode . visual-line-mode)
       :config
-      (use-package ob-restclient)
-      (use-package ob-shell :ensure nil)
-      (use-package htmlize)
-      (use-package swagger-to-org)
       (require 'ox-md nil t)
-      (use-package ox-asciidoc)
       (require 'org-agenda)
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
       (setq
@@ -1970,9 +1971,9 @@
             org-finished-file my-private-local-finished-org-file
             org-refile-targets '((nil :maxlevel . 2)
                                  (org-finished-file :maxlevel . 2)
-                                 (org-agenda-files :maxlevel . 2))
+                                 (org-agenda-files :maxlevel . 2)))
 
-            org-capture-templates
+      (setq org-capture-templates
             '(;; LOCAL
               ("b" "Book" ;; add a book in to-read list
                entry (file+headline todo-media-file "Lecture")
@@ -2135,6 +2136,11 @@
 
       (defadvice kill-whole-line (after fix-cookies activate)
         (myorg-update-parent-cookie)))
+    (use-package ob-restclient :after org)
+    (use-package ob-shell :ensure nil :after org)
+    (use-package htmlize :after org)
+    (use-package swagger-to-org :after org)
+    (use-package ox-asciidoc :after org)
   #+END_SRC
 
   Use fancy bullets in org-mode:
@@ -2152,13 +2158,9 @@
        :load-path "elisp/"
        :bind ("C-è" . hydra-spell/body)
        :commands dubcaps-mode
+       :hook ((text-mode . flyspell-mode) ;; flyspell by default
+              (text-mode . dubcaps-mode)) ;; auto-correct double capitals
        :config
-       (add-hook 'text-mode-hook 'flyspell-mode) ;; flyspell by default
-       (add-hook 'text-mode-hook 'dubcaps-mode) ;; auto-correct double capitals
-
-       (use-package define-word)
-       (use-package guess-language)
-
        (pretty-hydra-define hydra-spell
          (:color teal :quit-key "q")
          ("Spelling"
@@ -2176,19 +2178,26 @@
            ("e" ale/switch-to-en-dict "en_GB")
            ("u" ale/switch-to-us-dict "en_US")
            ("g" guess-language "guess")))))
+
+     (use-package define-word
+       :after my-checks)
+
+     (use-package guess-language
+       :after my-checks)
    #+END_SRC
 
 ** Synonyms
    #+BEGIN_SRC emacs-lisp
-     (use-package powerthesaurus :defer t)
+     (use-package powerthesaurus
+       :after my-checks)
    #+END_SRC
 
 ** Grammalecte
    #+BEGIN_SRC emacs-lisp
      (use-package grammalecte
        :disabled
-       :defer t
        :ensure nil
+       :after my-checks
        :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
    #+END_SRC
 
@@ -2265,9 +2274,9 @@
              lsp-ui-peek-list-width 60
              lsp-ui-peek-peek-height 25))
 
-     (use-package treemacs :defer t)
-
-     (use-package helm-lsp :disabled t)
+     (use-package helm-lsp
+       :requires lsp-mode
+       :disabled t)
 
      (use-package dap-mode
        :disabled t
@@ -2464,15 +2473,18 @@
 
 ** Clojure
    #+BEGIN_SRC emacs-lisp
-   (use-package clojure-mode
-     :disabled
-     :config
-     (use-package cider)
-     (use-package helm-cider)
+     (use-package clojure-mode
+       :disabled
+       :config
+       ;; (setq cider-font-lock-dynamically nil)
+       (setq cider-repl-use-pretty-printing t
+             helm-cider-mode t))
 
-     ;; (setq cider-font-lock-dynamically nil)
-     (setq cider-repl-use-pretty-printing t
-           helm-cider-mode t))
+     (use-package cider
+       :after clojure-mode)
+
+     (use-package helm-cider
+       :after clojure-mode)
    #+END_SRC
 
 ** Sql
@@ -2501,11 +2513,12 @@
               ("\\.prc\\'" . sql-mode)
               ("\\.pk\\'" .  sql-mode)))
 
-     (use-package sqlformat :defer t)
+     (use-package sqlformat
+       :after sql)
 
      (use-package sql-indent
        :ensure nil
-       :defer t
+       :after sql
        :load-path "elisp/")
 
      (use-package sql-upcase
@@ -2542,24 +2555,26 @@
 
 ** Rust
    #+BEGIN_SRC emacs-lisp
-     (use-package cargo
-       :defer t
-       :config (add-to-list 'exec-path (concat (getenv "HOME") "/.cargo/bin")))
-
      (use-package rust-mode
        :hook
        (rust-mode . cargo-minor-mode)
        (rust-mode . racer-mode)
-       (racer-mode . company-mode)
+       (racer-mode . company-mode))
+
+     (use-package cargo
+       :after rust-mode
+       :config (add-to-list 'exec-path (concat (getenv "HOME") "/.cargo/bin")))
+
+     (use-package flycheck-rust
+       :after rust-mode
+       :config (flycheck-rust-setup))
+
+     (use-package racer
+       :after rust-mode
        :config
-       (use-package flycheck-rust)
-       (use-package racer
-         :config
-         (setq company-tooltip-align-annotations t)
-         (local-set-key (kbd "TAB") #'company-indent-or-complete-common)
-         ;; (setq racer-rust-src-path (concat (getenv "HOME") "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"))
-         )
-       (flycheck-rust-setup))
+       (setq company-tooltip-align-annotations t)
+       ;; (setq racer-rust-src-path (concat (getenv "HOME") "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"))
+       (local-set-key (kbd "TAB") #'company-indent-or-complete-common))
    #+END_SRC
 
 ** Scala
