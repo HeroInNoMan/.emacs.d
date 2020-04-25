@@ -114,6 +114,7 @@
             elisp-slime-nav
             elpy
             ensime
+            ereader
             expand-region
             feather
             fireplace
@@ -173,7 +174,6 @@
             minimap
             move-text
             no-littering
-            nov
             ob-restclient
             ob-shell
             olivetti
@@ -3469,7 +3469,8 @@
 ** epub
    It now seems possible to read epub documents (ebooks) from within emacs:
    #+BEGIN_SRC emacs-lisp
-     (use-package nov :defer t)
+     (use-package ereader
+       :mode ("\\.epub\\'" . ereader-mode))
    #+END_SRC
 
 ** Text filling
