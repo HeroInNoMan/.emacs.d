@@ -1907,7 +1907,8 @@
   Sometimes CSV mode can be useful:
   #+BEGIN_SRC emacs-lisp
     (use-package csv-mode
-      :mode ".csv$")
+      :mode ("\\.csv\\'")
+      :config (setq csv-separators '("," "	" ";")))
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
