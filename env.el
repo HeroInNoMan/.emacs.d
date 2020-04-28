@@ -96,6 +96,7 @@
       ("b" (lambda () (interactive)(ale/open-project "~/projets/coopener-build")) "Coopener-build")
       ("m" (lambda () (interactive)(ale/open-project "~/projets/moulinette")) "Moulinette")
       ("p" (lambda () (interactive)(ale/open-project "~/projets/coopener-printer")) "EDI (printer)")
+      ("u" (lambda () (interactive)(ale/open-project "~/projets/mailjet-updater")) "Mailjet Updater")
       ("s" (lambda () (interactive)(ale/open-project "~/projets/architecture")) "Architecture")
       ("d" (lambda () (interactive)(ale/open-project my-private-dotfiles)) "dotfiles" :column "Perso")
       ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
