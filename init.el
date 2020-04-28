@@ -4,6 +4,9 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
+;; (debug-watch 'mode-local-init-hook)
+
 (setq base-emacs-directory user-emacs-directory)
 ;; (setq base-emacs-directory "~/Terminalcity/.emacs.d/")
 ;; (add-to-list 'load-path base-emacs-directory)
