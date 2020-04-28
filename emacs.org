@@ -3005,8 +3005,8 @@
 
 ** Docker
    #+BEGIN_SRC emacs-lisp
-     (use-package docker)
-     (use-package dockerfile-mode)
+     (use-package docker :disabled t)
+     (use-package dockerfile-mode :disabled t)
    #+END_SRC
 
 ** Logs
