@@ -1105,7 +1105,7 @@
        (require 'helm-config)
        (helm-mode 0) ;; only on demand
        (helm-autoresize-mode t)
-       (semantic-mode 1) ;; useful for imenu-like navigation
+       ;; (semantic-mode 1) ;; useful for imenu-like navigation
        (setq helm-M-x-fuzzy-match t
              helm-locate-command "locate %s -e -A --regex %s -d ~/mlocate.db"
              helm-adaptive-mode t
