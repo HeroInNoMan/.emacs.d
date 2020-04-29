@@ -614,6 +614,12 @@
       (toggle-frame-fullscreen))
   #+END_SRC
 
+  Set frame title to buffer name and mode:
+  #+BEGIN_SRC emacs-lisp
+    (setq-default frame-title-format '("%b [%m]"))
+  #+END_SRC
+
+
 ** Theme
    #+BEGIN_SRC emacs-lisp
      (use-package doom-themes
