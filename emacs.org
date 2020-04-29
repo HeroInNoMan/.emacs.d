@@ -1474,7 +1474,9 @@
 ** Point movements
    #+BEGIN_SRC emacs-lisp
      (use-package move-text
-       :config (move-text-default-bindings)) ;; M-up / M-down to move line or region
+       :bind
+       ("M-<down>" . move-text-down)
+       ("M-<up>" . move-text-up))
 
      (use-package zop-to-char
        :bind ("C-M-z" . zop-up-to-char))
@@ -3228,7 +3230,7 @@
 * Mode-line
   I want to be able to hide the mode-line entirely.
   #+BEGIN_SRC emacs-lisp
-    (use-package hide-mode-line)
+    (use-package hide-mode-line :defer t)
   #+END_SRC
 
   Aaaand we’re back to trying [[https://github.com/seagle0128/doom-modeline][doom-modeline]] this time:
@@ -3577,6 +3579,7 @@
                        elfeed-search-title-max-width 120))
 
        (use-package elfeed-org
+         :defer t
          :after elfeed
          :config
          (elfeed-org)

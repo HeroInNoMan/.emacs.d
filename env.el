@@ -75,6 +75,7 @@
                              (auth-file . my-private-work-auth-file)))) ;; machine SERVER-NAME login my_login password my_pass
 
     (use-package travis
+      :defer t
       :config (setq travis--token-id my-private-work-travis-token-id
                     travis-website my-private-work-travis-website
                     travis--host my-private-work-travis-host))
