@@ -3006,7 +3006,8 @@
 
 ** Gradle
    #+BEGIN_SRC emacs-lisp
-     (use-package gradle-mode)
+     (use-package gradle-mode
+       :hook (groovy-mode))
    #+END_SRC
 
 ** Docker
