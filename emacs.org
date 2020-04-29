@@ -93,6 +93,7 @@
             dap-java
             dap-mode
             dap-ui-mode
+            dashboard
             default-text-scale
             define-word
             delight
@@ -3385,6 +3386,30 @@
       ;; Hooks that run before/after the modeline version string is updated
       (setq doom-modeline-before-update-env-hook nil)
       (setq doom-modeline-after-update-env-hook nil))
+  #+END_SRC
+
+* Startup screen
+
+  Let’s use a dashboard:
+  #+BEGIN_SRC emacs-lisp
+    (use-package dashboard
+      :config
+      (dashboard-setup-startup-hook)
+      (setq dashboard-set-heading-icons t)
+      (setq dashboard-set-file-icons t)
+      (setq dashboard-banner-logo-title "Welcome to the real world.")
+      (setq dashboard-center-content t)
+      (dashboard-modify-heading-icons '((recents . "file-text")
+                                        (projects . "book")
+                                        (bookmarks . "book")))
+      (setq dashboard-items '((recents . 5)
+                              ;; (bookmarks . 5)
+                              ;; (registers . 5)
+                              (projects . 5)
+                              (agenda . 10)))
+      (setq show-week-agenda-p t)
+      (when (boundp 'my-private-footer-messages)
+        (nconc dashboard-footer-messages my-private-footer-messages)))
   #+END_SRC
 
 * Session saving & backups
