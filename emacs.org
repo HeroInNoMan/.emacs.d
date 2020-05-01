@@ -111,6 +111,7 @@
             dumb-jump
             edit-server
             editorconfig
+            elfeed
             elfeed-org
             elisp-slime-nav
             elpy
@@ -3618,7 +3619,6 @@
                        elfeed-search-title-max-width 120))
 
        (use-package elfeed-org
-         :defer t
          :after elfeed
          :config
          (elfeed-org)
