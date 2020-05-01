@@ -2011,7 +2011,7 @@
 
               ("d" "Diary" ;; add a diary entry
                item (file+olp+datetree diary-local-file)
-               "%i%?"
+               "\t%i%?"
                :time-prompt t :kill-buffer t)
 
               ("i" "Idée" ;; add an idea entry
