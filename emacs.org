@@ -1972,7 +1972,7 @@
         (org-set-property "CREATED" (format-time-string "[%F %a %R]")))
       (add-hook 'org-capture-before-finalize-hook 'add-property-with-date-captured)
 
-      (setq snippet-file (concat base-emacs-directory "code-snippets.txt")
+      (setq snippet-file (concat base-emacs-directory "code-snippets.org")
             diary-local-file my-private-local-diary-file
             todo-local-file my-private-local-todo-org-file
             todo-notes-file my-private-local-notes-org-file
@@ -2020,8 +2020,8 @@
                :kill-buffer t)
 
               ("y" "snippet\n" ;; add a (code) snippet
-               plain (file snippet-file)
-               "\n--\n%i%?"
+               entry (file snippet-file)
+               "* %U\n\t#+BEGIN_SRC %?\n%i\n\t#+END_SRC\n"
                :kill-buffer t)))
 
       ;; font and faces customization
