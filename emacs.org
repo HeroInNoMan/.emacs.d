@@ -3451,6 +3451,20 @@
   #+END_SRC
 
 * Other
+** Quitting
+
+   Tangle config file when emacs quits so that it doesn’t eat startup time:
+   #+BEGIN_SRC emacs-lisp
+     (defun ale/tangle-config-file ()
+       "Tangle my config file."
+       (progn
+         (org-babel-tangle-file
+          (expand-file-name "emacs.org" base-emacs-directory)
+          (expand-file-name "emacs.el" base-emacs-directory))
+         (message "Tangled file compiled.")))
+     (add-hook 'kill-emacs-hook 'ale/tangle-config-file)
+   #+END_SRC
+
 ** Accounting
    I use [[http://out.easycounter.com/external/ledger-cli.org][ledger]] to manage my money. There is a corresponding major-mode:
    #+BEGIN_SRC emacs-lisp
