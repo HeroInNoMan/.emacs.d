@@ -290,6 +290,8 @@
                  set-fira-font-if-possible)
       :load-path "elisp/"
       :bind
+      ("C-S-p" . up-arrow)
+      ("C-S-n" . down-arrow)
       ("M-é" . previous-user-buffer) ;; call previous user buffer
       ("M-è" . next-user-buffer) ;; call next user buffer
       ("C-M-é" . previous-buffer) ;; call previous buffer
@@ -852,9 +854,6 @@
 
   More navigation commands:
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-S-p") 'up-arrow)
-    (global-set-key (kbd "C-S-n") 'down-arrow)
-
     (use-package imenu-anywhere
       :bind ("C-c ." . helm-imenu-anywhere))
 
@@ -2189,17 +2188,14 @@
            ("u" ale/switch-to-us-dict "en_US")
            ("g" guess-language "guess")))))
 
-     (use-package define-word
-       :after my-checks)
+     (use-package define-word :defer t)
 
-     (use-package guess-language
-       :after my-checks)
+     (use-package guess-language :defer t)
    #+END_SRC
 
 ** Synonyms
    #+BEGIN_SRC emacs-lisp
-     (use-package powerthesaurus
-       :after my-checks)
+     (use-package powerthesaurus :defer t)
    #+END_SRC
 
 ** Grammalecte
@@ -2240,6 +2236,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package reformatter
+       :defer t
        :config (reformatter-define xml-format
                  :program "xmllint"
                  :args '("--format" "-")
@@ -3071,6 +3068,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package smtpmail
       :ensure nil
+      :defer t
       :config (setq message-send-mail-function 'smtpmail-send-it
                     starttls-use-gnutls t
                     smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-server-port nil nil))
@@ -3085,6 +3083,7 @@
   I use eww to surf the web in emacs, for simple pages mostly:
   #+BEGIN_SRC emacs-lisp
     (use-package eww
+      :defer t
       :config
       (setq browse-url-generic-program "eww" ;; set default browser to eww
             browse-url-browser-function 'eww-browse-url
@@ -3096,7 +3095,7 @@
 
   I use [[https://github.com/jozefg/wiki-summary.el][wiki-summary]] to quickly lookup the abstract of a wikipedia entry:
   #+BEGIN_SRC emacs-lisp
-    (use-package wiki-summary)
+    (use-package wiki-summary :defer t)
   #+END_SRC
 
 * Quick access
