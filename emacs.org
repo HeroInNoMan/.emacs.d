@@ -675,7 +675,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package highlight-line
        :ensure nil
-       :defer t
+       :hook (dired-mode . highlight-line-mode)
        :load-path "elisp/"
        :custom-face (hl-line ((t (:background "grey7"))))
        :config
