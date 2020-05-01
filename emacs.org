@@ -3206,7 +3206,7 @@
         (("p" list-packages "packages")
          ("Q" quick-calc "quick-calc")
          ("n" describe-number-at-point "describe number")
-         ("I" crux-cleanup-buffer-or-region "cleanup buffer")
+         ("?\\t" crux-cleanup-buffer-or-region "cleanup buffer")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
         "Files"
