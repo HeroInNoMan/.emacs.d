@@ -982,8 +982,10 @@
         ("M-s q" . vr/query-replace)
         ("C-M-%" . vr/query-replace)
         ("M-s m" . vr/mc-mark) ;; useful with multiple-cursors
-        ("M-s R" . vr/isearch-backward)
-        ("M-s S" . vr/isearch-forward))
+        ("C-M-s" . vr/isearch-forward)
+        ("C-M-r" . vr/isearch-backward)
+        ("M-s S" . isearch-forward)
+        ("M-s R" . isearch-backward))
        :config (require 'visual-regexp)) ;; TODO check if really necessary
    #+END_SRC
    Note: there seems to be a [[http://cpansearch.perl.org/src/YEWENBIN/Emacs-PDE-0.2.16/lisp/re-builder-x.el][re-builder supporting perl syntax]].
@@ -994,12 +996,23 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package ctrlf
-       :bind (("C-s" . ctrlf-forward-literal)
-              ("C-r" . ctrlf-backward-literal)
-              ("C-M-s" . ctrlf-forward-regexp)
-              ("C-M-r" . ctrlf-backward-regexp))
+       :bind (("M-s C-s" . ctrlf-forward-literal)
+              ("M-s C-r" . ctrlf-backward-literal)
+              ("M-s C-M-s" . ctrlf-forward-regexp)
+              ("M-s C-M-r" . ctrlf-backward-regexp))
        :config (ctrlf-mode +1)
+       (define-key minibuffer-local-map (kbd "C-s") 'ctrlf-forward-literal)
+       (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
        :custom-face (ctrlf-highlight-active ((t (:inherit isearch :background "dark orange")))))
+   #+END_SRC
+
+** phi-search
+   #+BEGIN_SRC emacs-lisp
+     (use-package phi-search
+       :bind
+       ("C-s" . phi-search)
+       ("C-r" . phi-search-backward)
+       :custom-face (phi-search-selection-face ((t (:inherit isearch :background "dark orange")))))
    #+END_SRC
 
 * Completion & help
@@ -1215,6 +1228,7 @@
           "Search"
           (("R"     helm-regexp "regexp" :column "Search")
            ("o"     helm-occur "occur")
+           ("s"     helm-swoop "swoop")
            ("a"     helm-do-grep-ag "ag grep")
            ("G"     helm-git-grep "git grep"))
           "Navigate"
@@ -1230,7 +1244,7 @@
           (("<tab>" helm-lisp-completion-at-point "lisp")
            ("$"     helm-lines "lines")
            ("g"     helm-google-suggest "google")
-           ("s"     helm-surfraw "surfraw")
+           ("S"     helm-surfraw "surfraw")
            ("y"     yas-insert-snippet "yasnippet")
            ("w"     wiki-summary "wikipedia"))
           "Doc & Help"
@@ -1253,9 +1267,6 @@
            ("j"     helm-list-elisp-packages "packages")
            ("X"     helm-select-xfont "xfont")
            ("x"     helm-run-external-command "run external"))))
-
-       (define-key minibuffer-local-map (kbd "C-s") 'ctrlf-forward-literal)
-       (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
 
        (defun my-do-ag-project-root-or-dir ()
          "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
@@ -1308,7 +1319,6 @@
    #+BEGIN_SRC emacs-lisp
      (use-package helm-swoop
        :bind
-       ("C-S-s" . helm-swoop)
        (:map isearch-mode-map
              ;; When doing isearch, hand the word over to helm-swoop
              ("M-i" . helm-swoop-from-isearch))
@@ -2352,13 +2362,6 @@
        (global-set-key (kbd "M-s “") 'wrap-with-curly-double-quotes)
        (global-set-key (kbd "M-s ‘") 'wrap-with-curly-single-quotes)
        (global-set-key (kbd "M-s `") 'wrap-with-back-quotes)
-
-       (global-set-key (kbd "M-s w") 'sp-rewrap-sexp)
-       (global-set-key (kbd "M-s a") 'sp-absorb-sexp)
-       (global-set-key (kbd "M-s j") 'sp-join-sexp)
-       (global-set-key (kbd "M-s |") 'sp-split-sexp)
-       (global-set-key (kbd "M-s R") 'sp-raise-sexp)
-       (global-set-key (kbd "M-s s") 'sp-splice-sexp)
 
        (pretty-hydra-define hydra-parens
          (:color teal :quit-key "q")
