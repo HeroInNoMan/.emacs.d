@@ -1102,11 +1102,11 @@
    #+BEGIN_SRC emacs-lisp
      (use-package helm
        :chords
-       ("bf" . helm-for-files) ;; snappy helm instance
+       ("bf" . helm-for-files)               ;; snappy helm instance
        ("éè" . my-do-ag-project-root-or-dir) ;; grep in current project or dir
-       ("«»" . hydra-helm-config/body) ;; all (useful) helm commands in one hydra
+       ("«»" . hydra-helm-config/body)       ;; all (useful) helm commands in one hydra
        :bind
-       (("M-x" . helm-M-x) ;; superior to M-x
+       (("M-x" . helm-M-x)                   ;; superior to M-x
         ("C-x M-x" . execute-extended-command)
         ("C-c h" . hydra-helm-config/body)
         ("C-h a" . helm-apropos)
@@ -1117,9 +1117,9 @@
         ("C-c C-l" . helm-minibuffer-history))
        :config
        (require 'helm-config)
-       (helm-mode 0) ;; only on demand
+       (helm-mode 0)                         ;; only on demand
        (helm-autoresize-mode t)
-       ;; (semantic-mode 1) ;; useful for imenu-like navigation
+       ;; (semantic-mode 1)                  ;; useful for imenu-like navigation
        (setq helm-M-x-fuzzy-match t
              helm-locate-command "locate %s -e -A --regex %s -d ~/mlocate.db"
              helm-adaptive-mode t
@@ -2328,14 +2328,14 @@
        (defmacro def-pairs (pairs)
          `(progn
             ,@(cl-loop for (key . val) in pairs
-                    collect
-                    `(defun ,(read (concat
-                                    "wrap-with-"
-                                    (prin1-to-string key t)
-                                    "s"))
-                         (&optional arg)
-                       (interactive "p")
-                       (sp-wrap-with-pair ,val)))))
+                       collect
+                       `(defun ,(read (concat
+                                       "wrap-with-"
+                                       (prin1-to-string key t)
+                                       "s"))
+                            (&optional arg)
+                          (interactive "p")
+                          (sp-wrap-with-pair ,val)))))
        ;; (sp-local-pair 'emacs-lisp-mode "`" "'") ;; adds `' as a local pair in emacs-lisp-mode
        ;; (sp-local-pair '(tex-mode latex-mode) "{" "}") ;; adds {} as a local pair in latex-mode
        (sp-pair "<" ">")
