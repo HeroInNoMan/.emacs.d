@@ -288,6 +288,7 @@
                  ale/jirify
                  ale/find-init-file
                  ale/open-project
+                 ale/tangle-config-file
                  set-fira-font-if-possible)
       :load-path "elisp/"
       :bind
@@ -300,8 +301,11 @@
       ("<f5>" . ale/revert-buffer-no-confirm)          ;; re-read file from disk
       ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
       ("M-<f5>" . show-file-name)                      ;; show the file name in minibuffer
+      ([remap goto-line] . 'goto-line-with-feedback)   ;; display linum while goto-line
       ("C-x |" . ale/toggle-window-split)
       ("C-|" . ale/toggle-window-split)
+      ("C-%" . ale/toggle-selective-display)
+      ("C-x _" . ale/toggle-camel-snake-kebab-case)
       ("C-c +" . increment-number-decimal)
       ("C-c -" . decrement-number-decimal))
   #+END_SRC
@@ -365,17 +369,23 @@
 
   Although I mainly use helm, ido is nice in some cases.
   #+BEGIN_SRC emacs-lisp
-    (ido-mode t)
-    (setq ido-enable-flex-matching t)
+    (use-package ido
+      :ensure nil
+      :config
+      (ido-mode t)
+      (setq ido-enable-flex-matching t))
   #+END_SRC
 
   Let’s use UTF-8 everywhere:
   #+BEGIN_SRC emacs-lisp
-    (prefer-coding-system       'utf-8)
-    (set-default-coding-systems 'utf-8)
-    (set-terminal-coding-system 'utf-8)
-    (set-keyboard-coding-system 'utf-8)
-    (setq default-buffer-file-coding-system 'utf-8)
+    (use-package mule
+      :ensure nil
+      :config
+      (prefer-coding-system       'utf-8)
+      (set-default-coding-systems 'utf-8)
+      (set-terminal-coding-system 'utf-8)
+      (set-keyboard-coding-system 'utf-8)
+      (setq default-buffer-file-coding-system 'utf-8))
 
     (use-package iso-transl ;; some environments don’t handle dead keys
       :ensure nil
@@ -388,7 +398,6 @@
     (put 'upcase-region 'disabled nil)
     (put 'narrow-to-region 'disabled nil)
     (put 'narrow-to-page 'disabled nil)
-    (put 'set-goal-column 'disabled nil)
     (put 'scroll-left 'disabled nil)
   #+END_SRC
 
@@ -400,21 +409,43 @@
 
   Let’s add some auto-backup configuration:
   #+BEGIN_SRC emacs-lisp
-    (require 'saveplace)
-    (setq-default save-place t)
-    (setq save-place-file (concat base-emacs-directory "places")
-          vc-make-backup-files t ;; make backups of files, even when they're in version control
-          backup-directory-alist `(("." . ,(concat base-emacs-directory
-                                                   "backups"))))
+    (use-package saveplace
+      :ensure nil
+      :config
+      (setq-default save-place t)
+      (setq save-place-file (concat base-emacs-directory "places")
+            vc-make-backup-files t ;; make backups of files, even when they're in version control
+            backup-directory-alist `(("." . ,(concat base-emacs-directory
+                                                     "backups")))))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package simple
+      :ensure nil
+      :bind
+      ("C-x C-u" . upcase-dwim)
+      ("C-x C-l" . downcase-dwim)
+      ("C-x C-c" . capitalize-dwim)
+      ("M-=" . count-words)
+      ("C-x C-z" . repeat-complex-command)
+      ("C-c w" . delete-trailing-whitespace)
+      ("M-«" . beginning-of-buffer)
+      ("M-»" . end-of-buffer)
+      :config
+      (setq global-mark-ring-max 256
+            mark-ring-max 256
+            kill-ring-max 256
+            line-number-mode t    ;; Always display line number
+            column-number-mode t  ;; and column number
+            shift-select-mode nil ;; don't use shift to mark things
+            save-interprogram-paste-before-kill t))
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
     (autoload 'zap-up-to-char "misc"
       "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-    (show-paren-mode 1)
-    (setq save-interprogram-paste-before-kill t
-          apropos-do-all t
+    (setq apropos-do-all t
           mouse-yank-at-point t
           require-final-newline t
           load-prefer-newer t
@@ -448,14 +479,6 @@
     (global-set-key [remap fill-paragraph]
                     #'endless/fill-or-unfill)
 
-    (setq global-mark-ring-max 256
-          mark-ring-max 256
-          kill-ring-max 256)
-
-    ;; use count-words instead of count-words-region as it works on buffer
-    ;; if no region is selected
-    (global-set-key (kbd "M-=") 'count-words)
-
     (global-font-lock-mode t) ;; enable syntax highlighting
     (blink-cursor-mode -1) ;; no blinking cursor
 
@@ -467,18 +490,13 @@
           inhibit-startup-screen t ;; No splash screen
           echo-keystrokes 0.1 ;; Show keystrokes in progress
           initial-scratch-message nil ;; No *scratch* message
-          visible-bell nil ;; No flashing!
-          line-number-mode t ;; Always display line number
-          column-number-mode t ;; and column number
-          shift-select-mode nil) ;; don't use shift to mark things
+          visible-bell nil) ;; No flashing!
+
   #+END_SRC
 
 
   I don’t usually display line numbers, but I want the abilitity to do so, and also to display relative line numbering, which is handy to navigate using numeric arguments.
   #+BEGIN_SRC emacs-lisp
-    ;; don’t display linum except while goto-line
-    (global-set-key [remap goto-line] 'goto-line-with-feedback)
-
     (use-package linum-relative
       :defer t
       :config (setq linum-relative-current-symbol ""))
@@ -523,19 +541,16 @@
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-x C-c") '(lambda () (interactive) (message "Use C-x r q (r·eally q·uit) to kill emacs.")))
     (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
+   ;; Tangle config file when emacs quits so that it doesn’t eat startup time:
+     (add-hook 'kill-emacs-hook 'ale/tangle-config-file)
   #+END_SRC
 
-  =M-«= and =M-»= are easier than =M-<= and =M->= with a BÉPO™ keyboard:
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "M-«") 'beginning-of-buffer)
-    (global-set-key (kbd "M-»") 'end-of-buffer)
+
   #+END_SRC
 
   I never use the minimise command, use the binding for =repeat= instead.
   #+BEGIN_SRC emacs-lisp
-    ;; repeat
     (global-set-key (kbd "C-z") 'repeat)
-    (global-set-key (kbd "C-x C-z") 'repeat-complex-command)
   #+END_SRC
 
   Vim’s “dot” is a cool macro-like feature. I want that.
@@ -599,9 +614,12 @@
 
   Always start in full screen.
   #+BEGIN_SRC emacs-lisp
-    (if (eq window-system 'ns)
-        (toggle-frame-maximized)
-      (toggle-frame-fullscreen))
+    (use-package frame
+      :ensure nil
+      :config
+      (if (eq window-system 'ns)
+          (toggle-frame-maximized)
+        (toggle-frame-fullscreen)))
   #+END_SRC
 
   Set frame title to buffer name and mode:
@@ -788,7 +806,7 @@
 
     (use-package dired-collapse
       :after dired
-      :hook (dired-mode . (lambda () (dired-collapse-mode t))))
+      :hook (dired-mode . dired-collapse-mode))
 
     (use-package dired-subtree
       :after dired
@@ -873,10 +891,6 @@
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
-
-    (add-hook 'prog-mode-hook '(lambda ()(setq show-trailing-whitespace t)))
-
     (use-package aggressive-indent
       :hook (prog-mode . aggressive-indent-mode))
 
@@ -916,10 +930,7 @@
                     vimish-fold-header-width 79))
   #+END_SRC
 
-  I also use =selective-display= as a more simple folding method.
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-%") 'ale/toggle-selective-display)
-  #+END_SRC
+  I also use =selective-display= as a more simple folding method (cf. package my-functions).
 
   I use a hydra to have all those commands in one place.
   #+BEGIN_SRC emacs-lisp
@@ -1527,8 +1538,6 @@
        :ensure nil
        :load-path "elisp/")
 
-     (global-set-key (kbd "C-x _") 'ale/toggle-camel-snake-kebab-case)
-
      (use-package change-inner
        :bind
        ("M-s i" . change-inner)
@@ -1551,10 +1560,14 @@
 ** Windows
    Better access to window manipulation commands:
    #+BEGIN_SRC emacs-lisp
-     (global-set-key (kbd "C-\"") 'delete-other-windows)
-     (global-set-key (kbd "C-«") 'split-window-below)
-     (global-set-key (kbd "C-»") 'split-window-right)
-     (global-set-key (kbd "C-*") 'delete-window)
+     (use-package window
+       :ensure nil
+       :bind
+       ("C-c o" . bury-buffer) ;; put buffer at bottom of buffer list
+       ("C-\"" . delete-other-windows)
+       ("C-«" . split-window-below)
+       ("C-»" . split-window-right)
+       ("C-*" . delete-window))
    #+END_SRC
 
    Revert windows on ediff exit - needs winner mode.
@@ -1583,7 +1596,6 @@
    #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-x M-b") 'ibuffer) ;; call ibuffer
      (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
-     (global-set-key (kbd "C-c o") 'bury-buffer) ;; put buffer at bottom of buffer list
      (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
      (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
    #+END_SRC
@@ -1831,30 +1843,32 @@
 * Tramp
 
   #+BEGIN_SRC emacs-lisp
-    ;; cache file-name forever
-    (setq remote-file-name-inhibit-cache nil)
-
-    ;; make sure vc stuff is not making tramp slower
-    (setq vc-ignore-dir-regexp
-          (format "%s\\|%s"
-                  vc-ignore-dir-regexp
-                  tramp-file-name-regexp))
-
-    (setq tramp-verbose 1) ;; only log errors
-
-    (setq tramp-syntax 'default)
+    (use-package tramp
+      :ensure nil
+      :defer t
+      :config
+      (setq remote-file-name-inhibit-cache nil ;; cache file-name forever
+            tramp-verbose 1 ;; only log errors
+            tramp-syntax 'default
+            ;; make sure vc stuff is not making tramp slower
+            vc-ignore-dir-regexp (format "%s\\|%s"
+                                         vc-ignore-dir-regexp
+                                         tramp-file-name-regexp)))
   #+END_SRC
 
 * Date
   Date and time should be displayed in standard format, no M/D/Y nonsense.
   #+BEGIN_SRC emacs-lisp
-     (setq display-time-day-and-date t ;; display date and time
-           display-time-24hr-format t ;; 24h time format
-           european-calendar-style t ;; day/month/year format for calendar
-           calendar-week-start-day 1 ;; start week on Monday
-           display-time-string-forms '((if (and (not display-time-format) display-time-day-and-date)
-                                           (format-time-string "%H:%M" now))))
-     (display-time)
+    (use-package time
+      :ensure nil
+      :config
+      (setq display-time-day-and-date t ;; display date and time
+            display-time-24hr-format t ;; 24h time format
+            european-calendar-style t ;; day/month/year format for calendar
+            calendar-week-start-day 1 ;; start week on Monday
+            display-time-string-forms '((if (and (not display-time-format) display-time-day-and-date)
+                                            (format-time-string "%H:%M" now))))
+      (display-time))
   #+END_SRC
 
   Add a hydra to insert the current date (and time) in various formats.
@@ -1950,6 +1964,7 @@
        org-refile-targets '((nil :maxlevel . 2)
                             (org-agenda-files :maxlevel . 2))
        org-completion-use-ido t
+       org-tags-column -80
        org-ellipsis " ▼"
 
        ;; html export
@@ -2220,24 +2235,27 @@
 * Programming
 ** Formatting
    #+BEGIN_SRC emacs-lisp
+     (use-package prog-mode
+       :ensure nil
+       :hook
+       (prog-mode . (lambda () (setq show-trailing-whitespace t)))
+       (prog-mode . prettify-symbols-mode)
+       :config
+       (defconst prettify-symbols-alist
+         '(("lambda"  . ?λ)
+           ("!=" . ?≠)
+           ("==" . ?＝)
+           ("<=" . ?≤)
+           (">=" . ?≥)
+           ("!=" . ?≠)
+           ("->" . ?→)
+           ("<-" . ?←)
+           ("=>" . ?⇒)
+           ("..." . ?…))))
+
      (use-package prog-fill
        :bind (:map prog-mode-map
                    ("M-q" . prog-fill)))
-
-     ;; prettify-symbols
-     (defconst prettify-symbols-alist
-       '(("lambda"  . ?λ)
-         ("!=" . ?≠)
-         ("==" . ?＝)
-         ("<=" . ?≤)
-         (">=" . ?≥)
-         ("!=" . ?≠)
-         ("->" . ?→)
-         ("<-" . ?←)
-         ("=>" . ?⇒)
-         ("..." . ?…)))
-     (add-hook 'prog-mode-hook 'prettify-symbols-mode)
-     (add-hook 'org-mode-hook 'prettify-symbols-mode)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
@@ -2306,6 +2324,10 @@
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
+     (use-package paren
+       :ensure nil
+       :config (show-paren-mode 1))
+
      (use-package smartparens
        :hook (prog-mode . turn-on-smartparens-mode)
        :commands smartparens-mode
@@ -3035,8 +3057,9 @@
 
 * Mail
   #+BEGIN_SRC emacs-lisp
-    ;; (remove-hook 'html-helper-mode-hook 'flyspell-mode) ;; auto-correct disabled by default
-    (add-hook 'mail-mode-hook 'visual-line-mode) ;; wrapping in mail-mode
+    (use-package sendmail
+      :ensure nil
+      :hook (mail-mode . visual-line-mode)) ;; wrapping in mail-mode
   #+END_SRC
 
   Let’s use emacs to read our mail (with mu4e) :
@@ -3230,7 +3253,9 @@
 
 ** Bookmarks and registers
    #+BEGIN_SRC emacs-lisp
-     (key-chord-define-global (kbd "jj") 'jump-to-register)
+     (use-package register
+       :ensure nil
+       :chords ("jj" . jump-to-register))
    #+END_SRC
 * Environment
   #+BEGIN_SRC emacs-lisp
@@ -3460,20 +3485,6 @@
   #+END_SRC
 
 * Other
-** Quitting
-
-   Tangle config file when emacs quits so that it doesn’t eat startup time:
-   #+BEGIN_SRC emacs-lisp
-     (defun ale/tangle-config-file ()
-       "Tangle my config file."
-       (progn
-         (org-babel-tangle-file
-          (expand-file-name "emacs.org" base-emacs-directory)
-          (expand-file-name "emacs.el" base-emacs-directory))
-         (message "Tangled file compiled.")))
-     (add-hook 'kill-emacs-hook 'ale/tangle-config-file)
-   #+END_SRC
-
 ** Accounting
    I use [[http://out.easycounter.com/external/ledger-cli.org][ledger]] to manage my money. There is a corresponding major-mode:
    #+BEGIN_SRC emacs-lisp
@@ -3567,19 +3578,6 @@
 ** Music
    #+BEGIN_SRC emacs-lisp
      (use-package helm-spotify-plus :disabled)
-   #+END_SRC
-
-** Youtube
-   #+BEGIN_SRC emacs-lisp
-     (defun play-youtube-video (url)
-       (interactive "sURL: ")
-       (shell-command
-        (concat "youtube-dl  -o - " url " | vlc -")))
-
-     (defun w3m-play-youtube-video ()
-       (interactive)
-       (play-youtube-video
-        (w3m-print-this-url (point))))
    #+END_SRC
 
 ** Games

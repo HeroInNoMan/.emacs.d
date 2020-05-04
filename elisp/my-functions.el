@@ -522,5 +522,23 @@ Swap buffers in the process"
   (interactive "p*")
   (increment-number-decimal (if arg (- arg) -1)))
 
+(defun play-youtube-video (url)
+  (interactive "sURL: ")
+  (shell-command
+   (concat "youtube-dl  -o - " url " | vlc -")))
+
+(defun w3m-play-youtube-video ()
+  (interactive)
+  (play-youtube-video
+   (w3m-print-this-url (point))))
+
+(defun ale/tangle-config-file ()
+  "Tangle my config file."
+  (progn
+    (org-babel-tangle-file
+     (expand-file-name "emacs.org" base-emacs-directory)
+     (expand-file-name "emacs.el" base-emacs-directory))
+    (message "Tangled file compiled.")))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here
