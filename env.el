@@ -19,6 +19,12 @@
      'org-load-hook
      '(lambda ()
         (progn
+          (add-to-list 'org-refile-targets '(my-private-work-diary-org-file :maxlevel . 3))
+          (add-to-list 'org-refile-targets '(my-private-local-todo-org-file :maxlevel . 2))
+
+          (add-to-list 'org-agenda-files my-private-work-diary-org-file)
+          (add-to-list 'org-agenda-files my-private-local-notes-org-file)
+
           ;; capture templates
           (add-to-list 'org-capture-templates
                        '("l" "Log       (work)"
@@ -39,12 +45,7 @@
                        '("r" "Référence (work)\n"
                          entry (file+headline my-private-work-diary-org-file "Références")
                          "* %?\n%i"
-                         :prepend t :kill-buffer t) t)
-          (add-to-list 'org-refile-targets '(my-private-work-diary-org-file :maxlevel . 3))
-          (add-to-list 'org-refile-targets '(my-private-local-todo-org-file :maxlevel . 2))
-
-          (add-to-list 'org-agenda-files my-private-work-diary-org-file)
-          (add-to-list 'org-agenda-files my-private-local-notes-org-file))))
+                         :prepend t :kill-buffer t) t))))
 
 
     ;; display battery level

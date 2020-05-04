@@ -1936,6 +1936,7 @@
 * Org-mode
   #+BEGIN_SRC emacs-lisp
     (use-package org
+      :init (setq org-capture-templates '())
       :bind (("\C-c a" . org-agenda)
              ("\C-c b" . org-iswitchb)
              :map org-mode-map
@@ -1994,47 +1995,54 @@
                                  (org-finished-file :maxlevel . 2)
                                  (org-agenda-files :maxlevel . 2)))
 
-      (setq org-capture-templates
-            '(;; LOCAL
-              ("b" "Book" ;; add a book in to-read list
-               entry (file+headline todo-media-file "Lecture")
-               "* LIRE %i%?%^{Author}p%^{Date}p"
-               :prepend t :kill-buffer t)
+      ;; LOCAL
+      (add-to-list 'org-capture-templates
+                   '("b" "Book" ;; add a book in to-read list
+                     entry (file+headline todo-media-file "Lecture")
+                     "* LIRE %i%?%^{Author}p%^{Date}p"
+                     :prepend t :kill-buffer t) t)
 
-              ("f" "Film\n" ;; add a film in to-watch list
-               entry (file+headline todo-media-file "Films")
-               "* VOIR %i%?%^{Date}p"
-               :prepend t :kill-buffer t)
+      (add-to-list 'org-capture-templates
+                   '("f" "Film\n" ;; add a film in to-watch list
+                     entry (file+headline todo-media-file "Films")
+                     "* VOIR %i%?%^{Date}p"
+                     :prepend t :kill-buffer t) t)
 
-              ("e" "Emprunt" ;; add a borrow entry
-               entry (file+headline  todo-local-file "Prêts / emprunts")
-               "* EMPRUNT %i%?"
-               :kill-buffer t)
+      (add-to-list 'org-capture-templates
+                   '("e" "Emprunt" ;; add a borrow entry
+                     entry (file+headline  todo-local-file "Prêts / emprunts")
+                     "* EMPRUNT %i%?"
+                     :kill-buffer t) t)
 
-              ("p" "Prêt\n" ;; add a lend entry
-               entry (file+headline  todo-local-file "Prêts / emprunts")
-               "* PRÊT %i%?"
-               :kill-buffer t)
+      (add-to-list 'org-capture-templates
+                   '("p" "Prêt\n" ;; add a lend entry
+                     entry (file+headline  todo-local-file "Prêts / emprunts")
+                     "* PRÊT %i%?"
+                     :kill-buffer t) t)
 
-              ("t" "Todo" ;; add a TODO entry
-               entry (file todo-local-file)
-               "* TODO %i%?\n\tSCHEDULED: %t"
-               :kill-buffer t)
+      (add-to-list 'org-capture-templates
+                   '("t" "Todo" ;; add a TODO entry
+                     entry (file todo-local-file)
+                     "* TODO %i%?\n\tSCHEDULED: %t"
+                     :kill-buffer t) t)
 
-              ("d" "Diary" ;; add a diary entry
-               item (file+olp+datetree diary-local-file)
-               "\t%i%?"
-               :time-prompt t :kill-buffer t)
+      (add-to-list 'org-capture-templates
+                   '("d" "Diary" ;; add a diary entry
+                     item (file+olp+datetree diary-local-file)
+                     "\t%i%?"
+                     :time-prompt t :kill-buffer t) t)
 
-              ("i" "Idée" ;; add an idea entry
-               item (file+headline todo-notes-file "Pêle-mêle")
-               "%i%?"
-               :kill-buffer t)
+      (add-to-list 'org-capture-templates
+                   '("i" "Idée" ;; add an idea entry
+                     item (file+headline todo-notes-file "Pêle-mêle")
+                     "%i%?"
+                     :kill-buffer t) t)
 
-              ("y" "snippet\n" ;; add a (code) snippet
-               entry (file snippet-file)
-               "* %U\n\t#+BEGIN_SRC %?\n%i\n\t#+END_SRC\n"
-               :kill-buffer t)))
+      (add-to-list 'org-capture-templates
+                   '("y" "snippet\n" ;; add a (code) snippet
+                     entry (file snippet-file)
+                     "* %U\n\t#+BEGIN_SRC %?\n%i\n\t#+END_SRC\n"
+                     :kill-buffer t) t)
 
       ;; font and faces customization
       (setq org-fontify-done-headline t)
