@@ -293,15 +293,17 @@
       :bind
       ("C-S-p" . up-arrow)
       ("C-S-n" . down-arrow)
-      ("M-é" . previous-user-buffer) ;; call previous user buffer
-      ("M-è" . next-user-buffer) ;; call next user buffer
-      ("C-M-é" . previous-buffer) ;; call previous buffer
-      ("C-M-è" . next-buffer) ;; call next buffer
-      ("<f5>" . ale/revert-buffer-no-confirm) ;; re-read file from disk
+      ("M-é" . previous-user-buffer)                   ;; call previous user buffer
+      ("M-è" . next-user-buffer)                       ;; call next user buffer
+      ("C-M-é" . previous-buffer)                      ;; call previous buffer
+      ("C-M-è" . next-buffer)                          ;; call next buffer
+      ("<f5>" . ale/revert-buffer-no-confirm)          ;; re-read file from disk
       ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
-      ("M-<f5>" . show-file-name) ;; show the file name in minibuffer
+      ("M-<f5>" . show-file-name)                      ;; show the file name in minibuffer
       ("C-x |" . ale/toggle-window-split)
-      ("C-|" . ale/toggle-window-split))
+      ("C-|" . ale/toggle-window-split)
+      ("C-c +" . increment-number-decimal)
+      ("C-c -" . decrement-number-decimal))
   #+END_SRC
 
 * Help
@@ -344,31 +346,6 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package describe-number :defer t)
-  #+END_SRC
-
-  #+BEGIN_SRC emacs-lisp
-    (defun increment-number-decimal (&optional arg)
-      "Increment the number forward from point by ARG."
-      (interactive "p*")
-      (save-excursion
-        (save-match-data
-          (let (inc-by field-width answer)
-            (setq inc-by (if arg arg 1))
-            (skip-chars-backward "0123456789")
-            (when (re-search-forward "[0-9]+" nil t)
-              (setq field-width (- (match-end 0) (match-beginning 0)))
-              (setq answer (+ (string-to-number (match-string 0) 10) inc-by))
-              (when (< answer 0)
-                (setq answer (+ (expt 10 field-width) answer)))
-              (replace-match (format (concat "%0" (int-to-string field-width) "d")
-                                     answer)))))))
-    (global-set-key (kbd "C-c +") 'increment-number-decimal)
-
-    (defun decrement-number-decimal (&optional arg)
-      "Decrement the number forward from point by ARG."
-      (interactive "p*")
-      (increment-number-decimal (if arg (- arg) -1)))
-    (global-set-key (kbd "C-c -") 'decrement-number-decimal)
   #+END_SRC
 
 * Defaults
