@@ -1966,6 +1966,8 @@
        org-html-htmlize-output-type 'css
        org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />"
        org-export-coding-system 'utf-8
+       org-src-ask-before-returning-to-edit-buffer nil
+       org-src-window-setup 'current-window
 
        ;; active Babel languages
        org-confirm-babel-evaluate nil)
