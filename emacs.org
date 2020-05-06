@@ -135,7 +135,6 @@
             grip-mode
             groovy-mode
             guess-language
-            helm-ag
             helm-cider
             helm-dash
             helm-descbinds
@@ -145,6 +144,7 @@
             helm-lobsters
             helm-lsp
             helm-projectile
+            helm-rg
             helm-swoop
             helm-tramp
             helpful
@@ -1108,12 +1108,12 @@
    #+BEGIN_SRC emacs-lisp
      (use-package helm
        :chords
-       ("bf" . helm-for-files)               ;; snappy helm instance
-       ("éè" . my-do-ag-project-root-or-dir) ;; grep in current project or dir
-       ("«»" . hydra-helm-config/body)       ;; all (useful) helm commands in one hydra
+       ("bf" . helm-for-files)                 ;; snappy helm instance
+       ("éè" . helm-rg)                        ;; ripgrep. end of story.
+       ("«»" . hydra-helm-config/body)         ;; all (useful) helm commands in one hydra
        :bind
-       (("M-x" . helm-M-x)                   ;; superior to M-x
-        ("C-x M-x" . execute-extended-command)
+       (("M-x" . helm-M-x)                     ;; superior to M-x
+        ("C-x M-x" . execute-extended-command) ;; still possible to use standard M-x
         ("C-c h" . hydra-helm-config/body)
         ("C-h a" . helm-apropos)
         :map helm-map
@@ -1123,14 +1123,12 @@
         ("C-c C-l" . helm-minibuffer-history))
        :config
        (require 'helm-config)
-       (helm-mode 0)                         ;; only on demand
+       (helm-mode 0)                           ;; only on demand
        (helm-autoresize-mode t)
-       ;; (semantic-mode 1)                  ;; useful for imenu-like navigation
+       ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
        (setq helm-M-x-fuzzy-match t
              helm-locate-command "locate %s -e -A --regex %s -d ~/mlocate.db"
              helm-adaptive-mode t
-             helm-ag-base-command "ag --nocolor --nogroup --smart-case"
-             helm-ag-insert-at-point 'symbol
              helm-buffer-max-length nil
              helm-buffers-fuzzy-matching t
              helm-candidate-number-limit 300
@@ -1232,10 +1230,10 @@
            ("p"     helm-projectile "projectile")
            ("t"     helm-tramp "tramp"))
           "Search"
-          (("R"     helm-regexp "regexp" :column "Search")
+          (("*"     helm-regexp "regexp" :column "Search")
            ("o"     helm-occur "occur")
            ("s"     helm-swoop "swoop")
-           ("a"     helm-do-grep-ag "ag grep")
+           ("R"     helm-rg "ripgrep")
            ("G"     helm-git-grep "git grep"))
           "Navigate"
           (("e"     helm-etags-select "etags")
@@ -1272,15 +1270,22 @@
            (","     helm-calcul-expression "calcul")
            ("j"     helm-list-elisp-packages "packages")
            ("X"     helm-select-xfont "xfont")
-           ("x"     helm-run-external-command "run external"))))
+           ("x"     helm-run-external-command "run external")))))
+   #+END_SRC
 
-       (defun my-do-ag-project-root-or-dir ()
-         "call helm-do-ag-project-root if in project, helm-do-ag otherwise"
-         (interactive)
-         (require 'helm-ag)
-         (let ((rootdir (helm-ag--project-root)))
-           (unless rootdir (helm-do-ag default-directory))
-           (helm-do-ag rootdir))))
+   [[https://blog.burntsushi.net/ripgrep/][Ripgrep]] is the the best tool for grepping anything anywhere these days. Combined with [[https://github.com/cosmicexplorer/helm-rg][helm-rg]], it’s all I need. And it also supports editing search results from the search buffer!
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-rg
+       :after helm
+       :hook (helm-rg--bounce-mode . (lambda () (aggressive-indent-mode -1)))
+       :bind (
+              :map helm-rg-map
+              ("M-b" . backward-word)
+              ("C-c C-e" . helm-rg--bounce)
+              :map helm-rg--bounce-mode-map
+              ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
+              ("C-c C-e" . helm-rg--bounce))
+       :config (setq helm-rg-default-directory "~/"))
    #+END_SRC
 
    =helm-descbinds= lets me browse all user-defined keybindings.
@@ -1305,20 +1310,6 @@
    #+BEGIN_SRC emacs-lisp
       (use-package ace-jump-helm-line
         :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
-   #+END_SRC
-
-   Let’s add some grepping facilities.
-   #+BEGIN_SRC emacs-lisp
-     (use-package wgrep
-       :bind (:map grep-mode-map
-                   ("C-x C-q" . wgrep-change-to-wgrep-mode)
-                   ("C-c C-c" . wgrep-finish-edit)))
-     (use-package helm-ag
-       :bind (:map helm-ag-mode-map
-                   ("p" . previous-line)
-                   ("n" . next-line)
-                   ("C-x C-q" . wgrep-change-to-wgrep-mode)
-                   ("C-c C-c" . wgrep-finish-edit)))
    #+END_SRC
 
    =Helm-swoop= can be called during =isearch= to make searching easier with big files or big number of occurences.
@@ -1923,9 +1914,12 @@
 
 * Text
   #+BEGIN_SRC emacs-lisp
-    (setq default-major-mode 'text-mode) ;; text-mode by default
-    (add-hook 'text-mode-hook 'visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
-    (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
+    (use-package text-mode
+      :ensure nil
+      :hook (text-mode . visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
+      :config
+      (setq default-major-mode 'text-mode) ;; text-mode by default
+      (remove-hook 'text-mode-hook #'turn-on-auto-fill)) ;; visual-line-mode instead of auto-fill)
   #+END_SRC
 
   Sometimes CSV mode can be useful:
@@ -2407,8 +2401,12 @@
 
 ** Shell
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'sh-mode-hook (lambda () (setq tab-width 2 sh-basic-offset 2 indent-tabs-mode t)))
-     (add-hook 'sh-mode-hook 'flycheck-mode)
+     (use-package sh-script
+       :ensure nil
+       :hook
+       (sh-mode . flycheck-mode)
+       (sh-mode-hook . (lambda () (setq tab-width 2 sh-basic-offset 2 indent-tabs-mode t))))
+
      (use-package shx :defer t)
      ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
      (add-to-list 'auto-mode-alist '(".*rc$" . sh-mode))
