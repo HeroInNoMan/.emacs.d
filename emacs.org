@@ -517,7 +517,7 @@
       ("C-x C-r" . crux-sudo-edit)
       ("C-S-d" . kill-whole-line)
       ("C-k" . crux-smart-kill-line)
-      ("C-c i" . indent-region)
+      ("C-c i" . crux-cleanup-buffer-or-region)
       ("M-\"" . crux-create-scratch-buffer)
       ("C-S-o" . crux-smart-open-line-above)
       ("C-S-j" . crux-smart-open-line)
@@ -3223,7 +3223,7 @@
         (("p" list-packages "packages")
          ("Q" quick-calc "quick-calc")
          ("n" describe-number-at-point "describe number")
-         ("?\\t" crux-cleanup-buffer-or-region "cleanup buffer")
+         ("TAB" indent-region "indent region")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
         "Files"
