@@ -3208,7 +3208,8 @@
         "Management"
         (("m" mu4e "mu4e")
          ("c" open-calendar "calendar")
-         ("T" tomatinho "pomodoro"))
+         ("T" tomatinho "pomodoro")
+         ("o" crux-open-with "open"))
         "Diff"
         (("E" ediff "ediff")
          ("z" ztree-diff "ztree-diff")
