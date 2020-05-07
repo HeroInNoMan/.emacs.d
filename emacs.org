@@ -516,11 +516,15 @@
       ("M-j" . crux-top-join-line)
       ("C-x C-r" . crux-sudo-edit)
       ("C-S-d" . kill-whole-line)
+      ("C-k" . crux-smart-kill-line)
       ("C-c i" . indent-region)
       ("M-\"" . crux-create-scratch-buffer)
+      ("C-S-o" . crux-smart-open-line-above)
+      ("C-S-j" . crux-smart-open-line)
+      ("C-S-k" . crux-smart-kill-line)
+      ([remap move-beginning-of-line] . crux-move-beginning-of-line)
+      ([remap kill-whole-line] . crux-kill-whole-line)
       :config
-      (global-set-key [remap move-beginning-of-line] #'crux-move-beginning-of-line)
-      (global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
       (crux-reopen-as-root-mode)
       ;; advices to make region-aware commands act on whole line if no region
       (crux-with-region-or-line comment-or-uncomment-region)
