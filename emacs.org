@@ -679,12 +679,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package highlight-line
        :ensure nil
-       :hook
-       (dired-mode . highlight-line-mode)
-       (org-agenda-mode . highlight-line-mode)
        :load-path "elisp/"
        :custom-face (hl-line ((t (:background "grey7"))))
        :config
+       (add-to-list 'highlight-line-target-modes 'org-agenda-mode)
        (global-hl-line-mode -1) ;; don’t highlight current line
        (highlight-line-mode 1)) ;; except in “list” modes
 
