@@ -898,6 +898,8 @@
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-c w") 'delete-trailing-whitespace)
 
+    (add-hook 'prog-mode-hook '(lambda ()(setq show-trailing-whitespace t)))
+
     (use-package aggressive-indent
       :hook (prog-mode . aggressive-indent-mode))
 
