@@ -598,14 +598,18 @@
       (defun my-update-cursor ()
         "change cursor colour if god-mode is activated/deactivated effectively."
         (cond
-         ((and god-local-mode (not god-mode-colors))
+         (god-local-mode
           (progn
             (set-cursor-color "red")
-            (setq god-mode-colors t)))
-         ((not god-local-mode)
+            (setq god-mode-colors t)
+            (setq cursor-type 'box)))
+         (t
           (progn
-            (set-cursor-color "#51afef") ;; TODO aller choper dynamiquement la couleur de base du curseur (ou mieux définir une face cursor-color-god ou un truc comme ça)
-            (setq god-mode-colors nil)))))
+            (set-cursor-color original-cursor-color) ;; TODO aller choper dynamiquement la couleur de base du curseur (ou mieux définir une face cursor-color-god ou un truc comme ça)
+            (setq god-mode-colors nil)
+            (if buffer-read-only
+                (setq cursor-type 'box)
+              (setq cursor-type 'box))))))
 
       (defadvice select-window (after update-cursor-color activate)
         (my-update-cursor))
@@ -637,6 +641,8 @@
        (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
              doom-themes-enable-italic t) ; if nil, italics is universally disabled
        (load-theme 'doom-vibrant) ;; more at https://github.com/hlissner/emacs-doom-themes
+
+       (setq original-cursor-color (face-attribute 'cursor :background))
 
        ;; Enable flashing mode-line on errors
        ;; (doom-themes-visual-bell-config)
