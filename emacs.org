@@ -138,6 +138,7 @@
             helm-cider
             helm-dash
             helm-descbinds
+            helm-fd
             helm-git-grep
             helm-gitlab
             helm-lines
@@ -1221,7 +1222,7 @@
          (:color teal :quit-key "q")
          ("Find"
           (("l"     helm-locate "locate")
-           ("/"     helm-find "find")
+           ("/"     helm-fd "fd find")
            ("F"     helm-find-files "files")
            ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
            ("m"     helm-mini "mini")
@@ -1285,6 +1286,13 @@
               ("C-c C-e" . helm-rg--bounce))
        :config (setq helm-rg-default-directory "~/"))
    #+END_SRC
+
+   fd is a modern replacement for find. Let’s have a helm interface to it.
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-fd
+       :config (setq helm-fd-noerrors t))
+   #+END_SRC
+
 
    =helm-descbinds= lets me browse all user-defined keybindings.
    #+BEGIN_SRC emacs-lisp
