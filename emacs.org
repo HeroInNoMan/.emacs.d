@@ -1317,7 +1317,7 @@
    =Helm-swoop= can be called during =isearch= to make searching easier with big files or big number of occurences.
    #+BEGIN_SRC emacs-lisp
      (use-package helm-swoop
-       :bind
+       :bind ("C-S-s" . helm-swoop)
        (:map isearch-mode-map
              ;; When doing isearch, hand the word over to helm-swoop
              ("M-i" . helm-swoop-from-isearch))
