@@ -1300,12 +1300,12 @@
    #+BEGIN_SRC emacs-lisp
      (use-package helm-dash
        :after helm
-       :config
-       (setq helm-dash-browser-func 'eww)
-       (add-hook 'clojure-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Clojure"))))
-       (add-hook 'java-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Java"))))
-       (add-hook 'js-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Javascript"))))
-       (add-hook 'rust-mode-hook #'(lambda () (setq-local helm-dash-docsets '("Rust")))))
+       :hook
+       (clojure-mode . (lambda () (setq-local helm-dash-docsets '("Clojure"))))
+       (java-mode . (lambda () (setq-local helm-dash-docsets '("Java"))))
+       (js-mode . (lambda () (setq-local helm-dash-docsets '("Javascript"))))
+       (rust-mode . (lambda () (setq-local helm-dash-docsets '("Rust"))))
+       :config (setq helm-dash-browser-func 'eww))
    #+END_SRC
 
    Let’s make =ace-jump-mode= also available during a helm session.
@@ -2180,7 +2180,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package org-bullets
       :after org
-      :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+      :hook (org-mode . (lambda () (org-bullets-mode 1))))
   #+END_SRC
 
 * Special characters, spelling, i18n
@@ -2632,29 +2632,28 @@
     #+BEGIN_SRC emacs-lisp
       (use-package malabar-mode
         :disabled
+        :hook
+        (after-init . (lambda () (message "activate-malabar-mode") (activate-malabar-mode)))
+        (malabar-java-mode . flycheck-mode)
+        (malabar-groovy-mode . flycheck-mode)
+        (malabar-mode . (lambda () (progn
+                                (add-hook 'after-save-hook 'malabar-http-compile-file-silently nil t)
+                                (add-hook 'after-save-hook 'malabar-compile-file-silently nil t))))
         :config
         ;; JAVA (malabar-mode)
         ;; mimic the IDEish compile-on-save behaviour
         ;; (load-file "~/outils/cedet/cedet-devel-load.el")
         (load-file "~/projets/malabar-mode/src/main/lisp/malabar-mode.el")
-        (load-file "~/projets/cedet/cedet-devel-load.el")
-        (add-hook 'after-init-hook (lambda ()
-                                     (message "activate-malabar-mode")
-                                     (activate-malabar-mode)))
-
-        (add-hook 'malabar-java-mode-hook 'flycheck-mode)
-        (add-hook 'malabar-groovy-mode-hook 'flycheck-mode)
-        (add-hook 'malabar-mode-hook (lambda () (add-hook 'after-save-hook 'malabar-compile-file-silently nil t)))
-        (add-hook 'malabar-mode-hook
-                  (lambda ()
-                    (add-hook 'after-save-hook 'malabar-http-compile-file-silently
-                              nil t))))
+        (load-file "~/projets/cedet/cedet-devel-load.el"))
     #+END_SRC
 
 *** TODO eclim (à tester)
     #+BEGIN_SRC emacs-lisp
       (use-package eclim
         :disabled
+        :hook
+        (java-mode . (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
+        (java-mode . eclim-mode)
         :config
         (global-eclim-mode)
         (require 'eclimd)
@@ -2663,10 +2662,8 @@
         ;; (require 'company)
         (require 'company-emacs-eclim)
         (global-company-mode t)
-        (company-emacs-eclim-setup)
         ;; (company-emacs-eclim-ignore-case t)
-        (add-hook 'java-mode-hook (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
-        (add-hook 'java-mode-hook 'eclim-mode))
+        (company-emacs-eclim-setup))
     #+END_SRC
 
 *** ecb (à tester)
@@ -2682,7 +2679,7 @@
         ;; :delight (java-mode "🅹" :major)
         :bind ("C-S-o" . lsp-execute-code-action)
         :after lsp
-        :config (add-hook 'java-mode-hook 'lsp))
+        :hook (java-mode . lsp))
 
       (use-package dap-java
         :disabled t
@@ -2817,31 +2814,29 @@
        :hook ((json-mode . json-pretty-print)
               (js2-mode . json-pretty-print-buffer)
               (js2-mode . aggressive-indent-mode)
-              (js2-mode . js2-refactor-mode))
+              (js2-mode . js2-refactor-mode)
+              (js2-mode . (lambda () (flycheck-mode t))))
        :config
-       (use-package js2-refactor
-         :config
-         (js2r-add-keybindings-with-prefix "C-c C-r")
-         (setq js2-skip-preprocessor-directives t))
        (setq js2-basic-offset 2
              js-indent-level 2
              js2-use-font-lock-faces t)
-       (add-hook 'js2-mode-hook (lambda () (flycheck-mode t)))
        (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
+     (use-package js2-refactor
+       :after js2-mode
+       :config
+       (js2r-add-keybindings-with-prefix "C-c C-r")
+       (setq js2-skip-preprocessor-directives t))
      ;; à tester
      (use-package js-comint
        :disabled
-       :config  (defun inferior-js-mode-hook-setup ()
-                  (add-hook 'comint-output-filter-functions 'js-comint-process-output))
-       (add-hook 'inferior-js-mode-hook 'inferior-js-mode-hook-setup t)
-       (add-hook 'js2-mode-hook
-                 (lambda ()
-                   (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
-                   (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
-                   (local-set-key (kbd "C-c b") 'js-send-buffer)
-                   (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
-                   (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
+       :hook (inferior-js-mode . (lambda () (add-hook 'comint-output-filter-functions 'js-comint-process-output)))
+       (js2-mode . (lambda ()
+                     (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
+                     (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
+                     (local-set-key (kbd "C-c b") 'js-send-buffer)
+                     (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
+                     (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
    #+END_SRC
 
 ** JSON
