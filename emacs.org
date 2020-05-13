@@ -1781,11 +1781,10 @@
        ("C-x g" . hydra-git/body)
        (:map magit-file-mode-map ("C-x g" . hydra-git/body))
        :custom-face (magit-branch-current ((t (:foreground "#51afef" :box (:line-width (1 . 1) :color "#51afef" :style released-button)))))
-       :config (magit-define-popup-switch 'magit-log-popup ?w "date-order" "--date-order")
-       (setq magit-branch-arguments nil
-             magit-fetch-arguments  '("--prune")
-             magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100")
-             magit-stash-arguments  '("--include-untracked"))
+       :config (setq magit-branch-arguments nil
+                     magit-fetch-arguments '("--prune" "--tags")
+                     magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100")
+                     magit-stash-arguments '("--include-untracked"))
 
        (pretty-hydra-define hydra-git
          (:color blue :quit-key "q")
