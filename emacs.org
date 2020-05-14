@@ -232,6 +232,7 @@
             winnow
             yaml-mode
             yasnippet-snippets
+            ytel
             zop-to-char
             ztree))
   #+END_SRC
@@ -3236,7 +3237,8 @@
          ("r l" helm-lobsters "lobsters")
          ("r e" elfeed "elfeed RSS")
          ("r g" gnus "Gnus")
-         ("r w" eww "web browser"))
+         ("r w" eww "web browser")
+         ("r y" ytel "youtube"))
         "Management"
         (("m" mu4e "mu4e")
          ("c" open-calendar "calendar")
@@ -3601,6 +3603,25 @@
 ** Music
    #+BEGIN_SRC emacs-lisp
      (use-package helm-spotify-plus :disabled)
+   #+END_SRC
+
+** Videos
+   #+BEGIN_SRC emacs-lisp
+     (use-package ytel
+       :bind (:map ytel-mode-map
+                   ("<RET>" . ytel-watch))
+       :config
+       (defun ytel-watch ()
+         "Stream video at point in mpv."
+         (interactive)
+         (let* ((video (ytel-get-current-video))
+                (id    (ytel-video-id video))
+                (url (concat "https://www.youtube.com/watch?v=" id))
+                (url (concat "https://www.youtube.com/watch?v=" id)))
+           (message (concat "Playing " url "…"))
+           (start-process "youtube" nil
+                          "smplayer"
+                          url))))
    #+END_SRC
 
 ** Games
