@@ -3432,7 +3432,17 @@
 
       ;; Hooks that run before/after the modeline version string is updated
       (setq doom-modeline-before-update-env-hook nil)
-      (setq doom-modeline-after-update-env-hook nil))
+      (setq doom-modeline-after-update-env-hook nil)
+
+      ;; I don’t want to see the battery status when it is fully charged ;;;;;;;;;;
+      (defun battery-full-p ()
+        "Return t if battery is full."
+        (interactive)
+        (string-equal "100%%" (prin1-to-string (cdr doom-modeline--battery-status) t)))
+
+      (defadvice doom-modeline-update-battery-status (after hide-full-battery activate)
+        (when (battery-full-p)
+          (setq doom-modeline--battery-status nil))))
   #+END_SRC
 
 * Startup screen
