@@ -540,5 +540,19 @@ Swap buffers in the process"
      (expand-file-name "emacs.el" base-emacs-directory))
     (message "Tangled file compiled.")))
 
+(defun init-server-alist ()
+  "Init the list of SQL connections based on `sql-connection-alist'."
+  (defvar ale-sql-servers-list '()
+    "Alist of server name and the function to connect.")
+  (cl-loop for db in sql-connection-alist
+           collect
+           (add-to-list
+            'ale-sql-servers-list ; string/function pairs
+            (list
+             (prin1-to-string (car db) t)
+             `(lambda ()
+                (setq sql-product ,(car (cdr (assoc 'sql-product db))))
+                (sql-connect (quote ,(car db))))))))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here

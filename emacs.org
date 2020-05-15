@@ -1120,6 +1120,14 @@
        (helm-mode 0)                           ;; only on demand
        (helm-autoresize-mode t)
        ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
+
+       (defun helm-sql-connect (func)
+         "Connect (using input FUNC) to a SQL server."
+         (interactive
+          (progn (init-server-alist)
+                 (helm-comp-read "Select server: " ale-sql-servers-list)))
+         (funcall func))
+
        (setq helm-M-x-fuzzy-match t
              helm-locate-command "locate %s -e -A --regex %s -d ~/mlocate.db"
              helm-adaptive-mode t
@@ -1234,6 +1242,7 @@
            ("i"     helm-semantic-or-imenu "imenu")
            ("I"     helm-imenu-in-all-buffers "imenu all")
            ("."     helm-imenu-anywhere "imenu any")
+           ("Q"     helm-sql-connect "SQL connection")
            ("b"     helm-filtered-bookmarks "bookmark")
            ("'"     helm-register "register")
            ("k"     helm-show-kill-ring "kill-ring")
