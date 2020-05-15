@@ -1800,7 +1800,7 @@
        :bind
        ("C-x g" . hydra-git/body)
        (:map magit-file-mode-map ("C-x g" . hydra-git/body))
-       :custom-face (magit-branch-current ((t (:foreground "#51afef" :box (:line-width (1 . 1) :color "#51afef" :style released-button)))))
+       :custom-face (magit-branch-current ((t (:foreground "cyan" :box (:line-width (3 . 3) :color "cyan" :style released-button)))))
        :config (setq magit-branch-arguments nil
                      magit-fetch-arguments '("--prune" "--tags")
                      magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100")
