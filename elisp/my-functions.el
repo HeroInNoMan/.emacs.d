@@ -301,34 +301,32 @@ Swap buffers in the process"
 (defun ale/switch-to-fr-dict ()
   "Switch to French dictionary."
   (interactive)
-  (progn
-    (flyspell-mode)
-    (ispell-change-dictionary "fr_FR")))
+  (flyspell-mode)
+  (ispell-change-dictionary "fr_FR"))
 
 (defun ale/switch-to-en-dict ()
   "Switch to British English dictionary."
   (interactive)
-  (progn  (flyspell-mode)
-          (ispell-change-dictionary "en_GB")))
+  (flyspell-mode)
+  (ispell-change-dictionary "en_GB"))
 
 (defun ale/switch-to-us-dict ()
   "Switch to American English dictionary."
   (interactive)
-  (progn  (flyspell-mode)
-          (ispell-change-dictionary "en_US")))
+  (flyspell-mode)
+  (ispell-change-dictionary "en_US"))
 
 (defun ale/open-project (args)
   "Open ARGS project magit logs and status as split windows."
   (interactive "D")
-  (progn
-    (find-file args)
-    (unless (boundp 'magit-log-arguments)
-      (magit-status))
-    (magit-log-all magit-log-arguments)
-    (delete-other-windows)
-    (magit-status-internal args)
-    (other-window 1)
-    (goto-char (point-min))))
+  (find-file args)
+  (unless (boundp 'magit-log-arguments)
+    (magit-status))
+  (magit-log-all magit-log-arguments)
+  (delete-other-windows)
+  (magit-status-internal args)
+  (other-window 1)
+  (goto-char (point-min)))
 
 (defun set-fira-font-if-possible ()
   "Set the font to “Fira Code” in it is available."
@@ -534,11 +532,10 @@ Swap buffers in the process"
 
 (defun ale/tangle-config-file ()
   "Tangle my config file."
-  (progn
-    (org-babel-tangle-file
-     (expand-file-name "emacs.org" base-emacs-directory)
-     (expand-file-name "emacs.el" base-emacs-directory))
-    (message "Tangled file compiled.")))
+  (org-babel-tangle-file
+   (expand-file-name "emacs.org" base-emacs-directory)
+   (expand-file-name "emacs.el" base-emacs-directory))
+  (message "Tangled file compiled."))
 
 (defun init-server-alist ()
   "Init the list of SQL connections based on `sql-connection-alist'."
