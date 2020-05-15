@@ -95,6 +95,7 @@
             dap-ui-mode
             dashboard
             default-text-scale
+            defrepeater
             define-word
             delight
             describe-number
@@ -531,6 +532,22 @@
   #+END_SRC
 
 * Keybindings
+
+  [[https://github.com/alphapapa/defrepeater.el][defrepeater]] is useful to define repeatable key bindings:
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package defrepeater
+      :config
+      (global-set-key [remap increment-number-decimal] (defrepeater 'increment-number-decimal))
+      (global-set-key [remap decrement-number-decimal] (defrepeater 'decrement-number-decimal))
+      (global-set-key [remap goto-last-change] (defrepeater 'goto-last-change))
+      (global-set-key [remap previous-error] (defrepeater 'previous-error))
+      (global-set-key [remap next-error] (defrepeater 'next-error))
+      (global-set-key [remap flycheck-previous-error] (defrepeater 'flycheck-previous-error))
+      (global-set-key [remap flycheck-next-error] (defrepeater 'flycheck-next-error))
+      (global-set-key [remap bury-buffer] (defrepeater 'bury-buffer)))
+  #+END_SRC
+
   I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
   #+BEGIN_SRC emacs-lisp
     (use-package hydra :defer t)
@@ -881,7 +898,6 @@
       :bind
       ("C-x C-/" . goto-last-change)
       ("C-x /" . goto-last-change))
-    ;; :config (make-command-repeatable 'goto-last-change)
   #+END_SRC
 
 * Whitespace
@@ -1541,11 +1557,6 @@
      (global-set-key (kbd "C-§") 'transpose-paragraphs)
      (global-set-key (kbd "C-x M-s") 'transpose-sentences)
      (global-set-key (kbd "C-x M-t") 'transpose-sexps)
-
-     (use-package repeatable ;; TODO add repeatable commands (or replace package with easy-repeat
-       :defer t
-       :ensure nil
-       :load-path "elisp/")
 
      (use-package change-inner
        :bind
