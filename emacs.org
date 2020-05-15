@@ -512,7 +512,6 @@
       ("M-j" . crux-top-join-line)
       ("C-x C-r" . crux-sudo-edit)
       ("C-S-d" . kill-whole-line)
-      ("C-k" . crux-smart-kill-line)
       ("C-c i" . crux-cleanup-buffer-or-region)
       ("M-\"" . crux-create-scratch-buffer)
       ("C-S-o" . crux-smart-open-line-above)
