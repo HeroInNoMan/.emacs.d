@@ -433,6 +433,7 @@
       ("M-»" . end-of-buffer)
       :config
       (setq global-mark-ring-max 256
+            set-mark-command-repeat-pop t
             mark-ring-max 256
             kill-ring-max 256
             line-number-mode t    ;; Always display line number
