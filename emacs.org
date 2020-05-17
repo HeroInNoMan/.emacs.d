@@ -1816,11 +1816,7 @@
        ("C-x g" . hydra-git/body)
        (:map magit-file-mode-map ("C-x g" . hydra-git/body))
        :custom-face (magit-branch-current ((t (:foreground "cyan" :box (:line-width (3 . 3) :color "cyan" :style released-button)))))
-       :config (setq magit-branch-arguments nil
-                     magit-fetch-arguments '("--prune" "--tags")
-                     magit-log-arguments '("--graph" "--color" "--decorate" "--date-order" "-n100")
-                     magit-stash-arguments '("--include-untracked"))
-
+       :config
        (pretty-hydra-define hydra-git
          (:color blue :quit-key "q")
          ("Gutter"
