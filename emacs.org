@@ -1987,10 +1987,20 @@
              ("\C-c t" . org-begin-template))
       :chords ("gx" . org-capture)
       :hook (org-mode . visual-line-mode)
+      :custom-face
+      (org-done ((t (:foreground "PaleGreen" :weight bold))))
+      (org-headline-done ((((class color) (min-colors 16) (background dark))
+                           (:foreground "dim grey" :strike-through t))))
       :config
       (require 'ox-md nil t)
       (require 'org-agenda)
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
+
+      (require 'color)
+      (set-face-attribute 'org-block nil :background
+                          (color-darken-name
+                           (face-attribute 'default :background) 3))
+
       (setq
        ;; general settings
        org-log-done 'time
@@ -2085,11 +2095,6 @@
 
       ;; font and faces customization
       (setq org-fontify-done-headline t)
-      (custom-set-faces
-       '(org-done ((t (:foreground "PaleGreen" :weight bold))))
-       '(org-headline-done
-         ((((class color) (min-colors 16) (background dark))
-           (:foreground "dim grey" :strike-through t)))))
       (setq org-todo-keyword-faces
             '(("TODO" . (:foreground "pink" :weight bold))
               ("MÉMO" . (:foreground "pink" :weight bold))
