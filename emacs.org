@@ -3708,6 +3708,8 @@
     #+END_SRC
 
 * Useful links
+** one entry point to find them all
+   - https://planet.emacslife.com/
 ** blogs
    - http://sachachua.com/blog/
 ** vlogs
