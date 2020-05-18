@@ -320,9 +320,7 @@ Swap buffers in the process"
   "Open ARGS project magit logs and status as split windows."
   (interactive "D")
   (find-file args)
-  (unless (boundp 'magit-log-arguments)
-    (magit-status))
-  (magit-log-all magit-log-arguments)
+  (magit-log-all (car (magit-log-arguments)))
   (delete-other-windows)
   (magit-status-internal args)
   (other-window 1)
