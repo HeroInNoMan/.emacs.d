@@ -1039,6 +1039,9 @@
    #+END_SRC
 
 ** phi-search
+
+   [[https://github.com/zk-phi/phi-search][phi-search]] is nice because it supports [[https://github.com/magnars/multiple-cursors.el][multiple-cursors]].
+
    #+BEGIN_SRC emacs-lisp
      (use-package phi-search
        :bind
