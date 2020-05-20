@@ -535,6 +535,12 @@ Swap buffers in the process"
    (expand-file-name "emacs.el" base-emacs-directory))
   (message "Tangled file compiled."))
 
+(defun kill-emacs-and-tangle ()
+  "Kill EMACS and tangle config file."
+  (interactive)
+  (ale/tangle-config-file)
+  (kill-emacs))
+
 (defun init-server-alist ()
   "Init the list of SQL connections based on `sql-connection-alist'."
   (defvar ale-sql-servers-list '()
