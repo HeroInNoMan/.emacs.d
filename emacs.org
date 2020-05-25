@@ -3198,6 +3198,7 @@
          ("p" prettify-symbols-mode "prettify symbols" :toggle t)
          ("l" linum-mode "line number" :toggle t)
          ("r" linum-relative-global-mode "relative line numbers" :toggle t)
+         ("|" global-display-fill-column-indicator-mode "right margin" :toggle t)
          ("w" whitespace-mode "whitespace" :toggle t)
          ("z" bzg-big-fringe-mode "zen" :toggle t))
         "Coding"
