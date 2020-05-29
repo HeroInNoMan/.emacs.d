@@ -1984,10 +1984,10 @@
       :init (setq org-capture-templates '())
       :bind (("\C-c a" . org-agenda)
              ("\C-c b" . org-iswitchb)
+             ("\C-c l" . org-store-link)
              :map org-mode-map
              ("\C-c +" . increment-number-decimal)
              ("\C-c -" . decrement-number-decimal)
-             ("\C-c l" . org-store-link)
              ("\C-c j" . ale/jirify)
              ("\C-c r" . ale/rtify)
              ("\C-c t" . org-begin-template))
