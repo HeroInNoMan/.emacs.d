@@ -1945,23 +1945,28 @@
     (use-package calfw
       :commands open-calendar
       :config
+      ;; Unicode characters
+      (setq cfw:fchar-junction ?╋
+            cfw:fchar-vertical-line ?┃
+            cfw:fchar-horizontal-line ?━
+            cfw:fchar-left-junction ?┣
+            cfw:fchar-right-junction ?┫
+            cfw:fchar-top-junction ?┯
+            cfw:fchar-top-left-corner ?┏
+            cfw:fchar-top-right-corner ?┓)
       (defun open-calendar ()
         (interactive)
         (cfw:open-calendar-buffer
          :contents-sources
          (list
-          (cfw:ical-create-source "Vacances" "http://dynical.com/iCal/weather.ics/?lng=fr&zone=ile-de-france|paris|75100&zone_=E" "yellow")
-          (cfw:org-create-source "DarkOliveGreen4")  ; orgmode source
-          ;; (cfw:cal-create-source "Orange") ; diary source
-          (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "Gray")  ; ICS source1
-          (cfw:ical-create-source "Perso" "https://framagenda.org/apps/calendar/p/KpjTmX4M9FX3QSYR" "DeepSkyBlue")))))
+          (cfw:ical-create-source "Perso" my-private-personal-ical-url "RoyalBlue")
+          (cfw:org-create-source "grey50")  ; orgmode source
+          (cfw:ical-create-source "Vacances" "https://www.data.gouv.fr/fr/datasets/r/17254f2a-a611-4b1f-995c-df45a4570f12" "goldenrod")  ; ICS source1
+          (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "gray20")))))
 
-    (use-package calfw-cal
-      :after calfw)
-    (use-package calfw-ical
-      :after calfw)
-    (use-package calfw-org
-      :after calfw)
+    (use-package calfw-cal :after calfw)
+    (use-package calfw-ical :after calfw)
+    (use-package calfw-org :after calfw)
   #+END_SRC
 
 * Text
