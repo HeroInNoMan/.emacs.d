@@ -437,7 +437,7 @@
       ("C-x C-u" . upcase-dwim)
       ("C-x C-l" . downcase-dwim)
       ("C-x C-c" . capitalize-dwim)
-      ("M-=" . count-words)
+      ("M-%" . count-words)
       ("C-x C-z" . repeat-complex-command)
       ("C-c w" . delete-trailing-whitespace)
       ("M-«" . beginning-of-buffer)
@@ -699,9 +699,24 @@
        ("C-+" . default-text-scale-increase)
        ("C-=" . default-text-scale-decrease)
        :config
+       (setq default-text-scale-amount 5)
        (defadvice default-text-scale-increase (after fix-font activate) (set-fira-font-if-possible))
        (defadvice default-text-scale-decrease (after fix-font activate) (set-fira-font-if-possible))
        (defadvice default-text-scale-reset (after fix-font activate) (set-fira-font-if-possible)))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package font-size
+       :ensure nil
+       :load-path "elisp/"
+       :bind
+       ("M-+" . font-size-increase)
+       ("M-=" . font-size-decrease)
+       ;; ("M-0" . font-size-default)
+       :config (font-size-init 10)
+       (defadvice font-size-increase (after fix-font activate) (set-fira-font-if-possible))
+       (defadvice font-size-decrease (after fix-font activate) (set-fira-font-if-possible))
+       (defadvice font-size-default (after fix-font activate) (set-fira-font-if-possible)))
    #+END_SRC
 
 ** Highlight feedback
