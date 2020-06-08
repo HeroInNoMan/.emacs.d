@@ -3211,9 +3211,7 @@
          ("l" linum-mode "line number" :toggle t)
          ("r" linum-relative-global-mode "relative line numbers" :toggle t)
          ("|" global-display-fill-column-indicator-mode "right margin" :toggle t)
-         ("w" whitespace-mode "whitespace" :toggle t)
-         ("z" darkroom-tentative-mode "darkroom" :toggle t)
-         ("Z" bzg-big-fringe-mode "zen (bzg)" :toggle t))
+         ("w" whitespace-mode "whitespace" :toggle t))
         "Coding"
         (("(" smartparens-global-mode "smartparens" :toggle t)
          (")" smartparens-global-strict-mode "smartparens strict" :toggle t)
@@ -3230,7 +3228,8 @@
          ("F" flyspell-mode "flyspell" :toggle t)
          ("o" overwrite-mode "overwrite" :toggle t)
          ("s" superword-mode "super-word" :toggle t)
-         ("1" ten-hundred-mode "1000 words" :toggle t))))
+         ("1" ten-hundred-mode "1000 words" :toggle t)
+         ("z" darkroom-tentative-mode "darkroom" :toggle t))))
      (global-set-key (kbd "C-é") 'hydra-toggles/body)
    #+END_SRC
 
@@ -3274,12 +3273,13 @@
         (("r r" avandu-overview "avandu RSS")
          ("r l" helm-lobsters "lobsters")
          ("r e" elfeed "elfeed RSS")
-         ("r g" gnus "Gnus")
          ("r w" eww "web browser")
          ("r y" ytel "youtube"))
         "Management"
-        (("m" mu4e "mu4e")
+        (("(" mu4e "mu4e")
+         ("a" org-agenda-list "agenda")
          ("c" open-calendar "calendar")
+         ("p" list-packages "packages")
          ("T" tomatinho "pomodoro")
          ("o" crux-open-with "open"))
         "Diff"
@@ -3288,9 +3288,10 @@
          ("b" ale/ediff-current-buffers "quick diff")
          ("y" ale/diff-last-2-yanks "diff yanks"))
         "Tools"
-        (("p" list-packages "packages")
+        (("'" point-to-register "save bookmark")
+         ("j" jump-to-register "jump to bookmark")
          ("Q" quick-calc "quick-calc")
-         ("n" describe-number-at-point "describe number")
+         ;; ("n" describe-number-at-point "describe number")
          ("TAB" indent-region "indent region")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
