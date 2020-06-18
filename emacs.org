@@ -205,6 +205,7 @@
             rainbow-mode
             reformatter
             region-bindings-mode
+            rg
             sass-mode
             sbt-mode
             scala-mode
@@ -1314,6 +1315,8 @@
 
    [[https://blog.burntsushi.net/ripgrep/][Ripgrep]] is the the best tool for grepping anything anywhere these days. Combined with [[https://github.com/cosmicexplorer/helm-rg][helm-rg]], it’s all I need. And it also supports editing search results from the search buffer!
    #+BEGIN_SRC emacs-lisp
+     (use-package rg)
+
      (use-package helm-rg
        :after helm
        :hook (helm-rg--bounce-mode . (lambda () (aggressive-indent-mode -1)))
