@@ -208,6 +208,7 @@
             sass-mode
             sbt-mode
             scala-mode
+            selected
             shell-pop
             shrink-whitespace
             shx
@@ -1555,6 +1556,16 @@
 
      (use-package zop-to-char
        :bind ("C-M-z" . zop-up-to-char))
+
+     (use-package selected
+       :commands selected-minor-mode selected-global-mode
+       :bind (:map selected-keymap
+                   ("u" . upcase-region)
+                   ("l" . downcase-region)
+                   ("c" . capitalize-region)
+                   ("u" . upcase-region)
+                   ("w" . count-words-region))
+       :hook ((text-mode prog-mode) . selected-global-mode))
 
      (use-package multiple-cursors
        :bind (:map region-bindings-mode-map
