@@ -102,6 +102,7 @@
             dap-java
             dap-mode
             dap-ui-mode
+            darkroom
             dashboard
             default-text-scale
             defrepeater
@@ -3226,7 +3227,8 @@
          ("r" linum-relative-global-mode "relative line numbers" :toggle t)
          ("|" global-display-fill-column-indicator-mode "right margin" :toggle t)
          ("w" whitespace-mode "whitespace" :toggle t)
-         ("z" bzg-big-fringe-mode "zen" :toggle t))
+         ("z" darkroom-tentative-mode "darkroom" :toggle t)
+         ("Z" bzg-big-fringe-mode "zen (bzg)" :toggle t))
         "Coding"
         (("(" smartparens-global-mode "smartparens" :toggle t)
          (")" smartparens-global-strict-mode "smartparens strict" :toggle t)
@@ -3650,6 +3652,11 @@
    Zen environment for writing:
    #+BEGIN_SRC emacs-lisp
      (use-package olivetti :defer t)
+   #+END_SRC
+
+   Another, better zen environment:
+   #+BEGIN_SRC emacs-lisp
+     (use-package darkroom :defer t)
    #+END_SRC
 
 ** Music
