@@ -293,10 +293,10 @@ Swap buffers in the process"
    (cond
     (column (if selective-display nil column))
     ((not selective-display) 1)
-    ((equal selective-display 1) 2)
-    ((equal selective-display 2) 3)
-    ((equal selective-display 3) 4)
-    ((equal selective-display 4) nil))))
+    ((equal selective-display 1) 3)
+    ((equal selective-display 3) 5)
+    ((equal selective-display 5) 10)
+    ((equal selective-display 10) nil))))
 
 (defun ale/switch-to-fr-dict ()
   "Switch to French dictionary."
