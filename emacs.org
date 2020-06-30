@@ -3485,6 +3485,7 @@
   Let’s use a dashboard:
   #+BEGIN_SRC emacs-lisp
     (use-package dashboard
+      :disabled t
       :config
       (dashboard-setup-startup-hook)
       (setq dashboard-set-heading-icons t)
