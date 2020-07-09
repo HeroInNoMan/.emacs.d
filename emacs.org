@@ -155,6 +155,7 @@
             helm-lines
             helm-lobsters
             helm-lsp
+            helm-mu
             helm-projectile
             helm-rg
             helm-swoop
@@ -187,6 +188,9 @@
             miniedit
             minimap
             move-text
+            mu4e-alert
+            mu4e-jump-to-list
+            mu4e-query-fragments
             no-littering
             ob-restclient
             ob-shell
@@ -3124,33 +3128,174 @@
   Let’s use emacs to read our mail (with mu4e) :
   #+BEGIN_SRC emacs-lisp
     (use-package mu4e
-      :load-path "/usr/share/emacs/site-lisp/mu4e"
+      :load-path my-private-mu4e-path
       :ensure nil
       :commands mu4e
+      :custom-face (mu4e-flagged-face ((t (:foreground "gold"))))
+      :bind ( :map mu4e-view-mode-map
+              ("<down>" . down-arrow)
+              ("<up>" . up-arrow)
+              ("{" . mu4e-view-headers-prev-unread)
+              ("}" . mu4e-view-headers-next-unread)
+              :map mu4e-headers-mode-map
+              ("o" . mu4e-headers-change-sorting)
+              ("{" . mu4e-headers-prev-unread)
+              ("}" . mu4e-headers-next-unread)
+              :map mu4e-main-mode-map
+              ("," . mu4e-context-switch)
+              ("u" . mu4e-update-mail-and-index)
+              ("U" . set-update-rate)
+              ("p" . previous-line)
+              ("n" . next-line)
+              ("Q" . mu4e-quit)
+              ("q" . bury-buffer)
+              ("x" . mu4e-kill-update-mail))
+      :hook
+      (mu4e-view-mode . visual-line-mode)
+      (mu4e-compose-mode-hook . ale/switch-to-fr-dict)
       :config
-      (setq mu4e-maildir (expand-file-name "~/Maildir")
-            mu4e-drafts-folder "/[Gmail].Drafts"
-            mu4e-sent-folder   "/[Gmail].Sent Mail"
-            mu4e-trash-folder  "/[Gmail].Trash"
+      (defun set-update-rate (arg)
+        "Prompt for an update rate ARG in minutes."
+        (interactive "NUpdate rate in minutes: ")
+        (let ((rate (prefix-numeric-value arg)))
+          (setq mu4e-update-interval (* 60 rate))
+          (message "Will check mail every %s minutes (after mu4e restarts)." rate)))
 
-            ;; don't save message to Sent Messages, GMail/IMAP will take care of this
-            mu4e-sent-messages-behavior 'delete
+      (require 'org-mu4e)
+      ;;store link to message if in header view, not to header query
+      (setq org-mu4e-link-query-in-headers-mode nil)
+
+      (setq mu4e-maildir (expand-file-name "~/Maildir/ProtonMail")
+            mu4e-attachment-dir            "~/Téléchargements"
+            mu4e-drafts-folder             "/Drafts"
+            mu4e-sent-folder               "/Sent"
+            mu4e-trash-folder              "/Trash"
+            mu4e-refile-folder             "/Archive"
+
+            message-kill-buffer-on-exit t
+
+            ;; Send mail
+            message-send-mail-function  'smtpmail-send-it
+            smtpmail-auth-credentials   my-private-auth-file
+            smtpmail-smtp-server        my-private-smtp-server
+            smtpmail-smtp-service       my-private-smtp-port
+            mu4e-sent-messages-behavior 'sent
 
             ;; setup some handy shortcuts
             mu4e-maildir-shortcuts
-            '(("/INBOX"             . ?i)
-              ("/[Gmail].Starred"   . ?s)
-              ("/[Gmail].Sent Mail" . ?t)
-              ("/[Gmail].Trash"     . ?b))
+            '(("/INBOX"   . ?i)
+              ("/starred" . ?s)
+              ("/Drafts"  . ?d)
+              ("/Sent"    . ?t)
+              ("/Spam"    . ?m)
+              ("/Archive" . ?a)
+              ("/Gmail"   . ?g))
 
             ;; allow for updating mail using 'U' in the main view:
-            mu4e-get-mail-command "offlineimap"
+            mu4e-get-mail-command             "mbsync --all --quiet"
+            mu4e-change-filenames-when-moving t         ;; needed for mbsync
+            mu4e-update-interval              (* 10 60) ;; update every 10 minutes
+            mu4e-index-cleanup                t         ;; don't do a full cleanup check
+            mu4e-index-lazy-check             nil       ;; don't consider up-to-date dirs
+            mu4e-index-update-in-background   t         ;; update in the background
+            mu4e-use-fancy-chars              nil       ;; unicode characters mess up thread drawings
+            mu4e-view-show-images             t
+            mu4e-headers-results-limit        2000
+            user-mail-address                 my-private-mail-address
+            user-full-name                    my-private-full-name
+            message-signature                 my-private-full-name
+            mu4e-compose-signature            message-signature)
 
-            ;; something about ourselves
-            user-mail-address my-private-mail-address
-            user-full-name my-private-full-name
-            ;; I don't use a signature…
-            message-signature (concat "\n-- \n" my-private-full-name)))
+      ;; Use imagemagick, if available.
+      (when (fboundp 'imagemagick-register-types)
+        (imagemagick-register-types))
+
+      ;; Sometimes html email is just not readable in a text based client, this lets me open the
+      ;; email in my browser.
+      (setq mu4e-view-actions
+            '(("capture message"  . mu4e-action-capture-message)
+              ("view in browser"  . mu4e-action-view-in-browser)
+              ("show this thread" . mu4e-action-show-thread)))
+
+      (add-to-list 'mu4e-view-actions '("view in browser" . mu4e-action-view-in-browser) t)
+
+      ;; bookmarks  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      (setq mu4e-bookmarks
+            '((:name "Nouveaux"         :query (concat "date:3d.."
+                                                       " AND %unread"
+                                                       " AND NOT %hidden")      :key ?n)
+              (:name "Non lus"          :query (concat "%unread"
+                                                       " AND NOT %hidden")      :key ?u)
+              (:name "Perso"            :query (concat " %unread"
+                                                       " AND NOT %work"
+                                                       " AND NOT %hidden")      :key ?p)
+              (:name "Enercoop"         :query (concat " date:24h.."
+                                                       " AND %work"
+                                                       " AND NOT %hidden")      :key ?e)
+              (:name "Importants"       :query "flag:flagged"                   :key ?i)
+              (:name "Récents"          :query "date:5h.."                      :key ?r)
+              (:name "Aujourd’hui"      :query "date:today.."                   :key ?t)
+              (:name "Hier"             :query "date:1d.."                      :key ?h)
+              (:name "Dernière semaine" :query "date:7d.." :hide-unread t       :key ?w)
+              (:name "Dernier mois" :query "date:1m.."     :hide-unread t       :key ?m)
+              ;; (:name "Avec images"   :query "mime:image/*"                   :key ?i)
+              ))
+
+      ;; optimize header column sizes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      (setq mu4e-headers-fields
+            '((:human-date   . 10)
+              (:flags        . 5)
+              (:mailing-list . 25)
+              (:from         . 40)
+              (:subject))))
+
+    (use-package mu4e-jump-to-list :after mu4e)
+
+    (use-package helm-mu
+      :after mu4e helm
+      :bind ( :map mu4e-main-mode-map
+              ("c" . helm-mu-contacts)
+              ("S" . helm-mu)
+              :map mu4e-view-mode-map
+              ("c" . helm-mu-contacts)
+              ("S" . helm-mu)
+              :map mu4e-headers-mode-map
+              ("c" . helm-mu-contacts)
+              ("S" . helm-mu)))
+
+    (use-package mu4e-query-fragments
+      :after mu4e
+      :config
+      (setq mu4e-query-fragments-list
+            '(("%unread"  . "flag:unread")
+              ("%junk"    . "maildir:/Junk OR subject:SPAM")
+              ("%hidden"  . "flag:trashed OR %junk")
+              ("%gmail"   . "maildir:/Gmail")
+              ("%work"    . "maildir:/ProtonMail/Folders/.Enercoop-forward OR maildir:/ProtonMail/Labels/.Enercoop"))
+            mu4e-query-fragments-append "AND NOT %hidden"))
+
+    (use-package mu4e-alert
+      :after mu4e
+      :config
+      (setq
+       mu4e-alert-email-notification-types '(subjects)
+       ;; mu4e-alert-email-count-title "Nouveaux mails !"
+       mu4e-alert-interesting-mail-query (concat
+                                          "flag:unread"
+                                          " AND NOT %hidden"))
+      (mu4e-alert-enable-mode-line-display)
+      (mu4e-alert-set-default-style 'libnotify)
+      (mu4e-alert-enable-notifications))
+
+    (use-package mu4e-maildirs-extension
+      :disabled t
+      :after mu4e
+      :config (mu4e-maildirs-extension))
+
+    (use-package mu4e-conversation
+      :disabled t
+      :after mu4e
+      :config (global-mu4e-conversation-mode))
   #+END_SRC
 
   I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
@@ -3160,11 +3305,11 @@
       :defer t
       :config (setq message-send-mail-function 'smtpmail-send-it
                     starttls-use-gnutls t
-                    smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-server-port nil nil))
+                    smtpmail-starttls-credentials '((my-private-smtp-server my-private-smtp-port nil nil))
                     smtpmail-auth-credentials (expand-file-name my-private-auth-file)
                     smtpmail-default-smtp-server my-private-smtp-server
                     smtpmail-smtp-server my-private-smtp-server
-                    smtpmail-smtp-service my-private-smtp-server-port
+                    smtpmail-smtp-service my-private-smtp-port
                     smtpmail-debug-info t))
   #+END_SRC
 
@@ -3444,7 +3589,7 @@
       (setq doom-modeline-modal-icon t)
 
       ;; Whether display the mu4e notifications. It requires `mu4e-alert' package.
-      (setq doom-modeline-mu4e nil)
+      (setq doom-modeline-mu4e t)
 
       ;; Whether display the gnus notifications.
       (setq doom-modeline-gnus t)
