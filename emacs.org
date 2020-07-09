@@ -1832,7 +1832,7 @@
        :bind
        ("C-x g" . hydra-git/body)
        (:map magit-file-mode-map ("C-x g" . hydra-git/body))
-       :custom-face (magit-branch-current ((t (:foreground "cyan" :box (:line-width (3 . 3) :color "cyan" :style released-button)))))
+       :custom-face (magit-branch-current ((t (:foreground "#5cEfFF" :box (:line-width (3 . 3) :color "#5cEfFF" :style released-button)))))
        :config
        (pretty-hydra-define hydra-git
          (:color blue :quit-key "q")
