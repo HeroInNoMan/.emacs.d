@@ -2029,6 +2029,12 @@
        org-tags-column -80
        org-ellipsis " ▼"
 
+       ;; new lines and separators
+       org-blank-before-new-entry
+       '((heading . nil)
+         (plain-list-item . nil))
+       org-cycle-separator-lines 2
+
        ;; html export
        org-export-html-style-include-scripts nil
        org-export-html-style-include-default nil
