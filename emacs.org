@@ -119,6 +119,7 @@
             dired-collapse
             dired-narrow
             dired-subtree
+            dmacro
             docker
             dockerfile-mode
             dokuwiki
@@ -612,6 +613,12 @@
       (unbind-key "C-." dot-mode-map)
       (unbind-key "C-c ." dot-mode-map)
       (global-dot-mode))
+  #+END_SRC
+
+  Let’s try [[https://github.com/emacs-jp/dmacro][dmacro]], which seems even more vim-dotty-like:
+  #+BEGIN_SRC emacs-lisp
+    (use-package dmacro
+      :init (setq global-dmacro-mode t))
   #+END_SRC
 
   More custom bindings :
