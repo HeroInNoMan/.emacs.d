@@ -3206,6 +3206,11 @@
             message-signature                 my-private-full-name
             mu4e-compose-signature            message-signature)
 
+      ;; Various options for email writing
+      (setq mu4e-compose-dont-reply-to-self t
+            mu4e-compose-in-new-frame nil
+            mu4e-compose-format-flowed t)
+
       ;; Use imagemagick, if available.
       (when (fboundp 'imagemagick-register-types)
         (imagemagick-register-types))
