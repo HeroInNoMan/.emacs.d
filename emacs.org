@@ -3203,7 +3203,7 @@
             mu4e-headers-results-limit        2000
             user-mail-address                 my-private-mail-address
             user-full-name                    my-private-full-name
-            message-signature                 my-private-full-name
+            message-signature                 my-private-short-name
             mu4e-compose-signature            message-signature)
 
       ;; Various options for email writing
