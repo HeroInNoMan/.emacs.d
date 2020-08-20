@@ -4,6 +4,9 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; https://www.masteringemacs.org/article/speed-up-emacs-libjansson-native-elisp-compilation
+(setq comp-deferred-compilation t)
+
 ;; (debug-watch 'mode-local-init-hook)
 
 (setq base-emacs-directory user-emacs-directory)

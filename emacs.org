@@ -32,6 +32,11 @@
     (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 20000000)))
   #+END_SRC
 
+  https://www.reddit.com/r/emacs/comments/i8v4k2/bringing_gnu_emacs_to_native_code_gccemacs/
+  #+BEGIN_SRC emacs-lisp
+    (setq comp-deferred-compilation t)
+  #+END_SRC
+
 * Package Management
   I use [[https://github.com/jwiegley/use-package][use-package]] and [[https://melpa.org/][melpa]] to manage my packages and modules.
   #+BEGIN_SRC emacs-lisp
