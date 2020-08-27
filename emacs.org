@@ -3200,7 +3200,7 @@
             mu4e-index-update-in-background   t         ;; update in the background
             mu4e-use-fancy-chars              nil       ;; unicode characters mess up thread drawings
             mu4e-view-show-images             t
-            mu4e-headers-results-limit        2000
+            mu4e-headers-results-limit        500
             user-mail-address                 my-private-mail-address
             user-full-name                    my-private-full-name
             message-signature                 my-private-short-name
@@ -3227,23 +3227,20 @@
       ;; bookmarks  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (setq mu4e-bookmarks
             '((:name "Nouveaux"         :query (concat "date:3d.."
-                                                       " AND %unread"
-                                                       " AND NOT %hidden")      :key ?n)
-              (:name "Non lus"          :query (concat "%unread"
-                                                       " AND NOT %hidden")      :key ?u)
-              (:name "Perso"            :query (concat " %unread"
                                                        " AND NOT %work"
-                                                       " AND NOT %hidden")      :key ?p)
-              (:name "Enercoop"         :query (concat " date:24h.."
-                                                       " AND %work"
-                                                       " AND NOT %hidden")      :key ?e)
-              (:name "Importants"       :query "flag:flagged"                   :key ?i)
-              (:name "Récents"          :query "date:5h.."                      :key ?r)
-              (:name "Aujourd’hui"      :query "date:today.."                   :key ?t)
-              (:name "Hier"             :query "date:1d.."                      :key ?h)
-              (:name "Dernière semaine" :query "date:7d.." :hide-unread t       :key ?w)
-              (:name "Dernier mois" :query "date:1m.."     :hide-unread t       :key ?m)
-              ;; (:name "Avec images"   :query "mime:image/*"                   :key ?i)
+                                                       " AND %unread")                  :key ?n)
+              (:name "Non lus"          :query "%unread"                                :key ?u)
+              (:name "Perso"            :query (concat "%unread"
+                                                       " AND NOT %work")                :key ?p)
+              (:name "Enercoop"         :query (concat " date:1w.."
+                                                       " AND %work")                    :key ?e)
+              (:name "Importants"       :query "flag:flagged"                           :key ?i)
+              (:name "Récents"          :query "date:5h.. AND NOT %work"                :key ?r)
+              (:name "Aujourd’hui"      :query "date:today.. AND NOT %work"             :key ?t)
+              (:name "Hier"             :query "date:1d.. AND NOT %work"                :key ?h)
+              (:name "Dernière semaine" :query "date:7d.. AND NOT %work" :hide-unread t :key ?w)
+              (:name "Dernier mois"     :query "date:1m.. AND NOT %work" :hide-unread t :key ?m)
+              ;; (:name "Avec images"   :query "mime:image/*"                :key ?i)
               ))
 
       ;; optimize header column sizes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -3276,7 +3273,10 @@
               ("%junk"    . "maildir:/Junk OR subject:SPAM")
               ("%hidden"  . "flag:trashed OR %junk")
               ("%gmail"   . "maildir:/Gmail")
-              ("%work"    . "maildir:/ProtonMail/Folders/.Enercoop-forward OR maildir:/ProtonMail/Labels/.Enercoop"))
+              ("%autos"   . "from:easter-eggs.com OR to:enercoop.org OR list:\"Coopener.enercoop.github.com\"")
+              ("%encp-fw" . "maildir:/Folders/Enercoop-forward")
+              ("%encp-lb" . "maildir:/Labels/Enercoop")
+              ("%work"    . "%encp-fw OR %encp-lb OR %autos"))
             mu4e-query-fragments-append "AND NOT %hidden"))
 
     (use-package mu4e-alert
@@ -3286,7 +3286,9 @@
        mu4e-alert-email-notification-types '(subjects)
        ;; mu4e-alert-email-count-title "Nouveaux mails !"
        mu4e-alert-interesting-mail-query (concat
-                                          "flag:unread"
+                                          "%unread"
+                                          " AND NOT %work"
+                                          " AND NOT %autos"
                                           " AND NOT %hidden"))
       (mu4e-alert-enable-mode-line-display)
       (mu4e-alert-set-default-style 'libnotify)
