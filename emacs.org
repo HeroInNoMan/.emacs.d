@@ -903,8 +903,8 @@
 
     (use-package dumb-jump
       :bind (:map prog-mode-map
-                  ("C-." . dumb-jump-go)
-                  ("C-," . dumb-jump-back)
+                  ("C-." . xref-find-definitions)
+                  ("C-," . xref-pop-marker-stack)
                   ("C-;" . dumb-jump-quick-look)))
 
     (use-package minimap :defer t)
