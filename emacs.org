@@ -1,6 +1,7 @@
 #+TITLE: Emacs configuration file
 #+AUTHOR: Arthur Léothaud
 #+EMAIL: arthur@leothaud.eu
+#+PROPERTY: header-args :tangle yes
 
 #+STARTUP: showall
 
@@ -578,10 +579,7 @@
   Killing emacs; default binding is too easy to hit by accident.
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-x C-c") '(lambda () (interactive) (message "Use C-x r q (r·eally q·uit) to kill emacs.")))
-    (global-set-key (kbd "C-x r q") 'kill-emacs-and-tangle) ;; r·eally q·uit
-  #+END_SRC
-
-
+    (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
   #+END_SRC
 
   I never use the minimise command, use the binding for =repeat= instead.
@@ -3914,3 +3912,8 @@
    - https://github.com/jwiegley/dot-emacs
 ** other
    - https://github.com/sebastiencs
+
+* Local Variables
+  # Local Variables:
+  # eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)
+  # End:

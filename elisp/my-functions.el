@@ -528,19 +528,6 @@ Swap buffers in the process"
   (play-youtube-video
    (w3m-print-this-url (point))))
 
-(defun ale/tangle-config-file ()
-  "Tangle my config file."
-  (org-babel-tangle-file
-   (expand-file-name "emacs.org" base-emacs-directory)
-   (expand-file-name "emacs.el" base-emacs-directory))
-  (message "Tangled file compiled."))
-
-(defun kill-emacs-and-tangle ()
-  "Kill EMACS and tangle config file."
-  (interactive)
-  (ale/tangle-config-file)
-  (kill-emacs))
-
 (defun init-server-alist ()
   "Init the list of SQL connections based on `sql-connection-alist'."
   (defvar ale-sql-servers-list '()
