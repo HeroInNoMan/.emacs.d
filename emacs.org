@@ -3260,13 +3260,13 @@
       :after mu4e helm
       :bind ( :map mu4e-main-mode-map
               ("c" . helm-mu-contacts)
-              ("S" . helm-mu)
+              ("C-S-s" . helm-mu)
               :map mu4e-view-mode-map
               ("c" . helm-mu-contacts)
-              ("S" . helm-mu)
+              ("C-S-s" . helm-mu)
               :map mu4e-headers-mode-map
               ("c" . helm-mu-contacts)
-              ("S" . helm-mu)))
+              ("C-S-s" . helm-mu)))
 
     (use-package mu4e-query-fragments
       :after mu4e
