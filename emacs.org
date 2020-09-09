@@ -3209,7 +3209,7 @@
       ;; Various options for email writing
       (setq mu4e-compose-dont-reply-to-self t
             mu4e-compose-in-new-frame nil
-            mu4e-compose-format-flowed t)
+            mu4e-compose-format-flowed nil)
 
       ;; Use imagemagick, if available.
       (when (fboundp 'imagemagick-register-types)
