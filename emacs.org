@@ -205,6 +205,7 @@
             ox-asciidoc
             page-break-lines
             persistent-scratch
+            poke-line
             powerthesaurus
             pretty-hydra
             prism
@@ -3647,6 +3648,17 @@
       (defadvice doom-modeline-update-battery-status (after hide-full-battery activate)
         (when (battery-full-p)
           (setq doom-modeline--battery-status nil))))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package poke-line
+      :config
+      (poke-line-global-mode 1)
+      ;; https://github.com/RyanMillerC/poke-line/blob/master/docs/pokemon.md
+      (setq-default poke-line-pokemon "charmander")
+      (setq-default poke-line- "pikachu")
+      (setq poke-line-minimum-window-width 64)
+      (setq poke-line-bar-length 32))
   #+END_SRC
 
 * Startup screen
