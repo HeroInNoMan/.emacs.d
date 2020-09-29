@@ -105,6 +105,7 @@
             crux
             csv-mode
             ctrlf
+            ctrlxo
             dap-java
             dap-mode
             dap-ui-mode
@@ -866,13 +867,19 @@
   #+END_SRC
 
 * Navigation
-  I use [[https://github.com/abo-abo/ace-window][ace-window]] to quickly switch windows…
+  I use [[https://github.com/abo-abo/ace-window][ace-window]],
   #+BEGIN_SRC emacs-lisp
     (use-package ace-window
       :bind
       ("M-o" . other-window)
       ;; ("M-o" . ace-window)
       )
+  #+END_SRC
+
+  and [[https://github.com/muffinmad/emacs-ctrlxo][ctrlxo]], to quickly switch windows…
+  #+BEGIN_SRC emacs-lisp
+    (use-package ctrlxo
+      :bind ("C-x o" . ctrlxo))
   #+END_SRC
 
   … and avy to directly jump to a char.
