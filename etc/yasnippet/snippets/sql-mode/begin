@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: begin
+# key: beg
+# --
+BEGIN;
+$1;
+ROLLBACK
+-- COMMIT

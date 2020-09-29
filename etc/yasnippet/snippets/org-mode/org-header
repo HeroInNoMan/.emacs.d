@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: org header block
+# key: h
+# --
+#+TITLE: ${1:Title}
+#+AUTHOR: ${2:`(when (boundp 'my-private-full-name)(insert my-private-full-name))`}
+#+EMAIL: ${3:`(when (boundp 'my-private-mail-address)(insert my-private-mail-address))`}
+#+DESCRIPTION: $4
+#+CATEGORY: $5
+
+#+LANGUAGE: ${6:fr}
+
+#+STARTUP: showall
+#+STARTUP: hidestars
+
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+#+TODO: TODO(t) PROJET(p) MÉMO(o) NEXT(n) LIRE(l) VOIR(v) EMPRUNT(e) PRÊT(ê) MAYBE(m) STARTED(s) WAIT(w) | DONE(d) DÉLÉGUÉ(é) DIFFÉRÉ(f) ANNULÉ(a) CANCELLED(c)
+
+#+TAGS: $7
+
+$8
