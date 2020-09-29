@@ -1293,8 +1293,8 @@
          ("Find"
           (("l"     helm-locate "locate")
            ("/"     helm-fd "fd find")
-           ("F"     helm-find-files "files")
-           ("f"     helm-for-files "all files") ;; like helm-multi-files but always run locate
+           ("f"     helm-find-files "files")
+           ("F"     helm-for-files "all files") ;; like helm-multi-files but always run locate
            ("m"     helm-mini "mini")
            ("p"     helm-projectile "projectile")
            ("t"     helm-tramp "tramp"))
