@@ -152,6 +152,7 @@
             grip-mode
             groovy-mode
             guess-language
+            helm-atoms
             helm-cider
             helm-dash
             helm-descbinds
@@ -1278,6 +1279,7 @@
            ("t"     helm-tramp "tramp"))
           "Search"
           (("*"     helm-regexp "regexp" :column "Search")
+           ("a"     helm-atoms "rev. var lookup")
            ("o"     helm-occur "occur")
            ("s"     helm-swoop "swoop")
            ("R"     helm-rg "ripgrep")
@@ -1418,6 +1420,11 @@
    #+BEGIN_SRC emacs-lisp
      (use-package helm-lines
        :commands (helm-lines))
+   #+END_SRC
+
+   Let’s add [[https://github.com/dantecatalfamo/helm-atoms][reverse variable lookup]]!
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-atoms)
    #+END_SRC
 
    Finally, let’s use helm for connecting to remote hosts (via TRAMP).
