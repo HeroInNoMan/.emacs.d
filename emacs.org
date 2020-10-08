@@ -137,6 +137,7 @@
             ereader
             expand-region
             feather
+            fill-page
             fireplace
             fish-mode
             flycheck-rust
@@ -906,6 +907,11 @@
   #+BEGIN_SRC emacs-lisp
     (use-package beginend
       :hook ((prog-mode dired-mode text-mode) . beginend-global-mode))
+  #+END_SRC
+
+  Let’s optimise what is displayed in the window:
+  #+BEGIN_SRC emacs-lisp
+    (use-package fill-page :defer t)
   #+END_SRC
 
   More navigation commands:
@@ -3371,6 +3377,7 @@
          ("M" minimap-mode "minimap" :toggle t)
          ("t" treemacs "treemacs")
          ("T" centaur-tabs-mode "tabs" :toggle t)
+         ("j" global-fill-page-mode "fill-page" :toggle t)
          ("W" mouse-wheel-mode "mouse wheel" :toggle t))
         "Highlighting"
         (("b" beacon-mode "beacon" :toggle t)
