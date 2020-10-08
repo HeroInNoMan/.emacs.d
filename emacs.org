@@ -133,6 +133,7 @@
             elfeed-org
             elisp-slime-nav
             elpy
+            emojify
             ensime
             ereader
             expand-region
@@ -417,6 +418,12 @@
     (use-package iso-transl ;; some environments don’t handle dead keys
       :ensure nil
       :defer t)
+  #+END_SRC
+
+  Let’s [[https://github.com/iqbalansari/emacs-emojify][emojify]] things :
+  #+BEGIN_SRC emacs-lisp
+    (use-package emojify
+      :hook (after-init . global-emojify-mode))
   #+END_SRC
 
   Some commands are disabled by default, let’s enable them:
