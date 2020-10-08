@@ -439,7 +439,11 @@
   This is supposed to improve performances when dealing with very long lines:
   #+BEGIN_SRC emacs-lisp
     (setq bidi-paragraph-direction 'left-to-right)
-    (setq bidi-inhibit-bpa t)
+
+    (if (version<= "27.1" emacs-version)
+        (progn
+          (setq bidi-inhibit-bpa t)
+          (global-so-long-mode 1)))
   #+END_SRC
 
   Let’s add some auto-backup configuration:
