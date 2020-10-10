@@ -260,7 +260,8 @@
             yasnippet-snippets
             ytel
             zop-to-char
-            ztree))
+            ztree
+            zygospore))
   #+END_SRC
 
   Let’s use [[https://github.com/conao3/feather.el][feather]] to manage packages in an asynchronous, multi-threaded way:
@@ -1655,6 +1656,13 @@
        ("C-«" . split-window-below)
        ("C-»" . split-window-right)
        ("C-*" . delete-window))
+   #+END_SRC
+
+   I use [[https://github.com/louiskottmann/zygospore.el][Zygospore]] to be able to revert ~delete-other-windows~:
+   #+BEGIN_SRC emacs-lisp
+     (use-package zygospore
+       :bind ("C-x 1" . zygospore-toggle-delete-other-windows)
+       ("C-\"" . zygospore-toggle-delete-other-windows))
    #+END_SRC
 
    Revert windows on ediff exit - needs winner mode.
@@ -3227,7 +3235,7 @@
             mu4e-change-filenames-when-moving t         ;; needed for mbsync
             mu4e-update-interval              (* 10 60) ;; update every 10 minutes
             mu4e-index-cleanup                t         ;; don't do a full cleanup check
-            mu4e-index-lazy-check             nil       ;; don't consider up-to-date dirs
+            mu4e-index-lazy-check             t         ;; don't consider up-to-date dirs
             mu4e-index-update-in-background   t         ;; update in the background
             mu4e-use-fancy-chars              nil       ;; unicode characters mess up thread drawings
             mu4e-view-show-images             t
@@ -3257,7 +3265,7 @@
 
       ;; bookmarks  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (setq mu4e-bookmarks
-            '((:name "Nouveaux"         :query (concat "date:3d.."
+            '((:name "Nouveaux"         :query (concat "date:30d.."
                                                        " AND NOT %work"
                                                        " AND %unread")                  :key ?n)
               (:name "Non lus"          :query "%unread"                                :key ?u)
@@ -3271,6 +3279,8 @@
               (:name "Hier"             :query "date:1d.. AND NOT %work"                :key ?h)
               (:name "Dernière semaine" :query "date:7d.. AND NOT %work" :hide-unread t :key ?w)
               (:name "Dernier mois"     :query "date:1m.. AND NOT %work" :hide-unread t :key ?m)
+              (:name "Work"             :query (concat "%work"
+                                                       " AND flag:unread")                 :key ?e)
               ;; (:name "Avec images"   :query "mime:image/*"                :key ?i)
               ))
 
