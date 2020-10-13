@@ -3925,19 +3925,18 @@
          :config
          ;; (elfeed-protocol-enable)
          (setq elfeed-feeds my-private-feeds
-               elfeed-search-title-max-width 120)
+               elfeed-search-title-max-width 120
 
-         (setq elfeed-use-curl nil)
-         (setq elfeed-protocol-ttrss-maxsize 200) ;; bigger than 200 is invalid
+               elfeed-use-curl nil
+               elfeed-protocol-ttrss-maxsize 200 ;; bigger than 200 is invalid
 
-         (setq elfeed-feeds
-               '(
-                 ("ttrss+https://username@domain/tt-rss"
+               elfeed-feeds
+               '(("ttrss+https://username@domain/tt-rss"
                   :password ""))))
 
        (use-package elfeed-org
          :defer t
-         :after elfeed
+         :after (elfeed org)
          :config
          (elfeed-org)
          (setq rmh-elfeed-org-auto-ignore-invalid-feeds t
