@@ -267,24 +267,24 @@
   Let’s use [[https://github.com/conao3/feather.el][feather]] to manage packages in an asynchronous, multi-threaded way:
   #+BEGIN_SRC emacs-lisp
     (use-package feather
-    :delight
-    :hook (package-menu-mode . feather-mode))
+      :delight
+      :hook (package-menu-mode . feather-mode))
   #+END_SRC
 
   Try packages without installing them:
   #+BEGIN_SRC emacs-lisp
-   (use-package try :defer t)
+    (use-package try :defer t)
   #+END_SRC
 
 * Emacs directory
   Let’s keep =~/.emacs.d= tidy:
   #+BEGIN_SRC emacs-lisp
-   (use-package no-littering
-     :config
-     (require 'recentf)
-     (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
-     (add-to-list 'recentf-exclude no-littering-var-directory)
-     (add-to-list 'recentf-exclude no-littering-etc-directory))
+    (use-package no-littering
+      :config
+      (require 'recentf)
+      (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
+      (add-to-list 'recentf-exclude no-littering-var-directory)
+      (add-to-list 'recentf-exclude no-littering-etc-directory))
   #+END_SRC
 
   Private information is stored in variables in =~/.emacs.d/private.el=
