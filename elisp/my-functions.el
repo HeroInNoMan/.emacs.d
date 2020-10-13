@@ -223,7 +223,7 @@ Swap buffers in the process"
   (unwind-protect
       (progn
         (linum-mode 1)
-        (forward-line (read-number "Goto line: ")))
+        (goto-line (read-number "Goto line: ")))
     (progn
       (linum-mode -1)
       (git-gutter-mode +1))))
