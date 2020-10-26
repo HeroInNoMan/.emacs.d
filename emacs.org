@@ -2082,6 +2082,7 @@
        org-log-repeat 'nil
        org-refile-targets '((nil :maxlevel . 2)
                             (org-agenda-files :maxlevel . 2))
+       org-agenda-include-diary t
        org-completion-use-ido t
        org-tags-column -80
        org-ellipsis " ▼"
