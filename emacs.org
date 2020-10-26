@@ -1204,7 +1204,9 @@
          (interactive
           (progn (init-server-alist)
                  (helm-comp-read "Select server: " ale-sql-servers-list)))
-         (funcall func))
+         (funcall func)
+         (when (boundp 'my-private-sql-scratch-buffer)
+           (find-file-other-window my-private-sql-scratch-buffer)))
 
        (setq helm-M-x-fuzzy-match t
              helm-locate-command "locate %s -e -A --regex %s -d ~/mlocate.db"
