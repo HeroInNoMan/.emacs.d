@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Leothaud
+# name: defadvice
+# key: defadvice
+# --
+  (defadvice FUNCTION (CLASS $1 [POSITION] [ARGLIST] FLAG...)
+    [DOCSTRING] [INTERACTIVE-FORM]
+    BODY...)
