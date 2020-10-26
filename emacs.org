@@ -1482,6 +1482,7 @@
        ("C-h y" . yas-describe-tables)
        ("C-c y" . hydra-yasnippet/body)
        :config
+       (setq yas-triggers-in-field t)
        (setq yas-snippet-dirs
              `(,(concat base-emacs-directory "etc/yasnippet/snippets")
                ,(car (file-expand-wildcards (concat base-emacs-directory "elpa/yasnippet-snippets-20*/snippets")))))
