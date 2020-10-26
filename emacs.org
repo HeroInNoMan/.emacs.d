@@ -3957,6 +3957,13 @@
       :commands helm-lobsters)
     #+END_SRC
 
+
+* Epilogue
+  Run one last function called epilogue if it is available:
+  #+BEGIN_SRC emacs-lisp
+    (if (fboundp 'epilogue)
+        (epilogue))
+  #+END_SRC
 * Useful links
 ** one entry point to find them all
    - https://planet.emacslife.com/
