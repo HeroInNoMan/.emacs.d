@@ -924,8 +924,7 @@
 
   I use the nice ~beginend~ package to enhance ~beginning-of-buffer~ and ~end-of-buffer~ commands.
   #+BEGIN_SRC emacs-lisp
-    (use-package beginend
-      :hook ((prog-mode dired-mode text-mode) . beginend-global-mode))
+    (use-package beginend :defer t)
   #+END_SRC
 
   Let’s optimise what is displayed in the window:
