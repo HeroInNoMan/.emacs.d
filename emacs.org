@@ -206,6 +206,7 @@
             ob-restclient
             ob-shell
             org-bullets
+            org-super-agenda
             origami
             ox-asciidoc
             page-break-lines
@@ -2082,6 +2083,7 @@
        org-refile-targets '((nil :maxlevel . 2)
                             (org-agenda-files :maxlevel . 2))
        org-agenda-include-diary t
+       org-agenda-span 'day
        org-completion-use-ido t
        org-tags-column -80
        org-ellipsis " ▼"
@@ -2295,6 +2297,125 @@
     (use-package htmlize :after org)
     (use-package swagger-to-org :after org)
     (use-package ox-asciidoc :after org)
+    (use-package org-habit
+      :ensure nil
+      :after org
+      :config (setq org-habit-following-days 30
+                    org-habit-preceding-days 4
+                    org-habit-graph-column 65))
+    (use-package org-super-agenda
+      :after (org origami)
+      :hook ((org-agenda-mode . origami-mode)
+             (org-agenda-finalize . ale/org-super-agenda-origami-fold-default))
+      :bind (:map org-super-agenda-header-map
+                  ("<tab>" . origami-toggle-node))
+      :config
+      (defvar ale/org-super-agenda-auto-show-groups
+        '(
+          "C Y C L I Q U E S"
+          "I M P O R T A N T"
+          "E N   C O U R S"
+          "R A P I D E"
+          "N E X T"
+          "J O U R N É E"
+          "E N   A T T E N T E"
+          "E N E R C O O P"
+          "A U J O U R D ’ H U I"
+          "E N   R E T A R D"
+          "E M P R U N T S"
+          "E M A C S"
+          "S E C O N D A I R E"
+          "Other items"))
+      (org-super-agenda-mode)
+      (defun ale/org-super-agenda-origami-fold-default ()
+        "Fold certain groups by default in Org Super Agenda buffer."
+        (forward-line 3)
+        (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
+                 while (origami-forward-fold-same-level (current-buffer) (point)))
+        (--each ale/org-super-agenda-auto-show-groups
+          (goto-char (point-min))
+          (when (re-search-forward (rx-to-string `(seq bol " " ,it)) nil t)
+            (origami-show-node (current-buffer) (point)))))
+
+      (setq org-super-agenda-groups
+            '(;; Each group has an implicit boolean OR operator between its selectors.
+              (:name "C Y C L I Q U E S"
+                     :order 30
+                     :habit t)
+
+              (:name "I M P O R T A N T"
+                     :face ( :weight bold
+                             :box ( :line-width (3 . 3)
+                                    :color "red"
+                                    :style released-button))
+                     :and ( :priority "A"
+                            :not (:todo "DONE")
+                            :tag "enercoop"))
+              (:order-multi (2
+                             (:name "E N   C O U R S"
+                                    :face ( :foreground "orange3"
+                                            :weight bold)
+                                    :todo ("WIP" "STARTED" "DELEGATED"))
+
+                             (:name "R A P I D E"
+                                    :face ( :foreground "DeepSkyBlue"
+                                            :weight bold)
+                                    :and ( :todo ("TODO" "NEXT")
+                                           :effort< "10"))
+
+                             (:name "N E X T"
+                                    :face ( :foreground "Darkolivegreen2"
+                                            :weight bold)
+                                    :and ( :todo "NEXT")) ))
+
+              (:name "J O U R N É E"
+                     :order 1
+                     :time-grid t
+                     :and ( :scheduled today
+                            :time-grid t))
+
+              (:name "E N   A T T E N T E"
+                     :order 20
+                     :todo ("WAIT" "BLOCKED" "DEFERRED"))
+
+              (:name "T R A V A I L"
+                     :order 4
+                     :face ( :foreground "gold"
+                             :weight bold)
+                     :and ( :todo ("TODO" "NEXT" "PROJECT" "STARTED" "WIP")
+                            :scheduled t
+                            :not (:priority< "B")
+                            :tag ("enercoop" "work" "travail")))
+
+              (:name "A U J O U R D ’ H U I"
+                     :order 5
+                     :and ( :scheduled today
+                            :not (:habit t)
+                            :todo "TODO"))
+
+              (:name "E N   R E T A R D"
+                     :order 6
+                     :and ( :scheduled past
+                            :not (:habit t)
+                            :todo "TODO"))
+
+              (:name "E M P R U N T S"
+                     :order 41
+                     :tag ("ÉCHANGES"))
+
+
+              (:name "E M A C S"
+                     :order 41
+                     :regexp "emacs"
+                     :tag "emacs")
+
+              (:name "S E C O N D A I R E"
+                     :order 50
+                     :scheduled future
+                     :scheduled past
+                     :todo ("TODO" "NEXT")
+                     :priority<= "B")
+              )))
   #+END_SRC
 
   Use fancy bullets in org-mode:
