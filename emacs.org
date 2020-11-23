@@ -1886,9 +1886,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package magit
        :chords ("qg" . magit-status) ;; run git status for current buffer
-       :bind
-       ("C-x g" . hydra-git/body)
-       (:map magit-file-mode-map ("C-x g" . hydra-git/body))
+       :bind ("C-x g" . hydra-git/body)
        :custom-face (magit-branch-current ((t (:foreground "#5cEfFF" :box (:line-width (3 . 3) :color "#5cEfFF" :style released-button)))))
        :config
        (pretty-hydra-define hydra-git
