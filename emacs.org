@@ -207,6 +207,7 @@
             ob-shell
             org-bullets
             org-super-agenda
+            org-tree-slide
             origami
             ox-asciidoc
             page-break-lines
@@ -2295,6 +2296,8 @@
     (use-package htmlize :after org)
     (use-package swagger-to-org :after org)
     (use-package ox-asciidoc :after org)
+    (use-package org-tree-slide
+      )
     (use-package org-habit
       :ensure nil
       :after org
