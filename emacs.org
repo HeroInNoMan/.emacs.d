@@ -2187,6 +2187,7 @@
               ("NEXT" . (:foreground "pink" :weight bold))
               ("LIRE" . (:foreground "pink" :weight bold))
               ("VOIR" . (:foreground "pink" :weight bold))
+              ("ÉCOUTER" . (:foreground "pink" :weight bold))
               ("EMPRUNT" . (:foreground "pink" :weight bold))
               ("PRÊT" . (:foreground "pink" :weight bold))
               ("PROJET" . (:foreground "pink2" :weight bold))
