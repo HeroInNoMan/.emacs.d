@@ -198,6 +198,7 @@
             meghanada
             miniedit
             minimap
+            monkeytype
             move-text
             mu4e-alert
             mu4e-jump-to-list
@@ -4101,6 +4102,10 @@
 *** Typing
     #+BEGIN_SRC emacs-lisp
       (use-package speed-type :defer t)
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package monkeytype :defer t)
     #+END_SRC
 
 *** Other
