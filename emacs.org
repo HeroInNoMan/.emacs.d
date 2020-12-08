@@ -151,6 +151,7 @@
             gitconfig-mode
             gitignore-mode
             god-mode
+            goggles
             goto-last-change
             gradle-mode
             grip-mode
@@ -253,7 +254,6 @@
             use-package-chords
             vimish-fold
             visual-regexp-steroids
-            volatile-highlights
             web-mode
             webpaste
             wgrep
@@ -757,8 +757,10 @@
 ** Highlight feedback
    Let’s have a visual feedback when performing cut/copy/paste operations.
    #+BEGIN_SRC emacs-lisp
-     (use-package volatile-highlights
-       :hook (prog-mode . volatile-highlights-mode))
+     (use-package goggles
+       :config
+       (goggles-mode)
+       (setq-default goggles-pulse t)) ;; set to nil to disable pulsing
 
      (use-package idle-highlight-mode
        :hook (prog-mode)
@@ -3625,7 +3627,7 @@
          ("R" rainbow-blocks-mode "rainbow blocks" :toggle t)
          ("I" highlight-indent-guides-mode "indent guide" :toggle t)
          ("m" hide-mode-line-mode "hide mode-line" :toggle t)
-         ("V" volatile-highlights-mode "volatile highlight" :toggle t))
+         ("V" goggles-mode "googles" :toggle t))
         "Decoration"
         (("G" grip-mode "md/org preview" :toggle t)
          ("h" hl-line-mode "highlight line" :toggle t)
