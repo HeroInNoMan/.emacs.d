@@ -2089,7 +2089,10 @@
        org-refile-targets '((nil :maxlevel . 2)
                             (org-agenda-files :maxlevel . 2))
        org-agenda-include-diary t
-       org-agenda-span 'day
+       org-agenda-weekend-days '(0 5 6) ;; week-end is friday, saturday, sunday
+       org-agenda-start-day nil
+       org-agenda-start-on-weekday nil
+       org-agenda-span 'week
        org-completion-use-ido t
        org-tags-column -80
        org-ellipsis " ▼"
@@ -2316,9 +2319,9 @@
       :after (org origami)
       :hook ((org-agenda-mode . origami-mode)
              (org-agenda-finalize . ale/org-super-agenda-origami-fold-default))
-      :bind ( ("<f8>" . org-super-agenda-groups-function)
-              :map org-super-agenda-header-map
-              ("<tab>" . origami-toggle-node))
+      :bind (("<f8>" . org-super-agenda-groups-function)
+             :map org-super-agenda-header-map
+             ("<tab>" . origami-toggle-node))
       :config
       (defvar ale/org-super-agenda-auto-show-groups
         '(
@@ -2326,7 +2329,6 @@
           "I M P O R T A N T"
           "E N   C O U R S"
           "R A P I D E"
-          ;; "N E X T"
           "J O U R N É E"
           "E N   A T T E N T E"
           "T R A V A I L"
@@ -2348,166 +2350,75 @@
       (defun org-super-agenda-groups-function (args)
         "Call the agenda with super groups."
         (interactive "P")
-        (let ((org-agenda-span 'day)
-              (org-super-agenda-groups
-               '(;; Each group has an implicit boolean OR operator between its selectors.
-                 (:name "C Y C L I Q U E S"
-                        :order 30
-                        :habit t)
+        (setq org-agenda-span 'week
+              org-super-agenda-groups
+              '(;; Each group has an implicit boolean OR operator between its selectors.
+                (:name "C Y C L I Q U E S"
+                       :order 30
+                       :habit t)
 
-                 (:name "J O U R N É E"
-                        :order 1
-                        :time-grid t
-                        :and ( :scheduled today
-                               :time-grid t))
+                (:name "J O U R N É E"
+                       :order 1
+                       :time-grid t
+                       :and ( :scheduled today
+                              :time-grid t))
 
-                 (:name "I M P O R T A N T"
-                        :face (
-                               :foreground "red"
-                               :weight bold
+                (:name "I M P O R T A N T"
+                       :face ( :foreground "red"
+                               :weight bold)
+                       :and ( :priority "A"
+                              :not (:todo "DONE")
+                              :tag "enercoop"))
 
-                               ;; :box ( :line-width (3 . 3)
-                               ;;        :color "red"
-                               ;;        :style released-button)
-                               )
-                        :and ( :priority "A"
-                               :not (:todo "DONE")
-                               :tag "enercoop"))
+                (:name "E N   C O U R S"
+                       :order 2
+                       :face ( :foreground "orange3"
+                               :weight bold)
+                       :todo ("WIP" "STARTED" "DELEGATED"))
 
-                 (:order-multi (2
-                                (:name "E N   C O U R S"
-                                       :face ( :foreground "orange3"
-                                               :weight bold)
-                                       :todo ("WIP" "STARTED" "DELEGATED"))
+                (:name "R A P I D E"
+                       :order 2
+                       :face ( :foreground "DeepSkyBlue"
+                               :weight bold)
+                       :and ( :todo ("TODO" "NEXT")
+                              :effort< "10"))
 
-                                (:name "R A P I D E"
-                                       :face ( :foreground "DeepSkyBlue"
-                                               :weight bold)
-                                       :and ( :todo ("TODO" "NEXT")
-                                              :effort< "10"))
+                (:name "E N   A T T E N T E"
+                       :order 20
+                       :todo ("WAIT" "BLOCKED" "DEFERRED"))
 
-                                ;; (:name "N E X T"
-                                ;;        :face ( :foreground "Darkolivegreen2"
-                                ;;                :weight bold)
-                                ;;        :and ( :todo "NEXT"))
-                                ))
+                (:name "T R A V A I L"
+                       :order 4
+                       :face ( :foreground "gold"
+                               :weight bold)
+                       :and ( :todo ("TODO" "NEXT" "PROJECT")
+                              :scheduled t
+                              :not (:priority< "C")
+                              :tag ("enercoop" "work" "travail")))
 
-                 (:name "E N   A T T E N T E"
-                        :order 20
-                        :todo ("WAIT" "BLOCKED" "DEFERRED"))
+                (:name "T O D O"
+                       :order 5
+                       :and ( :scheduled today
+                              :not (:habit t)
+                              :todo "TODO"))
 
-                 (:name "T R A V A I L"
-                        :order 4
-                        :face ( :foreground "gold"
-                                :weight bold)
-                        :and ( :todo ("TODO" "NEXT" "PROJECT")
-                               :scheduled t
-                               :not (:priority< "C")
-                               :tag ("enercoop" "work" "travail")))
+                (:name "E N   R E T A R D"
+                       :order 6
+                       :and ( :scheduled past
+                              :not (:habit t)
+                              :todo "TODO"))
 
-                 (:name "T O D O"
-                        :order 5
-                        :and ( :scheduled today
-                               :not (:habit t)
-                               :todo "TODO"))
-
-                 (:name "E N   R E T A R D"
-                        :order 6
-                        :and ( :scheduled past
-                               :not (:habit t)
-                               :todo "TODO"))
-
-                 (:name "E M P R U N T S"
-                        :order 41
-                        :tag ("ÉCHANGES"))
+                (:name "E M P R U N T S"
+                       :order 41
+                       :discard (:todo ("CANCELLED"))
+                       :tag ("ÉCHANGES"))
 
 
-                 (:name "E M A C S"
-                        :order 41
-                        :regexp "emacs"
-                        :tag "emacs")
-                 )))
-          (org-agenda-list)))
-
-      ;; (setq org-super-agenda-groups
-      ;;       '(;; Each group has an implicit boolean OR operator between its selectors.
-      ;;         (:name "C Y C L I Q U E S"
-      ;;                :order 30
-      ;;                :habit t)
-
-      ;;         (:name "J O U R N É E"
-      ;;                :order 1
-      ;;                :time-grid t
-      ;;                :and ( :scheduled today
-      ;;                       :time-grid t))
-
-      ;;         (:name "I M P O R T A N T"
-      ;;                :face (
-      ;;                       :foreground "red"
-      ;;                       :weight bold
-
-      ;;                       ;; :box ( :line-width (3 . 3)
-      ;;                       ;;        :color "red"
-      ;;                       ;;        :style released-button)
-      ;;                       )
-      ;;                :and ( :priority "A"
-      ;;                       :not (:todo "DONE")
-      ;;                       :tag "enercoop"))
-
-      ;;         (:order-multi (2
-      ;;                        (:name "E N   C O U R S"
-      ;;                               :face ( :foreground "orange3"
-      ;;                                       :weight bold)
-      ;;                               :todo ("WIP" "STARTED" "DELEGATED"))
-
-      ;;                        (:name "R A P I D E"
-      ;;                               :face ( :foreground "DeepSkyBlue"
-      ;;                                       :weight bold)
-      ;;                               :and ( :todo ("TODO" "NEXT")
-      ;;                                      :effort< "10"))
-
-      ;;                        ;; (:name "N E X T"
-      ;;                        ;;        :face ( :foreground "Darkolivegreen2"
-      ;;                        ;;                :weight bold)
-      ;;                        ;;        :and ( :todo "NEXT"))
-      ;;                        ))
-
-      ;;         (:name "E N   A T T E N T E"
-      ;;                :order 20
-      ;;                :todo ("WAIT" "BLOCKED" "DEFERRED"))
-
-      ;;         (:name "T R A V A I L"
-      ;;                :order 4
-      ;;                :face ( :foreground "gold"
-      ;;                        :weight bold)
-      ;;                :and ( :todo ("TODO" "NEXT" "PROJECT")
-      ;;                       :scheduled t
-      ;;                       :not (:priority< "C")
-      ;;                       :tag ("enercoop" "work" "travail")))
-
-      ;;         (:name "T O D O"
-      ;;                :order 5
-      ;;                :and ( :scheduled today
-      ;;                       :not (:habit t)
-      ;;                       :todo "TODO"))
-
-      ;;         (:name "E N   R E T A R D"
-      ;;                :order 6
-      ;;                :and ( :scheduled past
-      ;;                       :not (:habit t)
-      ;;                       :todo "TODO"))
-
-      ;;         (:name "E M P R U N T S"
-      ;;                :order 41
-      ;;                :tag ("ÉCHANGES"))
-
-
-      ;;         (:name "E M A C S"
-      ;;                :order 41
-      ;;                :regexp "emacs"
-      ;;                :tag "emacs")
-      ;;         ))
-      )
+                (:name "E M A C S"
+                       :order 41
+                       :regexp "emacs"
+                       :tag "emacs")))
+        (org-agenda-list)))
 
   #+END_SRC
 
