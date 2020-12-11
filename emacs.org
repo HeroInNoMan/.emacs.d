@@ -1997,6 +1997,7 @@
        (("t" ab/date-short-with-time (format-time-string "%Y/%m/%d %H:%M"))
         ("T" ab/date-long-with-time (format-time-string "%A %d %B %Y - %H:%M") :width 33)
         ("i" ab/date-iso-with-time (format-time-string "%FT%T%z"))
+        ("x" crux-insert-date "crux format")
         ("O" ale/org-date-time (format-time-string "<%F %a %H:%M>")))
        "Go to"
        (("g" ale/org-diary-goto-today (format-time-string "%F")))))
