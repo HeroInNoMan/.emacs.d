@@ -405,6 +405,7 @@
     (use-package ido
       :ensure nil
       :config
+      (setq ido-max-prospects 25)
       (ido-mode t)
       (setq ido-enable-flex-matching t))
   #+END_SRC
