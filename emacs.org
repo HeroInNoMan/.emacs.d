@@ -312,6 +312,15 @@
       (load custom-file))
   #+END_SRC
 
+  Let’s allow tangling files without confirmation
+  #+BEGIN_SRC emacs-lisp
+    (setq-default safe-local-variable-values
+                  '((eval add-hook 'after-save-hook
+                          (lambda nil
+                            (org-babel-tangle))
+                          nil t)))
+  #+END_SRC
+
 * Custom functions
   My custom (often stolen) lisp code is stored in =elisp/my-functions.el=.
   #+BEGIN_SRC emacs-lisp
