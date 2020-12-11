@@ -1897,6 +1897,7 @@
        :bind ("C-x g" . hydra-git/body)
        :custom-face (magit-branch-current ((t (:foreground "#5cEfFF" :box (:line-width (3 . 3) :color "#5cEfFF" :style released-button)))))
        :config
+       (put 'magit-edit-line-commit 'disabled nil)
        (pretty-hydra-define hydra-git
          (:color blue :quit-key "q")
          ("Gutter"
@@ -1905,14 +1906,13 @@
            ("r" git-gutter:revert-hunk "revert hunk" :color pink)
            ("s" git-gutter:stage-hunk "stage hunk" :color pink)
            ("u" git-gutter-mode "gutter mode"))
-          "Log"
-          (("b" magit-blame "blame")
-           ("l" magit-log-buffer-file "file history")
-           ("t" git-timemachine "time machine"))
-          "Other"
+          "Magit"
           (("." magit-status "status")
-           ("g" git-messenger:popup-message "message")
-           ("f" magit-file-popup "file popup")))))
+           ("d" magit-dispatch "dispatch…")
+           ("g" magit-file-dispatch "file action…"))
+          "Other"
+          (("t" git-timemachine "time machine")
+           ("m" git-messenger:popup-message "popup message")))))
 
      (use-package forge
        :after magit)
