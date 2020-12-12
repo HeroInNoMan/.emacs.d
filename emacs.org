@@ -1905,7 +1905,10 @@
      (use-package magit
        :chords ("qg" . magit-status) ;; run git status for current buffer
        :bind ("C-x g" . hydra-git/body)
-       :custom-face (magit-branch-current ((t (:foreground "#5cEfFF" :box (:line-width (3 . 3) :color "#5cEfFF" :style released-button)))))
+       :custom-face (magit-branch-current ((t ( :foreground "#5cEfFF"
+                                                :box ( :line-width (3 . 3)
+                                                       :color "#5cEfFF"
+                                                       :style released-button)))))
        :config
        (put 'magit-edit-line-commit 'disabled nil)
        (pretty-hydra-define hydra-git
