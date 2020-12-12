@@ -835,7 +835,7 @@
        (rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark turquoise"))))
        (rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "deep pink"))))
        (rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow1"))))
-       (rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "blue"))))
+       (rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "orange"))))
        (rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "white"))))
        (rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon")))))
    #+END_SRC
@@ -2576,6 +2576,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package paren
        :ensure nil
+       :custom-face (show-paren-match ((t ( :underline "white"
+                                            :weight ultra-bold
+                                            :background "black"
+                                            :foreground "white"))))
        :config (show-paren-mode 1))
 
      (use-package smartparens
