@@ -336,6 +336,8 @@
       :bind
       ("C-S-p" . up-arrow)
       ("C-S-n" . down-arrow)
+      ("C-M-S-p" . scroll-down-line)
+      ("C-M-S-n" . scroll-up-line)
       ("M-é" . previous-user-buffer)                   ;; call previous user buffer
       ("M-è" . next-user-buffer)                       ;; call next user buffer
       ("C-M-é" . previous-buffer)                      ;; call previous buffer
