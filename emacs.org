@@ -3641,7 +3641,7 @@
          ("h" hl-line-mode "highlight line" :toggle t)
          ("D" display-battery-mode "display battery" :toggle t)
          ("p" prettify-symbols-mode "prettify symbols" :toggle t)
-         ("l" linum-mode "line number" :toggle t)
+         ("l" global-linum-mode "line number" :toggle t)
          ("r" linum-relative-global-mode "relative line numbers" :toggle t)
          ("|" global-display-fill-column-indicator-mode "right margin" :toggle t)
          ("w" whitespace-mode "whitespace" :toggle t))
