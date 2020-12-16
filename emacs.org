@@ -2660,8 +2660,8 @@
        :ensure nil
        :custom-face (show-paren-match ((t ( :underline "white"
                                             :weight ultra-bold
-                                            :background "black"
-                                            :foreground "white"))))
+                                            :background unspecified
+                                            :foreground unspecified))))
        :config (show-paren-mode 1))
 
      (use-package smartparens
