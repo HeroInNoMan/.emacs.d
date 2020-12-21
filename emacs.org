@@ -2756,7 +2756,7 @@
        (sh-mode . flycheck-mode)
        (sh-mode . (lambda () (setq tab-width 2
                               sh-basic-offset 2
-                              indent-tabs-mode t))))
+                              indent-tabs-mode nil))))
 
      (use-package shx :defer t)
      ;;(autoload 'sh-mode "sh-mode" "Major mode for editing shell scripts." t)
@@ -2769,7 +2769,7 @@
        :config (setq tab-width 2
                      sh-basic-offset 2
                      fish-indent-offset 2
-                     indent-tabs-mode t))
+                     indent-tabs-mode nil))
 
      ;; Normal tab completion in Eshell
      (setq eshell-cmpl-cycle-completions nil)
