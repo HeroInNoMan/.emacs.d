@@ -478,11 +478,12 @@ Swap buffers in the process"
   "Return t if current buffer is a user buffer, else nil."
   (interactive)
   (cond
+   ((string-equal major-mode "dired-mode") nil)
    ((string-prefix-p "*scratch*" (buffer-name)) t)
    ((string-prefix-p "*Org Src" (buffer-name)) t)
    ((string-prefix-p "*eww" (buffer-name)) t)
    ((string-prefix-p "*" (buffer-name)) nil)
-   ((string-prefix-p "magit" (buffer-name)) t)
+   ((string-prefix-p "magit" (buffer-name)) nil)
    (t t)))
 
 (defun crontab-e ()
