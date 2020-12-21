@@ -331,6 +331,7 @@
                  ale/find-init-file
                  ale/open-project
                  ale/tangle-config-file
+                 ale/cleanup-buffer-and-save
                  set-fira-font-if-possible)
       :load-path "elisp/"
       :bind
@@ -3726,6 +3727,7 @@
          ("Q" quick-calc "quick-calc")
          ;; ("n" describe-number-at-point "describe number")
          ("TAB" indent-region "indent region")
+         ("s" ale/cleanup-buffer-and-save "clean & save")
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
         "Files"

@@ -542,5 +542,11 @@ Swap buffers in the process"
                 (setq sql-product ,(car (cdr (assoc 'sql-product db))))
                 (sql-connect (quote ,(car db))))))))
 
+(defun ale/cleanup-buffer-and-save ()
+  "Indent, untabify, clean-up and save buffer."
+  (interactive)
+  (crux-cleanup-buffer-or-region)
+  (save-buffer))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here
