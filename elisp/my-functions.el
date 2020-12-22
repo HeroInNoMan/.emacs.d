@@ -227,16 +227,29 @@ Swap buffers in the process"
     (progn
       (linum-mode -1)
       (git-gutter-mode +1))))
-
 (defun ale/insert-ticket-prefix ()
-  "Insert a prefix containing the number of the ticket."
+  "Insert a prefix containing the ticket ID."
   (interactive)
-  (let* ((result  (re-search-forward "\\([0-9]\\{4\\}\\)[_-].+$" nil t))
-         (s (match-string 1)))
-    (goto-char (point-min))
-    (when (and result
-               (not (string-match (concat "#" s ) (buffer-string))))
-      (insert (concat "#" s " ")))))
+  ;; (let* ((branch-name (magit-get-current-branch))
+  (let* ((ticket-types (if (boundp 'my-private-ticket-types)
+                           my-private-ticket-types
+                         '("hot" "bg" "tk" "ft")))
+         (branch-name (magit-get-current-branch))
+         (ticket-type (car (split-string branch-name "-")))
+         (ticket-id (car (cdr (split-string branch-name "-"))))
+         (prefix (concat "#" ticket-id)))
+    (when (and (member ticket-type ticket-types)
+               (string-match "^[0-9]+$" ticket-id)
+               (not (ticket-prefix-p prefix)))
+      (goto-char (point-min))
+      (insert (concat prefix " "))
+      (save-buffer))))
+
+(defun ticket-prefix-p (prefix)
+  "Return t if PREFIX is present in the current buffer, else nil."
+  (interactive "P")
+  ;; (let* ((result  (re-search-forward "\\([0-9]\\{4\\}\\)[_-].+$" nil t))
+  (re-search-forward prefix nil t))
 
 (defun ale/toggle-camel-snake-kebab-case ()
   "Cycle between camelCase, snake_case and kebab-case for the symbol at point."
@@ -260,7 +273,6 @@ Swap buffers in the process"
              (progn
                (replace-regexp "\\([A-Z]\\)" "-\\1" nil (1+ start) end)
                (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))))
-
 (defun ale/find-rest-client-file ()
   "Find rest-client file."
   (interactive)
