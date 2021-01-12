@@ -3638,7 +3638,8 @@
          ("m" hide-mode-line-mode "hide mode-line" :toggle t)
          ("V" goggles-mode "googles" :toggle t))
         "Decoration"
-        (("G" grip-mode "md/org preview" :toggle t)
+        (("k" poke-line-global-mode "poke-line" :toggle t)
+         ;; ("G" grip-mode "md/org preview" :toggle t)
          ("h" hl-line-mode "highlight line" :toggle t)
          ("D" display-battery-mode "display battery" :toggle t)
          ("p" prettify-symbols-mode "prettify symbols" :toggle t)
