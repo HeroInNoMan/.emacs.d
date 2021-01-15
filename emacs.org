@@ -1385,6 +1385,8 @@
               :map helm-rg-map
               ("M-b" . backward-word)
               ("C-c C-e" . helm-rg--bounce)
+              ("M-d" . helm-rg--set-dir)
+              ("M-g" . helm-rg--set-glob)
               :map helm-rg--bounce-mode-map
               ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
               ("C-c C-e" . helm-rg--bounce))
