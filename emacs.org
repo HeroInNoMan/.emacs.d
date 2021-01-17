@@ -457,10 +457,10 @@
   #+BEGIN_SRC emacs-lisp
     (setq bidi-paragraph-direction 'left-to-right)
 
-    (if (version<= "27.1" emacs-version)
-        (progn
-          (setq bidi-inhibit-bpa t)
-          (global-so-long-mode 1)))
+    (when (version<= "27.1" emacs-version)
+      (progn
+        (setq bidi-inhibit-bpa t)
+        (global-so-long-mode 1)))
   #+END_SRC
 
   Let’s add some auto-backup configuration:
@@ -595,12 +595,12 @@
       :config
       (global-set-key [remap increment-number-decimal] (defrepeater 'increment-number-decimal))
       (global-set-key [remap decrement-number-decimal] (defrepeater 'decrement-number-decimal))
-      (global-set-key [remap goto-last-change] (defrepeater 'goto-last-change))
-      (global-set-key [remap previous-error] (defrepeater 'previous-error))
-      (global-set-key [remap next-error] (defrepeater 'next-error))
-      (global-set-key [remap flycheck-previous-error] (defrepeater 'flycheck-previous-error))
-      (global-set-key [remap flycheck-next-error] (defrepeater 'flycheck-next-error))
-      (global-set-key [remap bury-buffer] (defrepeater 'bury-buffer)))
+      (global-set-key [remap goto-last-change]         (defrepeater 'goto-last-change))
+      (global-set-key [remap previous-error]           (defrepeater 'previous-error))
+      (global-set-key [remap next-error]               (defrepeater 'next-error))
+      (global-set-key [remap flycheck-previous-error]  (defrepeater 'flycheck-previous-error))
+      (global-set-key [remap flycheck-next-error]      (defrepeater 'flycheck-next-error))
+      (global-set-key [remap bury-buffer]              (defrepeater 'bury-buffer)))
   #+END_SRC
 
   I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
@@ -3242,7 +3242,7 @@
 
    [[https://github.com/skeeto/impatient-mode][Impatient-mode]] enables live editing of html files.
    #+BEGIN_SRC emacs-lisp
-     (use-package impatient-mode)
+     (use-package impatient-mode :defer t)
    #+END_SRC
 
 ** Typescript
@@ -3314,15 +3314,17 @@
                                     (flycheck-mode))))
        :config
        (setq python-indent-offset 4
-             tab-always-indent t)
+             tab-always-indent t))
 
-       (use-package jedi
-         :config (setq jedi:complete-on-dot t))
+     (use-package jedi
+       :after python
+       :config (setq jedi:complete-on-dot t))
 
-       (use-package elpy
-         :config
-         (delete "elpy-module-flymake" elpy-modules) ;; use flycheck instead
-         (setq elpy-rpc-backend "jedi"))) ;; fire up jedi in python env
+     (use-package elpy
+       :after python
+       :config
+       (delete "elpy-module-flymake" elpy-modules) ;; use flycheck instead
+       (setq elpy-rpc-backend "jedi")) ;; fire up jedi in python env
    #+END_SRC
 
 ** Yaml
@@ -3349,12 +3351,12 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-     (use-package grip-mode)
+     (use-package grip-mode :defer t)
    #+END_SRC
 
 ** Dokuwiki
    #+BEGIN_SRC emacs-lisp
-     (use-package dokuwiki-mode)
+     (use-package dokuwiki-mode :defer t)
      (use-package dokuwiki
        :hook dokuwiki-mode)
    #+END_SRC
