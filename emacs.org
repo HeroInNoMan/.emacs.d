@@ -1376,26 +1376,26 @@
 
    [[https://blog.burntsushi.net/ripgrep/][Ripgrep]] is the the best tool for grepping anything anywhere these days. Combined with [[https://github.com/cosmicexplorer/helm-rg][helm-rg]], it’s all I need. And it also supports editing search results from the search buffer!
    #+BEGIN_SRC emacs-lisp
-     (use-package rg)
+     (use-package rg :defer t)
 
      (use-package helm-rg
-       :after helm
+       :after (helm rg)
        :hook (helm-rg--bounce-mode . (lambda () (aggressive-indent-mode -1)))
-       :bind (
-              :map helm-rg-map
-              ("M-b" . backward-word)
-              ("C-c C-e" . helm-rg--bounce)
-              ("M-d" . helm-rg--set-dir)
-              ("M-g" . helm-rg--set-glob)
-              :map helm-rg--bounce-mode-map
-              ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
-              ("C-c C-e" . helm-rg--bounce))
+       :bind ( :map helm-rg-map
+               ("M-b" . backward-word)
+               ("C-c C-e" . helm-rg--bounce)
+               ("M-d" . helm-rg--set-dir)
+               ("M-g" . helm-rg--set-glob)
+               :map helm-rg--bounce-mode-map
+               ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
+               ("C-c C-e" . helm-rg--bounce))
        :config (setq helm-rg-default-directory "~/"))
    #+END_SRC
 
    fd is a modern replacement for find. Let’s have a helm interface to it.
    #+BEGIN_SRC emacs-lisp
      (use-package helm-fd
+       :disabled t                             ; 2020-12-26 helm-fd not available anymore
        :config (setq helm-fd-noerrors t))
    #+END_SRC
 
@@ -1477,7 +1477,8 @@
 
    Let’s add [[https://github.com/dantecatalfamo/helm-atoms][reverse variable lookup]]!
    #+BEGIN_SRC emacs-lisp
-     (use-package helm-atoms)
+     (use-package helm-atoms
+       :after helm)
    #+END_SRC
 
    Finally, let’s use helm for connecting to remote hosts (via TRAMP).
@@ -1497,7 +1498,6 @@
      (use-package yasnippet
        :commands yas-new-snippet yas-insert-snippet
        :chords ("yq" . hydra-yasnippet/body)
-       :hook ((prog-mode text-mode) . yas-minor-mode)
        :bind
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
@@ -2075,7 +2075,9 @@
 * Org-mode
   #+BEGIN_SRC emacs-lisp
     (use-package org
-      :init (setq org-capture-templates '())
+      :init (setq org-capture-templates '()
+                  org-refile-targets '((nil :maxlevel . 2)
+                                       (org-agenda-files :maxlevel . 2)))
       :bind (("\C-c a" . org-agenda)
              ("\C-c b" . org-iswitchb)
              ("\C-c l" . org-store-link)
@@ -2105,8 +2107,6 @@
        ;; general settings
        org-log-done 'time
        org-log-repeat 'nil
-       org-refile-targets '((nil :maxlevel . 2)
-                            (org-agenda-files :maxlevel . 2))
        org-agenda-include-diary t
        org-agenda-weekend-days '(0 5 6) ;; week-end is friday, saturday, sunday
        org-agenda-start-day nil
@@ -2326,8 +2326,7 @@
     (use-package htmlize :after org)
     (use-package swagger-to-org :after org)
     (use-package ox-asciidoc :after org)
-    (use-package org-tree-slide
-      )
+    (use-package org-tree-slide :after org)
     (use-package org-habit
       :ensure nil
       :after org
@@ -2622,11 +2621,13 @@
    TODO: describe lsp
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
+       :defer t
        :config
        (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
 
      (use-package company-lsp
-       :requires lsp company)
+       :requires lsp company
+       :after lsp-mode)
 
      (use-package lsp-ui
        :requires lsp-mode flycheck
@@ -2647,10 +2648,10 @@
              lsp-ui-peek-peek-height 25))
 
      (use-package helm-lsp
-       :requires lsp-mode)
+       :after lsp-mode)
 
      (use-package dap-mode
-       :requires lsp-mode
+       :after lsp-mode
        :config
        (dap-mode 1)
        (dap-ui-mode 1))
