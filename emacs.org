@@ -35,7 +35,7 @@
 
   https://www.reddit.com/r/emacs/comments/i8v4k2/bringing_gnu_emacs_to_native_code_gccemacs/
   #+BEGIN_SRC emacs-lisp
-    (setq comp-deferred-compilation t)
+    ;; (setq comp-deferred-compilation t)
   #+END_SRC
 
 * Package Management
