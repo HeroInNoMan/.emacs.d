@@ -207,6 +207,7 @@
             no-littering
             ob-restclient
             ob-shell
+            ob-verb
             org-bullets
             org-super-agenda
             org-tree-slide
@@ -252,6 +253,7 @@
             try
             undo-tree
             use-package-chords
+            verb
             vimish-fold
             visual-regexp-steroids
             web-mode
@@ -2094,6 +2096,7 @@
       (org-headline-done ((((class color) (min-colors 16) (background dark))
                            (:foreground "dim grey" :strike-through t))))
       :config
+      (define-key org-mode-map (kbd "C-c C-v") verb-command-map)
       (require 'ox-md nil t)
       (require 'org-agenda)
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
@@ -2322,6 +2325,8 @@
       (defadvice kill-whole-line (after fix-cookies activate)
         (myorg-update-parent-cookie)))
     (use-package ob-restclient :after org)
+    (use-package verb :after org)
+    (use-package ob-verb :ensure nil :after org)
     (use-package ob-shell :ensure nil :after org)
     (use-package htmlize :after org)
     (use-package swagger-to-org :after org)
