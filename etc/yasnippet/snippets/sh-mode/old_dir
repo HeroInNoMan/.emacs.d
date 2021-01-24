@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: old_dir
+# key: old
+# --
+old_dir=$(pwd)
+cd $old_dir
