@@ -2540,6 +2540,24 @@
        :hook ((text-mode . flyspell-mode) ;; flyspell by default
               (text-mode . dubcaps-mode)) ;; auto-correct double capitals
        :config
+       ;; Configure `LANG`, otherwise ispell.el cannot find a 'default
+       ;; dictionary' even though multiple dictionaries will be configured
+       ;; in next line.
+       ;; (setenv "LANG" "fr_FR")
+       (setq ispell-program-name "hunspell")
+       (setq ispell-dictionary "fr_FR,en_GB,en_US,de_DE")
+       ;; ispell-set-spellchecker-params has to be called
+       ;; before ispell-hunspell-add-multi-dic will work
+       (ispell-set-spellchecker-params)
+       (ispell-hunspell-add-multi-dic "fr_FR,en_GB,en_US,de_DE")
+       ;; For saving words to the personal dictionary, don't infer it from
+       ;; the locale, otherwise it would save to ~/.hunspell_fr_FR.
+       (setq ispell-personal-dictionary "~/.hunspell_personal")
+       ;; The personal dictionary file has to exist, otherwise hunspell will
+       ;; silently not use it.
+       (unless (file-exists-p ispell-personal-dictionary)
+         (write-region "" nil ispell-personal-dictionary nil 0))
+
        (pretty-hydra-define hydra-spell
          (:color teal :quit-key "q")
          ("Spelling"
