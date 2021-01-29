@@ -507,8 +507,7 @@
     (setq apropos-do-all t
           mouse-yank-at-point t
           require-final-newline t
-          load-prefer-newer t
-          ediff-window-setup-function 'ediff-setup-windows-plain)
+          load-prefer-newer t)
     ;; Answer questions with y/n
     (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -1871,11 +1870,42 @@
     #+END_SRC
 
 *** ediff
+    A saner ediff:
     #+BEGIN_SRC emacs-lisp
-      ;; A saner ediff
       (setq ediff-diff-options "-w"
-            ediff-split-window-function 'split-window-horizontally
+            ediff-split-window-function 'split-window-vertically
             ediff-window-setup-function 'ediff-setup-windows-plain)
+    #+END_SRC
+
+*** Smerge
+    #+BEGIN_SRC emacs-lisp
+      (use-package smerge-mode
+        :ensure nil
+        :init (setq smerge-command-prefix "")
+        :bind (("M-s e" . hydra-smerge/body))
+        :config
+        ;; https://github.com/alphapapa/unpackaged.el#smerge-mode
+        (pretty-hydra-define hydra-smerge
+          (:color pink :quit-key "q" :post (smerge-auto-leave))
+          ("Move"
+           (("n" smerge-next "next")
+            ("p" smerge-prev "prev"))
+           "Keep"
+           (("b" smerge-keep-base "base")
+            ("u" smerge-keep-upper "upper")
+            ("l" smerge-keep-lower "lower")
+            ("a" smerge-keep-all "all")
+            ("RET" smerge-keep-current "current"))
+           "Diff"
+           (("<" smerge-diff-base-upper "upper/base")
+            ("=" smerge-diff-upper-lower "upper/lower")
+            (">" smerge-diff-base-lower "base/lower")
+            ("R" smerge-refine "Refine")
+            ("e" smerge-ediff "e-diff" :color blue))
+           "Other"
+           (("c" smerge-combine-with-next "combine")
+            ("r" smerge-resolve "resolve")
+            ("k" smerge-kill-current "kill current")))))
     #+END_SRC
 
 ** Git tools
