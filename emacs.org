@@ -3679,7 +3679,7 @@
         "Coding"
         (("(" smartparens-global-mode                   "smartparens"           :toggle t)
          (")" smartparens-global-strict-mode            "smartparens strict"    :toggle t)
-         ("a" aggressive-indent-mode                    "aggressive indent"     :toggle t)
+         ("a" aggressive-indent-global-mode             "aggressive indent"     :toggle t)
          ("A" global-auto-revert-mode                   "auto-revert"           :toggle t)
          ("c" company-mode                              "company"               :toggle t)
          ("f" flycheck-mode                             "flycheck"              :toggle t)
