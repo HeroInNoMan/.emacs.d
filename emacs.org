@@ -783,7 +783,7 @@
        (setq-default goggles-pulse t)) ;; set to nil to disable pulsing
 
      (use-package idle-highlight-mode
-       :hook (prog-mode)
+       :hook prog-mode
        :custom-face (idle-highlight ((t (:background "gray10"))))
        :config (setq idle-highlight-idle-time 0.3)) ;; default 0.5
    #+END_SRC
@@ -2851,7 +2851,7 @@
 
      (use-package elisp-slime-nav
        :after emacs-lisp-mode
-       :hook (emacs-lisp-mode-hook))
+       :hook emacs-lisp-mode)
    #+END_SRC
 
    Litable mode allows quick elisp code evaluation.
@@ -2988,7 +2988,7 @@
        :disabled
        :ensure nil
        :load-path "elisp/"
-       :hook (java-mode))
+       :hook java-mode)
    #+END_SRC
 
 *** TODO malabar-mode (à tester)
@@ -3395,7 +3395,7 @@
 ** Gradle
    #+BEGIN_SRC emacs-lisp
      (use-package gradle-mode
-       :hook (groovy-mode))
+       :hook groovy-mode)
    #+END_SRC
 
 ** Docker
