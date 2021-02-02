@@ -244,7 +244,6 @@
             super-save
             swagger-to-org
             syslog-mode
-            temporary-persistent
             ten-hundred-mode
             tide
             transmission
@@ -1732,14 +1731,7 @@
 
 *** Scratch
     #+BEGIN_SRC emacs-lisp
-      (use-package temporary-persistent
-        :defer t
-        :config (setq temporary-persistent-buffer-name-template "temp")
-        (setq temporary-persistent-store-folder (expand-file-name "temp" base-emacs-directory)))
-
-
       (use-package persistent-scratch
-        :defer t
         :config
         (persistent-scratch-setup-default)
         (defun persistent-scratch-numbered-scratch-buffer-p ()
