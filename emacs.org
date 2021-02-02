@@ -3461,6 +3461,18 @@
       ;;store link to message if in header view, not to header query
       (setq org-mu4e-link-query-in-headers-mode nil)
 
+      (setq mu4e-headers-unread-mark    '("u" . "📩 ")
+            mu4e-headers-draft-mark     '("D" . "🚧 ")
+            mu4e-headers-flagged-mark   '("F" . "🚩 ")
+            mu4e-headers-new-mark       '("N" . "✨ ")
+            mu4e-headers-passed-mark    '("P" . "↪ ")
+            mu4e-headers-replied-mark   '("R" . "↩ ")
+            mu4e-headers-seen-mark      '("S" . " ")
+            mu4e-headers-trashed-mark   '("T" . "🗑️")
+            mu4e-headers-attach-mark    '("a" . "📎 ")
+            mu4e-headers-encrypted-mark '("x" . "🔑 ")
+            mu4e-headers-signed-mark    '("s" . "🖊 "))
+
       (setq mu4e-maildir (expand-file-name "~/Maildir/ProtonMail")
             mu4e-attachment-dir            "~/Téléchargements"
             mu4e-drafts-folder             "/Drafts"
@@ -3496,7 +3508,7 @@
             mu4e-index-update-in-background   t         ;; update in the background
             mu4e-use-fancy-chars              nil       ;; unicode characters mess up thread drawings
             mu4e-view-show-images             t
-            mu4e-headers-results-limit        500
+            mu4e-headers-results-limit        200
             user-mail-address                 my-private-mail-address
             user-full-name                    my-private-full-name
             message-signature                 my-private-short-name
@@ -3543,11 +3555,11 @@
 
       ;; optimize header column sizes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       (setq mu4e-headers-fields
-            '((:human-date   . 10)
-              (:flags        . 5)
-              (:mailing-list . 25)
-              (:from         . 40)
-              (:subject))))
+            '((:human-date   . 12)
+              (:flags        . 7)
+              (:mailing-list . 30)
+              (:from         . 35)
+              (:thread-subject))))
 
     (use-package mu4e-jump-to-list :after mu4e)
 
