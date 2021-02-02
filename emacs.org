@@ -1050,16 +1050,16 @@
 ** isearch
    Standard isearch by default:
    #+BEGIN_SRC emacs-lisp
-    (use-package isearch-dabbrev
-      :bind (:map isearch-mode-map
-                  ("<tab>" . isearch-dabbrev-expand)
-                  ("M-/" . isearch-dabbrev-expand)))
+     (use-package isearch-dabbrev
+       :bind (:map isearch-mode-map
+                   ("<tab>" . isearch-dabbrev-expand)
+                   ("M-/" . isearch-dabbrev-expand)))
 
-    (use-package smartscan
-      :bind
-      ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
-      ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
-      ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
+     (use-package smartscan
+       :bind
+       ("M-n". smartscan-symbol-go-forward) ;; find next occurence of word at point
+       ("M-p". smartscan-symbol-go-backward) ;; find previous occurence of word at point
+       ("M-'". smartscan-symbol-replace)) ;; replace all occurences of word at point
    #+END_SRC
 
 ** Regular expressions
@@ -1403,8 +1403,8 @@
 
    =helm-descbinds= lets me browse all user-defined keybindings.
    #+BEGIN_SRC emacs-lisp
-      (use-package helm-descbinds
-        :bind ("C-h b" . helm-descbinds))
+     (use-package helm-descbinds
+       :bind ("C-h b" . helm-descbinds))
    #+END_SRC
 
    =helm-dash= allows access to the full documentation of a language.
@@ -1421,8 +1421,8 @@
 
    Let’s make =ace-jump-mode= also available during a helm session.
    #+BEGIN_SRC emacs-lisp
-      (use-package ace-jump-helm-line
-        :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
+     (use-package ace-jump-helm-line
+       :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
    #+END_SRC
 
    =Helm-swoop= can be called during =isearch= to make searching easier with big files or big number of occurences.
@@ -1589,8 +1589,8 @@
 * Text manipulation
 ** Region
    #+BEGIN_SRC emacs-lisp
-    (use-package expand-region
-      :bind ("C-c e" . er/expand-region))
+     (use-package expand-region
+       :bind ("C-c e" . er/expand-region))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
@@ -1903,31 +1903,31 @@
 
 ** Git tools
    #+BEGIN_SRC emacs-lisp
-      (use-package git-timemachine :defer t)
+     (use-package git-timemachine :defer t)
 
-      (use-package git-messenger
-        :bind (:map git-messenger-map
-                    ("d" . git-messenger:popup-diff)
-                    ("s" . git-messenger:)
-                    ("c" . git-messenger:copy-commit-id))
-        :hook (git-messenger:popup-buffer-hook . magit-commit-mode)
-        :config (setq git-messenger:show-detail t))
+     (use-package git-messenger
+       :bind (:map git-messenger-map
+                   ("d" . git-messenger:popup-diff)
+                   ("s" . git-messenger:)
+                   ("c" . git-messenger:copy-commit-id))
+       :hook (git-messenger:popup-buffer-hook . magit-commit-mode)
+       :config (setq git-messenger:show-detail t))
 
-      (use-package gitignore-mode
-        :mode ".gitignore$")
+     (use-package gitignore-mode
+       :mode ".gitignore$")
 
-      (use-package gitconfig-mode
-        :mode ".gitconfig$")
+     (use-package gitconfig-mode
+       :mode ".gitconfig$")
 
-      (use-package git-gutter
-        :hook (prog-mode)
-        :bind
-        ("M-N" . git-gutter:next-hunk)
-        ("M-P" . git-gutter:previous-hunk)
-        :config
-        (global-git-gutter-mode +1)
-        (setq git-gutter:ask-p nil
-              git-gutter:hide-gutter t))
+     (use-package git-gutter
+       :hook prog-mode
+       :bind
+       ("M-N" . git-gutter:next-hunk)
+       ("M-P" . git-gutter:previous-hunk)
+       :config
+       (global-git-gutter-mode +1)
+       (setq git-gutter:ask-p nil
+             git-gutter:hide-gutter t))
    #+END_SRC
 
 ** Magit
@@ -2422,16 +2422,16 @@
                               :tag "enercoop"))
 
                 (:order-multi (2
-                (:name "E N   C O U R S"
-                       :face ( :foreground "orange3"
-                               :weight bold)
-                       :todo ("WIP" "STARTED" "DELEGATED"))
+                               (:name "E N   C O U R S"
+                                      :face ( :foreground "orange3"
+                                              :weight bold)
+                                      :todo ("WIP" "STARTED" "DELEGATED"))
 
-                (:name "R A P I D E"
-                       :face ( :foreground "DeepSkyBlue"
-                               :weight bold)
-                       :and ( :todo ("TODO" "NEXT")
-                              :effort< "10"))
+                               (:name "R A P I D E"
+                                      :face ( :foreground "DeepSkyBlue"
+                                              :weight bold)
+                                      :and ( :todo ("TODO" "NEXT")
+                                             :effort< "10"))
 
                                ;; (:name "N E X T"
                                ;;        :face ( :foreground "Darkolivegreen2"
@@ -2542,7 +2542,6 @@
       ;;                :tag "emacs")
       ;;         ))
       )
-
   #+END_SRC
 
   Use fancy bullets in org-mode:
@@ -3564,7 +3563,7 @@
               (:name "Dernière semaine" :query "date:7d.. AND NOT %work" :hide-unread t :key ?w)
               (:name "Dernier mois"     :query "date:1m.. AND NOT %work" :hide-unread t :key ?m)
               (:name "Work"             :query (concat "%work"
-                                                       " AND flag:unread")                 :key ?e)
+                                                       " AND flag:unread")              :key ?e)
               ;; (:name "Avec images"   :query "mime:image/*"                :key ?i)
               ))
 
@@ -4239,7 +4238,7 @@
 *** Stories
     #+BEGIN_SRC emacs-lisp
       (use-package helm-lobsters
-      :commands helm-lobsters)
+        :commands helm-lobsters)
     #+END_SRC
 
 
