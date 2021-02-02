@@ -334,7 +334,8 @@
                  ale/open-project
                  ale/tangle-config-file
                  ale/cleanup-buffer-and-save
-                 set-fira-font-if-possible)
+                 set-fira-font-if-possible
+                 togfun)
       :load-path "elisp/"
       :bind
       ("C-S-p" . up-arrow)
@@ -3759,10 +3760,10 @@
      (pretty-hydra-define hydra-widgets
        (:color blue :quit-key "q")
        ("Shells"
-        (("e" eshell "eshell")
+        (("e" (funcall (togfun "*eshell*" 'eshell)) "eshell")
          ("t" shell-pop "shell-pop")
-         ("$" shell "shell")
-         ("%" crux-visit-term-buffer "ansi-term"))
+         ("$" (funcall (togfun "*shell*" 'shell)) "shell")
+         ("%" (funcall (togfun "*ansi-term*" 'crux-visit-term-buffer)) "ansi-term"))
         "Reading"
         (("r r" avandu-overview "avandu RSS")
          ("r l" helm-lobsters "lobsters")

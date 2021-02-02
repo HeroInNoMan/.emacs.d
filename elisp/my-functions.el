@@ -561,5 +561,33 @@ Swap buffers in the process"
   (crux-cleanup-buffer-or-region)
   (save-buffer))
 
+(defun togfun (buffer-name buffer-create-fn &optional switch-cont)
+  "Make a toggle-function to have raise-or-create behaviour.
+
+Creates a toggle-function that executes BUFFER-CREATE-FN if a
+buffer named BUFFER-NAME doesn't exist, switches to the buffer
+named BUFFER-NAME if it exists, and switches to the previous
+buffer if we are currently visiting buffer BUFFER-NAME.
+
+The SWITCH-CONT argument is a function which, if given, is called
+after the buffer has been created or switched to.  This allows
+running further actions that setup the state of the buffer or
+modify it.
+
+Found on reddit.com/r/emacs
+Thanks to Ashjkaell!"
+
+  (lambda ()
+    (interactive)
+    (let ((target-buf (get-buffer buffer-name)))
+      (if target-buf
+          (if (eq (current-buffer) target-buf)
+              (winner-undo)
+            (progn
+              (switch-to-buffer buffer-name)
+              (when switch-cont (funcall switch-cont))))
+        (funcall buffer-create-fn)
+        (when switch-cont (funcall switch-cont))))))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here
