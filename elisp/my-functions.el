@@ -555,6 +555,13 @@ Swap buffers in the process"
                 (setq sql-product ,(car (cdr (assoc 'sql-product db))))
                 (sql-connect (quote ,(car db))))))))
 
+(defun ale/tangle-config-file ()
+  "Tangle my config file."
+  (org-babel-tangle-file
+   (expand-file-name "emacs.org" base-emacs-directory)
+   (expand-file-name "emacs.el" base-emacs-directory))
+  (message "Tangled file compiled."))
+
 (defun ale/cleanup-buffer-and-save ()
   "Indent, untabify, clean-up and save buffer."
   (interactive)
