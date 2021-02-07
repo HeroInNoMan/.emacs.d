@@ -967,8 +967,8 @@
     (use-package treemacs :defer t)
 
     ;; Allow scrolling with mouse wheel
-    (when (display-graphic-p) (progn(mouse-wheel-mode t)
-                                    (mouse-avoidance-mode 'none)))
+    (when (display-graphic-p) (progn (mouse-wheel-mode t)
+                                     (mouse-avoidance-mode 'none)))
 
     (use-package goto-last-change
       :bind
@@ -2125,6 +2125,7 @@
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
 
       (require 'color)
+      (setq org-hide-emphasis-markers t)
       (set-face-attribute 'org-block nil :background
                           (color-darken-name
                            (face-attribute 'default :background) 3))
