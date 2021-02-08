@@ -209,6 +209,7 @@
             ob-restclient
             ob-shell
             ob-verb
+            org-appear
             org-auto-tangle
             org-bullets
             org-super-agenda
@@ -2358,6 +2359,15 @@
     (use-package swagger-to-org :after org)
     (use-package ox-asciidoc :after org)
     (use-package org-tree-slide :after org)
+    (use-package org-appear
+      :ensure nil
+      :load-path "elisp/"
+      :after org
+      :hook (org-mode . org-appear-mode))
+  #+END_SRC
+
+  This package allows to tangle org-files asynchronously on save by adding ~#+auto_tangle: t~ in the file header. I use it for the current file.
+  #+BEGIN_SRC emacs-lisp
     (use-package org-auto-tangle
       ;; add “#+auto_tangle: t” to header of org file
       :after org
