@@ -2,6 +2,7 @@
 #+AUTHOR: Arthur Léothaud
 #+EMAIL: arthur@leothaud.eu
 #+PROPERTY: header-args :tangle yes
+#+auto_tangle: t
 
 #+STARTUP: showall
 
@@ -208,6 +209,7 @@
             ob-restclient
             ob-shell
             ob-verb
+            org-auto-tangle
             org-bullets
             org-super-agenda
             org-tree-slide
@@ -2356,6 +2358,11 @@
     (use-package swagger-to-org :after org)
     (use-package ox-asciidoc :after org)
     (use-package org-tree-slide :after org)
+    (use-package org-auto-tangle
+      ;; add “#+auto_tangle: t” to header of org file
+      :after org
+      :hook (org-mode . org-auto-tangle-mode))
+
     (use-package org-habit
       :ensure nil
       :after org
@@ -4265,8 +4272,3 @@
    - https://github.com/jwiegley/dot-emacs
 ** other
    - https://github.com/sebastiencs
-
-* Local Variables
-  # Local Variables:
-  # eval: (add-hook 'kill-emacs-hook 'ale/tangle-config-file)
-  # End:
