@@ -285,7 +285,7 @@
   #+END_SRC
 
 * Emacs directory
-  Let’s keep =~/.emacs.d= tidy:
+  Let’s keep ~~/.emacs.d~ tidy:
   #+BEGIN_SRC emacs-lisp
     (use-package no-littering
       :config
@@ -295,7 +295,7 @@
       (add-to-list 'recentf-exclude no-littering-etc-directory))
   #+END_SRC
 
-  Private information is stored in variables in =~/.emacs.d/private.el=
+  Private information is stored in variables in ~~/.emacs.d/private.el~
   #+BEGIN_SRC emacs-lisp
     (let ((private-file (expand-file-name "private.el" base-emacs-directory)))
       (when (file-exists-p private-file)
@@ -326,7 +326,7 @@
   #+END_SRC
 
 * Custom functions
-  My custom (often stolen) lisp code is stored in =elisp/my-functions.el=.
+  My custom (often stolen) lisp code is stored in ~elisp/my-functions.el~.
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :ensure nil
