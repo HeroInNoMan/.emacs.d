@@ -249,6 +249,7 @@
             syslog-mode
             ten-hundred-mode
             tide
+            tomatinho
             transmission
             travis
             treemacs
@@ -4090,7 +4091,7 @@
 
 ** Pomodoro
    #+BEGIN_SRC emacs-lisp
-     (use-package tomatinho :disabled)
+     (use-package tomatinho :defer t)
    #+END_SRC
 
 ** Demos
