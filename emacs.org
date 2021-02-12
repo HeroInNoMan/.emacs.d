@@ -3639,7 +3639,7 @@
          ("R" rainbow-blocks-mode                       "rainbow blocks"        :toggle t)
          ("I" highlight-indent-guides-mode              "indent guide"          :toggle t)
          ("m" hide-mode-line-mode                       "hide mode-line"        :toggle t)
-         ("V" goggles-mode                              "googles"               :toggle t))
+         ("V" goggles-mode                              "goggles"               :toggle t))
         "Decoration"
         (;; ("G" grip-mode                              "md/org preview"        :toggle t)
          ("h" hl-line-mode                              "highlight line"        :toggle t)
