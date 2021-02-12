@@ -1123,8 +1123,10 @@
        :config
        (global-company-mode 1) ;; enable company in all buffers
        (setq company-tooltip-limit 30
-             company-dabbrev-downcase nil
-             company-show-numbers t))
+             company-idle-delay 0.1 ;; almost no delay before showing candidates
+             company-minimum-prefix-length 1 ;; completion rigth away!
+             company-show-numbers 'on
+             company-dabbrev-downcase nil))
 
      (use-package company-prescient
        :after company
