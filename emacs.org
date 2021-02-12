@@ -2541,10 +2541,14 @@
            ("l" define-word-at-point "lookup word"))
           "Dictionary"
           (("d" ispell-change-dictionary "choose")
-           ("f" ale/switch-to-fr-dict "fr_FR")
-           ("e" ale/switch-to-en-dict "en_GB")
-           ("u" ale/switch-to-us-dict "en_US")
-           ("g" guess-language "guess")))))
+           ("f" ale/switch-to-fr-dict "fr (FR)")
+           ("e" ale/switch-to-en-dict "en (GB)")
+           ("u" ale/switch-to-us-dict "en (US)")
+           ("g" guess-language "guess"))
+          "Synonyms"
+          (("s" powerthesaurus-lookup-word-dwim "synonym (DWIM)")
+           ("w" powerthesaurus-lookup-word "synonym for word")
+           ("." powerthesaurus-lookup-word-at-point "synonym at point")))))
 
      (use-package define-word :defer t)
 
