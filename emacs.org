@@ -186,6 +186,7 @@
             jenkins
             js2-refactor
             json-reformat
+            keypression
             ledger-mode
             linum-relative
             litable
@@ -4034,6 +4035,17 @@
    #+BEGIN_SRC emacs-lisp
      (use-package command-log-mode :defer t)
    #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package keypression
+      :defer t
+      :config (setq keypression-cast-command-name t
+                    keypression-fade-out-delay 1
+                    keypression-fade-out-seconds 1
+                    keypression-use-child-frame t
+                    keypression-combine-same-keystrokes t
+                    keypression-combine-format "%s ×%d"))
+  #+END_SRC
 
 ** Restclient
    See if [[https://github.com/abrochard/walkman/][walkman]] might not be a bit better (because integrated in org-files!)
