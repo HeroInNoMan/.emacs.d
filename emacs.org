@@ -2125,16 +2125,12 @@
       (org-headline-done ((((class color) (min-colors 16) (background dark))
                            (:foreground "dim grey" :strike-through t))))
       :config
-      (define-key org-mode-map (kbd "C-c C-v") verb-command-map)
       (require 'ox-md nil t)
       (require 'org-agenda)
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
 
       (require 'color)
       (setq org-hide-emphasis-markers t)
-      (set-face-attribute 'org-block nil :background
-                          (color-darken-name
-                           (face-attribute 'default :background) 3))
 
       (setq
        ;; general settings
@@ -2353,13 +2349,17 @@
         (myorg-update-parent-cookie))
 
       (defadvice kill-whole-line (after fix-cookies activate)
-        (myorg-update-parent-cookie)))
+        (myorg-update-parent-cookie))
+      (set-face-attribute 'org-block nil :background
+                          (color-darken-name
+                           (face-attribute 'default :background) 3)))
   #+END_SRC
 
   I also use a few more packages depending on org:
   #+BEGIN_SRC emacs-lisp
     (use-package ob-restclient :after org)
-    (use-package verb :after org)
+    (use-package verb :after org
+      :config (define-key org-mode-map (kbd "C-c C-v") verb-command-map))
     (use-package ob-verb :ensure nil :after org)
     (use-package ob-shell :ensure nil :after org)
     (use-package htmlize :after org)
