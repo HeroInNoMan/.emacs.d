@@ -2538,23 +2538,24 @@
          (:color teal :quit-key "q")
          ("Spelling"
           (("t" flyspell-mode "toggle flyspell")
-           ("T" guess-language-mode "toggle guess"))
+           ("T" guess-language-mode "toggle guess")
+           ("g" guess-language "guess"))
           "Flyspell"
-          (("a" endless/ispell-word-then-abbrev "Correct & add")
-           ("c" flyspell-buffer "check buffer")
+          (("c" flyspell-buffer "check buffer")
+           ("." flyspell-auto-correct-word "correct word" :color pink)
+           ("a" endless/ispell-word-then-abbrev "correct & add abbrev")
            ("n" flyspell-goto-next-error "next error" :color pink)
-           ("p" flyspell-goto-previous-error "previous error" :color pink)
-           ("l" define-word-at-point "lookup word"))
+           ("p" flyspell-goto-previous-error "previous error" :color pink))
           "Dictionary"
           (("d" ispell-change-dictionary "choose")
            ("f" ale/switch-to-fr-dict "fr (FR)")
            ("e" ale/switch-to-en-dict "en (GB)")
            ("u" ale/switch-to-us-dict "en (US)")
-           ("g" guess-language "guess"))
+           ("l" define-word-at-point "lookup word"))
           "Synonyms"
           (("s" powerthesaurus-lookup-word-dwim "synonym (DWIM)")
            ("w" powerthesaurus-lookup-word "synonym for word")
-           ("." powerthesaurus-lookup-word-at-point "synonym at point")))))
+           ("S" powerthesaurus-lookup-word-at-point "synonym at point")))))
 
      (use-package define-word :defer t)
 
