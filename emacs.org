@@ -4077,7 +4077,6 @@
 ** Spritz
    [[http://spritzinc.com/][spritz]] is a reading technique. [[https://github.com/emacsmirror/spray][Spray-mode]] implements it for any emacs buffer.
    #+BEGIN_SRC emacs-lisp
-     ;; spray mode (spritz)
      (use-package spray
        :disabled
        :bind (:map spray-mode-map
