@@ -228,6 +228,7 @@
             rainbow-blocks
             rainbow-delimiters
             rainbow-mode
+            redshank
             reformatter
             region-bindings-mode
             rg
@@ -2851,6 +2852,12 @@
    #+BEGIN_SRC emacs-lisp
      (use-package litable
        :hook (lisp-interaction-mode . litable-mode))
+   #+END_SRC
+
+   Redshank is a package for refactoring stuff.
+   #+BEGIN_SRC emacs-lisp
+     (use-package redshank
+       :hook (lisp-data-mode . redshank-mode))
    #+END_SRC
 
 ** Clojure
