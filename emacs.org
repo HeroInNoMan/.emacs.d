@@ -2667,28 +2667,34 @@
    #+BEGIN_SRC emacs-lisp
      (use-package paren
        :ensure nil
+       :config (show-paren-mode 1)
        :custom-face (show-paren-match ((t ( :underline "white"
                                             :weight ultra-bold
                                             :background unspecified
-                                            :foreground unspecified))))
-       :config (show-paren-mode 1))
+                                            :foreground unspecified)))))
 
      (use-package smartparens
-       :hook (prog-mode . turn-on-smartparens-mode)
-       :commands smartparens-mode
-       :bind (
-              :map lisp-mode-map
-              ("C-M-f" . sp-forward-sexp)
-              ("C-M-b" . sp-backward-sexp)
-              :map emacs-lisp-mode-map
-              ("C-M-f" . sp-forward-sexp)
-              ("C-M-b" . sp-backward-sexp)
-              :map lisp-interaction-mode-map
-              ("C-M-f" . sp-forward-sexp)
-              ("C-M-b" . sp-backward-sexp)
-              :map emacs-lisp-mode-map
-              ("C-M-f" . sp-forward-sexp)
-              ("C-M-b" . sp-backward-sexp))
+       :hook (prog-mode . smartparens-mode)
+       :bind (:map smartparens-mode-map
+                   ;; up / down navigation
+                   ("C-M-u" . sp-backward-up-sexp)
+                   ("C-M-d" . sp-down-sexp)
+                   ;; sexp (macro) navigation
+                   ("C-M-p" . sp-backward-sexp)
+                   ("C-M-n" . sp-forward-sexp)
+                   ;; symbol (micro) navigation
+                   ("C-M-b" . sp-backward-symbol)
+                   ("C-M-f" . sp-forward-symbol)
+                   ;; forward barf/slurp
+                   ("C-M-(" . sp-forward-barf-sexp)
+                   ("C-M-)" . sp-slurp-hybrid-sexp)
+                   ;; backward barf/slurp
+                   ("C-M-«" . sp-backward-slurp-sexp)
+                   ("C-M-»" . sp-backward-barf-sexp)
+                   ;; transformations
+                   ("C-M-k" . sp-kill-hybrid-sexp)
+                   ("C-M-t" . sp-transpose-sexp)
+                   ("C-M-c" . sp-clone-sexp))
        :config
        (require 'smartparens-config)
        (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
@@ -2709,26 +2715,26 @@
        (sp-pair "« " " »" :trigger "«")
        (sp-pair "“" "”")
        (sp-pair "‘" "’")
-       (def-pairs ((paren . "(")
-                   (bracket . "[")
-                   (brace . "{")
-                   (angle . "<")
-                   (single-quote . "'")
-                   (double-quote . "\"")
-                   (guillemet . "« ")
+       (def-pairs ((paren              . "(")
+                   (bracket            . "[")
+                   (brace              . "{")
+                   (angle              . "<")
+                   (single-quote       . "'")
+                   (double-quote       . "\"")
+                   (guillemet          . "« ")
                    (curly-double-quote . "“")
                    (curly-single-quote . "‘")
-                   (back-quote . "`")))
-       (global-set-key (kbd "M-s (") 'wrap-with-parens)
-       (global-set-key (kbd "M-s [") 'wrap-with-brackets)
-       (global-set-key (kbd "M-s {") 'wrap-with-braces)
-       (global-set-key (kbd "M-s <") 'wrap-with-angles)
-       (global-set-key (kbd "M-s '") 'wrap-with-single-quotes)
+                   (back-quote         . "`")))
+       (global-set-key (kbd "M-s (")  'wrap-with-parens)
+       (global-set-key (kbd "M-s [")  'wrap-with-brackets)
+       (global-set-key (kbd "M-s {")  'wrap-with-braces)
+       (global-set-key (kbd "M-s <")  'wrap-with-angles)
+       (global-set-key (kbd "M-s '")  'wrap-with-single-quotes)
        (global-set-key (kbd "M-s \"") 'wrap-with-double-quotes)
-       (global-set-key (kbd "M-s «") 'wrap-with-guillemets)
-       (global-set-key (kbd "M-s “") 'wrap-with-curly-double-quotes)
-       (global-set-key (kbd "M-s ‘") 'wrap-with-curly-single-quotes)
-       (global-set-key (kbd "M-s `") 'wrap-with-back-quotes)
+       (global-set-key (kbd "M-s «")  'wrap-with-guillemets)
+       (global-set-key (kbd "M-s “")  'wrap-with-curly-double-quotes)
+       (global-set-key (kbd "M-s ‘")  'wrap-with-curly-single-quotes)
+       (global-set-key (kbd "M-s `")  'wrap-with-back-quotes)
 
        (pretty-hydra-define hydra-parens
          (:color teal :quit-key "q")
@@ -2739,21 +2745,18 @@
           (("k" sp-kill-sexp "kill")
            ("C-k" sp-kill-hybrid-sexp "kill hybrid")
            ("r" sp-raise-sexp "raise")
-           ("s" sp-splice-sexp "splice")
+           ("s" sp-unwrap-sexp "unwrap")
            ("M-s" sp-splice-sexp "splice"))
-          "Transpose"
+          "Transform"
           (("t" sp-transpose-sexp "transpose")
            ("T" sp-transpose-hybrid-sexp "transpose hybrid")
-           ("w" sp-rewrap-sexp "rewrap"))
-          "Slurp"
+           ("C" sp-convolute-sexp "convolute")
+           ("w" sp-rewrap-sexp "rewrap")
+           ("l" sp-swap-enclosing-sexp "swap enclosing"))
+          "Slurp / barf"
           (("a" sp-absorb-sexp "absorb")
            ("j" sp-join-sexp "join")
-           ("(" sp-backward-slurp-sexp "slurp backward")
-           (")" sp-slurp-hybrid-sexp "slurp hybrid"))
-          "Barf"
-          (("e" sp-emit-sexp "emit")
-           ("«" sp-backward-barf-sexp "barf backward")
-           ("»" sp-forward-barf-sexp "barf forward"))))
+           ("e" sp-emit-sexp "emit"))))
        (global-set-key (kbd "M-s M-s") 'hydra-parens/body))
    #+END_SRC
 
