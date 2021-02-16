@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: select limit
+# key: sl
+# --
+SELECT * FROM $1 LIMIT 20
