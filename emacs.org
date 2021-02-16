@@ -3948,14 +3948,19 @@
       (setq doom-modeline-before-update-env-hook nil)
       (setq doom-modeline-after-update-env-hook nil)
 
-      ;; I don’t want to see the battery status when it is fully charged ;;;;;;;;;;
-      (defun battery-full-p ()
-        "Return t if battery is full."
+      ;; I don’t want to see the battery status when it is almost full ;;;;;;
+      (defun battery-more-than-p (threshold)
+        "Return t if battery is charged more than a given THRESHOLD."
         (interactive)
-        (string-equal "100%%" (prin1-to-string (cdr doom-modeline--battery-status) t)))
+        (< threshold
+           (string-to-number
+            (string-remove-suffix "%%"
+                                  (prin1-to-string
+                                   (cdr doom-modeline--battery-status)
+                                   t)))))
 
       (defadvice doom-modeline-update-battery-status (after hide-full-battery activate)
-        (when (battery-full-p)
+        (when (battery-more-than-p 95)
           (setq doom-modeline--battery-status nil)))
 
       (when (daemonp)
