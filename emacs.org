@@ -3596,10 +3596,15 @@
        mu4e-alert-email-notification-types '(subjects)
        ;; mu4e-alert-email-count-title "Nouveaux mails !"
        mu4e-alert-interesting-mail-query (concat
-                                          "%unread"
-                                          " AND NOT %work"
-                                          " AND NOT %autos"
-                                          " AND NOT %hidden"))
+                                          "flag:unread"
+                                          " AND NOT maildir:/Folders/Enercoop-forward"
+                                          " AND NOT maildir:/Labels/Enercoop"
+                                          " AND NOT from:easter-eggs.com"
+                                          " AND NOT to:enercoop.org"
+                                          " AND NOT list:\"Coopener.enercoop.github.com\""
+                                          " AND NOT flag:trashed"
+                                          " AND NOT maildir:/Junk"
+                                          " AND NOT subject:SPAM"))
       (mu4e-alert-enable-mode-line-display)
       (mu4e-alert-set-default-style 'libnotify)
       (mu4e-alert-enable-notifications))
