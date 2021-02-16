@@ -3838,7 +3838,7 @@
       ;; If you are experiencing the laggy issue, especially while editing remote files
       ;; with tramp, please try `file-name' style.
       ;; Please refer to https://github.com/bbatsov/projectile/issues/657.
-      (setq doom-modeline-buffer-file-name-style 'file-name)
+      (setq doom-modeline-buffer-file-name-style 'auto)
 
       ;; Whether display icons in the mode-line. Respects `all-the-icons-color-icons'.
       ;; While using the server mode in GUI, should set the value explicitly.
@@ -3859,7 +3859,7 @@
       (setq doom-modeline-buffer-modification-icon t)
 
       ;; Whether to use unicode as a fallback (instead of ASCII) when not using icons.
-      (setq doom-modeline-unicode-fallback nil)
+      (setq doom-modeline-unicode-fallback t)
 
       ;; Whether display the minor modes in the mode-line.
       (setq doom-modeline-minor-modes nil)
@@ -3884,7 +3884,7 @@
       (setq doom-modeline-checker-simple-format t)
 
       ;; The maximum number displayed for notifications.
-      (setq doom-modeline-number-limit 99)
+      (setq doom-modeline-number-limit 999)
 
       ;; The maximum displayed length of the branch name of version control.
       (setq doom-modeline-vcs-max-length 40)
@@ -3899,7 +3899,7 @@
       (setq doom-modeline-lsp t)
 
       ;; Whether display the GitHub notifications. It requires `ghub' package.
-      (setq doom-modeline-github nil)
+      (setq doom-modeline-github t)
 
       ;; The interval of checking GitHub.
       (setq doom-modeline-github-interval (* 30 60))
@@ -3927,19 +3927,19 @@
       (setq doom-modeline-env-version t)
       ;; Or for individual languages
       (setq doom-modeline-env-enable-python t)
-      (setq doom-modeline-env-enable-ruby t)
-      (setq doom-modeline-env-enable-perl t)
-      (setq doom-modeline-env-enable-go t)
+      (setq doom-modeline-env-enable-ruby   t)
+      (setq doom-modeline-env-enable-perl   t)
+      (setq doom-modeline-env-enable-go     t)
       (setq doom-modeline-env-enable-elixir t)
-      (setq doom-modeline-env-enable-rust t)
+      (setq doom-modeline-env-enable-rust   t)
 
       ;; Change the executables to use for the language version string
       (setq doom-modeline-env-python-executable "python") ; or `python-shell-interpreter'
-      (setq doom-modeline-env-ruby-executable "ruby")
-      (setq doom-modeline-env-perl-executable "perl")
-      (setq doom-modeline-env-go-executable "go")
+      (setq doom-modeline-env-ruby-executable   "ruby")
+      (setq doom-modeline-env-perl-executable   "perl")
+      (setq doom-modeline-env-go-executable     "go")
       (setq doom-modeline-env-elixir-executable "iex")
-      (setq doom-modeline-env-rust-executable "rustc")
+      (setq doom-modeline-env-rust-executable   "rustc")
 
       ;; What to dispaly as the version while a new one is being loaded
       (setq doom-modeline-env-load-string "...")
