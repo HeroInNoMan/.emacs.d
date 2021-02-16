@@ -1727,7 +1727,11 @@
 
    Auto-refresh all buffers.
    #+BEGIN_SRC emacs-lisp
-     (global-auto-revert-mode 1)
+     (use-package autorevert
+       :ensure nil
+       :config
+       (global-auto-revert-mode 1)
+       (setq global-auto-revert-non-file-buffers t))
    #+END_SRC
 
    Some more buffer manipulation bindings.
