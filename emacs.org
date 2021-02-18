@@ -3714,24 +3714,28 @@
    #+BEGIN_SRC emacs-lisp
      (pretty-hydra-define hydra-major-modes
        (:color blue :quit-key "q")
-       ("Prog"
+       ("Lisp"
         (("e" emacs-lisp-mode "elisp")
-         ("g" groovy-mode "groovy")
-         ("l" lisp-mode "lisp")
-         ("J" java-mode "Java")
+         ("i" lisp-interaction-mode "fundamental")
+         ("l" lisp-mode "lisp"))
+        "Compiled"
+        (("j" java-mode "Java")
+         ("u" rust-mode "rust")
+         ("S" sql-mode "SQL"))
+        "Interpreted"
+        (("g" groovy-mode "groovy")
          ("p" python-mode "python")
          ("r" ruby-mode "ruby")
-         ("R" rust-mode "rust")
-         ("s" sql-mode "SQL")
-         )
+         ("s" shell-script-mode "shell"))
         "Web"
         (("h" html-mode "html")
          ("c" css-mode "css")
-         ("j" js2-mode "js2")
+         ("2" js2-mode "js2")
          ("n" nxml-mode "nXml")
          ("w" web-mode "web"))
-        "Text"
-        (("," csv-mode "csv")
+        "Structured text"
+        (("a" adoc-mode "ascii doc")
+         ("," csv-mode "csv")
          ("o" org-mode "org")
          ("t" text-mode "text"))))
      (global-set-key (kbd "C-c m") 'hydra-major-modes/body)
