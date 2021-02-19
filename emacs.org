@@ -261,6 +261,7 @@
             verb
             vimish-fold
             visual-regexp-steroids
+            vterm
             web-mode
             webpaste
             wgrep
@@ -2765,6 +2766,12 @@
    #+END_SRC
 
 ** Shell
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package vterm)
+   #+END_SRC
+
+
    #+BEGIN_SRC emacs-lisp
      (use-package sh-script
        :ensure nil
@@ -2806,7 +2813,7 @@
        :bind (:map shell-mode-map ("C-c C-l" . helm-comint-input-ring))
        :config
        (setq shell-pop-default-directory nil)
-       (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell)))))
+       (setq shell-pop-shell-type (quote ("vterm" "*vterm*" (lambda () (vterm shell-pop-term-shell)))))
        (setq shell-pop-term-shell "/bin/bash")
        ;;(setq shell-pop-universal-key "C-t")
        (setq shell-pop-window-size 30)
@@ -3749,7 +3756,8 @@
         (("e" (funcall (togfun "*eshell*" 'eshell)) "eshell")
          ("t" shell-pop "shell-pop")
          ("$" (funcall (togfun "*shell*" 'shell)) "shell")
-         ("%" (funcall (togfun "*ansi-term*" 'crux-visit-term-buffer)) "ansi-term"))
+         ("%" (funcall (togfun "*ansi-term*" 'crux-visit-term-buffer)) "ansi-term")
+         ("v" (funcall (togfun "vterm" 'vterm)) "vterm"))
         "Reading"
         (("r r" avandu-overview "avandu RSS")
          ("r l" helm-lobsters "lobsters")
