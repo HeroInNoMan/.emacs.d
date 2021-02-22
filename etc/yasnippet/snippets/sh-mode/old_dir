@@ -2,5 +2,5 @@
 # name: old_dir
 # key: old
 # --
-old_dir=$(pwd)
+old_dir=$PWD
 cd $old_dir

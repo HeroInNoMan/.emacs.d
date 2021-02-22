@@ -1515,6 +1515,10 @@
      (use-package yasnippet
        :commands yas-new-snippet yas-insert-snippet
        :chords ("yq" . hydra-yasnippet/body)
+       :hook
+       (snippet-mode . (lambda () (aggressive-indent-mode -1)))
+       (text-mode . (lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
+       (python-mode . (lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
        :bind
        ("<backtab>" . yas-ido-expand)
        ("C-h y" . yas-describe-tables)
