@@ -708,6 +708,12 @@
     (setq-default frame-title-format '("%b [%m]"))
   #+END_SRC
 
+  Set default window size to standard 80 × 24:
+  #+BEGIN_SRC emacs-lisp
+    (add-to-list 'default-frame-alist '(height . 24))
+    (add-to-list 'default-frame-alist '(width . 80))
+  #+END_SRC
+
 
 ** Theme
    #+BEGIN_SRC emacs-lisp
