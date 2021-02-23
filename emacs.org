@@ -135,6 +135,7 @@
             elfeed-org
             elisp-slime-nav
             elpy
+            emacs-everywhere
             emojify
             ensime
             ereader
@@ -4071,6 +4072,12 @@
             (not (server-running-p))))
       :bind ("M-#" . server-edit)) ;; send back to server, quicker than C-x #
   #+END_SRC
+
+  Invoke an emacsclient to/from any input field on the system:
+  #+BEGIN_SRC emacs-lisp
+    (use-package emacs-everywhere)
+  #+END_SRC
+
 
 * Other
 ** Accounting
