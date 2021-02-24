@@ -1133,7 +1133,7 @@
        (global-company-mode 1) ;; enable company in all buffers
        (setq company-tooltip-limit 30
              company-idle-delay 0.3 ;; almost no delay before showing candidates
-             company-minimum-prefix-length 1 ;; completion rigth away!
+             company-minimum-prefix-length 2 ;; completion rigth away!
              company-show-numbers 'on
              company-dabbrev-downcase nil))
 
