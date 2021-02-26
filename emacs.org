@@ -1765,6 +1765,84 @@
     (global-set-key (kbd "<f5>") 'hydra-file/body)
   #+END_SRC
 
+*** ibuffer
+    #+BEGIN_SRC emacs-lisp
+      (use-package ibuffer
+        :ensure nil
+        :defer t
+        :hook (ibuffer-mode . (lambda ()
+                          (ibuffer-auto-mode 1)
+                          (ibuffer-switch-to-saved-filter-groups "default")))
+        :config
+        (define-ibuffer-column size-h
+          (:name "Size" :inline t)
+          (cond
+           ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+           ((> (buffer-size) 100000)  (format "%7.0fk" (/ (buffer-size) 1000.0)))
+           ((> (buffer-size) 1000)    (format "%7.1fk" (/ (buffer-size) 1000.0)))
+           (t (format "%8d" (buffer-size)))))
+        (setq ibuffer-formats
+              '((mark modified read-only vc-status-mini " "
+                      (name 35 35       :left :elide) " "
+                      (size-h 9 -1      :right      ) " "
+                      (mode 16 16       :left :elide) " "
+                      (vc-status 14 14  :left       ) " "
+                      filename-and-process)))
+        (setq ibuffer-show-empty-filter-groups nil)
+        (setq ibuffer-saved-filters
+              '(("default"
+                 ("dired" (mode . dired-mode))
+                 ("org"   (name . "^.*org$"))
+                 ("web"   (or
+                           (mode . web-mode)
+                           (mode . js2-mode)))
+                 ("shell" (or
+                           (mode . eshell-mode)
+                           (mode . shell-mode)))
+                 ("mu4e"  (name . "\*mu4e\*"))
+                 ("magit" (mode . magit-status-mode))
+                 ("prog"  (or
+                           (mode . python-mode)
+                           (mode . c++-mode)))
+                 ("emacs" (or
+                           (name . "^\\*scratch\\*$")
+                           (name . "^\\*Messages\\*$"))))))
+        (setq ibuffer-saved-filter-groups
+              '(("default"
+                 ("tramp" (or
+                           ;; (filename . "/sshx?:.+:.+")
+                           (filename . "/sshx?:.+:.+")
+                           (name . "\*tramp.*\*")))
+                 ("dired" (mode . dired-mode))
+                 ("org"   (name . "^.*org$"))
+                 ("web"   (or
+                           (mode . web-mode)
+                           (mode . js2-mode)))
+                 ("shell" (or
+                           (mode . eshell-mode)
+                           (mode . shell-mode)))
+                 ("mu4e"  (name . "\*mu4e\*"))
+                 ("magit" (mode . magit-status-mode))
+                 ("prog"  (or
+                           (mode . python-mode)
+                           (mode . c++-mode)))
+                 ("emacs" (or
+                           (name . "^\\*scratch\\*$")
+                           (name . "^\\*Messages\\*$"))))))
+        (setq ibuffer-never-show-predicates '("\*helpful .*\*"
+                                              "\*helm .*\*")))
+    #+END_SRC
+
+*** ibuffer-vc
+    #+BEGIN_SRC emacs-lisp
+      (use-package ibuffer-vc
+        :hook
+        (ibuffer-vc-set-filter-groups-by-vc-root)
+        (ibuffer-mode . (lambda ()
+                          (ibuffer-vc-set-filter-groups-by-vc-root)
+                          (unless (eq ibuffer-sorting-mode 'alphabetic)
+                            (ibuffer-do-sort-by-alphabetic)))))
+    #+END_SRC
 *** Scratch
     #+BEGIN_SRC emacs-lisp
       (use-package persistent-scratch
