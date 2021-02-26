@@ -136,6 +136,7 @@
             elisp-slime-nav
             elpy
             emacs-everywhere
+            emmet-mode
             emojify
             ensime
             ereader
@@ -3365,6 +3366,12 @@
                      :map html-mode-map ("C-c b" . web-beautify-html)
                      :map web-mode-map ("C-c b" . web-beautify-html)
                      :map css-mode-map ("C-c b" . web-beautify-css)))
+   #+END_SRC
+
+   [[https://github.com/smihica/emmet-mode][Emmet]] is great to quickly create HTML/CSS structure
+   #+BEGIN_SRC emacs-lisp
+     (use-package emmet-mode
+       :hook web-mode)
    #+END_SRC
 
    [[https://github.com/skeeto/impatient-mode][Impatient-mode]] enables live editing of html files.
