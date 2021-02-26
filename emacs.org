@@ -2721,6 +2721,7 @@
                    ;; transformations
                    ("C-M-k" . sp-kill-hybrid-sexp)
                    ("C-M-t" . sp-transpose-sexp)
+                   ("C-M-j" . sp-join-sexp)
                    ("C-M-c" . sp-clone-sexp))
        :config
        (require 'smartparens-config)
