@@ -353,9 +353,6 @@
       ("M-è" . next-user-buffer)                       ;; call next user buffer
       ("C-M-é" . previous-buffer)                      ;; call previous buffer
       ("C-M-è" . next-buffer)                          ;; call next buffer
-      ("<f5>" . ale/revert-buffer-no-confirm)          ;; re-read file from disk
-      ("C-<f5>" . ale/copy-and-show-current-file-path) ;; copy current file path
-      ("M-<f5>" . show-file-name)                      ;; show the file name in minibuffer
       ([remap goto-line] . 'goto-line-with-feedback)   ;; display linum while goto-line
       ("C-x |" . ale/toggle-window-split)
       ("C-|" . ale/toggle-window-split)
@@ -1753,6 +1750,20 @@
      (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
      (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
    #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (pretty-hydra-define hydra-file
+      (:color blue :quit-key "q")
+      ("Refresh"
+       (("<f5>" ale/revert-buffer-no-confirm "revert buffer"))
+       "Crux commands…"
+       (("f" crux-kill-buffer-truename          "copy qualified name")
+        ("k" crux-kill-other-buffers            "kill other buffers")
+        ("r" crux-rename-file-and-buffer        "rename")
+        ("d" crux-delete-file-and-buffer        "delete")
+        ("c" crux-copy-file-preserve-attributes "copy"))))
+    (global-set-key (kbd "<f5>") 'hydra-file/body)
+  #+END_SRC
 
 *** Scratch
     #+BEGIN_SRC emacs-lisp
