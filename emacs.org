@@ -3626,14 +3626,17 @@
        ;; mu4e-alert-email-count-title "Nouveaux mails !"
        mu4e-alert-interesting-mail-query (concat
                                           "flag:unread"
-                                          " AND NOT maildir:/Folders/Enercoop-forward"
-                                          " AND NOT maildir:/Labels/Enercoop"
-                                          " AND NOT from:easter-eggs.com"
-                                          " AND NOT to:enercoop.org"
-                                          " AND NOT list:\"Coopener.enercoop.github.com\""
-                                          " AND NOT flag:trashed"
-                                          " AND NOT maildir:/Junk"
-                                          " AND NOT subject:SPAM"))
+                                          " AND maildir:/INBOX"
+                                          ;; " AND NOT maildir:/Folders/Enercoop-forward"
+                                          ;; " AND NOT maildir:/Labels/Enercoop"
+                                          ;; " AND NOT from:marinone"
+                                          ;; " AND NOT from:easter-eggs.com"
+                                          ;; " AND NOT to:enercoop.org"
+                                          ;; " AND NOT list:\"Coopener.enercoop.github.com\""
+                                          ;; " AND NOT flag:trashed"
+                                          ;; " AND NOT maildir:/Junk"
+                                          ;; " AND NOT subject:SPAM"
+                                          ))
       (mu4e-alert-enable-mode-line-display)
       (mu4e-alert-set-default-style 'libnotify)
       (mu4e-alert-enable-notifications))
