@@ -1772,8 +1772,8 @@
         :ensure nil
         :defer t
         :hook (ibuffer-mode . (lambda ()
-                          (ibuffer-auto-mode 1)
-                          (ibuffer-switch-to-saved-filter-groups "default")))
+                                (ibuffer-auto-mode 1)
+                                (ibuffer-switch-to-saved-filter-groups "default")))
         :config
         (unbind-key "M-o" ibuffer-mode-map)
         (define-ibuffer-column size-h
