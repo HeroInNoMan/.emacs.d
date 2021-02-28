@@ -1775,6 +1775,7 @@
                           (ibuffer-auto-mode 1)
                           (ibuffer-switch-to-saved-filter-groups "default")))
         :config
+        (unbind-key "M-o" ibuffer-mode-map)
         (define-ibuffer-column size-h
           (:name "Size" :inline t)
           (cond
@@ -2235,6 +2236,7 @@
       (org-headline-done ((((class color) (min-colors 16) (background dark))
                            (:foreground "dim grey" :strike-through t))))
       :config
+      (unbind-key "C-c C-j" org-mode-map)
       (require 'ox-md nil t)
       (require 'org-agenda)
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
