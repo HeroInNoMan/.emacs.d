@@ -4075,7 +4075,7 @@
 
   Invoke an emacsclient to/from any input field on the system:
   #+BEGIN_SRC emacs-lisp
-    (use-package emacs-everywhere)
+    (use-package emacs-everywhere :disabled t)
   #+END_SRC
 
 
