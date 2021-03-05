@@ -207,6 +207,7 @@
             move-text
             mu4e-alert
             mu4e-jump-to-list
+            mu4e-marker-icons
             mu4e-query-fragments
             no-littering
             ob-restclient
@@ -3684,6 +3685,10 @@
               (:mailing-list . 30)
               (:from         . 35)
               (:thread-subject))))
+
+    (use-package mu4e-marker-icons
+      :disabled t
+      :config (mu4e-marker-icons-mode 1))
 
     (use-package mu4e-jump-to-list :after mu4e)
 
