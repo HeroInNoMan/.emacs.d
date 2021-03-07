@@ -3552,7 +3552,15 @@
       :load-path my-private-mu4e-path
       :ensure nil
       :commands mu4e
-      :custom-face (mu4e-flagged-face ((t (:foreground "gold"))))
+      :custom-face
+      (mu4e-flagged-face ((t (:foreground "gold"))))
+      (mu4e-header-highlight-face ((t (;; :weight bold
+                                       :background "black"
+                                       ;; :foreground "red"
+                                       ;; :box ( :line-width (1 . 1)
+                                       ;;        :color "grey10"
+                                       ;; :style released-button
+                                       ))))
       :bind ( :map mu4e-view-mode-map
               ("<down>" . down-arrow)
               ("<up>" . up-arrow)
