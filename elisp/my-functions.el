@@ -218,29 +218,30 @@ Swap buffers in the process"
     (progn
       (linum-mode -1)
       (git-gutter-mode +1))))
+
 (defun ale/insert-ticket-prefix ()
   "Insert a prefix containing the ticket ID."
   (interactive)
-  ;; (let* ((branch-name (magit-get-current-branch))
   (let* ((ticket-types (if (boundp 'my-private-ticket-types)
                            my-private-ticket-types
                          '("hot" "bg" "tk" "ft")))
          (branch-name (magit-get-current-branch))
          (ticket-type (car (split-string branch-name "-")))
          (ticket-id (car (cdr (split-string branch-name "-"))))
-         (prefix (concat "#" ticket-id)))
+         (comment-char (magit-get "core.commentChar"))
+         (repo-url (magit-get "remote.origin.url"))
+         (project-prefix (when (string-match "sinapse-scripts" repo-url) "enercoop/Sinapse"))
+         (prefix-char (concat project-prefix "#"))
+         (prefix (if (or (not comment-char)
+                         (string= comment-char prefix-char))
+                     (concat "[" ticket-id "]")
+                   (concat prefix-char ticket-id))))
     (when (and (member ticket-type ticket-types)
                (string-match "^[0-9]+$" ticket-id)
-               (not (ticket-prefix-p prefix)))
+               (not (re-search-forward prefix nil t)))
       (goto-char (point-min))
       (insert (concat prefix " "))
       (save-buffer))))
-
-(defun ticket-prefix-p (prefix)
-  "Return t if PREFIX is present in the current buffer, else nil."
-  (interactive "P")
-  ;; (let* ((result  (re-search-forward "\\([0-9]\\{4\\}\\)[_-].+$" nil t))
-  (re-search-forward prefix nil t))
 
 (defun ale/toggle-camel-snake-kebab-case ()
   "Cycle between camelCase, snake_case and kebab-case for the symbol at point."
