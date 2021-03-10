@@ -545,6 +545,8 @@ Swap buffers in the process"
              (prin1-to-string (car db) t)
              `(lambda ()
                 (setq sql-product ,(car (cdr (assoc 'sql-product db))))
+                ;;TODO: check if connection already exists
+
                 (sql-connect (quote ,(car db))))))))
 
 (defun ale/tangle-config-file ()
