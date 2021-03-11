@@ -113,8 +113,8 @@
             darkroom
             dashboard
             default-text-scale
-            defrepeater
             define-word
+            defrepeater
             delight
             describe-number
             dired-collapse
