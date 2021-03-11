@@ -150,6 +150,7 @@
             dumb-jump
             edit-server
             editorconfig
+            eglot
             elfeed
             elfeed-org
             elisp-slime-nav
@@ -2798,7 +2799,12 @@
    #+END_SRC
 
 ** LSP
+*** Eglot
+   #+BEGIN_SRC emacs-lisp
+     (use-package eglot)
+   #+END_SRC
 
+*** lsp-mode
    TODO: describe lsp
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
@@ -2836,6 +2842,7 @@
        :after lsp-mode)
 
      (use-package dap-mode
+       :disabled t
        :after lsp-mode
        :config
        (dap-mode 1)
