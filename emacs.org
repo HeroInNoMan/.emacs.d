@@ -121,6 +121,7 @@
             dired-collapse
             dired-narrow
             dired-subtree
+            diredfl
             dmacro
             docker
             dockerfile-mode
@@ -897,6 +898,10 @@
     (use-package all-the-icons-dired
       :after dired
       :hook (dired-mode . all-the-icons-dired-mode))
+
+    (use-package diredfl
+      :after dired
+      :hook (dired-mode . diredfl-mode))
 
     (use-package dired-narrow
       :after dired
