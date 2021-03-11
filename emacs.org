@@ -82,6 +82,7 @@
             adoc-mode
             aggressive-indent
             all-the-icons
+            all-the-icons-dired
             auctex-latexmk
             auto-yasnippet
             avandu
@@ -892,6 +893,10 @@
             ;; always delete and copy recursively
             dired-recursive-deletes 'always
             dired-recursive-copies 'always))
+
+    (use-package all-the-icons-dired
+      :after dired
+      :hook (dired-mode . all-the-icons-dired-mode))
 
     (use-package dired-narrow
       :after dired
