@@ -575,6 +575,7 @@
       ("C-M-<down>" . crux-duplicate-current-line-or-region)
       ("C-M-<up>" . crux-duplicate-and-comment-current-line-or-region)
       ("M-j" . crux-top-join-line)
+      ("M-o" . crux-other-window-or-switch-buffer)
       ("C-x C-r" . crux-sudo-edit)
       ("C-S-d" . kill-whole-line)
       ("C-c i" . crux-cleanup-buffer-or-region)
