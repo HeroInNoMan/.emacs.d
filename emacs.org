@@ -77,8 +77,6 @@
   #+BEGIN_SRC emacs-lisp
     (setq package-selected-packages
           '(2048-game
-            ace-jump-helm-line
-            ace-window
             adoc-mode
             aggressive-indent
             all-the-icons
@@ -930,16 +928,7 @@
   #+END_SRC
 
 * Navigation
-  I use [[https://github.com/abo-abo/ace-window][ace-window]],
-  #+BEGIN_SRC emacs-lisp
-    (use-package ace-window
-      :bind
-      ("M-o" . other-window)
-      ;; ("M-o" . ace-window)
-      )
-  #+END_SRC
-
-  and [[https://github.com/muffinmad/emacs-ctrlxo][ctrlxo]], to quickly switch windows…
+  I use [[https://github.com/abo-abo/ace-window][ctrlxo]] to quickly switch windows…
   #+BEGIN_SRC emacs-lisp
     (use-package ctrlxo
       :bind ("C-x o" . ctrlxo))
@@ -1443,12 +1432,6 @@
        (js-mode . (lambda () (setq-local helm-dash-docsets '("Javascript"))))
        (rust-mode . (lambda () (setq-local helm-dash-docsets '("Rust"))))
        :config (setq helm-dash-browser-func 'eww))
-   #+END_SRC
-
-   Let’s make =ace-jump-mode= also available during a helm session.
-   #+BEGIN_SRC emacs-lisp
-     (use-package ace-jump-helm-line
-       :bind (:map helm-map ("M-à" . ace-jump-helm-line)))
    #+END_SRC
 
    =Helm-swoop= can be called during =isearch= to make searching easier with big files or big number of occurences.
