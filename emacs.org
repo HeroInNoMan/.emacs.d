@@ -81,6 +81,7 @@
             aggressive-indent
             all-the-icons
             all-the-icons-dired
+            all-the-icons-ivy-rich
             auctex-latexmk
             auto-yasnippet
             avandu
@@ -100,6 +101,11 @@
             company-box
             company-lsp
             company-prescient
+            counsel
+            counsel-dash
+            counsel-projectile
+            counsel-tramp
+            counsel-web
             crontab-mode
             crux
             csv-mode
@@ -182,6 +188,9 @@
             imenu-anywhere
             impatient-mode
             isearch-dabbrev
+            ivy
+            ivy-prescient
+            ivy-rich
             iy-go-to-char
             jedi
             jenkins
@@ -1183,31 +1192,6 @@
              undo-outer-limit 3000000))
    #+END_SRC
 
-** Ivy, counsel, swiper
-   Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
-   #+BEGIN_SRC emacs-lisp
-     (use-package ivy
-       :disabled t
-       :config
-       (ivy-mode nil)
-       ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-       (setq ivy-use-virtual-buffers t)
-       ;; number of result lines to display
-       (setq ivy-height 30)
-       ;; does not count candidates
-       (setq ivy-count-format "%d/%d ")
-       ;; no regexp by default
-       (setq ivy-initial-inputs-alist nil)
-       ;; configure regexp engine.
-       (setq ivy-re-builders-alist
-             ;; allow input not in order
-             '((t . ivy--regex-ignore-order))))
-
-     (use-package counsel
-       :disabled t
-       :bind ("M-s s" . counsel-grep-or-swiper))
-   #+END_SRC
-
 ** Helm
    Main =helm= configuration, with a big hydra as an entry point for almost all helm commands I use.
    #+BEGIN_SRC emacs-lisp
@@ -1360,7 +1344,7 @@
            ("b"     helm-filtered-bookmarks "bookmark")
            ("'"     helm-register "register")
            ("k"     helm-show-kill-ring "kill-ring")
-           ("<SPC>" helm-all-mark-rings "all mark rings"))
+           ("<SPC>" helm-all-mark-rings "mark rings"))
           "Completion"
           (("<tab>" helm-lisp-completion-at-point "lisp")
            ("$"     helm-lines "lines")
@@ -1376,6 +1360,8 @@
            ("h g"   helm-info-gnus "gnus")
            ("h h"   helm-documentation "doc")
            ("h a"   helm-apropos "a propos")
+           ("h f"   counsel-describe-function "desc. function")
+           ("h v"   counsel-describe-variable "desc. variable")
            ("h m"   helm-man-woman "woman")
            ("-"     helm-dash-at-point "dash"))
           "Other"
@@ -1387,7 +1373,7 @@
            (","     helm-calcul-expression "calcul")
            ("j"     helm-list-elisp-packages "packages")
            ("X"     helm-select-xfont "xfont")
-           ("x"     helm-run-external-command "run external")))))
+           ("x"     helm-M-x "helm-M-x")))))
    #+END_SRC
 
    [[https://blog.burntsushi.net/ripgrep/][Ripgrep]] is the the best tool for grepping anything anywhere these days. Combined with [[https://github.com/cosmicexplorer/helm-rg][helm-rg]], it’s all I need. And it also supports editing search results from the search buffer!
@@ -1502,6 +1488,78 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ssh-config-mode
        :mode ".ssh/config$")
+   #+END_SRC
+
+** Ivy, counsel, swiper
+
+   Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
+
+   Edit: that’s it, I’m moving from helm to ivy/counsel… what initiated the change was ivy-rich and the beautiful way of displaying the description next to the candidate, then the overall snappiness and feeling of solidity. I keep my helm commands for now, but almost all my use cases have been replaced so far.
+   #+BEGIN_SRC emacs-lisp
+     (use-package ivy
+       :defer t
+       :config
+       (ivy-mode t)
+       ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+       (setq ivy-use-virtual-buffers t)
+       ;; number of result lines to display
+       (setq ivy-height 20)
+       ;; does not count candidates
+       (setq ivy-count-format "[%d/%d] ")
+       ;; no regexp by default
+       (setq ivy-initial-inputs-alist nil)
+       ;; configure regexp engine.
+       (setq ivy-re-builders-alist
+             ;; allow input not in order
+             '((t . ivy--regex-ignore-order))))
+
+     (use-package counsel
+       :bind
+       ("M-s <SPC>" . counsel-mark-ring)
+       ("M-s a"     . counsel-apropos)
+       ("M-s b"     . counsel-switch-buffer)
+       ("M-s c"     . counsel-colors-emacs)
+       ("M-s f"     . counsel-buffer-or-recentf)
+       ("M-s g"     . counsel-rg)
+       ("M-s h a"   . counsel-apropos)
+       ("M-s h b"   . counsel-descbinds)
+       ("M-s h c"   . counsel-describe-face)
+       ("M-s h f"   . counsel-describe-function)
+       ("M-s h v"   . counsel-describe-variable)
+       ("M-s i"     . counsel-imenu)
+       ("M-s k"     . counsel-bookmark)
+       ("M-s l"     . counsel-locate)
+       ("M-s p"     . counsel-package)
+       ("M-s s"     . counsel-grep-or-swiper)
+       ("M-s x"     . counsel-linux-app)
+       ("M-s y"     . counsel-yank-pop)
+       ("M-x"       . counsel-M-x))
+
+     ;;TODO: counsel yasnippet
+
+     (use-package counsel-dash
+       :bind ("M-s d" . counsel-dash))
+
+     (use-package counsel-projectile
+       :bind ("M-s j" . counsel-projectile))
+
+     (use-package counsel-tramp
+       :bind ("M-s t" . counsel-tramp))
+
+     (use-package counsel-web
+       :bind
+       ("M-s w" . counsel-web-suggest)
+       ("M-s W" . counsel-web-search))
+
+     (use-package ivy-prescient
+       :after ivy
+       :config (ivy-prescient-mode 1))
+
+     (use-package all-the-icons-ivy-rich
+       :init (all-the-icons-ivy-rich-mode 1))
+
+     (use-package ivy-rich
+       :init (ivy-rich-mode 1))
    #+END_SRC
 
 ** Snippets
