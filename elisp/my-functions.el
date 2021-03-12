@@ -497,6 +497,8 @@ Swap buffers in the process"
   (interactive)
   (cond
    ((string-equal major-mode "dired-mode") nil)
+   ((string-equal major-mode "helm-major-mode") nil)
+   ((string-equal major-mode "erc-mode") nil)
    ((string-prefix-p "*scratch*" (buffer-name)) t)
    ((string-prefix-p "*Org Src" (buffer-name)) t)
    ((string-prefix-p "*eww" (buffer-name)) t)

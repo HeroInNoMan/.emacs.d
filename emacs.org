@@ -158,6 +158,11 @@
             emmet-mode
             emojify
             ensime
+            erc-hl-nicks
+            erc-match
+            erc-scrolltoplace
+            erc-tweet
+            erc-youtube
             ereader
             esup
             expand-region
@@ -474,7 +479,7 @@
   Let’s [[https://github.com/iqbalansari/emacs-emojify][emojify]] things :
   #+BEGIN_SRC emacs-lisp
     (use-package emojify
-      :hook (text-mode . (lambda () (emojify-mode t))))
+      :hook ((text-mode erc-mode) . (lambda () (emojify-mode t))))
   #+END_SRC
 
   Some commands are disabled by default, let’s enable them:
@@ -1860,48 +1865,31 @@
                       (vc-status 14 14  :left       ) " "
                       filename-and-process)))
         (setq ibuffer-show-empty-filter-groups nil)
-        (setq ibuffer-saved-filters
-              '(("default"
-                 ("dired" (mode . dired-mode))
-                 ("org"   (name . "^.*org$"))
-                 ("web"   (or
-                           (mode . web-mode)
-                           (mode . js2-mode)))
-                 ("shell" (or
-                           (mode . eshell-mode)
-                           (mode . shell-mode)))
-                 ("mu4e"  (name . "\*mu4e\*"))
-                 ("magit" (mode . magit-status-mode))
-                 ("prog"  (or
-                           (mode . python-mode)
-                           (mode . c++-mode)))
-                 ("emacs" (or
-                           (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$"))))))
         (setq ibuffer-saved-filter-groups
               '(("default"
-                 ("tramp" (or
-                           ;; (filename . "/sshx?:.+:.+")
-                           (filename . "/sshx?:.+:.+")
-                           (name . "\*tramp.*\*")))
+                 ("tramp" (or (filename . "/sshx?:.+:.+")
+                              (name . "\*tramp.*\*")))
+                 ("org"   (or (name . "^*Org Src ")
+                              (mode . org-mode)))
+                 ("prog"  (and (not (name . "^\\*.+\\*$"))
+                               (or (mode . python-mode)
+                                   (mode . java-mode)
+                                   (mode . web-mode)
+                                   (mode . js2-mode)
+                                   (mode . lisp-mode)
+                                   (mode . emacs-lisp-mode)
+                                   (mode . c++-mode))))
                  ("dired" (mode . dired-mode))
-                 ("org"   (name . "^.*org$"))
-                 ("web"   (or
-                           (mode . web-mode)
-                           (mode . js2-mode)))
-                 ("shell" (or
-                           (mode . eshell-mode)
-                           (mode . shell-mode)))
+                 ("emacs" (and (not (name . "\*mu4e\*"))
+                               (name . "^\\*.+\\*$")))
+                 ("shell" (or (mode . eshell-mode)
+                              (mode . shell-mode)))
+                 ("magit" (name . "^magit.+"))
+                 ("erc" (mode . erc-mode))
                  ("mu4e"  (name . "\*mu4e\*"))
-                 ("magit" (mode . magit-status-mode))
-                 ("prog"  (or
-                           (mode . python-mode)
-                           (mode . c++-mode)))
-                 ("emacs" (or
-                           (name . "^\\*scratch\\*$")
-                           (name . "^\\*Messages\\*$"))))))
+                 )))
         (setq ibuffer-never-show-predicates '("\*helpful .*\*"
-                                              "\*helm .*\*")))
+                                              "\*helm[ -].+")))
     #+END_SRC
 
 *** ibuffer-vc
@@ -3983,6 +3971,7 @@
          ("r y" ytel "youtube"))
         "Management"
         (("(" mu4e "mu4e")
+         ("I" erc-start-or-jump "IRC")
          ("a" org-agenda-list "agenda")
          ("c" open-calendar "calendar")
          ("p" list-packages "packages")
@@ -4285,8 +4274,257 @@
     (use-package emacs-everywhere :disabled t)
   #+END_SRC
 
-
 * Other
+** IRC
+
+   I usually use irssi inside a tmux session over ssh on a distant machine so I can keep the connection alive forever. However I sometimes use ERC, and I want it configured just like my irssi session:
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package erc
+       :ensure nil
+       :hook (erc-mode . visual-line-mode)
+       :bind (("<f6>" . erc-start-or-jump)
+              ("C-<f6>" . erc-start-or-jump) ;; for god-mode
+              :map erc-mode-map
+              ("M-q" . erc-quote-last-message)
+              ("C-o" . erc-start-or-jump))
+       :config
+       ;; BEHAVIOUR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       (setq erc-auto-query 'bury
+             erc-join-buffer 'buffer
+             erc-hide-list '("JOIN" "NICK" "PART" "QUIT" "MODE"))
+
+       ;; Kill buffers when disconnected or parted
+       (setq erc-kill-buffer-on-part t
+             erc-kill-queries-on-quit t
+             erc-kill-server-buffer-on-quit t)
+
+       ;; Truncate buffers to stop some sluggishness
+       (setq erc-max-buffer-size 20000)
+       (erc-truncate-mode t)
+
+       ;; APPEARANCE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       (erc-timestamp-mode t)                                          ;; timestamp
+       (setq erc-timestamp-format "%R "                                ;; HH:MM
+             erc-timestamp-only-if-changed-flag nil                    ;; every line
+             erc-insert-timestamp-function 'erc-insert-timestamp-left) ;; on the left
+
+       (setq erc-fill-prefix nil
+             erc-fill-function 'erc-fill-variable
+             erc-fill-column 500) ;; filling
+
+       (setq erc-interpret-mirc-color t) ;; colors
+
+       (setq erc-prompt (lambda () (concat "[" (buffer-name) "]"))) ;; prompt
+
+       ;; LOGGING ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       (setq erc-log-insert-log-on-open nil
+             erc-log-write-after-send t
+             erc-log-channels t
+             erc-log-channels-directory  (expand-file-name ".irclogs/" base-emacs-directory)
+             erc-save-buffer-on-part t
+             erc-hide-timestamps nil)
+       (erc-log-mode)
+
+       ;; Extra Mode settings
+
+       (erc-match-mode) ;; highlight special words
+
+       (erc-scrolltobottom-enable) ;; always try to scroll to bottom
+
+       (use-package erc-tweet
+         :config
+         (defun erc-tweet-w3m-cleanup-text (tweet-text)
+           (if (featurep 'w3m)
+               (with-temp-buffer
+                 (insert tweet-text)
+                 (w3m-region (point-min) (point-max) nil 'utf8)
+                 (concat (replace-regexp-in-string
+                          "\n" ""
+                          (buffer-substring-no-properties
+                           (point-min) (point-max)))
+                         "\n"))
+             (erc-strip-tags tweet-text)))
+         (setq erc-tweet-cleanup-text 'erc-tweet-w3m-cleanup-text)
+         (add-to-list 'erc-modules 'tweet))
+
+       (use-package erc-youtube
+         :config (add-to-list 'erc-modules 'youtube))
+
+       (use-package erc-hl-nicks)
+
+       (use-package erc-ring
+         :ensure nil
+         :config (erc-ring-mode t))
+
+       (use-package erc-netsplit
+         :ensure nil
+         :config (erc-netsplit-mode t))
+
+       (use-package erc-spelling
+         :ensure nil
+         :config (erc-spelling-mode 1))
+
+       ;; Don't track boring activity
+       (use-package erc-track
+         :ensure nil
+         :config
+         (erc-track-mode t)
+         (setq erc-track-exclude '("*highlight") ;; ZNC highlight buffer
+               erc-track-exclude-server-buffer t
+               erc-track-exclude-types
+               '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                 "324" "329" "332" "333" "353" "477")))
+
+       ;; Custom commands
+       (defun erc-start-or-jump ()
+         "Connect to IRC using `erc-connection-alist' if not running,
+      or jump to first active channel, or cycle through all channels."
+         (interactive)
+         (erc-cleanup-dead-buffers)
+         (if (bound-and-true-p erc-connection-alist)
+             (cl-loop for connection in erc-connection-alist
+                      do (let ((irc-server   (car (cdr (assoc 'irc-server   connection))))
+                               (irc-port     (car (cdr (assoc 'irc-port     connection))))
+                               (irc-nick     (car (cdr (assoc 'irc-nick     connection))))
+                               (irc-password (car (cdr (assoc 'irc-password connection)))))
+                           (unless (erc-server-alive-p irc-server)
+                             (erc :server irc-server :port irc-port :nick irc-nick :password irc-password))))
+           (message "Init `erc-connection-alist' to automatically connect to servers/channels!"))
+         (if erc-modified-channels-alist
+             (switch-to-buffer (car (car erc-modified-channels-alist)))
+           (if (eq last-command 'erc-start-or-jump)
+               (next-erc-channel-buffer)
+             (message "Nothing new on IRC!"))))
+
+       (defun erc-server-alive-p (server)
+         "Return non-nil if a server is alive, nil otherwise."
+         (cl-loop for buff in (erc-buffer-list)
+                  when (with-current-buffer buff (string-prefix-p server (buffer-name)))
+                  return (erc-server-process-alive buff)))
+
+       (defun erc-cleanup-dead-buffers ()
+         "Kill ERC buffers that don’t have a live process."
+         (interactive)
+         (cl-loop for buff in (erc-buffer-list)
+                  when (not (erc-server-process-alive buff))
+                  do (progn
+                       (message (concat "Cleaning up buffer " (buffer-name buff) "."))
+                       (kill-buffer buff))))
+
+       (defun next-erc-channel-buffer ()
+         "Switch to next erc channel buffer."
+         (interactive)
+         (let ((curr-buff (current-buffer))
+               (found-p))
+           (next-buffer)
+           (while (and (not found-p)
+                       (not (eq curr-buff (current-buffer))))
+             (if (erc-channel-buffer-p)
+                 (setq found-p t)
+               (next-buffer)))))
+
+       (defun erc-channel-buffer-p ()
+         "Return t if `current-buffer' is an ERC channel, nil otherwise."
+         (interactive)
+         (and (string-prefix-p "#" (buffer-name))
+              (eq major-mode 'erc-mode)))
+
+       (defun erc-quote-last-message (n)
+         "Cite the last Nth message in current ERC channel."
+         (interactive "p")
+         (if (erc-channel-buffer-p)
+             (let ((kill-read-only-ok t)
+                   (count (if n n 1)))
+               (goto-char (point-max))
+               (when (eq last-command 'erc-quote-last-message)
+                 (progn
+                   (end-of-line)
+                   (push-mark)
+                   (beginning-of-line)
+                   (let ((previous-citation
+                          (substring (buffer-substring-no-properties (mark) (point)) 0 -3)))
+                     (pop-mark)
+                     (kill-line)
+                     (setq this-command 'erc-quote-last-message)
+                     (while (not (eq 0 (current-column)))
+                       (search-backward previous-citation)))))
+               (re-search-backward "^[0-9][0-9]:[0-9][0-9] \\(\\* .+\\|<.+>\\) .+$" nil t count)
+               (push-mark)
+               (end-of-line)
+               (end-of-line)
+               (let ((citation (buffer-substring-no-properties (mark) (point))))
+                 (pop-mark)
+                 (goto-char (point-max))
+                 (beginning-of-line)
+                 (insert (concat citation " ← "))))
+           (message "You are not in an ERC channel.")))
+
+       (defun erc-cmd-MEDIA ()
+         "Announce the current amarok song to the current ERC channel."
+         (erc-cmd-ME
+          (concat " is listening to "
+                  (substring
+                   (shell-command-to-string "mpc -f '%artist% - %title%' | head -n1")
+                   0 -1))))
+
+       (defun erc-cmd-CLEAR ()
+         "Clear the current buffer."
+         (erc-truncate-buffer-to-size 0))
+
+       (defun erc-cmd-CLEARALL ()
+         "Clear all ERC buffers."
+         (mapc (lambda (buffer)
+                 (erc-truncate-buffer-to-size 0 (get-buffer buffer)))
+               (erc-all-buffer-names)))
+
+       ;; A Bar for delimiting read and unread message
+       ;; http://www.emacswiki.org/emacs/ErcBar
+       (eval-after-load 'erc-track
+         '(progn
+            (defun erc-bar-move-back (n)
+              "Moves back n message lines. Ignores wrapping, and server messages."
+              (interactive "nHow many lines ? ")
+              (re-search-backward "^.*<.*>" nil t n))
+
+            (defun erc-bar-update-overlay ()
+              "Update the overlay for current buffer, based on the content of
+                     erc-modified-channels-alist. Should be executed on window change."
+              (interactive)
+              (let* ((info (assq (current-buffer) erc-modified-channels-alist))
+                     (count (cadr info)))
+                (if (and info (> count erc-bar-threshold))
+                    (save-excursion
+                      (end-of-buffer)
+                      (when (erc-bar-move-back count)
+                        (let ((inhibit-field-text-motion t))
+                          (move-overlay erc-bar-overlay
+                                        (line-beginning-position)
+                                        ;; overlay on timestamp only:
+                                        (+ 5 (line-beginning-position))
+                                        ;; (line-end-position)
+                                        (current-buffer)))))
+                  (delete-overlay erc-bar-overlay))))
+
+            (defvar erc-bar-threshold 0
+              "Display bar when there are more than erc-bar-threshold unread messages.")
+            (defvar erc-bar-overlay nil
+              "Overlay used to set bar")
+            (setq erc-bar-overlay (make-overlay 0 0))
+            (overlay-put erc-bar-overlay 'face '(:background "black" :overline "red"))
+            ;;put the hook before erc-modified-channels-update
+            (defadvice erc-track-mode (after erc-bar-setup-hook
+                                             (&rest args) activate)
+              ;;remove and add, so we know it's in the first place
+              (remove-hook 'window-configuration-change-hook 'erc-bar-update-overlay)
+              (add-hook 'window-configuration-change-hook 'erc-bar-update-overlay))
+            (add-hook 'erc-send-completed-hook (lambda (str)
+                                                 (erc-bar-update-overlay)))))
+
+       ;; reload modules
+       (erc-update-modules))
+   #+END_SRC
+
 ** Accounting
    I use [[http://out.easycounter.com/external/ledger-cli.org][ledger]] to manage my money. There is a corresponding major-mode:
    #+BEGIN_SRC emacs-lisp
