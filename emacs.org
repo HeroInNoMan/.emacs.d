@@ -785,9 +785,10 @@
    Let’s have a visual feedback when performing cut/copy/paste operations.
    #+BEGIN_SRC emacs-lisp
      (use-package goggles
+       :hook ((prog-mode text-mode) . goggles-mode)
        :config
-       (goggles-mode)
-       (setq-default goggles-pulse t)) ;; set to nil to disable pulsing
+       (setq-default goggles-pulse t) ;; set to nil to disable pulsing
+       (setq goggles-pulse-delay 0.05))
 
      (use-package idle-highlight-mode
        :hook prog-mode
