@@ -3994,7 +3994,8 @@
   Aaaand we’re back to trying [[https://github.com/seagle0128/doom-modeline][doom-modeline]] this time:
   #+BEGIN_SRC emacs-lisp
     (use-package doom-modeline
-      :init (doom-modeline-mode 1)
+      :hook (after-init . doom-modeline-mode)
+      ;; :init (doom-modeline-mode 1)
       :config
       ;; How tall the mode-line should be. It's only respected in GUI.
       ;; If the actual char height is larger, it respects the actual height.
