@@ -966,6 +966,8 @@
   Equivalent of ~f~ key in vim:
   #+BEGIN_SRC emacs-lisp
     (use-package iy-go-to-char
+      :ensure nil ;; can’t find it on [m]elpa anymore…
+      :load-path "~/.emacs.d/elisp/iy-go-to-char-20141029.1546/"
       :chords
       ("éé" . iy-go-to-char-backward)
       ("èè" . iy-go-up-to-char))
