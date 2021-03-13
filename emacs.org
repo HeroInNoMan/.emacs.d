@@ -1880,16 +1880,16 @@
                                    (mode . emacs-lisp-mode)
                                    (mode . c++-mode))))
                  ("dired" (mode . dired-mode))
+                 ("helm" (or (name . "^\*helm[ -].+\*")
+                             (mode . helm-major-mode)))
                  ("emacs" (and (not (name . "\*mu4e\*"))
                                (name . "^\\*.+\\*$")))
                  ("shell" (or (mode . eshell-mode)
                               (mode . shell-mode)))
                  ("magit" (name . "^magit.+"))
                  ("erc" (mode . erc-mode))
-                 ("mu4e"  (name . "\*mu4e\*"))
-                 )))
-        (setq ibuffer-never-show-predicates '("\*helpful .*\*"
-                                              "\*helm[ -].+")))
+                 ("mu4e"  (name . "\*mu4e\*")))))
+        (setq ibuffer-never-show-predicates '()))
     #+END_SRC
 
 *** ibuffer-vc
