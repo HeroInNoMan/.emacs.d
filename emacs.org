@@ -4449,7 +4449,7 @@
 * Epilogue
   Run one last function called epilogue if it is available:
   #+BEGIN_SRC emacs-lisp
-    (if (fboundp 'epilogue)
+    (when (fboundp 'epilogue)
         (epilogue))
   #+END_SRC
 * Useful links
