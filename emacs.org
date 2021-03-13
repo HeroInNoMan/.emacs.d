@@ -2532,7 +2532,9 @@
   I also use a few more packages depending on org:
   #+BEGIN_SRC emacs-lisp
     (use-package ob-restclient :after org)
-    (use-package verb :after org
+    (use-package verb
+      :disabled t ;; worth enabling only when necessary
+      :after org
       :config (define-key org-mode-map (kbd "C-c C-v") verb-command-map))
     (use-package ob-verb :ensure nil :after org)
     (use-package ob-shell :ensure nil :after org)
