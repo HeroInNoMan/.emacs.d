@@ -2797,15 +2797,18 @@
    TODO: describe lsp
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
+       :disabled t
        :defer t
        :config
        (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
 
      (use-package company-lsp
+       :disabled t
        :requires lsp company
        :after lsp-mode)
 
      (use-package lsp-ui
+       :disabled t
        :requires lsp-mode flycheck
        :hook (lsp-mode . lsp-ui-mode)
        :config
@@ -2824,6 +2827,7 @@
              lsp-ui-peek-peek-height 25))
 
      (use-package helm-lsp
+       :disabled t
        :after lsp-mode)
 
      (use-package dap-mode
