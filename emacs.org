@@ -55,6 +55,13 @@
             use-package-always-defer nil
             use-package-verbose t))
 
+    (use-package auto-package-update
+      :config
+      (setq auto-package-update-delete-old-versions t
+            auto-package-update-hide-results nil
+            auto-package-update-interval 7)
+      (auto-package-update-maybe))
+
     (use-package delight :defer t)
 
     (use-package use-package-chords
@@ -83,6 +90,7 @@
             all-the-icons-dired
             all-the-icons-ivy-rich
             auctex-latexmk
+            auto-package-update
             auto-yasnippet
             avandu
             beacon
