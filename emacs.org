@@ -1809,19 +1809,19 @@
      (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
    #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    (pretty-hydra-define hydra-file
-      (:color blue :quit-key "q")
-      ("Refresh"
-       (("<f5>" ale/revert-buffer-no-confirm "revert buffer"))
-       "Crux commands…"
-       (("f" crux-kill-buffer-truename          "copy qualified name")
-        ("k" crux-kill-other-buffers            "kill other buffers")
-        ("r" crux-rename-file-and-buffer        "rename")
-        ("d" crux-delete-file-and-buffer        "delete")
-        ("c" crux-copy-file-preserve-attributes "copy"))))
-    (global-set-key (kbd "<f5>") 'hydra-file/body)
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (pretty-hydra-define hydra-file
+       (:color blue :quit-key "q")
+       ("Refresh"
+        (("<f5>" ale/revert-buffer-no-confirm "revert buffer"))
+        "Crux commands…"
+        (("f" crux-kill-buffer-truename          "copy qualified name")
+         ("k" crux-kill-other-buffers            "kill other buffers")
+         ("r" crux-rename-file-and-buffer        "rename")
+         ("d" crux-delete-file-and-buffer        "delete")
+         ("c" crux-copy-file-preserve-attributes "copy"))))
+     (global-set-key (kbd "<f5>") 'hydra-file/body)
+   #+END_SRC
 
 *** ibuffer
     #+BEGIN_SRC emacs-lisp
@@ -4291,16 +4291,16 @@
      (use-package command-log-mode :defer t)
    #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    (use-package keypression
-      :defer t
-      :config (setq keypression-cast-command-name t
-                    keypression-fade-out-delay 1
-                    keypression-fade-out-seconds 1
-                    keypression-use-child-frame t
-                    keypression-combine-same-keystrokes t
-                    keypression-combine-format "%s ×%d"))
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package keypression
+       :defer t
+       :config (setq keypression-cast-command-name t
+                     keypression-fade-out-delay 1
+                     keypression-fade-out-seconds 1
+                     keypression-use-child-frame t
+                     keypression-combine-same-keystrokes t
+                     keypression-combine-format "%s ×%d"))
+   #+END_SRC
 
 ** Restclient
    See if [[https://github.com/abrochard/walkman/][walkman]] might not be a bit better (because integrated in org-files!)
@@ -4467,7 +4467,7 @@
   Run one last function called epilogue if it is available:
   #+BEGIN_SRC emacs-lisp
     (when (fboundp 'epilogue)
-        (epilogue))
+      (epilogue))
   #+END_SRC
 * Useful links
 ** one entry point to find them all
