@@ -1,0 +1,5 @@
+# key: #auto
+# name: autoload-annotation
+# --
+;;;###autoload
+$1
