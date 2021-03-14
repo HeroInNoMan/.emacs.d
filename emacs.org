@@ -434,7 +434,8 @@
       (scroll-bar-mode -1))
     (when (fboundp 'horizontal-scroll-bar-mode)
       (horizontal-scroll-bar-mode -1))
-    (fringe-mode 0)
+    (when (display-graphic-p)
+      (fringe-mode 0))
   #+END_SRC
 
   Although I mainly use helm, ido is nice in some cases.
