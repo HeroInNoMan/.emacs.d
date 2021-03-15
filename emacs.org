@@ -102,6 +102,7 @@
             calfw-gcal
             calfw-ical
             calfw-org
+            caps-lock
             cargo
             centaur-tabs
             color-identifiers-mode
@@ -2737,6 +2738,12 @@
      (use-package guess-language :defer t)
    #+END_SRC
 
+   I’d rather have caps-lock as a minor mode:
+   #+BEGIN_SRC emacs-lisp
+     (use-package caps-lock
+       :defer t)
+   #+END_SRC
+
 ** Synonyms
    #+BEGIN_SRC emacs-lisp
      (use-package powerthesaurus :defer t)
@@ -3897,7 +3904,8 @@
          (")" smartparens-strict-mode                   "smartparens strict"    :toggle t)
          ("a" aggressive-indent-mode                    "aggressive indent"     :toggle t)
          ("A" global-auto-revert-mode                   "auto-revert"           :toggle t)
-         ("c" company-mode                              "company"               :toggle t)
+         ("c" caps-lock-mode                            "CAPS LOCK"             :toggle t)
+         ;; ("c" company-mode                              "company"               :toggle t)
          ("f" flycheck-mode                             "flycheck"              :toggle t)
          ("L" litable-mode                              "litable"               :toggle t)
          ("x" winnow-mode                               "winnow"                :toggle t))
