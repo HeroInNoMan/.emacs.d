@@ -758,6 +758,7 @@
        (load-theme 'doom-vibrant) ;; more at https://github.com/hlissner/emacs-doom-themes
 
        (setq original-cursor-color (face-attribute 'cursor :background))
+       ;; (setq original-cursor-color "#51afef")
 
        ;; Enable flashing mode-line on errors
        ;; (doom-themes-visual-bell-config)
