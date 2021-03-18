@@ -1696,7 +1696,10 @@
                  ("ERC" (derived-mode . erc-mode))
                  ("Emacs" (or (mode . diary-mode)
                               (name . "^\\*.+\\*\\(<[0-9]+>\\)?$"))))))
-        (setq ibuffer-never-show-predicates '()))
+        (setq ibuffer-never-show-predicates
+              '((lambda (buffer)
+                  (when (bound-and-true-p my-ibuffer-hide-erc-buffers-p)
+                    (with-current-buffer buffer (eq major-mode 'erc-mode)))))))
     #+END_SRC
 
 *** ibuffer-vc
