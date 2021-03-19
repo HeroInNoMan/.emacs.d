@@ -2714,24 +2714,26 @@
        (pretty-hydra-define hydra-spell
          (:color teal :quit-key "q")
          ("Spelling"
-          (("t" flyspell-mode "toggle flyspell")
+          (("t" flyspell-mode       "toggle flyspell")
            ("T" guess-language-mode "toggle guess")
-           ("g" guess-language "guess"))
+           ("g" guess-language      "guess"))
           "Flyspell"
-          (("c" flyspell-buffer "check buffer")
-           ("." flyspell-auto-correct-word "correct word" :color pink)
+          (("c" flyspell-buffer                 "check buffer")
            ("a" endless/ispell-word-then-abbrev "correct & add abbrev")
-           ("n" flyspell-goto-next-error "next error" :color pink)
-           ("p" flyspell-goto-previous-error "previous error" :color pink))
+           ("." flyspell-auto-correct-word      "correct word"   :color pink)
+           ("n" flyspell-goto-next-error        "next error"     :color pink)
+           ("p" flyspell-goto-previous-error    "previous error" :color pink))
           "Dictionary"
-          (("d" ispell-change-dictionary "choose")
-           ("f" ale/switch-to-fr-dict "fr (FR)")
-           ("e" ale/switch-to-en-dict "en (GB)")
-           ("u" ale/switch-to-us-dict "en (US)")
-           ("l" define-word-at-point "lookup word"))
-          "Synonyms"
-          (("s" powerthesaurus-lookup-word-dwim "synonym (DWIM)")
-           ("w" powerthesaurus-lookup-word "synonym for word")
+          (("D" ispell-change-dictionary "choose" )
+           ("A" ale/switch-to-all-dict   "all"    )
+           ("f" ale/switch-to-fr-dict    "fr (FR)")
+           ("d" ale/switch-to-de-dict    "de (DE)")
+           ("e" ale/switch-to-en-dict    "en (GB)")
+           ("u" ale/switch-to-us-dict    "en (US)"))
+          "Look up"
+          (("l" define-word-at-point                "word definition")
+           ("s" powerthesaurus-lookup-word-dwim     "synonym (DWIM)")
+           ("w" powerthesaurus-lookup-word          "synonym for word")
            ("S" powerthesaurus-lookup-word-at-point "synonym at point")))))
 
      (use-package define-word :defer t)

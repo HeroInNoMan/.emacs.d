@@ -302,11 +302,23 @@ Swap buffers in the process"
     ((equal selective-display 5) 10)
     ((equal selective-display 10) nil))))
 
+(defun ale/switch-to-all-dict ()
+  "Switch to all possible dictionaries."
+  (interactive)
+  (flyspell-mode)
+  (ispell-change-dictionary "fr_FR,en_GB,en_US,de_DE"))
+
 (defun ale/switch-to-fr-dict ()
   "Switch to French dictionary."
   (interactive)
   (flyspell-mode)
   (ispell-change-dictionary "fr_FR"))
+
+(defun ale/switch-to-de-dict ()
+  "Switch to German dictionary."
+  (interactive)
+  (flyspell-mode)
+  (ispell-change-dictionary "de_DE"))
 
 (defun ale/switch-to-en-dict ()
   "Switch to British English dictionary."
