@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: identify
+# key: identify
+# --
+/query NickServ identify $1
