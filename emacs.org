@@ -972,8 +972,8 @@
       :ensure nil ;; can’t find it on [m]elpa anymore…
       :load-path "~/.emacs.d/elisp/iy-go-to-char-20141029.1546/"
       :chords
-      ("éé" . iy-go-to-char-backward)
-      ("èè" . iy-go-up-to-char))
+      ("««" . iy-go-to-char-backward)
+      ("»»" . iy-go-up-to-char))
   #+END_SRC
 
   I use the nice ~beginend~ package to enhance ~beginning-of-buffer~ and ~end-of-buffer~ commands.
