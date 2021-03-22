@@ -1530,6 +1530,7 @@
        :bind
        ("M-s <SPC>" . counsel-mark-ring)
        ("M-s a"     . counsel-apropos)
+       ("M-s M-b"   . counsel-switch-buffer)
        ("M-s b"     . counsel-switch-buffer)
        ("M-s c"     . counsel-colors-emacs)
        ("M-s f"     . counsel-buffer-or-recentf)
