@@ -34,6 +34,11 @@
     (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 20000000)))
   #+END_SRC
 
+  To allow further startup time analysis, I use [[https://github.com/jschaf/esup][esup]]:
+  #+BEGIN_SRC emacs-lisp
+    (use-package esup :defer t)
+  #+END_SRC
+
   https://www.reddit.com/r/emacs/comments/i8v4k2/bringing_gnu_emacs_to_native_code_gccemacs/
   #+BEGIN_SRC emacs-lisp
     ;; (setq comp-deferred-compilation t)
@@ -154,6 +159,7 @@
             emojify
             ensime
             ereader
+            esup
             expand-region
             feather
             fill-page
