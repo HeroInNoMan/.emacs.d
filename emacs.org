@@ -2911,7 +2911,7 @@
        ;; (sp-local-pair 'emacs-lisp-mode "`" "'") ;; adds `' as a local pair in emacs-lisp-mode
        ;; (sp-local-pair '(tex-mode latex-mode) "{" "}") ;; adds {} as a local pair in latex-mode
        (sp-pair "<" ">")
-       (sp-pair "« " " »" :trigger "«")
+       (sp-pair "« " " »" :trigger "«")
        (sp-pair "“" "”")
        (sp-pair "‘" "’")
        (def-pairs ((paren              . "(")
