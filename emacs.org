@@ -785,7 +785,7 @@
    #+END_SRC
 
 ** Zoom
-   I use [[https://github.com/purcell/default-text-scale][default-text-scale]] to zoom in and out the whole emacs frame.
+   I use [[https://github.com/purcell/default-text-scale][default-text-scale]] to zoom in and out the frames of the current instance of emacs.
    #+BEGIN_SRC emacs-lisp
      (use-package default-text-scale
        :bind
