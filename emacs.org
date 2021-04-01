@@ -1526,7 +1526,7 @@
      (use-package ivy
        :defer t
        :config
-       (ivy-mode -1)
+       (ivy-mode -1) ;; just like helm, I want ivy only on demand
        ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
        (setq ivy-use-virtual-buffers t)
        ;; number of result lines to display
