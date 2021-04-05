@@ -1508,11 +1508,14 @@
    Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
 
    Edit: that’s it, I’m moving from helm to ivy/counsel… what initiated the change was ivy-rich and the beautiful way of displaying the description next to the candidate, then the overall snappiness and feeling of solidity. I keep my helm commands for now, but almost all my use cases have been replaced so far.
+
+   Edit: Actually I'm keeping both :D
+
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
        :defer t
        :config
-       (ivy-mode t)
+       (ivy-mode -1)
        ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
        (setq ivy-use-virtual-buffers t)
        ;; number of result lines to display
