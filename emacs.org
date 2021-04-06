@@ -4433,20 +4433,20 @@
            (next-buffer)
            (while (and (not found-p)
                        (not (eq curr-buff (current-buffer))))
-             (if (erc-channel-buffer-p)
+             (if (erc-channel-buffer-or-query-p)
                  (setq found-p t)
                (next-buffer)))))
 
-       (defun erc-channel-buffer-p ()
-         "Return t if `current-buffer' is an ERC channel, nil otherwise."
+       (defun erc-channel-buffer-or-query-p ()
+         "Return t if `current-buffer' is an ERC channel or query, nil otherwise."
          (interactive)
-         (and (string-prefix-p "#" (buffer-name))
-              (eq major-mode 'erc-mode)))
+         (and (eq major-mode 'erc-mode)
+              (not (string-match-p "\\([^\.]+\.\\)*[^\.]+:[0-9]+" (buffer-name)))))
 
        (defun erc-quote-last-message (n)
-         "Cite the last Nth message in current ERC channel."
+         "Cite the last Nth message in current ERC channel or query."
          (interactive "p")
-         (if (erc-channel-buffer-p)
+         (if (erc-channel-buffer-or-query-p)
              (let ((kill-read-only-ok t)
                    (count (if n n 1)))
                (goto-char (point-max))
@@ -4471,7 +4471,7 @@
                  (goto-char (point-max))
                  (beginning-of-line)
                  (insert (concat citation " ← "))))
-           (message "You are not in an ERC channel.")))
+           (message "You are not in an ERC channel or query.")))
 
        (defun erc-cmd-MEDIA ()
          "Announce the current amarok song to the current ERC channel."
