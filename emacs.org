@@ -3710,8 +3710,8 @@
 
             ;; allow for updating mail using 'U' in the main view:
             mu4e-get-mail-command             "mbsync --all --quiet"
-            mu4e-change-filenames-when-moving t         ;; needed for mbsync
-            mu4e-update-interval              (* 10 60) ;; update every 10 minutes
+            mu4e-change-filenames-when-moving t ;; needed for mbsync
+            mu4e-update-interval              (* 5 60) ;; update every 5 minutes
             mu4e-index-cleanup                t ;; don't do a full cleanup check
             mu4e-index-lazy-check             t ;; don't consider up-to-date dirs
             mu4e-index-update-in-background   t ;; update in the background
@@ -3820,6 +3820,12 @@
       :disabled t
       :after mu4e
       :config (global-mu4e-conversation-mode))
+
+
+    ;; (use-package mu4e-goodies
+    ;;   :ensure nil
+    ;;   :after mu4e
+    ;;   :load-path "");TODO:
   #+END_SRC
 
   I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
