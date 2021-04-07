@@ -3685,10 +3685,14 @@
             smtpmail-auth-credentials   my-private-auth-file
             smtpmail-smtp-server        my-private-smtp-server
             smtpmail-smtp-service       my-private-smtp-port
-            mu4e-sent-messages-behavior 'sent
+            mu4e-sent-messages-behavior 'sent)
 
-            ;; setup some handy shortcuts
-            mu4e-maildir-shortcuts
+      ;; signing & encrypting
+      (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime)
+      (setq mm-sign-option nil) ;; use default key
+
+      ;; setup some handy shortcuts
+      (setq mu4e-maildir-shortcuts
             '(("/INBOX"   . ?i)
               ("/starred" . ?s)
               ("/Drafts"  . ?d)
