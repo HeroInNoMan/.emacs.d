@@ -4359,7 +4359,6 @@
                erc-track-exclude-types
                '("JOIN" "NICK" "PART" "QUIT" "MODE"
                  "324" "329" "332" "333" "353" "477")))
-
        ;; Custom commands
        (defun erc-start-or-jump ()
          "Connect to IRC using `erc-connection-alist' if not running,
@@ -4372,7 +4371,8 @@
                                (irc-port     (car (cdr (assoc 'irc-port     connection))))
                                (irc-nick     (car (cdr (assoc 'irc-nick     connection))))
                                (irc-password (car (cdr (assoc 'irc-password connection)))))
-                           (unless (erc-server-alive-p irc-server)
+                           (if (erc-server-alive-p irc-server)
+                               (erc-join-channels-for-server irc-server)
                              (erc :server irc-server :port irc-port :nick irc-nick :password irc-password))))
            (message "Init `erc-connection-alist' to automatically connect to servers/channels!"))
          (if erc-modified-channels-alist
@@ -4380,6 +4380,22 @@
            (if (eq last-command 'erc-start-or-jump)
                (next-erc-channel-buffer)
              (message "Nothing new on IRC!"))))
+
+       (defun erc-join-channels-for-server (irc-server)
+         "Join all channels for IRC-SERVER ( specified in
+          `erc-autojoin-channels-alist' ) if not already joined."
+         (interactive)
+         (when (bound-and-true-p erc-autojoin-channels-alist)
+           (cl-loop for group in erc-autojoin-channels-alist
+                    when (string-suffix-p (car group) irc-server)
+                    do (mapcar (lambda (chan)
+                                 (when (not (member chan (car (erc-buffer-list nil))))
+                                   (erc-join-channel chan))) (cdr group))
+
+                    (cl-loop for buff in (erc-buffer-list nil)
+                             (with-current-buffer buff (and (string-prefix-p irc-server (buffer-name))
+                                                            (not (member chan (erc-buffer-list nil)))))
+                             (with-current-buffer buff (erc-join-channel chan))))))
 
        (defun erc-server-alive-p (server)
          "Return non-nil if a server is alive, nil otherwise."
