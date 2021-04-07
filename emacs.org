@@ -2854,7 +2854,7 @@
                                             :foreground unspecified)))))
 
      (use-package smartparens
-       :hook (prog-mode . smartparens-mode)
+       :hook ((prog-mode git-commit-mode) . smartparens-mode)
        :bind (:map smartparens-mode-map
                    ;; up / down navigation
                    ("C-M-u" . sp-backward-up-sexp)
