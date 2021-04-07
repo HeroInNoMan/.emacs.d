@@ -65,30 +65,9 @@
 
 (define-abbrev-table 'gitignore-mode-abbrev-table '())
 
-(define-abbrev-table 'global-abbrev-table
-  '(
-    ("adns" "dans" nil 1)
-    ("aps" "pas" nil 1)
-    ("aviat" "avait" nil 0)
-    ("cuop" "coup" nil 1)
-    ("dasn" "dans" nil 1)
-    ("dnas" "dans" nil 2)
-    ("dnsa" "dans" nil 1)
-    ("mainetnat" "maintenant" nil 1)
-    ("oauis" "ouais" nil 1)
-    ("oausi" "ouais" nil 1)
-    ("opur" "pour" nil 1)
-    ("ouasi" "ouais" nil 1)
-    ("ouias" "ouais" nil 1)
-    ("praamètres" "paramètres" nil 1)
-    ("psa" "pas" nil 1)
-    ("qqun" "quelqu’un" nil 1)
-    ("qunad" "quand" nil 2)
-    ("trcu" "truc" nil 1)
-    ("uoi" "oui" nil 1)
-    ("uqe" "que" nil 1)
-    ("vraiemnt" "vraiment" nil 1)
-   ))
+(define-abbrev-table 'global-abbrev-table '())
+
+(define-abbrev-table 'erc-mode-abbrev-table '())
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
 

@@ -34,3 +34,4 @@ var
 /.irclogs/
 /.last-package-update-day
 /transient/
+/etc/abbrev.el
