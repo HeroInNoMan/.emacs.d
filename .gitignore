@@ -35,3 +35,4 @@ var
 /.last-package-update-day
 /transient/
 /etc/abbrev.el
+/elpy/
