@@ -4524,7 +4524,7 @@
             (defvar erc-bar-overlay nil
               "Overlay used to set bar")
             (setq erc-bar-overlay (make-overlay 0 0))
-            (overlay-put erc-bar-overlay 'face '(:background "black" :overline "red"))
+            (overlay-put erc-bar-overlay 'face '(:overline "red"))
             ;;put the hook before erc-modified-channels-update
             (defadvice erc-track-mode (after erc-bar-setup-hook
                                              (&rest args) activate)
