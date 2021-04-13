@@ -3969,7 +3969,7 @@
          ("r y" ytel "youtube"))
         "Management"
         (("(" mu4e "mu4e")
-         ("I" erc-start-or-jump "IRC")
+         ("\"" erc-start-or-jump "IRC")
          ("a" org-agenda-list "agenda")
          ("c" open-calendar "calendar")
          ("p" list-packages "packages")
