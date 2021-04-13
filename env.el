@@ -132,7 +132,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 (defun load-highlander-env ()
   ;; hooking for specific functions
-  (add-hook 'git-commit-setup-hook 'ale/switch-to-us-dict)
+  (add-hook 'git-commit-setup-hook 'ale/switch-to-all-dict)
 
   ;; org
   (add-hook
