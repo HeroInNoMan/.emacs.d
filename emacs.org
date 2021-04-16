@@ -1123,8 +1123,8 @@
         ("M-s q" . vr/query-replace)
         ("C-M-%" . vr/query-replace)
         ("M-s m" . vr/mc-mark) ;; useful with multiple-cursors
-        ("C-M-s" . vr/isearch-forward)
-        ("C-M-r" . vr/isearch-backward)
+        ("M-s C-M-s" . vr/isearch-forward)
+        ("M-s C-M-r" . vr/isearch-backward)
         ("M-s S" . isearch-forward)
         ("M-s R" . isearch-backward))
        :config (require 'visual-regexp)) ;; TODO check if really necessary
@@ -1137,10 +1137,10 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package ctrlf
-       :bind (("M-s C-s" . ctrlf-forward-literal)
-              ("M-s C-r" . ctrlf-backward-literal)
-              ("M-s C-M-s" . ctrlf-forward-regexp)
-              ("M-s C-M-r" . ctrlf-backward-regexp))
+       :bind (("C-s" . ctrlf-forward-literal)
+              ("C-r" . ctrlf-backward-literal)
+              ("C-M-s" . ctrlf-forward-regexp)
+              ("C-M-r" . ctrlf-backward-regexp))
        :config (ctrlf-mode -1)
        (define-key minibuffer-local-map (kbd "C-s") 'ctrlf-forward-literal)
        (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
@@ -1154,8 +1154,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package phi-search
        :bind
-       ("C-s" . phi-search)
-       ("C-r" . phi-search-backward)
+       ("M-s C-s" . phi-search)
+       ("M-s C-r" . phi-search-backward)
        :custom-face (phi-search-selection-face ((t (:inherit isearch :background "dark orange")))))
    #+END_SRC
 
