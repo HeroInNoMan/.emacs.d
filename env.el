@@ -11,7 +11,7 @@
 
   ;; hooking for specific functions
   (add-hook 'git-commit-setup-hook 'ale/insert-ticket-prefix)
-  (add-hook 'git-commit-setup-hook 'ale/switch-to-fr-dict)
+  (add-hook 'git-commit-setup-hook 'ale/switch-to-all-dict)
 
   ;; org
   (add-hook
