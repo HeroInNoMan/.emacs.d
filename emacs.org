@@ -256,6 +256,7 @@
             pretty-hydra
             prism
             prog-fill
+            powershell
             racer
             rainbow-blocks
             rainbow-delimiters
@@ -3023,6 +3024,13 @@
        :ensure nil
        :commands ed
        :load-path "elisp/")
+   #+END_SRC
+
+** Powershell
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package powershell
+       :mode ("\\.ps1\\'" . powershell-mode))
    #+END_SRC
 
 ** Lisp
