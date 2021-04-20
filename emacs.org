@@ -4299,8 +4299,10 @@
        :config
        ;; BEHAVIOUR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (setq erc-auto-query 'bury
-             erc-join-buffer 'buffer
-             erc-hide-list '("JOIN" "NICK" "PART" "QUIT" "MODE"))
+             erc-join-buffer 'buffer)
+
+       ;; Hide boring stuff
+       (setq erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT" "MODE"))
 
        ;; Kill buffers when disconnected or parted
        (setq erc-kill-buffer-on-part t
