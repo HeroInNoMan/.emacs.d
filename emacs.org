@@ -4485,6 +4485,24 @@
                  (insert (concat citation " ← "))))
            (message "You are not in an ERC channel or query.")))
 
+       (defun erc-cmd-TRACKALL ()
+         "Start tracking all channels."
+         (interactive)
+         (setq erc-track-exclude nil))
+
+       (defun erc-cmd-TRACK (&optional target)
+         "Start tracking TARGET (or current channel)."
+         (interactive)
+         (let ((target (or target (buffer-name))))
+           (setq erc-track-exclude (remove target erc-track-exclude))))
+
+       (defun erc-cmd-UNTRACK (&optional target)
+         "Stop tracking TARGET (or current channel)."
+         (interactive)
+         (let ((target (or target (buffer-name))))
+           (setq erc-track-exclude (seq-uniq (append (list target)
+                                                     erc-track-exclude)))))
+
        (defun erc-cmd-MEDIA ()
          "Announce the current amarok song to the current ERC channel."
          (erc-cmd-ME
