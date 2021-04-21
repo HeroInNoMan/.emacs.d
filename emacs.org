@@ -4746,8 +4746,7 @@
                elfeed-protocol-ttrss-maxsize 200 ;; bigger than 200 is invalid
 
                elfeed-feeds
-               '(("ttrss+https://username@domain/tt-rss"
-                  :password ""))))
+               'my-private-feeds))
 
        (use-package elfeed-org
          :defer t
