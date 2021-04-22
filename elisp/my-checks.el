@@ -195,5 +195,74 @@ Single Capitals as you type."
           (forward-word)))))
   (define-key flyspell-mode-map (kbd "C-,") 'flyspell-goto-previous-error))
 
+(defun endless/flyspell-word-then-abbrev (p)
+  "Call `ispell-word', then create an abbrev for it.
+With prefix P, create global abbrev. Otherwise it will
+be local."
+  (interactive "P")
+  (save-excursion
+    (if (flyspell-goto-previous-word (point))
+        (let ((bef (downcase (or (thing-at-point 'word)
+                                 "")))
+              aft)
+          (call-interactively 'flyspell-auto-correct-word)
+          (setq aft (downcase
+                     (or (thing-at-point 'word) "")))
+          (unless (or (string= aft bef)
+                      (string= aft "")
+                      (string= bef ""))
+            (define-abbrev
+              (if p global-abbrev-table local-abbrev-table)
+              bef aft)
+            (message "\"%s\" now expands to \"%s\" %sally"
+                     bef aft (if p "glob" "loc"))))
+      (message "Cannot find a misspelled word"))))
+
+;; (define-key ctl-x-map "\C-i"
+;;   #'endless/flyspell-word-then-abbrev)
+
+(defun flyspell-goto-previous-word (position)
+  "Go to the first misspelled word that occurs before POSITION (point).
+But don't look beyond what's visible on the screen."
+  (interactive "d")
+
+  (let ((top (window-start))
+        (bot (window-end)))
+    (save-restriction
+      (narrow-to-region top bot)
+      (overlay-recenter (point))
+
+      (add-hook 'pre-command-hook
+                (function flyspell-auto-correct-previous-hook) t t)
+
+      (unless flyspell-auto-correct-previous-pos
+        ;; only reset if a new overlay exists
+        (setq flyspell-auto-correct-previous-pos nil)
+
+        (let ((overlay-list (overlays-in (point-min) position))
+              (new-overlay 'dummy-value))
+
+          ;; search for previous (new) flyspell overlay
+          (while (and new-overlay
+                      (or (not (flyspell-overlay-p new-overlay))
+                          ;; check if its face has changed
+                          (not (eq (get-char-property
+                                    (overlay-start new-overlay) 'face)
+                                   'flyspell-incorrect))))
+            (setq new-overlay (car-safe overlay-list))
+            (setq overlay-list (cdr-safe overlay-list)))
+
+          ;; if nothing new exits new-overlay should be nil
+          (if new-overlay ;; the length of the word may change so go to the start
+              (setq flyspell-auto-correct-previous-pos
+                    (overlay-start new-overlay)))))
+
+      (if (not flyspell-auto-correct-previous-pos)
+          nil
+        (goto-char flyspell-auto-correct-previous-pos)
+        t))))
+
+
+
 (provide 'my-checks)
 ;; my-checks.el ends here.
