@@ -1142,7 +1142,7 @@
               ("C-r" . ctrlf-backward-literal)
               ("C-M-s" . ctrlf-forward-regexp)
               ("C-M-r" . ctrlf-backward-regexp))
-       :config (ctrlf-mode -1)
+       :config (ctrlf-mode)
        (define-key minibuffer-local-map (kbd "C-s") 'ctrlf-forward-literal)
        (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
        :custom-face (ctrlf-highlight-active ((t (:inherit isearch :background "dark orange")))))
