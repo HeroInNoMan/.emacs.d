@@ -94,9 +94,9 @@ Results are reported in a compilation buffer."
     (car-safe (save-excursion (ispell-get-word nil))))
 
   (defun endless/ispell-word-then-abbrev (p)
-    "Call `ispell-word', then create an abbrev for it.
-With prefix P, create local abbrev. Otherwise it will
-be global.
+    "Call `ispell-word', then create a local abbrev for it.
+With prefix P, create global abbrev. Otherwise it will
+be local.
 If there's nothing wrong with the word at point, keep
 looking for a typo until the beginning of buffer. You can
 skip typos you don't want to fix with `SPC', and you can
@@ -120,10 +120,11 @@ abort completely with `C-g'."
           (let ((aft (downcase aft))
                 (bef (downcase bef)))
             (define-abbrev
-              (if p local-abbrev-table global-abbrev-table)
+              (if p global-abbrev-table local-abbrev-table)
               bef aft)
             (message "\"%s\" now expands to \"%s\" %sally"
-                     bef aft (if p "loc" "glob")))
+                     bef aft (if p "glob" "loc"))
+            (write-abbrev-file abbrev-file-name))
         (user-error "No typo at or before point"))))
 
   (setq save-abbrevs 'silently)
