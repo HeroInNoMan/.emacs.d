@@ -67,8 +67,6 @@ Results are reported in a compilation buffer."
 (use-package flyspell
   :config
   (require 'ispell)
-  (setq ispell-dictionary "francais") ;; french dictionary for auto-correct
-  (setq-default ispell-program-name "aspell") ;; aspell by default
 
   ;; Tell ispell.el that ’ can be part of a word.
   (setq ispell-local-dictionary-alist
