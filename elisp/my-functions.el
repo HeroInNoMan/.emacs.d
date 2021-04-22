@@ -290,6 +290,11 @@ Swap buffers in the process"
   (interactive)
   (find-file (expand-file-name my-private-work-diary-org-file)))
 
+(defun ale/vimtutor ()
+  "Open vimtutor in EMACS."
+  (interactive)
+  (find-file (expand-file-name "misc/vimtutor.txt" user-emacs-directory)))
+
 (defun ale/toggle-selective-display (column)
   "Hide lines indented as far as COLUMN."
   (interactive "P")
