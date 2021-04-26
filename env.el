@@ -33,7 +33,7 @@
         (add-to-list 'org-capture-templates
                      '("w" "TODO      (work)"
                        entry (file+headline my-private-work-diary-org-file "À faire")
-                       "* TODO %i%?\n\tSCHEDULED: %t"
+                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("v" "Revue     (work)"
