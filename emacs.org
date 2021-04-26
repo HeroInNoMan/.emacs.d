@@ -1881,6 +1881,7 @@
                              (derived-mode . helm-major-mode)))
                  ("Help" (or (mode . help-mode)
                              (mode . Info-mode)
+                             (mode . helpful-mode)
                              (derived-mode . man-common)))
                  ("Emacs" (and (not (name . "\*elfeed-.+\*"))
                                (not (name . "\*mu4e\*"))
