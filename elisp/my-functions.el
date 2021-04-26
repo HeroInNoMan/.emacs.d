@@ -345,6 +345,7 @@ Swap buffers in the process"
   (delete-other-windows)
   (magit-status-internal args)
   (other-window 1)
+  (magit-fetch-all (magit-fetch-arguments))
   (goto-char (point-min)))
 
 (defun set-fira-font-if-possible ()
