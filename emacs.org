@@ -3957,6 +3957,7 @@
         "Structured text"
         (("a" adoc-mode "ascii doc")
          ("," csv-mode "csv")
+         ("m" markdown-mode "markdown")
          ("o" org-mode "org")
          ("t" text-mode "text"))))
      (global-set-key (kbd "C-c m") 'hydra-major-modes/body)
