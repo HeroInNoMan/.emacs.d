@@ -3034,7 +3034,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package powershell
-       :mode ("\\.ps1\\'" . powershell-mode))
+       :mode ("\\.ps1\\'" . powershell-mode)
+       :config (setq powershell-indent 2))
    #+END_SRC
 
 ** Lisp
