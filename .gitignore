@@ -36,3 +36,5 @@ var
 /transient/
 /etc/abbrev.el
 /elpy/
+/eln-cache/
+/async-bytecomp.log
