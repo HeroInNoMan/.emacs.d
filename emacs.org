@@ -300,7 +300,6 @@
             wgrep
             which-key
             wiki-summary
-            winnow
             yaml-mode
             yasnippet-snippets
             ytel
@@ -1684,11 +1683,6 @@
        (setq aya-persist-snippets-dir
              (concat base-emacs-directory "etc/yasnippet/snippets")))
    #+END_SRC
-
-*** More grepping
-    #+BEGIN_SRC emacs-lisp
-      (use-package winnow :defer t)
-    #+END_SRC
 
 * Text manipulation
 ** Region
@@ -3925,8 +3919,7 @@
          ("c" caps-lock-mode                            "CAPS LOCK"             :toggle t)
          ;; ("c" company-mode                              "company"               :toggle t)
          ("f" flycheck-mode                             "flycheck"              :toggle t)
-         ("L" litable-mode                              "litable"               :toggle t)
-         ("x" winnow-mode                               "winnow"                :toggle t))
+         ("L" litable-mode                              "litable"               :toggle t))
         "Writing"
         (("-" refill-mode                               "auto-fill"             :toggle t)
          ("v" visual-line-mode                          "visual line"           :toggle t)
