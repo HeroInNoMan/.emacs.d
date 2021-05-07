@@ -4320,6 +4320,11 @@
        (setq erc-max-buffer-size 20000)
        (erc-truncate-mode t)
 
+       ;; No default user credentials
+       (setq erc-nick           nil
+             erc-user-full-name nil
+             erc-email-userid   nil)
+
        ;; APPEARANCE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (erc-timestamp-mode t)                                          ;; timestamp
        (setq erc-timestamp-format "%R "                                ;; HH:MM
