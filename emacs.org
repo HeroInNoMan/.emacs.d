@@ -60,6 +60,7 @@
             use-package-verbose t))
 
     (use-package auto-package-update
+      :disabled t ;; I want emacs to boot fast more than I want this
       :config
       (setq auto-package-update-delete-old-versions t
             auto-package-update-hide-results nil
