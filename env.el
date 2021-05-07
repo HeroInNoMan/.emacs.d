@@ -161,14 +161,35 @@
           transmission-service my-private-transmission-service
           transmission-rpc-path my-private-transmission-rpc-path))
 
+
+  (pretty-hydra-define hydra-projects
+    (:color teal :quit-key "q")
+    ("Config"
+     (("d" (funcall (lambda () (interactive)(ale/open-project "~/repos/dotfiles"))) "dotfiles")
+      ("e" (funcall (lambda () (interactive)(ale/open-project "~/repos/.emacs.d"))) "emacs")
+      ("E" (funcall (lambda () (interactive)(ale/open-project "~/repos/emacs"))) "emacs source")
+      ("x" (funcall (lambda () (interactive)(ale/open-project "~/repos/ergodox"))) "Ergodox EZ"))
+     "Curriculum"
+     (("v" (funcall (lambda () (interactive)(ale/open-project "~/repos/cv"))) "cv")
+      ("V" (funcall (lambda () (interactive)(ale/open-project "~/repos/CV"))) "CV")
+      ("c" (funcall (lambda () (interactive)(ale/open-project "~/repos/curriculum"))) "curriculum")
+      ("a" (funcall (lambda () (interactive)(ale/open-project "~/repos/cv-antoine"))) "cv antoine"))
+     "Travaux"
+     (("t" (funcall (lambda () (interactive)(ale/open-project "~/repos/traduction-omsi-2020"))) "trad OMSI")
+      ("b" (funcall (lambda () (interactive)(ale/open-project "~/repos/blog"))) "blog dibalo")
+      ("g" (funcall (lambda () (interactive)(ale/open-project "~/repos/gameoflife"))) "Game of Life")
+      ("s" (funcall (lambda () (interactive)(ale/open-project "~/repos/commune_sub"))) "subs commune")
+      ("m" (funcall (lambda () (interactive)(ale/open-project "~/repos/metoo"))) "textes Manue"))))
+
   ;; let access projects quickly in a convenient layout
-  (defhydra hydra-projects(:color teal :columns 3)
-    "projects"
-    ("d" (lambda () (interactive)(ale/open-project "~/Terminalcity/dotfiles")) "dotfiles")
-    ("c" (lambda () (interactive)(ale/open-project "~/Terminalcity/curriculum")) "curriculum")
-    ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
-    ("E" (lambda () (interactive)(ale/open-project "~/outils/emacs")) "emacs source")
-    ("q" nil "cancel"))
+  ;; (defhydra hydra-projects (:color teal :columns 3)
+  ;;   "projects"
+  ;;   ("d" (lambda () (interactive)(ale/open-project "~/Terminalcity/dotfiles")) "dotfiles")
+  ;;   ("c" (lambda () (interactive)(ale/open-project "~/Terminalcity/curriculum")) "curriculum")
+  ;;   ("e" (lambda () (interactive)(ale/open-project user-emacs-directory)) "emacs")
+  ;;   ("E" (lambda () (interactive)(ale/open-project "~/outils/emacs")) "emacs source")
+  ;;   ("E" (lambda () (interactive)(ale/open-project "~/outils/emacs")) "emacs source")
+  ;;   ("q" nil "cancel"))
   (global-set-key (kbd "<f9>") 'hydra-projects/body)
   (global-set-key (kbd "C-c C-j") 'hydra-projects/body))
 
