@@ -3811,6 +3811,7 @@
       :config
       (setq mu4e-query-fragments-list
             '(("%unread"  . "flag:unread")
+              ("%today"    . "date:today..")
               ("%junk"    . "maildir:/Junk OR subject:SPAM")
               ("%hidden"  . "flag:trashed OR %junk")
               ("%gmail"   . "maildir:/Gmail")
