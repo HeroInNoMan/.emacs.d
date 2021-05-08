@@ -4306,7 +4306,7 @@
        :config
        ;; BEHAVIOUR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (setq erc-auto-query 'bury
-             erc-join-buffer 'buffer)
+             erc-join-buffer 'bury)
 
        ;; Hide boring stuff
        (setq erc-lurker-hide-list '("JOIN" "NICK" "PART" "QUIT" "MODE"))
