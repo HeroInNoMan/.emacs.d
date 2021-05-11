@@ -1009,7 +1009,12 @@
                   ("C-," . xref-pop-marker-stack)
                   ("C-;" . dumb-jump-quick-look)))
 
-    (use-package minimap :defer t)
+    (use-package minimap :defer t
+      :config
+      (setq minimap-window-location 'right
+            minimap-highlight-line nil
+            minimap-hide-cursor t
+            minimap-recenter-type 'relative))
 
     (use-package treemacs :defer t)
 
