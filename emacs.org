@@ -205,6 +205,7 @@
             hide-mode-line
             highlight-indent-guides
             htmlize
+            ibuffer-vc
             idle-highlight-mode
             imenu-anywhere
             impatient-mode
