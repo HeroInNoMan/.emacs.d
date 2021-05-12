@@ -251,6 +251,7 @@
             ox-asciidoc
             page-break-lines
             persistent-scratch
+            phi-search
             poke-line
             powerthesaurus
             pretty-hydra
