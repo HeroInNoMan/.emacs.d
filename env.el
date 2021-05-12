@@ -197,21 +197,20 @@
 ;; DEFAULT ;;
 ;;;;;;;;;;;;;
 (defun load-default-env ()
+  "Load the default environment depending on system type."
   (cond
    ;; MAC OS X
-   ((equal "darwin" system-type)
-    (progn
-      (setq mac-command-modifier 'meta)
-      (setq mac-option-modifier 'super)
-      (setq ns-function-modifier 'hyper)))
+   ((string-equal "darwin" system-type)
+    (load-file (expand-file-name "elisp/macos-environment.el" base-emacs-directory)))
 
    ;; windows
-   ((or (equal "ms-dos" system-type)
-        (equal "windows-nt" system-type)
-        (equal "cygwin" system-type))
-    (ale/load-windows-specific-conf)
-    ;; useful when C-/ does not work (windows/putty)
-    (global-set-key (kbd "C-M-z") 'undo))))
+   ((or (string-equal "ms-dos" system-type)
+        (string-equal "windows-nt" system-type)
+        (string-equal "cygwin" system-type))
+    (load-file (expand-file-name "elisp/windows-environment.el" base-emacs-directory)))
+
+   ;; GNU
+   (t (message "Unknown GNU systme detected. No specific conf applied."))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LOAD APPROPRIATE ENVIRONMENT ;;
