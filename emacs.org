@@ -258,6 +258,7 @@
             prism
             prog-fill
             powershell
+            python
             racer
             rainbow-blocks
             rainbow-delimiters
