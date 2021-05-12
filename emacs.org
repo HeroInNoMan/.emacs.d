@@ -1017,6 +1017,8 @@
       :config
       (setq minimap-window-location 'right
             minimap-highlight-line nil
+            minimap-width-fraction 0.09
+            minimap-minimum-width 20
             minimap-hide-cursor t
             minimap-recenter-type 'relative))
 
