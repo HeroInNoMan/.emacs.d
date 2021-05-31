@@ -1422,7 +1422,7 @@
      (use-package rg :defer t)
 
      (use-package helm-rg
-       :after (helm rg)
+       :after helm
        :hook (helm-rg--bounce-mode . (lambda () (aggressive-indent-mode -1)))
        :bind ( :map helm-rg-map
                ("M-b" . backward-word)
