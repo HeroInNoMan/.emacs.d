@@ -1156,9 +1156,6 @@
               ("C-r" . ctrlf-backward-literal)
               ("C-w" . ctrlf-forward-symbol-at-point))
        :config (ctrlf-mode)
-       ;; (define-key minibuffer-local-map (kbd "C-s") 'ctrlf-forward-literal)
-       ;; (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
-       ;; (define-key minibuffer-local-map (kbd "C-w") 'ctrlf-forward-symbol-at-point)
        :custom-face (ctrlf-highlight-active ((t (:inherit isearch :background "dark orange")))))
    #+END_SRC
 
