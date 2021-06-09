@@ -589,8 +589,8 @@
           inhibit-startup-screen t ;; No splash screen
           echo-keystrokes 0.1 ;; Show keystrokes in progress
           initial-scratch-message nil ;; No *scratch* message
+          initial-major-mode 'text-mode
           visible-bell nil) ;; No flashing!
-
   #+END_SRC
 
 
