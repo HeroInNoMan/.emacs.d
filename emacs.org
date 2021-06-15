@@ -656,7 +656,7 @@
 
   Killing emacs; default binding is too easy to hit by accident.
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-x C-c") '(lambda () (interactive) (message "Use C-x r q (r·eally q·uit) to kill emacs.")))
+    (global-set-key (kbd "C-x C-c") #'(lambda () (interactive) (message "Use C-x r q (r·eally q·uit) to kill emacs.")))
     (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
   #+END_SRC
 
