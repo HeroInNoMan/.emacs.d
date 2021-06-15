@@ -41,6 +41,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (setq comp-deferred-compilation t)
+    (setq warning-suppress-types '((comp)))
   #+END_SRC
 
 * Package Management
