@@ -766,6 +766,7 @@
                "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
                "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e"
                "e1ecb0536abec692b5a5e845067d75273fe36f24d01210bf0aa5842f2a7e029f"
+               "f4fefd141d606f337880a642f20cfd0472ebe2d8a339741faa4ae222ec250bfb"
                "fa3bdd59ea708164e7821574822ab82a3c51e262d419df941f26d64d015c90ee"
                default))
        ;; Global settings (defaults)
