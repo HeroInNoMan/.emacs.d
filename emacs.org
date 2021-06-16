@@ -4015,7 +4015,8 @@
          ("f" format-all-buffer "format buffer")
          ("w" webpaste-paste-region "webpaste"))
         "Files"
-        (("d a" ale/find-todo-file "TODO file" :column "Files")
+        (("." find-file-at-point "open at point" :column "Files")
+         ("d a" ale/find-todo-file "TODO file")
          ("d d" ale/find-diary-file "diary")
          ("d w" ale/find-work-file "work TODO file")
          ("i" ale/find-init-file "init file")
