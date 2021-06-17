@@ -4459,22 +4459,26 @@
                        (kill-buffer buff))))
 
        (defun next-erc-channel-buffer ()
-         "Switch to next erc channel buffer."
+         "Switch to an IRC buffer, or run `erc-select'.
+         When called repeatedly, cycle through the buffers."
          (interactive)
-         (let ((curr-buff (current-buffer))
-               (found-p))
-           (next-buffer)
-           (while (and (not found-p)
-                       (not (eq curr-buff (current-buffer))))
-             (if (erc-channel-buffer-or-query-p)
-                 (setq found-p t)
-               (next-buffer)))))
+         (let ((buffers (and (fboundp 'erc-buffer-list)
+                             (erc-buffer-list))))
+           (while (or (eq (current-buffer) (car buffers))
+                      (not (erc-channel-buffer-or-query-p (car buffers))))
+             (setq buffers (cdr buffers))
+             (bury-buffer))
+           (if buffers
+               (switch-to-buffer (car buffers))
+             (call-interactively 'erc-select))))
 
-       (defun erc-channel-buffer-or-query-p ()
-         "Return t if `current-buffer' is an ERC channel or query, nil otherwise."
+       (defun erc-channel-buffer-or-query-p (&optional buffer)
+         "Return t if BUFFER (or current buffer) is an ERC channel
+     or query, nil otherwise."
          (interactive)
-         (and (eq major-mode 'erc-mode)
-              (not (string-match-p "\\([^\.]+\.\\)*[^\.]+:[0-9]+" (buffer-name)))))
+         (with-current-buffer (or buffer (current-buffer))
+           (and (eq major-mode 'erc-mode)
+                (not (string-match-p "\\([^\.]+\.\\)*[^\.]+:[0-9]+" (buffer-name))))))
 
        (defun erc-quote-last-message (n)
          "Cite the last Nth message in current ERC channel or query."
@@ -4504,7 +4508,7 @@
                  (goto-char (point-max))
                  (beginning-of-line)
                  (insert (concat citation " ← "))))
-           (message "You are not in an ERC channel or query.")))
+           (message "Not in an ERC channel or query.")))
 
        (defun erc-cmd-TRACKALL ()
          "Start tracking all channels."
