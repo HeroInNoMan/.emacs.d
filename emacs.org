@@ -2815,7 +2815,7 @@
 ** LSP
 *** Eglot
    #+BEGIN_SRC emacs-lisp
-     (use-package eglot)
+     (use-package eglot :defer t)
    #+END_SRC
 
 *** lsp-mode
@@ -4436,6 +4436,7 @@
                                    (erc-join-channel chan))) (cdr group))
 
                     (cl-loop for buff in (erc-buffer-list nil)
+                             do
                              (with-current-buffer buff (and (string-prefix-p irc-server (buffer-name))
                                                             (not (member chan (erc-buffer-list nil)))))
                              (with-current-buffer buff (erc-join-channel chan))))))

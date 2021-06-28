@@ -2,6 +2,36 @@
 ;; environment specific customisations ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun add-work-org-capture-templates ()
+  "Add work-related capture templates & org variables."
+  (add-to-list 'org-refile-targets '(my-private-work-diary-org-file :maxlevel . 3))
+  (add-to-list 'org-refile-targets '(my-private-local-todo-org-file :maxlevel . 2))
+
+  (add-to-list 'org-agenda-files my-private-work-diary-org-file)
+  (add-to-list 'org-agenda-files my-private-local-notes-org-file)
+
+  ;; capture templates
+  (add-to-list 'org-capture-templates
+               '("l" "Log       (work)"
+                 entry (file+olp+datetree my-private-work-diary-org-file)
+                 "* TODO %i%?"
+                 :time-prompt t :kill-buffer t) t)
+  (add-to-list 'org-capture-templates
+               '("w" "TODO      (work)"
+                 entry (file+headline my-private-work-diary-org-file "À faire")
+                 "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
+                 :prepend t :kill-buffer t) t)
+  (add-to-list 'org-capture-templates
+               '("v" "Revue     (work)"
+                 entry (file+headline my-private-work-diary-org-file "À faire")
+                 "* Review %i%?\n\tSCHEDULED: %t"
+                 :prepend t :kill-buffer t) t)
+  (add-to-list 'org-capture-templates
+               '("r" "Référence (work)\n"
+                 entry (file+headline my-private-work-diary-org-file "Références")
+                 "* %?\n%i"
+                 :prepend t :kill-buffer t) t))
+
 ;;;;;;;;;;;;;;;;;;;;;
 ;; KUUTAMO (work)  ;;
 ;;;;;;;;;;;;;;;;;;;;;
@@ -14,38 +44,11 @@
   (add-hook 'git-commit-setup-hook 'ale/switch-to-all-dict)
 
   ;; org
-  (add-hook
-   'org-load-hook
-   '(lambda ()
-      (progn
-        (add-to-list 'org-refile-targets '(my-private-work-diary-org-file :maxlevel . 3))
-        (add-to-list 'org-refile-targets '(my-private-local-todo-org-file :maxlevel . 2))
-
-        (add-to-list 'org-agenda-files my-private-work-diary-org-file)
-        (add-to-list 'org-agenda-files my-private-local-notes-org-file)
-
-        ;; capture templates
-        (add-to-list 'org-capture-templates
-                     '("l" "Log       (work)"
-                       entry (file+olp+datetree my-private-work-diary-org-file)
-                       "* TODO %i%?"
-                       :time-prompt t :kill-buffer t) t)
-        (add-to-list 'org-capture-templates
-                     '("w" "TODO      (work)"
-                       entry (file+headline my-private-work-diary-org-file "À faire")
-                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
-                       :prepend t :kill-buffer t) t)
-        (add-to-list 'org-capture-templates
-                     '("v" "Revue     (work)"
-                       entry (file+headline my-private-work-diary-org-file "À faire")
-                       "* Review %i%?\n\tSCHEDULED: %t"
-                       :prepend t :kill-buffer t) t)
-        (add-to-list 'org-capture-templates
-                     '("r" "Référence (work)\n"
-                       entry (file+headline my-private-work-diary-org-file "Références")
-                       "* %?\n%i"
-                       :prepend t :kill-buffer t) t))))
-
+  (if (fboundp 'org-capture)
+      (add-work-org-capture-templates)
+    (add-hook
+     'org-load-hook
+     #'add-work-org-capture-templates))
 
   ;; display battery level
   (display-battery-mode)
@@ -137,9 +140,9 @@
   ;; org
   (add-hook
    'org-load-hook
-   '(lambda () (progn
-            (add-to-list 'org-refile-targets '(my-private-local-notes-org-file :maxlevel . 2))
-            (add-to-list 'org-agenda-files my-private-local-todo-org-file))))
+   #'(lambda () (progn
+                  (add-to-list 'org-refile-targets '(my-private-local-notes-org-file :maxlevel . 2))
+                  (add-to-list 'org-agenda-files my-private-local-todo-org-file))))
 
 
   ;; display battery level
