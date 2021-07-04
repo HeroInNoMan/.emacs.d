@@ -1255,6 +1255,8 @@
        (helm-autoresize-mode t)
        ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
 
+       (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
+
        (defun helm-sql-connect (func)
          "Connect (using input FUNC) to a SQL server."
          (interactive
