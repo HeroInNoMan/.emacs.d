@@ -2302,6 +2302,10 @@
       :chords ("gx" . org-capture)
       :hook (org-mode . visual-line-mode)
       :custom-face
+      (org-agenda-date ((t (:foreground "#a991f1" :inverse-video nil :box (:line-width (2 . 2) :color "grey75" :style released-button) :weight ultra-bold))))
+      (org-agenda-date-today ((t (:foreground "#a991f1" :inverse-video t :box (:line-width (2 . 2) :color "grey75" :style released-button) :weight ultra-bold))))
+      (org-agenda-date-weekend ((t (:foreground "#68228b" :inverse-video nil :weight ultra-bold))))
+
       (org-done ((t (:foreground "PaleGreen" :weight bold))))
       (org-headline-done ((((class color) (min-colors 16) (background dark))
                            (:foreground "dim grey" :strike-through t))))
@@ -2594,100 +2598,82 @@
   #+BEGIN_SRC emacs-lisp
     (use-package org-super-agenda
       :after (org origami)
-      :hook ((org-agenda-mode . origami-mode)
-             (org-agenda-finalize . ale/org-super-agenda-origami-fold-default))
-      :bind (("<f8>" . org-super-agenda-mode)
+      :hook (org-agenda-mode . origami-mode)
+      :bind (("<f8>" . super-agenda)
              :map org-super-agenda-header-map
              ("<tab>" . origami-toggle-node))
+      :custom-face
+      (org-super-agenda-header
+       ((t ( :inherit org-agenda-structure
+             :foreground "#D3d3d3"
+             :overline "#778899"))))
       :config
-      (setq org-super-agenda-groups
+      (setq super-groups-main
             '(;; Each group has an implicit boolean OR operator between its selectors.
-              (:name "C Y C L I Q U E S"
+              (:name "CYCLIQUES"
                      :order 30
                      :habit t)
 
-              (:name "J O U R N É E"
-                     :order 1
+              (:name "AUJOURD’HUI"
+                     :order 5
                      :time-grid t
-                     :and ( :scheduled today
-                            :time-grid t))
+                     :and ( :todo ("TODO" "NEXT")
+                            :scheduled today)
+                     :discard (:todo "DONE"))
 
-              (:name "I M P O R T A N T"
-                     :face ( :foreground "red"
-                             :weight bold)
+              (:name "IMPORTANT"
+                     :face (:foreground "red" :weight bold)
                      :and ( :priority "A"
-                            :not (:todo "DONE")
-                            :tag "enercoop"))
+                            :not (:todo "DONE")))
 
-              (:order-multi (2
-                             (:name "E N   C O U R S"
-                                    :face ( :foreground "orange3"
-                                            :weight bold)
-                                    :todo ("WIP" "STARTED" "DELEGATED"))
+              (:name "EN COURS"
+                     :order 4
+                     :face (:foreground "yellow" :weight bold)
+                     :todo ("WIP" "STARTED" "DELEGATED"))
 
-                             (:name "R A P I D E"
-                                    :face ( :foreground "DeepSkyBlue"
-                                            :weight bold)
-                                    :and ( :todo ("TODO" "NEXT")
-                                           :effort< "10"))))
+              (:name "RAPIDE"
+                     :order 9
+                     :face (:foreground "DeepSkyBlue" :weight bold)
+                     :and ( :todo ("TODO" "NEXT")
+                            :effort< "10"))
 
-              (:name "E N   A T T E N T E"
+              (:name "EN ATTENTE"
                      :order 20
+                     :face (:foreground "#8b636c")
                      :todo ("WAIT" "BLOCKED" "DEFERRED"))
 
-              (:name "T R A V A I L"
-                     :order 4
-                     :face ( :foreground "gold"
-                             :weight bold)
+              (:name "TRAVAIL"
+                     :order 10
+                     :face (:foreground "#00cd00")
                      :and ( :todo ("TODO" "NEXT" "PROJECT")
                             :scheduled t
                             :not (:priority< "C")
                             :tag ("enercoop" "work" "travail")))
 
-              (:name "T O D O"
-                     :order 5
-                     :and ( :scheduled today
-                            :not (:habit t)
-                            :todo ("TODO" "NEXT")))
-
-              (:name "E N   R E T A R D"
-                     :order 6
+              (:name "EN RETARD"
+                     :order 20
+                     :face (:foreground "orange3")
                      :and ( :scheduled past
-                            :not (:habit t)
                             :todo ("TODO" "NEXT")))
 
-              (:name "E M P R U N T S"
-                     :order 41
+              (:name "EMPRUNTS"
+                     :order 40
                      :tag ("ÉCHANGES"))
 
-              (:name "E M A C S"
-                     :order 41
+              (:name "EMACS"
+                     :order 50
                      :regexp "emacs"
                      :tag "emacs")))
-      (defvar ale/org-super-agenda-auto-show-groups
-        '(
-          "C Y C L I Q U E S"
-          "I M P O R T A N T"
-          "E N   C O U R S"
-          "R A P I D E"
-          "J O U R N É E"
-          "E N   A T T E N T E"
-          "T R A V A I L"
-          "T O D O"
-          "E N   R E T A R D"
-          "E M P R U N T S"
-          "E M A C S"
-          "Other items"))
-      (defun ale/org-super-agenda-origami-fold-default ()
-        "Fold certain groups by default in Org Super Agenda buffer."
-        (forward-line 3)
-        (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
-                 while (origami-forward-fold-same-level (current-buffer) (point)))
-        (--each ale/org-super-agenda-auto-show-groups
-          (goto-char (point-min))
-          (when (re-search-forward (rx-to-string `(seq bol " " ,it)) nil t)
-            (origami-show-node (current-buffer) (point)))))
-      )
+
+      (defun super-agenda ()
+        "Call the agenda with super groups."
+        (interactive)
+        (setq org-super-agenda-groups super-groups-main)
+        (org-super-agenda-mode t)
+        (org-agenda nil "n")
+        (org-agenda-goto-today)
+        (recenter-top-bottom 0)
+        (end-of-line)))
   #+END_SRC
 
   Use fancy bullets in org-mode:
@@ -4000,7 +3986,7 @@
         "Management"
         (("(" mu4e "mu4e")
          ("\"" erc-start-or-jump "IRC")
-         ("a" org-agenda-list "agenda")
+         ("a" super-agenda "agenda")
          ("c" open-calendar "calendar")
          ("p" list-packages "packages")
          ("T" tomatinho "pomodoro")
