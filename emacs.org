@@ -2314,36 +2314,41 @@
       (require 'color)
       (setq org-hide-emphasis-markers t)
 
-      (setq
-       ;; general settings
-       org-log-done 'time
-       org-log-repeat 'nil
-       org-agenda-include-diary t
-       org-agenda-weekend-days '(0 5 6) ;; week-end is friday, saturday, sunday
-       org-agenda-start-day nil
-       org-agenda-start-on-weekday nil
-       org-agenda-span 'week
-       org-completion-use-ido t
-       org-tags-column -80
-       org-ellipsis " ▼"
+      ;; general settings
+      (setq org-log-done 'time
+            org-log-repeat 'nil)
 
-       ;; new lines and separators
-       org-blank-before-new-entry
-       '((heading . nil)
-         (plain-list-item . nil))
-       org-cycle-separator-lines 2
+      ;; org-agenda
+      (setq org-agenda-include-diary t
+            org-agenda-weekend-days '(0 5 6)
+            ;; week-end is friday, saturday, sunday
+            org-agenda-start-day "2021-07-06"
+            org-agenda-start-on-weekday 1
+            ;; org-agenda-start-on-weekday nil
+            org-agenda-span 'week)
 
-       ;; html export
-       org-export-html-style-include-scripts nil
-       org-export-html-style-include-default nil
-       org-html-htmlize-output-type 'css
-       org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />"
-       org-export-coding-system 'utf-8
-       org-src-ask-before-returning-to-edit-buffer nil
-       org-src-window-setup 'current-window
+      (setq org-completion-use-ido t
+            org-tags-column -80
+            org-ellipsis " ▼")
 
-       ;; active Babel languages
-       org-confirm-babel-evaluate nil)
+      ;; new lines and separators
+      (setq org-blank-before-new-entry
+            '((heading . nil)
+              (plain-list-item . nil))
+            org-cycle-separator-lines 2
+
+            ;; html export
+            org-export-html-style-include-scripts nil
+            org-export-html-style-include-default nil
+            org-html-htmlize-output-type 'css
+            org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />"
+            org-export-coding-system 'utf-8
+            org-src-ask-before-returning-to-edit-buffer nil
+            org-src-window-setup 'current-window
+
+            ;; active Babel languages
+            org-confirm-babel-evaluate nil)
+
       (org-babel-do-load-languages 'org-babel-load-languages
                                    '((ledger . t)
                                      (shell . t)
