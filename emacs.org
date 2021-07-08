@@ -2600,6 +2600,8 @@
       :after (org origami)
       :hook (org-agenda-mode . origami-mode)
       :bind (("<f8>" . super-agenda)
+             :map org-agenda-mode-map
+             ("<tab>" . origami-toggle-node)
              :map org-super-agenda-header-map
              ("<tab>" . origami-toggle-node))
       :custom-face
@@ -2610,9 +2612,16 @@
       :config
       (setq super-groups-main
             '(;; Each group has an implicit boolean OR operator between its selectors.
-              (:name "CYCLIQUES"
-                     :order 30
-                     :habit t)
+              (:name "IMPORTANT"
+                     :face (:foreground "red" :weight bold)
+                     :and ( :priority "A"
+                            :not (:todo "DONE")))
+
+              (:name "RAPIDE"
+                     :order 3
+                     :face (:foreground "DeepSkyBlue" :weight bold)
+                     :and ( :todo ("TODO" "NEXT")
+                            :effort< "10"))
 
               (:name "AUJOURD’HUI"
                      :order 5
@@ -2621,21 +2630,10 @@
                             :scheduled today)
                      :discard (:todo "DONE"))
 
-              (:name "IMPORTANT"
-                     :face (:foreground "red" :weight bold)
-                     :and ( :priority "A"
-                            :not (:todo "DONE")))
-
               (:name "EN COURS"
-                     :order 4
+                     :order 2
                      :face (:foreground "yellow" :weight bold)
                      :todo ("WIP" "STARTED" "DELEGATED"))
-
-              (:name "RAPIDE"
-                     :order 9
-                     :face (:foreground "DeepSkyBlue" :weight bold)
-                     :and ( :todo ("TODO" "NEXT")
-                            :effort< "10"))
 
               (:name "EN ATTENTE"
                      :order 20
@@ -2651,10 +2649,14 @@
                             :tag ("enercoop" "work" "travail")))
 
               (:name "EN RETARD"
-                     :order 20
+                     :order 4
                      :face (:foreground "orange3")
                      :and ( :scheduled past
                             :todo ("TODO" "NEXT")))
+
+              (:name "CYCLIQUES"
+                     :order 30
+                     :habit t)
 
               (:name "EMPRUNTS"
                      :order 40
@@ -2670,10 +2672,11 @@
         (interactive)
         (setq org-super-agenda-groups super-groups-main)
         (org-super-agenda-mode t)
-        (org-agenda nil "n")
+        (org-agenda nil "a")
         (org-agenda-goto-today)
         (recenter-top-bottom 0)
-        (end-of-line)))
+        (end-of-line)
+        (origami-open-all-nodes (get-buffer "*Org Agenda*"))))
   #+END_SRC
 
   Use fancy bullets in org-mode:
