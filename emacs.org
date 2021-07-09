@@ -2626,28 +2626,46 @@
             (origami-show-node (current-buffer) (point)))))
       (setq super-groups-main
             '(;; Each group has an implicit boolean OR operator between its selectors.
-              (:name "IMPORTANT"
-                     :face (:foreground "red" :weight bold)
-                     :and ( :priority "A"
-                            :not (:todo "DONE")))
+              ;; (:name "ROUTINES"
+              ;;        :order 90
+              ;;        :and ( :file-path "cycliques"
+              ;;               :habit t))
 
-              (:name "RAPIDE"
-                     :order 3
-                     :face (:foreground "DeepSkyBlue" :weight bold)
-                     :and ( :todo ("TODO" "NEXT")
-                            :effort< "10"))
-
-              (:name "AUJOURD’HUI"
+              (:name "PLANNING"
                      :order 5
                      :time-grid t
-                     :and ( :todo ("TODO" "NEXT")
+                     :and ( :time-grid t
                             :scheduled today)
+                     :transformer
+                     (--> it
+                       (cond ((string-match-p "DONE" it) it)
+                             ((string-match-p "WIP\\|STARTED\\|DELEGATED" it)
+                              (propertize it 'face '(:foreground "yellow")))
+                             ((string-match-p "\\[#A\\]" it)
+                              (propertize it 'face '(:foreground "red" :weight bold)))
+                             ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" it)
+                              (propertize it 'face '(:foreground "#696969")))
+                             ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" it)
+                              (propertize it 'face '(:foreground "#8b636c")))
+                             ((string-match-p "WORK" it)
+                              (propertize it 'face '(:foreground "#00cd00")))
+                             (t it)))
                      :discard (:todo "DONE"))
 
               (:name "EN COURS"
                      :order 2
                      :face (:foreground "yellow" :weight bold)
                      :todo ("WIP" "STARTED" "DELEGATED"))
+
+              (:name "IMPORTANT"
+                     :face (:foreground "red" :weight bold)
+                     :priority "A")
+
+              (:name "RAPIDE"
+                     :order 3
+                     :face (:foreground "DeepSkyBlue" :weight bold)
+                     :and ( :todo ("TODO" "NEXT")
+                            :effort< "10"))
 
               (:name "EN ATTENTE"
                      :order 20
@@ -2668,10 +2686,6 @@
                      :and ( :scheduled past
                             :todo ("TODO" "NEXT")))
 
-              (:name "CYCLIQUES"
-                     :order 30
-                     :habit t)
-
               (:name "EMPRUNTS"
                      :order 40
                      :tag ("ÉCHANGES"))
@@ -2679,7 +2693,25 @@
               (:name "EMACS"
                      :order 50
                      :regexp "emacs"
-                     :tag "emacs")))
+                     :tag "emacs")
+
+              (:name "DIVERS"
+                     :order 80
+                     :transformer
+                     (--> it
+                       (cond ((string-match-p "DONE" it) it)
+                             ((string-match-p "WIP\\|STARTED\\|DELEGATED" it)
+                              (propertize it 'face '(:foreground "yellow")))
+                             ((string-match-p "\\[#A\\]" it)
+                              (propertize it 'face '(:foreground "red" :weight bold)))
+                             ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" it)
+                              (propertize it 'face '(:foreground "#696969")))
+                             ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" it)
+                              (propertize it 'face '(:foreground "#8b636c")))
+                             ((string-match-p "WORK" it)
+                              (propertize it 'face '(:foreground "#00cd00")))
+                             (t it)))
+                     :anything t)))
 
       (defun super-agenda ()
         "Call the agenda with super groups."
