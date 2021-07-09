@@ -2328,7 +2328,7 @@
       (setq org-agenda-include-diary t
             org-agenda-weekend-days '(0 5 6)
             ;; week-end is friday, saturday, sunday
-            org-agenda-start-day "2021-07-06"
+            org-agenda-start-day nil
             org-agenda-start-on-weekday 1
             ;; org-agenda-start-on-weekday nil
             org-agenda-span 'week)
@@ -2371,7 +2371,6 @@
 
       (setq diary-local-file my-private-local-diary-file
             todo-local-file my-private-local-todo-org-file
-            todo-inbox-file my-private-local-inbox-org-file
             todo-notes-file my-private-local-notes-org-file
             todo-media-file my-private-local-media-org-file
             org-finished-file my-private-local-finished-org-file
@@ -2393,7 +2392,7 @@
                      :prepend t :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("e" "Emprunt" ;; add a borrow entry
+                   '("E" "Emprunt" ;; add a borrow entry
                      entry (file+headline  todo-local-file "Prêts / emprunts")
                      "* EMPRUNT %i%?"
                      :kill-buffer t) t)
@@ -2429,8 +2428,8 @@
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("n" "new item (inbox)\n" ;; add a (code) snippet
-                     entry (file+headline todo-inbox-file "Boîte de réception")
+                   '("e" "todo in Emacs\n" ;; add a todo entry for emacs
+                     entry (file+headline todo-local-file "Emacs")
                      "* TODO %?"
                      :kill-buffer t) t)
 
