@@ -2404,7 +2404,13 @@
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("t" "Todo" ;; add a TODO entry
+                   '("t" "TODO" ;; add a TODO entry
+                     entry (file todo-local-file)
+                     "* TODO %i%?\n%a\n"
+                     :kill-buffer t) t)
+
+      (add-to-list 'org-capture-templates
+                   '("T" "TODO - avec date" ;; add a TODO entry
                      entry (file todo-local-file)
                      "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
                      :kill-buffer t) t)
