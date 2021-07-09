@@ -4031,6 +4031,7 @@
          ("d r" ale/find-rest-client-file "rest-client"))))
 
      (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
+     (key-chord-define-global (kbd "\"«") 'hydra-widgets/body)
    #+END_SRC
 
 ** Bookmarks and registers
