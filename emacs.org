@@ -2416,7 +2416,13 @@
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("d" "Diary" ;; add a diary entry
+                   '("d" "Diary - today" ;; add a diary entry
+                     item (file+olp+datetree diary-local-file)
+                     "\t%i%?"
+                     :kill-buffer t) t)
+
+      (add-to-list 'org-capture-templates
+                   '("D" "Diary" ;; add a diary entry
                      item (file+olp+datetree diary-local-file)
                      "\t%i%?"
                      :time-prompt t :kill-buffer t) t)
