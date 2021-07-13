@@ -2393,14 +2393,14 @@
 
       (add-to-list 'org-capture-templates
                    '("E" "Emprunt" ;; add a borrow entry
-                     entry (file+headline  todo-local-file "Prêts / emprunts")
-                     "* EMPRUNT %i%?"
+                     entry (file+headline  todo-local-file "À rendre")
+                     "* RENDRE %i%?"
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
                    '("p" "Prêt\n" ;; add a lend entry
-                     entry (file+headline  todo-local-file "Prêts / emprunts")
-                     "* PRÊT %i%?"
+                     entry (file+headline  todo-local-file "À récupérer")
+                     "* RÉCUPÉRER %i%?"
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
@@ -2730,7 +2730,7 @@
         (interactive)
         (setq org-super-agenda-groups super-groups-main)
         (org-super-agenda-mode t)
-        (org-agenda nil "a")
+        (org-agenda nil "n")
         (org-agenda-goto-today)
         (recenter-top-bottom 0)
         (end-of-line)
