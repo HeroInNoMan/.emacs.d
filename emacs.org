@@ -2337,6 +2337,25 @@
             org-tags-column -80
             org-ellipsis " ▼")
 
+      (setq org-agenda-custom-commands
+            '(("i" "Agenda + important TODOs"
+               ((agenda #1="")
+                (tags-todo "+PRIORITY=\"A\"")
+                (alltodo #1#)))
+              ("n" "Agenda and all TODOs"
+               ((agenda #1="")
+                (alltodo #1#)))
+              ("w" "Weekly Review"
+               ((agenda "" ((org-agenda-span 7))) ; review upcoming deadlines and appointments
+                                            ; type "l" in the agenda to review logged items
+                (stuck "") ; review stuck projects as designated by org-stuck-projects
+                (todo "PROJECT") ; review all projects (assuming you use todo keywords to designate projects)
+                (todo "MAYBE")   ; review someday/maybe items
+                (todo "WAITING")))          ; review waiting items
+              ;; ...other commands here
+              ("E" "Emacs TODOs"
+               ((tags-todo "emacs")))))
+
       ;; new lines and separators
       (setq org-blank-before-new-entry
             '((heading . nil)
