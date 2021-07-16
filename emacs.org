@@ -757,11 +757,13 @@
      (use-package doom-themes
        :config
        (setq custom-safe-themes
-             '("1526aeed166165811eefd9a6f9176061ec3d121ba39500af2048073bea80911e"
+             '("0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1"
+               "1526aeed166165811eefd9a6f9176061ec3d121ba39500af2048073bea80911e"
                "1a52e224f2e09af1084db19333eb817c23bceab5e742bf93caacbfea5de6b4f6"
                "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
                "79278310dd6cacf2d2f491063c4ab8b129fee2a498e4c25912ddaa6c3c5b621e"
                "7f791f743870983b9bb90c8285e1e0ba1bf1ea6e9c9a02c60335899ba20f3c94"
+               "80147cd7121944101fb451c69800c8565db80b5b819754118d96a28be6ea1054"
                "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
                "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
                "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e"
