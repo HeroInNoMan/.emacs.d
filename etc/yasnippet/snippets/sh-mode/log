@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: log
+# key: log
+# --
+echo "${1:var}: \$$1"
