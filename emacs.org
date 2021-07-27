@@ -2673,20 +2673,7 @@
                      :time-grid t
                      :and ( :time-grid t
                             :scheduled today)
-                     :transformer
-                     (--> it
-                       (cond ((string-match-p "DONE" it) it)
-                             ((string-match-p "WIP\\|STARTED\\|DELEGATED" it)
-                              (propertize it 'face '(:foreground "yellow")))
-                             ((string-match-p "\\[#A\\]" it)
-                              (propertize it 'face '(:foreground "red" :weight bold)))
-                             ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" it)
-                              (propertize it 'face '(:foreground "#696969")))
-                             ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" it)
-                              (propertize it 'face '(:foreground "#8b636c")))
-                             ((string-match-p "WORK" it)
-                              (propertize it 'face '(:foreground "#00cd00")))
-                             (t it)))
+                     :transformer map-todo-faces-super-agenda
                      :discard (:todo "DONE"))
 
               (:name "EN COURS"
@@ -2734,21 +2721,23 @@
 
               (:name "DIVERS"
                      :order 80
-                     :transformer
-                     (--> it
-                       (cond ((string-match-p "DONE" it) it)
-                             ((string-match-p "WIP\\|STARTED\\|DELEGATED" it)
-                              (propertize it 'face '(:foreground "yellow")))
-                             ((string-match-p "\\[#A\\]" it)
-                              (propertize it 'face '(:foreground "red" :weight bold)))
-                             ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" it)
-                              (propertize it 'face '(:foreground "#696969")))
-                             ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" it)
-                              (propertize it 'face '(:foreground "#8b636c")))
-                             ((string-match-p "WORK" it)
-                              (propertize it 'face '(:foreground "#00cd00")))
-                             (t it)))
+                     :transformer map-todo-faces-super-agenda
                      :anything t)))
+
+      (defun map-todo-faces-super-agenda (item)
+        "Propertize ITEM for display in agenda."
+        (cond ((string-match-p "DONE" item) item)
+              ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" item)
+               (propertize item 'face '(:foreground "#8b636c")))
+              ((string-match-p "WIP\\|STARTED\\|DELEGATED" item)
+               (propertize item 'face '(:foreground "yellow")))
+              ((string-match-p "\\[#A\\]" item)
+               (propertize item 'face '(:foreground "red" :weight bold)))
+              ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" item)
+               (propertize item 'face '(:foreground "#696969")))
+              ((string-match-p "WORK" item)
+               (propertize item 'face '(:foreground "#00cd00")))
+              (t item)))
 
       (defun super-agenda ()
         "Call the agenda with super groups."
