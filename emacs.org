@@ -2681,6 +2681,11 @@
                      :face (:foreground "yellow" :weight bold)
                      :todo ("WIP" "STARTED" "DELEGATED"))
 
+              (:name "EN ATTENTE"
+                     :order 20
+                     :face (:foreground "#8b636c")
+                     :todo ("WAIT" "BLOCKED" "DEFERRED"))
+
               (:name "IMPORTANT"
                      :face (:foreground "red" :weight bold)
                      :priority "A")
@@ -2690,11 +2695,6 @@
                      :face (:foreground "DeepSkyBlue" :weight bold)
                      :and ( :todo ("TODO" "NEXT")
                             :effort< "10"))
-
-              (:name "EN ATTENTE"
-                     :order 20
-                     :face (:foreground "#8b636c")
-                     :todo ("WAIT" "BLOCKED" "DEFERRED"))
 
               (:name "TRAVAIL"
                      :order 10
