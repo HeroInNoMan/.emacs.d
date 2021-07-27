@@ -2331,7 +2331,8 @@
             org-agenda-start-day nil
             org-agenda-start-on-weekday 1
             ;; org-agenda-start-on-weekday nil
-            org-agenda-span 'week)
+            org-agenda-span 'week
+            org-agenda-entry-text-maxlines 15)
 
       (setq org-completion-use-ido t
             org-tags-column -80
