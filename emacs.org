@@ -2727,7 +2727,7 @@
 
       (defun map-todo-faces-super-agenda (item)
         "Propertize ITEM for display in agenda."
-        (cond ((string-match-p "DONE" item) item)
+        (cond ((string-match-p "DONE" item) item) ;; no special face for done items
               ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" item)
                (propertize item 'face '(:foreground "#8b636c")))
               ((string-match-p "WIP\\|STARTED\\|DELEGATED" item)
@@ -2736,7 +2736,7 @@
                (propertize item 'face '(:foreground "red" :weight bold)))
               ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" item)
                (propertize item 'face '(:foreground "#696969")))
-              ((string-match-p "WORK" item)
+              ((string-match-p "WORK\\|enercoop" item)
                (propertize item 'face '(:foreground "#00cd00")))
               (t item)))
 
