@@ -304,6 +304,7 @@
             wgrep
             which-key
             wiki-summary
+            wrap-region
             yaml-mode
             yasnippet-snippets
             ytel
@@ -3029,6 +3030,24 @@
            ("j" sp-join-sexp "join")
            ("e" sp-emit-sexp "emit"))))
        (global-set-key (kbd "M-s M-s") 'hydra-parens/body))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package wrap-region
+       :hook
+       ((text-mode fundamental-mode)  . wrap-region-mode)
+       :config
+       (wrap-region-add-wrappers
+        '(("“" "”")
+          ("⩽" "⩾")
+          ("‘" "’")
+          ("*" "*" nil org-mode)
+          ("~" "~" nil org-mode)
+          ("/" "/" nil org-mode)
+          ("=" "=" nil org-mode)
+          ("+" "+" nil org-mode)
+          ("_" "_" nil org-mode)
+          ("$" "$" nil org-mode))))
    #+END_SRC
 
 ** Shell
