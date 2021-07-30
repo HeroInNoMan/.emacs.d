@@ -220,6 +220,7 @@
             js2-refactor
             json-reformat
             keypression
+            kurecolor
             ledger-mode
             linum-relative
             litable
@@ -916,6 +917,10 @@
        :hook (prog-mode . rainbow-mode))
    #+END_SRC
    Note: If I ever need to work seriously with colours: [[https://github.com/emacsfodder/kurecolor][kurecolor]]
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package kurecolor :defer t)
+   #+END_SRC
 
 * Dired
   #+BEGIN_SRC emacs-lisp
