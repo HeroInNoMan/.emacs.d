@@ -2290,9 +2290,7 @@
 * Org-mode
   #+BEGIN_SRC emacs-lisp
     (use-package org
-      :init (setq org-capture-templates '()
-                  org-refile-targets '((nil :maxlevel . 2)
-                                       (org-agenda-files :maxlevel . 2)))
+      :init (setq org-capture-templates '())
       :bind (("C-c a" . org-agenda)
              ("C-c b" . org-iswitchb)
              ("C-c l" . org-store-link)
@@ -2305,13 +2303,38 @@
       :chords ("gx" . org-capture)
       :hook (org-mode . visual-line-mode)
       :custom-face
-      (org-agenda-date ((t (:foreground "#a991f1" :inverse-video nil :box (:line-width (2 . 2) :color "grey75" :style released-button) :weight ultra-bold))))
-      (org-agenda-date-today ((t (:foreground "#a991f1" :inverse-video t :box (:line-width (2 . 2) :color "grey75" :style released-button) :weight ultra-bold))))
-      (org-agenda-date-weekend ((t (:foreground "#68228b" :inverse-video nil :box (:line-width (1 . 1) :color "grey75" :style released-button) :weight ultra-bold))))
-
-      (org-done ((t (:foreground "PaleGreen" :weight bold))))
-      (org-headline-done ((((class color) (min-colors 16) (background dark))
-                           (:foreground "dim grey" :strike-through t))))
+      (org-agenda-date
+       ((t ( :foreground "#a991f1"
+             :inverse-video nil
+             :box (
+                   :line-width (2 . 2)
+                   :color "grey75"
+                   :style released-button)
+             :weight ultra-bold))))
+      (org-agenda-date-today
+       ((t (
+            :foreground "#a991f1"
+            :inverse-video t
+            :box (
+                  :line-width (2 . 2)
+                  :color "grey75"
+                  :style released-button)
+            :weight ultra-bold))))
+      (org-agenda-date-weekend
+       ((t ( :foreground "#68228b"
+             :inverse-video nil
+             :box (
+                   :line-width (1 . 1)
+                   :color "grey75"
+                   :style released-button)
+             :weight ultra-bold))))
+      (org-done
+       ((t ( :foreground "PaleGreen"
+             :weight bold))))
+      (org-headline-done
+       ((((class color) (min-colors 16) (background dark))
+         ( :foreground "dim grey"
+           :strike-through t))))
       :config
       (unbind-key "C-c C-j" org-mode-map)
       (require 'ox-md nil t)
@@ -2319,9 +2342,13 @@
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
 
       (require 'color)
-      (setq org-hide-emphasis-markers t)
 
       ;; general settings
+      (setq org-hide-emphasis-markers t
+            org-tags-column -80
+            org-ellipsis " ▼")
+
+      ;; org log
       (setq org-log-done 'time
             org-log-repeat 'nil)
 
@@ -2335,12 +2362,22 @@
             org-agenda-span 'week
             org-agenda-entry-text-maxlines 15)
 
-      (setq org-completion-use-ido t
-            org-tags-column -80
-            org-ellipsis " ▼")
+      ;; refile and completion
+      (setq org-completion-use-ido nil
+            org-refile-targets '((nil :maxlevel . 5)
+                                 (org-agenda-files :maxlevel . 5))
+            org-refile-use-outline-path 'file
+            org-outline-path-complete-in-steps nil
+            org-refile-allow-creating-parent-nodes 'confirm
+            org-completing-read 'helm--completing-read-default)
 
       (setq org-agenda-custom-commands
-            '(("i" "Agenda + important TODOs"
+            '(("e" "Work only"
+               ((org-super-agenda-mode -1)
+                (agenda ""
+                        ((org-agenda-span 3)
+                         (tags "enercoop")))))
+              ("i" "Agenda + important TODOs"
                ((agenda #1="")
                 (tags-todo "+PRIORITY=\"A\"")
                 (alltodo #1#)))
@@ -2348,7 +2385,8 @@
                ((agenda #1="")
                 (alltodo #1#)))
               ("w" "Weekly Review"
-               ((agenda "" ((org-agenda-span 7))) ; review upcoming deadlines and appointments
+               ((agenda ""
+                        ((org-agenda-span 7))) ; review upcoming deadlines and appointments
                                             ; type "l" in the agenda to review logged items
                 (stuck "") ; review stuck projects as designated by org-stuck-projects
                 (todo "PROJECT") ; review all projects (assuming you use todo keywords to designate projects)
@@ -2362,10 +2400,10 @@
       (setq org-blank-before-new-entry
             '((heading . nil)
               (plain-list-item . nil))
-            org-cycle-separator-lines 2
+            org-cycle-separator-lines 2)
 
-            ;; html export
-            org-export-html-style-include-scripts nil
+      ;; html export
+      (setq org-export-html-style-include-scripts nil
             org-export-html-style-include-default nil
             org-html-htmlize-output-type 'css
             org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"org.css\" />"
