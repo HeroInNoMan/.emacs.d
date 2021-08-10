@@ -2679,7 +2679,7 @@
       :after (org origami)
       :hook (org-agenda-mode . origami-mode)
       ;; (org-agenda-finalize . ale/org-super-agenda-origami-fold-default)
-      :bind (("<f8>" . super-agenda)
+      :bind (("<f8>" . hydra-super-agenda/body)
              :map org-agenda-mode-map
              ("<tab>" . origami-toggle-node)
              :map org-super-agenda-header-map
@@ -2733,8 +2733,7 @@
 
               (:name "RAPIDE"
                      :order 3
-                     ;; :face (:foreground "DeepSkyBlue" :weight bold)
-                     :transformer map-todo-faces-super-agenda
+                     :face (:foreground "DeepSkyBlue" :weight bold)
                      :and ( :todo ("TODO" "NEXT" "WIP" "STARTED")
                             :effort< "15"))
 
@@ -2781,16 +2780,30 @@
               ;;  (propertize item 'face '(:foreground "#00cd00")))
               (t item)))
 
-      (defun super-agenda ()
-        "Call the agenda with super groups."
+      (defun super-agenda (command)
+        "Call the agenda COMMAND with super groups."
         (interactive)
         (setq org-super-agenda-groups super-groups-main)
-        (org-super-agenda-mode t)
-        (org-agenda nil "n")
-        (org-agenda-goto-today)
-        (recenter-top-bottom 0)
-        (end-of-line)
-        (origami-open-all-nodes (get-buffer "*Org Agenda*"))))
+        (org-super-agenda-mode 1)
+        (org-agenda nil command)
+        (org-agenda-day-view)
+        (origami-open-all-nodes (get-buffer "*Org Agenda*")))
+
+      (defun agenda-list (command)
+        "Call the agenda for the week with COMMAND."
+        (interactive)
+        (org-super-agenda-mode -1)
+        (org-agenda nil command)
+        (org-agenda-week-view))
+
+      (pretty-hydra-define hydra-super-agenda
+        (:color teal :quit-key "q")
+        ("Standard"
+         (("a"    (funcall 'agenda-list "a")  "Agenda")
+          ("l"    (funcall 'agenda-list "n")  "Agenda + list"))
+         "Custom"
+         (("<f8>" (funcall 'super-agenda "a")  "Agenda + list")
+          ("n"    (funcall 'super-agenda "n") "Custom + list")))))
   #+END_SRC
 
   Use fancy bullets in org-mode:
@@ -4123,7 +4136,7 @@
         "Management"
         (("(" mu4e "mu4e")
          ("\"" erc-start-or-jump "IRC")
-         ("a" super-agenda "agenda")
+         ("a" (funcall 'super-agenda "a") "agenda")
          ("c" open-calendar "calendar")
          ("p" list-packages "packages")
          ("T" tomatinho "pomodoro")
