@@ -2398,6 +2398,7 @@
                ((org-super-agenda-mode -1)
                 (agenda ""
                         ((org-agenda-span 3)
+                         (org-agenda-files '(my-private-work-todo-org-file my-private-work-diary-org-file))
                          (tags "enercoop")))))
               ("i" "Agenda + important TODOs"
                ((agenda #1="")
@@ -2518,6 +2519,7 @@
                      :kill-buffer t) t)
 
       (when (and (boundp 'my-private-work-diary-org-file)
+                 (boundp 'my-private-work-todo-org-file)
                  (boundp 'my-work-machine-name)
                  (equal my-work-machine-name (system-name)))
         (add-to-list 'org-capture-templates
@@ -2527,22 +2529,22 @@
                        :time-prompt t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("w" "TODO       (work)"
-                       entry (file+headline my-private-work-diary-org-file "À faire")
+                       entry (file+headline my-private-work-todo-org-file "À faire")
                        "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("u" "Quick TODO (work)"
-                       entry (file+headline my-private-work-diary-org-file "À faire")
+                       entry (file+headline my-private-work-todo-org-file "À faire")
                        "* TODO %i%?\n\tSCHEDULED: %t\n\t:PROPERTIES:\n\t:Effort:\t5\n\t:END:\n%a\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("f" "Fiche      (work)"
-                       entry (file+headline my-private-work-diary-org-file "Tickets à créer")
+                       entry (file+headline my-private-work-todo-org-file "Tickets à créer")
                        "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("v" "Revue      (work)"
-                       entry (file+headline my-private-work-diary-org-file "À faire")
+                       entry (file+headline my-private-work-todo-org-file "À faire")
                        "* Review %i%?\n\tSCHEDULED: %t"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
