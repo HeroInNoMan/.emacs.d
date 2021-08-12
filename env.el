@@ -14,7 +14,7 @@
   (add-to-list 'org-capture-templates
                '("l" "Log       (work)"
                  entry (file+olp+datetree my-private-work-diary-org-file)
-                 "* TODO %i%?"
+                 "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
                  :time-prompt t :kill-buffer t) t)
   (add-to-list 'org-capture-templates
                '("w" "TODO      (work)"
