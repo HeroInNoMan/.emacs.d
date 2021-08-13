@@ -3545,6 +3545,10 @@
              js2-use-font-lock-faces t)
        (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
+     (use-package json-mode
+       :ensure nil
+       :mode ("\\.rasi\\'" . json-mode))
+
      (use-package js2-refactor
        :after js2-mode
        :config
