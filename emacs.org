@@ -1842,8 +1842,8 @@
    #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-x M-b") 'ibuffer) ;; call ibuffer
      (global-set-key (kbd "C-x C-b") 'electric-buffer-list) ;; electric buffer by default
-     (global-set-key (kbd "C-c k") 'kill-this-buffer) ;; kill buffer without confirmation
-     (key-chord-define-global (kbd "+-") 'kill-this-buffer) ;; kill buffer without confirmation
+     (global-set-key (kbd "C-c k") 'ale/kill-this-buffer) ;; kill buffer without confirmation
+     (key-chord-define-global (kbd "+-") 'ale/kill-this-buffer) ;; kill buffer without confirmation
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp

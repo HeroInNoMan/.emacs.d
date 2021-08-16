@@ -169,6 +169,11 @@ Show the full path file name in the minibuffer."
   (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'ale/add-d-to-ediff-mode-map)
 
+(defun ale/kill-this-buffer ()
+  "Kill the current buffer."
+  (interactive)
+  (kill-buffer (current-buffer)))
+
 (defun ale/swap-buffers ()
   "Swap the contents of windows in the frame."
   (interactive)
