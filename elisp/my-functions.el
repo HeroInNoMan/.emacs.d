@@ -270,6 +270,22 @@ Swap buffers in the process"
              (progn
                (replace-regexp "\\([A-Z]\\)" "-\\1" nil (1+ start) end)
                (downcase-region start (cdr (bounds-of-thing-at-point 'symbol)))))))))
+
+(defun ale/json-reformat-region-or-buffer ()
+  "Call json-reformat-region on region (if active) or on whole buffer."
+  (interactive)
+  (let ((first (if (region-active-p) (region-beginning) (point-min)))
+        (last (if (region-active-p) (region-end) (point-max))))
+    (json-reformat-region first last)))
+
+(defun ale/format-all-buffer-or-region ()
+  "Call `format-all-region' if region is active, `format-all-buffer' otherwise."
+  (interactive)
+  (if (region-active-p)
+      (format-all-region (region-beginning) (region-end))
+    (format-all-buffer)))
+
+
 (defun ale/find-rest-client-file ()
   "Find rest-client file."
   (interactive)

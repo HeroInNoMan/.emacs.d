@@ -3542,6 +3542,8 @@
               (js2-mode . js2-refactor-mode)
               (js2-mode . (lambda () (flycheck-mode t))))
        :config
+       (use-package web-beautify
+         :bind (:map js2-mode-map ("C-c C-f" . web-beautify-js)))
        (setq js2-basic-offset 2
              js-indent-level 2
              js2-use-font-lock-faces t)
@@ -3567,27 +3569,18 @@
 ** JSON
    #+BEGIN_SRC emacs-lisp
      (use-package json-mode
-       :ensure nil
-       :mode (("\\.json\\'" . json-mode)
-              ("\\.rasi\\'" . json-mode))
-       :config (setq js-indent-level 2))
-
-     (use-package json-reformat
-       :bind (:map json-mode-map
-                   ("C-c j" . json-reformat-region))
-       :config (setq json-reformat:indent-width js-indent-level))
+       :mode ("\\.json\\'"
+              "\\.rasi\\'")
+       :config
+       (setq js-indent-level 2)
+       (use-package json-reformat
+         :bind (:map json-mode-map ("C-c C-f" . ale/json-reformat-region-or-buffer))
+         :config (setq json-reformat:indent-width js-indent-level)))
    #+END_SRC
 
 ** Web
    #+BEGIN_SRC emacs-lisp
      (use-package web-mode ;; HTML, XML, JSP (using web-mode)
-       :config
-       (setq web-mode-markup-indent-offset 2
-             web-mode-code-indent-offset 2
-             web-mode-enable-auto-indentation t
-             web-mode-enable-auto-quoting t
-             web-mode-engines-alist '(("php" . "\\.phtml\\'")
-                                      ("blade" . "\\.blade\\.")))
        :mode ("\\.phtml\\'"
               "\\.tpl\\.php\\'"
               "\\.[agj]sp\\'"
@@ -3595,7 +3588,6 @@
               "\\.erb\\'"
               "\\.js\\'"
               "\\.jsx\\'"
-              "\\.json\\'"
               "\\.mustache\\'"
               "\\.djhtml\\'"
               "\\.rhtml\\'"
@@ -3606,7 +3598,14 @@
               "\\.tsx\\'"
               "\\.xml\\'"
               "\\.xsd\\'"
-              "\\.wsdl\\'"))
+              "\\.wsdl\\'")
+       :config
+       (setq web-mode-markup-indent-offset 2
+             web-mode-code-indent-offset 2
+             web-mode-enable-auto-indentation t
+             web-mode-enable-auto-quoting t
+             web-mode-engines-alist '(("php" . "\\.phtml\\'")
+                                      ("blade" . "\\.blade\\."))))
 
      (defun mu-xml-format ()
        "Format an XML buffer with `xmllint'."
@@ -3615,16 +3614,6 @@
                                 "xmllint -format -"
                                 (current-buffer) t
                                 "*Xmllint Error Buffer*" t))
-     (use-package web-beautify
-       :disabled
-       :bind-keymap (
-                     ;; :map js2-mode-map ("C-c b" . web-beautify-js)
-                     ;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
-                     :map js-mode-map ("C-c b" . web-beautify-js)
-                     :map json-mode-map ("C-c b" . web-beautify-js)
-                     :map html-mode-map ("C-c b" . web-beautify-html)
-                     :map web-mode-map ("C-c b" . web-beautify-html)
-                     :map css-mode-map ("C-c b" . web-beautify-css)))
    #+END_SRC
 
    [[https://github.com/smihica/emmet-mode][Emmet]] is great to quickly create HTML/CSS structure
@@ -4166,7 +4155,7 @@
          ;; ("n" describe-number-at-point "describe number")
          ("TAB" indent-region "indent region")
          ("s" ale/cleanup-buffer-and-save "clean & save")
-         ("f" format-all-buffer "format buffer")
+         ("f" ale/format-all-buffer-or-region "format all")
          ("w" webpaste-paste-region "webpaste"))
         "Files"
         (("." find-file-at-point "open at point" :column "Files")
@@ -4793,7 +4782,8 @@
        :mode (("\\.http\\'" . restclient-mode))
        :bind (:map restclient-mode-map
                    ("C-c n w" . widen)
-                   ("C-c C-f" . json-mode-beautify)))
+                   ("C-c C-f" . json-mode-beautify))
+)
 
      (use-package ob-restclient :defer t)
    #+END_SRC
