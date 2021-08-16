@@ -9,13 +9,13 @@ My emacs configuration.
     │
     ├── init.el       # bootstrap file, tangles emacs.org into emacs.el and loads it
     │
-    ├── emacs.org     # main config file, literate style
+    ├── emacs.org     # main config file, literate programming style
     │
     ├── emacs.el      # generated from emacs.org (not under vc)
     │
-    ├── custom.el     # customize file (mostly generated) called by emacs.el
+    ├── custom.el     # customize file (generated, not under vc)
     │
-    ├── env.el        # system-aware lisp config called by emacs.el
+    ├── env.el        # environment-aware lisp config called by emacs.el
     │
     ├── elisp/        # plugins, modules (managed manually)
     │
@@ -27,9 +27,7 @@ My emacs configuration.
     │
     └── private.el    # private variables definitions (not under vc)
 
-# Actions #
+# TODO #
 
-* eclipse-style formatting system
+* eclipse-style formatting system for java files
 * ctags with projectile
-* complete IDE for javascript
-* spaceline: manage battery status
