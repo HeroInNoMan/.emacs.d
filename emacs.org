@@ -3548,7 +3548,8 @@
 
      (use-package json-mode
        :ensure nil
-       :mode ("\\.rasi\\'" . json-mode))
+       :mode ("\\.rasi\\'" . json-mode)
+       :config (setq js-indent-level 2))
 
      (use-package js2-refactor
        :after js2-mode
@@ -4789,10 +4790,10 @@
      ;; REST client
      (use-package restclient-helm
        :ensure restclient
-       :mode ("restclient" . restclient-mode)
-       :bind
-       (:map restclient-mode-map
-             ("C-c n w" . widen)))
+       :mode (("\\.http\\'" . restclient-mode))
+       :bind (:map restclient-mode-map
+                   ("C-c n w" . widen)
+                   ("C-c C-f" . json-mode-beautify)))
 
      (use-package ob-restclient :defer t)
    #+END_SRC
