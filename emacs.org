@@ -3247,6 +3247,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package sql
        :ensure nil
+       :bind (:map sql-mode-map
+                   ("C-c C-f" . hydra-format-sql/body))
        :hook
        (sql-mode . (lambda () (progn
                            (setq-local truncate-lines nil)
@@ -3294,7 +3296,6 @@
         "Upcase"
         (("u" sql-upcase-buffer "buffer")
          ("U" sql-upcase-region "region"))))
-     (global-set-key (kbd "C-c C-f") 'hydra-format-sql/body)
    #+END_SRC
 
 ** Groovy
