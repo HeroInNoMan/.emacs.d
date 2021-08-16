@@ -3547,11 +3547,6 @@
              js2-use-font-lock-faces t)
        (autoload 'json-pretty-print "json-pretty-print" "json-pretty-print" t))
 
-     (use-package json-mode
-       :ensure nil
-       :mode ("\\.rasi\\'" . json-mode)
-       :config (setq js-indent-level 2))
-
      (use-package js2-refactor
        :after js2-mode
        :config
@@ -3571,10 +3566,16 @@
 
 ** JSON
    #+BEGIN_SRC emacs-lisp
+     (use-package json-mode
+       :ensure nil
+       :mode (("\\.json\\'" . json-mode)
+              ("\\.rasi\\'" . json-mode))
+       :config (setq js-indent-level 2))
+
      (use-package json-reformat
-       :bind (:map prog-mode-map
+       :bind (:map json-mode-map
                    ("C-c j" . json-reformat-region))
-       :config (setq json-reformat:indent-width js2-basic-offset))
+       :config (setq json-reformat:indent-width js-indent-level))
    #+END_SRC
 
 ** Web
