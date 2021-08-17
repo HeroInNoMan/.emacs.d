@@ -40,29 +40,35 @@
   #+END_SRC
 
 * Package Management
-  I use [[https://github.com/jwiegley/use-package][use-package]] and [[https://melpa.org/][melpa]] to manage my packages and modules.
+
+  I decided to move to [[https://github.com/raxod502/straight.el][straight.el]] to manage my config, as it seems more solid and predictable.
+
+  This is how straight is being bootstrapped itself:
   #+BEGIN_SRC emacs-lisp
-    ;; package-style dependencies
-    (eval-when-compile
-      (require 'package)
-      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-      (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-      (unless (package-installed-p 'use-package)
-        (package-refresh-contents)
-        (package-install 'use-package))
-      (require 'use-package)
-      (setq use-package-always-ensure t
-            use-package-always-defer nil
-            use-package-verbose t))
+    (defvar bootstrap-version)
+    (let ((bootstrap-file
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+          (bootstrap-version 5))
+      (unless (file-exists-p bootstrap-file)
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
+      (load bootstrap-file nil 'nomessage))
+  #+END_SRC
 
-    (use-package auto-package-update
-      :disabled t ;; I want emacs to boot fast more than I want this
-      :config
-      (setq auto-package-update-delete-old-versions t
-            auto-package-update-hide-results nil
-            auto-package-update-interval 7)
-      (auto-package-update-maybe))
+  and then configured so I can still use [[https://github.com/jwiegley/use-package][use-package]] to manage my packages and modules.
+  #+BEGIN_SRC emacs-lisp
+    (straight-use-package 'use-package)
+    (setq straight-use-package-by-default t
+          use-package-always-defer nil
+          use-package-verbose t)
+  #+END_SRC
 
+  Some more [[https://github.com/jwiegley/use-package][use-package]]-related packages:
+  #+BEGIN_SRC emacs-lisp
     (use-package delight :defer t)
 
     (use-package use-package-chords
@@ -76,237 +82,9 @@
   #+BEGIN_SRC emacs-lisp
     (use-package explain-pause-mode
       :disabled t
-      :ensure nil
+      :straight nil
       :load-path "elisp/"
       :config (explain-pause-mode t))
-  #+END_SRC
-
-  This is the list of my (user-selected) packages:
-  #+BEGIN_SRC emacs-lisp
-    (setq package-selected-packages
-          '(2048-game
-            adoc-mode
-            aggressive-indent
-            all-the-icons
-            all-the-icons-dired
-            all-the-icons-ivy-rich
-            auctex-latexmk
-            auto-package-update
-            auto-yasnippet
-            avandu
-            beacon
-            beginend
-            browse-kill-ring
-            butler
-            calfw
-            calfw-cal
-            calfw-gcal
-            calfw-ical
-            calfw-org
-            caps-lock
-            cargo
-            centaur-tabs
-            color-identifiers-mode
-            command-log-mode
-            company-box
-            company-lsp
-            company-prescient
-            counsel
-            counsel-dash
-            counsel-projectile
-            counsel-tramp
-            counsel-web
-            crontab-mode
-            crux
-            csv-mode
-            ctrlf
-            ctrlxo
-            dap-java
-            dap-mode
-            dap-ui-mode
-            darkroom
-            dashboard
-            default-text-scale
-            define-word
-            defrepeater
-            delight
-            describe-number
-            dired-collapse
-            dired-narrow
-            dired-subtree
-            diredfl
-            dmacro
-            docker
-            dockerfile-mode
-            dokuwiki
-            dokuwiki-mode
-            doom-modeline
-            doom-themes
-            dot-mode
-            dumb-jump
-            edit-server
-            editorconfig
-            eglot
-            elfeed
-            elfeed-org
-            elisp-slime-nav
-            elpy
-            emacs-everywhere
-            emmet-mode
-            emojify
-            ensime
-            erc-hl-nicks
-            erc-match
-            erc-scrolltoplace
-            erc-tweet
-            erc-youtube
-            ereader
-            esup
-            expand-region
-            feather
-            fill-page
-            fireplace
-            fish-mode
-            flycheck-rust
-            forge
-            format-all
-            git-gutter
-            git-messenger
-            git-timemachine
-            gitconfig-mode
-            gitignore-mode
-            god-mode
-            goggles
-            goto-last-change
-            gradle-mode
-            grip-mode
-            groovy-mode
-            guess-language
-            helm-atoms
-            helm-cider
-            helm-dash
-            helm-descbinds
-            helm-fd
-            helm-git-grep
-            helm-gitlab
-            helm-lines
-            helm-lobsters
-            helm-lsp
-            helm-mu
-            helm-projectile
-            helm-rg
-            helm-swoop
-            helm-tramp
-            helpful
-            hide-mode-line
-            highlight-indent-guides
-            htmlize
-            ibuffer-vc
-            idle-highlight-mode
-            imenu-anywhere
-            impatient-mode
-            isearch-dabbrev
-            ivy
-            ivy-prescient
-            ivy-rich
-            iy-go-to-char
-            jedi
-            jenkins
-            js2-refactor
-            json-reformat
-            keypression
-            kurecolor
-            ledger-mode
-            linum-relative
-            litable
-            load-dir
-            lorem-ipsum
-            lsp-helm
-            lsp-java
-            lsp-java-treemacs
-            lsp-ui
-            magit-org-todos
-            magit-todos
-            meghanada
-            miniedit
-            minimap
-            monkeytype
-            move-text
-            mu4e-alert
-            mu4e-jump-to-list
-            mu4e-marker-icons
-            mu4e-query-fragments
-            no-littering
-            ob-restclient
-            ob-shell
-            ob-verb
-            org-appear
-            org-auto-tangle
-            org-bullets
-            org-super-agenda
-            org-tree-slide
-            origami
-            ox-asciidoc
-            page-break-lines
-            persistent-scratch
-            phi-search
-            poke-line
-            powerthesaurus
-            pretty-hydra
-            prism
-            prog-fill
-            powershell
-            python
-            racer
-            rainbow-blocks
-            rainbow-delimiters
-            rainbow-mode
-            redshank
-            reformatter
-            region-bindings-mode
-            rg
-            sass-mode
-            sbt-mode
-            scala-mode
-            selected
-            shell-pop
-            shrink-whitespace
-            shx
-            slime-volleyball
-            smart-comment
-            smartparens
-            smartscan
-            speed-type
-            sqlformat
-            ssh-config-mode
-            super-save
-            swagger-to-org
-            syslog-mode
-            ten-hundred-mode
-            tide
-            tomatinho
-            transmission
-            travis
-            treemacs
-            try
-            undo-tree
-            use-package-chords
-            verb
-            vimish-fold
-            visual-regexp-steroids
-            vterm
-            web-mode
-            webpaste
-            wgrep
-            which-key
-            wiki-summary
-            wrap-region
-            yaml-mode
-            yasnippet-snippets
-            ytel
-            zop-to-char
-            ztree
-            zygospore))
   #+END_SRC
 
   Let’s use [[https://github.com/conao3/feather.el][feather]] to manage packages in an asynchronous, multi-threaded way:
@@ -314,11 +92,6 @@
     (use-package feather
       :delight
       :hook (package-menu-mode . feather-mode))
-  #+END_SRC
-
-  Try packages without installing them:
-  #+BEGIN_SRC emacs-lisp
-    (use-package try :defer t)
   #+END_SRC
 
   To allow startup time analysis, I use [[https://github.com/jschaf/esup][esup]]:
@@ -372,7 +145,7 @@
   My custom (often stolen) lisp code is stored in ~elisp/my-functions.el~.
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
-      :ensure nil
+      :straight nil
       :commands (ale/insert-ticket-prefix
                  ale/jirify
                  ale/find-init-file
@@ -461,7 +234,7 @@
   Although I mainly use helm, ido is nice in some cases.
   #+BEGIN_SRC emacs-lisp
     (use-package ido
-      :ensure nil
+      :straight nil
       :config
       (setq ido-max-prospects 25)
       (ido-mode t)
@@ -472,7 +245,7 @@
   Let’s use UTF-8 everywhere:
   #+BEGIN_SRC emacs-lisp
     (use-package mule
-      :ensure nil
+      :straight nil
       :config
       (prefer-coding-system       'utf-8)
       (set-default-coding-systems 'utf-8)
@@ -481,7 +254,7 @@
       (setq default-buffer-file-coding-system 'utf-8))
 
     (use-package iso-transl ;; some environments don’t handle dead keys
-      :ensure nil
+      :straight nil
       :defer t)
   #+END_SRC
 
@@ -513,7 +286,7 @@
   Let’s add some auto-backup configuration:
   #+BEGIN_SRC emacs-lisp
     (use-package saveplace
-      :ensure nil
+      :straight nil
       :config
       (setq-default save-place t)
       (setq save-place-file (concat base-emacs-directory "places")
@@ -524,7 +297,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package simple
-      :ensure nil
+      :straight nil
       :bind
       ("C-x C-u" . upcase-dwim)
       ("C-x C-l" . downcase-dwim)
@@ -735,7 +508,7 @@
   Always start in full screen.
   #+BEGIN_SRC emacs-lisp
     (use-package frame
-      :ensure nil
+      :straight nil
       :config
       (if (eq window-system 'ns)
           (toggle-frame-maximized)
@@ -810,7 +583,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package font-size
-       :ensure nil
+       :straight nil
        :load-path "elisp/"
        :bind
        ("M-+" . font-size-increase)
@@ -840,7 +613,7 @@
    Highlight current line in list buffers:
    #+BEGIN_SRC emacs-lisp
      (use-package highlight-line
-       :ensure nil
+       :straight nil
        :load-path "elisp/"
        :custom-face (hl-line ((t (:background "grey7"))))
        :config
@@ -868,13 +641,13 @@
 ** Icons in terminal
    #+BEGIN_SRC emacs-lisp
      (use-package font-lock+
-       :ensure nil
+       :straight nil
        :defer t
        :load-path "elisp/")
 
      (use-package icons-in-terminal
        :disabled t
-       :ensure nil
+       :straight nil
        :defer t
        :load-path "~/.local/share/icons-in-terminal/")
      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
@@ -925,7 +698,7 @@
 * Dired
   #+BEGIN_SRC emacs-lisp
     (use-package dired
-      :ensure nil
+      :straight nil
       :bind ("C-x C-j". dired-jump)
       :config
       (unbind-key "M-b" dired-mode-map)
@@ -994,7 +767,7 @@
   Equivalent of ~f~ key in vim:
   #+BEGIN_SRC emacs-lisp
     (use-package iy-go-to-char
-      :ensure nil ;; can’t find it on [m]elpa anymore…
+      :straight nil ;; can’t find it on [m]elpa anymore…
       :load-path "~/.emacs.d/elisp/iy-go-to-char-20141029.1546/"
       :chords
       ("««" . iy-go-to-char-backward)
@@ -1632,7 +1405,7 @@
        (setq yas-triggers-in-field t)
        (setq yas-snippet-dirs
              `(,(concat base-emacs-directory "etc/yasnippet/snippets")
-               ,(car (file-expand-wildcards (concat base-emacs-directory "elpa/yasnippet-snippets-20*/snippets")))))
+               ,(car (file-expand-wildcards (concat base-emacs-directory "straight/repos/yasnippet-snippets/snippets")))))
        (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
 
@@ -1796,7 +1569,7 @@
    Better access to window manipulation commands:
    #+BEGIN_SRC emacs-lisp
      (use-package window
-       :ensure nil
+       :straight nil
        :bind
        ("C-c o" . bury-buffer) ;; put buffer at bottom of buffer list
        ("C-\"" . delete-other-windows)
@@ -1832,7 +1605,7 @@
    Auto-refresh all buffers.
    #+BEGIN_SRC emacs-lisp
      (use-package autorevert
-       :ensure nil
+       :straight nil
        :config
        (global-auto-revert-mode 1)
        (setq global-auto-revert-non-file-buffers t))
@@ -1863,7 +1636,7 @@
 *** ibuffer
     #+BEGIN_SRC emacs-lisp
       (use-package ibuffer
-        :ensure nil
+        :straight nil
         :defer t
         :hook (ibuffer-mode . (lambda ()
                                 (ibuffer-auto-mode 1)
@@ -2068,7 +1841,7 @@
 *** Smerge
     #+BEGIN_SRC emacs-lisp
       (use-package smerge-mode
-        :ensure nil
+        :straight nil
         :init (setq smerge-command-prefix "")
         :bind (("M-s e" . hydra-smerge/body))
         :config
@@ -2192,7 +1965,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package tramp
-      :ensure nil
+      :straight nil
       :defer t
       :config
       (setq remote-file-name-inhibit-cache nil ;; cache file-name forever
@@ -2208,7 +1981,7 @@
   Date and time should be displayed in standard format, no M/D/Y nonsense.
   #+BEGIN_SRC emacs-lisp
     (use-package time
-      :ensure nil
+      :straight nil
       :config
       (setq display-time-day-and-date t ;; display date and time
             display-time-24hr-format t ;; 24h time format
@@ -2274,7 +2047,7 @@
 * Text
   #+BEGIN_SRC emacs-lisp
     (use-package text-mode
-      :ensure nil
+      :straight nil
       :hook (text-mode . visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
       :config
       (setq default-major-mode 'text-mode) ;; text-mode by default
@@ -2647,15 +2420,15 @@
       :disabled t ;; worth enabling only when necessary
       :after org
       :config (define-key org-mode-map (kbd "C-c C-v") verb-command-map)
-      (use-package ob-verb :ensure nil :after org))
+      (use-package ob-verb :straight nil :after org))
 
-    (use-package ob-shell :ensure nil :after org)
+    (use-package ob-shell :straight nil :after org)
     (use-package htmlize :after org)
     (use-package swagger-to-org :after org)
     (use-package ox-asciidoc :after org)
     (use-package org-tree-slide :after org)
     (use-package org-appear
-      :ensure nil
+      :straight nil
       :load-path "elisp/"
       :after org
       :hook (org-mode . org-appear-mode))
@@ -2672,7 +2445,7 @@
   Display “habit” TODOs in a fancy way for the agenda view
   #+BEGIN_SRC emacs-lisp
     (use-package org-habit
-      :ensure nil
+      :straight nil
       :after org
       :config (setq org-habit-following-days 30
                     org-habit-preceding-days 4
@@ -2822,7 +2595,7 @@
 ** Spell checking
    #+BEGIN_SRC emacs-lisp
      (use-package my-checks
-       :ensure nil
+       :straight nil
        :load-path "elisp/"
        :bind ("C-è" . hydra-spell/body)
        :commands dubcaps-mode
@@ -2892,7 +2665,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package grammalecte
        :disabled
-       :ensure nil
+       :straight nil
        :after my-checks
        :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
    #+END_SRC
@@ -2901,7 +2674,7 @@
 ** Formatting
    #+BEGIN_SRC emacs-lisp
      (use-package prog-mode
-       :ensure nil
+       :straight nil
        :hook
        (prog-mode . (lambda () (setq show-trailing-whitespace t)))
        (prog-mode . prettify-symbols-mode)
@@ -2996,7 +2769,7 @@
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
      (use-package paren
-       :ensure nil
+       :straight nil
        :config (show-paren-mode 1)
        :custom-face (show-paren-match ((t ( :underline "white"
                                             :weight ultra-bold
@@ -3119,7 +2892,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package sh-script
-       :ensure nil
+       :straight nil
        :hook
        (sh-mode . flycheck-mode)
        (sh-mode . (lambda () (setq tab-width 2
@@ -3178,7 +2951,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package ed-mode
-       :ensure nil
+       :straight nil
        :commands ed
        :load-path "elisp/")
    #+END_SRC
@@ -3196,7 +2969,7 @@
    Let’s define some behaviours for all types of lisp buffers (~lisp-data-mode~ is the parent mode for all of them).
    #+BEGIN_SRC emacs-lisp
      (use-package lisp-data-mode
-       :ensure nil
+       :straight nil
        :hook (lisp-data-mode . smartparens-strict-mode)
        :bind
        ("C-c C-c" . eval-region)
@@ -3206,7 +2979,7 @@
    Some more behaviour…
    #+BEGIN_SRC emacs-lisp
      (use-package ielm
-       :ensure nil
+       :straight nil
        :hook (ielm-mode . (lambda () (setq-local scroll-margin 0))))
 
      (use-package elisp-slime-nav
@@ -3245,7 +3018,7 @@
 ** Sql
    #+BEGIN_SRC emacs-lisp
      (use-package sql
-       :ensure nil
+       :straight nil
        :bind (:map sql-mode-map
                    ("C-c C-f" . hydra-format-sql/body))
        :hook
@@ -3276,12 +3049,12 @@
        :after sql)
 
      (use-package sql-indent
-       :ensure nil
+       :straight nil
        :after sql
        :load-path "elisp/")
 
      (use-package sql-upcase
-       :ensure nil
+       :straight nil
        :load-path "elisp/"
        :hook (sql-mode . sql-upcase-mode))
 
@@ -3347,7 +3120,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck-java ;; flycheck minor mode for java
        :disabled
-       :ensure nil
+       :straight nil
        :load-path "elisp/"
        :hook java-mode)
    #+END_SRC
@@ -3407,12 +3180,12 @@
 
       (use-package dap-java
         :disabled t
-        :ensure nil
+        :straight nil
         :after lsp-java)
 
       (use-package lsp-java-treemacs
         :disabled t
-        :ensure nil
+        :straight nil
         :after treemacs)
 
       ;; (use-package lsp-mode
@@ -3746,7 +3519,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package tex
        :mode ("\\.tex\\'")
-       :ensure auctex
+       :straight auctex
        :config
        (use-package auctex-latexmk
          :config
@@ -3779,7 +3552,7 @@
 * Mail
   #+BEGIN_SRC emacs-lisp
     (use-package sendmail
-      :ensure nil
+      :straight nil
       :hook (mail-mode . visual-line-mode)) ;; wrapping in mail-mode
   #+END_SRC
 
@@ -3787,7 +3560,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package mu4e
       :load-path my-private-mu4e-path
-      :ensure nil
+      :straight nil
       :commands mu4e
       :custom-face
       (mu4e-flagged-face ((t (:foreground "gold"))))
@@ -3989,7 +3762,7 @@
 
 
     ;; (use-package mu4e-goodies
-    ;;   :ensure nil
+    ;;   :straight nil
     ;;   :after mu4e
     ;;   :load-path "");TODO:
   #+END_SRC
@@ -3997,7 +3770,7 @@
   I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
   #+BEGIN_SRC emacs-lisp
     (use-package smtpmail
-      :ensure nil
+      :straight nil
       :defer t
       :config (setq message-send-mail-function 'smtpmail-send-it
                     starttls-use-gnutls t
@@ -4139,7 +3912,9 @@
          ("\"" erc-start-or-jump "IRC")
          ("a" (funcall 'super-agenda "a") "agenda")
          ("c" open-calendar "calendar")
-         ("p" list-packages "packages")
+         ("p p" straight-pull-all "pull packages")
+         ("p c" straight-check-all "check packages")
+         ("p i" straight-use-package "install package")
          ("T" tomatinho "pomodoro")
          ("o" crux-open-with "open"))
         "Diff"
@@ -4171,7 +3946,7 @@
 ** Bookmarks and registers
    #+BEGIN_SRC emacs-lisp
      (use-package register
-       :ensure nil
+       :straight nil
        :chords ("jj" . jump-to-register))
    #+END_SRC
 * Environment
@@ -4448,7 +4223,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package erc
-       :ensure nil
+       :straight nil
        :hook (erc-mode . visual-line-mode)
        :bind (("<f6>" . erc-start-or-jump)
               ("C-<f6>" . erc-start-or-jump) ;; for god-mode
@@ -4528,20 +4303,20 @@
        (use-package erc-hl-nicks)
 
        (use-package erc-ring
-         :ensure nil
+         :straight nil
          :config (erc-ring-mode t))
 
        (use-package erc-netsplit
-         :ensure nil
+         :straight nil
          :config (erc-netsplit-mode t))
 
        (use-package erc-spelling
-         :ensure nil
+         :straight nil
          :config (erc-spelling-mode 1))
 
        ;; Don't track boring activity
        (use-package erc-track
-         :ensure nil
+         :straight nil
          :config
          (erc-track-mode t)
          (setq erc-track-exclude '("*highlight") ;; ZNC highlight buffer
@@ -4874,7 +4649,7 @@
     #+BEGIN_SRC emacs-lisp
       (use-package 2048-game :defer t)
       (use-package vimgolf
-        :ensure nil
+        :straight nil
         :commands vimgolf
         :load-path "elisp/")
       (use-package slime-volleyball :defer t)
