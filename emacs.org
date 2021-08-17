@@ -34,11 +34,6 @@
     (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 20000000)))
   #+END_SRC
 
-  To allow further startup time analysis, I use [[https://github.com/jschaf/esup][esup]]:
-  #+BEGIN_SRC emacs-lisp
-    (use-package esup :defer t)
-  #+END_SRC
-
   #+BEGIN_SRC emacs-lisp
     (setq comp-deferred-compilation t)
     (setq warning-suppress-types '((comp)))
@@ -324,6 +319,11 @@
   Try packages without installing them:
   #+BEGIN_SRC emacs-lisp
     (use-package try :defer t)
+  #+END_SRC
+
+  To allow startup time analysis, I use [[https://github.com/jschaf/esup][esup]]:
+  #+BEGIN_SRC emacs-lisp
+    (use-package esup :defer t)
   #+END_SRC
 
 * Emacs directory
