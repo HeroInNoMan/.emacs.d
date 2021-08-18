@@ -85,13 +85,6 @@
       :config (explain-pause-mode t))
   #+END_SRC
 
-  Let’s use [[https://github.com/conao3/feather.el][feather]] to manage packages in an asynchronous, multi-threaded way:
-  #+BEGIN_SRC emacs-lisp
-    (use-package feather
-      :delight
-      :hook (package-menu-mode . feather-mode))
-  #+END_SRC
-
   To allow startup time analysis, I use [[https://github.com/jschaf/esup][esup]]:
   #+BEGIN_SRC emacs-lisp
     (use-package esup :defer t)
