@@ -82,8 +82,6 @@
   #+BEGIN_SRC emacs-lisp
     (use-package explain-pause-mode
       :disabled t
-      :straight nil
-      :load-path "elisp/"
       :config (explain-pause-mode t))
   #+END_SRC
 
