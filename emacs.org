@@ -146,14 +146,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
       :straight nil
-      :commands (ale/insert-ticket-prefix
-                 ale/jirify
-                 ale/find-init-file
-                 ale/open-project
-                 ale/tangle-config-file
-                 ale/cleanup-buffer-and-save
-                 set-fira-font-if-possible
-                 togfun)
+      :demand
       :load-path "elisp/"
       :bind
       ("C-S-p" . up-arrow)
