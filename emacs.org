@@ -631,10 +631,7 @@
 
 ** Icons in terminal
    #+BEGIN_SRC emacs-lisp
-     (use-package font-lock+
-       :straight nil
-       :defer t
-       :load-path "elisp/")
+     (use-package font-lock+ :defer t)
 
      (use-package icons-in-terminal
        :disabled t
