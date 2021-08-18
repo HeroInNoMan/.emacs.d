@@ -3732,20 +3732,19 @@
       (mu4e-alert-enable-notifications))
 
     (use-package mu4e-maildirs-extension
-      :disabled t
+      :disabled
       :after mu4e
       :config (mu4e-maildirs-extension))
 
     (use-package mu4e-conversation
-      :disabled t
+      :disabled
       :after mu4e
       :config (global-mu4e-conversation-mode))
 
-
-    ;; (use-package mu4e-goodies
-    ;;   :straight nil
-    ;;   :after mu4e
-    ;;   :load-path "");TODO:
+    (use-package mu4e-goodies
+      :disabled ;TODO: à configurer
+      :straight '(mu4e-goodies :host github :repo "panjie/mu4e-goodies")
+      :after mu4e)
   #+END_SRC
 
   I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
