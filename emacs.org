@@ -4628,10 +4628,9 @@
 *** Other
     #+BEGIN_SRC emacs-lisp
       (use-package 2048-game :defer t)
-      (use-package vimgolf
-        :straight nil
-        :commands vimgolf
-        :load-path "elisp/")
+
+      (use-package vimgolf :commands vimgolf)
+
       (use-package slime-volleyball :defer t)
 
       (use-package fireplace :defer t)
