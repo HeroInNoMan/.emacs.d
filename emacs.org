@@ -2646,11 +2646,7 @@
 
 ** Grammalecte
    #+BEGIN_SRC emacs-lisp
-     (use-package grammalecte
-       :disabled
-       :straight nil
-       :after my-checks
-       :load-path "../projets/yet-an-other-flycheck-grammalecte-fork/")
+     (use-package flycheck-grammalecte :defer t)
    #+END_SRC
 
 * Programming
