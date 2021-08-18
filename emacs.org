@@ -574,8 +574,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package font-size
-       :straight nil
-       :load-path "elisp/"
+       :straight '(font-size :host github :repo "nabeix/emacs-font-size")
        :bind
        ("M-+" . font-size-increase)
        ("M-=" . font-size-decrease)
