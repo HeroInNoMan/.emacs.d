@@ -2935,9 +2935,9 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package ed-mode
-       :straight nil
        :commands ed
-       :load-path "elisp/")
+       :straight '(ed-mode :host github
+                           :repo "ryanprior/ed-mode"))
    #+END_SRC
 
 ** Powershell
