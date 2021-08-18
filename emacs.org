@@ -2414,8 +2414,6 @@
     (use-package ox-asciidoc :after org)
     (use-package org-tree-slide :after org)
     (use-package org-appear
-      :straight nil
-      :load-path "elisp/"
       :after org
       :hook (org-mode . org-appear-mode))
   #+END_SRC
