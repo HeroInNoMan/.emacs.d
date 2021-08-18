@@ -2682,7 +2682,6 @@
   I use org-super-agenda to display relevant information in a nicer way.
   #+BEGIN_SRC emacs-lisp
     (use-package org-super-agenda
-      :after (org origami)
       :hook (org-agenda-mode . origami-mode)
       ;; (org-agenda-finalize . ale/org-super-agenda-origami-fold-default)
       :bind (("<f8>" . hydra-super-agenda/body)
