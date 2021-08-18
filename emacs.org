@@ -4537,6 +4537,13 @@
      (use-package ob-restclient :defer t)
    #+END_SRC
 
+   [[https://github.com/flashcode/impostman][Impostman]] enables to import Postman collections/environments to use with restclient:
+   #+BEGIN_SRC emacs-lisp
+     (use-package impostman
+       :defer t
+       :straight '(impostman :host github :repo "flashcode/impostman"))
+   #+END_SRC
+
 ** Web pasting
    #+BEGIN_SRC emacs-lisp
      (use-package webpaste
