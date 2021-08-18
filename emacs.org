@@ -3100,8 +3100,9 @@
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck-java ;; flycheck minor mode for java
        :disabled
-       :straight nil
-       :load-path "elisp/"
+       :straight '(flycheck-java
+                   :host github
+                   :repo "akorobov/flycheck-java")
        :hook java-mode)
    #+END_SRC
 
