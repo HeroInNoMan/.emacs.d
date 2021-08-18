@@ -3029,13 +3029,9 @@
               ("\\.prc\\'" . sql-mode)
               ("\\.pk\\'" .  sql-mode)))
 
-     (use-package sqlformat
-       :after sql)
+     (use-package sqlformat :after sql)
 
-     (use-package sql-indent
-       :straight nil
-       :after sql
-       :load-path "elisp/")
+     (use-package sql-indent :after sql)
 
      (use-package sql-upcase
        :straight nil
