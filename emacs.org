@@ -165,9 +165,9 @@
   #+END_SRC
 
 * Help
-  [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed.
+  [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed (replaces [[https://github.com/kai2nenobu/guide-key][guide-key]]).
   #+BEGIN_SRC emacs-lisp
-    (use-package which-key ;; which-key (replacement for guide-key)
+    (use-package which-key
       :hook ((prog-mode text-mode) . which-key-mode)
       :config
       (which-key-mode)
@@ -243,10 +243,11 @@
       (set-terminal-coding-system 'utf-8)
       (set-keyboard-coding-system 'utf-8)
       (setq default-buffer-file-coding-system 'utf-8))
+  #+END_SRC
 
-    (use-package iso-transl ;; some environments don’t handle dead keys
-      :straight nil
-      :defer t)
+  Some environments don’t handle dead keys.
+  #+BEGIN_SRC emacs-lisp
+    (use-package iso-transl :straight nil :defer t)
   #+END_SRC
 
   Let’s [[https://github.com/iqbalansari/emacs-emojify][emojify]] things :
