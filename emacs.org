@@ -1131,6 +1131,7 @@
            ("f"     helm-find-files "files")
            ("F"     helm-for-files "all files") ;; like helm-multi-files but always run locate
            ("m"     helm-mini "mini")
+           ("g"     helm-browse-project "ls git")
            ("p"     helm-projectile "projectile")
            ("t"     helm-tramp "tramp"))
           "Search"
@@ -1153,7 +1154,6 @@
           "Completion"
           (("<tab>" helm-lisp-completion-at-point "lisp")
            ("$"     helm-lines "lines")
-           ("g"     helm-google-suggest "google")
            ("S"     helm-surfraw "surfraw")
            ("y"     yas-insert-snippet "yasnippet")
            ("w"     wiki-summary "wikipedia"))
@@ -1268,6 +1268,11 @@
    #+BEGIN_SRC emacs-lisp
      (use-package helm-git-grep
        :defer t
+       :after helm)
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-ls-git
        :after helm)
    #+END_SRC
 
