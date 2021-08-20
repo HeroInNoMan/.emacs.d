@@ -520,6 +520,8 @@
 
 
 ** Theme
+
+*** Doom themes
    #+BEGIN_SRC emacs-lisp
      (use-package doom-themes
        :config
@@ -558,6 +560,13 @@
        ;; Corrects (and improves) org-mode's native fontification.
        (doom-themes-org-config))
    #+END_SRC
+
+*** Alternative themes
+    #+BEGIN_SRC emacs-lisp
+      (use-package amethyst
+        :disabled
+        :straight '(amethyst :host github :repo "ashton314/amethyst"))
+    #+END_SRC
 
 ** Zoom
    I use [[https://github.com/purcell/default-text-scale][default-text-scale]] to zoom in and out the frames of the current instance of emacs.
