@@ -602,14 +602,11 @@
 
    Highlight current line in list buffers:
    #+BEGIN_SRC emacs-lisp
-     (use-package highlight-line
+     (use-package hl-line
        :straight nil
-       :load-path "elisp/"
        :custom-face (hl-line ((t (:background "grey7"))))
-       :config
-       (add-to-list 'highlight-line-target-modes 'org-agenda-mode)
-       (global-hl-line-mode -1) ;; don’t highlight current line
-       (highlight-line-mode 1)) ;; except in “list” modes
+       :hook (dired-mode . hl-line-mode)
+       :config (global-hl-line-mode -1))
 
      (use-package highlight-indent-guides
        :hook (prog-mode . highlight-indent-guides-mode)
