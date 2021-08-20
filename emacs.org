@@ -4131,7 +4131,6 @@
   Let’s use a dashboard:
   #+BEGIN_SRC emacs-lisp
     (use-package dashboard
-      :disabled t
       :config
       (dashboard-setup-startup-hook)
       (setq dashboard-set-heading-icons t)
@@ -4141,7 +4140,7 @@
       (dashboard-modify-heading-icons '((recents . "file-text")
                                         (projects . "book")
                                         (bookmarks . "book")))
-      (setq dashboard-items '((recents . 5)
+      (setq dashboard-items '((recents . 8)
                               ;; (bookmarks . 5)
                               ;; (registers . 5)
                               (projects . 5)
@@ -4694,8 +4693,10 @@
 * Epilogue
   Run one last function called epilogue if it is available:
   #+BEGIN_SRC emacs-lisp
-    (when (fboundp 'epilogue)
-      (epilogue))
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                (when (fboundp 'epilogue)
+                  (epilogue))))
   #+END_SRC
 * Useful links
 ** one entry point to find them all

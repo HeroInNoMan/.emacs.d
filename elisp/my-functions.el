@@ -285,6 +285,18 @@ Swap buffers in the process"
       (format-all-region (region-beginning) (region-end))
     (format-all-buffer)))
 
+(defun dash-or-scratch ()
+  "Switch to dashboard if exists and if there is only one frame.
+Also make frame fullscreen. Otherwise, open a new scratch
+ buffer."
+  (interactive)
+  (if (and (length< (frame-list) 3) ;; only one frame
+           (get-buffer "*dashboard*"))
+      (progn
+        (when (not (cdr (assoc 'fullscreen (frame-parameters))))
+          (toggle-frame-fullscreen))
+        (switch-to-buffer "*dashboard*"))
+    (crux-create-scratch-buffer)))
 
 (defun ale/find-rest-client-file ()
   "Find rest-client file."
