@@ -81,7 +81,7 @@
   I tried to use [[https://github.com/lastquestion/explain-pause-mode/][explain-pause-mode]] to monitor why emacs sometimes slows down, but it seems to mess with key-chords.
   #+BEGIN_SRC emacs-lisp
     (use-package explain-pause-mode
-      :disabled t
+      :disabled
       :config (explain-pause-mode t))
   #+END_SRC
 
@@ -640,7 +640,7 @@
      (use-package font-lock+ :defer t)
 
      (use-package icons-in-terminal
-       :disabled t
+       :disabled
        :straight nil
        :defer t
        :load-path "~/.local/share/icons-in-terminal/")
@@ -2415,7 +2415,7 @@
     (use-package ob-restclient :after org)
 
     (use-package verb
-      :disabled t ;; worth enabling only when necessary
+      :disabled ;; worth enabling only when necessary
       :after org
       :config (define-key org-mode-map (kbd "C-c C-v") verb-command-map)
       (use-package ob-verb :straight nil :after org))
@@ -2716,18 +2716,18 @@
    TODO: describe lsp
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
-       :disabled t
+       :disabled
        :defer t
        :config
        (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
 
      (use-package company-lsp
-       :disabled t
+       :disabled
        :requires lsp company
        :after lsp-mode)
 
      (use-package lsp-ui
-       :disabled t
+       :disabled
        :requires lsp-mode flycheck
        :hook (lsp-mode . lsp-ui-mode)
        :config
@@ -2746,11 +2746,11 @@
              lsp-ui-peek-peek-height 25))
 
      (use-package helm-lsp
-       :disabled t
+       :disabled
        :after lsp-mode)
 
      (use-package dap-mode
-       :disabled t
+       :disabled
        :after lsp-mode
        :config
        (dap-mode 1)
@@ -3098,9 +3098,9 @@
 
 ** Scala
    #+BEGIN_SRC emacs-lisp
-     (use-package ensime :disabled t)
-     (use-package sbt-mode :disabled t)
-     (use-package scala-mode :disabled t)
+     (use-package ensime :disabled)
+     (use-package sbt-mode :disabled)
+     (use-package scala-mode :disabled)
    #+END_SRC
 
 ** Java
@@ -3161,19 +3161,19 @@
 *** lsp-java
     #+BEGIN_SRC emacs-lisp
       (use-package lsp-java
-        :disabled t
+        :disabled
         ;; :delight (java-mode "🅹" :major)
         :bind ("C-S-o" . lsp-execute-code-action)
         :after lsp
         :hook (java-mode . lsp))
 
       (use-package dap-java
-        :disabled t
+        :disabled
         :straight nil
         :after lsp-java)
 
       (use-package lsp-java-treemacs
-        :disabled t
+        :disabled
         :straight nil
         :after treemacs)
 
@@ -3698,7 +3698,7 @@
               (:thread-subject . nil))))
 
     (use-package mu4e-marker-icons
-      :disabled t
+      :disabled
       :config (mu4e-marker-icons-mode 1))
 
     (use-package mu4e-jump-to-list :after mu4e)
@@ -4172,7 +4172,7 @@
 
     ;; Save a list of recent files visited.
     (use-package desktop
-      :disabled t
+      :disabled
       :defer t
       :config
       (setq desktop-save t
@@ -4200,7 +4200,7 @@
 
   Invoke an emacsclient to/from any input field on the system:
   #+BEGIN_SRC emacs-lisp
-    (use-package emacs-everywhere :disabled t)
+    (use-package emacs-everywhere :disabled)
   #+END_SRC
 
 * Other
