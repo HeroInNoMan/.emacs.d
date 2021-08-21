@@ -436,6 +436,7 @@
   Vim’s “dot” is a cool macro-like feature. I want that.
   #+BEGIN_SRC emacs-lisp
     (use-package dot-mode
+      :disabled
       :bind ("M-." . dot-mode-execute)
       :config
       ;; default bindings I already use
