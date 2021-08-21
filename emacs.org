@@ -1356,6 +1356,18 @@
        :init (ivy-rich-mode 1))
    #+END_SRC
 
+** Contextual completion
+
+   [[https://github.com/oantolin/embark/][embark]] is a sort of contextual help menu, very helpful.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package embark
+       :bind
+       ("M-." . embark-act)
+       ("C-M-." . embark-dwim))
+   #+END_SRC
+   #+END_SRC
+
 ** Snippets
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
