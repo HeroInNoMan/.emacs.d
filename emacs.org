@@ -1136,60 +1136,36 @@
 
        (pretty-hydra-define hydra-helm-config
          (:color teal :quit-key "q")
-         ("Find"
-          (("l"     helm-locate "locate")
-           ("/"     helm-find "find")
-           ("f"     helm-find-files "files")
-           ("F"     helm-for-files "all files") ;; like helm-multi-files but always run locate
-           ("m"     helm-mini "mini")
-           ("g"     helm-browse-project "ls git")
-           ("p"     helm-projectile "projectile")
-           ("t"     helm-tramp "tramp"))
-          "Search"
-          (("*"     helm-regexp "regexp" :column "Search")
-           ("a"     helm-atoms "rev. var lookup")
-           ("o"     helm-occur "occur")
-           ("s"     helm-swoop "swoop")
-           ("R"     helm-rg "ripgrep")
-           ("G"     helm-git-grep "git grep"))
-          "Navigate"
-          (("e"     helm-etags-select "etags")
-           ("i"     helm-semantic-or-imenu "imenu")
-           ("I"     helm-imenu-in-all-buffers "imenu all")
-           ("."     helm-imenu-anywhere "imenu any")
-           ("Q"     helm-sql-connect "SQL connection")
-           ("b"     helm-filtered-bookmarks "bookmark")
-           ("'"     helm-register "register")
-           ("k"     helm-show-kill-ring "kill-ring")
-           ("<SPC>" helm-all-mark-rings "mark rings"))
-          "Completion"
-          (("<tab>" helm-lisp-completion-at-point "lisp")
-           ("$"     helm-lines "lines")
-           ("S"     helm-surfraw "surfraw")
-           ("y"     yas-insert-snippet "yasnippet")
-           ("w"     wiki-summary "wikipedia"))
-          "Doc & Help"
-          (("h b"   helm-descbinds "bindings")
-           ("h e"   helm-eval-expression-with-eldoc "eldoc")
-           ("h i"   helm-info-at-point "info")
-           ("h r"   helm-info-emacs "emacs")
-           ("h g"   helm-info-gnus "gnus")
-           ("h h"   helm-documentation "doc")
-           ("h a"   helm-apropos "a propos")
-           ("h f"   counsel-describe-function "desc. function")
-           ("h v"   counsel-describe-variable "desc. variable")
-           ("h m"   helm-man-woman "woman")
-           ("-"     helm-dash-at-point "dash"))
-          "Other"
-          (("r"     helm-resume "resume" :column "Helm")
-           ("T"     helm-top "top")
-           ("P"     helm-list-emacs-process "process")
-           ("c"     helm-colors "colours")
-           ("8"     helm-ucs "ucs")
-           (","     helm-calcul-expression "calcul")
-           ("j"     helm-list-elisp-packages "packages")
-           ("X"     helm-select-xfont "xfont")
-           ("x"     helm-M-x "helm-M-x")))))
+         ( "Files"
+           (("l"     helm-locate               "locate")
+            ("/"     helm-find                 "find")
+            ("f"     helm-find-files           "files")
+            ("p"     helm-projectile           "projectile")
+            ("g"     helm-browse-project       "ls git"))
+           "Search"
+           (("i"     helm-semantic-or-imenu    "imenu")
+            ("e"     helm-imenu-in-all-buffers "imenu all")
+            ("."     helm-imenu-anywhere       "imenu any")
+            ("x"     helm-rg                   "ripgrep")
+            ("y"     helm-git-grep             "git grep"))
+           "Browse"
+           (("b"     helm-filtered-bookmarks   "Bookmark")
+            ("j"     helm-list-elisp-packages  "packages")
+            ("c"     helm-colors               "colours")
+            ("u"     helm-ucs                  "unicode")
+            ("v"     helm-atoms                "variables"))
+           "Processes"
+           (("h"     helm-top                  "top")
+            ("k"     helm-list-emacs-process   "process")
+            ("t"     helm-tramp                "tramp")
+            ("s"     helm-sql-connect          "sql")
+            (","     helm-calcul-expression    "calc"))
+           "Help"
+           (("r"     helm-resume               "resume")
+            ("%"     helm-regexp               "build regex")
+            ("a"     helm-apropos              "a propos")
+            ("m"     helm-man-woman            "(wo)-man")
+            ("B"     helm-descbinds            "bindings")))))
    #+END_SRC
 
    [[https://blog.burntsushi.net/ripgrep/][Ripgrep]] is the the best tool for grepping anything anywhere these days. Combined with [[https://github.com/cosmicexplorer/helm-rg][helm-rg]], it’s all I need. And it also supports editing search results from the search buffer!
