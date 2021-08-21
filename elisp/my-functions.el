@@ -67,16 +67,6 @@ Show the full path file name in the minibuffer."
     (kill-new filename))
   (message (buffer-file-name)))
 
-(defun eval-and-replace ()
-  "Replace the preceding sexp with its value."
-  (interactive)
-  (backward-kill-sexp)
-  (condition-case nil
-      (prin1 (eval (read (current-kill 0)))
-             (current-buffer))
-    (error (message "Invalid expression")
-           (insert (current-kill 0)))))
-
 (defun ale/jirify ()
   "Create an org link with a ticket ID using the URL in my-private-primary-work-bugtracker-url."
   (interactive)
