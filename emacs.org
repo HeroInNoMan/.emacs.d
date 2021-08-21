@@ -412,7 +412,8 @@
       (global-set-key [remap next-error]               (defrepeater 'next-error))
       (global-set-key [remap flycheck-previous-error]  (defrepeater 'flycheck-previous-error))
       (global-set-key [remap flycheck-next-error]      (defrepeater 'flycheck-next-error))
-      (global-set-key [remap bury-buffer]              (defrepeater 'bury-buffer)))
+      (global-set-key [remap bury-buffer]              (defrepeater 'bury-buffer))
+      (global-set-key [remap shrink-whitespace]        (defrepeater 'shrink-whitespace)))
   #+END_SRC
 
   I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
