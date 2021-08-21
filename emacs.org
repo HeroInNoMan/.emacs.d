@@ -2093,6 +2093,7 @@
 
       ;; general settings
       (setq org-hide-emphasis-markers t
+            org-adapt-indentation t
             org-tags-column -80
             org-ellipsis " ▼")
 
@@ -2146,8 +2147,8 @@
 
       ;; new lines and separators
       (setq org-blank-before-new-entry
-            '((heading . nil)
-              (plain-list-item . nil))
+            '((heading . auto)
+              (plain-list-item . auto))
             org-cycle-separator-lines 2)
 
       ;; html export
