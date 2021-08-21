@@ -1293,9 +1293,10 @@
 
    Finally, let’s use helm for connecting to remote hosts (via TRAMP).
    #+BEGIN_SRC emacs-lisp
-     ;; (use-package helm-tramp
-     ;;   :config
-     ;;   (setq tramp-default-method "ssh"))
+     (use-package helm-tramp
+       :after helm
+       :config
+       (setq tramp-default-method "ssh"))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
