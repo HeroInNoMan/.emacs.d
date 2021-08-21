@@ -523,44 +523,44 @@
 ** Theme
 
 *** Doom themes
-   #+BEGIN_SRC emacs-lisp
-     (use-package doom-themes
-       :config
-       (setq custom-safe-themes
-             '("0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1"
-               "1526aeed166165811eefd9a6f9176061ec3d121ba39500af2048073bea80911e"
-               "1a52e224f2e09af1084db19333eb817c23bceab5e742bf93caacbfea5de6b4f6"
-               "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
-               "79278310dd6cacf2d2f491063c4ab8b129fee2a498e4c25912ddaa6c3c5b621e"
-               "7f791f743870983b9bb90c8285e1e0ba1bf1ea6e9c9a02c60335899ba20f3c94"
-               "80147cd7121944101fb451c69800c8565db80b5b819754118d96a28be6ea1054"
-               "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
-               "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
-               "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e"
-               "e1ecb0536abec692b5a5e845067d75273fe36f24d01210bf0aa5842f2a7e029f"
-               "f4fefd141d606f337880a642f20cfd0472ebe2d8a339741faa4ae222ec250bfb"
-               "fa3bdd59ea708164e7821574822ab82a3c51e262d419df941f26d64d015c90ee"
-               default))
-       ;; Global settings (defaults)
-       (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-             doom-themes-enable-italic t) ; if nil, italics is universally disabled
-       (load-theme 'doom-vibrant) ;; more at https://github.com/hlissner/emacs-doom-themes
+    #+BEGIN_SRC emacs-lisp
+      (use-package doom-themes
+        :config
+        (setq custom-safe-themes
+              '("0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1"
+                "1526aeed166165811eefd9a6f9176061ec3d121ba39500af2048073bea80911e"
+                "1a52e224f2e09af1084db19333eb817c23bceab5e742bf93caacbfea5de6b4f6"
+                "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
+                "79278310dd6cacf2d2f491063c4ab8b129fee2a498e4c25912ddaa6c3c5b621e"
+                "7f791f743870983b9bb90c8285e1e0ba1bf1ea6e9c9a02c60335899ba20f3c94"
+                "80147cd7121944101fb451c69800c8565db80b5b819754118d96a28be6ea1054"
+                "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
+                "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
+                "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e"
+                "e1ecb0536abec692b5a5e845067d75273fe36f24d01210bf0aa5842f2a7e029f"
+                "f4fefd141d606f337880a642f20cfd0472ebe2d8a339741faa4ae222ec250bfb"
+                "fa3bdd59ea708164e7821574822ab82a3c51e262d419df941f26d64d015c90ee"
+                default))
+        ;; Global settings (defaults)
+        (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+              doom-themes-enable-italic t) ; if nil, italics is universally disabled
+        (load-theme 'doom-vibrant) ;; more at https://github.com/hlissner/emacs-doom-themes
 
-       (setq original-cursor-color (face-attribute 'cursor :background))
-       (setq original-cursor-color "#51afef")
+        (setq original-cursor-color (face-attribute 'cursor :background))
+        (setq original-cursor-color "#51afef")
 
-       ;; Enable flashing mode-line on errors
-       ;; (doom-themes-visual-bell-config)
+        ;; Enable flashing mode-line on errors
+        ;; (doom-themes-visual-bell-config)
 
-       ;; Enable custom neotree theme (all-the-icons must be installed!)
-       ;; (doom-themes-neotree-config)
-       ;; or for treemacs users
-       (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
-       (doom-themes-treemacs-config)
+        ;; Enable custom neotree theme (all-the-icons must be installed!)
+        ;; (doom-themes-neotree-config)
+        ;; or for treemacs users
+        (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+        (doom-themes-treemacs-config)
 
-       ;; Corrects (and improves) org-mode's native fontification.
-       (doom-themes-org-config))
-   #+END_SRC
+        ;; Corrects (and improves) org-mode's native fontification.
+        (doom-themes-org-config))
+    #+END_SRC
 
 *** Alternative themes
     #+BEGIN_SRC emacs-lisp
@@ -2691,54 +2691,54 @@
 
 ** LSP
 *** Eglot
-   #+BEGIN_SRC emacs-lisp
-     (use-package eglot :defer t)
-   #+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (use-package eglot :defer t)
+    #+END_SRC
 
 *** lsp-mode
-   TODO: describe lsp
-   #+BEGIN_SRC emacs-lisp
-     (use-package lsp-mode
-       :disabled
-       :defer t
-       :config
-       (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
+    TODO: describe lsp
+    #+BEGIN_SRC emacs-lisp
+      (use-package lsp-mode
+        :disabled
+        :defer t
+        :config
+        (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
 
-     (use-package company-lsp
-       :disabled
-       :requires lsp company
-       :after lsp-mode)
+      (use-package company-lsp
+        :disabled
+        :requires lsp company
+        :after lsp-mode)
 
-     (use-package lsp-ui
-       :disabled
-       :requires lsp-mode flycheck
-       :hook (lsp-mode . lsp-ui-mode)
-       :config
-       (setq lsp-ui-doc-enable t
-             lsp-ui-doc-use-childframe t
-             lsp-ui-doc-position 'top
-             lsp-ui-doc-include-signature t
-             lsp-ui-sideline-enable nil
-             lsp-ui-sideline-update-mode 'point
-             lsp-ui-sideline-ignore-duplicate t
-             lsp-ui-flycheck-enable t
-             lsp-ui-flycheck-list-position 'right
-             lsp-ui-flycheck-live-reporting t
-             lsp-ui-peek-enable t
-             lsp-ui-peek-list-width 60
-             lsp-ui-peek-peek-height 25))
+      (use-package lsp-ui
+        :disabled
+        :requires lsp-mode flycheck
+        :hook (lsp-mode . lsp-ui-mode)
+        :config
+        (setq lsp-ui-doc-enable t
+              lsp-ui-doc-use-childframe t
+              lsp-ui-doc-position 'top
+              lsp-ui-doc-include-signature t
+              lsp-ui-sideline-enable nil
+              lsp-ui-sideline-update-mode 'point
+              lsp-ui-sideline-ignore-duplicate t
+              lsp-ui-flycheck-enable t
+              lsp-ui-flycheck-list-position 'right
+              lsp-ui-flycheck-live-reporting t
+              lsp-ui-peek-enable t
+              lsp-ui-peek-list-width 60
+              lsp-ui-peek-peek-height 25))
 
-     (use-package helm-lsp
-       :disabled
-       :after lsp-mode)
+      (use-package helm-lsp
+        :disabled
+        :after lsp-mode)
 
-     (use-package dap-mode
-       :disabled
-       :after lsp-mode
-       :config
-       (dap-mode 1)
-       (dap-ui-mode 1))
-   #+END_SRC
+      (use-package dap-mode
+        :disabled
+        :after lsp-mode
+        :config
+        (dap-mode 1)
+        (dap-ui-mode 1))
+    #+END_SRC
 
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
@@ -2997,16 +2997,17 @@
        :bind (:map sql-mode-map
                    ("C-c C-f" . hydra-format-sql/body))
        :hook
-       (sql-mode . (lambda () (progn
-                           (setq-local truncate-lines nil)
-                           (aggressive-indent-mode -1)
-                           (setq-local linesize 9999))))
+       (sql-mode . (lambda ()
+                     (progn (setq-local truncate-lines nil)
+                            (aggressive-indent-mode -1)
+                            (setq-local linesize 9999))))
 
-       (sql-interactive-mode . (lambda () (progn
-                                       (setq-local comint-output-filter-functions 'comint-truncate-buffer)
-                                       (setq-local comint-buffer-maximum-size 5000)
-                                       (setq-local comint-scroll-show-maximum-output t)
-                                       (setq-local comint-input-ring-size 500))))
+       (sql-interactive-mode . (lambda ()
+                                 (progn
+                                   (setq-local comint-output-filter-functions 'comint-truncate-buffer)
+                                   (setq-local comint-buffer-maximum-size 5000)
+                                   (setq-local comint-scroll-show-maximum-output t)
+                                   (setq-local comint-input-ring-size 500))))
        :mode (("\\.sql\\'" . sql-mode)
               ("\\.pks\\'" . sql-mode)
               ("\\.pkb\\'" . sql-mode)
@@ -3433,11 +3434,11 @@
                    ("M-g M-p" . flycheck-previous-error)
                    ("M-g M-n" . flycheck-next-error)
                    ("C-x C-e" . python-shell-send-defun))
-       :hook (python-mode . (lambda () (progn
-                                    (aggressive-indent-mode -1)
-                                    (elpy-enable)
-                                    (elpy-mode)
-                                    (flycheck-mode))))
+       :hook (python-mode . (lambda ()
+                              (progn (aggressive-indent-mode -1)
+                                     (elpy-enable)
+                                     (elpy-mode)
+                                     (flycheck-mode))))
        :config
        (setq python-indent-offset 4
              tab-always-indent t))
@@ -4526,8 +4527,7 @@
        :mode (("\\.http\\'" . restclient-mode))
        :bind (:map restclient-mode-map
                    ("C-c n w" . widen)
-                   ("C-c C-f" . json-mode-beautify))
-)
+                   ("C-c C-f" . json-mode-beautify)))
 
      (use-package ob-restclient :defer t)
    #+END_SRC

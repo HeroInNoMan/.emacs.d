@@ -141,8 +141,8 @@
   (add-hook
    'org-load-hook
    #'(lambda () (progn
-                  (add-to-list 'org-refile-targets '(my-private-local-notes-org-file :maxlevel . 2))
-                  (add-to-list 'org-agenda-files my-private-local-todo-org-file))))
+             (add-to-list 'org-refile-targets '(my-private-local-notes-org-file :maxlevel . 2))
+             (add-to-list 'org-agenda-files my-private-local-todo-org-file))))
 
 
   ;; display battery level
@@ -163,7 +163,6 @@
     (setq transmission-host my-private-transmission-host
           transmission-service my-private-transmission-service
           transmission-rpc-path my-private-transmission-rpc-path))
-
 
   (pretty-hydra-define hydra-projects
     (:color teal :quit-key "q")
