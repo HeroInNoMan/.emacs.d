@@ -2663,6 +2663,8 @@
        (prog-mode . (lambda () (setq show-trailing-whitespace t)))
        (prog-mode . prettify-symbols-mode)
        :config
+       (setq prettify-symbols-unprettify-at-point 'right-edge)
+
        (defconst prettify-symbols-alist
          '(("lambda"  . ?λ)
            ("!=" . ?≠)
@@ -2672,7 +2674,10 @@
            ("->" . ?→)
            ("<-" . ?←)
            ("=>" . ?⇒)
-           ("..." . ?…))))
+           ("..." . ?…)
+           ("[ ]" . ?⬛)
+           ("[X]" . ?☑)
+           ("[-]" . ?❍))))
 
      (use-package prog-fill
        :bind (:map prog-mode-map
