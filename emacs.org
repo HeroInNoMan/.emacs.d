@@ -375,7 +375,7 @@
       ("C-x C-r" . crux-sudo-edit)
       ("C-S-d" . kill-whole-line)
       ("C-c i" . crux-cleanup-buffer-or-region)
-      ("M-\"" . crux-create-scratch-buffer)
+      ("M-\"" . ale/new-scratch-or-reuse)
       ("C-S-o" . crux-smart-open-line-above)
       ("C-S-j" . crux-smart-open-line)
       ("C-S-k" . crux-smart-kill-line)

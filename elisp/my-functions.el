@@ -275,6 +275,20 @@ Swap buffers in the process"
       (format-all-region (region-beginning) (region-end))
     (format-all-buffer)))
 
+(defun ale/new-scratch-or-reuse ()
+  "Create a new scratch buffer or re-use existing empty scratch."
+  (interactive)
+  (let ((scratches nil))
+    (mapc
+     (lambda (buff)
+       (when (and (= (buffer-size buff) 0)
+                  (string-match "^\\*scratch\\*\\(<[0-9]+>\\)?" (buffer-name buff)))
+         (setq scratches (append scratches (list buff)))))
+     (buffer-list))
+    (if (length> scratches 0)
+        (switch-to-buffer (buffer-name (car scratches)))
+      (crux-create-scratch-buffer))))
+
 (defun dash-or-scratch ()
   "Switch to dashboard if exists and if there is only one frame.
 Also make frame fullscreen. Otherwise, open a new scratch
@@ -286,7 +300,7 @@ Also make frame fullscreen. Otherwise, open a new scratch
         (when (not (cdr (assoc 'fullscreen (frame-parameters))))
           (toggle-frame-fullscreen))
         (switch-to-buffer "*dashboard*"))
-    (crux-create-scratch-buffer)))
+    (ale/new-scratch-or-reuse)))
 
 (defun ale/find-rest-client-file ()
   "Find rest-client file."
