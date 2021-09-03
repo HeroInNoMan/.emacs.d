@@ -67,10 +67,13 @@
           use-package-verbose t)
   #+END_SRC
 
-  Some more [[https://github.com/jwiegley/use-package][use-package]]-related packages:
+  [[https://elpa.gnu.org/packages/delight.html][delight]] helps unclutter the mode-line with useless minor mode indications.
   #+BEGIN_SRC emacs-lisp
     (use-package delight :defer t)
+  #+END_SRC
 
+  [[https://www.emacswiki.org/emacs/key-chord.el][key-chords.el]] is now part of use-package. Check out this [[https://www.youtube.com/watch?v=NXTf8_Arl1w][90 seconds video]] if you don’t know what key-chords is!
+  #+BEGIN_SRC emacs-lisp
     (use-package use-package-chords
       :config
       (key-chord-mode 1)
