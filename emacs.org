@@ -4030,7 +4030,7 @@
       (setq doom-modeline-minor-modes nil)
 
       ;; If non-nil, a word count will be added to the selection-info modeline segment.
-      (setq doom-modeline-enable-word-count nil)
+      (setq doom-modeline-enable-word-count t)
 
       ;; Major modes in which to display word count continuously.
       ;; Also applies to any derived modes. Respects `doom-modeline-enable-word-count'.
@@ -4049,13 +4049,13 @@
       (setq doom-modeline-checker-simple-format t)
 
       ;; The maximum number displayed for notifications.
-      (setq doom-modeline-number-limit 999)
+      (setq doom-modeline-number-limit 99)
 
       ;; The maximum displayed length of the branch name of version control.
       (setq doom-modeline-vcs-max-length 40)
 
       ;; Whether display the perspective name. Non-nil to display in the mode-line.
-      (setq doom-modeline-persp-name t)
+      (setq doom-modeline-persp-name nil)
 
       ;; If non nil the default perspective name is displayed in the mode-line.
       (setq doom-modeline-display-default-persp-name nil)
@@ -4064,7 +4064,7 @@
       (setq doom-modeline-lsp t)
 
       ;; Whether display the GitHub notifications. It requires `ghub' package.
-      (setq doom-modeline-github t)
+      (setq doom-modeline-github nil)
 
       ;; The interval of checking GitHub.
       (setq doom-modeline-github-interval (* 30 60))
@@ -4077,10 +4077,10 @@
       (setq doom-modeline-mu4e t)
 
       ;; Whether display the gnus notifications.
-      (setq doom-modeline-gnus t)
+      (setq doom-modeline-gnus nil)
 
       ;; Wheter gnus should automatically be updated and how often (set to nil to disable)
-      (setq doom-modeline-gnus-timer 2)
+      (setq doom-modeline-gnus-timer nil)
 
       ;; Whether display the IRC notifications. It requires `circe' or `erc' package.
       (setq doom-modeline-irc t)
