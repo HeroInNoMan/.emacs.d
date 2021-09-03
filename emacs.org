@@ -997,8 +997,8 @@
              undo-tree-enable-undo-in-region nil
              undo-tree-visualizer-diff t
              undo-tree-auto-save-history t
-             undo-limit 80000000
-             undo-outer-limit 30000000))
+             undo-limit 8000000
+             undo-outer-limit 3000000))
    #+END_SRC
 
 ** Helm
