@@ -122,7 +122,8 @@
   #+BEGIN_SRC emacs-lisp
     (setq-local custom-file-enabled nil) ;; enable / disable custom-file loading
     (setq-default custom-file (expand-file-name "custom.el" base-emacs-directory))
-    (when (and custom-file-enabled (file-exists-p custom-file))
+    (when (and custom-file-enabled
+               (file-exists-p custom-file))
       (load custom-file))
   #+END_SRC
 
@@ -358,7 +359,6 @@
           visible-bell nil) ;; No flashing!
   #+END_SRC
 
-
   I don’t usually display line numbers, but I want the abilitity to do so, and also to display relative line numbering, which is handy to navigate using numeric arguments.
   #+BEGIN_SRC emacs-lisp
     (use-package linum-relative
@@ -515,7 +515,6 @@
     (add-to-list 'default-frame-alist '(height . 24))
     (add-to-list 'default-frame-alist '(width . 80))
   #+END_SRC
-
 
 ** Theme
 
@@ -733,7 +732,6 @@
                   ("<backtab>" . dired-subtree-cycle)
                   ("«" . dired-subtree-beginning)
                   ("»" . dired-subtree-end)))
-
 
   #+END_SRC
 
@@ -2076,27 +2074,23 @@
       (org-agenda-date
        ((t ( :foreground "#a991f1"
              :inverse-video nil
-             :box (
-                   :line-width (2 . 2)
-                   :color "grey75"
-                   :style released-button)
+             :box ( :line-width (2 . 2)
+                    :color "grey75"
+                    :style released-button)
              :weight ultra-bold))))
       (org-agenda-date-today
-       ((t (
-            :foreground "#a991f1"
-            :inverse-video t
-            :box (
-                  :line-width (2 . 2)
-                  :color "grey75"
-                  :style released-button)
-            :weight ultra-bold))))
+       ((t ( :foreground "#a991f1"
+             :inverse-video t
+             :box ( :line-width (2 . 2)
+                    :color "grey75"
+                    :style released-button)
+             :weight ultra-bold))))
       (org-agenda-date-weekend
        ((t ( :foreground "#68228b"
              :inverse-video nil
-             :box (
-                   :line-width (1 . 1)
-                   :color "grey75"
-                   :style released-button)
+             :box ( :line-width (1 . 1)
+                    :color "grey75"
+                    :style released-button)
              :weight ultra-bold))))
       (org-done
        ((t ( :foreground "PaleGreen"
@@ -2429,7 +2423,6 @@
       :after org
       :hook (org-mode . org-auto-tangle-mode))
   #+END_SRC
-
 
   Display “habit” TODOs in a fancy way for the agenda view
   #+BEGIN_SRC emacs-lisp
@@ -2878,7 +2871,6 @@
      (use-package vterm
        :defer t)
    #+END_SRC
-
 
    #+BEGIN_SRC emacs-lisp
      (use-package sh-script
@@ -4666,6 +4658,7 @@
 
       (use-package fireplace :defer t)
     #+END_SRC
+
 ** News
 *** RSS feeds
 **** Avandu
@@ -4715,7 +4708,6 @@
       (use-package helm-lobsters
         :commands helm-lobsters)
     #+END_SRC
-
 
 * Epilogue
   Run one last function called epilogue if it is available:
