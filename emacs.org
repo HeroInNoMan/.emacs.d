@@ -4206,7 +4206,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package edit-server
       :if (and
-           (window-system)
+           (display-graphic-p)
            (or
             (not (fboundp 'server-running-p))
             (not (server-running-p))))
