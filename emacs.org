@@ -1021,7 +1021,7 @@
         ("C-c C-l" . helm-minibuffer-history))
        :config
        (require 'helm-config)
-       (helm-mode 0)                           ;; only on demand
+       (helm-mode t)                           ;; only on demand
        (helm-autoresize-mode t)
        ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
 
