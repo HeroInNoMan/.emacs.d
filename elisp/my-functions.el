@@ -294,12 +294,12 @@ Swap buffers in the process"
 Also make frame fullscreen. Otherwise, open a new scratch
  buffer."
   (interactive)
-  (if (and (length< (frame-list) 3) ;; only one frame
-           (get-buffer "*dashboard*"))
+  (if (length< (frame-list) 3) ;; only one frame
       (progn
-        (when (not (cdr (assoc 'fullscreen (frame-parameters))))
+        (unless (cdr (assoc 'fullscreen (frame-parameters)))
           (toggle-frame-fullscreen))
-        (switch-to-buffer "*dashboard*"))
+        (when (get-buffer "*dashboard*")
+          (switch-to-buffer "*dashboard*")))
     (ale/new-scratch-or-reuse)))
 
 (defun ale/find-rest-client-file ()
