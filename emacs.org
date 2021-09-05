@@ -2687,6 +2687,21 @@
                            (face-attribute 'default :background) 3)))
   #+END_SRC
 
+  Let’s use org-journal:
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package org-journal
+      :config
+      (setq org-journal-dir "~/Nextcloud/org/journal"
+            org-journal-file-format "%Y-%m.org"
+            org-journal-date-prefix "* "
+            org-journal-date-format "%F %R"
+            org-journal-time-prefix ""
+            org-journal-time-format ""
+            ))
+  #+END_SRC
+
+
   I also use a few more packages depending on org:
   #+BEGIN_SRC emacs-lisp
     (use-package verb
