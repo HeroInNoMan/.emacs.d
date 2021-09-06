@@ -311,6 +311,7 @@
   #+BEGIN_SRC emacs-lisp
     (autoload 'zap-up-to-char "misc"
       "Kill up to, but not including ARGth occurrence of CHAR." t)
+    (global-set-key (kbd "M-z") 'zap-up-to-char)
 
     (setq apropos-do-all t
           mouse-yank-at-point t
@@ -444,10 +445,23 @@
       (global-dot-mode))
   #+END_SRC
 
-  More custom bindings :
+  Text completion is everything. The order in which the completion functions are called makes quite a difference.
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "M-/") 'hippie-expand)
-    (global-set-key (kbd "M-z") 'zap-up-to-char)
+    (use-package hippie-exp
+      :straight nil
+      :bind ("M-/" . hippie-expand)
+      :config
+      (setq hippie-expand-try-functions-list
+            '(try-complete-file-name-partially
+              try-complete-file-name
+              try-expand-list
+              try-expand-all-abbrevs
+              try-expand-dabbrev
+              try-expand-dabbrev-all-buffers
+              try-expand-dabbrev-from-kill
+              try-complete-lisp-symbol-partially
+              try-complete-lisp-symbol
+              try-expand-line)))
   #+END_SRC
 
 * Modal editing
