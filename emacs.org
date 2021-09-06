@@ -444,12 +444,6 @@
       (global-dot-mode))
   #+END_SRC
 
-  Let’s try [[https://github.com/emacs-jp/dmacro][dmacro]], which seems even more vim-dotty-like:
-  #+BEGIN_SRC emacs-lisp
-    (use-package dmacro
-      :init (setq global-dmacro-mode t))
-  #+END_SRC
-
   More custom bindings :
   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "M-/") 'hippie-expand)
