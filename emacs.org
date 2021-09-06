@@ -284,6 +284,7 @@
                                                      "backups")))))
   #+END_SRC
 
+  More miscellaneous configuration and bindings, grouped by built-in packages:
   #+BEGIN_SRC emacs-lisp
     (use-package simple
       :straight nil
