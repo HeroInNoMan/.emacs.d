@@ -822,7 +822,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package aggressive-indent
-      :hook (prog-mode . aggressive-indent-mode))
+      :hook (lisp-data-mode . aggressive-indent-mode))
 
     ;;Indentation
     (setq-default tab-width 2
