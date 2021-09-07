@@ -1918,19 +1918,15 @@
            ("g" magit-file-dispatch "file action…"))
           "Other"
           (("t" git-timemachine "time machine")
-           ("m" git-messenger:popup-message "popup message")))))
+           ("m" git-messenger:popup-message "popup message"))))
 
-     (use-package forge
-       :after magit)
+       (use-package forge)
 
-     (use-package magit-todos
-       :after magit
-       :config (setq magit-todos-max-items 30))
+       (use-package magit-todos
+         :config (setq magit-todos-max-items 30))
 
-     (use-package magit-org-todos
-       :after magit
-       :config
-       (magit-org-todos-autoinsert))
+       (use-package magit-org-todos
+         :config (magit-org-todos-autoinsert)))
    #+END_SRC
 
 * Project management
