@@ -965,13 +965,13 @@
              company-dabbrev-downcase nil))
 
      (use-package company-prescient
-       :after company
+       :hook (company-mode . company-prescient-mode)
        :config
        (company-prescient-mode)
        (prescient-persist-mode))
 
      (use-package company-box
-       :after company)
+       :hook (company-mode . company-box-mode))
 
      (use-package browse-kill-ring
        :config
