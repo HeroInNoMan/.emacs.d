@@ -2028,11 +2028,11 @@
           (cfw:ical-create-source "Perso" my-private-personal-ical-url "RoyalBlue")
           (cfw:org-create-source "grey50")  ; orgmode source
           (cfw:ical-create-source "Vacances" "https://www.data.gouv.fr/fr/datasets/r/17254f2a-a611-4b1f-995c-df45a4570f12" "goldenrod")  ; ICS source1
-          (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "gray20")))))
+          (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "gray20"))))
 
-    (use-package calfw-cal :after calfw)
-    (use-package calfw-ical :after calfw)
-    (use-package calfw-org :after calfw)
+      (use-package calfw-cal)
+      (use-package calfw-ical)
+      (use-package calfw-org))
   #+END_SRC
 
 * Text
