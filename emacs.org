@@ -2985,6 +2985,7 @@
    I came across [[https://github.com/hchbaw/eval-sexp-fu.el][eval-sexp-fu]] to make evaluating emacs lisp code quicker while coding.
    #+BEGIN_SRC emacs-lisp
      (use-package eval-sexp-fu
+       :commands turn-on-eval-sexp-fu-flash-mode
        :hook (emacs-lisp-mode . (lambda () (turn-on-eval-sexp-fu-flash-mode)))
        :bind (:map emacs-lisp-mode-map
                    ("C-c C-c" . eval-containing-sexp)
