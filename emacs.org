@@ -1002,13 +1002,13 @@
        :bind (("C-M-/" . undo-tree-redo)
               ("C-c u" . undo-tree-hydra/body))
        :config
-       (global-undo-tree-mode)
        (setq undo-tree-visualizer-timestamps t
              undo-tree-enable-undo-in-region nil
              undo-tree-visualizer-diff t
              undo-tree-auto-save-history t
              undo-limit 8000000
-             undo-outer-limit 3000000))
+             undo-outer-limit 3000000)
+       (global-undo-tree-mode))
    #+END_SRC
 
 ** Helm
