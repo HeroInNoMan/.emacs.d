@@ -2645,6 +2645,13 @@
        :defer t)
    #+END_SRC
 
+** Abbrevs
+
+   Abbrev is great in specific modes for
+
+   #+BEGIN_SRC emacs-lisp
+#+END_SRC
+
 ** Synonyms
    #+BEGIN_SRC emacs-lisp
      (use-package powerthesaurus :defer t)
