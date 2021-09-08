@@ -4240,6 +4240,7 @@
        :bind (("<f6>" . erc-start-or-jump)
               ("C-<f6>" . erc-start-or-jump) ;; for god-mode
               :map erc-mode-map
+              ("C-c C-x" . erc-cmd-UNTRACK)
               ("M-q" . erc-quote-last-message)
               ("C-o" . erc-start-or-jump))
        :config
