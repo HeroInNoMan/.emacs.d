@@ -2709,7 +2709,9 @@
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
-       :hook (prog-mode . flycheck-mode))
+       :hook
+       (prog-mode . flycheck-mode)
+       (lisp-data-mode . (lambda () (add-to-list 'flycheck-disabled-checkers 'emacs-lisp-checkdoc))))
    #+END_SRC
 
 ** LSP
