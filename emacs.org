@@ -4159,7 +4159,6 @@
       (poke-line-global-mode 1)
       ;; https://github.com/RyanMillerC/poke-line/blob/master/docs/pokemon.md
       (setq-default poke-line-pokemon "charmander")
-      (setq-default poke-line- "pikachu")
       (setq poke-line-minimum-window-width 64)
       (setq poke-line-bar-length 32))
   #+END_SRC
