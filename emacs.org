@@ -490,7 +490,9 @@
             (setq cursor-type 'box)))
          (t
           (progn
-            (set-cursor-color original-cursor-color) ;; TODO aller choper dynamiquement la couleur de base du curseur (ou mieux définir une face cursor-color-god ou un truc comme ça)
+            ;; TODO aller choper dynamiquement la couleur de base du curseur (ou mieux
+            ;; définir une face cursor-color-god ou un truc comme ça)
+            (set-cursor-color original-cursor-color)
             (setq god-mode-colors nil)
             (if buffer-read-only
                 (setq cursor-type 'box)
@@ -662,15 +664,24 @@
      (use-package rainbow-delimiters
        :hook (prog-mode . rainbow-delimiters-mode)
        :custom-face
-       (rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
-       (rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
-       (rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
-       (rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark turquoise"))))
-       (rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "deep pink"))))
-       (rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow1"))))
-       (rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "orange"))))
-       (rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "white"))))
-       (rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon")))))
+       (rainbow-delimiters-depth-1-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
+       (rainbow-delimiters-depth-2-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
+       (rainbow-delimiters-depth-3-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
+       (rainbow-delimiters-depth-4-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "dark turquoise"))))
+       (rainbow-delimiters-depth-5-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "deep pink"))))
+       (rainbow-delimiters-depth-6-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "yellow1"))))
+       (rainbow-delimiters-depth-7-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "orange"))))
+       (rainbow-delimiters-depth-8-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "white"))))
+       (rainbow-delimiters-depth-9-face
+        ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon")))))
    #+END_SRC
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
@@ -761,7 +772,8 @@
       ("M-à" . avy-goto-word-1) ;; quickly jump to word by pressing its first letter
       ("M-m" . avy-goto-char) ;; quickly jump to any char in word
       :config
-      (setq avy-keys '(97 117 105 101 98 233 112 111 116 115 114 110 109 118 100 108 106 99 113 103 104 102)))
+      (setq avy-keys
+            '(97 117 105 101 98 233 112 111 116 115 114 110 109 118 100 108 106 99 113 103 104 102)))
   #+END_SRC
 
   Equivalent of ~f~ key in vim:
@@ -1067,77 +1079,78 @@
                                              ;; helm-source-file-name-history
                                              helm-source-locate
                                              helm-source-find-files)
-             helm-boring-file-regexp-list '("\\.o$"
-                                            "~$"
-                                            "\\.bin$"
-                                            "\\.lbin$"
-                                            "\\.so$"
-                                            "\\.a$"
-                                            "\\.ln$"
-                                            "\\.blg$"
-                                            "\\.bbl$"
-                                            "\\.elc$"
-                                            "\\.lof$"
-                                            "\\.glo$"
-                                            "\\.idx$"
-                                            "\\.lot$"
-                                            "\\.svn\\(/\\|$\\)"
-                                            "\\.hg\\(/\\|$\\)"
-                                            "\\.git\\(/\\|$\\)"
-                                            "\\.bzr\\(/\\|$\\)"
-                                            "CVS\\(/\\|$\\)"
-                                            "_darcs\\(/\\|$\\)"
-                                            "_MTN\\(/\\|$\\)"
-                                            "\\.fmt$"
-                                            "\\.tfm$"
-                                            "\\.class$"
-                                            "\\.fas$"
-                                            "\\.lib$"
-                                            "\\.mem$"
-                                            "\\.x86f$"
-                                            "\\.sparcf$"
-                                            "\\.dfsl$"
-                                            "\\.pfsl$"
-                                            "\\.d64fsl$"
-                                            "\\.p64fsl$"
-                                            "\\.lx64fsl$"
-                                            "\\.lx32fsl$"
-                                            "\\.dx64fsl$"
-                                            "\\.dx32fsl$"
-                                            "\\.fx64fsl$"
-                                            "\\.fx32fsl$"
-                                            "\\.sx64fsl$"
-                                            "\\.sx32fsl$"
-                                            "\\.wx64fsl$"
-                                            "\\.wx32fsl$"
-                                            "\\.fasl$"
-                                            "\\.ufsl$"
-                                            "\\.fsl$"
-                                            "\\.dxl$"
-                                            "\\.lo$"
-                                            "\\.la$"
-                                            "\\.gmo$"
-                                            "\\.mo$"
-                                            "\\.toc$"
-                                            "\\.aux$"
-                                            "\\.cp$"
-                                            "\\.fn$"
-                                            "\\.ky$"
-                                            "\\.pg$"
-                                            "\\.tp$"
-                                            "\\.vr$"
-                                            "\\.cps$"
-                                            "\\.fns$"
-                                            "\\.kys$"
-                                            "\\.pgs$"
-                                            "\\.tps$"
-                                            "\\.vrs$"
-                                            "\\.pyc$"
-                                            "\\.pyo$"
-                                            "\\.egradle/sdk\\(/\\|$\\)"
-                                            "\\.cache/mozilla\\(/\\|$\\)"
-                                            "\\.local/share/Trash/files\\(/\\|$\\)"
-                                            "\\.cache/\\(chromium\\|google\\-chrome\\)/Default/Cache\\(/\\|$\\)"))
+             helm-boring-file-regexp-list
+             '("\\.o$"
+               "~$"
+               "\\.bin$"
+               "\\.lbin$"
+               "\\.so$"
+               "\\.a$"
+               "\\.ln$"
+               "\\.blg$"
+               "\\.bbl$"
+               "\\.elc$"
+               "\\.lof$"
+               "\\.glo$"
+               "\\.idx$"
+               "\\.lot$"
+               "\\.svn\\(/\\|$\\)"
+               "\\.hg\\(/\\|$\\)"
+               "\\.git\\(/\\|$\\)"
+               "\\.bzr\\(/\\|$\\)"
+               "CVS\\(/\\|$\\)"
+               "_darcs\\(/\\|$\\)"
+               "_MTN\\(/\\|$\\)"
+               "\\.fmt$"
+               "\\.tfm$"
+               "\\.class$"
+               "\\.fas$"
+               "\\.lib$"
+               "\\.mem$"
+               "\\.x86f$"
+               "\\.sparcf$"
+               "\\.dfsl$"
+               "\\.pfsl$"
+               "\\.d64fsl$"
+               "\\.p64fsl$"
+               "\\.lx64fsl$"
+               "\\.lx32fsl$"
+               "\\.dx64fsl$"
+               "\\.dx32fsl$"
+               "\\.fx64fsl$"
+               "\\.fx32fsl$"
+               "\\.sx64fsl$"
+               "\\.sx32fsl$"
+               "\\.wx64fsl$"
+               "\\.wx32fsl$"
+               "\\.fasl$"
+               "\\.ufsl$"
+               "\\.fsl$"
+               "\\.dxl$"
+               "\\.lo$"
+               "\\.la$"
+               "\\.gmo$"
+               "\\.mo$"
+               "\\.toc$"
+               "\\.aux$"
+               "\\.cp$"
+               "\\.fn$"
+               "\\.ky$"
+               "\\.pg$"
+               "\\.tp$"
+               "\\.vr$"
+               "\\.cps$"
+               "\\.fns$"
+               "\\.kys$"
+               "\\.pgs$"
+               "\\.tps$"
+               "\\.vrs$"
+               "\\.pyc$"
+               "\\.pyo$"
+               "\\.egradle/sdk\\(/\\|$\\)"
+               "\\.cache/mozilla\\(/\\|$\\)"
+               "\\.local/share/Trash/files\\(/\\|$\\)"
+               "\\.cache/\\(chromium\\|google\\-chrome\\)/Default/Cache\\(/\\|$\\)"))
 
        (pretty-hydra-define hydra-helm-config
          (:color teal :quit-key "q")
@@ -1398,7 +1411,8 @@
        (setq yas-triggers-in-field t)
        (setq yas-snippet-dirs
              `(,(concat base-emacs-directory "etc/yasnippet/snippets")
-               ,(car (file-expand-wildcards (concat base-emacs-directory "straight/repos/yasnippet-snippets/snippets")))))
+               ,(car (file-expand-wildcards
+                      (concat base-emacs-directory "straight/repos/yasnippet-snippets/snippets")))))
        (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
 
@@ -1505,28 +1519,29 @@
        :hook ((text-mode prog-mode) . selected-global-mode))
 
      (use-package multiple-cursors
-       :bind (:map region-bindings-mode-map
-                   ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
-                   ("d" . mc/mark-all-symbols-like-this-in-defun)
-                   ("D" . mc/mark-all-dwim)
-                   ("p" . mc/mark-previous-like-this) ;; new cursor on previous occurence of current region
-                   ("n" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
-                   ("P" . mc/unmark-previous-like-this)
-                   ("N" . mc/unmark-next-like-this)
-                   ("é" . mc/edit-lines) ;; new cursor on each line of region
-                   ("(" . mc/cycle-backward)
-                   (")" . mc/cycle-forward)
-                   ("m" . mc/mark-more-like-this-extended)
-                   ("h" . mc-hide-unmatched-lines-mode)
-                   ("v" . mc/vertical-align)
-                   ("|" . mc/vertical-align-with-space)
-                   ("r" . mc/reverse-regions)
-                   ("s" . mc/sort-regions)
-                   ("#" . mc/insert-numbers) ; use num prefix to set the starting number
-                   ("^" . mc/edit-beginnings-of-lines)
-                   ("$" . mc/edit-ends-of-lines)
-                   ("<down>" . move-text-down)
-                   ("<up>" . move-text-up))
+       :bind
+       (:map region-bindings-mode-map
+             ("a" . mc/mark-all-like-this) ;; new cursor on each occurence of current region
+             ("d" . mc/mark-all-symbols-like-this-in-defun)
+             ("D" . mc/mark-all-dwim)
+             ("p" . mc/mark-previous-like-this) ;; new cursor on prev. occurence of current region
+             ("n" . mc/mark-next-like-this) ;; new cursor on next occurence of current region
+             ("P" . mc/unmark-previous-like-this)
+             ("N" . mc/unmark-next-like-this)
+             ("é" . mc/edit-lines) ;; new cursor on each line of region
+             ("(" . mc/cycle-backward)
+             (")" . mc/cycle-forward)
+             ("m" . mc/mark-more-like-this-extended)
+             ("h" . mc-hide-unmatched-lines-mode)
+             ("v" . mc/vertical-align)
+             ("|" . mc/vertical-align-with-space)
+             ("r" . mc/reverse-regions)
+             ("s" . mc/sort-regions)
+             ("#" . mc/insert-numbers) ; use num prefix to set the starting number
+             ("^" . mc/edit-beginnings-of-lines)
+             ("$" . mc/edit-ends-of-lines)
+             ("<down>" . move-text-down)
+             ("<up>" . move-text-up))
        :config (setq mc/list-file (concat base-emacs-directory "var/mc-list.el")))
 
      (use-package smart-comment
@@ -1702,7 +1717,8 @@
           "Return non-nil iff the current buffer's name begins with *scratch*."
           (and (length> (buffer-name) 8)
                (string-equal "*scratch*"  (substring (buffer-name) 0 9))))
-        (setq persistent-scratch-scratch-buffer-p-function 'persistent-scratch-numbered-scratch-buffer-p))
+        (setq persistent-scratch-scratch-buffer-p-function
+              'persistent-scratch-numbered-scratch-buffer-p))
     #+END_SRC
 
 *** Minibuffer
@@ -1744,7 +1760,8 @@
         ;; (defun centaur-tabs-buffer-groups ()
         ;;    "`centaur-tabs-buffer-groups' control buffers' group rules.
 
-        ;; Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+        ;; Group centaur-tabs with mode if buffer is derived from
+        ;; `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
         ;; All buffer name start with * will group to \"Emacs\".
         ;; Other buffer group by `centaur-tabs-get-group-name' with project name."
         ;;    (list
@@ -1979,7 +1996,8 @@
             display-time-24hr-format t ;; 24h time format
             european-calendar-style t ;; day/month/year format for calendar
             calendar-week-start-day 1 ;; start week on Monday
-            display-time-string-forms '((if (and (not display-time-format) display-time-day-and-date)
+            display-time-string-forms '((if (and (not display-time-format)
+                                                 display-time-day-and-date)
                                             (format-time-string "%H:%M" now))))
       (display-time))
   #+END_SRC
@@ -2026,10 +2044,20 @@
         (cfw:open-calendar-buffer
          :contents-sources
          (list
-          (cfw:ical-create-source "Perso" my-private-personal-ical-url "RoyalBlue")
-          (cfw:org-create-source "grey50")  ; orgmode source
-          (cfw:ical-create-source "Vacances" "https://www.data.gouv.fr/fr/datasets/r/17254f2a-a611-4b1f-995c-df45a4570f12" "goldenrod")  ; ICS source1
-          (cfw:ical-create-source "Moon" "http://cantonbecker.com/astronomy-calendar/astrocal.ics" "gray20"))))
+          (cfw:ical-create-source
+           "Perso"
+           my-private-personal-ical-url
+           "RoyalBlue")
+          (cfw:org-create-source
+           "grey50") ; orgmode source
+          (cfw:ical-create-source
+           "Vacances"
+           "https://www.data.gouv.fr/fr/datasets/r/17254f2a-a611-4b1f-995c-df45a4570f12"
+           "goldenrod") ; ICS source1
+          (cfw:ical-create-source
+           "Moon"
+           "http://cantonbecker.com/astronomy-calendar/astrocal.ics"
+           "gray20"))))
 
       (use-package calfw-cal)
       (use-package calfw-ical)
@@ -2159,11 +2187,11 @@
               ("w" "Weekly Review"
                ((agenda ""
                         ((org-agenda-span 7))) ; review upcoming deadlines and appointments
-                                            ; type "l" in the agenda to review logged items
-                (stuck "") ; review stuck projects as designated by org-stuck-projects
-                (todo "PROJECT") ; review all projects (assuming you use todo keywords to designate projects)
-                (todo "MAYBE")   ; review someday/maybe items
-                (todo "WAITING")))          ; review waiting items
+                                   ; type "l" in the agenda to review logged items
+                (stuck "")         ; review stuck projects as designated by org-stuck-projects
+                (todo "PROJECT")   ; review all projects
+                (todo "MAYBE")     ; review someday/maybe items
+                (todo "WAITING"))) ; review waiting items
               ;; ...other commands here
               ("E" "Emacs TODOs"
                ((tags-todo "emacs")))))
@@ -2458,7 +2486,8 @@
              :overline "#778899"))))
       :config
       (defvar ale/org-super-agenda-auto-show-groups
-        '("IMPORTANT" "RAPIDE" "AUJOURD’HUI" "EN COURS" "EN ATTENTE" "TRAVAIL" "EN RETARD" "CYCLIQUES" "EMPRUNTS" "EMACS" "Other items"))
+        '("IMPORTANT" "RAPIDE" "AUJOURD’HUI" "EN COURS""EN ATTENTE"
+          "TRAVAIL" "EN RETARD" "CYCLIQUES" "EMPRUNTS" "EMACS" "Other items"))
       (defun ale/org-super-agenda-origami-fold-default ()
         "Fold certain groups by default in Org Super Agenda buffer."
         (forward-line 2)
@@ -2930,7 +2959,8 @@
        :bind (:map shell-mode-map ("C-c C-l" . helm-comint-input-ring))
        :config
        (setq shell-pop-default-directory nil)
-       (setq shell-pop-shell-type (quote ("vterm" "*vterm*" (lambda () (vterm shell-pop-term-shell)))))
+       (setq shell-pop-shell-type
+             (quote ("vterm" "*vterm*" (lambda () (vterm shell-pop-term-shell)))))
        (setq shell-pop-term-shell "/bin/bash")
        ;;(setq shell-pop-universal-key "C-t")
        (setq shell-pop-window-size 30)
@@ -3048,16 +3078,15 @@
                    ("C-c C-f" . hydra-format-sql/body))
        :hook
        (sql-mode . (lambda ()
-                     (progn (setq-local truncate-lines nil)
-                            (aggressive-indent-mode -1)
-                            (setq-local linesize 9999))))
+                     (setq-local truncate-lines nil)
+                     (aggressive-indent-mode -1)
+                     (setq-local linesize 9999)))
 
        (sql-interactive-mode . (lambda ()
-                                 (progn
-                                   (setq-local comint-output-filter-functions 'comint-truncate-buffer)
-                                   (setq-local comint-buffer-maximum-size 5000)
-                                   (setq-local comint-scroll-show-maximum-output t)
-                                   (setq-local comint-input-ring-size 500))))
+                                 (setq-local comint-output-filter-functions 'comint-truncate-buffer)
+                                 (setq-local comint-buffer-maximum-size 5000)
+                                 (setq-local comint-scroll-show-maximum-output t)
+                                 (setq-local comint-input-ring-size 500)))
        :mode (("\\.sql\\'" . sql-mode)
               ("\\.pks\\'" . sql-mode)
               ("\\.pkb\\'" . sql-mode)
@@ -3126,7 +3155,8 @@
        :after rust-mode
        :config
        (setq company-tooltip-align-annotations t)
-       ;; (setq racer-rust-src-path (concat (getenv "HOME") "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"))
+       ;; (setq racer-rust-src-path (concat (getenv "HOME")
+       ;; "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"))
        (local-set-key (kbd "TAB") #'company-indent-or-complete-common))
    #+END_SRC
 
@@ -3172,7 +3202,7 @@
       (use-package eclim
         :disabled
         :hook
-        (java-mode . (lambda () (setq flycheck-java-ecj-jar-path "/home/arthur/outils/java/ecj-4.5.jar")))
+        (java-mode . (lambda () (setq flycheck-java-ecj-jar-path "~/outils/java/ecj-4.5.jar")))
         (java-mode . eclim-mode)
         :config
         (global-eclim-mode)
@@ -3352,7 +3382,9 @@
      ;; à tester
      (use-package js-comint
        :disabled
-       :hook (inferior-js-mode . (lambda () (add-hook 'comint-output-filter-functions 'js-comint-process-output)))
+       :hook
+       (inferior-js-mode . (lambda ()
+                             (add-hook 'comint-output-filter-functions 'js-comint-process-output)))
        (js2-mode . (lambda ()
                      (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
                      (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
@@ -3456,7 +3488,8 @@
                                    :insertSpaceAfterFunctionKeywordForAnonymousFunctions t
                                    :placeOpenBraceOnNewLineForFunctions nil))
 
-       ;; (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file ~/projets/tss.log"))
+       ;; (setq tide-tsserver-process-environment
+       ;; '("TSS_LOG=-level verbose -file ~/projets/tss.log"))
        :pretty-hydra
        ((:color blue :quit-key "q")
         ("Tide"
