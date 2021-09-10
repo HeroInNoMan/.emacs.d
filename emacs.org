@@ -4274,7 +4274,7 @@
        :bind (("<f6>" . erc-start-or-jump)
               ("C-<f6>" . erc-start-or-jump) ;; for god-mode
               :map erc-mode-map
-              ("C-c C-x" . erc-cmd-UNTRACK)
+              ("C-c C-x" . erc-cmd-UNTRACK-this)
               ("M-q" . erc-quote-last-message)
               ("C-o" . erc-start-or-jump))
        :config
@@ -4485,14 +4485,23 @@
          "Start tracking TARGET (or current channel)."
          (interactive)
          (let ((target (or target (buffer-name))))
-           (setq erc-track-exclude (remove target erc-track-exclude))))
+           (setq erc-track-exclude (remove target erc-track-exclude))
+           (message (concat "Start tracking " target "."))))
 
        (defun erc-cmd-UNTRACK (&optional target)
          "Stop tracking TARGET (or current channel)."
          (interactive)
          (let ((target (or target (buffer-name))))
-           (setq erc-track-exclude (seq-uniq (append (list target)
-                                                     erc-track-exclude)))))
+           (setq erc-track-exclude (seq-uniq (append (list target) erc-track-exclude)))
+           (message (concat "Stop tracking " target "."))))
+
+       (defun erc-cmd-UNTRACK-this (&optional arg)
+         "Stop tracking current channel. With prefix ARG, start tracking current channel."
+         (interactive "P")
+         (let ((target (buffer-name)))
+           (if arg
+               (erc-cmd-TRACK target)
+             (erc-cmd-UNTRACK target))))
 
        (defun erc-cmd-MEDIA ()
          "Announce the current amarok song to the current ERC channel."
