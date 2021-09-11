@@ -803,7 +803,8 @@
       :bind (:map prog-mode-map
                   ("C-." . xref-find-definitions)
                   ("C-," . xref-pop-marker-stack)
-                  ("C-;" . dumb-jump-quick-look)))
+                  ("C-;" . dumb-jump-quick-look))
+      :config (setq dumb-jump-default-project my-default-project-root))
 
     (use-package minimap :defer t
       :config
@@ -1911,11 +1912,26 @@
              git-gutter:hide-gutter t))
    #+END_SRC
 
+** Gitlab
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-gitlab
+       :disabled
+       :ensure gitlab
+       :config
+       (setq gitlab-host my-private-gitlab-host
+             gitlab-username my-private-gitlab-username
+             gitlab-password my-private-gitlab-password
+             gitlab-token-id my-private-gitlab-token-id))
+   #+END_SRC
+
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
        :chords ("qg" . magit-status) ;; run git status for current buffer
        :bind ("C-x g" . hydra-git/body)
+       :hook
+       (git-commit-setup . ale/insert-ticket-prefix)
+       (git-commit-setup . ale/switch-to-all-dict)
        :custom-face (magit-branch-current ((t ( :foreground "#5cEfFF"
                                                 :box ( :line-width (3 . 3)
                                                        :color "#5cEfFF"
@@ -1944,7 +1960,8 @@
          :config (setq magit-todos-max-items 30))
 
        (use-package magit-org-todos
-         :config (magit-org-todos-autoinsert)))
+         :config (magit-org-todos-autoinsert)
+         (setq-default magit-org-todos-filename my-private-work-diary-org-file)))
    #+END_SRC
 
 * Project management
@@ -2153,6 +2170,14 @@
             org-log-repeat 'nil)
 
       ;; org-agenda
+      (setq org-agenda-files my-org-agenda-files)
+
+      (setq diary-local-file my-private-local-diary-file
+            todo-local-file my-private-local-todo-org-file
+            todo-notes-file my-private-local-notes-org-file
+            todo-media-file my-private-local-media-org-file
+            org-finished-file my-private-local-finished-org-file)
+
       (setq org-agenda-include-diary t
             org-agenda-weekend-days '(0 5 6)
             ;; week-end is friday, saturday, sunday
@@ -2164,8 +2189,9 @@
 
       ;; refile and completion
       (setq org-completion-use-ido nil
-            org-refile-targets '((nil :maxlevel . 5)
-                                 (org-agenda-files :maxlevel . 5))
+            org-refile-targets '((nil :maxlevel . 2)
+                                 (org-finished-file :maxlevel . 2)
+                                 (org-agenda-files :maxlevel . 2))
             org-refile-use-outline-path 'file
             org-outline-path-complete-in-steps nil
             org-refile-allow-creating-parent-nodes 'confirm
@@ -2187,7 +2213,7 @@
               ("w" "Weekly Review"
                ((agenda ""
                         ((org-agenda-span 7))) ; review upcoming deadlines and appointments
-                                   ; type "l" in the agenda to review logged items
+                                            ; type "l" in the agenda to review logged items
                 (stuck "")         ; review stuck projects as designated by org-stuck-projects
                 (todo "PROJECT")   ; review all projects
                 (todo "MAYBE")     ; review someday/maybe items
@@ -2227,15 +2253,6 @@
         (interactive)
         (org-set-property "CREATED" (format-time-string "[%F %a %R]")))
       (add-hook 'org-capture-before-finalize-hook 'add-property-with-date-captured)
-
-      (setq diary-local-file my-private-local-diary-file
-            todo-local-file my-private-local-todo-org-file
-            todo-notes-file my-private-local-notes-org-file
-            todo-media-file my-private-local-media-org-file
-            org-finished-file my-private-local-finished-org-file
-            org-refile-targets '((nil :maxlevel . 2)
-                                 (org-finished-file :maxlevel . 2)
-                                 (org-agenda-files :maxlevel . 2)))
 
       ;; LOCAL
       (add-to-list 'org-capture-templates
@@ -2303,6 +2320,28 @@
                      entry (file+headline todo-local-file "Emacs")
                      "* TODO %?"
                      :kill-buffer t) t)
+
+      (when (equal my-work-machine-name (system-name))
+        (add-to-list 'org-capture-templates
+                     '("l" "Log       (work)"
+                       entry (file+olp+datetree my-private-work-diary-org-file)
+                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
+                       :time-prompt t :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("w" "TODO      (work)"
+                       entry (file+headline my-private-work-diary-org-file "À faire")
+                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
+                       :prepend t :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("v" "Revue     (work)"
+                       entry (file+headline my-private-work-diary-org-file "À faire")
+                       "* Review %i%?\n\tSCHEDULED: %t"
+                       :prepend t :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("r" "Référence (work)\n"
+                       entry (file+headline my-private-work-diary-org-file "Références")
+                       "* %?\n%i"
+                       :prepend t :kill-buffer t) t))
 
       ;; font and faces customization
       (setq org-fontify-done-headline t)
@@ -3842,8 +3881,8 @@
     (use-package eww
       :defer t
       :config
-      (setq browse-url-generic-program "firefox" ;; set default browser to eww
-            browse-url-browser-function 'browse-url-firefox
+      (setq browse-url-generic-program my-web-browser-program ;; set default browser to eww
+            browse-url-browser-function my-web-browser-function
             shr-external-browser 'browse-url-firefox ;; use ‘&’ to open page in firefox
             shr-width 100 ;; keep sane layout
             shr-use-fonts t ;; no fancy fonts in text mode
@@ -3997,10 +4036,6 @@
        :straight nil
        :chords ("jj" . jump-to-register))
    #+END_SRC
-* Environment
-  #+BEGIN_SRC emacs-lisp
-    (load-file (expand-file-name "env.el" base-emacs-directory))
-  #+END_SRC
 
 * Mode-line
   I want to be able to hide the mode-line entirely.
@@ -4263,6 +4298,39 @@
   #+END_SRC
 
 * Other
+
+** Continuous integration
+
+   #+BEGIN_SRC emacs-lisp
+     ;; jenkins interaction
+     (use-package butler
+       :disabled
+       :bind (:map butler-mode-map
+                   ("n" . next-line)
+                   ("p" . previous-line))
+       :config
+       (add-to-list 'god-exempt-major-modes 'butler-mode)
+       (add-to-list 'butler-server-list
+                    '(jenkins my-private-work-jenkins-url
+                              (server-address . my-private-work-server-address)
+                              (auth-file . my-private-work-auth-file)))) ;; machine SERVER-NAME login my_login password my_pass
+
+     (use-package travis
+       :disabled
+       :defer t
+       :config (setq travis--token-id my-private-work-travis-token-id
+                     travis-website my-private-work-travis-website
+                     travis--host my-private-work-travis-host))
+
+     (use-package jenkins ;; TODO compare to butler
+       :disabled
+       :config
+       (setq jenkins-api-token "<api token can be found on user's configure page>"
+             jenkins-url "<jenkins url>"
+             jenkins-username "<your user name>"
+             jenkins-viewname "<viewname>"))
+   #+END_SRC
+
 ** IRC
 
    I usually use irssi inside a tmux session over ssh on a distant machine so I can keep the connection alive forever. However I sometimes use ERC, and I want it configured just like my irssi session:
@@ -4278,6 +4346,15 @@
               ("M-q" . erc-quote-last-message)
               ("C-o" . erc-start-or-jump))
        :config
+       ;; DEFAULTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       (setq erc-nick my-erc-nick
+             erc-user-full-name my-erc-user-full-name
+             erc-email-userid my-erc-email-userid)
+
+       (setq erc-keywords my-erc-keywords)
+       (setq erc-connection-alist my-erc-connection-alist)
+       (setq erc-autojoin-channels-alist my-erc-autojoin-channels-alist)
+
        ;; BEHAVIOUR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (setq erc-auto-query 'bury
              erc-join-buffer 'bury)
@@ -4568,6 +4645,17 @@
        (erc-update-modules))
    #+END_SRC
 
+** Torrent
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package transmission
+       :disabled
+       :config
+       (setq transmission-host my-private-transmission-host
+             transmission-service my-private-transmission-service
+             transmission-rpc-path my-private-transmission-rpc-path))
+   #+END_SRC
+
 ** Accounting
    I use [[http://out.easycounter.com/external/ledger-cli.org][ledger]] to manage my money. There is a corresponding major-mode:
    #+BEGIN_SRC emacs-lisp
@@ -4769,12 +4857,31 @@
     #+END_SRC
 
 * Epilogue
-  Run one last function called epilogue if it is available:
+  Last configuration steps :
   #+BEGIN_SRC emacs-lisp
     (add-hook 'emacs-startup-hook
               (lambda ()
-                (when (fboundp 'epilogue)
-                  (epilogue))))
+                (create-project-hydra)
+                (when (string-equal "darwin" system-type)
+                  (load-file
+                   (expand-file-name "elisp/macos-environment.el" base-emacs-directory)))
+                (when (or (string-equal "ms-dos" system-type)
+                          (string-equal "windows-nt" system-type)
+                          (string-equal "cygwin" system-type))
+                  (load-file
+                   (expand-file-name "elisp/windows-environment.el" base-emacs-directory)))
+                (cond
+                 ((daemonp)
+                  (progn
+                    (when (fboundp 'beacon-mode)           (beacon-mode -1))
+                    (when (fboundp 'centaur-tabs-mode)     (centaur-tabs-mode -1))
+                    (when (fboundp 'poke-line-global-mode) (poke-line-global-mode -1))))
+                 (t
+                  (progn
+                    (when (fboundp 'beacon-mode)           (beacon-mode))
+                    (when (fboundp 'centaur-tabs-mode)     (centaur-tabs-mode 1))
+                    (when (fboundp 'poke-line-global-mode) (poke-line-global-mode))
+                    (mouse-wheel-mode t))))))
   #+END_SRC
 * Useful links
 ** one entry point to find them all

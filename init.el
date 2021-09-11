@@ -4,8 +4,10 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
-(setq base-emacs-directory user-emacs-directory)
-(setq config-file (expand-file-name "emacs.el" base-emacs-directory))
+(defvar base-emacs-directory user-emacs-directory
+  "Root directory of my EMACS config.")
+(defvar config-file (expand-file-name "emacs.el" base-emacs-directory)
+  "Main configuration file. Result of tangling `emacs.org'.")
 
 (if (file-exists-p config-file)
     (load-file config-file)
