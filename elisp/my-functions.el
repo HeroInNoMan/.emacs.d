@@ -233,7 +233,7 @@ Swap buffers in the process"
                    (concat prefix-char ticket-id))))
     (when (and (member ticket-type ticket-types)
                (string-match "^[0-9]+$" ticket-id)
-               (not (re-search-forward prefix nil t)))
+               (not (search-forward prefix nil t)))
       (goto-char (point-min))
       (insert (concat prefix " "))
       (save-buffer))))
