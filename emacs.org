@@ -2718,10 +2718,15 @@
 
 ** Abbrevs
 
-   Abbrev is great in specific modes for
+   Abbrev is great in specific modes for avoiding typos.
 
    #+BEGIN_SRC emacs-lisp
-#+END_SRC
+     (use-package abbrev
+       :straight nil
+       :config
+       (when (boundp 'my-private-abbrev-file)
+         (setq abbrev-file-name my-private-abbrev-file)))
+   #+END_SRC
 
 ** Synonyms
    #+BEGIN_SRC emacs-lisp
