@@ -278,10 +278,10 @@
       :straight nil
       :config
       (setq-default save-place t)
-      (setq save-place-file (concat base-emacs-directory "places")
+      (setq save-place-file (expand-file-name "places" base-emacs-directory)
             vc-make-backup-files t ;; make backups of files, even when they're in version control
-            backup-directory-alist `(("." . ,(concat base-emacs-directory
-                                                     "backups")))))
+            backup-directory-alist `(("." . ,(expand-file-name "backups"
+                                                               base-emacs-directory)))))
   #+END_SRC
 
   More miscellaneous configuration and bindings, grouped by built-in packages:
@@ -652,7 +652,7 @@
        :disabled
        :straight nil
        :defer t
-       :load-path "~/.local/share/icons-in-terminal/")
+       :load-path (expand-file-name ".local/share/icons-in-terminal/" my-home-dir))
      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
 
      (use-package all-the-icons :defer t)
@@ -1202,7 +1202,7 @@
                :map helm-rg--bounce-mode-map
                ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
                ("C-c C-e" . helm-rg--bounce))
-       :config (setq helm-rg-default-directory "~/"))
+       :config (setq helm-rg-default-directory (expand-file-name my-home-dir)))
    #+END_SRC
 
    =helm-descbinds= lets me browse all user-defined keybindings.
@@ -1411,9 +1411,9 @@
        :config
        (setq yas-triggers-in-field t)
        (setq yas-snippet-dirs
-             `(,(concat base-emacs-directory "etc/yasnippet/snippets")
+             `(,(expand-file-name "etc/yasnippet/snippets" base-emacs-directory)
                ,(car (file-expand-wildcards
-                      (concat base-emacs-directory "straight/repos/yasnippet-snippets/snippets")))))
+                      (expand-file-name "straight/repos/yasnippet-snippets/snippets" base-emacs-directory)))))
        (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
 
@@ -1484,7 +1484,7 @@
        :after yasnippet
        :config
        (setq aya-persist-snippets-dir
-             (concat base-emacs-directory "etc/yasnippet/snippets")))
+             (expand-file-name "etc/yasnippet/snippets" base-emacs-directory)))
    #+END_SRC
 
 * Text manipulation
@@ -1543,7 +1543,7 @@
              ("$" . mc/edit-ends-of-lines)
              ("<down>" . move-text-down)
              ("<up>" . move-text-up))
-       :config (setq mc/list-file (concat base-emacs-directory "var/mc-list.el")))
+       :config (setq mc/list-file (expand-file-name "var/mc-list.el" base-emacs-directory)))
 
      (use-package smart-comment
        :bind ("M-;" . smart-comment))
@@ -3191,7 +3191,7 @@
 
      (use-package cargo
        :after rust-mode
-       :config (add-to-list 'exec-path (concat (getenv "HOME") "/.cargo/bin")))
+       :config (add-to-list 'exec-path (expand-file-name ".cargo/bin" my-home-dir)))
 
      (use-package flycheck-rust
        :after rust-mode
@@ -3201,8 +3201,9 @@
        :after rust-mode
        :config
        (setq company-tooltip-align-annotations t)
-       ;; (setq racer-rust-src-path (concat (getenv "HOME")
-       ;; "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"))
+       ;; (setq racer-rust-src-path (expand-file-name
+       ;; "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"
+       ;; my-home-dir))
        (local-set-key (kbd "TAB") #'company-indent-or-complete-common))
    #+END_SRC
 
