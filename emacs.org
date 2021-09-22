@@ -4871,6 +4871,7 @@
     (add-hook 'emacs-startup-hook
               (lambda ()
                 (create-project-hydra)
+                (display-battery-mode)
                 (when (string-equal "darwin" system-type)
                   (load-file
                    (expand-file-name "elisp/macos-environment.el" base-emacs-directory)))
