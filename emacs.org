@@ -1926,10 +1926,14 @@
        :disabled
        :ensure gitlab
        :config
-       (setq gitlab-host my-private-gitlab-host
-             gitlab-username my-private-gitlab-username
-             gitlab-password my-private-gitlab-password
-             gitlab-token-id my-private-gitlab-token-id))
+       (when (boundp 'my-private-gitlab-host)
+         (setq gitlab-host my-private-gitlab-host))
+       (when (boundp 'my-private-gitlab-username)
+         (setq gitlab-username my-private-gitlab-username))
+       (when (boundp 'my-private-gitlab-password)
+         (setq gitlab-password my-private-gitlab-password))
+       (when (boundp 'my-private-gitlab-token-id)
+         (setq gitlab-token-id my-private-gitlab-token-id)))
    #+END_SRC
 
 ** Magit
@@ -1968,8 +1972,10 @@
          :config (setq magit-todos-max-items 30))
 
        (use-package magit-org-todos
-         :config (magit-org-todos-autoinsert)
-         (setq-default magit-org-todos-filename my-private-work-diary-org-file)))
+         :config
+         (magit-org-todos-autoinsert)
+         (when (boundp 'my-private-work-diary-org-file)
+           (setq-default magit-org-todos-filename my-private-work-diary-org-file))))
    #+END_SRC
 
 * Project management
@@ -3213,7 +3219,10 @@
 
      (use-package cargo
        :after rust-mode
-       :config (add-to-list 'exec-path (expand-file-name ".cargo/bin" my-home-dir)))
+       :config
+       (add-to-list
+        'exec-path
+        (expand-file-name ".cargo/bin" (if (boundp 'my-home-dir) my-home-dir "~"))))
 
      (use-package flycheck-rust
        :after rust-mode
