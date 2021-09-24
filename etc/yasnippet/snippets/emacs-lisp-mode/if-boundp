@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: if-boundp
+# key: ib
+# --
+(if (boundp '$1) $1 "$0")
