@@ -1942,7 +1942,7 @@
        (git-commit-setup . ale/switch-to-all-dict)
        :custom-face (magit-branch-current ((t ( :foreground "#5cEfFF"
                                                 :box ( :line-width (3 . 3)
-                                                       :color "#5cEfFF"
+                                                       :color "#ee0000"
                                                        :style released-button)))))
        :config
        (put 'magit-edit-line-commit 'disabled nil)
