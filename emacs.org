@@ -1221,9 +1221,9 @@
        :after helm
        :hook
        (clojure-mode . (lambda () (setq-local helm-dash-docsets '("Clojure"))))
-       (java-mode . (lambda () (setq-local helm-dash-docsets '("Java"))))
-       (js-mode . (lambda () (setq-local helm-dash-docsets '("Javascript"))))
-       (rust-mode . (lambda () (setq-local helm-dash-docsets '("Rust"))))
+       (java-mode    . (lambda () (setq-local helm-dash-docsets '("Java"))))
+       (js-mode      . (lambda () (setq-local helm-dash-docsets '("Javascript"))))
+       (rust-mode    . (lambda () (setq-local helm-dash-docsets '("Rust"))))
        :config (setq helm-dash-browser-func 'eww))
    #+END_SRC
 
