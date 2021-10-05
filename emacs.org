@@ -1206,8 +1206,7 @@
                :map helm-rg--bounce-mode-map
                ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
                ("C-c C-e" . helm-rg--bounce))
-       :config (setq helm-rg-default-directory
-                     (expand-file-name (if (boundp 'my-home-dir) my-home-dir "~"))))
+       :config (setq helm-rg-default-directory 'git-root))
    #+END_SRC
 
    =helm-descbinds= lets me browse all user-defined keybindings.
