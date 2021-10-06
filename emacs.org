@@ -4373,6 +4373,7 @@
        :bind (("<f6>" . erc-start-or-jump)
               ("C-<f6>" . erc-start-or-jump) ;; for god-mode
               :map erc-mode-map
+              ("<f7>" . ale/insert-date-as-word)
               ("C-c C-x" . erc-cmd-UNTRACK-this)
               ("M-q" . erc-quote-last-message)
               ("C-o" . erc-start-or-jump))
