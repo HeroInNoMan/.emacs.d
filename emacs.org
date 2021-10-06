@@ -1042,6 +1042,8 @@
         ("C-c h" . hydra-helm-config/body)
         ("C-h a" . helm-apropos)
         :map helm-map
+        ("C-S-t"   . helm-toggle-resplit-and-swap-windows) ; remap this one…
+        ("C-t"     . transpose-chars) ; so I can still use that one
         ("M-«" . helm-beginning-of-buffer)
         ("M-»" . helm-end-of-buffer)
         ("C-S-t" . helm-toggle-resplit-and-swap-windows)
@@ -1198,16 +1200,14 @@
 
    [[https://blog.burntsushi.net/ripgrep/][Ripgrep]] is the the best tool for grepping anything anywhere these days. Combined with [[https://github.com/cosmicexplorer/helm-rg][helm-rg]], it’s all I need. And it also supports editing search results from the search buffer!
    #+BEGIN_SRC emacs-lisp
-     (use-package rg :defer t)
-
      (use-package helm-rg
        :after helm
        :hook (helm-rg--bounce-mode . (lambda () (aggressive-indent-mode -1)))
        :bind ( :map helm-rg-map
-               ("M-b" . backward-word)
+               ("M-b"     . backward-word)
                ("C-c C-e" . helm-rg--bounce)
-               ("M-d" . helm-rg--set-dir)
-               ("M-g" . helm-rg--set-glob)
+               ("M-d"   . helm-rg--set-dir)
+               ("M-g"     . helm-rg--set-glob)
                :map helm-rg--bounce-mode-map
                ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
                ("C-c C-e" . helm-rg--bounce))
