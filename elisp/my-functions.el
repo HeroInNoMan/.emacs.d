@@ -432,6 +432,11 @@ Also make frame fullscreen. Otherwise, open a new scratch
   (interactive)
   (insert (format-time-string "%Y/%m/%d %H:%M")))
 
+(defun ab/date-short-only-time ()
+  "Insert the time, eg. 13:12."
+  (interactive)
+  (insert (format-time-string "%H:%M")))
+
 (defun ale/org-date ()
   "Insert the current date, org timestamp format eg. <2019-07-29 lun.>."
   (interactive)
@@ -481,10 +486,10 @@ Also make frame fullscreen. Otherwise, open a new scratch
   (let ((a (generate-new-buffer "*diff-yank*"))
         (b (generate-new-buffer "*diff-yank*")))
     (cl-labels ((clean-up ()
-                          (kill-buffer a)
-                          (kill-buffer b)
-                          (remove-hook 'ediff-cleanup-hook #'clean-up)
-                          (winner-undo)))
+                  (kill-buffer a)
+                  (kill-buffer b)
+                  (remove-hook 'ediff-cleanup-hook #'clean-up)
+                  (winner-undo)))
       (add-hook 'ediff-cleanup-hook #'clean-up)
       (with-current-buffer a
         (insert (elt kill-ring 0)))
@@ -712,6 +717,41 @@ Version 2019-02-12"
         (set-mark $p1)
         (setq deactivate-mark nil))
       (put 'xah-cycle-hyphen-underscore-space 'state (% (+ $nowState 1) $length)))))
+(defun ale/insert-date-as-word (&optional date)
+  "Insert the word produced by `ale/convert-date-to-word'."
+  (interactive "P")
+  (insert (ale/convert-date-to-word)))
+
+(defun ale/convert-date-to-word (&optional date)
+  "Convert a DATE ( current if no arg ) to a four-letter word.
+The DATE format must include hours & minutes.
+Example: 2020-09-22T13:12:17+0200 → ACAB"
+  (interactive)
+  (let ((date (if (boundp 'date)
+                  date
+                (format-time-string "%H:%M"))))
+    (string-match "[0-9]\\{2\\}:[0-9]\\{2\\}" date)
+    (let ((time (match-string 0 date)))
+      (message
+       (concat
+        (ale/convert-digit-to-letter (substring time 0 1))
+        (ale/convert-digit-to-letter (substring time 1 2))
+        (ale/convert-digit-to-letter (substring time 3 4))
+        (ale/convert-digit-to-letter (substring time 4 5)))))))
+
+(defun ale/convert-digit-to-letter (digit)
+  "Convert a DIGIT to the corresponding letter.
+ A=1, B=2, …, I=9. By choice, O=0."
+  (cond ((string= digit "0") "O")
+        ((string= digit "1") "A")
+        ((string= digit "2") "B")
+        ((string= digit "3") "C")
+        ((string= digit "4") "D")
+        ((string= digit "5") "E")
+        ((string= digit "6") "F")
+        ((string= digit "7") "G")
+        ((string= digit "8") "H")
+        ((string= digit "9") "I")))
 
 (provide 'my-functions)
 ;;; my-functions.el ends here
