@@ -3667,11 +3667,7 @@
 
 ** Logs
    #+BEGIN_SRC emacs-lisp
-     (use-package syslog-mode
-       :mode ("\\.log\\'" "\\.out\\'")
-       :config
-       (add-to-list 'revert-without-query "\\.log\\'")
-       (add-to-list 'revert-without-query "\\.out\\'"))
+     (use-package syslog-mode :defer t)
    #+END_SRC
 
 * Mail
