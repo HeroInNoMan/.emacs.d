@@ -1044,6 +1044,11 @@
         :map helm-map
         ("M-«" . helm-beginning-of-buffer)
         ("M-»" . helm-end-of-buffer)
+        ("C-S-t" . helm-toggle-resplit-and-swap-windows)
+        ("C-t" . transpose-chars)
+        ("C-S-b" . helm-rg--bounce)
+        ("C-S-d" . helm-rg--set-dir)
+        ("M-d" . kill-word)
         :map minibuffer-local-map
         ("C-c C-l" . helm-minibuffer-history))
        :config
