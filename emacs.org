@@ -3273,52 +3273,44 @@
 ** LSP
 *** Eglot
     #+BEGIN_SRC emacs-lisp
-      (use-package eglot :defer t)
+      (use-package eglot
+        :disabled
+        :hook (python-mode . eglot-ensure))
     #+END_SRC
 
 *** lsp-mode
     TODO: describe lsp
     #+BEGIN_SRC emacs-lisp
       (use-package lsp-mode
-        :disabled
         :defer t
+        :init (setq lsp-keymap-prefix "C-c l")
         :config
-        (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
-
-      (use-package company-lsp
-        :disabled
-        :requires lsp company
-        :after lsp-mode)
-
-      (use-package lsp-ui
-        :disabled
-        :requires lsp-mode flycheck
-        :hook (lsp-mode . lsp-ui-mode)
-        :config
-        (setq lsp-ui-doc-enable t
-              lsp-ui-doc-use-childframe t
-              lsp-ui-doc-position 'top
-              lsp-ui-doc-include-signature t
-              lsp-ui-sideline-enable nil
-              lsp-ui-sideline-update-mode 'point
-              lsp-ui-sideline-ignore-duplicate t
-              lsp-ui-flycheck-enable t
-              lsp-ui-flycheck-list-position 'right
-              lsp-ui-flycheck-live-reporting t
-              lsp-ui-peek-enable t
-              lsp-ui-peek-list-width 60
-              lsp-ui-peek-peek-height 25))
-
-      (use-package helm-lsp
-        :disabled
-        :after lsp-mode)
-
-      (use-package dap-mode
-        :disabled
-        :after lsp-mode
-        :config
-        (dap-mode 1)
-        (dap-ui-mode 1))
+        (setq lsp-prefer-flymake nil) ;; flycheck instead of flymake
+        (use-package company-lsp
+          :requires company)
+        (use-package lsp-ui
+          :commands lsp-ui-mode
+          :requires flycheck
+          :hook (lsp-mode . lsp-ui-mode)
+          :config
+          (setq lsp-ui-doc-enable t
+                lsp-ui-doc-use-childframe t
+                lsp-ui-doc-position 'top
+                lsp-ui-doc-include-signature t
+                lsp-ui-sideline-enable nil
+                lsp-ui-sideline-update-mode 'point
+                lsp-ui-sideline-ignore-duplicate t
+                lsp-ui-flycheck-enable t
+                lsp-ui-flycheck-list-position 'right
+                lsp-ui-flycheck-live-reporting t
+                lsp-ui-peek-enable t
+                lsp-ui-peek-list-width 60
+                lsp-ui-peek-peek-height 25))
+        (use-package helm-lsp :commands helm-lsp-workspace-symbol)
+        (use-package dap-mode
+          :config
+          (dap-mode 1)
+          (dap-ui-mode 1)))
     #+END_SRC
 
 ** Dealing with parens
@@ -3756,80 +3748,50 @@
 *** lsp-java
     #+BEGIN_SRC emacs-lisp
       (use-package lsp-java
-        :disabled
-        ;; :delight (java-mode "🅹" :major)
+        ;; :delight (java-mode "☕" :major)
+        :init
+        (defun java-mode-config ()
+          (setq-local tab-width 4
+                      c-basic-offset 4)
+          (toggle-truncate-lines 1)
+          (setq-local tab-width 4)
+          (setq-local c-basic-offset 4)
+          (lsp))
         :bind ("C-S-o" . lsp-execute-code-action)
         :after lsp
-        :hook (java-mode . lsp))
+        :hook
+        (java-mode . lsp)
+        (java-mode . java-mode-config)
+        :config
+        (use-package dap-java
+          :straight nil
+          :after lsp-java)
+        (use-package lsp-java-treemacs
+          :straight nil
+          :after treemacs)
+        ;; Support Lombok in our projects, among other things
+        (setq lsp-java-vmargs
+              (list "-noverify"
+                    "-Xmx2G"
+                    "-XX:+UseG1GC"
+                    "-XX:+UseStringDeduplication"
+                    ;; (concat "-javaagent:" jmi/lombok-jar)
+                    ;; (concat "-Xbootclasspath/a:" jmi/lombok-jar)
+                    )
+              lsp-file-watch-ignored
+              '(".idea" ".ensime_cache" ".eunit" "node_modules"
+                ".git" ".hg" ".fslckout" "_FOSSIL_"
+                ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
+                "build")
 
-      (use-package dap-java
-        :disabled
-        :straight nil
-        :after lsp-java)
+              lsp-java-import-order '["" "java" "javax" "#"]
+              ;; Don't organize imports on save
+              lsp-java-save-action-organize-imports nil
 
-      (use-package lsp-java-treemacs
-        :disabled
-        :straight nil
-        :after treemacs)
-
-      ;; (use-package lsp-mode
-      ;;   :init (setq lsp-prefer-flymake nil)
-      ;;   :demand t)
-
-      ;; (use-package lsp-ui
-      ;;   :config
-      ;;   (setq lsp-ui-doc-enable nil
-      ;;         lsp-ui-sideline-enable nil
-      ;;         lsp-ui-flycheck-enable t)
-      ;;   :after lsp-mode)
-
-      ;; (use-package dap-mode
-      ;;   :config
-      ;;   (dap-mode t)
-      ;;   (dap-ui-mode t))
-
-      ;; (use-package lsp-java
-      ;;   :init
-      ;;   (defun java-mode-config ()
-      ;;     (setq-local tab-width 4
-      ;;                 c-basic-offset 4)
-      ;;     (toggle-truncate-lines 1)
-      ;;     (setq-local tab-width 4)
-      ;;     (setq-local c-basic-offset 4)
-      ;;     (lsp))
-
-      ;;   :config
-      ;;   ;; Enable dap-java
-      ;;   (require 'dap-java)
-
-      ;;   ;; Support Lombok in our projects, among other things
-      ;;   (setq lsp-java-vmargs
-      ;;         (list "-noverify"
-      ;;               "-Xmx2G"
-      ;;               "-XX:+UseG1GC"
-      ;;               "-XX:+UseStringDeduplication"
-      ;;               ;; (concat "-javaagent:" jmi/lombok-jar)
-      ;;               ;; (concat "-Xbootclasspath/a:" jmi/lombok-jar)
-      ;;               )
-      ;;         lsp-file-watch-ignored
-      ;;         '(".idea" ".ensime_cache" ".eunit" "node_modules"
-      ;;           ".git" ".hg" ".fslckout" "_FOSSIL_"
-      ;;           ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
-      ;;           "build")
-
-      ;;         lsp-java-import-order '["" "java" "javax" "#"]
-      ;;         ;; Don't organize imports on save
-      ;;         lsp-java-save-action-organize-imports nil
-
-      ;;         ;; Formatter profile
-      ;;         ;; lsp-java-format-settings-url
-      ;;         ;; (concat "file://" jmi/java-format-settings-file)
-      ;;         )
-
-      ;;   :hook (java-mode . java-mode-config)
-
-      ;;   :demand t
-      ;;   :after (lsp lsp-mode dap-mode))
+              ;; Formatter profile
+              ;; lsp-java-format-settings-url
+              ;; (concat "file://" jmi/java-format-settings-file)
+              ))
     #+END_SRC
 
 *** meghanada
