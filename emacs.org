@@ -1071,7 +1071,7 @@
            (find-file-other-window my-private-sql-scratch-buffer)))
 
        (setq helm-M-x-fuzzy-match t
-             helm-locate-command "locate %s -e -A --regex %s -d ~/mlocate.db"
+             helm-locate-command "locate %s -e -A --regex %s"
              helm-adaptive-mode t
              helm-buffer-max-length nil
              helm-buffers-fuzzy-matching t
