@@ -22,3 +22,26 @@ statistics ( number of steps, upper bound ) ."
         (setq current (cond ((= (mod current 2) 0) (/ current 2))
                             (t (1+ (* current 3)))))))
     (message "Loop reached in %s steps (upper bound: %s)" (1- counter) (reduce #'max steps))))
+
+;; (defun swap-sort (elements)
+;;   "Sort ELEMENTS as a list using the swap sort algorithm."
+;;   (interactive "P")
+;;   (let ((sorted-elements elements)
+;;         (n (length sorted-elements)))
+;;     (cl-loop
+;;      for i from 1 to n
+;;      do (cl-loop
+;;          for j from 1 to n
+;;          do (if (< (nth i) (nth j)))
+;;          (swap-elements sorted-elements i j)))))
+
+;; (defun swap-elements (collection index1 index2)
+;;   "Swap elements INDEX1 and INDEX2 in COLLECTION."
+;;   (let ((v (vconcat collection))
+;;         (a (aref 'v index1))
+;;         (b (aref 'v index2)))
+;;     (aset v index1 b)
+;;     (aset v index2 a)
+;;     (append v nil)))
+
+;; (swap-elements '(a b c d e f g h i j) '4 '8 )
