@@ -4762,6 +4762,10 @@
        (setq webpaste-open-in-browser t))
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package 0x0)
+   #+END_SRC
+
 ** Spritz
    [[http://spritzinc.com/][spritz]] is a reading technique. [[https://github.com/emacsmirror/spray][Spray-mode]] implements it for any emacs buffer.
    #+BEGIN_SRC emacs-lisp
