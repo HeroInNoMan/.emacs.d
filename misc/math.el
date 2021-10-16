@@ -3,8 +3,8 @@
   "Apply the syracuse (or 3N+1) rules to DIGIT recursively until it reaches 1."
   (message (number-to-string digit))
   (cond ((= 1 digit) (message "Done!"))
-        ((= (mod digit 2) 0) (syracuse (/ digit 2)))
-        (t (syracuse (1+ (* digit 3))))))
+        ((= (mod digit 2) 0) (syracuse-recursive (/ digit 2)))
+        (t (syracuse-recursive (1+ (* digit 3))))))
 
 (defun syracuse (digit)
   "Run the syracuse algorithm starting with DIGIT and show some
