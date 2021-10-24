@@ -573,7 +573,7 @@
 *** Alternative themes
     #+BEGIN_SRC emacs-lisp
       (use-package amethyst
-        :disabled
+        :defer t
         :straight '(amethyst :host github :repo "ashton314/amethyst"))
     #+END_SRC
 
