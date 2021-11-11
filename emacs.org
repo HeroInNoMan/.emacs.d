@@ -2534,8 +2534,6 @@
 
   I also use a few more packages depending on org:
   #+BEGIN_SRC emacs-lisp
-    (use-package ob-restclient :after org)
-
     (use-package verb
       :disabled ;; worth enabling only when necessary
       :after org
@@ -4778,7 +4776,7 @@
                    ("C-c n w" . widen)
                    ("C-c C-f" . json-mode-beautify)))
 
-     (use-package ob-restclient :defer t)
+     ;; (use-package ob-restclient :defer t)
    #+END_SRC
 
    [[https://github.com/flashcode/impostman][Impostman]] enables to import Postman collections/environments to use with restclient:
