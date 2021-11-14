@@ -4205,8 +4205,8 @@
                    ("C-x C-e" . python-shell-send-defun))
        :hook (python-mode . (lambda ()
                               (progn (aggressive-indent-mode -1)
-                                     (elpy-enable)
-                                     (elpy-mode)
+                                     ;; (elpy-enable)
+                                     ;; (elpy-mode)
                                      (flycheck-mode))))
        :config
        (setq python-indent-offset 4
