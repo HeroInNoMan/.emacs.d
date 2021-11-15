@@ -755,6 +755,9 @@
                   ("«" . dired-subtree-beginning)
                   ("»" . dired-subtree-end)))
 
+    (use-package dired-quick-sort
+      :bind (:map dired-mode-map
+                  ("r" . hydra-dired-quick-sort/body)))
   #+END_SRC
 
 * Navigation
