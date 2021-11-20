@@ -1911,9 +1911,13 @@
        :config (setq git-messenger:show-detail t))
 
      (use-package gitignore-mode
+       :straight (:host github :repo "magit/git-modes"
+                        :files ("gitignore-mode.el"))
        :mode ".gitignore$")
 
      (use-package gitconfig-mode
+       :straight (:host github :repo "magit/git-modes"
+                        :files ("gitconfig-mode.el"))
        :mode ".gitconfig$")
 
      (use-package git-gutter
