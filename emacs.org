@@ -2281,11 +2281,11 @@
             org-confirm-babel-evaluate nil)
 
       (org-babel-do-load-languages 'org-babel-load-languages
-                                   '((ledger . t)
-                                     (shell . t)
+                                   '((shell . t)
+                                     ;; (ledger . t)
                                      (sql . t)
                                      (dot . t)
-                                     (restclient . t)
+                                     ;; (restclient . t)
                                      (emacs-lisp . t)))
       ;; ORG-CAPTURE
       (defun add-property-with-date-captured ()
