@@ -1871,9 +1871,9 @@
     #+BEGIN_SRC emacs-lisp
       (use-package smerge-mode
         :straight nil
-        :init (setq smerge-command-prefix "")
         :bind (("M-s e" . hydra-smerge/body))
         :config
+        (setq smerge-command-prefix "")
         ;; https://github.com/alphapapa/unpackaged.el#smerge-mode
         (pretty-hydra-define hydra-smerge
           (:color pink :quit-key "q" :post (smerge-auto-leave))
