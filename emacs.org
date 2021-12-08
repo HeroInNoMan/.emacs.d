@@ -1972,7 +1972,8 @@
           "Magit"
           (("." magit-status "status")
            ("d" magit-dispatch "dispatch…")
-           ("g" magit-file-dispatch "file action…"))
+           ("g" magit-file-dispatch "file action…")
+           ("c" magit-clone "clone…"))
           "Other"
           (("t" git-timemachine "time machine")
            ("m" git-messenger:popup-message "popup message"))))
