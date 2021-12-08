@@ -1101,8 +1101,8 @@
                                              helm-source-files-in-current-dir
                                              helm-source-file-cache
                                              ;; helm-source-file-name-history
-                                             helm-source-locate
-                                             helm-source-find-files)
+                                             ;; helm-source-find-files
+                                             helm-source-locate)
              helm-boring-file-regexp-list
              '("\\.o$"
                "~$"
