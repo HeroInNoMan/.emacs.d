@@ -1037,7 +1037,7 @@
      (use-package helm
        :chords
        ("bf" . helm-for-files)                 ;; snappy helm instance
-       ("éè" . helm-rg)                        ;; ripgrep. end of story.
+       ("éè" . helm-rg-grep-or-git)            ;; ripgrep. end of story.
        ("«»" . hydra-helm-config/body)         ;; all (useful) helm commands in one hydra
        :bind
        (("M-x" . helm-M-x)                     ;; superior to M-x
@@ -1063,6 +1063,15 @@
        ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
 
        (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
+
+       (defun helm-rg-grep-or-git ()
+         "Call helm-git-grep if inside a git repo, helm-rg otherwise."
+         (interactive)
+         (if (and (fboundp 'magit-toplevel)
+                  (magit-toplevel)
+                  (fboundp 'helm-git-grep))
+             (helm-git-grep)
+           (call-interactively 'helm-rg)))
 
        (defun helm-sql-connect (func)
          "Connect (using input FUNC) to a SQL server."
