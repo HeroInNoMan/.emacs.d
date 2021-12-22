@@ -2795,6 +2795,7 @@
        :hook
        (prog-mode . (lambda () (setq show-trailing-whitespace t)))
        (prog-mode . prettify-symbols-mode)
+       :custom-face (trailing-whitespace ((t (:background "grey12"))))
        :config
        (setq prettify-symbols-unprettify-at-point 'right-edge)
 
