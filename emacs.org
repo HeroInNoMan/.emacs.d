@@ -1956,6 +1956,14 @@
          (setq gitlab-token-id my-private-gitlab-token-id)))
    #+END_SRC
 
+** Github
+   #+BEGIN_SRC emacs-lisp
+     (use-package github-review
+       :config
+       (setq github-review-view-comments-in-code-lines t
+             github-review-reply-inline-comments t))
+   #+END_SRC
+
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
