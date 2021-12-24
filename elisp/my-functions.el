@@ -742,16 +742,16 @@ Example: 2020-09-22T13:12:17+0200 → ACAB"
 (defun ale/convert-digit-to-letter (digit)
   "Convert a DIGIT to the corresponding letter.
  A=1, B=2, …, I=9. By choice, O=0."
-  (cond ((string= digit "0") "O")
-        ((string= digit "1") "A")
-        ((string= digit "2") "B")
-        ((string= digit "3") "C")
-        ((string= digit "4") "D")
-        ((string= digit "5") "E")
-        ((string= digit "6") "F")
-        ((string= digit "7") "G")
-        ((string= digit "8") "H")
-        ((string= digit "9") "I")))
+  (cond ((string= digit "0") "𝑶")
+        ((string= digit "1") "𝑨")
+        ((string= digit "2") "𝑩")
+        ((string= digit "3") "𝑪")
+        ((string= digit "4") "𝑫")
+        ((string= digit "5") "𝑬")
+        ((string= digit "6") "𝑭")
+        ((string= digit "7") "𝑮")
+        ((string= digit "8") "𝑯")
+        ((string= digit "9") "𝑰")))
 
 (provide 'my-functions)
 ;;; my-functions.el ends here
