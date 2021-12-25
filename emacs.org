@@ -4488,6 +4488,7 @@
          (add-to-list 'erc-modules 'tweet))
 
        (use-package erc-youtube
+         :disabled ;; useless without a youtube API key
          :config (add-to-list 'erc-modules 'youtube))
 
        (use-package erc-hl-nicks)
