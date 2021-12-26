@@ -1367,6 +1367,7 @@
        ("M-s s"     . counsel-grep-or-swiper)
        ("M-s x"     . counsel-linux-app)
        ("M-s y"     . counsel-yank-pop)
+       ("M-s z"     . counsel-fzf)
        ("M-x"       . counsel-M-x))
 
      ;;TODO: counsel yasnippet
