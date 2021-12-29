@@ -3982,6 +3982,7 @@
         (("b" beacon-mode                               "beacon"               :toggle t)
          ("C" color-identifiers-mode                    "color identifiers"    :toggle t)
          ("H" idle-highlight-mode                       "Idle HL"              :toggle t)
+         ("G" clm/toggle-command-log-buffer             "command log mode"     :toggle t)
          ("P" prism-mode                                "prism"                :toggle t)
          ("R" rainbow-blocks-mode                       "rainbow blocks"       :toggle t)
          ("I" highlight-indent-guides-mode              "indent guide"         :toggle t)
@@ -4751,7 +4752,9 @@
 
 ** Demos
    #+BEGIN_SRC emacs-lisp
-     (use-package command-log-mode :defer t)
+     (use-package command-log-mode
+       :commands clm/toggle-command-log-buffer
+       :init (setq command-log-mode-key-binding-open-log "C-c c")) ;; "C-c o" already used for bury-buffer
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
