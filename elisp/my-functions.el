@@ -720,14 +720,14 @@ Version 2019-02-12"
 (defun ale/insert-date-as-word (&optional date)
   "Insert the word produced by `ale/convert-date-to-word'."
   (interactive "P")
-  (insert (ale/convert-date-to-word)))
+  (insert (ale/convert-date-to-word date)))
 
 (defun ale/convert-date-to-word (&optional date)
   "Convert a DATE ( current if no arg ) to a four-letter word.
 The DATE format must include hours & minutes.
 Example: 2020-09-22T13:12:17+0200 → ACAB"
   (interactive)
-  (let ((date (if (boundp 'date)
+  (let ((date (if date
                   date
                 (format-time-string "%H:%M"))))
     (string-match "[0-9]\\{2\\}:[0-9]\\{2\\}" date)
