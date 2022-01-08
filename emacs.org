@@ -4285,6 +4285,12 @@
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
+    (use-package mlscroll
+      :ensure t
+      :hook (server-after-make-frame . mlscroll-mode))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
     (use-package poke-line
       :config
       (poke-line-global-mode 1)
