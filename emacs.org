@@ -4289,16 +4289,6 @@
       :hook (server-after-make-frame . mlscroll-mode))
   #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    (use-package poke-line
-      :config
-      (poke-line-global-mode 1)
-      ;; https://github.com/RyanMillerC/poke-line/blob/master/docs/pokemon.md
-      (setq-default poke-line-pokemon "charmander")
-      (setq poke-line-minimum-window-width 64)
-      (setq poke-line-bar-length 32))
-  #+END_SRC
-
 * Startup screen
 
   Let’s use a dashboard:
@@ -4944,14 +4934,12 @@
                 (cond
                  ((daemonp)
                   (progn
-                    (when (fboundp 'beacon-mode)           (beacon-mode -1))
-                    (when (fboundp 'centaur-tabs-mode)     (centaur-tabs-mode -1))
-                    (when (fboundp 'poke-line-global-mode) (poke-line-global-mode -1))))
+                    (when (fboundp 'beacon-mode)       (beacon-mode -1))
+                    (when (fboundp 'centaur-tabs-mode) (centaur-tabs-mode -1))))
                  (t
                   (progn
-                    (when (fboundp 'beacon-mode)           (beacon-mode))
-                    (when (fboundp 'centaur-tabs-mode)     (centaur-tabs-mode 1))
-                    (when (fboundp 'poke-line-global-mode) (poke-line-global-mode))
+                    (when (fboundp 'beacon-mode)       (beacon-mode))
+                    (when (fboundp 'centaur-tabs-mode) (centaur-tabs-mode 1))
                     (mouse-wheel-mode t))))))
   #+END_SRC
 * Useful links
