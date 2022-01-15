@@ -1595,6 +1595,12 @@
                    ("p" . ztree-previous-line)))
    #+END_SRC
 
+** ASCII art
+   This package requires ~figlet~ installed in order to work.
+   #+BEGIN_SRC emacs-lisp
+     (use-package figlet :defer t)
+   #+END_SRC
+
 * Buffer & window manipulation
 ** Windows
    Better access to window manipulation commands:
