@@ -250,7 +250,7 @@
   Let’s [[https://github.com/iqbalansari/emacs-emojify][emojify]] things :
   #+BEGIN_SRC emacs-lisp
     (use-package emojify
-      :hook ((text-mode erc-mode) . (lambda () (emojify-mode t))))
+      :hook ((org-mode erc-mode) . (lambda () (emojify-mode t))))
   #+END_SRC
 
   Some commands are disabled by default, let’s enable them:
