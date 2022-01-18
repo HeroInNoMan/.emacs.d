@@ -114,7 +114,7 @@
   Let’s load all files from the “extra” directory (will happen after init is finished).
   #+BEGIN_SRC emacs-lisp
     (use-package load-dir
-      :defer t
+      :disabled ;; no exta/ dir to load… maybe someday
       :config (setq load-dirs (expand-file-name "extra/" base-emacs-directory)))
   #+END_SRC
 
@@ -165,7 +165,6 @@
   [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed (replaces [[https://github.com/kai2nenobu/guide-key][guide-key]]).
   #+BEGIN_SRC emacs-lisp
     (use-package which-key
-      :hook ((prog-mode text-mode) . which-key-mode)
       :config
       (which-key-mode)
       (setq which-key-idle-delay 0.3))
@@ -223,11 +222,10 @@
   #+BEGIN_SRC emacs-lisp
     (use-package ido
       :straight nil
-      :config
+      :config (ido-mode t)
       (setq ido-max-prospects 25)
-      (ido-mode t)
-      (setq ido-case-fold t
-            ido-enable-flex-matching t))
+      (setq ido-case-fold t)
+      (setq ido-enable-flex-matching t))
   #+END_SRC
 
   Let’s use UTF-8 everywhere:
