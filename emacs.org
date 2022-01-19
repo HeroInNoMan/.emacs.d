@@ -2260,6 +2260,16 @@
             org-refile-allow-creating-parent-nodes 'confirm
             org-completing-read 'helm--completing-read-default)
 
+      ;; always activate helm-mode before org-refile
+      (advice-add 'org-refile :around
+                  (defun run-with-helm (fun &rest args)
+                    "Run function with helm-mode enabled."
+                    (interactive)
+                    (let (helm-mode-active helm-mode)
+                      (unless helm-mode-active (helm-mode 1))
+                      (funcall fun)
+                      (unless helm-mode-active (helm-mode 0)))))
+
       (setq org-agenda-custom-commands
             '(("e" "Work only"
                ((org-super-agenda-mode -1)
