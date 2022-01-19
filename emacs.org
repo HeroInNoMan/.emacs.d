@@ -2276,11 +2276,11 @@
               ("w" "Weekly Review"
                ((agenda ""
                         ((org-agenda-span 7))) ; review upcoming deadlines and appointments
-                                            ; type "l" in the agenda to review logged items
-                (stuck "")         ; review stuck projects as designated by org-stuck-projects
-                (todo "PROJECT")   ; review all projects
-                (todo "MAYBE")     ; review someday/maybe items
-                (todo "WAITING"))) ; review waiting items
+                                               ; type "l" in the agenda to review logged items
+                (stuck "")                     ; review stuck projects as designated by org-stuck-projects
+                (todo "PROJECT")               ; review all projects
+                (todo "MAYBE")                 ; review someday/maybe items
+                (todo "WAITING")))             ; review waiting items
               ;; ...other commands here
               ("E" "Emacs TODOs"
                ((tags-todo "emacs")))))
@@ -2325,7 +2325,7 @@
                      :prepend t :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("f" "Film\n" ;; add a film in to-watch list
+                   '("F" "Film\n" ;; add a film in to-watch list
                      entry (file+headline todo-media-file "Films")
                      "* VOIR %i%?%^{Date}p"
                      :prepend t :kill-buffer t) t)
@@ -2388,22 +2388,32 @@
                  (boundp 'my-work-machine-name)
                  (equal my-work-machine-name (system-name)))
         (add-to-list 'org-capture-templates
-                     '("l" "Log       (work)"
+                     '("l" "Log        (work)"
                        entry (file+olp+datetree my-private-work-diary-org-file)
                        "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
                        :time-prompt t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
-                     '("w" "TODO      (work)"
+                     '("w" "TODO       (work)"
                        entry (file+headline my-private-work-diary-org-file "À faire")
                        "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
-                     '("v" "Revue     (work)"
+                     '("u" "Quick TODO (work)"
+                       entry (file+headline my-private-work-diary-org-file "À faire")
+                       "* TODO %i%?\n\tSCHEDULED: %t\n\t:PROPERTIES:\n\t:Effort:\t5\n\t:END:\n%a\n"
+                       :prepend t :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("f" "Fiche      (work)"
+                       entry (file+headline my-private-work-diary-org-file "Tickets à créer")
+                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
+                       :prepend t :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("v" "Revue      (work)"
                        entry (file+headline my-private-work-diary-org-file "À faire")
                        "* Review %i%?\n\tSCHEDULED: %t"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
-                     '("r" "Référence (work)\n"
+                     '("r" "Référence  (work)\n"
                        entry (file+headline my-private-work-diary-org-file "Références")
                        "* %?\n%i"
                        :prepend t :kill-buffer t) t))
