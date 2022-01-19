@@ -2622,7 +2622,7 @@
                      :and ( :time-grid t
                             :scheduled today)
                      :transformer map-todo-faces-super-agenda
-                     :discard (:todo "DONE"))
+                     :discard (:and ( :todo ("DONE" "ABANDONED" "CANCELLED"))))
 
               ;; (:name "EN COURS"
               ;;        :order 2
