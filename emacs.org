@@ -2626,13 +2626,14 @@
               ;;        :and ( :file-path "cycliques"
               ;;               :habit t))
 
+              (:discard (:and (:todo ("DONE" "ABANDONED" "CANCELLED"))))
+
               (:name "PLANNING"
                      :order 5
                      :time-grid t
                      :and ( :time-grid t
                             :scheduled today)
-                     :transformer map-todo-faces-super-agenda
-                     :discard (:and ( :todo ("DONE" "ABANDONED" "CANCELLED"))))
+                     :transformer map-todo-faces-super-agenda)
 
               ;; (:name "EN COURS"
               ;;        :order 2
