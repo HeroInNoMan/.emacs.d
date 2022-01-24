@@ -223,7 +223,7 @@
     (use-package ido
       :straight nil
       :config (ido-mode t)
-      (setq ido-max-prospects 25)
+      (setq ido-max-prospects 50)
       (setq ido-case-fold t)
       (setq ido-enable-flex-matching t))
   #+END_SRC
