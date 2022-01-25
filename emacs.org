@@ -2763,6 +2763,7 @@
               ;;        :and ( :file-path "cycliques"
               ;;               :habit t))
 
+              ;; first filter out DONE items
               (:discard (:and (:todo ("DONE" "ABANDONED" "CANCELLED"))))
 
               (:name "PLANNING"
@@ -2772,10 +2773,10 @@
                             :scheduled today)
                      :transformer map-todo-faces-super-agenda)
 
-              ;; (:name "EN COURS"
-              ;;        :order 2
-              ;;        :face (:foreground "yellow" :weight bold)
-              ;;        :todo ("WIP" "STARTED" "DELEGATED"))
+              (:name "EN COURS"
+                     :order 2
+                     :todo ("WIP" "STARTED" "DELEGATED")
+                     :transformer map-todo-faces-super-agenda)
 
               (:name "EN ATTENTE"
                      :order 20
@@ -2793,14 +2794,6 @@
                      :and ( :todo ("TODO" "NEXT" "WIP" "STARTED")
                             :effort< "15"))
 
-              ;; (:name "TRAVAIL"
-              ;;        :order 10
-              ;;        :transformer map-todo-faces-super-agenda
-              ;;        :and ( :todo ("TODO" "NEXT" "PROJECT")
-              ;;               :scheduled t
-              ;;               :not (:priority< "C")
-              ;;               :tag ("enercoop" "work" "travail")))
-
               (:name "EN RETARD"
                      :order 4
                      :face (:foreground "orange3")
@@ -2811,10 +2804,30 @@
                      :order 40
                      :tag ("ÉCHANGES"))
 
+              (:name "CERCLE DE RÉMUNÉRATION"
+                     :order 60
+                     :regexp "cercle"
+                     :tag "cercle")
+
               (:name "EMACS"
-                     :order 50
+                     :order 70
                      :regexp "emacs"
                      :tag "emacs")
+
+              (:name "CNT"
+                     :order 75
+                     :regexp "cnt"
+                     :tag "cnt")
+
+              (:name "TICKETS À CRÉER"
+                     :order 55
+                     :transformer map-todo-faces-super-agenda
+                     :tag "ticket")
+
+              (:name "TRAVAIL"
+                     :order 50
+                     :transformer map-todo-faces-super-agenda
+                     :tag ("enercoop" "work" "travail"))
 
               (:name "DIVERS"
                      :order 80
@@ -2823,18 +2836,18 @@
 
       (defun map-todo-faces-super-agenda (item)
         "Propertize ITEM for display in agenda."
-        (cond ((string-match-p "DONE" item) item) ;; no special face for done items
-              ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" item)
-               (propertize item 'face '(:foreground "#8b636c")))
-              ((string-match-p "WIP\\|STARTED\\|DELEGATED" item)
-               (propertize item 'face '(:foreground "yellow")))
-              ((string-match-p "\\[#A\\]" item)
-               (propertize item 'face '(:foreground "red" :weight bold)))
-              ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" item)
-               (propertize item 'face '(:foreground "#696969")))
-              ;; ((string-match-p "WORK\\|enercoop" item)
-              ;;  (propertize item 'face '(:foreground "#00cd00")))
-              (t item)))
+        (cond ;;((string-match-p "DONE" item) item) ;; no special face for done items
+         ((string-match-p "\\[#A\\]" item)
+          (propertize item 'face '(:foreground "red" :weight bold)))
+         ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" item)
+          (propertize item 'face '(:foreground "#8b636c")))
+         ((string-match-p "WIP\\|STARTED\\|DELEGATED" item)
+          (propertize item 'face '(:foreground "yellow")))
+         ((string-match-p "WORK\\|enercoop\\|travail" item)
+          (propertize item 'face '(:foreground "#00cd00")))
+         ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" item)
+          (propertize item 'face '(:foreground "#696969")))
+         (t item)))
 
       (defun super-agenda (command)
         "Call the agenda COMMAND with super groups."
