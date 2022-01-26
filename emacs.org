@@ -2764,7 +2764,7 @@
               ;;               :habit t))
 
               ;; first filter out DONE items
-              (:discard (:and (:todo ("DONE" "ABANDONED" "CANCELLED"))))
+              (:discard (:and (:todo ("DONE" "ABANDONED" "CANCELLED" "DELEGATED"))))
 
               (:name "PLANNING"
                      :order 5
@@ -2775,7 +2775,7 @@
 
               (:name "EN COURS"
                      :order 2
-                     :todo ("WIP" "STARTED" "DELEGATED")
+                     :todo ("WIP" "STARTED")
                      :transformer map-todo-faces-super-agenda)
 
               (:name "EN ATTENTE"
@@ -2798,7 +2798,7 @@
                      :order 4
                      :face (:foreground "orange3")
                      :and ( :scheduled past
-                            :todo ("TODO" "NEXT" "WIP" "STARTED" "DELEGATED")))
+                            :todo ("TODO" "NEXT" "WIP" "STARTED")))
 
               (:name "PRÊTS / EMPRUNTS"
                      :order 40
@@ -2836,18 +2836,21 @@
 
       (defun map-todo-faces-super-agenda (item)
         "Propertize ITEM for display in agenda."
-        (cond ;;((string-match-p "DONE" item) item) ;; no special face for done items
-         ((string-match-p "\\[#A\\]" item)
-          (propertize item 'face '(:foreground "red" :weight bold)))
-         ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" item)
-          (propertize item 'face '(:foreground "#8b636c")))
-         ((string-match-p "WIP\\|STARTED\\|DELEGATED" item)
-          (propertize item 'face '(:foreground "yellow")))
-         ((string-match-p "WORK\\|enercoop\\|travail" item)
-          (propertize item 'face '(:foreground "#00cd00")))
-         ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" item)
-          (propertize item 'face '(:foreground "#696969")))
-         (t item)))
+        (let ((weight
+               (cond
+                ((string-match-p "\\[#A\\]" item) 'ultra-heavy)
+                ((string-match-p "\\[#B\\]" item) 'semi-bold)
+                ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" item) 'thin)
+                (t 'normal))))
+          (cond
+           ;;((string-match-p "DONE" item) item) ;; no special face for done items
+           ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" item)
+            (propertize item 'face `(:foreground "#8b636c" :weight ,weight)))
+           ((string-match-p "WIP\\|STARTED\\|DELEGATED" item)
+            (propertize item 'face `(:foreground "yellow" :weight ,weight)))
+           ((string-match-p "WORK\\|enercoop\\|travail" item)
+            (propertize item 'face `(:foreground "#00cd00" :weight ,weight)))
+           (t (propertize item 'face `(:weight ,weight))))))
 
       (defun super-agenda (command)
         "Call the agenda COMMAND with super groups."
