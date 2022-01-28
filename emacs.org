@@ -225,7 +225,31 @@
       :config (ido-mode t)
       (setq ido-max-prospects 50)
       (setq ido-case-fold t)
-      (setq ido-enable-flex-matching t))
+      (setq ido-enable-flex-matching t)
+
+      (defun ido-find-file-jump (dir)
+        "Return a command that sends DIR to `ido-find-file'."
+        `(lambda ()
+           (interactive)
+           (ido-set-current-directory ,dir)
+           (setq ido-exit 'refresh)
+           (exit-minibuffer)))
+
+      (defvar ale-ido-shortcuts
+        '(("~/" "~")
+          ("/" ":")))
+
+      (mapc (lambda (x)
+              (setcar x (ido-find-file-jump (car x))))
+            ale-ido-shortcuts)
+
+      (defun ale-ido-setup-hook ()
+        (mapc
+         (lambda (x)
+           (define-key ido-file-dir-completion-map (cadr x) (car x)))
+         ale-ido-shortcuts))
+
+      (add-hook 'ido-setup-hook 'ale-ido-setup-hook))
   #+END_SRC
 
   Let’s use UTF-8 everywhere:
