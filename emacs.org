@@ -1116,6 +1116,7 @@
                (write-file . (default helm-read-file-name-handler-1))
                (write-region . (default helm-read-file-name-handler-1))))
 
+       (setq helm-minibuffer-history-key "C-c r") ;; à tester, ça a pas l’air de marcher de ouf
        (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
 
        (defun helm-rg-grep-or-git ()
