@@ -222,7 +222,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package ido
       :straight nil
-      :config (ido-mode t)
+      :config (ido-mode -1) ;; disabled by default
       (setq ido-max-prospects 50)
       (setq ido-case-fold t)
       (setq ido-enable-flex-matching t)
@@ -1068,21 +1068,47 @@
         ("C-h a" . helm-apropos)
         :map helm-map
         ("C-S-t"   . helm-toggle-resplit-and-swap-windows) ; remap this one…
-        ("C-t"     . transpose-chars) ; so I can still use that one
-        ("M-«" . helm-beginning-of-buffer)
-        ("M-»" . helm-end-of-buffer)
-        ("C-S-t" . helm-toggle-resplit-and-swap-windows)
-        ("C-t" . transpose-chars)
-        ("C-S-b" . helm-rg--bounce)
-        ("C-S-d" . helm-rg--set-dir)
-        ("M-d" . kill-word)
+        ("C-t"     . transpose-chars)        ; so I can still use that one
+        ("M-«"     . helm-beginning-of-buffer)
+        ("M-»"     . helm-end-of-buffer)
+        ("C-S-b"   . helm-rg--bounce)
+        ("C-S-d"   . helm-rg--set-dir)
+        ("M-d"     . kill-word)
         :map minibuffer-local-map
         ("C-c C-l" . helm-minibuffer-history))
        :config
        (require 'helm-config)
-       (helm-mode 0)                           ;; only on demand
        (helm-autoresize-mode t)
        ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
+       (helm-mode 1) ;; use helm by default
+       (setq helm-completing-read-handlers-alist
+             '((find-tag . helm-completing-read-default-find-tag)
+               (xref-find-definitions . helm-completing-read-default-find-tag)
+               (xref-find-references . helm-completing-read-default-find-tag)
+               (ggtags-find-tag-dwim . helm-completing-read-default-find-tag)
+               (tmm-menubar . nil)
+               ;; ido prefered in a number of cases
+               (find-file . ido)
+               (load-file . ido)
+               (basic-save-buffer . ido)
+               (write-file . ido)
+               (find-alternate-file . ido)
+               (consult-dir . ido)
+               (magit-checkout . ido)
+               (magit-log-other . ido)
+               (magit-branch-and-checkout . ido)
+               (magit-branch-create . ido)
+               (magit-branch-delete . ido)
+               ;;
+               (execute-extended-command . nil)
+               (dired-do-rename . helm-read-file-name-handler-1)
+               (dired-do-copy . helm-read-file-name-handler-1)
+               (dired-do-symlink . helm-read-file-name-handler-1)
+               (dired-do-relsymlink . helm-read-file-name-handler-1)
+               (dired-do-hardlink . helm-read-file-name-handler-1)
+               (basic-save-buffer . helm-read-file-name-handler-1)
+               (write-file . (default helm-read-file-name-handler-1))
+               (write-region . (default helm-read-file-name-handler-1))))
 
        (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
 
@@ -2285,14 +2311,17 @@
             org-completing-read 'helm--completing-read-default)
 
       ;; always activate helm-mode before org-refile
-      (advice-add 'org-refile :around
-                  (defun run-with-helm (fun &rest args)
-                    "Run function with helm-mode enabled."
-                    (interactive)
-                    (let (helm-mode-active helm-mode)
-                      (unless helm-mode-active (helm-mode 1))
-                      (funcall fun)
-                      (unless helm-mode-active (helm-mode 0)))))
+      ;; (advice-add 'org-refile :around
+      ;;             (defun run-with-helm (fun &rest args)
+      ;;               "Run function with helm-mode enabled."
+      ;;               (interactive)
+      ;;               (let (helm-mode-active helm-mode)
+      ;;                 (unless helm-mode-active (helm-mode 1))
+      ;;                 (funcall fun)
+      ;;                 (unless helm-mode-active (helm-mode 0)))))
+      ;; EDIT: I have found how to disable helm completion for specific commands,
+      ;; so I don’t need this anymore. I just use helm by default and disable it
+      ;; where I want.
 
       (setq org-agenda-custom-commands
             '(("e" "Work only"
