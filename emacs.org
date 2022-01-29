@@ -1087,6 +1087,10 @@
        (helm-autoresize-mode t)
        ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
        (helm-mode 1) ;; use helm by default
+
+       (setq helm-describe-variable-function 'helpful-variable)
+       (setq helm-describe-function-function 'helpful-function)
+
        (setq helm-completing-read-handlers-alist
              '((find-tag . helm-completing-read-default-find-tag)
                (xref-find-definitions . helm-completing-read-default-find-tag)
@@ -1423,7 +1427,10 @@
        ("M-s x"     . counsel-linux-app)
        ("M-s y"     . counsel-yank-pop)
        ("M-s z"     . counsel-fzf)
-       ("M-x"       . counsel-M-x))
+       ("M-x"       . counsel-M-x)
+       :config
+       (setq counsel-describe-function-function #'helpful-callable)
+       (setq counsel-describe-variable-function #'helpful-variable))
 
      ;;TODO: counsel yasnippet
 
