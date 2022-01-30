@@ -1795,7 +1795,7 @@
         (persistent-scratch-setup-default)
         (defun persistent-scratch-numbered-scratch-buffer-p ()
           "Return non-nil iff the current buffer's name begins with *scratch*."
-          (and (length> (buffer-name) 8)
+          (and (> (length (buffer-name)) 8)
                (string-equal "*scratch*"  (substring (buffer-name) 0 9))))
         (setq persistent-scratch-scratch-buffer-p-function
               'persistent-scratch-numbered-scratch-buffer-p))

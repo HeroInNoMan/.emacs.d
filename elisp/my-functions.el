@@ -285,7 +285,7 @@ Swap buffers in the process"
                   (string-match "^\\*scratch\\*\\(<[0-9]+>\\)?" (buffer-name buff)))
          (setq scratches (append scratches (list buff)))))
      (buffer-list))
-    (if (length> scratches 0)
+    (if (> (length scratches) 0)
         (switch-to-buffer (buffer-name (car scratches)))
       (crux-create-scratch-buffer))))
 
@@ -294,7 +294,7 @@ Swap buffers in the process"
 Also make frame fullscreen. Otherwise, open a new scratch
  buffer."
   (interactive)
-  (if (length< (frame-list) 3) ;; only one frame
+  (if (< (length (frame-list)) 3) ;; only one frame
       (progn
         (unless (cdr (assoc 'fullscreen (frame-parameters)))
           (toggle-frame-fullscreen))
