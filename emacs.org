@@ -67,6 +67,12 @@
           use-package-verbose t)
   #+END_SRC
 
+  Only check for package modifications when calling ~M-x straight-check-package~ and ~M-x straight-check-all~.
+  #+BEGIN_SRC emacs-lisp
+    (setq straight-check-for-modifications nil)
+    (setq straight-cache-autoloads t)
+  #+END_SRC
+
   [[https://elpa.gnu.org/packages/delight.html][delight]] helps unclutter the mode-line with useless minor mode indications.
   #+BEGIN_SRC emacs-lisp
     (use-package delight :defer t)
