@@ -1736,7 +1736,6 @@
     #+BEGIN_SRC emacs-lisp
       (use-package ibuffer
         :straight nil
-        :defer t
         :hook (ibuffer-mode . (lambda ()
                                 (ibuffer-auto-mode 1)
                                 (ibuffer-switch-to-saved-filter-groups "default")))
