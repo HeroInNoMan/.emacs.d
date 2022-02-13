@@ -1089,6 +1089,17 @@
    #+END_SRC
 
 ** Helm
+
+   First enable icons.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package helm-icons
+       :config
+       (helm-icons-enable)
+       (customize-set-value 'helm-icons-mode->icon nil)
+       (setq helm-icons-provider 'all-the-icons))
+   #+END_SRC
+
    Main =helm= configuration, with a big hydra as an entry point for almost all helm commands I use.
    #+BEGIN_SRC emacs-lisp
      (use-package helm
