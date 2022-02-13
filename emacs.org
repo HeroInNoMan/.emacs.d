@@ -4367,7 +4367,7 @@
    Let’s define a few hydras to manage global settings. First, a general hydra for all minor modes that can be toggled:
    #+BEGIN_SRC emacs-lisp
      (pretty-hydra-define hydra-toggles
-       (:color blue :quit-key "q")
+       (:title "Toggles " :color blue :quit-key "q")
        ("Navigation"
         (("B" beginend-global-mode                      "begin-end"            :toggle t)
          ("i" ido-mode                                  "ido"                  :toggle t)
@@ -4423,7 +4423,7 @@
    Then an other hydra for quickly switching to the major modes I use the most:
    #+BEGIN_SRC emacs-lisp
      (pretty-hydra-define hydra-major-modes
-       (:color blue :quit-key "q")
+       (:title "Major mode" :color blue :quit-key "q")
        ("Lisp"
         (("e" emacs-lisp-mode "elisp")
          ("i" lisp-interaction-mode "fundamental")
@@ -4455,7 +4455,7 @@
    Finally, a last hydra to manage all kinds of stuff I use often: opening shell buffers, some specific files…
    #+BEGIN_SRC emacs-lisp
      (pretty-hydra-define hydra-widgets
-       (:color blue :quit-key "q")
+       (:title "Widget " :color blue :quit-key "q")
        ("Shells"
         (("e" (funcall (togfun "*eshell*" 'eshell)) "eshell")
          ("t" shell-pop "shell-pop")
