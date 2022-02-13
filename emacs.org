@@ -2047,15 +2047,26 @@
                         :files ("gitconfig-mode.el"))
        :mode ".gitconfig$")
 
-     (use-package git-gutter
-       :hook prog-mode
+     (use-package git-gutter-fringe
+       :hook (prog-mode . git-gutter-mode)
+       (focus-in . git-gutter:update-all-windows)
        :bind
        ("M-N" . git-gutter:next-hunk)
        ("M-P" . git-gutter:previous-hunk)
        :config
        (global-git-gutter-mode +1)
-       (setq git-gutter:ask-p nil
-             git-gutter:hide-gutter t))
+       (setq git-gutter-fr:ask-p nil
+             git-gutter-fr:hide-gutter t)
+
+       ;; standardize default fringe width
+       (if (fboundp 'fringe-mode) (fringe-mode '4))
+
+       ;; places the git gutter outside the margins.
+       (setq-default fringes-outside-margins t)
+       ;; thin fringe bitmaps
+       (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+       (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+       (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
    #+END_SRC
 
 ** Gitlab
