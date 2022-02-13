@@ -2096,6 +2096,7 @@
                                                        :style released-button)))))
        :config
        (put 'magit-edit-line-commit 'disabled nil)
+       (setq magit-diff-refine-hunk 'all)
        (pretty-hydra-define hydra-git
          (:color blue :quit-key "q")
          ("Gutter"
