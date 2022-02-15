@@ -2320,6 +2320,18 @@
       (require 'org-agenda)
       (remove-hook 'text-mode-hook #'turn-on-auto-fill) ;; visual-line-mode instead of auto-fill
 
+      ;; fill or unfill paragraph in org-mode (M-q as a toggle)
+      (defun endless/org-fill-or-unfill ()
+        "Like `org-fill-paragraph', but unfill if used twice."
+        (interactive)
+        (let ((fill-column
+               (if (eq last-command 'endless/org-fill-or-unfill)
+                   (progn (setq this-command nil)
+                          (point-max))
+                 fill-column)))
+          (call-interactively #'org-fill-paragraph)))
+      (define-key org-mode-map (kbd "M-q") #'endless/org-fill-or-unfill)
+
       (require 'color)
 
       ;; general settings
