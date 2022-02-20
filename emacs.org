@@ -5030,7 +5030,7 @@
                    (let ((previous-citation
                           (substring (buffer-substring-no-properties (mark) (point)) 0 -3)))
                      (pop-mark)
-                     (kill-line)
+                     (delete-line)
                      (setq this-command 'erc-quote-last-message)
                      (while (not (eq 0 (current-column)))
                        (search-backward previous-citation)))))
