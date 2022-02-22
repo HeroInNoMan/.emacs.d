@@ -882,8 +882,10 @@
     (use-package treemacs :defer t)
 
     ;; Allow scrolling with mouse wheel
-    (when (display-graphic-p) (progn (mouse-wheel-mode t)
-                                     (mouse-avoidance-mode 'none)))
+    (when (display-graphic-p)
+      (progn (mouse-wheel-mode t)
+             (mouse-avoidance-mode 'none)
+             (setq mouse-autoselect-window nil)))
 
     (use-package goto-last-change
       :bind
