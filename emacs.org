@@ -2307,27 +2307,6 @@
       :chords ("gx" . org-capture)
       :hook (org-mode . visual-line-mode)
       :custom-face
-      (org-agenda-date
-       ((t ( :foreground "#a991f1"
-             :inverse-video nil
-             :box ( :line-width 2
-                    :color "grey75"
-                    :style released-button)
-             :weight ultra-bold))))
-      (org-agenda-date-today
-       ((t ( :foreground "#a991f1"
-             :inverse-video t
-             :box ( :line-width 2
-                    :color "grey75"
-                    :style released-button)
-             :weight ultra-bold))))
-      (org-agenda-date-weekend
-       ((t ( :foreground "#68228b"
-             :inverse-video nil
-             :box ( :line-width 1
-                    :color "grey75"
-                    :style released-button)
-             :weight ultra-bold))))
       (org-done
        ((t ( :foreground "PaleGreen"
              :weight bold))))
