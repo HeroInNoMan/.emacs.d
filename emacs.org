@@ -4871,7 +4871,8 @@
              erc-fill-function 'erc-fill-variable
              erc-fill-column 500) ;; filling
 
-       (setq erc-interpret-mirc-color t) ;; colors
+       (setq erc-interpret-mirc-color t) ;; mIRC colors
+       (setq erc-interpret-controls-p t) ;; other colors
 
        (setq erc-prompt (lambda () (concat "[" (buffer-name) "]"))) ;; prompt
 
