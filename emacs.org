@@ -2693,11 +2693,12 @@
     (use-package org-journal
       :config
       (setq org-journal-dir "~/Nextcloud/org/journal"
-            org-journal-file-format "%Y-%m.org"
+            org-journal-file-format "%Y.org"
             org-journal-date-prefix "* "
             org-journal-date-format "%F %R"
             org-journal-time-prefix ""
             org-journal-time-format ""
+            org-journal-file-type 'yearly
             ))
   #+END_SRC
 
