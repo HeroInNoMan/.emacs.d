@@ -3438,6 +3438,21 @@
           ("$" "$" nil org-mode))))
    #+END_SRC
 
+[[https://github.com/ganmacs/emacs-surround][emacs-surround]] is a nice copy of vim.surround for changing, inserting, deleting pairs.
+   #+BEGIN_SRC emacs-lisp
+     (use-package emacs-surround
+       :straight (:host github :repo "ganmacs/emacs-surround")
+       :bind ("M-s M-z" . emacs-surround)
+       :config
+       (add-to-list 'emacs-surround-alist '("<" . ("<" . ">")))
+       (add-to-list 'emacs-surround-alist '("“" . ("“" . "”")))
+       (add-to-list 'emacs-surround-alist '("‘" . ("‘" . "’")))
+       (add-to-list 'emacs-surround-alist '("⩽" . ("⩽" . "⩾")))
+       (add-to-list 'emacs-surround-alist '("«" . ("«" . "»")))
+       (add-to-list 'emacs-surround-alist '("»" . ("« " . " »")))
+       (add-to-list 'emacs-surround-alist '("`" . ("`" . "'"))))
+   #+END_SRC
+
 ** Shell
 
    #+BEGIN_SRC emacs-lisp
