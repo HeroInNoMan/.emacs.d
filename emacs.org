@@ -1740,8 +1740,10 @@
    #+BEGIN_SRC emacs-lisp
      (use-package winner
        :bind
-       ("<s-left>" . winner-undo)
+       ("<s-left>"  . winner-undo)
        ("<s-right>" . winner-redo)
+       ([f1]        . winner-undo)
+       ([f2]        . winner-redo)
        :config (winner-mode))
    #+END_SRC
 
