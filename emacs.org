@@ -2781,6 +2781,11 @@
                      :and ( :todo ("TODO" "NEXT" "WIP" "STARTED")
                             :effort< "15"))
 
+              (:name "TICKETS À CRÉER"
+                     :order 55
+                     :transformer map-todo-faces-super-agenda
+                     :tag "ticket")
+
               (:name "EN RETARD"
                      :order 4
                      :face (:foreground "orange3")
@@ -2805,11 +2810,6 @@
                      :order 75
                      :regexp "cnt"
                      :tag "cnt")
-
-              (:name "TICKETS À CRÉER"
-                     :order 55
-                     :transformer map-todo-faces-super-agenda
-                     :tag "ticket")
 
               (:name "TRAVAIL"
                      :order 50
