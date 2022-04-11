@@ -4439,7 +4439,8 @@
          ("c" caps-lock-mode                            "CAPS LOCK"            :toggle t)
          ;; ("c" company-mode                           "company"              :toggle t)
          ("f" flycheck-mode                             "flycheck"             :toggle t)
-         ("L" litable-mode                              "litable"              :toggle t))
+         ("L" litable-mode                              "litable"              :toggle t)
+         ("N" require-final-newline                     "newline required"     :toggle t))
         "Writing"
         (("-" refill-mode                               "auto-fill"            :toggle t)
          ("v" visual-line-mode                          "visual line"          :toggle t)
