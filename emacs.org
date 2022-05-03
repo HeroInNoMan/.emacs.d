@@ -1152,7 +1152,6 @@
                (tmm-menubar . nil)
                ;; ido prefered in a number of cases
                (find-file . ido)
-               (load-file . ido)
                (basic-save-buffer . ido)
                (write-file . ido)
                (find-alternate-file . ido)
