@@ -3957,7 +3957,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package web-mode ;; HTML, XML, JSP (using web-mode)
        :mode ("\\.phtml\\'"
-              "\\.tpl\\.php\\'"
+              "\\.php\\'"
               "\\.[agj]sp\\'"
               "\\.as[cp]x\\'"
               "\\.erb\\'"
