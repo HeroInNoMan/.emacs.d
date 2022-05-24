@@ -4387,9 +4387,11 @@
     (use-package eww
       :defer t
       :config
-      (setq browse-url-generic-program my-web-browser-program ;; set default browser to eww
-            browse-url-browser-function my-web-browser-function
-            shr-external-browser 'browse-url-firefox ;; use ‘&’ to open page in firefox
+      (when (boundp 'my-web-browser-program)
+        (setq browse-url-generic-program my-web-browser-program)) ;; set default browser to eww
+      (when (boundp 'my-web-browser-function)
+        (setq browse-url-browser-function my-web-browser-function))
+      (setq shr-external-browser 'browse-url-firefox ;; use ‘&’ to open page in firefox
             shr-width 100 ;; keep sane layout
             shr-use-fonts t ;; no fancy fonts in text mode
             gnus-button-url 'browse-url-generic))
@@ -4739,8 +4741,10 @@
       (dashboard-setup-startup-hook)
       (setq dashboard-set-heading-icons t)
       (setq dashboard-set-file-icons t)
-      (setq dashboard-startup-banner my-private-dashboard-banner-png)
-      (setq dashboard-banner-logo-title my-private-dashboard-title)
+      (when (boundp 'my-private-dashboard-banner-png)
+        (setq dashboard-startup-banner my-private-dashboard-banner-png))
+      (when (boundp 'my-private-dashboard-title)
+        (setq dashboard-banner-logo-title my-private-dashboard-title))
       (setq dashboard-center-content t)
       (dashboard-modify-heading-icons '((recents . "file-text")
                                         (projects . "book")
@@ -4819,9 +4823,13 @@
      (use-package travis
        :disabled
        :defer t
-       :config (setq travis--token-id my-private-work-travis-token-id
-                     travis-website my-private-work-travis-website
-                     travis--host my-private-work-travis-host))
+       :config
+       (when (boundp 'my-private-work-travis-token-id)
+         (setq travis--token-id my-private-work-travis-token-id))
+       (when (boundp 'my-private-work-travis-website)
+         (setq travis-website my-private-work-travis-website))
+       (when (boundp 'my-private-work-travis-host)
+         (setq travis--host my-private-work-travis-host)))
 
      (use-package jenkins ;; TODO compare to butler
        :disabled
@@ -4849,13 +4857,19 @@
               ("C-o" . erc-start-or-jump))
        :config
        ;; DEFAULTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-       (setq erc-nick my-erc-nick
-             erc-user-full-name my-erc-user-full-name
-             erc-email-userid my-erc-email-userid)
+       (when (boundp 'my-erc-nick)
+         (setq erc-nick my-erc-nick))
+       (when (boundp 'my-erc-user-full-name)
+         (setq erc-user-full-name my-erc-user-full-name))
+       (when (boundp 'my-erc-email-userid)
+         (setq erc-email-userid my-erc-email-userid))
 
-       (setq erc-keywords my-erc-keywords)
-       (setq erc-connection-alist my-erc-connection-alist)
-       (setq erc-autojoin-channels-alist my-erc-autojoin-channels-alist)
+       (when (boundp 'my-erc-keywords)
+         (setq erc-keywords my-erc-keywords))
+       (when (boundp 'my-erc-connection-alist)
+         (setq erc-connection-alist my-erc-connection-alist))
+       (when (boundp 'my-erc-autojoin-channels-alist)
+         (setq erc-autojoin-channels-alist my-erc-autojoin-channels-alist))
 
        ;; BEHAVIOUR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (setq erc-auto-query 'bury
@@ -5155,9 +5169,12 @@
      (use-package transmission
        :disabled
        :config
-       (setq transmission-host my-private-transmission-host
-             transmission-service my-private-transmission-service
-             transmission-rpc-path my-private-transmission-rpc-path))
+       (when (boundp 'my-private-transmission-host)
+         (setq transmission-host my-private-transmission-host))
+       (when (boundp 'my-private-transmission-service)
+         (setq transmission-service my-private-transmission-service))
+       (when (boundp 'my-private-transmission-rpc-path)
+         (setq transmission-rpc-path my-private-transmission-rpc-path)))
    #+END_SRC
 
 ** Accounting
@@ -5323,9 +5340,13 @@
                  ("<backtab>" . avandu-previous-feed)
                  ("l" . recenter-top-bottom)
                  ("v" . scroll-up-command))
-         :config (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url
-                       avandu-user my-private-personal-tt-rss-username
-                       avandu-password my-private-personal-tt-rss-password))
+         :config
+         (when (boundp 'my-private-personal-tt-rss-api-url)
+           (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url))
+         (when (boundp 'my-private-personal-tt-rss-username)
+           (setq avandu-user my-private-personal-tt-rss-username))
+         (when (boundp 'my-private-personal-tt-rss-password)
+           (setq avandu-password my-private-personal-tt-rss-password)))
      #+END_SRC
 
 **** Elfeed
@@ -5334,14 +5355,14 @@
          :defer t
          :config
          ;; (elfeed-protocol-enable)
-         (setq elfeed-feeds my-private-feeds
-               elfeed-search-title-max-width 120
+         (when (boundp 'my-private-feeds)
+           (setq elfeed-feeds my-private-feeds))
+  
+         (setq elfeed-search-title-max-width 120
 
                elfeed-use-curl nil
                elfeed-protocol-ttrss-maxsize 200 ;; bigger than 200 is invalid
-
-               elfeed-feeds
-               'my-private-feeds))
+               ))
 
        (use-package elfeed-org
          :defer t
