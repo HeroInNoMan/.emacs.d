@@ -1161,6 +1161,7 @@
                (magit-branch-and-checkout . ido)
                (magit-branch-create . ido)
                (magit-branch-delete . ido)
+               (magit-rebase-branch . ido)
                ;;
                (execute-extended-command . nil)
                (dired-do-rename . helm-read-file-name-handler-1)
