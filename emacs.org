@@ -814,6 +814,7 @@
                   ("»" . dired-subtree-end)))
 
     (use-package dired-quick-sort
+      :after dired
       :bind (:map dired-mode-map
                   ("r" . hydra-dired-quick-sort/body)))
   #+END_SRC
