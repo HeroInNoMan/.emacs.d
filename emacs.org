@@ -2144,15 +2144,15 @@
       (setq projectile-enable-caching t) ;; enable caching for projectile-mode
       (setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
       ;; (setq projectile-project-search-path '(my-private-repos-dir my-default-project-root))
-      (setq projectile-switch-project-action #'ale/open-current-project)
+      ;; (setq projectile-switch-project-action #'ale/open-project)
       (def-projectile-commander-method ?d
-                                       "Open project root in dired."
-                                       (projectile-dired))
-      (def-projectile-commander-method ?f
-                                       "Git fetch."
-                                       (magit-status)
-                                       (call-interactively #'magit-fetch-current)))
+        "Open project root in dired."
+        (projectile-dired))
 
+      (def-projectile-commander-method ?f
+        "Git fetch."
+        (magit-status)
+        (call-interactively #'magit-fetch-current)))
   #+END_SRC
 
   I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (mostly git projects).
