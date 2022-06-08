@@ -2734,6 +2734,7 @@
              :foreground "#D3d3d3"
              :overline "#778899"))))
       :config
+      (org-super-agenda-mode 1) ;; always enable, disable by setting `org-super-agenda-groups' to nil.
       (defvar ale/org-super-agenda-auto-show-groups
         '("IMPORTANT" "RAPIDE" "AUJOURD’HUI" "EN COURS""EN ATTENTE"
           "TRAVAIL" "EN RETARD" "CYCLIQUES" "EMPRUNTS" "EMACS" "Other items"))
@@ -2845,8 +2846,9 @@
       (defun super-agenda (command)
         "Call the agenda COMMAND with super groups."
         (interactive)
+        (when (not org-super-agenda-groups)
+          (org-agenda-kill-all-agenda-buffers))
         (setq org-super-agenda-groups super-groups-main)
-        (org-super-agenda-mode 1)
         (org-agenda nil command)
         (org-agenda-day-view)
         (origami-open-all-nodes (get-buffer "*Org Agenda*")))
@@ -2854,7 +2856,9 @@
       (defun agenda-list (command)
         "Call the agenda for the week with COMMAND."
         (interactive)
-        (org-super-agenda-mode -1)
+        (when org-super-agenda-groups
+          (org-agenda-kill-all-agenda-buffers))
+        (setq org-super-agenda-groups nil)
         (org-agenda nil command)
         (org-agenda-week-view))
 
