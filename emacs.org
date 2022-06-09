@@ -895,6 +895,18 @@
       ("C-x /" . goto-last-change))
   #+END_SRC
 
+  I found the package [[https://github.com/alphapapa/dogears.el][dogears]] which replaces ~goto-last-change~.
+  #+BEGIN_SRC emacs-lisp
+    (use-package dogears
+      :bind
+      ("M-g d" . dogears-go)
+      ("M-g M-b" . dogears-back)
+      ("M-g M-f" . dogears-forward)
+      ("M-g M-d" . dogears-list)
+      ("M-g M-D" . dogears-sidebar)
+      :config (dogears-mode))
+  #+END_SRC
+
 * Whitespace
   I just heard of [[https://github.com/editorconfig/editorconfig-emacs][editorconfig]], which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
   #+BEGIN_SRC emacs-lisp
