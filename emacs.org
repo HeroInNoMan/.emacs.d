@@ -653,7 +653,7 @@
      (use-package hl-line
        :straight nil
        :custom-face (hl-line ((t (:background "grey7"))))
-       :hook ((dired-mode org-agenda-mode) . hl-line-mode)
+       :hook ((dired-mode org-agenda-mode ibuffer-mode) . hl-line-mode)
        :config (global-hl-line-mode -1))
 
      (use-package highlight-indent-guides
