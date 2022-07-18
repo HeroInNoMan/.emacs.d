@@ -4871,19 +4871,20 @@
               ("C-o" . erc-start-or-jump))
        :config
        ;; DEFAULTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-       (when (boundp 'my-erc-nick)
-         (setq erc-nick my-erc-nick))
-       (when (boundp 'my-erc-user-full-name)
-         (setq erc-user-full-name my-erc-user-full-name))
-       (when (boundp 'my-erc-email-userid)
-         (setq erc-email-userid my-erc-email-userid))
+       (defun erc-init-default-values ()
+         (when (boundp 'my-erc-nick)
+           (setq erc-nick my-erc-nick))
+         (when (boundp 'my-erc-user-full-name)
+           (setq erc-user-full-name my-erc-user-full-name))
+         (when (boundp 'my-erc-email-userid)
+           (setq erc-email-userid my-erc-email-userid))
 
-       (when (boundp 'my-erc-keywords)
-         (setq erc-keywords my-erc-keywords))
-       (when (boundp 'my-erc-connection-alist)
-         (setq erc-connection-alist my-erc-connection-alist))
-       (when (boundp 'my-erc-autojoin-channels-alist)
-         (setq erc-autojoin-channels-alist my-erc-autojoin-channels-alist))
+         (when (boundp 'my-erc-keywords)
+           (setq erc-keywords my-erc-keywords))
+         (when (boundp 'my-erc-connection-alist)
+           (setq erc-connection-alist my-erc-connection-alist))
+         (when (boundp 'my-erc-autojoin-channels-alist)
+           (setq erc-autojoin-channels-alist my-erc-autojoin-channels-alist)))
 
        ;; BEHAVIOUR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (setq erc-auto-query 'bury
@@ -4985,6 +4986,7 @@
          "Connect to IRC using `erc-connection-alist' if not running,
       or jump to first active channel, or cycle through all channels."
          (interactive)
+         (erc-init-default-values)
          (erc-cleanup-dead-buffers)
          (if (bound-and-true-p erc-connection-alist)
              (cl-loop for connection in erc-connection-alist
@@ -5014,14 +5016,18 @@
 
                     (cl-loop for buff in (erc-buffer-list nil)
                              do
-                             (with-current-buffer buff (and (string-prefix-p irc-server (buffer-name))
+                             ;; (with-current-buffer buff (and (string-prefix-p irc-server (buffer-name))
+                             (with-current-buffer buff (and (get-buffer-process (buffer-name))
+                                                            (cl-search irc-server (process-name (get-buffer-process (buffer-name))))
                                                             (not (member chan (erc-buffer-list nil)))))
                              (with-current-buffer buff (erc-join-channel chan))))))
 
        (defun erc-server-alive-p (server)
          "Return non-nil if a server is alive, nil otherwise."
          (cl-loop for buff in (erc-buffer-list)
-                  when (with-current-buffer buff (string-prefix-p server (buffer-name)))
+                  ;; when (with-current-buffer buff (string-prefix-p server (buffer-name)))
+                  when (with-current-buffer buff (and (get-buffer-process (buffer-name))
+                                                      (cl-search irc-server (process-name (get-buffer-process (buffer-name))))))
                   return (erc-server-process-alive buff)))
 
        (defun erc-cleanup-dead-buffers ()
@@ -5053,7 +5059,7 @@
          (interactive)
          (with-current-buffer (or buffer (current-buffer))
            (and (eq major-mode 'erc-mode)
-                (not (string-match-p "\\([^\.]+\.\\)*[^\.]+:[0-9]+" (buffer-name))))))
+                (not (get-buffer-process (buffer-name))))))
 
        (defun erc-quote-last-message (n)
          "Cite the last Nth message in current ERC channel or query."
