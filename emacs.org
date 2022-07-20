@@ -3734,6 +3734,10 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
+     (use-package apheleia)
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
      (use-package reformatter
        :defer t
        :config (reformatter-define xml-format
