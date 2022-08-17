@@ -1848,7 +1848,8 @@
         (setq ibuffer-saved-filter-groups
               '(("default"
                  ("Tramp" (or (filename . "/sshx?:.+:.+")
-                              (name . "\*tramp.*\*")))
+                              (name . "\*tramp.*\*")
+                              (name . "\*debug tramp.*\*")))
                  ("Running" (and (process . "")
                                  (not (derived-mode . erc-mode))))
                  ("Text"   (and (derived-mode . text-mode)
