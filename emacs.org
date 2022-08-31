@@ -479,6 +479,7 @@
       :straight nil
       :bind ("M-/" . hippie-expand)
       :config
+      (setq completion-styles '(flex basic partial-completion emacs22))
       (setq hippie-expand-try-functions-list
             '(try-complete-file-name-partially
               try-complete-file-name
