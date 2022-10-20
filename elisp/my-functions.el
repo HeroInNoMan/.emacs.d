@@ -374,13 +374,12 @@ Also make frame fullscreen. Otherwise, open a new scratch
   (flyspell-mode)
   (ispell-change-dictionary "en_US"))
 
-(defun ale/open-project (args)
-  "Open ARGS project magit logs and status as split windows."
-  (interactive "D")
-  (find-file args)
+(defun ale/open-project (&optional dir)
+  "Open DIR project magit logs and status as split windows."
+  (when dir (find-file dir))
   (magit-log-all (car (magit-log-arguments)))
   (delete-other-windows)
-  (magit-status-internal args)
+  (magit-status-internal)
   (other-window 1)
   (magit-fetch-all (magit-fetch-arguments))
   (goto-char (point-min)))

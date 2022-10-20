@@ -1506,7 +1506,11 @@
        :bind ("M-s d" . counsel-dash))
 
      (use-package counsel-projectile
-       :bind ("M-s j" . counsel-projectile))
+       :bind
+       ("M-s j" . counsel-projectile)
+       ("C-c C-j" . counsel-projectile-switch-project)
+       ("<f9>" . counsel-projectile-switch-project)
+       :config (setq counsel-projectile-switch-project-action #'ale/open-project))
 
      (use-package counsel-tramp
        :bind ("M-s t" . counsel-tramp))
@@ -2158,7 +2162,7 @@
       (setq projectile-enable-caching t) ;; enable caching for projectile-mode
       (setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
       ;; (setq projectile-project-search-path '(my-private-repos-dir my-default-project-root))
-      ;; (setq projectile-switch-project-action #'ale/open-project)
+      (setq projectile-switch-project-action #'ale/open-project)
       (def-projectile-commander-method ?d
         "Open project root in dired."
         (projectile-dired))
@@ -2174,6 +2178,7 @@
     (use-package helm-projectile
       :delight (projectile-mode)
       :after helm
+      :bind ("C-c p" . helm-projectile-switch-project)
       :config
       (helm-projectile-on))
   #+END_SRC
