@@ -2309,7 +2309,7 @@
       :init (setq org-refile-targets nil
                   org-capture-templates '())
       :bind (("C-c a" . org-agenda)
-             ("C-c b" . org-iswitchb)
+             ("C-c b" . org-switchb)
              ("C-c l" . org-store-link)
              :map org-mode-map
              ("C-c +" . increment-number-decimal)
