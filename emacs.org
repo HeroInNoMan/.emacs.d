@@ -4047,7 +4047,38 @@
 
    [[https://github.com/skeeto/impatient-mode][Impatient-mode]] enables live editing of html files.
    #+BEGIN_SRC emacs-lisp
-     (use-package impatient-mode :defer t)
+     (use-package impatient-mode
+       :commands impatient-mode)
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package simple-httpd
+       :config
+       (setq httpd-port 7070)
+       (setq httpd-host (system-name)))
+   #+END_SRC
+
+   I have [[https://blog.bitsandbobs.net/blog/emacs-markdown-live-preview/][found]] a nice set of functions to have a live preview of a markdown file :
+
+   #+BEGIN_SRC emacs-lisp
+     (defun my-markdown-filter (buffer)
+       (princ
+        (with-temp-buffer
+          (let ((tmp (buffer-name)))
+            (set-buffer buffer)
+            (set-buffer (markdown tmp))
+            (format "<!DOCTYPE html><html><title>Markdown preview</title><link rel=\"stylesheet\" href = \"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css\"/>
+     <body><article class=\"markdown-body\" style=\"box-sizing: border-box;min-width: 200px;max-width: 980px;margin: 0 auto;padding: 45px;\">%s</article></body></html>" (buffer-string))))
+        (current-buffer)))
+
+     (defun my-markdown-preview ()
+       "Preview markdown."
+       (interactive)
+       (unless (process-status "httpd")
+         (httpd-start))
+       (impatient-mode)
+       (imp-set-user-filter 'my-markdown-filter)
+       (imp-visit-buffer))
    #+END_SRC
 
 ** Typescript
@@ -4153,7 +4184,8 @@
               ("\\.md\\'" . markdown-mode)
               ("\\.markdown\\'" . markdown-mode))
        :init (setq markdown-open-command "grip"
-                   markdown-command "markdown"))
+                   markdown-command "markdown")
+       :config (setq markdown-command "pandoc -t html5"))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
