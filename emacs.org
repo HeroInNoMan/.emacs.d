@@ -1022,6 +1022,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package ctrlf
+       :commands ctrlf-yank-word-or-char
+
        :bind (("C-s" . ctrlf-forward-literal)
               ("C-r" . ctrlf-backward-literal)
               ("C-M-s" . ctrlf-forward-regexp)
@@ -1029,8 +1031,21 @@
               :map minibuffer-local-map
               ("C-s" . ctrlf-forward-literal)
               ("C-r" . ctrlf-backward-literal)
-              ("C-w" . ctrlf-forward-symbol-at-point))
-       :config (ctrlf-mode)
+              ("C-w" . ctrlf-yank-word-or-char))
+       :config
+       (ctrlf-mode)
+       (defun ctrlf-yank-word-or-char ()
+         (interactive)
+         (let ((input (field-string (point-max))) yank)
+           (when (or ctrlf--match-bounds (= (length input) 0))
+             (with-current-buffer (window-buffer (minibuffer-selected-window))
+               (setq yank (buffer-substring-no-properties
+                           (or (and ctrlf--match-bounds
+                                    (cdr ctrlf--match-bounds))
+                               ctrlf--current-starting-point)
+                           (progn (forward-word) (point)))))
+             (goto-char (field-end (point-max)))
+             (insert yank))))
        :custom-face (ctrlf-highlight-active ((t (:inherit isearch :background "dark orange")))))
    #+END_SRC
 
