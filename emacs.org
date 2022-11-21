@@ -2185,7 +2185,13 @@
       (def-projectile-commander-method ?f
         "Git fetch."
         (magit-status)
-        (call-interactively #'magit-fetch-current)))
+        (call-interactively #'magit-fetch-current))
+      (when (boundp 'my-private-repos-dir)
+        (cl-loop for project in (f-directories my-private-repos-dir (lambda (dir) (projectile-root-top-down dir)))
+                 do (projectile-add-known-project project)))
+      (when (boundp 'my-default-project-root)
+        (cl-loop for project in (f-directories my-private-repos-dir (lambda (dir) (projectile-root-top-down dir)))
+                 do (projectile-add-known-project project))))
   #+END_SRC
 
   I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (mostly git projects).
@@ -5436,7 +5442,6 @@
   #+BEGIN_SRC emacs-lisp
     (add-hook 'emacs-startup-hook
               (lambda ()
-                (create-project-hydra)
                 (display-battery-mode)
                 (when (string-equal "darwin" system-type)
                   (load-file
