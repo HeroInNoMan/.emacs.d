@@ -1187,7 +1187,7 @@
                (find-alternate-file . ido)
                (consult-dir . ido)
                (magit-checkout . ido)
-               (magit-log-other . ido)
+               ;; (magit-log-other . ido)
                (magit-branch-and-checkout . ido)
                (magit-branch-create . ido)
                (magit-branch-delete . ido)
