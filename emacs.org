@@ -107,8 +107,11 @@
   #+BEGIN_SRC emacs-lisp
     (use-package no-littering
       :config
+      (setq recentf-keep '(file-remote-p file-readable-p))
       (require 'recentf)
       (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
+      (setq recentf-exclude '("~$" "/tmp/" "/ssh:" "/sshx:" "/sudo:"))
+      (recentf-mode 1)
       (add-to-list 'recentf-exclude no-littering-var-directory)
       (add-to-list 'recentf-exclude no-littering-etc-directory))
   #+END_SRC
@@ -2108,15 +2111,21 @@
   #+BEGIN_SRC emacs-lisp
     (use-package tramp
       :straight nil
-      :defer t
+      ;; :defer t
       :config
-      (setq remote-file-name-inhibit-cache nil ;; cache file-name forever
-            tramp-verbose 1 ;; only log errors
-            tramp-syntax 'default
-            ;; make sure vc stuff is not making tramp slower
-            vc-ignore-dir-regexp (format "%s\\|%s"
-                                         vc-ignore-dir-regexp
-                                         tramp-file-name-regexp)))
+      (setq recentf-keep '(file-remote-p file-readable-p))
+      (tramp-cleanup-all-connections)
+      (tramp-cleanup-all-buffers)
+      (setq
+       ;; remote-file-name-inhibit-cachefile-name-inhibit-cache nil ;; cache file-name forever
+       remote-file-name-inhibit-cachefile-name-inhibit-cache t
+       tramp-verbose 0 ;; log all
+       tramp-syntax 'default
+       ;; make sure vc stuff is not making tramp slower
+       tramp-use-ssh-controlmaster-options nil
+       vc-ignore-dir-regexp (format "%s\\|%s"
+                                    vc-ignore-dir-regexp
+                                    tramp-file-name-regexp)))
   #+END_SRC
 
 * Date
