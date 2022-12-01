@@ -3488,7 +3488,7 @@
           ("$" "$" nil org-mode))))
    #+END_SRC
 
-[[https://github.com/ganmacs/emacs-surround][emacs-surround]] is a nice copy of vim.surround for changing, inserting, deleting pairs.
+   [[https://github.com/ganmacs/emacs-surround][emacs-surround]] is a nice copy of vim.surround for changing, inserting, deleting pairs.
    #+BEGIN_SRC emacs-lisp
      (use-package emacs-surround
        :straight (:host github :repo "ganmacs/emacs-surround")
@@ -5447,9 +5447,8 @@
          ;; (elfeed-protocol-enable)
          (when (boundp 'my-private-feeds)
            (setq elfeed-feeds my-private-feeds))
-  
-         (setq elfeed-search-title-max-width 120
 
+         (setq elfeed-search-title-max-width 120
                elfeed-use-curl nil
                elfeed-protocol-ttrss-maxsize 200 ;; bigger than 200 is invalid
                ))
