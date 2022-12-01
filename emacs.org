@@ -1331,7 +1331,8 @@
             ("e"     helm-imenu-in-all-buffers "imenu all")
             ("."     helm-imenu-anywhere       "imenu any")
             ("x"     helm-rg                   "ripgrep")
-            ("y"     helm-git-grep             "git grep"))
+            ("y"     helm-git-grep             "git grep")
+            ("o"     helm-org-ql               "org-ql"))
            "Browse"
            (("b"     helm-filtered-bookmarks   "Bookmark")
             ("j"     helm-list-elisp-packages  "packages")
@@ -2757,6 +2758,11 @@
       :config (setq org-habit-following-days 30
                     org-habit-preceding-days 4
                     org-habit-graph-column 65))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package helm-org-ql
+      :config (setq org-directory my-private-org-dir))
   #+END_SRC
 
   I use org-super-agenda to display relevant information in a nicer way.
