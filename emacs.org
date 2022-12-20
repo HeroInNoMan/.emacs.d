@@ -1166,7 +1166,6 @@
         :map minibuffer-local-map
         ("C-c C-l" . helm-minibuffer-history))
        :config
-       (require 'helm-config)
        (helm-autoresize-mode t)
        ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
        (helm-mode 1) ;; use helm by default
