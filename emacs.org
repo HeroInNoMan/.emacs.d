@@ -802,7 +802,9 @@
 
     (use-package dired-collapse
       :after dired
-      :hook (dired-mode . dired-collapse-mode))
+      :hook (dired-mode . dired-collapse-mode)
+      :bind (:map dired-mode-map ;; enable easy toggling for this mode
+                  ("z" . dired-collapse-mode)))
 
     (use-package dired-subtree
       :after dired
