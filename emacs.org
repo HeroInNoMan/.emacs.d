@@ -3560,6 +3560,10 @@
 ** Shell
 
    #+BEGIN_SRC emacs-lisp
+     (use-package eat)
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
      (use-package vterm
        :defer t)
    #+END_SRC
