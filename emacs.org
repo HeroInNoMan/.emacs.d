@@ -2844,7 +2844,9 @@
               ;;               :habit t))
 
               ;; first filter out DONE items
-              (:discard (:and (:todo ("DONE" "ABANDONED" "CANCELLED" "DELEGATED"))))
+              (:discard (:todo ("DONE" "ABANDONED" "CANCELLED" "DELEGATED")))
+              ;; also filter out items that are not TODOs at all
+              (:discard (:todo nil))
 
               (:name "PLANNING"
                      :order 5
