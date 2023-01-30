@@ -937,6 +937,14 @@
       :bind ("C-x C-o" . shrink-whitespace))
   #+END_SRC
 
+** Whitespace faces
+   #+BEGIN_SRC emacs-lisp
+     (set-face-attribute 'nobreak-space nil
+                         :inherit 'escape-glyph
+                         :foreground "black"
+                         :underline t)
+   #+END_SRC
+
 * Folding
   I use [[https://github.com/gregsexton/origami.el][origami]]…
   #+BEGIN_SRC emacs-lisp
