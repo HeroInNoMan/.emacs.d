@@ -4528,7 +4528,7 @@
          ("p" prettify-symbols-mode                     "prettify symbols"     :toggle t)
          ("e" global-emojify-mode                       "emoji"                :toggle t)
          ("j" global-fill-page-mode                     "fill-page"            :toggle t)
-         ("l" global-linum-mode                         "line number"          :toggle t)
+         ("l" global-display-line-numbers-mode          "line number"          :toggle t)
          ("r" linum-relative-global-mode                "relative line number" :toggle t)
          ("|" global-display-fill-column-indicator-mode "right margin"         :toggle t)
          ("w" global-whitespace-mode                    "whitespace"           :toggle t))
