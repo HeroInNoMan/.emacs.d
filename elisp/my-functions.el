@@ -206,13 +206,16 @@ Swap buffers in the process"
 (defun goto-line-with-feedback ()
   "Show line numbers and whitespaces temporarily, while prompting for the line number input."
   (interactive)
-  (unwind-protect
+  (let ((linum display-line-numbers-mode))
+    (unwind-protect
+        (progn
+          (when (not linum)
+            (display-line-numbers-mode 1))
+          (goto-line (read-number "Goto line: ")))
       (progn
-        (linum-mode 1)
-        (goto-line (read-number "Goto line: ")))
-    (progn
-      (linum-mode -1)
-      (git-gutter-mode +1))))
+        (when (not linum)
+          (display-line-numbers-mode -1))
+        (git-gutter-mode +1)))))
 
 (defun ale/insert-ticket-prefix ()
   "Insert a prefix containing the ticket ID."
