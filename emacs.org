@@ -1277,7 +1277,7 @@
              helm-ff-skip-boring-files t
              helm-net-prefer-curl t
              helm-recentf-fuzzy-match t
-             helm-split-window-default-side 'right
+             helm-split-window-default-side 'other
              helm-for-files-preferred-list '(helm-source-buffers-list
                                              helm-source-bookmarks
                                              helm-source-recentf
