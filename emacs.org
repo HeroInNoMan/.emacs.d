@@ -3233,6 +3233,18 @@
    #+END_SRC
 
 * Programming
+
+** tree-sitter
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tree-sitter
+    :init (global-tree-sitter-mode)
+    :hook (tree-sitter-after-on . tree-sitter-hl-mode))
+
+  (use-package tree-sitter-langs)
+
+#+END_SRC
+
 ** Formatting
    #+BEGIN_SRC emacs-lisp
      (use-package prog-mode
