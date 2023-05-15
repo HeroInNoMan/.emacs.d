@@ -1209,7 +1209,7 @@
         ("C-c C-l" . helm-minibuffer-history))
        :config
        (helm-autoresize-mode t)
-       ;; (semantic-mode 1)                    ;; useful for imenu-like navigation
+       (semantic-mode 1)                    ;; useful for imenu-like navigation
        (helm-mode 1) ;; use helm by default
 
        (setq helm-describe-variable-function 'helpful-variable)
@@ -1222,12 +1222,12 @@
                (ggtags-find-tag-dwim . helm-completing-read-default-find-tag)
                (tmm-menubar . nil)
                ;; ido prefered in a number of cases
-               (find-file . ido)
-               (basic-save-buffer . ido)
+               ;; (find-file . ido)
+               ;; (basic-save-buffer . ido)
                (write-file . ido)
                (find-alternate-file . ido)
                (consult-dir . ido)
-               (magit-checkout . ido)
+               ;; (magit-checkout . ido)
                ;; (magit-log-other . ido)
                (magit-branch-and-checkout . ido)
                (magit-branch-create . ido)
