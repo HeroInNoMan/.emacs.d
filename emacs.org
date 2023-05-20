@@ -1707,7 +1707,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package region-bindings-mode
-       :config (region-bindings-mode-enable))
+       :config (region-bindings-mode-enable)
+       (setq region-bindings-mode-disabled-modes '(magit-status-mode)))
    #+END_SRC
 
 ** Point movements
