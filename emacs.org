@@ -1157,89 +1157,6 @@
        :mode ".ssh/config$")
    #+END_SRC
 
-** Ivy, counsel, swiper
-
-   Once in a while, I try to use {ivy|counsel|swiper} (only to go back to helm ^^).
-
-   Edit: that’s it, I’m moving from helm to ivy/counsel… what initiated the change was ivy-rich and the beautiful way of displaying the description next to the candidate, then the overall snappiness and feeling of solidity. I keep my helm commands for now, but almost all my use cases have been replaced so far.
-
-   Edit: Actually I'm keeping both :D
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package ivy
-       :defer t
-       :config
-       (ivy-mode -1) ;; just like helm, I want ivy only on demand
-       ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-       (setq ivy-use-virtual-buffers t)
-       ;; number of result lines to display
-       (setq ivy-height 20)
-       ;; does not count candidates
-       (setq ivy-count-format "[%d/%d] ")
-       ;; no regexp by default
-       (setq ivy-initial-inputs-alist nil)
-       ;; configure regexp engine.
-       (setq ivy-re-builders-alist
-             ;; allow input not in order
-             '((t . ivy--regex-ignore-order))))
-
-     (use-package counsel
-       :bind
-       ("M-s <SPC>" . counsel-mark-ring)
-       ("M-s a"     . counsel-apropos)
-       ("M-s M-b"   . counsel-switch-buffer)
-       ("M-s b"     . counsel-switch-buffer)
-       ("M-s c"     . counsel-colors-emacs)
-       ("M-s f"     . counsel-buffer-or-recentf)
-       ("M-s g"     . counsel-rg)
-       ("M-s h a"   . counsel-apropos)
-       ("M-s h b"   . counsel-descbinds)
-       ("M-s h c"   . counsel-describe-face)
-       ("M-s h f"   . counsel-describe-function)
-       ("M-s h v"   . counsel-describe-variable)
-       ("M-s i"     . counsel-imenu)
-       ("M-s k"     . counsel-bookmark)
-       ("M-s l"     . counsel-locate)
-       ("M-s p"     . counsel-package)
-       ("M-s s"     . counsel-grep-or-swiper)
-       ("M-s x"     . counsel-linux-app)
-       ("M-s y"     . counsel-yank-pop)
-       ("M-s z"     . counsel-fzf)
-       ("M-x"       . counsel-M-x)
-       :config
-       (setq counsel-describe-function-function #'helpful-callable)
-       (setq counsel-describe-variable-function #'helpful-variable))
-
-     ;;TODO: counsel yasnippet
-
-     (use-package counsel-dash
-       :bind ("M-s d" . counsel-dash))
-
-     (use-package counsel-projectile
-       :bind
-       ("M-s j" . counsel-projectile)
-       ("C-c C-j" . counsel-projectile-switch-project)
-       ("<f9>" . counsel-projectile-switch-project)
-       :config (setq counsel-projectile-switch-project-action #'ale/open-project))
-
-     (use-package counsel-tramp
-       :bind ("M-s t" . counsel-tramp))
-
-     (use-package counsel-web
-       :bind
-       ("M-s w" . counsel-web-suggest)
-       ("M-s W" . counsel-web-search))
-
-     (use-package ivy-prescient
-       :after ivy
-       :config (ivy-prescient-mode 1))
-
-     (use-package all-the-icons-ivy-rich
-       :init (all-the-icons-ivy-rich-mode 1))
-
-     (use-package ivy-rich
-       :init (ivy-rich-mode 1))
-   #+END_SRC
 
 ** Contextual completion
 
@@ -4099,7 +4016,6 @@
        (:title "Toggles " :color blue :quit-key "q")
        ("Navigation"
         (("B" beginend-global-mode                      "begin-end"            :toggle t)
-         ("y" ivy-mode                                  "ivy"                  :toggle t)
          ("g" toggle-god-mode                           "god"                  :toggle god-local-mode)
          ("M" minimap-mode                              "minimap"              :toggle t)
          ("t" treemacs                                  "treemacs"                      )
