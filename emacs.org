@@ -217,40 +217,6 @@
       (fringe-mode 0))
   #+END_SRC
 
-  Although I mainly use helm, ido is nice in some cases.
-  #+BEGIN_SRC emacs-lisp
-    (use-package ido
-      :straight nil
-      :config (ido-mode -1) ;; disabled by default
-      (setq ido-max-prospects 30)
-      (setq ido-case-fold t)
-      (setq ido-enable-flex-matching t)
-
-      (defun ido-find-file-jump (dir)
-        "Return a command that sends DIR to `ido-find-file'."
-        `(lambda ()
-           (interactive)
-           (ido-set-current-directory ,dir)
-           (setq ido-exit 'refresh)
-           (exit-minibuffer)))
-
-      (defvar ale-ido-shortcuts
-        '(("~/" "~")
-          ("/" ":")))
-
-      (mapc (lambda (x)
-              (setcar x (ido-find-file-jump (car x))))
-            ale-ido-shortcuts)
-
-      (defun ale-ido-setup-hook ()
-        (mapc
-         (lambda (x)
-           (define-key ido-file-dir-completion-map (cadr x) (car x)))
-         ale-ido-shortcuts))
-
-      (add-hook 'ido-setup-hook 'ale-ido-setup-hook))
-  #+END_SRC
-
   Let’s use UTF-8 everywhere:
   #+BEGIN_SRC emacs-lisp
     (use-package mule
@@ -1632,7 +1598,7 @@
        (text-mode . (lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
        (python-mode . (lambda () (set (make-local-variable 'yas-indent-line) 'fixed)))
        :bind
-       ("<backtab>" . yas-ido-expand)
+       ("<backtab>" . yas-vertico-expand)
        ("C-h y" . yas-describe-tables)
        ("C-c y" . hydra-yasnippet/body)
        :config
@@ -1644,7 +1610,7 @@
        (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
 
-       (defun yas-ido-expand ()
+       (defun yas-vertico-expand ()
          "Lets you select (and expand) a yasnippet key"
          (interactive)
          (let ((original-point (point)))
@@ -1661,7 +1627,7 @@
                          (lambda (s) (string-match (concat "^" word) s)) list)))
                (if (= (length key) 1)
                    (setq key (pop key))
-                 (setq key (ido-completing-read "key: " list nil nil word)))
+                 (setq key (completing-read "key: " list nil nil word)))
                (delete-char (- init-word original-point))
                (insert key)
                (yas-expand)))))
@@ -1690,7 +1656,7 @@
           (("t" yas-describe-tables "tables")
            ("r" yas-reload-all "reload"))
           "Insert"
-          (("e" yas-ido-expand "ido expand")
+          (("e" yas-vertico-expand "expand")
            ("i" yas-insert-snippet "insert"))
           "Edit"
           (("n" yas-new-snippet "new")
@@ -2455,8 +2421,7 @@
             org-agenda-sticky t)
 
       ;; refile and completion
-      (setq org-completion-use-ido nil
-            org-refile-targets '((nil :maxlevel . 2)
+      (setq org-refile-targets '((nil :maxlevel . 2)
                                  (org-finished-file :maxlevel . 2)
                                  (org-agenda-files :maxlevel . 2))
             org-refile-use-outline-path 'file
@@ -4530,7 +4495,6 @@
        (:title "Toggles " :color blue :quit-key "q")
        ("Navigation"
         (("B" beginend-global-mode                      "begin-end"            :toggle t)
-         ("i" ido-mode                                  "ido"                  :toggle t)
          ("y" ivy-mode                                  "ivy"                  :toggle t)
          ("n" helm-mode                                 "helm"                 :toggle t)
          ("k" (if (eq helm-split-window-default-side 'other)
