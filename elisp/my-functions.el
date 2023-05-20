@@ -547,7 +547,6 @@ Also make frame fullscreen. Otherwise, open a new scratch
   (interactive)
   (cond
    ((string-equal major-mode "dired-mode") nil)
-   ((string-equal major-mode "helm-major-mode") nil)
    ((string-equal major-mode "erc-mode") nil)
    ((string-prefix-p "*scratch*" (buffer-name)) t)
    ((string-prefix-p "*Org Src" (buffer-name)) t)

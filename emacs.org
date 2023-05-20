@@ -471,7 +471,6 @@
 
       (defadvice select-window (after update-cursor-color activate)
         (my-update-cursor))
-      (add-to-list 'god-exempt-major-modes 'helm-major-mode)
       (add-to-list 'god-exempt-major-modes 'browse-kill-ring-mode)
       (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
   #+END_SRC
@@ -1153,332 +1152,6 @@
               ("C-c u" . undo-fu-only-redo-all)))
    #+END_SRC
 
-** Helm
-
-   First enable icons.
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-icons
-       :config
-       (helm-icons-enable)
-       (customize-set-value 'helm-icons-mode->icon nil)
-       (setq helm-icons-provider 'all-the-icons))
-   #+END_SRC
-
-   Main =helm= configuration, with a big hydra as an entry point for almost all helm commands I use.
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm
-       :chords
-       ("bf" . helm-for-files)                 ;; snappy helm instance
-       ("éè" . helm-rg-grep-or-git)            ;; ripgrep. end of story.
-       ("«»" . hydra-helm-config/body)         ;; all (useful) helm commands in one hydra
-       :bind
-       (("M-x" . helm-M-x)                     ;; superior to M-x
-        ("C-x M-x" . execute-extended-command) ;; still possible to use standard M-x
-        ("C-c h" . hydra-helm-config/body)
-        ("C-h a" . helm-apropos)
-        :map helm-map
-        ("C-S-t"   . helm-toggle-resplit-and-swap-windows) ; remap this one…
-        ("C-t"     . transpose-chars)        ; so I can still use that one
-        ("M-«"     . helm-beginning-of-buffer)
-        ("M-»"     . helm-end-of-buffer)
-        ("C-S-b"   . helm-rg--bounce)
-        ("C-S-d"   . helm-rg--set-dir)
-        ("M-d"     . kill-word)
-        :map minibuffer-local-map
-        ("C-c C-l" . helm-minibuffer-history))
-       :config
-       (helm-autoresize-mode t)
-       (semantic-mode 1)                    ;; useful for imenu-like navigation
-       (helm-mode 1) ;; use helm by default
-
-       (setq helm-describe-variable-function 'helpful-variable)
-       (setq helm-describe-function-function 'helpful-function)
-
-       (setq helm-completing-read-handlers-alist
-             '((find-tag . helm-completing-read-default-find-tag)
-               (xref-find-definitions . helm-completing-read-default-find-tag)
-               (xref-find-references . helm-completing-read-default-find-tag)
-               (ggtags-find-tag-dwim . helm-completing-read-default-find-tag)
-               (tmm-menubar . nil)
-               ;; ido prefered in a number of cases
-               ;; (find-file . ido)
-               ;; (basic-save-buffer . ido)
-               (write-file . ido)
-               (find-alternate-file . ido)
-               (consult-dir . ido)
-               ;; (magit-checkout . ido)
-               ;; (magit-log-other . ido)
-               (magit-branch-and-checkout . ido)
-               (magit-branch-create . ido)
-               (magit-branch-delete . ido)
-               (magit-rebase-branch . ido)
-               ;;
-               (execute-extended-command . nil)
-               (dired-do-rename . helm-read-file-name-handler-1)
-               (dired-do-copy . helm-read-file-name-handler-1)
-               (dired-do-symlink . helm-read-file-name-handler-1)
-               (dired-do-relsymlink . helm-read-file-name-handler-1)
-               (dired-do-hardlink . helm-read-file-name-handler-1)
-               (basic-save-buffer . helm-read-file-name-handler-1)
-               (write-file . (default helm-read-file-name-handler-1))
-               (write-region . (default helm-read-file-name-handler-1))))
-
-       (setq helm-minibuffer-history-key "C-c r") ;; à tester, ça a pas l’air de marcher de ouf
-       (define-key minibuffer-local-map (kbd "C-r") 'ctrlf-backward-literal)
-
-       (defun helm-rg-grep-or-git ()
-         "Call helm-git-grep if inside a git repo, helm-rg otherwise."
-         (interactive)
-         (if (and (fboundp 'magit-toplevel)
-                  (magit-toplevel)
-                  (fboundp 'helm-git-grep))
-             (helm-git-grep)
-           (call-interactively 'helm-rg)))
-
-       (defun helm-sql-connect (func)
-         "Connect (using input FUNC) to a SQL server."
-         (interactive
-          (progn (init-server-alist)
-                 (helm-comp-read "Select server: " ale-sql-servers-list)))
-         (funcall func)
-         (when (boundp 'my-private-sql-scratch-buffer)
-           (find-file-other-window my-private-sql-scratch-buffer)))
-
-       (setq helm-M-x-fuzzy-match t
-             helm-locate-command "locate %s -e -A --regex %s"
-             helm-adaptive-mode t
-             helm-buffer-max-length nil
-             helm-buffers-fuzzy-matching t
-             helm-candidate-number-limit 300
-             helm-echo-input-in-header-line nil
-             helm-external-programs-associations '(("mp3" . "audacious"))
-             helm-ff-file-name-history-use-recentf t
-             helm-ff-skip-boring-files t
-             helm-net-prefer-curl t
-             helm-recentf-fuzzy-match t
-             helm-split-window-default-side 'other
-             helm-for-files-preferred-list '(helm-source-buffers-list
-                                             helm-source-bookmarks
-                                             helm-source-recentf
-                                             helm-source-files-in-current-dir
-                                             helm-source-file-cache
-                                             ;; helm-source-file-name-history
-                                             ;; helm-source-find-files
-                                             helm-source-locate)
-             helm-boring-file-regexp-list
-             '("\\.o$"
-               "~$"
-               "\\.bin$"
-               "\\.lbin$"
-               "\\.so$"
-               "\\.a$"
-               "\\.ln$"
-               "\\.blg$"
-               "\\.bbl$"
-               "\\.elc$"
-               "\\.lof$"
-               "\\.glo$"
-               "\\.idx$"
-               "\\.lot$"
-               "\\.svn\\(/\\|$\\)"
-               "\\.hg\\(/\\|$\\)"
-               "\\.git\\(/\\|$\\)"
-               "\\.bzr\\(/\\|$\\)"
-               "CVS\\(/\\|$\\)"
-               "_darcs\\(/\\|$\\)"
-               "_MTN\\(/\\|$\\)"
-               "\\.fmt$"
-               "\\.tfm$"
-               "\\.class$"
-               "\\.fas$"
-               "\\.lib$"
-               "\\.mem$"
-               "\\.x86f$"
-               "\\.sparcf$"
-               "\\.dfsl$"
-               "\\.pfsl$"
-               "\\.d64fsl$"
-               "\\.p64fsl$"
-               "\\.lx64fsl$"
-               "\\.lx32fsl$"
-               "\\.dx64fsl$"
-               "\\.dx32fsl$"
-               "\\.fx64fsl$"
-               "\\.fx32fsl$"
-               "\\.sx64fsl$"
-               "\\.sx32fsl$"
-               "\\.wx64fsl$"
-               "\\.wx32fsl$"
-               "\\.fasl$"
-               "\\.ufsl$"
-               "\\.fsl$"
-               "\\.dxl$"
-               "\\.lo$"
-               "\\.la$"
-               "\\.gmo$"
-               "\\.mo$"
-               "\\.toc$"
-               "\\.aux$"
-               "\\.cp$"
-               "\\.fn$"
-               "\\.ky$"
-               "\\.pg$"
-               "\\.tp$"
-               "\\.vr$"
-               "\\.cps$"
-               "\\.fns$"
-               "\\.kys$"
-               "\\.pgs$"
-               "\\.tps$"
-               "\\.vrs$"
-               "\\.pyc$"
-               "\\.pyo$"
-               "\\.egradle/sdk\\(/\\|$\\)"
-               "\\.cache/mozilla\\(/\\|$\\)"
-               "\\.local/share/Trash/files\\(/\\|$\\)"
-               "\\.cache/\\(chromium\\|google\\-chrome\\)/Default/Cache\\(/\\|$\\)"))
-
-       (pretty-hydra-define hydra-helm-config
-         (:color teal :quit-key "q")
-         ( "Files"
-           (("l"     helm-locate               "locate")
-            ("/"     helm-find                 "find")
-            ("f"     helm-find-files           "files")
-            ("p"     helm-projectile           "projectile")
-            ("g"     helm-browse-project       "ls git"))
-           "Search"
-           (("i"     helm-semantic-or-imenu    "imenu")
-            ("e"     helm-imenu-in-all-buffers "imenu all")
-            ("."     helm-imenu-anywhere       "imenu any")
-            ("x"     helm-rg                   "ripgrep")
-            ("y"     helm-git-grep             "git grep")
-            ("o"     helm-org-ql               "org-ql"))
-           "Browse"
-           (("b"     helm-filtered-bookmarks   "Bookmark")
-            ("j"     helm-list-elisp-packages  "packages")
-            ("c"     helm-colors               "colours")
-            ("u"     helm-ucs                  "unicode")
-            ("v"     helm-atoms                "variables"))
-           "Processes"
-           (("h"     helm-top                  "top")
-            ("k"     helm-list-emacs-process   "process")
-            ("t"     helm-tramp                "tramp")
-            ("s"     helm-sql-connect          "sql")
-            (","     helm-calcul-expression    "calc"))
-           "Help"
-           (("r"     helm-resume               "resume")
-            ("%"     helm-regexp               "build regex")
-            ("a"     helm-apropos              "a propos")
-            ("m"     helm-man-woman            "(wo)-man")
-            ("B"     helm-descbinds            "bindings")))))
-   #+END_SRC
-
-   [[https://blog.burntsushi.net/ripgrep/][Ripgrep]] is the the best tool for grepping anything anywhere these days. Combined with [[https://github.com/cosmicexplorer/helm-rg][helm-rg]], it’s all I need. And it also supports editing search results from the search buffer!
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-rg
-       :after helm
-       :hook (helm-rg--bounce-mode . (lambda () (aggressive-indent-mode -1)))
-       :bind ( :map helm-rg-map
-               ("M-b"     . backward-word)
-               ("C-c C-e" . helm-rg--bounce)
-               ("M-d"   . helm-rg--set-dir)
-               ("M-g"     . helm-rg--set-glob)
-               :map helm-rg--bounce-mode-map
-               ("C-c C-o" . helm-rg--visit-current-file-for-bounce)
-               ("C-c C-e" . helm-rg--bounce))
-       :config (setq helm-rg-default-directory "~"))
-   #+END_SRC
-
-   =helm-descbinds= lets me browse all user-defined keybindings.
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-descbinds
-       :bind ("C-h b" . helm-descbinds))
-   #+END_SRC
-
-   =helm-dash= allows access to the full documentation of a language.
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-dash
-       :after helm
-       :hook
-       (clojure-mode . (lambda () (setq-local helm-dash-docsets '("Clojure"))))
-       (java-mode    . (lambda () (setq-local helm-dash-docsets '("Java"))))
-       (js-mode      . (lambda () (setq-local helm-dash-docsets '("Javascript"))))
-       (rust-mode    . (lambda () (setq-local helm-dash-docsets '("Rust"))))
-       :config (setq helm-dash-browser-func 'eww))
-   #+END_SRC
-
-   =Helm-swoop= can be called during =isearch= to make searching easier with big files or big number of occurences.
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-swoop
-       :bind ("C-S-s" . helm-swoop)
-       (:map isearch-mode-map
-             ;; When doing isearch, hand the word over to helm-swoop
-             ("M-i" . helm-swoop-from-isearch))
-       (:map helm-swoop-map
-             ;; From helm-swoop to helm-multi-swoop-all
-             ("M-i" . helm-multi-swoop-all-from-helm-swoop)
-             ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
-             ("M-m" . helm-multi-swoop-current-mode-from-helm-swoop)
-             ;; Move up and down like isearch
-             ("C-r" . helm-previous-line)
-             ("C-s" . helm-next-line))
-       :config
-       ;; Save buffer when helm-multi-swoop-edit complete
-       (setq helm-multi-swoop-edit-save t
-
-             ;; If this value is t, split window inside the current window
-             helm-swoop-split-with-multiple-windows nil
-
-             ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
-             helm-swoop-split-direction 'split-window-horizontally
-
-             ;; If nil, you can slightly boost invoke speed in exchange for text color
-             helm-swoop-speed-or-color t
-
-             ;; ;; Go to the opposite side of line from the end or beginning of line
-             helm-swoop-move-to-line-cycle nil
-
-             ;; Optional face for line numbers
-             ;; Face name is `helm-swoop-line-number-face`
-             helm-swoop-use-line-number-face t
-
-             ;; If you prefer fuzzy matching
-             helm-swoop-use-fuzzy-match nil))
-   #+END_SRC
-
-   Let’s enable a git-aware grep search
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-git-grep
-       :defer t
-       :after helm)
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-ls-git
-       :after helm)
-   #+END_SRC
-
-   Let’s add a helm module to auto-complete full lines.
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-lines
-       :commands (helm-lines))
-   #+END_SRC
-
-   Let’s add [[https://github.com/dantecatalfamo/helm-atoms][reverse variable lookup]]!
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-atoms
-       :after helm)
-   #+END_SRC
-
-   Finally, let’s use helm for connecting to remote hosts (via TRAMP).
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-tramp
-       :disabled
-       :config
-       (setq tramp-default-method "ssh"))
-   #+END_SRC
-
    #+BEGIN_SRC emacs-lisp
      (use-package ssh-config-mode
        :mode ".ssh/config$")
@@ -1607,7 +1280,6 @@
              `(,(expand-file-name "etc/yasnippet/snippets" base-emacs-directory)
                ,(car (file-expand-wildcards
                       (expand-file-name "straight/repos/yasnippet-snippets/snippets" base-emacs-directory)))))
-       (add-to-list 'yas-prompt-functions 'yas-helm-prompt)
        ;; Completing point by some yasnippet key
 
        (defun yas-vertico-expand ()
@@ -1631,24 +1303,6 @@
                (delete-char (- init-word original-point))
                (insert key)
                (yas-expand)))))
-
-       (defun yas-helm-prompt (prompt choices &optional display-fn)
-         "Use helm to select a snippet. Put this into `yas-prompt-functions.'"
-         (interactive)
-         (setq display-fn (or display-fn 'identity))
-         (let (tmpsource cands result rmap)
-           (setq cands (mapcar (lambda (x) (funcall display-fn x)) choices))
-           (setq rmap (mapcar (lambda (x) (cons (funcall display-fn x) x)) choices))
-           (setq tmpsource
-                 (list
-                  (cons 'name prompt)
-                  (cons 'candidates cands)
-                  '(action . (("Expand" . (lambda (selection) selection))))
-                  ))
-           (setq result (helm-other-buffer '(tmpsource) "*helm-select-yasnippet"))
-           (if (null result)
-               (signal 'quit "user quit!")
-             (cdr (assoc result rmap)))))
 
        (pretty-hydra-define hydra-yasnippet
          (:color teal :quit-key "q")
@@ -1883,9 +1537,6 @@
                  ("PDF" (or (name . "\*\.\\(pdf|PDF\\)$")
                             (mode . doc-view-mode)))
                  ("Dired" (derived-mode . dired-mode))
-                 ("Helm" (or (name . "^\*helm[ -].+\*")
-                             (mode . helm-rg--bounce-mode)
-                             (derived-mode . helm-major-mode)))
                  ("Help" (or (mode . help-mode)
                              (mode . Info-mode)
                              (mode . helpful-mode)
@@ -1952,8 +1603,6 @@
             (or
              (string-prefix-p "*epc" name)
              (string-prefix-p "*tramp" name)
-             (string-prefix-p "*helm" name)
-             (string-prefix-p "*Helm" name)
              (string-prefix-p "*Compile-Log*" name)
              (string-prefix-p "*lsp" name)
              (and (string-prefix-p "magit" name)
@@ -2177,7 +1826,7 @@
       :config
       (projectile-mode) ;; activate projectile-mode everywhere
       (setq projectile-mode-line-prefix " ")
-      (setq projectile-completion-system 'helm)
+      (setq projectile-completion-system 'auto)
       (setq projectile-require-project-root nil)
       (setq projectile-enable-caching t) ;; enable caching for projectile-mode
       ;; (setq projectile-project-search-path '(my-private-repos-dir my-default-project-root))
@@ -2199,16 +1848,6 @@
       (when (boundp 'my-default-tools-dir)
         (cl-loop for project in (f-directories my-private-tools-dir (lambda (dir) (projectile-root-top-down dir)))
                  do (projectile-add-known-project project))))
-  #+END_SRC
-
-  I use [[https://github.com/bbatsov/helm-projectile][helm-projectile]] to manage my projects (mostly git projects).
-  #+BEGIN_SRC emacs-lisp
-    (use-package helm-projectile
-      :delight (projectile-mode)
-      :after helm
-      :bind ("C-c p" . helm-projectile-switch-project)
-      :config
-      (helm-projectile-on))
   #+END_SRC
 
 * Tramp
@@ -2426,21 +2065,7 @@
                                  (org-agenda-files :maxlevel . 2))
             org-refile-use-outline-path 'file
             org-outline-path-complete-in-steps nil
-            org-refile-allow-creating-parent-nodes 'confirm
-            org-completing-read 'helm--completing-read-default)
-
-      ;; always activate helm-mode before org-refile
-      ;; (advice-add 'org-refile :around
-      ;;             (defun run-with-helm (fun &rest args)
-      ;;               "Run function with helm-mode enabled."
-      ;;               (interactive)
-      ;;               (let (helm-mode-active helm-mode)
-      ;;                 (unless helm-mode-active (helm-mode 1))
-      ;;                 (funcall fun)
-      ;;                 (unless helm-mode-active (helm-mode 0)))))
-      ;; EDIT: I have found how to disable helm completion for specific commands,
-      ;; so I don’t need this anymore. I just use helm by default and disable it
-      ;; where I want.
+            org-refile-allow-creating-parent-nodes 'confirm)
 
       (setq org-agenda-custom-commands
             '(("e" "Work only"
@@ -2763,11 +2388,6 @@
       :config (setq org-habit-following-days 30
                     org-habit-preceding-days 4
                     org-habit-graph-column 65))
-  #+END_SRC
-
-  #+BEGIN_SRC emacs-lisp
-    (use-package helm-org-ql
-      :config (setq org-directory my-private-org-dir))
   #+END_SRC
 
   I use org-super-agenda to display relevant information in a nicer way.
@@ -3375,10 +2995,6 @@
               lsp-ui-peek-list-width 60
               lsp-ui-peek-peek-height 25))
 
-      (use-package helm-lsp
-        :disabled
-        :after lsp-mode)
-
       (use-package dap-mode
         :disabled
         :after lsp-mode
@@ -3568,7 +3184,7 @@
                    (kbd "C-d") 'comint-delchar-or-eof-or-kill-buffer)))
 
      (use-package shell-pop
-       :bind (:map shell-mode-map ("C-c C-l" . helm-comint-input-ring))
+       :bind (:map shell-mode-map ("C-c C-l" . comint-input-ring))
        :config
        (setq shell-pop-default-directory nil)
        (setq shell-pop-shell-type
@@ -4398,18 +4014,6 @@
 
     (use-package mu4e-jump-to-list :after mu4e)
 
-    (use-package helm-mu
-      :after mu4e helm
-      :bind ( :map mu4e-main-mode-map
-              ("c" . helm-mu-contacts)
-              ("C-S-s" . helm-mu)
-              :map mu4e-view-mode-map
-              ("c" . helm-mu-contacts)
-              ("C-S-s" . helm-mu)
-              :map mu4e-headers-mode-map
-              ("c" . helm-mu-contacts)
-              ("C-S-s" . helm-mu)))
-
     (use-package mu4e-query-fragments
       :after mu4e
       :config
@@ -4496,10 +4100,6 @@
        ("Navigation"
         (("B" beginend-global-mode                      "begin-end"            :toggle t)
          ("y" ivy-mode                                  "ivy"                  :toggle t)
-         ("n" helm-mode                                 "helm"                 :toggle t)
-         ("k" (if (eq helm-split-window-default-side 'other)
-                  (setq helm-split-window-default-side 'right)
-                (setq helm-split-window-default-side 'other))        "helm toggle split")
          ("g" toggle-god-mode                           "god"                  :toggle god-local-mode)
          ("M" minimap-mode                              "minimap"              :toggle t)
          ("t" treemacs                                  "treemacs"                      )
