@@ -475,26 +475,6 @@
       (global-dot-mode))
   #+END_SRC
 
-  Text completion is everything. The order in which the completion functions are called makes quite a difference.
-  #+BEGIN_SRC emacs-lisp
-    (use-package hippie-exp
-      :straight nil
-      :bind ("M-/" . hippie-expand)
-      :config
-      (setq completion-styles '(flex basic partial-completion emacs22))
-      (setq hippie-expand-try-functions-list
-            '(try-complete-file-name-partially
-              try-complete-file-name
-              try-expand-list
-              try-expand-all-abbrevs
-              try-expand-dabbrev
-              try-expand-dabbrev-all-buffers
-              try-expand-dabbrev-from-kill
-              try-complete-lisp-symbol-partially
-              try-complete-lisp-symbol
-              try-expand-line)))
-  #+END_SRC
-
 * Modal editing
   I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor becomes red when in god-mode to make it more visible.
   #+BEGIN_SRC emacs-lisp
@@ -1103,8 +1083,64 @@
        :custom-face (phi-search-selection-face ((t (:inherit isearch :background "dark orange")))))
    #+END_SRC
 
-* Completion & help
-** Completion
+* Completion
+
+  Case-insensitive policy:
+  #+BEGIN_SRC emacs-lisp
+    (setq completion-ignore-case t
+          pcomplete-ignore-case t
+          read-file-name-completion-ignore-case t
+          read-buffer-completion-ignore-case t)
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+     (use-package browse-kill-ring
+       :config
+       (browse-kill-ring-default-keybindings)
+       (setq browse-kill-ring-quit-action 'save-and-restore))
+  #+END_SRC
+
+** Dabbrev
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package dabbrev
+
+       ;; Swap M-/ and C-M-/
+       ;; :bind (("M-/" . dabbrev-completion)
+       ;;        ("C-M-/" . dabbrev-expand))
+       ;; Other useful Dabbrev configurations.
+       :custom
+       (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
+   #+END_SRC
+
+** Hippie expand
+
+   The order in which the completion functions are called makes quite a difference.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package hippie-exp
+       :straight nil
+       :bind ("M-/" . hippie-expand)
+       :config
+       (setq completion-styles '(flex basic partial-completion emacs22))
+       (setq hippie-expand-try-functions-list
+             '(try-complete-file-name-partially
+               try-complete-file-name
+               try-expand-dabbrev-visible
+               try-expand-dabbrev
+               try-expand-dabbrev-from-kill
+               try-expand-dabbrev-all-buffers
+               try-expand-all-abbrevs
+               try-expand-list
+               try-complete-lisp-symbol-partially
+               try-complete-lisp-symbol
+               try-expand-line)))
+
+   #+END_SRC
+
+
+** Company
+
    #+BEGIN_SRC emacs-lisp
      (use-package company
        :hook (prog-mode . global-company-mode)
@@ -1124,18 +1160,13 @@
 
      (use-package company-box
        :hook (company-mode . company-box-mode))
+   #+END_SRC
 
      (use-package browse-kill-ring
        :config
        (browse-kill-ring-default-keybindings)
        (setq browse-kill-ring-quit-action 'save-and-restore))
 
-     ;; case-insensitive policy
-     (setq completion-ignore-case t
-           pcomplete-ignore-case t
-           read-file-name-completion-ignore-case t
-           read-buffer-completion-ignore-case t)
-   #+END_SRC
 
 ** Undo
    [[http://www.dr-qubit.org/undo-tree.html][undo-tree]] is a powerful undo/redo mode that treats undo history as a tree.
