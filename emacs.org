@@ -1116,42 +1116,6 @@
        (setq browse-kill-ring-quit-action 'save-and-restore))
 
 
-** Undo
-   [[http://www.dr-qubit.org/undo-tree.html][undo-tree]] is a powerful undo/redo mode that treats undo history as a tree.
-   #+BEGIN_SRC emacs-lisp
-     (use-package undo-tree
-       :disabled
-       :demand
-       :pretty-hydra
-       ((:color teal :quit-key "q")
-        ("Navigate"
-         (("p" undo-tree-undo "↶ undo" :color red)
-          ("n" undo-tree-redo "↷ redo" :color red))
-         "Manage"
-         (("v" undo-tree-visualize "visualize")
-          ("s" undo-tree-save-history "save")
-          ("l" undo-tree-load-history "load"))))
-       :bind (("C-M-/" . undo-tree-redo)
-              ("C-c u" . undo-tree-hydra/body))
-       :config
-       (setq undo-tree-visualizer-timestamps t
-             undo-tree-enable-undo-in-region nil
-             undo-tree-visualizer-diff t
-             undo-tree-auto-save-history t
-             undo-limit 8000000
-             undo-outer-limit 3000000)
-       (global-undo-tree-mode))
-   #+END_SRC
-
-   [[https://github.com/emacsmirror/undo-fu][undo-fu]] is more robust alternative to undo-tree (which gets in the way a lot…) :
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package undo-fu
-       :bind (("C-/" . undo-fu-only-undo)
-              ("C-M-/" . undo-fu-only-redo)
-              ("C-c u" . undo-fu-only-redo-all)))
-   #+END_SRC
-
    #+BEGIN_SRC emacs-lisp
      (use-package ssh-config-mode
        :mode ".ssh/config$")
@@ -1250,6 +1214,42 @@
    #+END_SRC
 
 * Text manipulation
+** Undo
+   [[http://www.dr-qubit.org/undo-tree.html][undo-tree]] is a powerful undo/redo mode that treats undo history as a tree.
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       :disabled
+       :demand
+       :pretty-hydra
+       ((:color teal :quit-key "q")
+        ("Navigate"
+         (("p" undo-tree-undo "↶ undo" :color red)
+          ("n" undo-tree-redo "↷ redo" :color red))
+         "Manage"
+         (("v" undo-tree-visualize "visualize")
+          ("s" undo-tree-save-history "save")
+          ("l" undo-tree-load-history "load"))))
+       :bind (("C-M-/" . undo-tree-redo)
+              ("C-c u" . undo-tree-hydra/body))
+       :config
+       (setq undo-tree-visualizer-timestamps t
+             undo-tree-enable-undo-in-region nil
+             undo-tree-visualizer-diff t
+             undo-tree-auto-save-history t
+             undo-limit 8000000
+             undo-outer-limit 3000000)
+       (global-undo-tree-mode))
+   #+END_SRC
+
+   [[https://github.com/emacsmirror/undo-fu][undo-fu]] is more robust alternative to undo-tree (which gets in the way a lot…) :
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-fu
+       :bind (("C-/" . undo-fu-only-undo)
+              ("C-M-/" . undo-fu-only-redo)
+              ("C-c u" . undo-fu-only-redo-all)))
+   #+END_SRC
+
 ** Region
    #+BEGIN_SRC emacs-lisp
      (use-package expand-region
