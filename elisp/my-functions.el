@@ -382,7 +382,7 @@ Also make frame fullscreen. Otherwise, open a new scratch
   (when dir (find-file dir))
   (magit-log-all (car (magit-log-arguments)))
   (delete-other-windows)
-  (magit-status-internal)
+  (magit-status)
   (other-window 1)
   (magit-fetch-all (magit-fetch-arguments))
   (goto-char (point-min)))
