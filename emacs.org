@@ -5567,7 +5567,10 @@
                  ((daemonp)
                   (progn
                     (when (fboundp 'beacon-mode)       (beacon-mode -1))
-                    (when (fboundp 'centaur-tabs-mode) (centaur-tabs-mode -1))))
+                    (when (fboundp 'centaur-tabs-mode) (centaur-tabs-mode -1))
+                    (when (boundp 'my-private-frame-font-size)
+                      (set-face-attribute 'default nil :height my-private-frame-font-size)
+                      (set-fira-font-if-possible))))
                  (t
                   (progn
                     (when (fboundp 'beacon-mode)       (beacon-mode))
