@@ -598,13 +598,6 @@
         (doom-themes-org-config))
     #+END_SRC
 
-*** Alternative themes
-    #+BEGIN_SRC emacs-lisp
-      (use-package amethyst
-        :defer t
-        :straight '(amethyst :host github :repo "ashton314/amethyst"))
-    #+END_SRC
-
 ** Zoom
    I use [[https://github.com/purcell/default-text-scale][default-text-scale]] to zoom in and out the frames of the current instance of emacs.
    #+BEGIN_SRC emacs-lisp
@@ -875,9 +868,6 @@
 
   More navigation commands:
   #+BEGIN_SRC emacs-lisp
-    (use-package imenu-anywhere
-      :bind ("C-c ." . helm-imenu-anywhere))
-
     (use-package dumb-jump
       :bind (:map prog-mode-map
                   ("C-." . xref-find-definitions)
@@ -1942,7 +1932,6 @@
                              (mode . helpful-mode)
                              (derived-mode . man-common)))
                  ("mu4e"  (name . "\*mu4e\*"))
-                 ("Elfeed"  (name . "\*elfeed-.+\*"))
                  ("Magit" (derived-mode . magit-mode))
                  ("ERC" (derived-mode . erc-mode))
                  ("Emacs" (or (mode . diary-mode)
@@ -2170,22 +2159,6 @@
              git-gutter:hide-gutter t))
    #+END_SRC
 
-** Gitlab
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-gitlab
-       :disabled
-       :ensure gitlab
-       :config
-       (when (boundp 'my-private-gitlab-host)
-         (setq gitlab-host my-private-gitlab-host))
-       (when (boundp 'my-private-gitlab-username)
-         (setq gitlab-username my-private-gitlab-username))
-       (when (boundp 'my-private-gitlab-password)
-         (setq gitlab-password my-private-gitlab-password))
-       (when (boundp 'my-private-gitlab-token-id)
-         (setq gitlab-token-id my-private-gitlab-token-id)))
-   #+END_SRC
-
 ** Github
    #+BEGIN_SRC emacs-lisp
      (use-package github-review
@@ -2248,7 +2221,6 @@
       (setq projectile-completion-system 'helm)
       (setq projectile-require-project-root nil)
       (setq projectile-enable-caching t) ;; enable caching for projectile-mode
-      (setq projectile-switch-project-action 'projectile-vc) ;; magit-status or svn
       ;; (setq projectile-project-search-path '(my-private-repos-dir my-default-project-root))
       (setq projectile-switch-project-action #'ale/open-project)
       (def-projectile-commander-method ?d
@@ -3734,22 +3706,6 @@
    #+BEGIN_SRC emacs-lisp
      (use-package redshank
        :hook (lisp-data-mode . redshank-mode))
-   #+END_SRC
-
-** Clojure
-   #+BEGIN_SRC emacs-lisp
-     (use-package clojure-mode
-       :disabled
-       :config
-       ;; (setq cider-font-lock-dynamically nil)
-       (setq cider-repl-use-pretty-printing t
-             helm-cider-mode t))
-
-     (use-package cider
-       :after clojure-mode)
-
-     (use-package helm-cider
-       :after clojure-mode)
    #+END_SRC
 
 ** Sql
@@ -5463,37 +5419,11 @@
      (use-package darkroom :defer t)
    #+END_SRC
 
-** Music
-   #+BEGIN_SRC emacs-lisp
-     (use-package helm-spotify-plus :disabled)
-   #+END_SRC
-
-** Videos
-   #+BEGIN_SRC emacs-lisp
-     (use-package ytel
-       :bind (:map ytel-mode-map
-                   ("<RET>" . ytel-watch))
-       :config
-       (defun ytel-watch ()
-         "Stream video at point in mpv."
-         (interactive)
-         (let* ((video (ytel-get-current-video))
-                (id    (ytel-video-id video))
-                (url (concat "https://www.youtube.com/watch?v=" id))
-                (url (concat "https://www.youtube.com/watch?v=" id)))
-           (message (concat "Playing " url "…"))
-           (start-process "youtube" nil
-                          "smplayer"
-                          url))))
-   #+END_SRC
-
 ** Games
 *** Typing
     #+BEGIN_SRC emacs-lisp
       (use-package speed-type :defer t)
-    #+END_SRC
 
-    #+BEGIN_SRC emacs-lisp
       (use-package monkeytype :defer t)
     #+END_SRC
 
@@ -5502,66 +5432,7 @@
       (use-package 2048-game :defer t)
 
       (use-package vimgolf :commands vimgolf)
-
-      (use-package slime-volleyball :defer t)
-
-      (use-package fireplace :defer t)
     #+END_SRC
-
-** News
-*** RSS feeds
-**** Avandu
-     Avandu is a gateway to Tiny Tiny RSS.
-     #+BEGIN_SRC emacs-lisp
-       (use-package avandu
-         :bind ( :map avandu-article-mode-map
-                 ("p" . previous-line)
-                 ("n" . next-line)
-                 ("l" . recenter-top-bottom)
-                 :map avandu-overview-map
-                 ("<tab>" . avandu-next-feed)
-                 ("<backtab>" . avandu-previous-feed)
-                 ("l" . recenter-top-bottom)
-                 ("v" . scroll-up-command))
-         :config
-         (when (boundp 'my-private-personal-tt-rss-api-url)
-           (setq avandu-tt-rss-api-url my-private-personal-tt-rss-api-url))
-         (when (boundp 'my-private-personal-tt-rss-username)
-           (setq avandu-user my-private-personal-tt-rss-username))
-         (when (boundp 'my-private-personal-tt-rss-password)
-           (setq avandu-password my-private-personal-tt-rss-password)))
-     #+END_SRC
-
-**** Elfeed
-     #+BEGIN_SRC emacs-lisp
-       (use-package elfeed
-         :defer t
-         :config
-         ;; (elfeed-protocol-enable)
-         (when (boundp 'my-private-feeds)
-           (setq elfeed-feeds my-private-feeds))
-
-         (setq elfeed-search-title-max-width 120
-               elfeed-use-curl nil
-               elfeed-protocol-ttrss-maxsize 200 ;; bigger than 200 is invalid
-               ))
-
-       (use-package elfeed-org
-         :defer t
-         :after (elfeed org)
-         :config
-         (elfeed-org)
-         (setq rmh-elfeed-org-auto-ignore-invalid-feeds t
-               rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org")))
-     #+END_SRC
-
-*** Stories
-    #+BEGIN_SRC emacs-lisp
-      (use-package helm-lobsters
-        :commands helm-lobsters)
-    #+END_SRC
-
-*** xkcd
 
     #+BEGIN_SRC emacs-lisp
       (use-package xkcd
