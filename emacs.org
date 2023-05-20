@@ -2367,7 +2367,8 @@
       ("\\.adoc" . adoc-mode))
   #+END_SRC
 
-* Org-mode
+* Org
+
   #+BEGIN_SRC emacs-lisp
     (use-package org
       :straight (:type built-in) ;; compatibility problems between versions of org…
