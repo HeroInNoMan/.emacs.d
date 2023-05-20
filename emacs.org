@@ -5532,7 +5532,21 @@
         :bind (:map xkcd-mode-map
                     ("n" . xkcd-next)
                     ("p" . xkcd-prev))
-        :defer t)
+        :config
+        (define-key xkcd-mode-map (kbd "+")
+                    (lambda () (interactive)
+                      (unless (or (eq last-command 'image-decrease-size)
+                                  (eq last-command 'image-increase-size))
+                        (goto-char (point-min))
+                        (forward-line))
+                      (image-increase-size)))
+        (define-key xkcd-mode-map (kbd "-")
+                    (lambda () (interactive)
+                      (unless (or (eq last-command 'image-decrease-size)
+                                  (eq last-command 'image-increase-size))
+                        (goto-char (point-min))
+                        (forward-line))
+                      (image-decrease-size))))
     #+END_SRC
 
 * Epilogue
