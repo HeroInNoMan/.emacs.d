@@ -2258,7 +2258,8 @@
       (setq org-hide-emphasis-markers t
             org-adapt-indentation t
             org-tags-column -80
-            org-ellipsis " ▼")
+            org-ellipsis " ▼"
+            org-imenu-depth 3)
 
       ;; org log
       (setq org-log-done 'time
