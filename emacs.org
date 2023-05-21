@@ -15,6 +15,7 @@
 #+HTML_HEAD: <link rel=stylesheet type=text/css href=org.css />
 
 * Startup
+
   Display emacs startup time, with the number of garbage collections during the process.
   #+BEGIN_SRC emacs-lisp
     ;; Use a hook so the message doesn't get clobbered by other messages.
@@ -100,6 +101,7 @@
   #+END_SRC
 
 * Emacs directory
+
   Let’s keep ~~/.emacs.d~ tidy:
   #+BEGIN_SRC emacs-lisp
     (use-package no-littering
@@ -136,6 +138,7 @@
   #+END_SRC
 
 * Custom functions
+
   My custom (often stolen) lisp code is stored in ~elisp/my-functions.el~.
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
@@ -161,6 +164,7 @@
   #+END_SRC
 
 * Help
+
   [[https://github.com/justbur/emacs-which-key][which-key]] displays all available bindings for the prefix that has just been typed (replaces [[https://github.com/kai2nenobu/guide-key][guide-key]]).
   #+BEGIN_SRC emacs-lisp
     (use-package which-key
@@ -202,212 +206,175 @@
   #+END_SRC
 
 * Defaults
+
   Let’s redefine some basic behaviour:
 
-  First, let’s remove menus, toolbar, scrollbar, fringes.
-  #+BEGIN_SRC emacs-lisp
-    (menu-bar-mode -1)
-    (when (fboundp 'tool-bar-mode)
-      (tool-bar-mode -1))
-    (when (fboundp 'scroll-bar-mode)
-      (scroll-bar-mode -1))
-    (when (fboundp 'horizontal-scroll-bar-mode)
-      (horizontal-scroll-bar-mode -1))
-    (when (display-graphic-p)
-      (fringe-mode 0))
-  #+END_SRC
+** Decoration
 
-  Let’s use UTF-8 everywhere:
-  #+BEGIN_SRC emacs-lisp
-    (use-package mule
-      :straight nil
-      :config
-      (prefer-coding-system       'utf-8)
-      (set-default-coding-systems 'utf-8)
-      (set-terminal-coding-system 'utf-8)
-      (set-keyboard-coding-system 'utf-8)
-      (setq default-buffer-file-coding-system 'utf-8))
-  #+END_SRC
+   First, let’s remove menus, toolbar, scrollbar, fringes.
+   #+BEGIN_SRC emacs-lisp
+     (menu-bar-mode -1)
+     (when (fboundp 'tool-bar-mode)
+       (tool-bar-mode -1))
+     (when (fboundp 'scroll-bar-mode)
+       (scroll-bar-mode -1))
+     (when (fboundp 'horizontal-scroll-bar-mode)
+       (horizontal-scroll-bar-mode -1))
+     (when (display-graphic-p)
+       (fringe-mode 0))
+   #+END_SRC
 
-  Some environments don’t handle dead keys.
-  #+BEGIN_SRC emacs-lisp
-    (use-package iso-transl :straight nil :defer t)
-  #+END_SRC
+** Encoding
 
-  Let’s [[https://github.com/iqbalansari/emacs-emojify][emojify]] things :
-  #+BEGIN_SRC emacs-lisp
-    (use-package emojify
-      :hook ((org-mode erc-mode) . (lambda () (emojify-mode t))))
-  #+END_SRC
+   Let’s use UTF-8 everywhere:
+   #+BEGIN_SRC emacs-lisp
+     (use-package mule
+       :straight nil
+       :config
+       (prefer-coding-system       'utf-8)
+       (set-default-coding-systems 'utf-8)
+       (set-terminal-coding-system 'utf-8)
+       (set-keyboard-coding-system 'utf-8)
+       (setq default-buffer-file-coding-system 'utf-8))
+   #+END_SRC
 
-  Some commands are disabled by default, let’s enable them:
-  #+BEGIN_SRC emacs-lisp
-    (put 'downcase-region 'disabled nil)
-    (put 'upcase-region 'disabled nil)
-    (put 'narrow-to-region 'disabled nil)
-    (put 'narrow-to-page 'disabled nil)
-    (put 'scroll-left 'disabled nil)
-  #+END_SRC
+   Some environments don’t handle dead keys.
+   #+BEGIN_SRC emacs-lisp
+     (use-package iso-transl :straight nil :defer t)
+   #+END_SRC
 
-  This is supposed to improve performances when dealing with very long lines:
-  #+BEGIN_SRC emacs-lisp
-    (setq bidi-paragraph-direction 'left-to-right)
+** Emoji
 
-    (when (version<= "27.1" emacs-version)
-      (progn
-        (setq bidi-inhibit-bpa t)
-        (global-so-long-mode 1)))
-  #+END_SRC
+   Let’s [[https://github.com/iqbalansari/emacs-emojify][emojify]] things :
+   #+BEGIN_SRC emacs-lisp
+     (use-package emojify
+       :hook ((org-mode erc-mode) . (lambda () (emojify-mode t))))
+   #+END_SRC
 
-  Let’s add some auto-backup configuration:
-  #+BEGIN_SRC emacs-lisp
-    (use-package saveplace
-      :straight nil
-      :config
-      (setq-default save-place t)
-      (setq save-place-file (expand-file-name "places" base-emacs-directory)
-            vc-make-backup-files t ;; make backups of files, even when they're in version control
-            backup-directory-alist `(("." . ,(expand-file-name "backups"
-                                                               base-emacs-directory)))))
-  #+END_SRC
+** Disabled commands
 
-  More miscellaneous configuration and bindings, grouped by built-in packages:
-  #+BEGIN_SRC emacs-lisp
-    (use-package simple
-      :straight nil
-      :bind
-      ("C-x C-u" . upcase-dwim)
-      ("C-x C-l" . downcase-dwim)
-      ("C-x C-c" . capitalize-dwim)
-      ("M-%" . count-words)
-      ("C-x C-z" . repeat-complex-command)
-      ("C-c w" . delete-trailing-whitespace)
-      ("M-«" . beginning-of-buffer)
-      ("M-»" . end-of-buffer)
-      :config
-      (setq global-mark-ring-max 256
-            set-mark-command-repeat-pop t
-            mark-ring-max 256
-            kill-ring-max 256
-            line-number-mode t    ;; Always display line number
-            column-number-mode t  ;; and column number
-            shift-select-mode nil ;; don't use shift to mark things
-            save-interprogram-paste-before-kill t))
-  #+END_SRC
+   Some commands are disabled by default, let’s enable them:
+   #+BEGIN_SRC emacs-lisp
+     (put 'downcase-region 'disabled nil)
+     (put 'upcase-region 'disabled nil)
+     (put 'narrow-to-region 'disabled nil)
+     (put 'narrow-to-page 'disabled nil)
+     (put 'scroll-left 'disabled nil)
+   #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    (autoload 'zap-up-to-char "misc"
-      "Kill up to, but not including ARGth occurrence of CHAR." t)
-    (global-set-key (kbd "M-z") 'zap-up-to-char)
+** Backup
 
-    (setq apropos-do-all t
-          mouse-yank-at-point t
-          require-final-newline t
-          load-prefer-newer t)
-    ;; Answer questions with y/n
-    (defalias 'yes-or-no-p 'y-or-n-p)
+   Let’s add some auto-backup configuration:
+   #+BEGIN_SRC emacs-lisp
+     (use-package saveplace
+       :straight nil
+       :config
+       (setq-default save-place t)
+       (setq save-place-file (expand-file-name "places" base-emacs-directory)
+             vc-make-backup-files t ;; make backups of files, even when they're in version control
+             backup-directory-alist `(("." . ,(expand-file-name "backups"
+                                                                base-emacs-directory)))))
+   #+END_SRC
 
-    ;; Transparently open compressed files
-    (auto-compression-mode t)
+** Miscellaneous
 
-    ;; some more config
-    (setq recentf-max-saved-items 100  ;; just 20 is too recent
-          delete-by-moving-to-trash t ;; move files to trash when deleting
-          savehist-additional-variables '(register-alist))
-    (recentf-mode 1)
+   This is supposed to improve performances when dealing with very long lines:
+   #+BEGIN_SRC emacs-lisp
+     (setq bidi-paragraph-direction 'left-to-right)
 
-    (use-package savehist
-      :init (savehist-mode))
+     (when (version<= "27.1" emacs-version)
+       (progn
+         (setq bidi-inhibit-bpa t)
+         (global-so-long-mode 1)))
+   #+END_SRC
 
-    ;; Lines should be 80 characters wide, not 70
-    (setq-default fill-column 80)
+   More miscellaneous configuration and bindings, grouped by built-in packages:
+   #+BEGIN_SRC emacs-lisp
+     (use-package simple
+       :straight nil
+       :bind
+       ("C-x C-u" . upcase-dwim)
+       ("C-x C-l" . downcase-dwim)
+       ("C-x C-c" . capitalize-dwim)
+       ("M-%" . count-words)
+       ("C-x C-z" . repeat-complex-command)
+       ("C-c w" . delete-trailing-whitespace)
+       ("M-«" . beginning-of-buffer)
+       ("M-»" . end-of-buffer)
+       :config
+       (setq global-mark-ring-max 256
+             set-mark-command-repeat-pop t
+             mark-ring-max 256
+             kill-ring-max 256
+             line-number-mode t    ;; Always display line number
+             column-number-mode t  ;; and column number
+             shift-select-mode nil ;; don't use shift to mark things
+             save-interprogram-paste-before-kill t))
+   #+END_SRC
 
-    ;; fill or unfill paragraph (M-q as a toggle)
-    (defun endless/fill-or-unfill ()
-      "Like `fill-paragraph', but unfill if used twice."
-      (interactive)
-      (let ((fill-column
-             (if (eq last-command 'endless/fill-or-unfill)
-                 (progn (setq this-command nil)
-                        (point-max))
-               fill-column)))
-        (call-interactively #'fill-paragraph)))
-    (global-set-key [remap fill-paragraph]
-                    #'endless/fill-or-unfill)
+   #+BEGIN_SRC emacs-lisp
+     (autoload 'zap-up-to-char "misc"
+       "Kill up to, but not including ARGth occurrence of CHAR." t)
+     (global-set-key (kbd "M-z") 'zap-up-to-char)
 
-    (global-font-lock-mode t) ;; enable syntax highlighting
-    (blink-cursor-mode -1) ;; no blinking cursor
+     (setq apropos-do-all t
+           mouse-yank-at-point t
+           require-final-newline t
+           load-prefer-newer t)
+     ;; Answer questions with y/n
+     (defalias 'yes-or-no-p 'y-or-n-p)
 
-    (setq-default transient-mark-mode t ;; Show active region
-                  truncate-lines t ;; Don't soft-break lines for me, please
-                  truncate-string-ellipsis "…")
+     ;; Transparently open compressed files
+     (auto-compression-mode t)
 
-    (setq font-lock-maximum-decoration t ;; all possible colours
-          inhibit-startup-screen t ;; No splash screen
-          echo-keystrokes 0.1 ;; Show keystrokes in progress
-          initial-scratch-message nil ;; No *scratch* message
-          initial-major-mode 'text-mode
-          visible-bell nil) ;; No flashing!
-  #+END_SRC
+     ;; some more config
+     (setq recentf-max-saved-items 100  ;; just 20 is too recent
+           delete-by-moving-to-trash t ;; move files to trash when deleting
+           savehist-additional-variables '(register-alist))
+     (recentf-mode 1)
 
-  I don’t usually display line numbers, but I want the abilitity to do so, and also to display relative line numbering, which is handy to navigate using numeric arguments.
-  #+BEGIN_SRC emacs-lisp
-    (use-package linum-relative
-      :defer t
-      :config (setq linum-relative-current-symbol ""))
-  #+END_SRC
+     (use-package savehist
+       :init (savehist-mode))
 
-  [[https://github.com/bbatsov/crux][Crux]] brings a lot of better default behaviour and functions.
-  #+BEGIN_SRC emacs-lisp
-    (use-package crux
-      ;; replace some commands
-      :bind
-      ("C-M-<down>" . crux-duplicate-current-line-or-region)
-      ("C-M-<up>" . crux-duplicate-and-comment-current-line-or-region)
-      ("M-j" . crux-top-join-line)
-      ("M-o" . crux-other-window-or-switch-buffer)
-      ("C-x C-r" . crux-sudo-edit)
-      ("C-S-d" . kill-whole-line)
-      ("C-c i" . crux-cleanup-buffer-or-region)
-      ("M-\"" . ale/new-scratch-or-reuse)
-      ("C-S-o" . crux-smart-open-line-above)
-      ("C-S-j" . crux-smart-open-line)
-      ("C-S-k" . crux-smart-kill-line)
-      ([remap move-beginning-of-line] . crux-move-beginning-of-line)
-      ([remap kill-whole-line] . crux-kill-whole-line)
-      :config
-      (crux-reopen-as-root-mode)
-      ;; advices to make region-aware commands act on whole line if no region
-      (crux-with-region-or-line comment-or-uncomment-region)
-      ;; advices to make region-aware commands act on whole buffer if no region
-      (crux-with-region-or-buffer indent-region)
-      (crux-with-region-or-buffer untabify)
-      (crux-with-region-or-buffer tabify))
-  #+END_SRC
+     ;; Lines should be 80 characters wide, not 70
+     (setq-default fill-column 80)
+
+     ;; fill or unfill paragraph (M-q as a toggle)
+     (defun endless/fill-or-unfill ()
+       "Like `fill-paragraph', but unfill if used twice."
+       (interactive)
+       (let ((fill-column
+              (if (eq last-command 'endless/fill-or-unfill)
+                  (progn (setq this-command nil)
+                         (point-max))
+                fill-column)))
+         (call-interactively #'fill-paragraph)))
+     (global-set-key [remap fill-paragraph]
+                     #'endless/fill-or-unfill)
+
+     (global-font-lock-mode t) ;; enable syntax highlighting
+     (blink-cursor-mode -1) ;; no blinking cursor
+
+     (setq-default transient-mark-mode t ;; Show active region
+                   truncate-lines t ;; Don't soft-break lines for me, please
+                   truncate-string-ellipsis "…")
+
+     (setq font-lock-maximum-decoration t ;; all possible colours
+           inhibit-startup-screen t ;; No splash screen
+           echo-keystrokes 0.1 ;; Show keystrokes in progress
+           initial-scratch-message nil ;; No *scratch* message
+           initial-major-mode 'text-mode
+           visible-bell nil) ;; No flashing!
+   #+END_SRC
+
+   I don’t usually display line numbers, but I want the abilitity to do so, and also to display relative line numbering, which is handy to navigate using numeric arguments.
+   #+BEGIN_SRC emacs-lisp
+     (use-package linum-relative
+       :defer t
+       :config (setq linum-relative-current-symbol ""))
+   #+END_SRC
 
 * Keybindings
-
-  [[https://github.com/alphapapa/defrepeater.el][defrepeater]] is useful to define repeatable key bindings:
-
-  #+BEGIN_SRC emacs-lisp
-    (use-package defrepeater
-      :config
-      (global-set-key [remap increment-number-decimal] (defrepeater 'increment-number-decimal))
-      (global-set-key [remap decrement-number-decimal] (defrepeater 'decrement-number-decimal))
-      (global-set-key [remap goto-last-change]         (defrepeater 'goto-last-change))
-      (global-set-key [remap previous-error]           (defrepeater 'previous-error))
-      (global-set-key [remap next-error]               (defrepeater 'next-error))
-      (global-set-key [remap flycheck-previous-error]  (defrepeater 'flycheck-previous-error))
-      (global-set-key [remap flycheck-next-error]      (defrepeater 'flycheck-next-error))
-      (global-set-key [remap bury-buffer]              (defrepeater 'bury-buffer))
-      (global-set-key [remap shrink-whitespace]        (defrepeater 'shrink-whitespace)))
-  #+END_SRC
-
-  I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
-  #+BEGIN_SRC emacs-lisp
-    (use-package hydra :defer t)
-    (use-package pretty-hydra :defer t)
-  #+END_SRC
 
   Killing emacs; default binding is too easy to hit by accident.
   #+BEGIN_SRC emacs-lisp
@@ -417,22 +384,77 @@
     (global-set-key (kbd "C-x r q") 'kill-emacs) ;; r·eally q·uit
   #+END_SRC
 
-  I never use the minimise command, use the binding for =repeat= instead.
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-z") 'repeat)
-  #+END_SRC
+** Crux
 
-  Vim’s “dot” is a cool macro-like feature. I want that.
-  #+BEGIN_SRC emacs-lisp
-    (use-package dot-mode
-      :disabled
-      :chords ("pz" . dot-mode-execute)
-      :config
-      ;; default bindings I already use
-      (unbind-key "C-." dot-mode-map)
-      (unbind-key "C-c ." dot-mode-map)
-      (global-dot-mode))
-  #+END_SRC
+   [[https://github.com/bbatsov/crux][Crux]] brings a lot of better default behaviour and functions.
+   #+BEGIN_SRC emacs-lisp
+     (use-package crux
+       ;; replace some commands
+       :bind
+       ("C-M-<down>" . crux-duplicate-current-line-or-region)
+       ("C-M-<up>" . crux-duplicate-and-comment-current-line-or-region)
+       ("M-j" . crux-top-join-line)
+       ("M-o" . crux-other-window-or-switch-buffer)
+       ("C-x C-r" . crux-sudo-edit)
+       ("C-S-d" . kill-whole-line)
+       ("C-c i" . crux-cleanup-buffer-or-region)
+       ("M-\"" . ale/new-scratch-or-reuse)
+       ("C-S-o" . crux-smart-open-line-above)
+       ("C-S-j" . crux-smart-open-line)
+       ("C-S-k" . crux-smart-kill-line)
+       ([remap move-beginning-of-line] . crux-move-beginning-of-line)
+       ([remap kill-whole-line] . crux-kill-whole-line)
+       :config
+       (crux-reopen-as-root-mode)
+       ;; advices to make region-aware commands act on whole line if no region
+       (crux-with-region-or-line comment-or-uncomment-region)
+       ;; advices to make region-aware commands act on whole buffer if no region
+       (crux-with-region-or-buffer indent-region)
+       (crux-with-region-or-buffer untabify)
+       (crux-with-region-or-buffer tabify))
+   #+END_SRC
+
+** Repeat
+
+   [[https://github.com/alphapapa/defrepeater.el][defrepeater]] is useful to define repeatable key bindings:
+   #+BEGIN_SRC emacs-lisp
+     (use-package defrepeater
+       :config
+       (global-set-key [remap increment-number-decimal] (defrepeater 'increment-number-decimal))
+       (global-set-key [remap decrement-number-decimal] (defrepeater 'decrement-number-decimal))
+       (global-set-key [remap goto-last-change]         (defrepeater 'goto-last-change))
+       (global-set-key [remap previous-error]           (defrepeater 'previous-error))
+       (global-set-key [remap next-error]               (defrepeater 'next-error))
+       (global-set-key [remap flycheck-previous-error]  (defrepeater 'flycheck-previous-error))
+       (global-set-key [remap flycheck-next-error]      (defrepeater 'flycheck-next-error))
+       (global-set-key [remap bury-buffer]              (defrepeater 'bury-buffer))
+       (global-set-key [remap shrink-whitespace]        (defrepeater 'shrink-whitespace)))
+   #+END_SRC
+
+   I never use the minimise command, use the binding for =repeat= instead.
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-z") 'repeat)
+   #+END_SRC
+
+   Vim’s “dot” is a cool macro-like feature. I want that.
+   #+BEGIN_SRC emacs-lisp
+     (use-package dot-mode
+       :disabled
+       :chords ("pz" . dot-mode-execute)
+       :config
+       ;; default bindings I already use
+       (unbind-key "C-." dot-mode-map)
+       (unbind-key "C-c ." dot-mode-map)
+       (global-dot-mode))
+   #+END_SRC
+
+** Hydra
+
+   I use [[https://github.com/abo-abo/hydra][hydra]] in order to map ranges of key bindings:
+   #+BEGIN_SRC emacs-lisp
+     (use-package hydra :defer t)
+     (use-package pretty-hydra :defer t)
+   #+END_SRC
 
 * Modal editing
   I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor becomes red when in god-mode to make it more visible.
