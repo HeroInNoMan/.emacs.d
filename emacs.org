@@ -117,9 +117,9 @@
         (load-file private-file)))
   #+END_SRC
 
-  Custom file should be loaded early. Edit: let’s try not to use a custom file at all and do everything in ~emacs.org~.
+  I don’t use a ~custom.el~ file, everything is managed within ~emacs.org~.
   #+BEGIN_SRC emacs-lisp
-    (setq-local custom-file-enabled nil) ;; enable / disable custom-file loading
+    (setq-local custom-file-enabled nil) ;; disable custom-file loading
     (setq-default custom-file (expand-file-name "custom.el" base-emacs-directory))
     (when (and custom-file-enabled
                (file-exists-p custom-file))
