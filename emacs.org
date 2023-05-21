@@ -117,13 +117,6 @@
         (load-file private-file)))
   #+END_SRC
 
-  Let’s load all files from the “extra” directory (will happen after init is finished).
-  #+BEGIN_SRC emacs-lisp
-    (use-package load-dir
-      :disabled ;; no exta/ dir to load… maybe someday
-      :config (setq load-dirs (expand-file-name "extra/" base-emacs-directory)))
-  #+END_SRC
-
   Custom file should be loaded early. Edit: let’s try not to use a custom file at all and do everything in ~emacs.org~.
   #+BEGIN_SRC emacs-lisp
     (setq-local custom-file-enabled nil) ;; enable / disable custom-file loading
