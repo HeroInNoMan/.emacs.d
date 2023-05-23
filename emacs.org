@@ -1388,6 +1388,8 @@
          ("M-s e" . consult-isearch-history) ;; orig. isearch-edit-string
          ("M-s l" . consult-line)       ;; needed by consult-line to detect isearch
          ("M-s L" . consult-line-multi) ;; needed by consult-line to detect isearch
+         ;; Yasnippets
+         ("M-s y" . consult-yasnippet) ;;
          ;; Minibuffer history
          :map minibuffer-local-map
          ("C-c C-l" . consult-history)) ;; orig. previous-matching-history-element
@@ -1427,7 +1429,7 @@
             ("/"     consult-find              "find")
             ("g"     consult-git-grep          "git grep")
             ("\\"    consult-git-log-grep      "git log grep")
-            ("y"     consult-yasnippet         "yasnippet"))
+            ("x"     consult-recoll            "recoll"))
            "Tools"
            ((","     quick-calc            "calc")
             ("c"     read-color            "colours")
@@ -1505,6 +1507,9 @@
 
       (use-package consult-git-log-grep
         :custom (consult-git-log-grep-open-function #'magit-show-commit))
+
+      (use-package consult-recoll
+        :if (= 0 (shell-command "hash recoll"))) ;; check if recoll is present on the system
     #+END_SRC
 
 *** [[https://github.com/minad/orderless][Orderless]]
