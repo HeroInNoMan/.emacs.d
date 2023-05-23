@@ -648,18 +648,26 @@
      (use-package beacon :defer t)
    #+END_SRC
 
-** Icons in terminal
-   #+BEGIN_SRC emacs-lisp
-     (use-package font-lock+ :defer t)
+** Icons
 
-     (use-package icons-in-terminal
-       :disabled
-       :straight nil
-       :defer t
-       :load-path (expand-file-name ".local/share/icons-in-terminal/"
-                                    (if (boundp 'my-home-dir) my-home-dir "~")))
-     ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
-   #+END_SRC
+*** Icons in terminal
+    #+BEGIN_SRC emacs-lisp
+      (use-package font-lock+ :defer t)
+
+      (use-package icons-in-terminal
+        :disabled
+        :straight nil
+        :defer t
+        :load-path (expand-file-name ".local/share/icons-in-terminal/"
+                                     (if (boundp 'my-home-dir) my-home-dir "~")))
+      ;; (insert (icons-in-terminal 'oct_flame)) ; C-h f icons-in-terminal[RET] for more info
+    #+END_SRC
+
+*** Nerd-icons
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package nerd-icons)
+    #+END_SRC
 
 ** Colours
 
