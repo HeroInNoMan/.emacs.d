@@ -334,7 +334,10 @@
 
      (use-package savehist
        :init (savehist-mode)
-       (add-to-list 'savehist-additional-variables 'register-alist))
+       (add-to-list 'savehist-additional-variables 'register-alist)
+       (add-to-list 'savehist-additional-variables 'search-ring)
+       (add-to-list 'savehist-additional-variables 'regexp-search-ring)
+       (add-to-list 'savehist-additional-variables 'log-edit-comment-ring))
 
      ;; Lines should be 80 characters wide, not 70
      (setq-default fill-column 80)
