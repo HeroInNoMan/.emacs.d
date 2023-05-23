@@ -2075,6 +2075,8 @@
       :defer t
       :config
       (require 'f)
+      (when (version< (car (cdr (s-split " " (s-trim (shell-command-to-string "fdfind --version"))))) "8.3")
+        (setq projectile-git-fd-args "-H -0 -E .git -tf"))
       (setq projectile-mode-line-prefix " ")
       (setq projectile-completion-system 'auto)
       (setq projectile-require-project-root nil)
