@@ -2073,21 +2073,21 @@
   #+BEGIN_SRC emacs-lisp
     (use-package projectile
       :config
-      (projectile-mode) ;; activate projectile-mode everywhere
       (setq projectile-mode-line-prefix " ")
       (setq projectile-completion-system 'auto)
       (setq projectile-require-project-root nil)
       (setq projectile-enable-caching t) ;; enable caching for projectile-mode
       ;; (setq projectile-project-search-path '(my-private-repos-dir my-default-project-root))
       (setq projectile-switch-project-action #'ale/open-project)
+      (projectile-mode) ;; activate projectile-mode everywhere
       (def-projectile-commander-method ?d
-        "Open project root in dired."
-        (projectile-dired))
+                                       "Open project root in dired."
+                                       (projectile-dired))
 
       (def-projectile-commander-method ?f
-        "Git fetch."
-        (magit-status)
-        (call-interactively #'magit-fetch-current))
+                                       "Git fetch."
+                                       (magit-status)
+                                       (call-interactively #'magit-fetch-current))
       (when (boundp 'my-default-project-root)
         (cl-loop for project in (f-directories my-default-project-root (lambda (dir) (projectile-root-top-down dir)))
                  do (projectile-add-known-project project)))
