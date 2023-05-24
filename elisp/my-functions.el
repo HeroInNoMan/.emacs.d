@@ -393,6 +393,27 @@ Also make frame fullscreen. Otherwise, open a new scratch
   (when (member "Fira Code" (font-family-list))
     (set-frame-font "Fira Code" t t)))
 
+(defun ajust-font-size-to-monitor ()
+  "Ajust the font size according to the monitor resolution."
+  (interactive)
+  (let* ((small-display-p (string= "eDP-1" (alist-get 'name (car (display-monitor-attributes-list)))))
+         (new-font-size (if small-display-p 130 100)))
+    (set-face-attribute 'default nil :height new-font-size)
+    (set-fira-font-if-possible)))
+
+(defun cycle-font-size ()
+  "Cycle between small, big, and very big font size."
+  (interactive)
+  (let* ((small-font 100)
+         (normal-font 130)
+         (big-font 150)
+         (current-size (face-attribute 'default :height))
+         (new-size (cond ((<= current-size small-font) normal-font)
+                         ((<= current-size normal-font) big-font)
+                         (t small-font))))
+    (set-face-attribute 'default nil :height new-size)
+    (set-fira-font-if-possible)))
+
 ;; functions stolen from angrybacon
 (defun ab/date-iso ()
   "Insert the current date, ISO format, eg. 2016-12-09."
