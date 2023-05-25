@@ -85,7 +85,8 @@
       :config
       (key-chord-mode 1)
       (setq key-chord-one-key-delay 0.25)
-      (setq key-chord-two-keys-delay 0.05))
+      (setq key-chord-two-keys-delay 0.05)
+      (setq key-chord-safety-interval-forward 0))
   #+END_SRC
 
   I tried to use [[https://github.com/lastquestion/explain-pause-mode/][explain-pause-mode]] to monitor why emacs sometimes slows down, but it seems to mess with key-chords.
