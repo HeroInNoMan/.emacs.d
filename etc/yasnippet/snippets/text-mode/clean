@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: duncan
+# name: clean
+# key: cl
+# --
+[clean] $0
