@@ -2574,11 +2574,12 @@
                        :prepend t :kill-buffer t) t))
 
       ;; font and faces customization
-      (set-face-attribute 'org-block nil :background
-                          (if (eq 'light frame-background-mode)
-                              (color-darken-name
-                               (face-attribute 'default :background) 15)
-                            (color-lighten-name (face-attribute 'default :background) 15)))
+      ;; TODO fix this section
+      ;; (set-face-attribute 'org-block nil :background
+      ;;                     (if (eq 'light frame-background-mode)
+      ;;                         (color-darken-name
+      ;;                          (face-attribute 'default :background) 15)
+      ;;                       (color-lighten-name (face-attribute 'default :background) 15)))
 
       (setq org-fontify-done-headline t)
       (setq org-todo-keyword-faces
