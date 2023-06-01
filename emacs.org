@@ -2072,7 +2072,9 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package projectile
+      :defer t
       :config
+      (require 'f)
       (setq projectile-mode-line-prefix " ")
       (setq projectile-completion-system 'auto)
       (setq projectile-require-project-root nil)
