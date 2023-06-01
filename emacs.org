@@ -2244,6 +2244,7 @@
       :init (setq org-refile-targets nil
                   org-capture-templates '())
       :bind (("C-c a" . org-agenda)
+             ("<f8>" . org-agenda)
              ("C-c b" . org-switchb)
              ("C-c l" . org-store-link)
              :map org-mode-map
@@ -2258,6 +2259,9 @@
       (org-done
        ((t ( :foreground "PaleGreen"
              :weight bold))))
+      (org-agenda-done
+       ((t ( :foreground "dim grey"
+             :strike-through t))))
       (org-headline-done
        ((((class color) (min-colors 16) (background dark))
          ( :foreground "dim grey"
@@ -2293,6 +2297,14 @@
       (setq org-log-done 'time
             org-log-repeat 'nil)
 
+      ;; refile and completion
+      (setq org-refile-targets '((nil :maxlevel . 9)
+                                 (org-finished-file :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9))
+            org-refile-use-outline-path 'file
+            org-outline-path-complete-in-steps nil
+            org-refile-allow-creating-parent-nodes 'confirm)
+
       ;; org-agenda
       (setq diary-local-file
             (if (boundp 'my-private-local-diary-file)
@@ -2317,31 +2329,78 @@
 
       (setq org-agenda-files (if (boundp 'my-org-agenda-files) my-org-agenda-files nil))
 
-      (setq org-agenda-include-diary t
-            org-agenda-weekend-days '(0 5 6)
-            ;; week-end is friday, saturday, sunday
-            org-agenda-start-day nil
-            org-agenda-start-on-weekday 1
-            ;; org-agenda-start-on-weekday nil
-            org-agenda-span 'week
-            org-agenda-entry-text-maxlines 15
-            org-agenda-sticky t)
-
-      ;; refile and completion
-      (setq org-refile-targets '((nil :maxlevel . 9)
-                                 (org-finished-file :maxlevel . 9)
-                                 (org-agenda-files :maxlevel . 9))
-            org-refile-use-outline-path 'file
-            org-outline-path-complete-in-steps nil
-            org-refile-allow-creating-parent-nodes 'confirm)
+      (setq org-agenda-weekend-days '(0 5 6)
+            ;; org-agenda-entry-text-maxlines 30
+            org-agenda-start-on-weekday 1)
 
       (setq org-agenda-custom-commands
-            '(("e" "Work only"
-               ((org-super-agenda-mode -1)
-                (agenda ""
-                        ((org-agenda-span 3)
-                         (org-agenda-files '(my-private-work-todo-org-file my-private-work-diary-org-file))
-                         (tags "enercoop")))))
+            '(("E" occur-tree "emacs")
+              ("e" "Work (fortnight view)"
+               ((agenda "" ;; block 1 Current fortnight
+                        ((org-agenda-overriding-header "Agenda")
+                         (org-agenda-start-on-weekday 1)
+                         (org-agenda-weekend-days '(0 5 6))
+                         (org-agenda-show-future-repeats nil)
+                         (org-agenda-span 'fortnight)
+                         (org-agenda-include-diary nil)
+                         (org-agenda-remove-tags t)
+                         (org-agenda-sorting-strategy '(time-up
+                                                        priority-down
+                                                        effort-up))))
+                (tags-todo "enercoop" ;; Block 2 All work-related TODOs
+                           ((org-agenda-overriding-header "À faire")
+                            (org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                        'deadline
+                                                        'scheduled))
+                            (org-agenda-sorting-strategy '(todo-state-up
+                                                           priority-down
+                                                           user-defined-down
+                                                           effort-up
+                                                           alpha-up)))))
+               ((org-agenda-files `(,my-private-work-todo-org-file
+                                    ,my-private-work-diary-org-file))
+                (org-agenda-skip-scheduled-if-deadline-is-shown t)
+                (org-agenda-sticky nil)))
+              ("d" "Work (day view)"
+               ((agenda "" ;; block 1 Current day
+                        ((org-agenda-overriding-header "Aujourd’hui")
+                         (org-agenda-span 1)
+                         (org-agenda-entry-types '(:deadline :scheduled))
+                         (org-agenda-include-diary t)
+                         (org-agenda-show-future-repeats 'next)
+                         (org-agenda-remove-tags t)
+                         (org-agenda-sorting-strategy '(time-up priority-down))))
+                (agenda "" ;; block 2 Current + next week
+                        ((org-agenda-overriding-header "Agenda")
+                         (org-agenda-start-on-weekday 1)
+                         (org-agenda-weekend-days '(0 5 6))
+                         (org-agenda-use-time-grid nil)
+                         (org-agenda-span 'fortnight)
+                         (org-agenda-entry-types '(:deadline :scheduled))
+                         (org-agenda-include-diary nil)
+                         (org-agenda-remove-tags t)
+                         ;; (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "habit"))
+                         (org-agenda-sorting-strategy '(time-up priority-down))))
+                (tags-todo "enercoop" ;; Block 3 All work-related TODO items
+                           ((org-agenda-overriding-header "À faire")
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))
+                            (org-agenda-sorting-strategy '(priority-down timestamp-up effort-up alpha-up)))))
+               ((org-agenda-files `(,my-private-work-todo-org-file ,my-private-work-diary-org-file))
+                (org-agenda-sorting-strategy '(priority-down))
+                (org-agenda-skip-scheduled-if-deadline-is-shown t)
+                (org-agenda-sticky nil) ;; a bit too slow to recreate every time
+                (org-agenda-tag-filter '("+enercoop"))))
+              ("p" "Agenda + recent TODOs"
+               ((agenda ""
+                        ((org-agenda-overriding-header "Agenda")
+                         (org-agenda-weekend-days '(0 5 6))
+                         (org-agenda-start-on-weekday nil)
+                         (org-agenda-span 'week)))
+                (alltodo))
+               ((org-agenda-tag-filter '("-enercoop,-pointeur"))
+                (org-agenda-skip-scheduled-if-deadline-is-shown t)))
+
               ("i" "Agenda + important TODOs"
                ((agenda #1="")
                 (tags-todo "+PRIORITY=\"A\"")
@@ -2354,12 +2413,30 @@
                         ((org-agenda-span 7))) ; review upcoming deadlines and appointments
                                             ; type "l" in the agenda to review logged items
                 (stuck "") ; review stuck projects as designated by org-stuck-projects
-                (todo "PROJECT")            ; review all projects
-                (todo "MAYBE")              ; review someday/maybe items
-                (todo "WAITING")))          ; review waiting items
-              ;; ...other commands here
-              ("E" "Emacs TODOs"
-               ((tags-todo "emacs")))))
+                (todo "PROJECT")              ; review all projects
+                (todo "MAYBE")                ; review someday/maybe items
+                (todo "WAITING")))
+              ("P" "Printed agenda"
+               ((agenda "" ((org-agenda-span 7) ;; overview of appointments
+                            (org-agenda-start-on-weekday nil) ;; calendar begins today
+                            (org-agenda-repeating-timestamp-show-all t)
+                            (org-agenda-entry-types '(:timestamp :sexp))))
+                (agenda "" ((org-agenda-span 1)             ; daily agenda
+                            (org-deadline-warning-days 7) ; 7 day advanced warning for deadlines
+                            (org-agenda-todo-keyword-format "[ ]")
+                            (org-agenda-scheduled-leaders '("" ""))
+                            (org-agenda-prefix-format "%t%s")))
+                (todo "TODO" ;; todos sorted by context
+                      ((org-agenda-prefix-format "[ ] %T: ")
+                       (org-agenda-sorting-strategy '(tag-up priority-down))
+                       (org-agenda-todo-keyword-format "")
+                       (org-agenda-overriding-header "\nTasks by Context\n------------------\n"))))
+               ((org-agenda-with-colors nil)
+                (org-agenda-compact-blocks t)
+                (org-agenda-remove-tags t)
+                (ps-number-of-columns 2)
+                (ps-landscape-mode t))
+               ("~/agenda.ps"))))
 
       ;; new lines and separators
       (setq org-blank-before-new-entry
@@ -2656,166 +2733,10 @@
     (use-package org-habit
       :straight nil
       :after org
-      :config (setq org-habit-following-days 30
-                    org-habit-preceding-days 4
-                    org-habit-graph-column 65))
-  #+END_SRC
-
-  I use org-super-agenda to display relevant information in a nicer way.
-  #+BEGIN_SRC emacs-lisp
-    (use-package org-super-agenda
-      :hook (org-agenda-mode . origami-mode)
-      ;; (org-agenda-finalize . ale/org-super-agenda-origami-fold-default)
-      :bind (("<f8>" . hydra-super-agenda/body)
-             :map org-agenda-mode-map
-             ("<tab>" . origami-toggle-node)
-             :map org-super-agenda-header-map
-             ("<tab>" . origami-toggle-node))
-      :custom-face
-      (org-super-agenda-header
-       ((t ( :inherit org-agenda-structure
-             :foreground "#D3d3d3"
-             :overline "#778899"))))
       :config
-      (org-super-agenda-mode 1) ;; always enable, disable by setting `org-super-agenda-groups' to nil.
-      (defvar ale/org-super-agenda-auto-show-groups
-        '("IMPORTANT" "RAPIDE" "AUJOURD’HUI" "EN COURS""EN ATTENTE"
-          "TRAVAIL" "EN RETARD" "CYCLIQUES" "EMPRUNTS" "EMACS" "Other items"))
-      (defun ale/org-super-agenda-origami-fold-default ()
-        "Fold certain groups by default in Org Super Agenda buffer."
-        (forward-line 2)
-        (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
-                 while (origami-forward-fold-same-level (current-buffer) (point)))
-        (--each ale/org-super-agenda-auto-show-groups
-          (goto-char (point-min))
-          (when (re-search-forward (rx-to-string `(seq bol " " ,it)) nil t)
-            (origami-show-node (current-buffer) (point)))))
-      (setq super-groups-main
-            '(;; Each group has an implicit boolean OR operator between its selectors.
-              ;; (:name "ROUTINES"
-              ;;        :order 90
-              ;;        :and ( :file-path "cycliques"
-              ;;               :habit t))
-
-              ;; first filter out DONE items
-              (:discard (:todo ("DONE" "ABANDONED" "CANCELLED" "DELEGATED")))
-              ;; also filter out items that are not TODOs at all
-              (:discard (:todo nil))
-
-              (:name "PLANNING"
-                     :order 5
-                     :time-grid t
-                     :and ( :time-grid t
-                            :scheduled today)
-                     :transformer map-todo-faces-super-agenda)
-
-              (:name "EN COURS"
-                     :order 2
-                     :todo ("WIP" "STARTED")
-                     :transformer map-todo-faces-super-agenda)
-
-              (:name "EN ATTENTE"
-                     :order 20
-                     :face (:foreground "#8b636c")
-                     :todo ("WAIT" "BLOCKED" "DEFERRED"))
-
-              ;; on vire la catégorie, ça reste sous forme de couleur
-              ;; (:name "IMPORTANT"
-              ;;        :face (:foreground "red" :weight bold)
-              ;;        :priority "A")
-
-              (:name "RAPIDE"
-                     :order 3
-                     :face (:foreground "DeepSkyBlue" :weight bold)
-                     :and ( :todo ("TODO" "NEXT" "WIP" "STARTED")
-                            :effort< "15"))
-
-              (:name "TICKETS À CRÉER"
-                     :order 55
-                     :transformer map-todo-faces-super-agenda
-                     :tag "ticket")
-
-              (:name "EN RETARD"
-                     :order 4
-                     :face (:foreground "orange3")
-                     :and ( :scheduled past
-                            :todo ("TODO" "NEXT" "WIP" "STARTED")))
-
-              (:name "PRÊTS / EMPRUNTS"
-                     :order 40
-                     :tag ("ÉCHANGES"))
-
-              (:name "CERCLE DE RÉMUNÉRATION"
-                     :order 60
-                     :regexp "cercle"
-                     :tag "cercle")
-
-              (:name "EMACS"
-                     :order 70
-                     :regexp "emacs"
-                     :tag "emacs")
-
-              (:name "CNT"
-                     :order 75
-                     :regexp "cnt"
-                     :tag "cnt")
-
-              (:name "TRAVAIL"
-                     :order 50
-                     :transformer map-todo-faces-super-agenda
-                     :tag ("enercoop" "work" "travail"))
-
-              (:name "DIVERS"
-                     :order 80
-                     :transformer map-todo-faces-super-agenda
-                     :anything t)))
-
-      (defun map-todo-faces-super-agenda (item)
-        "Propertize ITEM for display in agenda."
-        (let ((weight
-               (cond
-                ((string-match-p "\\[#A\\]" item) 'ultra-heavy)
-                ((string-match-p "\\[#B\\]" item) 'semi-bold)
-                ((string-match-p "\\[#C\\]\\|\\[#D\\]\\|\\[#E\\]" item) 'thin)
-                (t 'normal))))
-          (cond
-           ;;((string-match-p "DONE" item) item) ;; no special face for done items
-           ((string-match-p "WAIT\\|BLOQUÉ\\|DEFERRED\\|BLOCKED" item)
-            (propertize item 'face `(:foreground "#8b636c" :weight ,weight)))
-           ((string-match-p "WIP\\|STARTED\\|DELEGATED" item)
-            (propertize item 'face `(:foreground "yellow" :weight ,weight)))
-           ((string-match-p "WORK\\|enercoop\\|travail" item)
-            (propertize item 'face `(:foreground "#00cd00" :weight ,weight)))
-           (t (propertize item 'face `(:weight ,weight))))))
-
-      (defun super-agenda (command)
-        "Call the agenda COMMAND with super groups."
-        (interactive)
-        (when (not org-super-agenda-groups)
-          (org-agenda-kill-all-agenda-buffers))
-        (setq org-super-agenda-groups super-groups-main)
-        (org-agenda nil command)
-        (org-agenda-day-view)
-        (origami-open-all-nodes (get-buffer "*Org Agenda*")))
-
-      (defun agenda-list (command)
-        "Call the agenda for the week with COMMAND."
-        (interactive)
-        (when org-super-agenda-groups
-          (org-agenda-kill-all-agenda-buffers))
-        (setq org-super-agenda-groups nil)
-        (org-agenda nil command)
-        (org-agenda-week-view))
-
-      (pretty-hydra-define hydra-super-agenda
-        (:color teal :quit-key "q")
-        ("Standard"
-         (("a"    (funcall 'agenda-list "a")  "Agenda")
-          ("l"    (funcall 'agenda-list "n")  "Agenda + list")
-          ("t"    (funcall 'agenda-list "t")  "TODO"))
-         "Custom"
-         (("<f8>" (funcall 'super-agenda "a")  "Agenda + list")
-          ("n"    (funcall 'super-agenda "n") "Custom + list")))))
+      (setq org-habit-following-days 4
+            org-habit-preceding-days 2
+            org-habit-graph-column 70))
   #+END_SRC
 
   Use fancy bullets in org-mode:
@@ -4470,7 +4391,7 @@
         "Management"
         (("(" mu4e "mu4e")
          ("\"" erc-start-or-jump "IRC")
-         ("a" (funcall 'super-agenda "a") "agenda")
+         ("a" org-agenda "agenda")
          ("c" open-calendar "calendar")
          ("T" tomatinho "pomodoro")
          )
