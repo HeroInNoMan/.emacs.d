@@ -2336,6 +2336,21 @@
 
       (setq org-agenda-custom-commands
             '(("E" occur-tree "emacs")
+              ("p" "Agenda + recent TODOs"
+               ((agenda ""
+                        ((org-agenda-overriding-header "Agenda")
+                         (org-agenda-weekend-days '(0 5 6))
+                         (org-agenda-start-on-weekday nil)
+                         (org-agenda-span 'week)))
+                (alltodo ""
+                         ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
+                          (org-agenda-sorting-strategy '(user-defined-down todo-state-up timestamp-down priority-down))
+                          (org-agenda-overriding-header "Récent ↓")
+                          (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))
+               ((org-agenda-tag-filter '("-enercoop" "-POINTEUR" "-emacs"))
+                (org-agenda-skip-scheduled-if-deadline-is-shown t)
+                (org-agenda-files `(,my-private-local-todo-org-file
+                                    ,my-private-local-cyclic-org-file))))
               ("e" "Work (fortnight view)"
                ((agenda "" ;; block 1 Current fortnight
                         ((org-agenda-overriding-header "Agenda")
@@ -2392,15 +2407,6 @@
                 (org-agenda-skip-scheduled-if-deadline-is-shown t)
                 (org-agenda-sticky nil) ;; a bit too slow to recreate every time
                 (org-agenda-tag-filter '("+enercoop"))))
-              ("p" "Agenda + recent TODOs"
-               ((agenda ""
-                        ((org-agenda-overriding-header "Agenda")
-                         (org-agenda-weekend-days '(0 5 6))
-                         (org-agenda-start-on-weekday nil)
-                         (org-agenda-span 'week)))
-                (alltodo))
-               ((org-agenda-tag-filter '("-enercoop,-pointeur"))
-                (org-agenda-skip-scheduled-if-deadline-is-shown t)))
 
               ("i" "Agenda + important TODOs"
                ((agenda #1="")
