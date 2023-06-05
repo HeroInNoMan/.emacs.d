@@ -2754,6 +2754,22 @@
       :hook (org-mode . (lambda () (org-bullets-mode 1))))
   #+END_SRC
 
+  Use fancy priorities:
+  #+BEGIN_SRC emacs-lisp
+    (use-package org-fancy-priorities
+      :after org
+      :hook (org-mode . org-fancy-priorities-mode)
+      :config (setq org-fancy-priorities-list '((?A . "🔥")
+                                                (?B . "🎯")
+                                                (?C . "☕")
+                                                (?D . "🎁")
+                                                (?1 . "⚡")
+                                                (?2 . "⮬")
+                                                (?3 . "⮮")
+                                                (?4 . "☕")
+                                                (?I . "Important"))))
+  #+END_SRC
+
 * Special characters, spelling, i18n
 ** Spell checking
 
