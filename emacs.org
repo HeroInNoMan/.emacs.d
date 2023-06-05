@@ -2330,42 +2330,58 @@
 
       (setq org-agenda-files (if (boundp 'my-org-agenda-files) my-org-agenda-files nil))
 
-      (setq org-agenda-weekend-days '(0 5 6)
-            ;; org-agenda-entry-text-maxlines 30
-            org-agenda-start-on-weekday 1)
-
       (setq org-agenda-custom-commands
-            '(("E" occur-tree "emacs")
-              ("p" "Agenda + recent TODOs"
+            '(("p" "Agenda + recent TODOs"
                ((agenda ""
                         ((org-agenda-overriding-header "Agenda")
                          (org-agenda-weekend-days '(0 5 6))
                          (org-agenda-start-on-weekday nil)
-                         (org-agenda-span 'week)))
-                (alltodo ""
-                         ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
-                          (org-agenda-sorting-strategy '(user-defined-down todo-state-up timestamp-down priority-down))
-                          (org-agenda-overriding-header "Récent ↓")
-                          (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled)))))
-               ((org-agenda-tag-filter '("-enercoop" "-POINTEUR" "-emacs"))
-                (org-agenda-skip-scheduled-if-deadline-is-shown t)
-                (org-agenda-files `(,my-private-local-todo-org-file
-                                    ,my-private-local-cyclic-org-file))))
-              ("e" "Work (fortnight view)"
-               ((agenda "" ;; block 1 Current fortnight
-                        ((org-agenda-overriding-header "Agenda")
-                         (org-agenda-start-on-weekday 1)
-                         (org-agenda-weekend-days '(0 5 6))
-                         (org-agenda-show-future-repeats nil)
-                         (org-agenda-span 'fortnight)
-                         (org-agenda-include-diary nil)
-                         (org-agenda-remove-tags t)
+                         (org-agenda-span 'week)
+                         (org-agenda-show-future-repeats 'next)
                          (org-agenda-sorting-strategy '(time-up
                                                         priority-down
                                                         effort-up))))
+                (tags-todo "+PRIORITY=\"A\""
+                           ((org-agenda-overriding-header "❗IMPORTANT❗")
+                            (org-agenda-sorting-strategy '(priority-down
+                                                           todo-state-up
+                                                           user-defined-down))
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                        'deadline
+                                                        'scheduled))))
+                (alltodo "" ((org-agenda-overriding-header "Récent ↓")
+                             (org-agenda-sorting-strategy '(todo-state-up
+                                                            user-defined-down
+                                                            priority-down))
+                             (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                         'deadline
+                                                         'scheduled)))))
+               ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
+                (org-agenda-tag-filter '("-enercoop" "-POINTEUR" "-emacs"))
+                (org-agenda-skip-scheduled-if-deadline-is-shown t)
+                (org-agenda-files `(,my-private-local-todo-org-file
+                                    ,my-private-local-cyclic-org-file))))
+              ("e" "Work"
+               ((agenda "" ((org-agenda-overriding-header "Agenda")
+                            (org-agenda-weekend-days '(0 5 6))
+                            (org-agenda-start-on-weekday 1)
+                            (org-agenda-show-future-repeats 'next)
+                            (org-agenda-span 'fortnight)
+                            (org-agenda-include-diary nil)
+                            (org-agenda-remove-tags t)
+                            (org-agenda-sorting-strategy '(time-up
+                                                           priority-down
+                                                           effort-up))))
+                (tags-todo "+PRIORITY=\"A\""
+                           ((org-agenda-overriding-header "❗IMPORTANT❗")
+                            (org-agenda-sorting-strategy '(priority-down
+                                                           todo-state-up
+                                                           user-defined-down))
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                        'deadline
+                                                        'scheduled))))
                 (tags-todo "enercoop" ;; Block 2 All work-related TODOs
                            ((org-agenda-overriding-header "À faire")
-                            (org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
                             (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                         'deadline
                                                         'scheduled))
@@ -2374,76 +2390,11 @@
                                                            user-defined-down
                                                            effort-up
                                                            alpha-up)))))
-               ((org-agenda-files `(,my-private-work-todo-org-file
+               ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
+                (org-agenda-files `(,my-private-work-todo-org-file
                                     ,my-private-work-diary-org-file))
                 (org-agenda-skip-scheduled-if-deadline-is-shown t)
-                (org-agenda-sticky nil)))
-              ("d" "Work (day view)"
-               ((agenda "" ;; block 1 Current day
-                        ((org-agenda-overriding-header "Aujourd’hui")
-                         (org-agenda-span 1)
-                         (org-agenda-entry-types '(:deadline :scheduled))
-                         (org-agenda-include-diary t)
-                         (org-agenda-show-future-repeats 'next)
-                         (org-agenda-remove-tags t)
-                         (org-agenda-sorting-strategy '(time-up priority-down))))
-                (agenda "" ;; block 2 Current + next week
-                        ((org-agenda-overriding-header "Agenda")
-                         (org-agenda-start-on-weekday 1)
-                         (org-agenda-weekend-days '(0 5 6))
-                         (org-agenda-use-time-grid nil)
-                         (org-agenda-span 'fortnight)
-                         (org-agenda-entry-types '(:deadline :scheduled))
-                         (org-agenda-include-diary nil)
-                         (org-agenda-remove-tags t)
-                         ;; (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "habit"))
-                         (org-agenda-sorting-strategy '(time-up priority-down))))
-                (tags-todo "enercoop" ;; Block 3 All work-related TODO items
-                           ((org-agenda-overriding-header "À faire")
-                            (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))
-                            (org-agenda-sorting-strategy '(priority-down timestamp-up effort-up alpha-up)))))
-               ((org-agenda-files `(,my-private-work-todo-org-file ,my-private-work-diary-org-file))
-                (org-agenda-sorting-strategy '(priority-down))
-                (org-agenda-skip-scheduled-if-deadline-is-shown t)
-                (org-agenda-sticky nil) ;; a bit too slow to recreate every time
-                (org-agenda-tag-filter '("+enercoop"))))
-
-              ("i" "Agenda + important TODOs"
-               ((agenda #1="")
-                (tags-todo "+PRIORITY=\"A\"")
-                (alltodo #1#)))
-              ("n" "Agenda and all TODOs"
-               ((agenda #1="")
-                (alltodo #1#)))
-              ("w" "Weekly Review"
-               ((agenda ""
-                        ((org-agenda-span 7))) ; review upcoming deadlines and appointments
-                                            ; type "l" in the agenda to review logged items
-                (stuck "") ; review stuck projects as designated by org-stuck-projects
-                (todo "PROJECT")              ; review all projects
-                (todo "MAYBE")                ; review someday/maybe items
-                (todo "WAITING")))
-              ("P" "Printed agenda"
-               ((agenda "" ((org-agenda-span 7) ;; overview of appointments
-                            (org-agenda-start-on-weekday nil) ;; calendar begins today
-                            (org-agenda-repeating-timestamp-show-all t)
-                            (org-agenda-entry-types '(:timestamp :sexp))))
-                (agenda "" ((org-agenda-span 1)             ; daily agenda
-                            (org-deadline-warning-days 7) ; 7 day advanced warning for deadlines
-                            (org-agenda-todo-keyword-format "[ ]")
-                            (org-agenda-scheduled-leaders '("" ""))
-                            (org-agenda-prefix-format "%t%s")))
-                (todo "TODO" ;; todos sorted by context
-                      ((org-agenda-prefix-format "[ ] %T: ")
-                       (org-agenda-sorting-strategy '(tag-up priority-down))
-                       (org-agenda-todo-keyword-format "")
-                       (org-agenda-overriding-header "\nTasks by Context\n------------------\n"))))
-               ((org-agenda-with-colors nil)
-                (org-agenda-compact-blocks t)
-                (org-agenda-remove-tags t)
-                (ps-number-of-columns 2)
-                (ps-landscape-mode t))
-               ("~/agenda.ps"))))
+                (org-agenda-sticky nil)))))
 
       ;; new lines and separators
       (setq org-blank-before-new-entry
