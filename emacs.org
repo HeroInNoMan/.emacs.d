@@ -42,36 +42,62 @@
 
 * Package Management
 
-  I decided to move to [[https://github.com/raxod502/straight.el][straight.el]] to manage my config, as it seems more solid and predictable.
+  I decided to move to [[https://github.com/progfolio/elpaca][elpaca]] to manage my config, as it seems more solid and predictable.
 
-  This is how straight is being bootstrapped itself:
+  This is how elpaca itself is being bootstrapped:
   #+BEGIN_SRC emacs-lisp
-    (defvar bootstrap-version)
-    (let ((bootstrap-file
-           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-          (bootstrap-version 5))
-      (unless (file-exists-p bootstrap-file)
-        (with-current-buffer
-            (url-retrieve-synchronously
-             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-             'silent 'inhibit-cookies)
-          (goto-char (point-max))
-          (eval-print-last-sexp)))
-      (load bootstrap-file nil 'nomessage))
+    (defvar elpaca-installer-version 0.4)
+    (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+    (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+    (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+    (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                                  :ref nil
+                                  :files (:defaults (:exclude "extensions"))
+                                  :build (:not elpaca--activate-package)))
+    (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+           (build (expand-file-name "elpaca/" elpaca-builds-directory))
+           (order (cdr elpaca-order))
+           (default-directory repo))
+      (add-to-list 'load-path (if (file-exists-p build) build repo))
+      (unless (file-exists-p repo)
+        (make-directory repo t)
+        (when (< emacs-major-version 28) (require 'subr-x))
+        (condition-case-unless-debug err
+            (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                     ((zerop (call-process "git" nil buffer t "clone"
+                                           (plist-get order :repo) repo)))
+                     ((zerop (call-process "git" nil buffer t "checkout"
+                                           (or (plist-get order :ref) "--"))))
+                     (emacs (concat invocation-directory invocation-name))
+                     ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                           "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                     ((require 'elpaca))
+                     ((elpaca-generate-autoloads "elpaca" repo)))
+                (kill-buffer buffer)
+              (error "%s" (with-current-buffer buffer (buffer-string))))
+          ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+      (unless (require 'elpaca-autoloads nil t)
+        (require 'elpaca)
+        (elpaca-generate-autoloads "elpaca" repo)
+        (load "./elpaca-autoloads")))
+    (add-hook 'after-init-hook #'elpaca-process-queues)
+    (elpaca `(,@elpaca-order))
   #+END_SRC
 
   and then configured so I can still use [[https://github.com/jwiegley/use-package][use-package]] to manage my packages and modules.
   #+BEGIN_SRC emacs-lisp
-    (straight-use-package 'use-package)
-    (setq straight-use-package-by-default t
-          use-package-always-defer nil
-          use-package-verbose t)
-  #+END_SRC
+    ;; Install use-package support
+    (elpaca elpaca-use-package
+            ;; Enable :elpaca use-package keyword.
+            (elpaca-use-package-mode)
+            ;; Assume :elpaca t unless otherwise specified.
+            (setq elpaca-use-package-by-default t))
 
-  Only check for package modifications when calling ~M-x straight-check-package~ and ~M-x straight-check-all~.
-  #+BEGIN_SRC emacs-lisp
-    (setq straight-check-for-modifications nil)
-    (setq straight-cache-autoloads t)
+    ;; Block until current queue processed.
+    (elpaca-wait)
+
+    (setq use-package-always-defer nil
+          use-package-verbose t)
   #+END_SRC
 
   [[https://elpa.gnu.org/packages/delight.html][delight]] helps unclutter the mode-line with useless minor mode indications.
@@ -87,6 +113,7 @@
       (setq key-chord-one-key-delay 0.25)
       (setq key-chord-two-keys-delay 0.05)
       (setq key-chord-safety-interval-forward 0))
+    (elpaca-wait)
   #+END_SRC
 
   I tried to use [[https://github.com/lastquestion/explain-pause-mode/][explain-pause-mode]] to monitor why emacs sometimes slows down, but it seems to mess with key-chords.
@@ -146,7 +173,7 @@
   My custom (often stolen) lisp code is stored in ~elisp/my-functions.el~.
   #+BEGIN_SRC emacs-lisp
     (use-package my-functions ;; custom functions
-      :straight nil
+      :elpaca nil
       :demand
       :load-path "elisp/"
       :bind
@@ -233,7 +260,7 @@
    Let’s use UTF-8 everywhere:
    #+BEGIN_SRC emacs-lisp
      (use-package mule
-       :straight nil
+       :elpaca nil
        :config
        (prefer-coding-system       'utf-8)
        (set-default-coding-systems 'utf-8)
@@ -244,7 +271,7 @@
 
    Some environments don’t handle dead keys.
    #+BEGIN_SRC emacs-lisp
-     (use-package iso-transl :straight nil :defer t)
+     (use-package iso-transl :elpaca nil :defer t)
    #+END_SRC
 
 ** Emoji
@@ -271,7 +298,7 @@
    Let’s add some auto-backup configuration:
    #+BEGIN_SRC emacs-lisp
      (use-package saveplace
-       :straight nil
+       :elpaca nil
        :config
        (setq-default save-place t)
        (setq save-place-file (expand-file-name "places" base-emacs-directory)
@@ -295,7 +322,7 @@
    More miscellaneous configuration and bindings, grouped by built-in packages:
    #+BEGIN_SRC emacs-lisp
      (use-package simple
-       :straight nil
+       :elpaca nil
        :bind
        ("C-x C-u" . upcase-dwim)
        ("C-x C-l" . downcase-dwim)
@@ -337,6 +364,7 @@
      (recentf-mode 1)
 
      (use-package savehist
+       :elpaca nil
        :init (savehist-mode)
        (add-to-list 'savehist-additional-variables 'register-alist)
        (add-to-list 'savehist-additional-variables 'search-ring)
@@ -461,6 +489,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package hydra :defer t)
      (use-package pretty-hydra :defer t)
+     (elpaca-wait)
    #+END_SRC
 
 * Modal editing
@@ -508,7 +537,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package devil
-      :straight '(devil :host github :repo "susam/devil")
+      :elpaca '(devil :host github :repo "susam/devil")
       :init (global-devil-mode)
       :bind ("C-x ," . global-devil-mode)
       :config (defvar devil-translations '(("%k %k" . "%k")
@@ -524,7 +553,7 @@
   Always start in full screen.
   #+BEGIN_SRC emacs-lisp
     (use-package frame
-      :straight nil
+      :elpaca nil
       :config
       (if (eq window-system 'ns)
           (toggle-frame-maximized)
@@ -601,7 +630,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package font-size
-       :straight '(font-size :host github :repo "nabeix/emacs-font-size")
+       :elpaca '(font-size :host github :repo "nabeix/emacs-font-size")
        :bind
        ("M-+" . font-size-increase)
        ("M-=" . font-size-decrease)
@@ -630,7 +659,7 @@
    Highlight current line in list buffers:
    #+BEGIN_SRC emacs-lisp
      (use-package hl-line
-       :straight nil
+       :elpaca nil
        :custom-face (hl-line ((t (:background "grey7"))))
        :hook ((dired-mode org-agenda-mode ibuffer-mode) . hl-line-mode)
        :config (global-hl-line-mode -1))
@@ -656,11 +685,11 @@
 
 *** Icons in terminal
     #+BEGIN_SRC emacs-lisp
-      (use-package font-lock+ :defer t)
+      (use-package font-lock+ :elpaca nil :defer t)
 
       (use-package icons-in-terminal
         :disabled
-        :straight nil
+        :elpaca nil
         :defer t
         :load-path (expand-file-name ".local/share/icons-in-terminal/"
                                      (if (boundp 'my-home-dir) my-home-dir "~")))
@@ -752,7 +781,7 @@
 * Dired
   #+BEGIN_SRC emacs-lisp
     (use-package dired
-      :straight nil
+      :elpaca nil
       :bind ("C-x C-j". dired-jump)
       :config
       (unbind-key "M-b" dired-mode-map)
@@ -842,6 +871,8 @@
   Equivalent of ~f~ key in vim:
   #+BEGIN_SRC emacs-lisp
     (use-package iy-go-to-char
+      :elpaca '(iy-go-to-char :host github
+                              :repo "doitian/iy-go-to-char")
       :chords
       ("««" . iy-go-to-char-backward)
       ("»»" . iy-go-up-to-char))
@@ -1002,6 +1033,7 @@
    #+BEGIN_SRC emacs-lisp
      ;; regexp-builder
      (use-package re-builder
+       :elpaca nil
        :defer t
        :config (setq reb-re-syntax 'string)) ;; syntax used in the re-buidler
 
@@ -1085,7 +1117,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package dabbrev
-
+       :elpaca nil
        ;; Swap M-/ and C-M-/
        ;; :bind (("M-/" . dabbrev-completion)
        ;;        ("C-M-/" . dabbrev-expand))
@@ -1100,7 +1132,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package hippie-exp
-       :straight nil
+       :elpaca nil
        :bind ("M-/" . hippie-expand)
        :config
        (setq hippie-expand-try-functions-list
@@ -1239,21 +1271,22 @@
         ;; snippet to enable name shadowing
         (with-eval-after-load 'rfn-eshadow
           (setq-default file-name-shadow-properties '(invisible t intangible t)))
-        (add-hook 'after-init-hook #'file-name-shadow-mode)
+        (add-hook 'elpaca-after-init-hook #'file-name-shadow-mode)
         (vertico-mode)                 ;; Enable vertico
         (setq vertico-scroll-margin 2) ;; Different scroll margin
         (setq vertico-count 20)        ;; Show more candidates
         (setq vertico-resize nil)      ;; Grow and shrink the Vertico minibuffer
         (setq vertico-cycle t) ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-        (setq vertico-extensions-path "straight/repos/vertico/extensions")
+        (setq vertico-extensions-path "elpaca/repos/vertico/extensions")
         :bind ( :map vertico-map
                 ("C-l" . vertico-directory-up)
                 ("C-o" . vertico-next-group)
                 ("C-s" . vertico-next)
                 ("C-r" . vertico-previous)))
+      (elpaca-wait)
 
-      (use-package vertico-multiform :straight nil
-        :load-path "straight/repos/vertico/extensions"
+      (use-package vertico-multiform :elpaca nil
+        :load-path vertico-extensions-path
         :after vertico
         :config
         (setq vertico-multiform-commands
@@ -1273,37 +1306,37 @@
 
         (vertico-multiform-mode))
 
-      (use-package vertico-buffer :straight nil :after vertico
+      (use-package vertico-buffer :elpaca nil :after vertico
         :load-path vertico-extensions-path
         :config (setq vertico-buffer-mode nil))
 
-      (use-package vertico-directory :straight nil :after vertico
+      (use-package vertico-directory :elpaca nil :after vertico
         :load-path vertico-extensions-path)
 
-      (use-package vertico-flat :straight nil :after vertico
+      (use-package vertico-flat :elpaca nil :after vertico
         :load-path vertico-extensions-path)
 
-      (use-package vertico-grid :straight nil :after vertico
+      (use-package vertico-grid :elpaca nil :after vertico
         :load-path vertico-extensions-path)
 
-      (use-package vertico-indexed :straight nil :after vertico
+      (use-package vertico-indexed :elpaca nil :after vertico
         :load-path vertico-extensions-path)
 
-      (use-package vertico-mouse :straight nil :after vertico
+      (use-package vertico-mouse :elpaca nil :after vertico
         :load-path vertico-extensions-path)
 
-      (use-package vertico-reverse :straight nil :after vertico
+      (use-package vertico-reverse :elpaca nil :after vertico
         :load-path vertico-extensions-path)
 
-      (use-package vertico-unobtrusive :straight nil :after vertico
+      (use-package vertico-unobtrusive :elpaca nil :after vertico
         :load-path vertico-extensions-path)
 
-      (use-package vertico-repeat :straight nil :after vertico
+      (use-package vertico-repeat :elpaca nil :after vertico
         :load-path vertico-extensions-path
         :hook (minibuffer-setup . vertico-repeat-save)
         :init (add-to-list 'savehist-additional-variables 'vertico-repeat-history))
 
-      (use-package vertico-quick :straight nil :after vertico
+      (use-package vertico-quick :elpaca nil :after vertico
         :load-path vertico-extensions-path
         :bind (:map vertico-map ("M-à" . vertico-quick-exit))
         :custom
@@ -1502,7 +1535,7 @@
       (use-package consult-yasnippet
         :after yasnippet)
 
-      (use-package embark-consult)
+      (use-package embark-consult :after (consult embark))
 
       (use-package consult-git-log-grep
         :custom (consult-git-log-grep-open-function #'magit-show-commit))
@@ -1686,7 +1719,7 @@
    Better access to window manipulation commands:
    #+BEGIN_SRC emacs-lisp
      (use-package window
-       :straight nil
+       :elpaca nil
        :bind
        ("C-c o" . bury-buffer) ;; put buffer at bottom of buffer list
        ("C-\"" . delete-other-windows)
@@ -1705,6 +1738,7 @@
    Revert windows on ediff exit - needs winner mode.
    #+BEGIN_SRC emacs-lisp
      (use-package winner
+       :elpaca nil
        :bind
        ("<s-left>"  . winner-undo)
        ("<s-right>" . winner-redo)
@@ -1724,7 +1758,7 @@
    Auto-refresh all buffers.
    #+BEGIN_SRC emacs-lisp
      (use-package autorevert
-       :straight nil
+       :elpaca nil
        :config
        (global-auto-revert-mode 1)
        (setq global-auto-revert-non-file-buffers t))
@@ -1755,7 +1789,7 @@
 *** ibuffer
     #+BEGIN_SRC emacs-lisp
       (use-package ibuffer
-        :straight nil
+        :elpaca nil
         :hook (ibuffer-mode . (lambda ()
                                 (ibuffer-auto-mode 1)
                                 (ibuffer-switch-to-saved-filter-groups "default")))
@@ -1844,6 +1878,7 @@
   Always follow symbolic links for files under VC.
   #+BEGIN_SRC emacs-lisp
     (use-package vc
+      :elpaca nil
       :defer t
       :config (setq vc-follow-symlinks t))
   #+END_SRC
@@ -1892,7 +1927,7 @@
 *** Smerge
     #+BEGIN_SRC emacs-lisp
       (use-package smerge-mode
-        :straight nil
+        :elpaca nil
         :bind (("M-s e" . hydra-smerge/body))
         :config
         (setq smerge-command-prefix "")
@@ -1932,15 +1967,20 @@
        :hook (git-messenger:popup-buffer-hook . magit-commit-mode)
        :config (setq git-messenger:show-detail t))
 
-     (use-package gitignore-mode
-       :straight (:host github :repo "magit/git-modes"
-                        :files ("gitignore-mode.el"))
-       :mode ".gitignore$")
-
      (use-package gitconfig-mode
-       :straight (:host github :repo "magit/git-modes"
-                        :files ("gitconfig-mode.el"))
+       :after magit
+       :elpaca '(gitconfig-mode :host github
+                                :repo "magit/git-modes"
+                                :files ("gitconfig-mode.el"))
        :mode ".gitconfig$")
+
+     (use-package gitignore-mode
+       ;; :disabled t ;; TODO fix this package for elpaca
+       :after magit
+       :elpaca '(gitignore-mode :host github
+                                :repo "magit/git-modes"
+                                :files ("gitignore-mode.el"))
+       :mode ".gitignore$")
 
      (use-package git-gutter
        :hook prog-mode
@@ -2044,7 +2084,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package tramp
-      :straight nil
+      :elpaca nil
       ;; :defer t
       :config
       (setq recentf-keep '(file-remote-p file-readable-p))
@@ -2066,7 +2106,7 @@
   Date and time should be displayed in standard format, no M/D/Y nonsense.
   #+BEGIN_SRC emacs-lisp
     (use-package time
-      :straight nil
+      :elpaca nil
       :config
       (setq display-time-day-and-date t ;; display date and time
             display-time-24hr-format t ;; 24h time format
@@ -2143,7 +2183,7 @@
 * Text
   #+BEGIN_SRC emacs-lisp
     (use-package text-mode
-      :straight nil
+      :elpaca nil
       :hook (text-mode . visual-line-mode) ;; auto-wrapping (soft wrap) in text-mode
       :config
       (setq default-major-mode 'text-mode) ;; text-mode by default
@@ -2169,7 +2209,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package org
-      :straight (:type built-in) ;; compatibility problems between versions of org…
+      :elpaca (:type built-in) ;; compatibility problems between versions of org…
       :init (setq org-refile-targets nil
                   org-capture-templates '())
       :bind (("C-c a" . org-agenda)
@@ -2596,9 +2636,9 @@
       :disabled ;; worth enabling only when necessary
       :after org
       :config (define-key org-mode-map (kbd "C-c C-v") verb-command-map)
-      (use-package ob-verb :straight nil :after org))
+      (use-package ob-verb :elpaca nil :after org))
 
-    (use-package ob-shell :straight nil :after org)
+    (use-package ob-shell :elpaca nil :after org)
     (use-package htmlize :after org)
     (use-package swagger-to-org :after org)
     (use-package ox-asciidoc :after org)
@@ -2618,7 +2658,7 @@
   Display “habit” TODOs in a fancy way for the agenda view
   #+BEGIN_SRC emacs-lisp
     (use-package org-habit
-      :straight nil
+      :elpaca nil
       :after org
       :config
       (setq org-habit-following-days 4
@@ -2654,6 +2694,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package flyspell
+       :elpaca nil
        :bind ("C-è" . flyspell-hydra/body)
        :commands dubcaps-mode
        :hook ((text-mode . flyspell-mode) ;; flyspell by default
@@ -2909,7 +2950,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package abbrev
-       :straight nil
+       :elpaca nil
        :hook ((org-mode erc-mode) . abbrev-mode)
        :config
        (setq save-abbrevs 'silently)
@@ -2924,7 +2965,9 @@
 
 ** Grammalecte
    #+BEGIN_SRC emacs-lisp
-     (use-package flycheck-grammalecte :defer t)
+     (use-package flycheck-grammalecte
+       :elpaca '(flycheck-grammalecte :depth nil)
+       :defer t)
    #+END_SRC
 
 * Programming
@@ -2943,7 +2986,7 @@
 ** Formatting
    #+BEGIN_SRC emacs-lisp
      (use-package prog-mode
-       :straight nil
+       :elpaca nil
        :hook
        (prog-mode . (lambda () (setq show-trailing-whitespace t)))
        (prog-mode . prettify-symbols-mode)
@@ -3098,7 +3141,7 @@
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
      (use-package paren
-       :straight nil
+       :elpaca nil
        :config (show-paren-mode 1)
        :custom-face (show-paren-match ((t ( :underline "white"
                                             :weight ultra-bold
@@ -3214,7 +3257,7 @@
    [[https://github.com/ganmacs/emacs-surround][emacs-surround]] is a nice copy of vim.surround for changing, inserting, deleting pairs.
    #+BEGIN_SRC emacs-lisp
      (use-package emacs-surround
-       :straight (:host github :repo "ganmacs/emacs-surround")
+       :elpaca (:host github :repo "ganmacs/emacs-surround")
        :bind ("M-s M-z" . emacs-surround)
        :config
        (add-to-list 'emacs-surround-alist '("<" . ("<" . ">")))
@@ -3239,7 +3282,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package sh-script
-       :straight nil
+       :elpaca nil
        :hook
        (sh-mode . flycheck-mode)
        (sh-mode . (lambda () (setq tab-width 2
@@ -3300,7 +3343,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ed-mode
        :commands ed
-       :straight '(ed-mode :host github
+       :elpaca '(ed-mode :host github
                            :repo "ryanprior/ed-mode"))
    #+END_SRC
 
@@ -3317,7 +3360,7 @@
    Let’s define some behaviours for all types of lisp buffers (~lisp-data-mode~ is the parent mode for all of them).
    #+BEGIN_SRC emacs-lisp
      (use-package lisp-data-mode
-       :straight nil
+       :elpaca nil
        :hook (lisp-data-mode . smartparens-strict-mode)
        :bind
        ("C-c C-c" . eval-region)
@@ -3327,7 +3370,7 @@
    Some more behaviour…
    #+BEGIN_SRC emacs-lisp
      (use-package ielm
-       :straight nil
+       :elpaca nil
        :hook (ielm-mode . (lambda () (setq-local scroll-margin 0))))
 
      (use-package elisp-slime-nav
@@ -3369,6 +3412,10 @@
 
    Redshank is a package for refactoring stuff.
    #+BEGIN_SRC emacs-lisp
+     (use-package paredit ;; cf. https://github.com/progfolio/elpaca/issues/40 (cloning of paredit fails)
+       :elpaca '(paredit :depth nil)
+       :defer t)
+
      (use-package redshank
        :hook (lisp-data-mode . redshank-mode))
    #+END_SRC
@@ -3376,7 +3423,7 @@
 ** Sql
    #+BEGIN_SRC emacs-lisp
      (use-package sql
-       :straight nil
+       :elpaca nil
        :bind (:map sql-mode-map
                    ("C-c C-f" . hydra-format-sql/body))
        :hook
@@ -3408,7 +3455,7 @@
      (use-package sql-indent :after sql)
 
      (use-package sql-upcase
-       :straight nil
+       :elpaca nil
        :load-path "elisp/"
        :hook (sql-mode . sql-upcase-mode))
 
@@ -3434,6 +3481,7 @@
 ** Ruby
    #+BEGIN_SRC emacs-lisp
      (use-package ruby-mode
+       :elpaca nil
        :mode "\\.rb\\'"
        :interpreter "ruby")
    #+END_SRC
@@ -3472,7 +3520,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck-java ;; flycheck minor mode for java
        :disabled
-       :straight '(flycheck-java
+       :elpaca '(flycheck-java
                    :host github
                    :repo "akorobov/flycheck-java")
        :hook java-mode)
@@ -3533,12 +3581,12 @@
 
       (use-package dap-java
         :disabled
-        :straight nil
+        :elpaca nil
         :after lsp-java)
 
       (use-package lsp-java-treemacs
         :disabled
-        :straight nil
+        :elpaca nil
         :after treemacs)
 
       ;; (use-package lsp-mode
@@ -3906,7 +3954,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package tex
        :mode ("\\.tex\\'")
-       :straight auctex
+       :elpaca auctex
        :config
        (use-package auctex-latexmk
          :config
@@ -3929,13 +3977,13 @@
 
 ** Logs
    #+BEGIN_SRC emacs-lisp
-     (use-package syslog-mode :defer t)
+     (use-package syslog-mode :elpaca nil :defer t)
    #+END_SRC
 
 * Mail
   #+BEGIN_SRC emacs-lisp
     (use-package sendmail
-      :straight nil
+      :elpaca nil
       :hook (mail-mode . visual-line-mode)) ;; wrapping in mail-mode
   #+END_SRC
 
@@ -3943,7 +3991,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package mu4e
       :load-path my-private-mu4e-path
-      :straight nil
+      :elpaca nil
       :commands mu4e
       :custom-face
       (mu4e-flagged-face ((t (:foreground "gold"))))
@@ -4133,14 +4181,14 @@
 
     (use-package mu4e-goodies
       :disabled ;TODO: à configurer
-      :straight '(mu4e-goodies :host github :repo "panjie/mu4e-goodies")
+      :elpaca '(mu4e-goodies :host github :repo "panjie/mu4e-goodies")
       :after mu4e)
   #+END_SRC
 
   I send email using smtpmail. We have to make sure the gnutls command line utils are installed; package 'gnutls-bin' in Debian/Ubuntu, 'gnutls' in Archlinux.
   #+BEGIN_SRC emacs-lisp
     (use-package smtpmail
-      :straight nil
+      :elpaca nil
       :defer t
       :config (setq message-send-mail-function 'smtpmail-send-it
                     starttls-use-gnutls t
@@ -4156,6 +4204,7 @@
   I use eww to surf the web in emacs, for simple pages mostly:
   #+BEGIN_SRC emacs-lisp
     (use-package eww
+      :elpaca nil
       :defer t
       :config
       (when (boundp 'my-web-browser-program)
@@ -4293,19 +4342,18 @@
          ("s" ale/cleanup-buffer-and-save "clean & save")
          ("f" ale/format-all-buffer-or-region "format all")
          ("w" 0x0-dwim "webpaste"))
-        "Straight"
-        (("p p" straight-pull-all "pull packages")
-         ("p c" straight-check-all "check packages")
-         ("p i" straight-use-package "install package"))))
+        "Packages"
+        (("m" elpaca-manager "package manager")
+         ("u" elpaca-update-all "update all packages"))))
 
-     (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
-     (key-chord-define-global (kbd "\"«") 'hydra-widgets/body)
+       (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
+       (key-chord-define-global (kbd "\"«") 'hydra-widgets/body)
    #+END_SRC
 
 ** Bookmarks and registers
    #+BEGIN_SRC emacs-lisp
      (use-package register
-       :straight nil
+       :elpaca nil
        :chords ("jj" . jump-to-register))
    #+END_SRC
 
@@ -4318,7 +4366,7 @@
   Aaaand we’re back to trying [[https://github.com/seagle0128/doom-modeline][doom-modeline]] this time:
   #+BEGIN_SRC emacs-lisp
     (use-package doom-modeline
-      :hook (after-init . doom-modeline-mode)
+      :hook (elpaca-after-init . doom-modeline-mode)
       ;; :init (doom-modeline-mode 1)
       :config
       ;; How tall the mode-line should be. It's only respected in GUI.
@@ -4609,7 +4657,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package erc
-       :straight nil
+       :elpaca nil
        :hook (erc-mode . visual-line-mode)
        :bind (("<f6>" . erc-start-or-jump)
               ("C-<f6>" . erc-start-or-jump) ;; for god-mode
@@ -4709,22 +4757,22 @@
        (use-package erc-hl-nicks)
 
        (use-package erc-ring
-         :straight nil
+         :elpaca nil
          :config (erc-ring-mode t))
 
        (use-package erc-netsplit
-         :straight nil
+         :elpaca nil
          :config (erc-netsplit-mode t))
 
        (use-package erc-spelling
-         :straight nil
+         :elpaca nil
          :config (erc-spelling-mode 1))
 
        (use-package znc)
 
        ;; Don't track boring activity
        (use-package erc-track
-         :straight nil
+         :elpaca nil
          :config
          (erc-track-mode t)
          (setq erc-track-exclude '("*highlight") ;; ZNC highlight buffer
@@ -5004,7 +5052,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package impostman
        :defer t
-       :straight '(impostman :host github :repo "flashcode/impostman"))
+       :elpaca '(impostman :host github :repo "flashcode/impostman"))
    #+END_SRC
 
 ** Web pasting
@@ -5062,7 +5110,9 @@
 
 *** Other
     #+BEGIN_SRC emacs-lisp
-      (use-package 2048-game :defer t)
+      (use-package 2048-game :defer t
+        :elpaca '(2048-game :host github
+                            :repo "emacsmirror/2048-game"))
 
       (use-package vimgolf :commands vimgolf)
     #+END_SRC
