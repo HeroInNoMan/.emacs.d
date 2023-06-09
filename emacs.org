@@ -1841,76 +1841,6 @@
         :init (miniedit-install))
     #+END_SRC
 
-*** Tabs
-    Emacs now has a built-in tab feature. There is another package called [[https://github.com/ema2159/centaur-tabs][Centaur-tabs]]:
-    #+BEGIN_SRC emacs-lisp
-      (use-package centaur-tabs
-        :bind
-        ("C-<prior>" . centaur-tabs-backward)
-        ("C-<next>" . centaur-tabs-forward)
-        :config
-        ;; (centaur-tabs-group-by-projectile-project)
-        (centaur-tabs-group-buffer-groups)
-        (setq centaur-tabs-style "rounded"
-              centaur-tabs-set-modified-marker t
-              centaur-tabs-modified-marker "*"
-              centaur-tabs-set-icons t
-              centaur-tabs-height 32)
-        (defun centaur-tabs-hide-tab (x)
-          (let ((name (format "%s" x)))
-            (or
-             (string-prefix-p "*epc" name)
-             (string-prefix-p "*tramp" name)
-             (string-prefix-p "*Compile-Log*" name)
-             (string-prefix-p "*lsp" name)
-             (and (string-prefix-p "magit" name)
-                  (not (file-name-extension name)))
-             )))
-        (centaur-tabs-group-by-projectile-project)
-        ;; (defun centaur-tabs-buffer-groups ()
-        ;;    "`centaur-tabs-buffer-groups' control buffers' group rules.
-
-        ;; Group centaur-tabs with mode if buffer is derived from
-        ;; `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
-        ;; All buffer name start with * will group to \"Emacs\".
-        ;; Other buffer group by `centaur-tabs-get-group-name' with project name."
-        ;;    (list
-        ;;     (cond
-        ;;      ;; ((not (eq (file-remote-p (buffer-file-name)) nil))
-        ;;      ;; "Remote")
-        ;;      ;; ((or (string-equal "*" (substring (buffer-name) 0 1))
-        ;;      ;;      (memq major-mode '(magit-process-mode
-        ;;      ;;                         magit-status-mode
-        ;;      ;;                         magit-diff-mode
-        ;;      ;;                         magit-log-mode
-        ;;      ;;                         magit-file-mode
-        ;;      ;;                         magit-blob-mode
-        ;;      ;;                         magit-blame-mode
-        ;;      ;;                         )))
-        ;;      ;;  "Emacs")
-        ;;      ;; ((derived-mode-p 'prog-mode)
-        ;;      ;;  "Editing")
-        ;;      ;; ((derived-mode-p 'dired-mode)
-        ;;      ;;  "Dired")
-        ;;      ;; ((memq major-mode '(helpful-mode
-        ;;      ;;                     help-mode))
-        ;;      ;;  "Help")
-        ;;      ;; ((memq major-mode '(org-mode
-        ;;      ;;                     org-agenda-clockreport-mode
-        ;;      ;;                     org-src-mode
-        ;;      ;;                     org-agenda-mode
-        ;;      ;;                     org-beamer-mode
-        ;;      ;;                     org-indent-mode
-        ;;      ;;                     org-bullets-mode
-        ;;      ;;                     org-cdlatex-mode
-        ;;      ;;                     org-agenda-log-mode
-        ;;      ;;                     diary-mode))
-        ;;      ;;  "OrgMode")
-        ;;      (t
-        ;;       (centaur-tabs-get-group-name (current-buffer))))))
-        )
-    #+END_SRC
-
 * Version control
 
   Always follow symbolic links for files under VC.
@@ -4269,7 +4199,7 @@
          ("g" toggle-god-mode                           "god"                  :toggle god-local-mode)
          ("M" minimap-mode                              "minimap"              :toggle t)
          ("t" treemacs                                  "treemacs"                      )
-         ("T" centaur-tabs-mode                         "tabs"                 :toggle t)
+         ("T" tab-bar-mode                              "tabs"                 :toggle t)
          ("W" mouse-wheel-mode                          "mouse wheel"          :toggle t))
         "Highlighting"
         (("b" beacon-mode                               "beacon"               :toggle t)
@@ -5192,14 +5122,14 @@
                  ((daemonp)
                   (progn
                     (when (fboundp 'beacon-mode)       (beacon-mode -1))
-                    (when (fboundp 'centaur-tabs-mode) (centaur-tabs-mode -1))
+                    (when (fboundp 'centaur-tabs-mode) (tab-bar-mode -1))
                     (when (boundp 'my-private-frame-font-size)
                       (set-face-attribute 'default nil :height my-private-frame-font-size)
                       (set-fira-font-if-possible))))
                  (t
                   (progn
                     (when (fboundp 'beacon-mode)       (beacon-mode))
-                    (when (fboundp 'centaur-tabs-mode) (centaur-tabs-mode 1))
+                    (when (fboundp 'centaur-tabs-mode) (tab-bar-mode 1))
                     (mouse-wheel-mode t))))))
   #+END_SRC
 * Useful links
