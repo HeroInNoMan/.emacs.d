@@ -1423,11 +1423,11 @@
             ("o"     consult-outline       "outline")
             ("SPC"   consult-global-mark   "mark"))
            "Search"
-           (("l"     consult-locate            "locate")
-            ("/"     consult-find              "find")
-            ("g"     consult-git-grep          "git grep")
-            ("\\"    consult-git-log-grep      "git log grep")
-            ("x"     consult-recoll            "recoll"))
+           (("l"     consult-locate        "locate")
+            ("/"     consult-find          "find")
+            ("g"     consult-git-grep      "git grep")
+            ("\\"    consult-git-log-grep  "git log grep")
+            ("x"     consult-recoll        "recoll"))
            "Tools"
            ((","     quick-calc            "calc")
             ("c"     read-color            "colours")
