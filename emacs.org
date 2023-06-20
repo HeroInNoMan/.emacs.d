@@ -3471,13 +3471,6 @@
        (local-set-key (kbd "TAB") #'company-indent-or-complete-common))
    #+END_SRC
 
-** Scala
-   #+BEGIN_SRC emacs-lisp
-     (use-package ensime :disabled)
-     (use-package sbt-mode :disabled)
-     (use-package scala-mode :disabled)
-   #+END_SRC
-
 ** Java
    Enable flycheck for Java:
    #+BEGIN_SRC emacs-lisp
