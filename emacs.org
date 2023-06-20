@@ -4229,10 +4229,10 @@
          ("L" litable-mode                              "litable"              :toggle t)
          ("N" require-final-newline                     "newline required"     :toggle t))
         "Writing"
-        (("-" refill-mode                               "auto-fill"            :toggle t)
+        (("+" cycle-font-size                           "adjust font size"              )
+         ("-" refill-mode                               "auto-fill"            :toggle t)
          ("v" visual-line-mode                          "visual line"          :toggle t)
          ("d" dubcaps-mode                              "dubcaps"              :toggle t)
-         ("F" flyspell-mode                             "flyspell"             :toggle t)
          ("o" overwrite-mode                            "overwrite"            :toggle t)
          ("s" superword-mode                            "super-word"           :toggle t)
          ("1" ten-hundred-mode                          "1000 words"           :toggle t)
