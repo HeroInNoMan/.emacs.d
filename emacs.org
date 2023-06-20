@@ -3052,10 +3052,6 @@
    #+END_SRC
 
 ** LSP
-*** Eglot
-    #+BEGIN_SRC emacs-lisp
-      (use-package eglot :defer t)
-    #+END_SRC
 
 *** lsp-mode
     TODO: describe lsp
