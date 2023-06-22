@@ -2435,7 +2435,7 @@
         (add-to-list 'org-capture-templates
                      '("w" "TODO       (work)"
                        entry (file+headline my-private-work-todo-org-file "À faire")
-                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
+                       "* TODO [#B] %i%?\n\tSCHEDULED: %t\n%a\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("u" "Quick TODO (work)"
