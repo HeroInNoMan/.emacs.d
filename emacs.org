@@ -5375,11 +5375,6 @@
                              ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
    #+END_SRC
 
-** Pomodoro
-   #+BEGIN_SRC emacs-lisp
-     (use-package tomatinho :defer t)
-   #+END_SRC
-
 ** Demos
    #+BEGIN_SRC emacs-lisp
      (use-package command-log-mode
