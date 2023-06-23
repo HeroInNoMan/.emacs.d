@@ -5110,6 +5110,13 @@
                      keypression-combine-format "%s ×%d"))
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package keycast
+       :config
+       (add-to-list 'global-mode-string '("" mode-line-keycast))
+       (keycast-mode))
+   #+END_SRC
+
 ** Restclient
    See if [[https://github.com/abrochard/walkman/][walkman]] might not be a bit better (because integrated in org-files!)
 
