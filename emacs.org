@@ -1625,7 +1625,8 @@
             ("f"     helpful-function      "function")
             ("c"     helpful-command       "command")
             ("F"     describe-face         "face")
-            ("a"     apropos-value         "value"))
+            ("a"     apropos-value         "value")
+            ("b"     which-key-show-full-major-mode "bindings"))
            "Manual"
            (("b"     describe-bindings     "bindings")
             ("Y"     yas-describe-tables   "yasnippets")
