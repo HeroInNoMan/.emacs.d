@@ -5522,11 +5522,18 @@
                      keypression-combine-format "%s ×%d"))
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package keycast
+       :config
+       (add-to-list 'global-mode-string '("" mode-line-keycast))
+       (keycast-mode))
+   #+END_SRC
+
 ** Presentations & keynotes
+
    #+BEGIN_SRC emacs-lisp
      (use-package remark-mode
-            :mode ("\\.remark$"))
-
+       :mode ("\\.remark$"))
    #+END_SRC
 
 ** Restclient
