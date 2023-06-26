@@ -504,21 +504,6 @@
       (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
   #+END_SRC
 
-  Ok, let’s try [[https://github.com/susam/devil][devil-mode]], which seems a little bit closer to what I am looking for:
-
-  #+BEGIN_SRC emacs-lisp
-    (use-package devil
-      :straight '(devil :host github :repo "susam/devil")
-      :init (global-devil-mode)
-      :bind ("C-x ," . global-devil-mode)
-      :config (defvar devil-translations '(("%k %k" . "%k")
-                                           ("%k m m" . "M-")
-                                           ("%k" . "C-")
-                                           ("m" . "M-")
-                                           ("," . "C-")
-                                           ("." . "M-"))))
-  #+END_SRC
-
 * Appearance
 
   Always start in full screen.
