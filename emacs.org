@@ -764,13 +764,7 @@
       (dirvish-override-dired-mode)
       :custom
       (dirvish-quick-access-entries ; It's a custom option, `setq' won't work
-       '(("h" "~/"                 "Home")
-         ("t" "~/Téléchargements/" "Téléchargements")
-         ("i" "~/Images/"          "Images")
-         ("d" "~/repos/dotfiles/"  "dotfiles")
-         ("e" "~/repos/my-emacs/"  "emacs dir")
-         ("r" "~/repos/"           "repos")
-         ("p" "~/projets/"         "projets")))
+       my-private-dirvish-quick-access-entries)
       :config
       (setq dirvish-peek-categories '(project-file library))
       (dirvish-peek-mode) ; Preview files in minibuffer
