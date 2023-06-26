@@ -2226,6 +2226,9 @@
       (setq org-log-done 'time
             org-log-repeat 'nil)
 
+      ;; no numbers in priority cookie value, fixes ticket format issue (#1234)
+      (setq org-priority-regexp ".*?\\(\\[#\\([A-Z]+\\)\\] ?\\)")
+
       ;; refile and completion
       (setq org-refile-targets '((nil :maxlevel . 9)
                                  (org-finished-file :maxlevel . 9)
