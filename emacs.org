@@ -772,6 +772,7 @@
          ("r" "~/repos/"           "repos")
          ("p" "~/projets/"         "projets")))
       :config
+      (setq dirvish-peek-categories '(project-file library))
       (dirvish-peek-mode) ; Preview files in minibuffer
       (dirvish-side-follow-mode) ; similar to `treemacs-follow-mode'
       (setq dirvish-mode-line-format
