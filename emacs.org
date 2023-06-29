@@ -1495,6 +1495,12 @@
 
       (use-package consult-recoll
         :if (= 0 (shell-command "hash recoll"))) ;; check if recoll is present on the system
+
+      (use-package wgrep
+        :bind
+        (:map grep-mode-map
+              ("e" . wgrep-change-to-wgrep-mode)
+              ("C-c C-e" . wgrep-change-to-wgrep-mode)))
     #+END_SRC
 
 *** [[https://github.com/minad/orderless][Orderless]]
