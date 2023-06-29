@@ -2021,15 +2021,7 @@
                                        "Git fetch."
                                        (magit-status)
                                        (call-interactively #'magit-fetch-current))
-      (when (boundp 'my-default-project-root)
-        (cl-loop for project in (f-directories my-default-project-root (lambda (dir) (projectile-root-top-down dir)))
-                 do (projectile-add-known-project project)))
-      (when (boundp 'my-private-repos-dir)
-        (cl-loop for project in (f-directories my-private-repos-dir (lambda (dir) (projectile-root-top-down dir)))
-                 do (projectile-add-known-project project)))
-      (when (boundp 'my-default-tools-dir)
-        (cl-loop for project in (f-directories my-private-tools-dir (lambda (dir) (projectile-root-top-down dir)))
-                 do (projectile-add-known-project project))))
+      (ale/scan-projects))
   #+END_SRC
 
 * Tramp

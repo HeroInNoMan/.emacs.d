@@ -377,6 +377,24 @@ Also make frame fullscreen. Otherwise, open a new scratch
   (flyspell-mode)
   (ispell-change-dictionary "en_US"))
 
+(defun ale/scan-projects ()
+  "Scan specific directories for new projects (for projectile).
+When called with a prefix argument, cleanup all known projects beforehand."
+  (interactive)
+  (require 'projectile)
+  (if (equal current-prefix-arg nil)
+      (projectile-cleanup-known-projects)
+    (setq projectile-known-projects nil))
+  (when (boundp 'my-default-project-root)
+    (cl-loop for project in (f-directories my-default-project-root (lambda (dir) (projectile-root-bottom-up dir)))
+             do (projectile-add-known-project project)))
+  (when (boundp 'my-private-repos-dir)
+    (cl-loop for project in (f-directories my-private-repos-dir (lambda (dir) (projectile-root-bottom-up dir)))
+             do (projectile-add-known-project project)))
+  (when (boundp 'my-default-tools-dir)
+    (cl-loop for project in (f-directories my-private-tools-dir (lambda (dir) (projectile-root-bottom-up dir)))
+             do (projectile-add-known-project project))))
+
 (defun ale/open-project (&optional dir)
   "Open DIR project magit logs and status as split windows."
   (when dir (find-file dir))
