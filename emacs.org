@@ -825,6 +825,8 @@
 
   #+END_SRC
 
+** Dirvish
+
   [[https://github.com/alexluigit/dirvish][dirvish]] is a great package that extends dired in all sorts of ways. It also feels really robust.
 
   #+BEGIN_SRC emacs-lisp
@@ -847,6 +849,7 @@
       (setq dirvish-time-format-string "%Y-%m-%d %R")
       (setq dired-listing-switches
             "-l --almost-all --human-readable --group-directories-first --no-group")
+      (setq dirvish-time-format-string "%Y-%m-%d %R")
       :bind ; Bind `dirvish|dirvish-side|dirvish-dwim' as you see fit
       (("C-c f" . dirvish-fd)
        :map dirvish-mode-map ; Dirvish inherits `dired-mode-map'
@@ -859,7 +862,7 @@
        ("s"   . dirvish-quicksort)    ; remapped `dired-sort-toggle-or-edit'
        ("v"   . dirvish-vc-menu)      ; remapped `dired-view-file'
        ("TAB" . dirvish-subtree-toggle)
-       ("i" . dirvish-subtree-toggle)
+       ("i" .   dirvish-subtree-toggle)
        ("M-f" . dirvish-history-go-forward)
        ("M-b" . dirvish-history-go-backward)
        ("M-l" . dirvish-ls-switches-menu)
