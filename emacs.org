@@ -1401,7 +1401,8 @@
             ("i"     consult-imenu         "imenu")
             ("e"     consult-imenu-multi   "imenu multi")
             ("o"     consult-outline       "outline")
-            ("SPC"   consult-global-mark   "mark"))
+            ("SPC"   consult-global-mark   "mark")
+            ("j"     bookmark-jump         "bookmark"))
            "Search"
            (("l"     consult-locate        "locate")
             ("/"     consult-find          "find")
@@ -1772,7 +1773,7 @@
                  ("Text"   (and (derived-mode . text-mode)
                                 (or (name . "^\\*scratch\\*\\(<[0-9]+>\\)?$")
                                     (not (name . "^\\*.+\\*$")))))
-                 ("Prog" (or (derived-mode . conf-unix-mode)
+                 ("Prog" (or (derived-mode . conf-mode)
                              (derived-mode . prog-mode)
                              (mode . restclient-mode)
                              (name . "\*\.\\(http\\)$")))
