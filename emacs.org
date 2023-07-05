@@ -1924,6 +1924,22 @@
       (use-package consult-git-log-grep
         :custom (consult-git-log-grep-open-function #'magit-show-commit))
 
+      (use-package consult-gh
+        :if (= 0 (shell-command "hash gh")) ;; check if gh is present on the system
+        :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh")
+
+        :config
+        ;;add your main GitHub account (replace "armindarvish" with your user or org)
+        (add-to-list 'consult-gh-default-orgs-list "arthur.leothaud@enercoop.org")
+
+        ;;use "gh org list" to get a list of all your organizations and adds them to default list
+        (setq consult-gh-default-orgs-list
+              (append consult-gh-default-orgs-list
+                      (remove "" (split-string (consult-gh--command-to-string "org" "list") "\n"))))
+
+        ;; set the default folder for cloning repositories, By default Consult-GH will confirm this before cloning
+        (setq consult-gh-default-clone-directory my-default-project-root))
+
       (use-package consult-recoll
         :if (= 0 (shell-command "hash recoll"))) ;; check if recoll is present on the system
 
