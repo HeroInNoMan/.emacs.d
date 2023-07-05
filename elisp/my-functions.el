@@ -401,6 +401,7 @@ When called with a prefix argument, cleanup all known projects beforehand."
   (magit-log-all (car (magit-log-arguments)))
   (delete-other-windows)
   (magit-status)
+  (ignore-errors (forge-pull))
   (other-window 1)
   (magit-fetch-all (magit-fetch-arguments))
   (goto-char (point-min)))
