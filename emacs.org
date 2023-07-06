@@ -1474,8 +1474,7 @@
 
       (use-package consult-projectile
         :after projectile
-        :bind
-        ("<f9>" . consult-projectile)
+        :defer t
         :config
         (setq consult-projectile-use-projectile-switch-project t
               consult-projectile-source-projectile-project-action #'ale/open-project))
