@@ -68,7 +68,8 @@ Show the full path file name in the minibuffer."
   (message (buffer-file-name)))
 
 (defun ale/jirify ()
-  "Create an org link with a ticket ID using the URL in my-private-primary-work-bugtracker-url."
+  "Create an org link with a ticket ID using the URL in
+ my-private-primary-work-bugtracker-url."
   (interactive)
   (if (and
        (boundp 'my-private-primary-work-bugtracker-url)
@@ -82,7 +83,8 @@ Show the full path file name in the minibuffer."
     (message "Var my-private-primary-work-bugtracker-url is nil or undefined. You must define a bugtracker URL first.")))
 
 (defun ale/rtify ()
-  "Create an org link with a ticket ID using the URL in my-private-secondary-work-bugtracker-url."
+  "Create an org link with a ticket ID using the URL in
+ my-private-secondary-work-bugtracker-url."
   (interactive)
   (if (and
        (boundp 'my-private-secondary-work-bugtracker-url)
