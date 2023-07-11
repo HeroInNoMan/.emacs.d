@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: premier-entretien
+# key: entretien1
+# --
+
+Bonjour $1,
+
+Nous avons bien reçu ta candidature au poste de développeur⋅euse Back-end confirmé⋅e.
+
+Nous voudrions organiser un court point d’échange (de l’ordre de 30 minutes) pour clarifier tes attentes et ce que propose Enercoop et ainsi déterminer si les deux correspondent bien.
+
+Cela peut se faire par téléphone ou visioconférence suivant ce que tu préfères.
+
+Serais-tu disponible cette semaine (par exemple jeudi) ou la semaine prochaine ?
+
+Bon après-midi et à bientôt !
+
+--
+Arthur Léothaud
+Lead développeur back-end Enercoop
