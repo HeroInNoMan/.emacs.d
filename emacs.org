@@ -4588,6 +4588,11 @@
              jenkins-viewname "<viewname>"))
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package jenkinsfile-mode
+       :mode ("\\.jenkinsfile$"))
+   #+END_SRC
+
 ** IRC
 
    I usually use irssi inside a tmux session over ssh on a distant machine so I can keep the connection alive forever. However I sometimes use ERC, and I want it configured just like my irssi session:
