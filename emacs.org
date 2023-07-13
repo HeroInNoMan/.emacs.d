@@ -1233,6 +1233,8 @@
                 ("C-s" . vertico-next)
                 ("C-r" . vertico-previous)))
 
+      (use-package vertico-posframe)
+
       (use-package vertico-multiform :straight nil
         :load-path "straight/repos/vertico/extensions"
         :after vertico
