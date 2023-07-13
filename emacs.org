@@ -4846,13 +4846,13 @@
        (when (boundp 'my-private-work-travis-host)
          (setq travis--host my-private-work-travis-host)))
 
-     (use-package jenkins ;; TODO compare to butler
-       :disabled
+     (use-package jenkins
        :config
-       (setq jenkins-api-token "<api token can be found on user's configure page>"
-             jenkins-url "<jenkins url>"
-             jenkins-username "<your user name>"
-             jenkins-viewname "<viewname>"))
+       (setq jenkins-api-token "1113007ba7de342d99f1ed28005a47d34b"
+             jenkins-url "https://integration.enercoop.org/"
+             jenkins-username "arthur.leothaud"
+             ;; jenkins-viewname "coopener_pipeline-deploy-2-instances"
+             ))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
