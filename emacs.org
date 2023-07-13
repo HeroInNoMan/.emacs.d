@@ -773,12 +773,68 @@
    #+END_SRC
 
    Makes unfocused window a bit dimmer :
-    #+BEGIN_SRC emacs-lisp
-      (use-package dimmer
-        :disabled
-        :config (dimmer-mode)
-        (setq dimmer-fraction 0.25))
-    #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package dimmer
+       :disabled
+       :config (dimmer-mode)
+       (setq dimmer-fraction 0.25))
+   #+END_SRC
+
+** Peek
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package peek
+       :straight (:type git :host sourcehut :repo "meow_king/peek")
+
+       :custom-face (peek-overlay-content-face
+                     ((t (:background "grey10"))))
+
+       :custom
+       ;; only list some settings that are wanted to be chaned by most people
+       (peek-overlay-window-size 11)  ; lines
+       (peek-overlay-position 'above)  ; or below
+       (peek-overlay-distance 4)  ; the distance between peek view and the cursor point
+
+       ;; one line before the place found by `peek-definition' will also appear
+       ;; in peek window. Note `peek-definition' is the underlying function of
+       ;; `peek-xref-definition'
+       (peek-definition-surrounding-above-lines 1)
+
+       (peek-live-update t)  ; live update peek view of a marked region
+
+       (peek-enable-eldoc-message-integration t)  ; enable `eldoc-message-function' integration
+       ;; eldoc message overlay at two lines below the point
+       ;; It's recommended to set the eldoc message overlay below the point since the pop up of
+       ;; the peek overlay may cause visual shaking
+       (peek-eldoc-message-overlay-position 2)
+
+       ;; enable `eldoc-display-functons'  integration
+       ;; note: you need Emacs version >= 28.1
+       (peek-enable-eldoc-display-integration t)
+
+       :config
+       (global-peek-mode 1)
+
+       ;; Keybindings
+       ;; default keybindings in peek-mode-keymap
+       (define-key peek-mode-keymap (kbd "M-n") 'peek-next-line)
+       (define-key peek-mode-keymap (kbd "M-p") 'peek-prev-line)
+
+       ;; or you can use `keymap-global-set', which is introduced in emacs 29
+       (global-set-key (kbd "C-x P p") #'peek-overlay-dwim)
+       (global-set-key (kbd "C-x P d") #'peek-xref-definition)
+       (global-set-key (kbd "C-x P m") #'peek-overlay-eldoc-message-toggle-stauts)
+       (global-set-key (kbd "C-c c d") #'eldoc)
+
+       ;; Eldoc display setting
+       ;; Besides making `peek-enable-eldoc-display-integration' to t, you may want to remove
+       ;;   other eldoc display functions.
+       (remove-hook 'eldoc-display-functions 'eldoc-display-in-buffer)
+
+       ;; you may also want to set scroll margin (see its docs)
+       ;; (setq-default scroll-margin 5)
+       )
+   #+END_SRC
 
 ** Icons
 
