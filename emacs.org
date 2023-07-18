@@ -775,6 +775,7 @@
       (setq dirvish-attributes
             '(all-the-icons file-time file-size collapse subtree-state vc-state git-msg))
       (setq delete-by-moving-to-trash nil)
+      (setq dirvish-time-format-string "%Y-%m-%d %R")
       (setq dired-listing-switches
             "-l --almost-all --human-readable --group-directories-first --no-group")
       :bind ; Bind `dirvish|dirvish-side|dirvish-dwim' as you see fit
