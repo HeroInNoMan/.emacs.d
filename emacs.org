@@ -1711,6 +1711,12 @@
        :config (winner-mode))
    #+END_SRC
 
+   [[https://github.com/roman/golden-ratio.el][golden-ratio]] resizes windows automatically:
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package golden-ratio :defer t)
+   #+END_SRC
+
 ** Buffer Management
    Change how buffer names are made unique.
    #+BEGIN_SRC emacs-lisp
@@ -4188,7 +4194,8 @@
         (("b" beacon-mode                               "beacon"               :toggle t)
          ("C" color-identifiers-mode                    "color identifiers"    :toggle t)
          ("H" idle-highlight-mode                       "Idle HL"              :toggle t)
-         ("G" clm/toggle-command-log-buffer             "command log mode"     :toggle t)
+         ;; ("G" clm/toggle-command-log-buffer             "command log mode"     :toggle t)
+         ("G" golden-ratio-mode                         "golden ratio"         :toggle t)
          ("P" prism-mode                                "prism"                :toggle t)
          ("I" highlight-indent-guides-mode              "indent guide"         :toggle t)
          ("m" global-hide-mode-line-mode                "hide mode-line"       :toggle t)
