@@ -5112,9 +5112,29 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package keycast
-       :config
-       (add-to-list 'global-mode-string '("" mode-line-keycast))
-       (keycast-mode))
+       :init
+       (with-eval-after-load 'keycast
+         (define-minor-mode keycast-mode
+           "Show current command and its key binding in the mode line, adapted."
+           :global t
+           (if keycast-mode
+               (add-hook 'pre-command-hook 'keycast--update t)
+             (remove-hook 'pre-command-hook 'keycast--update)))
+
+         (add-to-list 'global-mode-string '("" mode-line-keycast)))
+
+
+       (defun turn-on-keycast ()
+         (interactive)
+         (setq keycast-insert-after '(:eval (doom-modeline-format--main)))
+         (add-to-list 'global-mode-string '("" mode-line-keycast " "))
+         (keycast-mode-line-mode))
+
+       (defun turn-off-keycast ()
+         (interactive)
+         (setq keycast-insert-after '(:eval (doom-modeline-format--main)))
+         (setq global-mode-string (delete '("" mode-line-keycast " ") global-mode-string))
+         (keycast-mode-line-mode -1)))
    #+END_SRC
 
 ** Restclient
