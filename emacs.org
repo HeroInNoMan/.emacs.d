@@ -3282,7 +3282,8 @@
        :config
        (setq shell-pop-default-directory nil)
        (setq shell-pop-shell-type
-             (quote ("vterm" "*vterm*" (lambda () (vterm shell-pop-term-shell)))))
+             (quote ("shell" "*shell*" (lambda nil (shell shell-pop-term-shell)))))
+       ;; (setq shell-pop-shell-type (quote ("vterm" "*vterm*" (lambda () (vterm shell-pop-term-shell)))))
        (setq shell-pop-term-shell "/bin/bash")
        ;;(setq shell-pop-universal-key "C-t")
        (setq shell-pop-window-size 30)
