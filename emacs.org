@@ -247,6 +247,13 @@
      (use-package iso-transl :straight nil :defer t)
    #+END_SRC
 
+   cf. https://emacs.stackexchange.com/questions/53461/specifying-a-binding-for-control-shift-tab as to why this is necessary on my X11 system to bind ~C-S-<tab>~.
+   #+BEGIN_SRC emacs-lisp
+     (define-key function-key-map [(control shift iso-lefttab)] [(control shift tab)])
+     (define-key function-key-map [(meta shift iso-lefttab)] [(meta shift tab)])
+     (define-key function-key-map [(meta control shift iso-lefttab)] [(meta control shift tab)])
+   #+END_SRC
+
 ** Emoji
 
    Let’s [[https://github.com/iqbalansari/emacs-emojify][emojify]] things :
