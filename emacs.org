@@ -893,6 +893,74 @@
       :config (dogears-mode))
   #+END_SRC
 
+** Tabs
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package awesome-tab
+       :bind
+       ("M-é"       . awesome-tab-backward-tab)
+       ("M-è"       . awesome-tab-forward-tab)
+       ("C-M-é"     . awesome-tab-backward-group)
+       ("C-M-è"     . awesome-tab-forward-group)
+       ("C-x t t"   . awesome-tab-switch-group)
+       ("C-x t b"   . awesome-tab-move-current-tab-to-left)
+       ("C-x t f"   . awesome-tab-move-current-tab-to-right)
+       ("C-x t +"   . awesome-tab-increase-tabbar-height)
+       ("C-x t -"   . awesome-tab-decrease-tabbar-height)
+       :config
+       (defadvice default-text-scale-increase
+           (after fix-tab-height activate)
+         (setq awesome-tab-height (face-attribute 'default :height))
+         (awesome-tab-refresh-display))
+       (defadvice default-text-scale-decrease
+           (after fix-tab-height activate)
+         (setq awesome-tab-height (face-attribute 'default :height))
+         (awesome-tab-refresh-display))
+       (defadvice cycle-font-size
+           (after fix-tab-height activate)
+         (setq awesome-tab-height (face-attribute 'default :height))
+         (awesome-tab-refresh-display))
+
+       (defun awesome-tab-increase-tabbar-height ()
+         "Increase the size of the tabbar."
+         (interactive)
+         (setq awesome-tab-height (+ 10 awesome-tab-height))
+         (awesome-tab-refresh-display)
+         (message "tab height : %s" (int-to-string awesome-tab-height)))
+       (defun awesome-tab-decrease-tabbar-height ()
+         "Decrease the size of the tabbar."
+         (interactive)
+         (setq awesome-tab-height (- awesome-tab-height 10))
+         (awesome-tab-refresh-display)
+         (message "tab height : %s" (int-to-string awesome-tab-height)))
+       (defun awesome-tab-hide-tab (x)
+         (let ((name (format "%s" x)))
+           (or
+            (string-prefix-p "*epc" name)
+            (string-prefix-p "*Compile-Log*" name)
+            (string-prefix-p "*straight" name)
+            (string-prefix-p "*Dirvish" name)
+            (string-prefix-p "*lsp" name))))
+       (defun awesome-tab-buffer-groups ()
+         "`awesome-tab-buffer-groups' control buffers' group rules.
+
+     cf. https://github.com/manateelazycat/awesome-tab for original function.
+     - Group awesome-tab with mode if buffer is derived from `erc-mode'.
+     - Group together all uninteresting buffers under \"emacs\"
+     - Other buffers are grouped by `awesome-tab-get-group-name' with
+      project name."
+         (list
+          (cond
+           ((derived-mode-p 'erc-mode)
+            "ERC")
+           ((and (not (derived-mode-p 'prog-mode))
+                 (or (memq major-mode '(org-agenda-mode diary-mode))
+                     (derived-mode-p 'eshell-mode)
+                     (string-equal "*" (substring (buffer-name) 0 1)))
+                 "emacs"))
+           (t (awesome-tab-get-group-name (current-buffer)))))))
+   #+END_SRC
+
 * Whitespace
   I just heard of [[https://github.com/editorconfig/editorconfig-emacs][editorconfig]], which sounds like a sensible way of dealing with formatting issues accross multiple IDEs/Projects/developers
   #+BEGIN_SRC emacs-lisp
@@ -4201,7 +4269,7 @@
          ;; ("t" treemacs                                  "treemacs"                      )
          ("l" global-display-line-numbers-mode          "line number"          :toggle t)
          ("r" linum-relative-global-mode                "relative line number" :toggle t)
-         ("T" tab-bar-mode                              "tabs"                 :toggle t)
+         ("t" awesome-tab-mode                          "tabs"                 :toggle t)
          ("W" mouse-wheel-mode                          "mouse wheel"          :toggle t))
         "Highlighting"
         (("C" color-identifiers-mode                    "color identifiers"    :toggle t)
@@ -5126,15 +5194,13 @@
                 (cond
                  ((daemonp)
                   (progn
-                    (when (fboundp 'beacon-mode)       (beacon-mode -1))
-                    (when (fboundp 'centaur-tabs-mode) (tab-bar-mode -1))
+                    (when (fboundp 'beacon-mode) (beacon-mode -1))
                     (when (boundp 'my-private-frame-font-size)
                       (set-face-attribute 'default nil :height my-private-frame-font-size)
                       (set-fira-font-if-possible))))
                  (t
                   (progn
-                    (when (fboundp 'beacon-mode)       (beacon-mode))
-                    (when (fboundp 'centaur-tabs-mode) (tab-bar-mode 1))
+                    (when (fboundp 'beacon-mode) (beacon-mode))
                     (mouse-wheel-mode t))))))
   #+END_SRC
 * Useful links
