@@ -935,18 +935,18 @@
        ("C-x t +"   . awesome-tab-increase-tabbar-height)
        ("C-x t -"   . awesome-tab-decrease-tabbar-height)
        :config
-       (defadvice default-text-scale-increase
-           (after fix-tab-height activate)
-         (setq awesome-tab-height (face-attribute 'default :height))
-         (awesome-tab-refresh-display))
-       (defadvice default-text-scale-decrease
-           (after fix-tab-height activate)
-         (setq awesome-tab-height (face-attribute 'default :height))
-         (awesome-tab-refresh-display))
-       (defadvice cycle-font-size
-           (after fix-tab-height activate)
-         (setq awesome-tab-height (face-attribute 'default :height))
-         (awesome-tab-refresh-display))
+       (defun ale-adapt-awesome-tab-size ()
+         (when awesome-tab-mode
+           (setq awesome-tab-height (face-attribute 'default :height))
+           (awesome-tab-refresh-display)))
+       (defadvice awesome-tab-mode (after fix-tab-height activate)
+         (ale-adapt-awesome-tab-size))
+       (defadvice default-text-scale-increase (after fix-tab-height activate)
+         (ale-adapt-awesome-tab-size))
+       (defadvice default-text-scale-decrease (after fix-tab-height activate)
+         (ale-adapt-awesome-tab-size))
+       (defadvice cycle-font-size (after fix-tab-height activate)
+         (ale-adapt-awesome-tab-size))
 
        (defun awesome-tab-increase-tabbar-height ()
          "Increase the size of the tabbar."
