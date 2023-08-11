@@ -1414,7 +1414,7 @@
             ("x"     consult-recoll        "recoll"))
            "Tools"
            ((","     quick-calc            "calc")
-            ("c"     read-color            "colours")
+            ("C"     read-color            "colours")
             ("t"     consult-theme         "themes")
             ("k"     consult-kmacro        "run macro")
             ("y"     consult-yasnippet     "yasnippet"))
@@ -1423,6 +1423,7 @@
             ("s"     helpful-symbol        "symbol")
             ("v"     helpful-variable      "variable")
             ("f"     helpful-function      "function")
+            ("c"     helpful-command       "command")
             ("b"     describe-bindings     "bindings")
             ("F"     describe-face         "face"))
            "Manual"
