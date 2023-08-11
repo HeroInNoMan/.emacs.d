@@ -4625,6 +4625,11 @@
        (imp-visit-buffer))
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package impatient-showdown
+       :config (setq impatient-showdown-flavor 'github))
+   #+END_SRC
+
 ** Typescript
    #+BEGIN_SRC emacs-lisp
      (use-package tide
