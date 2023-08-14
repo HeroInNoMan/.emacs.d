@@ -65,6 +65,7 @@
     (straight-use-package 'use-package)
     (setq straight-use-package-by-default t
           use-package-always-defer nil
+          use-package-enable-imenu-support t
           use-package-verbose t)
   #+END_SRC
 
