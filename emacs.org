@@ -229,6 +229,15 @@
        (fringe-mode 0))
    #+END_SRC
 
+** imenu
+
+   imenu is great, 60-character lines is just not enough.
+   #+BEGIN_SRC emacs-lisp
+     (use-package imenu
+       :straight nil
+       :config (setq imenu-max-item-length 150))
+   #+END_SRC
+
 ** Encoding
 
    Let’s use UTF-8 everywhere:
