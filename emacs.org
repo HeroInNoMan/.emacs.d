@@ -1141,7 +1141,11 @@
 ** deadgrep
 
    #+BEGIN_SRC emacs-lisp
-     (use-package deadgrep)
+     (use-package deadgrep
+       :bind
+       (:map deadgrep-mode-map
+             ("f" . next-error-follow-minor-mode) ;; follow
+             ("v" . next-error-follow-minor-mode))) ;; view
    #+END_SRC
 
 * Completion
