@@ -1129,6 +1129,12 @@
        :custom-face (phi-search-selection-face ((t (:inherit isearch :background "dark orange")))))
    #+END_SRC
 
+** deadgrep
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package deadgrep)
+   #+END_SRC
+
 * Completion
 
   Case-insensitive policy:
@@ -1494,7 +1500,8 @@
             ("/"     consult-find          "find")
             ("g"     consult-git-grep      "git grep")
             ("\\"    consult-git-log-grep  "git log grep")
-            ("x"     consult-recoll        "recoll"))
+            ("x"     deadgrep              "deadgrep")
+            ("X"     consult-recoll        "recoll"))
            "Tools"
            ((","     quick-calc            "calc")
             ("C"     read-color            "colours")
