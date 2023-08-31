@@ -1336,8 +1336,6 @@
                 ("C-s" . vertico-next)
                 ("C-r" . vertico-previous)))
 
-      (use-package vertico-posframe)
-
       (use-package vertico-multiform :straight nil
         :load-path "straight/repos/vertico/extensions"
         :after vertico
@@ -1358,6 +1356,8 @@
                 (symbol (vertico-sort-function . vertico-sort-alpha))))
 
         (vertico-multiform-mode))
+
+      (use-package vertico-posframe)
 
       (use-package vertico-buffer :straight nil :after vertico
         :load-path vertico-extensions-path
