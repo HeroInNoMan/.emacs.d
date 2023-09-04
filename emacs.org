@@ -2277,7 +2277,7 @@
       :init (setq org-refile-targets nil
                   org-capture-templates '())
       :bind (("C-c a" . org-agenda)
-             ("<f8>" . org-agenda)
+             ;; ("<f8>" . org-agenda)
              ("C-c b" . org-switchb)
              ("C-c l" . org-store-link)
              :map org-mode-map
