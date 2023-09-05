@@ -3201,6 +3201,15 @@
         (dap-ui-mode 1))
     #+END_SRC
 
+** Codium
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package codeium
+       :defer t
+       :straight '(codeium :type git :host github :repo "Exafunction/codeium.el")
+       :config (setq codeium/metadata/api_key my-private-codeium-api-key))
+   #+END_SRC
+
 ** Dealing with parens
    I tried paredit, didn’t really like the “strict” thing. Hope will get used to smartparens
    #+BEGIN_SRC emacs-lisp
