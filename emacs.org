@@ -570,7 +570,7 @@
         ;; Global settings (defaults)
         (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
               doom-themes-enable-italic t) ; if nil, italics is universally disabled
-        (load-theme (if (boundp 'my-private-theme) my-private-theme 'doom-vibrant))
+        (load-theme (if (boundp 'my-private-theme) my-private-theme 'doom-vibrant) t)
 
         (setq original-cursor-color (face-attribute 'cursor :background))
         (setq original-cursor-color "#51afef")
