@@ -426,13 +426,14 @@ When called with a prefix argument, cleanup all known projects beforehand."
   "Cycle between small, big, and very big font size."
   (interactive)
   (let* ((small-font 100)
-         (normal-font 130)
-         (big-font 150)
+         (normal-font 140)
+         (big-font 170)
          (current-size (face-attribute 'default :height))
          (new-size (cond ((<= current-size small-font) normal-font)
                          ((<= current-size normal-font) big-font)
                          (t small-font))))
     (set-face-attribute 'default nil :height new-size)
+    (message "Default font size is now %s" new-size)
     (set-fira-font-if-possible)))
 
 ;; functions stolen from angrybacon
