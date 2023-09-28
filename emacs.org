@@ -2419,7 +2419,8 @@
                            ((org-agenda-overriding-header "À faire")
                             (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                         'deadline
-                                                        'scheduled))
+                                                        'scheduled
+                                                        'regexp "#A"))
                             (org-agenda-sorting-strategy '(todo-state-up
                                                            priority-down
                                                            user-defined-down
