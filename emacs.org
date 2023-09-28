@@ -638,10 +638,20 @@
        :hook ((dired-mode org-agenda-mode ibuffer-mode) . hl-line-mode)
        :config (global-hl-line-mode -1))
 
-     (use-package highlight-indent-guides
-       :hook (prog-mode . highlight-indent-guides-mode)
-       :custom-face (highlight-indent-guides-character-face ((t (:foreground "gray15"))))
-       :config (setq highlight-indent-guides-method 'character))
+
+     (use-package indent-bars
+       :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+       :hook (prog-mode . indent-bars-mode)
+       :custom
+       (indent-bars-zigzag t)
+       (indent-bars-display-on-blank-lines nil)
+       (indent-bars-treesit-support t)
+       (indent-bars-no-descend-string t)
+       (indent-bars-treesit-ignore-blank-lines-types '("module"))
+       (indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
+                                           list list_comprehension
+                                           dictionary dictionary_comprehension
+                                           parenthesized_expression subscript))))
    #+END_SRC
 
    Prettify those ugly ==
@@ -4315,7 +4325,7 @@
          ("d" keypression-mode                          "Demo"                 :toggle t)
          ("G" golden-ratio-mode                         "golden ratio"         :toggle t)
          ("P" prism-mode                                "prism"                :toggle t)
-         ("I" highlight-indent-guides-mode              "indent guide"         :toggle t)
+         ("I" indent-bars-mode                          "indent bars"          :toggle t)
          ("m" global-hide-mode-line-mode                "hide mode-line"       :toggle t)
          ("V" goggles-mode                              "goggles"              :toggle t))
         "Decoration"
