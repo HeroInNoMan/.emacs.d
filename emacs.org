@@ -2324,7 +2324,7 @@
             org-adapt-indentation t
             org-tags-column -80
             org-ellipsis " ▼"
-            org-imenu-depth 3)
+            org-imenu-depth 4)
 
       ;; org log
       (setq org-log-done 'time
