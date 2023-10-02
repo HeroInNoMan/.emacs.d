@@ -4698,6 +4698,14 @@
 
 * Other
 
+** TOTP (time-based one-time passwords)
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package totp
+       :straight nil
+       :load-path "elisp/")
+   #+END_SRC
+
 ** Continuous integration
 
    #+BEGIN_SRC emacs-lisp
