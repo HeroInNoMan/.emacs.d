@@ -1537,7 +1537,8 @@
             ("v"     helpful-variable      "variable")
             ("f"     helpful-function      "function")
             ("c"     helpful-command       "command")
-            ("F"     describe-face         "face"))
+            ("F"     describe-face         "face")
+            ("a"     apropos-value         "value"))
            "Manual"
            (("b"     describe-bindings     "bindings")
             ("Y"     yas-describe-tables   "yasnippets")
