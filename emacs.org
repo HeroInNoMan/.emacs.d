@@ -3446,7 +3446,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package lisp-data-mode
        :straight nil
-       :hook (lisp-data-mode . smartparens-strict-mode)
+       :hook ((lisp-data-mode comint-mode) . smartparens-strict-mode)
        :bind
        ("C-c C-c" . eval-region)
        ("C-c C-r" . crux-eval-and-replace))
