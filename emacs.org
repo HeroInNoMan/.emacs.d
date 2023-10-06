@@ -2358,7 +2358,7 @@
         (interactive)
         (maybe-relocate-before-call 'org-agenda))
 
-        (setq diary-local-file
+      (setq diary-local-file
             (if (boundp 'my-private-local-diary-file)
                 my-private-local-diary-file
               (expand-file-name "diary.org" base-emacs-directory))
@@ -2392,18 +2392,10 @@
                          (org-agenda-sorting-strategy '(time-up
                                                         priority-down
                                                         effort-up))))
-                (tags-todo "+PRIORITY=\"A\""
-                           ((org-agenda-overriding-header "❗IMPORTANT❗")
-                            (org-agenda-sorting-strategy '(priority-down
-                                                           todo-state-up
-                                                           user-defined-down))
-                            (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                        'deadline
-                                                        'scheduled))))
                 (alltodo "" ((org-agenda-overriding-header "Récent ↓")
-                             (org-agenda-sorting-strategy '(todo-state-up
-                                                            user-defined-down
-                                                            priority-down))
+                             (org-agenda-sorting-strategy '(priority-down
+                                                            todo-state-up
+                                                            user-defined-down))
                              (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                          'deadline
                                                          'scheduled)))))
@@ -2482,69 +2474,45 @@
 
       ;; LOCAL
       (add-to-list 'org-capture-templates
-                   '("b" "Book" ;; add a book in to-read list
-                     entry (file+headline todo-media-file "Lecture")
-                     "* LIRE %i%?%^{Author}p%^{Date}p"
-                     :prepend t :kill-buffer t) t)
-
-      (add-to-list 'org-capture-templates
-                   '("F" "Film\n" ;; add a film in to-watch list
-                     entry (file+headline todo-media-file "Films")
-                     "* VOIR %i%?%^{Date}p"
-                     :prepend t :kill-buffer t) t)
-
-      (add-to-list 'org-capture-templates
-                   '("E" "Emprunt" ;; add a borrow entry
-                     entry (file+headline  todo-local-file "À rendre")
-                     "* RENDRE %i%?"
-                     :kill-buffer t) t)
-
-      (add-to-list 'org-capture-templates
-                   '("p" "Prêt\n" ;; add a lend entry
-                     entry (file+headline  todo-local-file "À récupérer")
-                     "* RÉCUPÉRER %i%?"
-                     :kill-buffer t) t)
-
-      (add-to-list 'org-capture-templates
-                   '("t" "TODO" ;; add a TODO entry
+                   '("t" "✅   TODO" ;; add a TODO entry
                      entry (file todo-local-file)
-                     "* TODO %i%?\n%a\n"
+                     "* TODO [#B] %?%a\n%i\n"
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("T" "TODO - avec date" ;; add a TODO entry
+                   '("T" "✅📆 TODO  – with date\n" ;; add a TODO entry
                      entry (file todo-local-file)
-                     "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
+                     "* TODO [#B] %?%a\n\tSCHEDULED: %t\n%i\n"
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("d" "Diary - today" ;; add a diary entry
+                   '("d" "📔   Diary" ;; add a diary entry
                      item (file+olp+datetree diary-local-file)
                      "\t%i%?"
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("D" "Diary" ;; add a diary entry
+                   '("D" "📔📆 Diary – with date\n" ;; add a diary entry
                      item (file+olp+datetree diary-local-file)
                      "\t%i%?"
                      :time-prompt t :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("i" "Idée" ;; add an idea entry
+                   '("n" "📝   Note" ;; add a note entry
+                     entry (file todo-notes-file)
+                     "* %i%?"
+                     :kill-buffer t) t)
+
+      (add-to-list 'org-capture-templates
+                   '("i" "💡   Idea" ;; add an idea entry
                      item (file+headline todo-notes-file "Pêle-mêle")
                      "%i%?"
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("y" "snippet\n" ;; add a (code) snippet
+                   '("y" "✂️   Snippet\n" ;; add a (code) snippet
                      entry (file+headline todo-notes-file "Code snippets")
                      "* %?\n\t#+BEGIN_SRC \n%i\n\t#+END_SRC\n"
-                     :kill-buffer t) t)
-
-      (add-to-list 'org-capture-templates
-                   '("e" "todo in Emacs\n" ;; add a todo entry for emacs
-                     entry (file+headline todo-local-file "Emacs")
-                     "* TODO %?"
                      :kill-buffer t) t)
 
       (when (and (boundp 'my-private-work-diary-org-file)
@@ -2552,44 +2520,32 @@
                  (boundp 'my-work-machine-name)
                  (equal my-work-machine-name (system-name)))
         (add-to-list 'org-capture-templates
-                     '("l" "Log        (work)"
+                     '("w" "✅   TODO            (🏢 Work)"
+                       entry (file+headline my-private-work-todo-org-file "À faire")
+                       "* TODO [#B] %?%a\n\tSCHEDULED: %t\n%i\n"
+                       :prepend t :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("u" "✅⚡ Quick TODO      (🏢 Work)\n"
+                       entry (file+headline my-private-work-todo-org-file "À faire")
+                       "* TODO [#B] %?%a\n\tSCHEDULED: %t\n\t:PROPERTIES:\n\t:Effort:\t5\n\t:END:\n%i\n"
+                       :prepend t :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("l" "📜   Log             (🏢 Work)"
                        entry (file+olp+datetree my-private-work-diary-org-file)
-                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
+                       "* %?%a\n%i\n"
+                       :kill-buffer t) t)
+        (add-to-list 'org-capture-templates
+                     '("L" "📜📆 Log – with date (🏢 Work)\n"
+                       entry (file+olp+datetree my-private-work-diary-org-file)
+                       "* %?%a\n%i\n"
                        :time-prompt t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
-                     '("w" "TODO       (work)"
-                       entry (file+headline my-private-work-todo-org-file "À faire")
-                       "* TODO [#B] %i%?\n\tSCHEDULED: %t\n%a\n"
-                       :prepend t :kill-buffer t) t)
-        (add-to-list 'org-capture-templates
-                     '("u" "Quick TODO (work)"
-                       entry (file+headline my-private-work-todo-org-file "À faire")
-                       "* TODO %i%?\n\tSCHEDULED: %t\n\t:PROPERTIES:\n\t:Effort:\t5\n\t:END:\n%a\n"
-                       :prepend t :kill-buffer t) t)
-        (add-to-list 'org-capture-templates
-                     '("f" "Fiche      (work)"
-                       entry (file+headline my-private-work-todo-org-file "Tickets à créer")
-                       "* TODO %i%?\n\tSCHEDULED: %t\n%a\n"
-                       :prepend t :kill-buffer t) t)
-        (add-to-list 'org-capture-templates
-                     '("v" "Revue      (work)"
-                       entry (file+headline my-private-work-todo-org-file "À faire")
-                       "* Review %i%?\n\tSCHEDULED: %t"
-                       :prepend t :kill-buffer t) t)
-        (add-to-list 'org-capture-templates
-                     '("r" "Référence  (work)\n"
+                     '("r" "📝   Référence       (🏢 Work)\n"
                        entry (file+headline my-private-work-diary-org-file "Références")
                        "* %?\n%i"
                        :prepend t :kill-buffer t) t))
 
       ;; font and faces customization
-      ;; TODO fix this section
-      ;; (set-face-attribute 'org-block nil :background
-      ;;                     (if (eq 'light frame-background-mode)
-      ;;                         (color-darken-name
-      ;;                          (face-attribute 'default :background) 15)
-      ;;                       (color-lighten-name (face-attribute 'default :background) 15)))
-
       (setq org-fontify-done-headline t)
       (setq org-todo-keyword-faces
             '(("TODO"       . (:foreground "#Ffc0cb" :weight bold))
