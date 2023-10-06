@@ -2287,7 +2287,7 @@
       :straight (:type built-in) ;; compatibility problems between versions of org…
       :init (setq org-refile-targets nil
                   org-capture-templates '())
-      :bind (("C-c a" . org-agenda)
+      :bind (("C-c a" . ale/org-agenda)
              ;; ("<f8>" . org-agenda)
              ("C-c b" . org-switchb)
              ("C-c l" . org-store-link)
@@ -2353,7 +2353,12 @@
             org-refile-allow-creating-parent-nodes 'confirm)
 
       ;; org-agenda
-      (setq diary-local-file
+      (defun ale/org-agenda ()
+        "Run `org-agenda' after setting `default-directory' to `~'."
+        (interactive)
+        (maybe-relocate-before-call 'org-agenda))
+
+        (setq diary-local-file
             (if (boundp 'my-private-local-diary-file)
                 my-private-local-diary-file
               (expand-file-name "diary.org" base-emacs-directory))

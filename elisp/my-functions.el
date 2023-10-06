@@ -292,7 +292,14 @@ Swap buffers in the process"
      (buffer-list))
     (if (> (length scratches) 0)
         (switch-to-buffer (buffer-name (car scratches)))
-      (crux-create-scratch-buffer))))
+      (maybe-relocate-before-call 'crux-create-scratch-buffer))))
+
+(defun maybe-relocate-before-call (function)
+  "Redefine `default-directory' before calling FUNCTION."
+      (if (file-remote-p default-directory)
+          (let ((default-directory "~"))
+            (funcall function))
+        (funcall function)))
 
 (defun dash-or-scratch ()
   "Switch to dashboard if exists and if there is only one frame.
