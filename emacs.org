@@ -111,7 +111,7 @@
       (setq recentf-keep '(file-remote-p file-readable-p))
       (require 'recentf)
       (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
-      (setq recentf-exclude '("~$" "/tmp/" "/ssh:" "/sshx:" "/sudo:"))
+      (setq recentf-exclude '("~$" "/tmp/" "/sftp:" "/ssh:" "/sshx:" "/sudo:"))
       (recentf-mode 1)
       (add-to-list 'recentf-exclude no-littering-var-directory)
       (add-to-list 'recentf-exclude no-littering-etc-directory))
