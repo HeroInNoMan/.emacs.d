@@ -175,6 +175,7 @@
     (use-package which-key
       :config
       (which-key-mode)
+      (setq which-key-popup-type 'minibuffer)
       (setq which-key-idle-delay 0.3))
   #+END_SRC
 
