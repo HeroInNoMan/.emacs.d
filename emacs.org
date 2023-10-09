@@ -805,6 +805,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package dirvish
+      :disabled
       :init
       (dirvish-override-dired-mode)
       :custom
