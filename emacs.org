@@ -4374,11 +4374,11 @@
          ("%" (funcall (togfun "*ansi-term*" 'crux-visit-term-buffer)) "ansi-term")
          ("v" (funcall (togfun "vterm" 'vterm)) "vterm"))
         "Navigation"
-        (("i" ale/find-init-file "go to init file")
-         ("'" point-to-register "save bookmark")
+        (("'" point-to-register "save bookmark")
          ("j" jump-to-register "jump to bookmark")
          ("o" crux-open-with "open")
-         ("." find-file-at-point "open at point" :column "Files"))
+         ("." find-file-at-point "open at point" :column "Files")
+         ("," ffap-menu "open around point" :column "Files"))
         "Management"
         (("(" mu4e "mu4e")
          ("\"" erc-start-or-jump "IRC")
@@ -4396,7 +4396,8 @@
          ("f" ale/format-all-buffer-or-region "format all")
          ("w" 0x0-dwim "webpaste"))
         "Straight"
-        (("p p" straight-pull-all "pull packages")
+        (("i" ale/find-init-file "go to init file") 
+         ("p p" straight-pull-all "pull packages")
          ("p c" straight-check-all "check packages")
          ("p i" straight-use-package "install package"))))
 
