@@ -3626,7 +3626,6 @@
     #+BEGIN_SRC emacs-lisp
       (use-package lsp-java
         :disabled
-        ;; :delight (java-mode "🅹" :major)
         :bind ("C-S-o" . lsp-execute-code-action)
         :after lsp
         :hook (java-mode . lsp))
