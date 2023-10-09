@@ -483,6 +483,8 @@
    #+END_SRC
 
 * Modal editing
+
+** god-mode
   I use [[https://github.com/chrisdone/god-mode][god-mode]] to implement a pseudo-modal behaviour. The cursor becomes red when in god-mode to make it more visible.
   #+BEGIN_SRC emacs-lisp
     (use-package god-mode
@@ -521,6 +523,13 @@
         (my-update-cursor))
       (add-to-list 'god-exempt-major-modes 'browse-kill-ring-mode)
       (add-to-list 'god-exempt-major-modes 'ibuffer-mode))
+  #+END_SRC
+
+** evil-mode
+
+  Let’s have evil-mode installed juste in case:
+  #+BEGIN_SRC emacs-lisp
+    (use-package evil)
   #+END_SRC
 
 * Appearance
