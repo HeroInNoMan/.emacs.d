@@ -416,7 +416,7 @@ When called with a prefix argument, cleanup all known projects beforehand."
   (goto-char (point-min)))
 
 (defun set-fira-font-if-possible ()
-  "Set the font to “Fira Code” in it is available."
+  "Set the font to “Fira Code” if it is available."
   (interactive)
   (when (member "Fira Code" (font-family-list))
     (set-frame-font "Fira Code" t t)))
