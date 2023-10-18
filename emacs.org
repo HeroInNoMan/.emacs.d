@@ -2608,7 +2608,9 @@
                          (org-agenda-show-future-repeats 'next)
                          (org-agenda-sorting-strategy '(time-up
                                                         priority-down
-                                                        effort-up))))
+                                                        effort-up))
+                         (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                     'nottodo 'todo))))
                 (alltodo "" ((org-agenda-overriding-header "🕗 Récent ↓")
                              (org-agenda-sorting-strategy '(priority-down
                                                             todo-state-up
