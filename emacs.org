@@ -2524,31 +2524,42 @@
                             (org-agenda-weekend-days '(0 5 6))
                             (org-agenda-start-on-weekday 1)
                             (org-agenda-show-future-repeats 'next)
-                            (org-agenda-span 'fortnight)
+                            (org-agenda-span 'day)
                             (org-agenda-include-diary nil)
                             (org-agenda-remove-tags t)
                             (org-agenda-sorting-strategy '(time-up
                                                            priority-down
                                                            effort-up))))
+                (todo "STARTED"
+                      ((org-agenda-overriding-header "STARTED")
+                       (org-agenda-sorting-strategy '(priority-down
+                                                      effort-up))
+                       (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                   'todo '("STARTED")
+                                                   'deadline
+                                                   'scheduled))))
                 (tags-todo "+PRIORITY=\"A\""
-                           ((org-agenda-overriding-header "❗IMPORTANT❗")
+                           ((org-agenda-overriding-header "⚠️ IMPORTANT")
                             (org-agenda-sorting-strategy '(priority-down
+                                                           effort-up
                                                            todo-state-up
                                                            user-defined-down))
                             (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                         'deadline
                                                         'scheduled))))
+
                 (tags-todo "enercoop" ;; Block 2 All work-related TODOs
                            ((org-agenda-overriding-header "À faire")
-                            (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                        'deadline
-                                                        'scheduled
-                                                        'regexp "#A"))
                             (org-agenda-sorting-strategy '(todo-state-up
                                                            priority-down
                                                            user-defined-down
                                                            effort-up
-                                                           alpha-up)))))
+                                                           alpha-up))
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                        'deadline
+                                                        'scheduled
+                                                        'todo '("STARTED")
+                                                        'regexp "#A")))))
                ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
                 (org-agenda-files `(,my-private-work-todo-org-file
                                     ,my-private-work-diary-org-file))
@@ -2839,7 +2850,8 @@
     (use-package org-fancy-priorities
       :after org
       :hook (org-mode . org-fancy-priorities-mode)
-      :config (setq org-fancy-priorities-list '((?A . "🔥")
+      :config (setq org-priority-lowest ?D
+                    org-fancy-priorities-list '((?A . "🔥")
                                                 (?B . "🎯")
                                                 (?C . "☕")
                                                 (?D . "🎁")
