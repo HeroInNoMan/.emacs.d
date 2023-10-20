@@ -666,6 +666,13 @@ are equal return nil."
   (play-youtube-video
    (w3m-print-this-url (point))))
 
+(defun ale-sql-connect (connection)
+  "Connect to specified CONNECTION."
+  (interactive)
+  (setq sql-product (car (cdr (assoc 'sql-product (alist-get connection sql-connection-alist)))))
+  (sql-connect connection)
+  (find-file-other-window my-private-sql-scratch-buffer))
+
 (defun init-server-alist ()
   "Init the list of SQL connections based on `sql-connection-alist'."
   (defvar ale-sql-servers-list '()

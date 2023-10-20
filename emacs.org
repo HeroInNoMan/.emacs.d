@@ -1599,7 +1599,107 @@
          consult-ripgrep
          :keymap (let ((map (make-sparse-keymap)))
                    (define-key map (kbd "C-l") #'consult-ripgrep-up-directory)
-                   map)))
+                   map))
+  
+        (defun mode-buffer-exists-p (mode)
+          (seq-some (lambda (buf)
+                      (provided-mode-derived-p
+                       (buffer-local-value 'major-mode buf)
+                       mode))
+                    (buffer-list)))
+
+        (defvar sql-source
+          (list
+           :name "SQLConnection"
+           :category 'consult-new
+           :narrow ?s
+           :face 'font-lock-constant-face
+           :action #'ale-sql-connect
+           :items #'(lambda () sql-connections)))
+
+        (defvar eshell-source
+          `( :name     "eshell"
+             :category 'consult-new
+             :narrow   ?e
+             :face     'font-lock-constant-face
+             :action   ,(lambda (&rest _) (eshell))
+             :items    ,(lambda () (unless (mode-buffer-exists-p 'eshell-mode)
+                                '("*eshell* (new)")))))
+        (defvar term-source
+          `( :name     "Term"
+             :category 'consult-new
+             :narrow   ?t
+             :face     'font-lock-constant-face
+             :action   ,(lambda (&rest _) (ansi-term (or (getenv "SHELL") "/bin/sh")))
+             :items    ,(lambda () (unless (mode-buffer-exists-p 'term-mode)
+                                '("*ansi-term* (new)")))))
+        (defvar shell-sources
+          (list
+           :name     "shell"
+           :category 'buffer
+           :narrow   ?$
+           :face     'consult-buffer
+           :history  'buffer-name-history
+           :state    #'consult--buffer-state
+           :new
+           (lambda (name)
+             (cond ((string= name "e") (eshell))
+                   ((string= name "s") (shell))
+                   ((string= name "t") (ansi-term (or (getenv "SHELL") "/bin/sh")))
+                   ((string= name "v") (vterm))
+                   ((string= name "p") (shell-pop))
+                   (t (message "not a valid shell (e|s|t|v|p)."))))
+           :items
+           (lambda ()
+             (mapcar #'buffer-name
+                     (seq-filter
+                      (lambda (x)
+                        (memq (buffer-local-value 'major-mode x)
+                              (list 'eshell-mode
+                                    'term-mode
+                                    'vterm-mode
+                                    'shell-mode
+                                    'term-mode)))
+                      (buffer-list))))))
+
+        (defvar org-source
+          (list :name     "Org Buffer"
+                :category 'buffer
+                :narrow   ?o
+                :face     'consult-buffer
+                :history  'buffer-name-history
+                :state    #'consult--buffer-state
+                :new (lambda (name)
+                       (with-current-buffer (get-buffer-create name)
+                         (insert "#+title: " name "\n\n")
+                         (org-mode)
+                         (consult--buffer-action (current-buffer))))
+                :items (lambda ()
+                         (mapcar #'buffer-name
+                                 (seq-filter
+                                  (lambda (x)
+                                    (eq (buffer-local-value 'major-mode x) 'org-mode))
+                                  (buffer-list))))))
+
+        (defvar erc-source
+          (list :name     "IRC Buffer"
+                :category 'buffer
+                :narrow   ?i
+                :face     'consult-buffer
+                :history  'buffer-name-history
+                :state    #'consult--buffer-state
+                :items (lambda ()
+                         (mapcar #'buffer-name
+                                 (seq-filter
+                                  (lambda (x)
+                                    (eq (buffer-local-value 'major-mode x) 'erc-mode))
+                                  (buffer-list))))))
+        (add-to-list 'consult-buffer-sources 'sql-source    'append)
+        (add-to-list 'consult-buffer-sources 'eshell-source 'append)
+        (add-to-list 'consult-buffer-sources 'term-source   'append)
+        (add-to-list 'consult-buffer-sources 'shell-sources 'append)
+        (add-to-list 'consult-buffer-sources 'org-source    'append)
+        (add-to-list 'consult-buffer-sources 'erc-source    'append))
 
       (use-package consult-projectile
         :after projectile
