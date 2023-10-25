@@ -296,10 +296,10 @@ Swap buffers in the process"
 
 (defun maybe-relocate-before-call (function)
   "Redefine `default-directory' before calling FUNCTION."
-      (if (file-remote-p default-directory)
-          (let ((default-directory "~"))
-            (funcall function))
-        (funcall function)))
+  (if (file-remote-p default-directory)
+      (let ((default-directory "~"))
+        (funcall function))
+    (funcall function)))
 
 (defun dash-or-scratch ()
   "Switch to dashboard if exists and if there is only one frame.
