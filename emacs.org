@@ -2488,7 +2488,11 @@
             org-finished-file
             (if (boundp 'my-private-local-finished-org-file)
                 my-private-local-finished-org-file
-              (expand-file-name "finished.org" base-emacs-directory)))
+              (expand-file-name "finished.org" base-emacs-directory))
+            todo-shopping-file
+            (if (boundp 'my-private-local-shopping-org-file)
+                my-private-local-shopping-org-file
+              (expand-file-name "Courses.org" base-emacs-directory)))
 
       (setq org-agenda-files (if (boundp 'my-org-agenda-files) my-org-agenda-files nil))
 
@@ -2621,9 +2625,15 @@
                      :kill-buffer t) t)
 
       (add-to-list 'org-capture-templates
-                   '("y" "✂️   Snippet\n" ;; add a (code) snippet
+                   '("y" "✂️   Snippet" ;; add a (code) snippet
                      entry (file+headline todo-notes-file "Code snippets")
                      "* %?\n\t#+BEGIN_SRC \n%i\n\t#+END_SRC\n"
+                     :kill-buffer t) t)
+
+      (add-to-list 'org-capture-templates
+                   '("c" "🛒️   Courses\n" ;; add a shopping item
+                     entry (file+headline todo-shopping-file "Liste rapide")
+                     "* TODO [#B] %?\n%i\n"
                      :kill-buffer t) t)
 
       (when (and (boundp 'my-private-work-diary-org-file)
