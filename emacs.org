@@ -5272,6 +5272,13 @@
        (erc-update-modules))
    #+END_SRC
 
+** Rocket Chat
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package rocket-chat
+       :straight (:host github :repo "4hiziri/rocket-chat"))
+   #+END_SRC
+
 ** Torrent
 
    #+BEGIN_SRC emacs-lisp
