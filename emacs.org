@@ -1843,7 +1843,6 @@
                    ("u" . upcase-region)
                    ("l" . downcase-region)
                    ("c" . capitalize-region)
-                   ("u" . upcase-region)
                    ("w" . count-words-region))
        :hook ((text-mode prog-mode) . selected-global-mode))
 
