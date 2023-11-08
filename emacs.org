@@ -491,6 +491,7 @@
       :init (setq god-local-mode nil)
       :bind
       (("C-c g" . toggle-god-mode)
+       ("C-è" .   toggle-god-mode)
        :map god-local-mode-map
        ("i" . toggle-god-mode)
        ("." . repeat))
@@ -2855,33 +2856,35 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package flyspell
-       :bind ("C-è" . flyspell-hydra/body)
+       ;; :bind ("C-è" . flyspell-hydra/body)
        :commands dubcaps-mode
        :hook ((text-mode . flyspell-mode) ;; flyspell by default
-              (org-mode . dubcaps-mode)) ;; auto-correct double capitals
+              (org-mode . dubcaps-mode))  ;; auto-correct double capitals
        :pretty-hydra ((:color teal :quit-key "q")
                       ("Spelling"
-                       (("t" flyspell-mode       "toggle flyspell")
-                        ("T" guess-language-mode "toggle guess")
-                        ("g" guess-language      "guess"))
+                       (("t" flyspell-mode                       "toggle flyspell"      :toggle t)
+                        ("T" guess-language-mode                 "toggle guess"         :toggle t)
+                        ("g" guess-language                      "guess"                :toggle t)
+                        ("1" ten-hundred-mode                    "1000 words"           :toggle t))
                        "Flyspell"
-                       (("c" flyspell-buffer                 "check buffer")
-                        ("a" endless/ispell-word-then-abbrev "correct & add abbrev")
-                        ("." flyspell-auto-correct-word      "correct word"   :color pink)
-                        ("n" flyspell-goto-next-error        "next error"     :color pink)
-                        ("p" flyspell-goto-previous-error    "previous error" :color pink))
+                       (("c" flyspell-buffer                     "check buffer")
+                        ("D" endless/ispell-word-then-abbrev     "correct & add abbrev"          )
+                        ("a" endless/ispell-word-then-abbrev     "correct & add abbrev"          )
+                        ("." flyspell-auto-correct-word          "correct word"       :color pink)
+                        ("n" flyspell-goto-next-error            "next error"         :color pink)
+                        ("p" flyspell-goto-previous-error        "previous error"     :color pink))
                        "Dictionary"
-                       (("D" ispell-change-dictionary "choose" )
-                        ("A" ale/switch-to-all-dict   "all"    )
-                        ("f" ale/switch-to-fr-dict    "fr (FR)")
-                        ("d" ale/switch-to-de-dict    "de (DE)")
-                        ("e" ale/switch-to-en-dict    "en (GB)")
-                        ("u" ale/switch-to-us-dict    "en (US)"))
+                       (("D" ispell-change-dictionary            "choose"                        )
+                        ("A"            ale/switch-to-all-dict   "all"                           )
+                        ("f"            ale/switch-to-fr-dict    "fr (FR)"                       )
+                        ("d"            ale/switch-to-de-dict    "de (DE)"                       )
+                        ("e"            ale/switch-to-en-dict    "en (GB)"                       )
+                        ("u"            ale/switch-to-us-dict    "en (US)"                       ))
                        "Look up"
-                       (("l" define-word-at-point                "word definition")
-                        ("s" powerthesaurus-lookup-word-dwim     "synonym (DWIM)")
-                        ("w" powerthesaurus-lookup-word          "synonym for word")
-                        ("S" powerthesaurus-lookup-word-at-point "synonym at point"))))
+                       (("l" define-word-at-point                "word definition"               )
+                        ("s" powerthesaurus-lookup-word-dwim     "synonym (DWIM)"                )
+                        ("w" powerthesaurus-lookup-word          "synonym for word"              )
+                        ("S" powerthesaurus-lookup-word-at-point "synonym at point"              ))))
        :config
        ;; Configure `LANG`, otherwise ispell.el cannot find a 'default
        ;; dictionary' even though multiple dictionaries will be configured
@@ -4437,8 +4440,8 @@
          ("c" caps-lock-mode                            "CAPS LOCK"            :toggle t)
          ("D" dubcaps-mode                              "dubcaps"              :toggle t)
          ("o" overwrite-mode                            "overwrite"            :toggle t)
-         ("1" ten-hundred-mode                          "1000 words"           :toggle t)
-         ("z" darkroom-tentative-mode                   "darkroom"             :toggle t))))
+         ("z" darkroom-tentative-mode                   "darkroom"             :toggle t)
+         ("è" flyspell-hydra/body                       "spelling"                      ))))
      (global-set-key (kbd "C-é") 'hydra-toggles/body)
    #+END_SRC
 
