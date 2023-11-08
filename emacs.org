@@ -2643,12 +2643,12 @@
         (add-to-list 'org-capture-templates
                      '("w" "✅   TODO            (🏢 Work)"
                        entry (file+headline my-private-work-todo-org-file "À faire")
-                       "* TODO [#B] %?%a\n\tSCHEDULED: %t\n%i\n"
+                       "* TODO [#B] %?\n\tSCHEDULED: %t\n%i\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("u" "✅⚡ Quick TODO      (🏢 Work)\n"
                        entry (file+headline my-private-work-todo-org-file "À faire")
-                       "* TODO [#B] %?%a\n\tSCHEDULED: %t\n\t:PROPERTIES:\n\t:Effort:\t5\n\t:END:\n%i\n"
+                       "* TODO [#B] %?\n\tSCHEDULED: %t\n\t:PROPERTIES:\n\t:Effort:\t5\n\t:END:\n%i\n"
                        :prepend t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("l" "📜   Log             (🏢 Work)"
