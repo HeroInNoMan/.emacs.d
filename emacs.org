@@ -557,9 +557,22 @@
 
 ** Theme
 
+*** Nano emacs
+
+
+    #+BEGIN_SRC emacs-lisp
+      (setq nano-emacs-enabled nil)
+      (use-package nano
+        :disabled
+        :straight '(nano :type git :host github :repo "rougier/nano-emacs")
+        :config (setq nano-emacs-enabled t))
+
+    #+END_SRC
+
 *** Doom themes
     #+BEGIN_SRC emacs-lisp
       (use-package doom-themes
+        :if (not nano-emacs-enabled)
         :config
         (setq custom-safe-themes
               '("0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1"
@@ -635,6 +648,7 @@
        (setq goggles-pulse-delay 0.05))
 
      (use-package idle-highlight-mode
+       :if (not nano-emacs-enabled)
        :hook prog-mode
        :custom-face (idle-highlight ((t (:background "gray10"))))
        :config (setq idle-highlight-idle-time 0.3)) ;; default 0.5
@@ -643,6 +657,7 @@
    Highlight current line in list buffers:
    #+BEGIN_SRC emacs-lisp
      (use-package hl-line
+       :if (not nano-emacs-enabled)
        :straight nil
        :custom-face (hl-line ((t (:background "grey7"))))
        :hook ((dired-mode org-agenda-mode ibuffer-mode) . hl-line-mode)
@@ -736,6 +751,7 @@
    Colour parentheses according to nesting level:
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-delimiters
+       :if (not nano-emacs-enabled)
        :hook (prog-mode . rainbow-delimiters-mode)
        :custom-face
        (rainbow-delimiters-depth-1-face
