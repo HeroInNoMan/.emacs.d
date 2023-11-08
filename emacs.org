@@ -4916,6 +4916,7 @@
        (erc-scrolltobottom-enable) ;; always try to scroll to bottom
 
        (use-package erc-tweet
+         :disabled
          :config
          (defun erc-tweet-w3m-cleanup-text (tweet-text)
            (if (featurep 'w3m)
@@ -4949,7 +4950,7 @@
          :straight nil
          :config (erc-spelling-mode 1))
 
-       (use-package znc)
+       (use-package znc :disabled)
 
        ;; Don't track boring activity
        (use-package erc-track
