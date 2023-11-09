@@ -61,7 +61,6 @@ required for HMAC-TOTP."
                   (lambda (acc char) (+ (ash acc 5) (aref base32-alphabet char)))
                   trimmed-array 0))))
 
-;;;###autoload
 (defun totp-display (auth)
   "Select a TOTP AUTH from `auth-sources' and display its TOTP."
   (auth-source-forget-all-cached)

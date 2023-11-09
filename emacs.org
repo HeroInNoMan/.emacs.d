@@ -650,7 +650,7 @@
      (use-package idle-highlight-mode
        :if (not nano-emacs-enabled)
        :hook prog-mode
-       :custom-face (idle-highlight ((t (:background "gray10"))))
+       :custom-face (idle-highlight ((t (:background "gray80"))))
        :config (setq idle-highlight-idle-time 0.3)) ;; default 0.5
    #+END_SRC
 
@@ -665,6 +665,7 @@
 
 
      (use-package indent-bars
+       :disabled
        :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
        :hook (prog-mode . indent-bars-mode)
        :custom
@@ -755,7 +756,7 @@
        :hook (prog-mode . rainbow-delimiters-mode)
        :custom-face
        (rainbow-delimiters-depth-1-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "white smoke"))))
+        ((t (:inherit rainbow-delimiters-base-face :foreground "black smoke"))))
        (rainbow-delimiters-depth-2-face
         ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
        (rainbow-delimiters-depth-3-face
@@ -769,7 +770,7 @@
        (rainbow-delimiters-depth-7-face
         ((t (:inherit rainbow-delimiters-base-face :foreground "orange"))))
        (rainbow-delimiters-depth-8-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "white"))))
+        ((t (:inherit rainbow-delimiters-base-face :foreground "black"))))
        (rainbow-delimiters-depth-9-face
         ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon")))))
    #+END_SRC
@@ -1272,6 +1273,7 @@
        (setq hippie-expand-try-functions-list
              '(try-complete-file-name-partially
                try-complete-file-name
+               try-expand-line
                try-expand-dabbrev-visible
                try-expand-dabbrev
                try-expand-dabbrev-from-kill
@@ -1279,9 +1281,7 @@
                try-expand-all-abbrevs
                try-expand-list
                try-complete-lisp-symbol-partially
-               try-complete-lisp-symbol
-               try-expand-line)))
-
+               try-complete-lisp-symbol)))
    #+END_SRC
 
 ** Company
@@ -1662,7 +1662,7 @@
          :keymap (let ((map (make-sparse-keymap)))
                    (define-key map (kbd "C-l") #'consult-ripgrep-up-directory)
                    map))
-  
+
         (defun mode-buffer-exists-p (mode)
           (seq-some (lambda (buf)
                       (provided-mode-derived-p
@@ -1918,7 +1918,9 @@
 ** Region
    #+BEGIN_SRC emacs-lisp
      (use-package expand-region
-       :bind ("C-c e" . er/expand-region))
+       :bind ("C-c e" . er/expand-region)
+       :config
+       (setq expand-region-subword-enabled t))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
@@ -2017,6 +2019,14 @@
        ("C-«" . split-window-below)
        ("C-»" . split-window-right)
        ("C-*" . delete-window))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (defun mp-toggle-window-dedication ()
+       "Toggles window dedication in the selected window."
+       (interactive)
+       (set-window-dedicated-p (selected-window)
+                               (not (window-dedicated-p (selected-window)))))
    #+END_SRC
 
    I use [[https://github.com/louiskottmann/zygospore.el][Zygospore]] to be able to revert ~delete-other-windows~:
@@ -3087,7 +3097,7 @@
              (while (if (setq bef (endless/simple-get-word))
                         ;; Word was corrected or used quit.
                         (if (ispell-word nil 'quiet)
-                            nil ; End the loop.
+                            nil              ; End the loop.
                           ;; Also end if we reach `bob'.
                           (not (bobp)))
                       ;; If there's no word at point, keep looking
@@ -4638,9 +4648,8 @@
          ("%" (funcall (togfun "*ansi-term*" 'crux-visit-term-buffer)) "ansi-term")
          ("v" (funcall (togfun "vterm" 'vterm)) "vterm"))
         "Navigation"
-        (("'" point-to-register "save bookmark")
-         ("j" jump-to-register "jump to bookmark")
-         ("o" crux-open-with "open")
+        (("r" point-to-register "point-to-Register")
+         ("j" jump-to-register "Jump-to-register")
          ("." find-file-at-point "open at point" :column "Files")
          ("," ffap-menu "open around point" :column "Files"))
         "Management"
@@ -4658,6 +4667,7 @@
         (("TAB" crux-cleanup-buffer-or-region "indent region")
          ("s" ale/cleanup-buffer-and-save "clean & save")
          ("f" ale/format-all-buffer-or-region "format all")
+         ("o" crux-open-with "open externally")
          ("w" 0x0-dwim "webpaste"))
         "Straight"
         (("i" ale/find-init-file "go to init file") 
