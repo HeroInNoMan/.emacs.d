@@ -689,12 +689,46 @@ are equal return nil."
 
                 (sql-connect (quote ,(car db))))))))
 
-(defun ale/cleanup-buffer-and-save ()
-  "Indent, untabify, clean-up and save buffer."
-  (interactive)
-  (crux-cleanup-buffer-or-region)
-  (save-buffer))
+(defvar clean-text-alist
+  '(
+    ("  +" " ")
+    ("'" "’")
+    (" +:" " :")
+    (" +\\?" " ?")
+    )
+  "List of replacement pairs for textual buffers.")
 
+(defvar clean-text-regexp-alist
+  '(("\\(^[^ ]+\\)  +" "\\1 ")
+    )
+  "List of regexp replacement pairs for textual buffers.")
+
+
+
+(defun ale/cleanup-text ()
+  "Indent, untabify, clean-up and save buffer or region."
+  (interactive)
+  (when (memq (buffer-local-value 'major-mode (current-buffer))
+              (list 'text-mode
+                    'org-mode))
+    (save-restriction
+      (narrow-to-region (if (region-active-p) (region-beginning) (point-min))
+                        (if (region-active-p) (region-end) (point-max)))
+      ;; (when (and (boundp 'clean-text-alist)
+      ;;            (not (eq 'clean-text-alist '())))
+      ;;   (dolist (ele clean-text-alist)
+      ;;     (goto-char (point-min))
+      ;;     (while (search-forward-regexp (car ele) nil t 1)
+      ;;       (replace-match (car (cdr ele))))))
+      (when (and (boundp 'clean-text-regexp-alist)
+                 (not (eq 'clean-text-regexp-alist '())))
+        (dolist (ele clean-text-regexp-alist)
+          (goto-char (point-min))
+          ;; (while (search-forward-regexp (car ele) nil t 1)
+          ;; (replace-match (car (cdr ele))))))))
+          (while (search-forward-regexp (car ele) nil t 1)
+            (replace-match (car (cdr ele))))))))
+  (crux-cleanup-buffer-or-region))
 (defun togfun (buffer-name buffer-create-fn &optional switch-cont)
   "Make a toggle-function to have raise-or-create behaviour.
 
