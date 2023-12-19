@@ -2586,7 +2586,9 @@
         (interactive)
         (org-set-property "CREATED" (format-time-string "[%F %a %R]")))
       (add-hook 'org-capture-before-finalize-hook 'add-property-with-date-captured)
-
+      (add-hook 'org-capture-after-finalize-hook (lambda () ;; for captures in emacsclient frame
+                                                   (when (= 1 (count-windows))
+                                                     (delete-frame))))
       ;; LOCAL
       (add-to-list 'org-capture-templates
                    '("t" "✅   TODO" ;; add a TODO entry
