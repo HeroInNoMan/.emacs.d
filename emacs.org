@@ -2521,7 +2521,31 @@
       (setq org-agenda-files (if (boundp 'my-org-agenda-files) my-org-agenda-files nil))
 
       (setq org-agenda-custom-commands
-            '(("p" "Agenda + recent TODOs"
+            '(("é" "Agenda + Enercoop - Vue mixte"
+               ((agenda ""
+                        ((org-agenda-overriding-header "Agenda")
+                         (org-agenda-weekend-days '(0 5 6))
+                         (org-agenda-start-on-weekday nil)
+                         (org-agenda-span 'week)
+                         (org-agenda-show-future-repeats 'next)
+                         (org-agenda-sorting-strategy '(time-up
+                                                        priority-down
+                                                        effort-up))))
+                (alltodo "" ((org-agenda-overriding-header "Récent ↓")
+                             (org-agenda-sorting-strategy '(priority-down
+                                                            todo-state-up
+                                                            user-defined-down))
+                             (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                         'deadline
+                                                         'scheduled)))))
+               ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
+                (org-agenda-tag-filter '("-emacs" "-POINTEUR"))
+                (org-agenda-skip-scheduled-if-deadline-is-shown t)
+                (org-agenda-files `(,my-private-local-todo-org-file
+                                    ,my-private-local-cyclic-org-file
+                                    ,my-private-work-diary-org-file
+                                    ,my-private-work-todo-org-file))))
+              ("p" "Agenda + recent TODOs"
                ((agenda ""
                         ((org-agenda-overriding-header "Agenda")
                          (org-agenda-weekend-days '(0 5 6))
