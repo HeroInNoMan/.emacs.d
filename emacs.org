@@ -5037,11 +5037,11 @@
              (message "Nothing new on IRC!"))))
 
        (defun erc-server-alive-p (server)
-         "Return non-nil if a server is alive, nil otherwise."
+         "Return non-nil if a SERVER is alive, nil otherwise."
          (cl-loop for buff in (erc-buffer-list)
                   ;; when (with-current-buffer buff (string-prefix-p server (buffer-name)))
                   when (with-current-buffer buff (and (get-buffer-process (buffer-name))
-                                                      (cl-search irc-server (process-name (get-buffer-process (buffer-name))))))
+                                                      (cl-search server (process-name (get-buffer-process (buffer-name))))))
                   return (erc-server-process-alive buff)))
 
        (defun erc-cleanup-dead-buffers ()
