@@ -4757,6 +4757,7 @@
 
   #+BEGIN_SRC emacs-lisp
     (use-package mlscroll
+      :disabled t
       :ensure t
       :hook (server-after-make-frame . mlscroll-mode))
   #+END_SRC
