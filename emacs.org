@@ -490,8 +490,7 @@
     (use-package god-mode
       :init (setq god-local-mode nil)
       :bind
-      (("C-c g" . toggle-god-mode)
-       ("C-è" .   toggle-god-mode)
+      (("C-è" .   toggle-god-mode)
        :map god-local-mode-map
        ("i" . toggle-god-mode)
        ("." . repeat))
@@ -1777,6 +1776,30 @@
         (define-key minibuffer-local-completion-map (kbd "C-l")
                     #'my/match-components-literally))
     #+END_SRC
+
+** LLM
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package gptel
+       :bind ("C-c g" . gptel-menu)
+       :config
+       ;; (gptel-make-gpt4all
+       ;;  "GPT4All"                              ;Name of your choosing
+       ;;  :protocol "http"
+       ;;  :host "localhost:4891"                 ;Where it's running
+       ;;  :models '( "mistral-7b-instruct-v0.1.Q4_0.gguf"
+       ;;             "mistral-7b-openorca.Q4_0.gguf"
+       ;;             ))
+                                             ;Available models
+       ;; (setq gptel-model "mistral-7b-instruct-v0.1.Q4_0.gguf")
+       ;; (setq-default gptel-model "mistral-7b-openorca.Q4_0.gguf")
+       ;; (setq gptel-model "mistral-7b-openorca.Q4_0.gguf")
+       (setq-default gptel-max-tokens 800)
+       (setq gptel-directives '((default . "You are a Nexus, Duncan's helpful assistant. You have dry humor.")
+                                (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
+                                (writing . "You are a large language model and a writing assistant. Respond concisely.")
+                                (chat . "You are a large language model and a conversation partner. Respond concisely."))))
+   #+END_SRC
 
 * Text manipulation
 ** Undo
