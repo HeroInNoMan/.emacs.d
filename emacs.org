@@ -3778,6 +3778,14 @@
          ("U" sql-upcase-region "region"))))
    #+END_SRC
 
+*** sql & company
+    #+BEGIN_SRC emacs-lisp
+      (use-package dash)
+      (use-package company-postgresql
+        :straight '(company-postgresql :type git :host github :repo "urbint/emacs-postgresql-interactive")
+        :config (add-to-list 'company-backends 'company-ob-postgresql))
+    #+END_SRC
+
 ** Groovy
    #+BEGIN_SRC emacs-lisp
      (use-package groovy-mode
