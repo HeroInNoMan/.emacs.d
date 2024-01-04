@@ -650,7 +650,7 @@
      (use-package idle-highlight-mode
        :if (not nano-emacs-enabled)
        :hook prog-mode
-       :custom-face (idle-highlight ((t (:background "gray80"))))
+       :custom-face (idle-highlight ((t (:inherit vertico-current))))
        :config (setq idle-highlight-idle-time 0.3)) ;; default 0.5
    #+END_SRC
 
@@ -659,7 +659,7 @@
      (use-package hl-line
        :if (not nano-emacs-enabled)
        :straight nil
-       :custom-face (hl-line ((t (:background "grey7"))))
+       :custom-face (hl-line ((t (:inherit org-verse))))
        :hook ((dired-mode org-agenda-mode ibuffer-mode) . hl-line-mode)
        :config (global-hl-line-mode -1))
 
@@ -754,25 +754,26 @@
      (use-package rainbow-delimiters
        :if (not nano-emacs-enabled)
        :hook (prog-mode . rainbow-delimiters-mode)
-       :custom-face
-       (rainbow-delimiters-depth-1-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "black smoke"))))
-       (rainbow-delimiters-depth-2-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
-       (rainbow-delimiters-depth-3-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
-       (rainbow-delimiters-depth-4-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "dark turquoise"))))
-       (rainbow-delimiters-depth-5-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "deep pink"))))
-       (rainbow-delimiters-depth-6-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "yellow1"))))
-       (rainbow-delimiters-depth-7-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "orange"))))
-       (rainbow-delimiters-depth-8-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "black"))))
-       (rainbow-delimiters-depth-9-face
-        ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon")))))
+       ;; :custom-face
+       ;; (rainbow-delimiters-depth-1-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "black smoke"))))
+       ;; (rainbow-delimiters-depth-2-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "gold"))))
+       ;; (rainbow-delimiters-depth-3-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "lawn green"))))
+       ;; (rainbow-delimiters-depth-4-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "dark turquoise"))))
+       ;; (rainbow-delimiters-depth-5-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "deep pink"))))
+       ;; (rainbow-delimiters-depth-6-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "yellow1"))))
+       ;; (rainbow-delimiters-depth-7-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "orange"))))
+       ;; (rainbow-delimiters-depth-8-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "black"))))
+       ;; (rainbow-delimiters-depth-9-face
+       ;;  ((t (:inherit rainbow-delimiters-base-face :foreground "dark salmon"))))
+       )
    #+END_SRC
 
    In some specific modes, I like to have the syntax highlighting replaced by a colouring according to nesting level.
@@ -1088,12 +1089,13 @@
   #+END_SRC
 
 ** Whitespace faces
-   #+BEGIN_SRC emacs-lisp
-     (set-face-attribute 'nobreak-space nil
-                         :inherit 'escape-glyph
-                         :foreground "black"
-                         :underline t)
-   #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'nobreak-space nil
+                      :inherit 'shadow
+                      ;; :foreground nil
+                      ;; :background nil
+                      :underline nil)
+#+END_SRC
 
 * Folding
   I use [[https://github.com/gregsexton/origami.el][origami]]…
@@ -2309,7 +2311,7 @@
        :hook
        (git-commit-setup . ale/insert-ticket-prefix)
        (git-commit-setup . ale/switch-to-all-dict)
-       :custom-face (magit-branch-current ((t ( :foreground "#5cEfFF"
+       :custom-face (magit-branch-current ((t ( :inherit magit-branch-local
                                                 :box ( :line-width 3
                                                        :color "#ee0000"
                                                        :style released-button)))))
@@ -3303,7 +3305,7 @@
        :hook
        (prog-mode . (lambda () (setq show-trailing-whitespace t)))
        (prog-mode . prettify-symbols-mode)
-       :custom-face (trailing-whitespace ((t (:background "grey12"))))
+       :custom-face (trailing-whitespace ((t (:inherit org-verse))))
        :config
        (setq prettify-symbols-unprettify-at-point 'right-edge)
 
@@ -3465,10 +3467,10 @@
      (use-package paren
        :straight nil
        :config (show-paren-mode 1)
-       :custom-face (show-paren-match ((t ( :underline "white"
-                                            :weight ultra-bold
+       :custom-face (show-paren-match ((t ( :weight ultra-bold
                                             :background unspecified
-                                            :foreground unspecified)))))
+                                            :underline t
+                                            :foreground "red")))))
 
      (use-package smartparens
        :hook ((prog-mode git-commit-mode) . smartparens-mode)
