@@ -935,6 +935,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (use-package awesome-tab
+       :disabled
        :bind
        ("M-é"       . awesome-tab-backward-tab)
        ("M-è"       . awesome-tab-forward-tab)
