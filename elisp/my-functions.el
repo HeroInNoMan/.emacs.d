@@ -871,5 +871,9 @@ by using nxml's indentation rules."
     (indent-region begin end))
   (message "Formatting done."))
 
+(defun ale-fix-network ()
+  (find-file "/etc/resolv.conf")
+  (insert "nameserver 1.1.1.1"))
+
 (provide 'my-functions)
 ;;; my-functions.el ends here
