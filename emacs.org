@@ -1739,12 +1739,27 @@
                                   (lambda (x)
                                     (eq (buffer-local-value 'major-mode x) 'erc-mode))
                                   (buffer-list))))))
+        (defvar dired-source
+          (list :name     "Dired Buffer"
+                :category 'buffer
+                :narrow   ?d
+                :face     'consult-buffer
+                :history  'buffer-name-history
+                :state    #'consult--buffer-state
+                :items (lambda ()
+                         (mapcar #'buffer-name
+                                 (seq-filter
+                                  (lambda (x)
+                                    (eq (buffer-local-value 'major-mode x) 'dired-mode))
+                                  (buffer-list))))))
+
         (add-to-list 'consult-buffer-sources 'sql-source    'append)
         (add-to-list 'consult-buffer-sources 'eshell-source 'append)
         (add-to-list 'consult-buffer-sources 'term-source   'append)
         (add-to-list 'consult-buffer-sources 'shell-sources 'append)
         (add-to-list 'consult-buffer-sources 'org-source    'append)
-        (add-to-list 'consult-buffer-sources 'erc-source    'append))
+        (add-to-list 'consult-buffer-sources 'erc-source    'append)
+        (add-to-list 'consult-buffer-sources 'dired-source    'append))
 
       (use-package consult-projectile
         :after projectile
