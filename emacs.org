@@ -1445,7 +1445,8 @@
 
       (use-package vertico-buffer :straight nil :after vertico
         :load-path vertico-extensions-path
-        :config (setq vertico-buffer-mode nil))
+        ;; :config (setq vertico-buffer-mode nil)
+        )
 
       (use-package vertico-directory :straight nil :after vertico
         :load-path vertico-extensions-path)
@@ -3313,7 +3314,7 @@
            ("<-" . ?←)
            ("=>" . ?⇒)
            ("..." . ?…)
-           ("[ ]" . ?☐)
+           ;; ("[ ]" . ?☐)
            ("[X]" . ?☑)
            ("[-]" . ?❍))))
 
