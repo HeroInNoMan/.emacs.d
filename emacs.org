@@ -230,6 +230,11 @@
        (fringe-mode 0))
    #+END_SRC
 
+** Image types
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'image-types 'svg)
+   #+END_SRC
+
 ** imenu
 
    imenu is great, 60-character lines is just not enough.
