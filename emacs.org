@@ -1441,7 +1441,7 @@
 
         (vertico-multiform-mode))
 
-      (use-package vertico-posframe)
+      ;; (use-package vertico-posframe)
 
       (use-package vertico-buffer :straight nil :after vertico
         :load-path vertico-extensions-path
