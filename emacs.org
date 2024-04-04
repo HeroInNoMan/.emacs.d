@@ -699,6 +699,7 @@
    Makes unfocused window a bit dimmer :
     #+BEGIN_SRC emacs-lisp
       (use-package dimmer
+        :disabled
         :config (dimmer-mode)
         (setq dimmer-fraction 0.25))
     #+END_SRC
