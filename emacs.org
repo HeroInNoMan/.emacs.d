@@ -3024,7 +3024,8 @@
                        (("t" flyspell-mode                       "toggle flyspell"      :toggle t)
                         ("T" guess-language-mode                 "toggle guess"         :toggle t)
                         ("g" guess-language                      "guess"                :toggle t)
-                        ("1" ten-hundred-mode                    "1000 words"           :toggle t))
+                        ("1" ten-hundred-mode                    "1000 words"           :toggle t)
+                        ("r" reverso                             "reverso"              :toggle t))
                        "Flyspell"
                        (("c" flyspell-buffer                     "check buffer")
                         ("D" endless/ispell-word-then-abbrev     "correct & add abbrev"          )
@@ -3288,6 +3289,11 @@
 ** Grammalecte
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck-grammalecte :defer t)
+   #+END_SRC
+
+** Reverso
+   #+BEGIN_SRC emacs-lisp
+     (use-package reverso :defer t)
    #+END_SRC
 
 * Programming
