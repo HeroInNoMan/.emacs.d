@@ -2627,8 +2627,8 @@
                          (org-agenda-sorting-strategy '(time-up
                                                         priority-down
                                                         effort-up))
-                         (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                     'nottodo 'todo))))
+                         (org-agenda-skip-function
+                          '(org-agenda-skip-entry-if 'nottodo '("*")))))
                 (alltodo "" ((org-agenda-overriding-header "🕗 Récent ↓")
                              (org-agenda-sorting-strategy '(priority-down
                                                             todo-state-up
@@ -2652,7 +2652,9 @@
                          (org-agenda-show-future-repeats 'next)
                          (org-agenda-sorting-strategy '(time-up
                                                         priority-down
-                                                        effort-up))))
+                                                        effort-up))
+                         (org-agenda-skip-function
+                          '(org-agenda-skip-entry-if 'nottodo '("*")))))
                 (alltodo "" ((org-agenda-overriding-header "🕗 Récent ↓")
                              (org-agenda-sorting-strategy '(priority-down
                                                             todo-state-up
@@ -2675,13 +2677,21 @@
                             (org-agenda-remove-tags t)
                             (org-agenda-sorting-strategy '(time-up
                                                            priority-down
-                                                           effort-up))))
+                                                           effort-up))
+                            (org-agenda-skip-function
+                             '(org-agenda-skip-entry-if 'nottodo '("*")))))
+                (tags "daily"
+                      ((org-agenda-overriding-header "⏰ DAILY")
+                       (org-agenda-sorting-strategy '(priority-down
+                                                      effort-up))
+                       (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                   'todo 'done))))
                 (todo "STARTED"
                       ((org-agenda-overriding-header "🏁 STARTED")
                        (org-agenda-sorting-strategy '(priority-down
                                                       effort-up))
                        (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                   'nottodo '("STARTED")
+                                                   'todo '("STARTED")
                                                    'deadline
                                                    'scheduled))))
                 (tags-todo "+PRIORITY=\"A\""
@@ -2691,12 +2701,11 @@
                                                            todo-state-up
                                                            user-defined-down))
                             (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                        'todo '("STARTED")
                                                         'deadline
-                                                        'scheduled))))
+                                                        'todo '("STARTED")))))
 
                 (tags-todo "enercoop" ;; Block 2 All work-related TODOs
-                           ((org-agenda-overriding-header "✅ À faire")
+                           ((org-agenda-overriding-header "☑️ À faire")
                             (org-agenda-sorting-strategy '(todo-state-up
                                                            priority-down
                                                            user-defined-down
@@ -2705,8 +2714,8 @@
                             (org-agenda-skip-function '(org-agenda-skip-entry-if
                                                         'deadline
                                                         'scheduled
-                                                        'todo '("STARTED")
-                                                        'regexp "#A")))))
+                                                        'regexp "#A"
+                                                        'todo '("STARTED"))))))
                ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
                 (org-agenda-files `(,my-private-work-todo-org-file
                                     ,my-private-work-diary-org-file))
