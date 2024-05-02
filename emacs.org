@@ -5381,6 +5381,13 @@
                      keypression-combine-format "%s ×%d"))
    #+END_SRC
 
+** Presentations & keynotes
+   #+BEGIN_SRC emacs-lisp
+     (use-package remark-mode
+            :mode ("\\.remark$"))
+
+   #+END_SRC
+
 ** Restclient
    See if [[https://github.com/abrochard/walkman/][walkman]] might not be a bit better (because integrated in org-files!)
 
