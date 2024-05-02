@@ -1598,7 +1598,7 @@
             ("e"     consult-imenu-multi   "imenu multi")
             ("o"     consult-outline       "outline")
             ("SPC"   consult-global-mark   "mark")
-            ("j"     bookmark-jump         "bookmark"))
+            ("j"     consult-bookmark      "bookmark"))
            "Search"
            (("l"     consult-locate        "locate")
             ("/"     consult-find          "find")
