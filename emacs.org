@@ -5009,13 +5009,14 @@
        (when (boundp 'my-private-work-travis-host)
          (setq travis--host my-private-work-travis-host)))
 
-     (use-package jenkins ;; TODO compare to butler
-       :disabled
+     (use-package jenkins
        :config
-       (setq jenkins-api-token "<api token can be found on user's configure page>"
-             jenkins-url "<jenkins url>"
-             jenkins-username "<your user name>"
-             jenkins-viewname "<viewname>"))
+       (when (boundp 'my-private-work-jenkins-api-token)
+         (setq jenkins-api-token my-private-work-jenkins-api-token))
+       (when (boundp 'my-private-work-jenkins-url)
+         (setq jenkins-url my-private-work-jenkins-url))
+       (when (boundp 'my-private-work-jenkins-username)
+         (setq jenkins-username my-private-work-jenkins-username)))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
