@@ -400,8 +400,11 @@ When called with a prefix argument, cleanup all known projects beforehand."
   (when (boundp 'my-private-repos-dir)
     (cl-loop for project in (f-directories my-private-repos-dir (lambda (dir) (projectile-root-bottom-up dir)))
              do (projectile-add-known-project project)))
-  (when (boundp 'my-default-tools-dir)
+  (when (boundp 'my-private-tools-dir)
     (cl-loop for project in (f-directories my-private-tools-dir (lambda (dir) (projectile-root-bottom-up dir)))
+             do (projectile-add-known-project project)))
+  (when (boundp 'my-private-extra-repo-dir)
+    (cl-loop for project in (f-directories my-private-extra-repo-dir (lambda (dir) (projectile-root-bottom-up dir)))
              do (projectile-add-known-project project))))
 
 (defun ale/open-project (&optional dir)
