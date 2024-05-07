@@ -912,6 +912,12 @@
       :bind (:map dired-mode-map
                   ("r" . hydra-dired-quick-sort/body)))
 
+    (use-package casual-dired
+      :unless (featurep 'dirvish)
+      :after dired
+      :straight (:host github :repo "kickingvegas/casual-dired")
+      :bind (:map dired-mode-map
+                  ("é" . casual-dired-tmenu)))
   #+END_SRC
 
 * Navigation
