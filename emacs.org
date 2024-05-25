@@ -3464,6 +3464,11 @@
 
   (use-package tree-sitter-langs)
 
+  (use-package treesit-auto
+    :demand t
+    :config
+    (global-treesit-auto-mode))
+
 #+END_SRC
 
 ** Formatting
