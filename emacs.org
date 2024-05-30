@@ -1301,41 +1301,6 @@
                try-complete-lisp-symbol)))
    #+END_SRC
 
-** Company
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package company
-       :hook (prog-mode . global-company-mode)
-       :config
-       (global-company-mode 1) ;; enable company in all buffers
-       (setq company-tooltip-limit 30
-             company-idle-delay 0.5 ;; almost no delay before showing candidates
-             company-minimum-prefix-length 2 ;; completion rigth away!
-             company-show-numbers 'on
-             company-dabbrev-downcase nil))
-
-     (use-package company-prescient
-       :hook (company-mode . company-prescient-mode)
-       :config
-       (company-prescient-mode)
-       (prescient-persist-mode))
-
-     (use-package company-box
-       :hook (company-mode . company-box-mode))
-   #+END_SRC
-
-     (use-package browse-kill-ring
-       :config
-       (browse-kill-ring-default-keybindings)
-       (setq browse-kill-ring-quit-action 'save-and-restore))
-
-
-   #+BEGIN_SRC emacs-lisp
-     (use-package ssh-config-mode
-       :mode ".ssh/config$")
-   #+END_SRC
-
-
 ** Snippets
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
@@ -1405,7 +1370,7 @@
              (expand-file-name "etc/yasnippet/snippets" base-emacs-directory)))
    #+END_SRC
 
-** VEMCO
+** VEMCO+
 
    A set of new-generation tools trying to be as flexible and close to emacs built-in functions as possible :
    - *Vertico*: VERTical Interactive COmpletion
@@ -1413,6 +1378,7 @@
    - *Marginalia*: Marginalia in the minibuffer
    - *Consult*: Consulting completing-read
    - *Orderless*: orderless completion style
+   - *Corfu*: COmpletion in Region FUnction
 
 *** [[https://github.com/minad/vertico/][Vertico]]
 
@@ -1875,6 +1841,134 @@
 
     #+END_SRC
 
+*** [[https://github.com/minad/corfu][Corfu]]
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package corfu
+        ;; Optional customizations
+        :custom
+        (corfu-cycle t)              ;; Enable cycling for `corfu-next/previous'
+        (corfu-auto t)               ;; Enable auto completion
+        (corfu-separator ?\s)        ;; Orderless field separator
+        (corfu-quit-at-boundary nil) ;; Never quit at completion boundary
+        (corfu-quit-no-match t)      ;; Never quit, even if there is no match
+        (corfu-preview-current nil)  ;; Disable current candidate preview
+        (corfu-preselect t)          ;; Enable candidate preselection
+        (corfu-on-exact-match nil)   ;; Configure handling of exact matches
+        (corfu-scroll-margin 2)      ;; Use scroll margin
+        (corfu-auto-prefix 2)        ;; auto-completion threshold
+        (corfu-count 20)
+        (corfu-popupinfo-mode t)
+        (corfu-history-mode t)
+        :bind (:map corfu-map
+                    ("RET" . corfu-insert))
+        ;; Enable Corfu only for certain modes.
+        ;; :hook ((prog-mode . corfu-mode)
+        ;;        (shell-mode . corfu-mode)
+        ;;        (eshell-mode . corfu-mode))
+
+        ;; Recommended: Enable Corfu globally.
+        ;; This is recommended since Dabbrev can be used globally (M-/).
+        ;; See also `corfu-excluded-modes'.
+        :init
+        (global-corfu-mode)
+
+        ;; A few more useful configurations...
+
+        ;; TAB cycle if there are only few candidates
+        (setq completion-cycle-threshold 2)
+
+        ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+        ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+        ;; (setq read-extended-command-predicate
+        ;;       #'command-completion-default-include-p)
+
+        ;; Enable indentation+completion using the TAB key.
+        ;; `completion-at-point' is often bound to M-TAB.
+        (setq tab-always-indent 'complete)
+        :config)
+
+      (use-package nerd-icons-corfu
+        :disabled
+        :after corfu
+        :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
+
+        ;; Optionally:
+        (setq nerd-icons-corfu-mapping
+              '((array :style "cod" :icon "symbol_array" :face font-lock-type-face)
+                (boolean :style "cod" :icon "symbol_boolean" :face font-lock-builtin-face)
+                ;; ...
+                (t :style "cod" :icon "code" :face font-lock-warning-face)))
+        ;; Remember to add an entry for `t', the library uses that as default.
+
+        ;; The Custom interface is also supported for tuning the variable above.
+        )
+
+      (use-package kind-icon
+        :after corfu
+        :custom
+        (kind-icon-blend-background t)
+        (kind-icon-default-face 'corfu-default) ; only needed with blend-background
+        :config
+        (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+      ;; Add extensions
+      (use-package cape
+        ;; Bind dedicated completion commands
+        ;; Alternative prefix keys: C-c p, M-p, M-+, ...
+        :bind (("C-c p p" . completion-at-point) ;; capf
+               ("C-c p t" . complete-tag)        ;; etags
+               ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+               ("C-c p h" . cape-history)
+               ("C-c p f" . cape-file)
+               ("C-c p k" . cape-keyword)
+               ("C-c p s" . cape-elisp-symbol)
+               ("C-c p e" . cape-elisp-block)
+               ("C-c p a" . cape-abbrev)
+               ("C-c p l" . cape-line)
+               ("C-c p w" . cape-dict)
+               ("C-c p :" . cape-emoji)
+               ("C-c p \\" . cape-tex)
+               ("C-c p _" . cape-tex)
+               ("C-c p ^" . cape-tex)
+               ("C-c p &" . cape-sgml)
+               ("C-c p r" . cape-rfc1345))
+        :init
+        ;; Add to the global default value of `completion-at-point-functions' which is
+        ;; used by `completion-at-point'.  The order of the functions matters, the
+        ;; first function returning a result wins.  Note that the list of buffer-local
+        ;; completion functions takes precedence over the global list.
+        (add-hook 'completion-at-point-functions #'cape-history)
+        (add-hook 'completion-at-point-functions #'cape-abbrev)
+        (add-hook 'completion-at-point-functions #'cape-dabbrev)
+        ;; (add-hook 'completion-at-point-functions #'cape-file)
+        (add-hook 'completion-at-point-functions #'cape-elisp-block)
+        (add-hook 'completion-at-point-functions #'cape-keyword)
+        ;; (add-hook 'completion-at-point-functions #'cape-tex)
+        ;; (add-hook 'completion-at-point-functions #'cape-sgml)
+        ;; (add-hook 'completion-at-point-functions #'cape-rfc1345)
+        (add-hook 'completion-at-point-functions #'cape-abbrev)
+        (add-hook 'completion-at-point-functions #'cape-dict)
+        (add-hook 'completion-at-point-functions #'cape-elisp-symbol)
+        ;; (add-hook 'completion-at-point-functions #'cape-line)
+        )
+
+      (use-package corfu-candidate-overlay
+        :disabled
+        :straight (:type git
+                         :repo "https://code.bsdgeek.org/adam/corfu-candidate-overlay"
+                         :files (:defaults "*.el"))
+        :after corfu
+        :config
+        ;; enable corfu-candidate-overlay mode globally
+        ;; this relies on having corfu-auto set to nil
+        (corfu-candidate-overlay-mode +1)
+        ;; bind Ctrl + TAB to trigger the completion popup of corfu
+        ;; (global-set-key (kbd "C-<tab>") 'completion-at-point)
+        ;; bind Ctrl + Shift + Tab to trigger completion of the first candidate
+        ;; (keybing <iso-lefttab> may not work for your keyboard model)
+        (global-set-key (kbd "C-<tab>") 'corfu-candidate-overlay-complete-at-point))
+    #+END_SRC
 ** LLM
 
    #+BEGIN_SRC emacs-lisp
@@ -3463,11 +3557,6 @@
         :config
         (setq lsp-prefer-flymake nil)) ;; flycheck instead of flymake
 
-      (use-package company-lsp
-        :disabled
-        :requires lsp company
-        :after lsp-mode)
-
       (use-package lsp-ui
         :disabled
         :requires lsp-mode flycheck
@@ -3715,6 +3804,11 @@
                            :repo "ryanprior/ed-mode"))
    #+END_SRC
 
+   #+BEGIN_SRC emacs-lisp
+     (use-package ssh-config-mode
+       :mode ".ssh/config$")
+   #+END_SRC
+
 ** Powershell
 
    #+BEGIN_SRC emacs-lisp
@@ -3835,14 +3929,6 @@
          ("U" sql-upcase-region "region"))))
    #+END_SRC
 
-*** sql & company
-    #+BEGIN_SRC emacs-lisp
-      (use-package dash)
-      (use-package company-postgresql
-        :straight '(company-postgresql :type git :host github :repo "urbint/emacs-postgresql-interactive")
-        :config (add-to-list 'company-backends 'company-ob-postgresql))
-    #+END_SRC
-
 ** Groovy
    #+BEGIN_SRC emacs-lisp
      (use-package groovy-mode
@@ -3862,8 +3948,7 @@
      (use-package rust-mode
        :hook
        (rust-mode . cargo-minor-mode)
-       (rust-mode . racer-mode)
-       (racer-mode . company-mode))
+       (rust-mode . racer-mode))
 
      (use-package cargo
        :after rust-mode
@@ -3879,11 +3964,10 @@
      (use-package racer
        :after rust-mode
        :config
-       (setq company-tooltip-align-annotations t)
        ;; (setq racer-rust-src-path (expand-file-name
        ;; "/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib"
        ;; my-home-dir))
-       (local-set-key (kbd "TAB") #'company-indent-or-complete-common))
+       )
    #+END_SRC
 
 ** Java
@@ -3927,12 +4011,7 @@
         (global-eclim-mode)
         (require 'eclimd)
         (setq eclim-eclipse-dirs "~/outils/eclipse/eclipse-mars"
-              eclim-executable "~/outils/eclipse/eclipse-mars/eclim")
-        ;; (require 'company)
-        (require 'company-emacs-eclim)
-        (global-company-mode t)
-        ;; (company-emacs-eclim-ignore-case t)
-        (company-emacs-eclim-setup))
+              eclim-executable "~/outils/eclipse/eclipse-mars/eclim"))
     #+END_SRC
 
 *** ecb (à tester)
@@ -4228,10 +4307,9 @@
          (setq flycheck-check-syntax-automatically '(save mode-enabled))
          ;; flycheck-typescript-tslint-executable "tslint"
          ;; (eldoc-mode +1)
-         (company-mode +1))
+         )
 
-       (setq company-tooltip-align-annotations t  ;; aligns annotation to the right hand side
-             typescript-indent-level 2
+       (setq typescript-indent-level 2
              ;; format options
              tide-format-options '(
                                    :insertSpaceAfterFunctionKeywordForAnonymousFunctions t
