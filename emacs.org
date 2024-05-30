@@ -2068,16 +2068,14 @@
         :custom
         (corfu-cycle t)              ;; Enable cycling for `corfu-next/previous'
         (corfu-auto t)               ;; Enable auto completion
-        (corfu-auto-delay 0.8)               ;; Enable auto completion
         (corfu-separator ?\s)        ;; Orderless field separator
         (corfu-quit-at-boundary nil) ;; Never quit at completion boundary
         (corfu-quit-no-match t)      ;; Never quit, even if there is no match
         (corfu-preview-current nil)  ;; Disable current candidate preview
-        (corfu-preselect t)          ;; Enable candidate preselection
+        (corfu-preselect-first nil)    ;; Disable candidate preselection
         (corfu-on-exact-match nil)   ;; Configure handling of exact matches
         (corfu-scroll-margin 2)      ;; Use scroll margin
         (corfu-auto-prefix 2)        ;; auto-completion threshold
-        (corfu-count 20)
         (corfu-popupinfo-mode t)
         (corfu-history-mode t)
         :bind (:map corfu-map
@@ -2105,13 +2103,7 @@
 
         ;; Enable indentation+completion using the TAB key.
         ;; `completion-at-point' is often bound to M-TAB.
-        (setq tab-always-indent 'complete)
-        :config)
-
-      (defun corfu-automatic ()
-        "Toggle corfu-auto."
-        (interactive)
-        (setq corfu-auto (not corfu-auto)))
+        (setq tab-always-indent 'complete))
 
       (use-package nerd-icons-corfu
         :disabled
@@ -2130,6 +2122,7 @@
         )
 
       (use-package kind-icon
+        ;; :disabled
         :after corfu
         :custom
         (kind-icon-blend-background t)
