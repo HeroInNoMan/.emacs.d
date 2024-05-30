@@ -2837,12 +2837,12 @@
         (add-to-list 'org-capture-templates
                      '("l" "📜   Log             (🏢 Work)"
                        entry (file+olp+datetree my-private-work-diary-org-file)
-                       "* %?%a\n%i\n"
+                       "* %?\n%i\n"
                        :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("L" "📜📆 Log – with date (🏢 Work)\n"
                        entry (file+olp+datetree my-private-work-diary-org-file)
-                       "* %?%a\n%i\n"
+                       "* %?\n%i\n"
                        :time-prompt t :kill-buffer t) t)
         (add-to-list 'org-capture-templates
                      '("r" "📝   Référence       (🏢 Work)\n"
