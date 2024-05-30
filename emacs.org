@@ -2763,9 +2763,14 @@
         (interactive)
         (org-set-property "CREATED" (format-time-string "[%F %a %R]")))
       (add-hook 'org-capture-before-finalize-hook 'add-property-with-date-captured)
+
+      (defvar newframe-capture nil
+        "true if a capture was initiated in a new dedicated frame.")
       (add-hook 'org-capture-after-finalize-hook (lambda () ;; for captures in emacsclient frame
-                                                   (when (= 1 (count-windows))
-                                                     (delete-frame))))
+                                                   (when (and newframe-capture
+                                                              (= 1 (count-windows)))
+                                                     (delete-frame))
+                                                   (setq newframe-capture nil)))
       ;; LOCAL
       (add-to-list 'org-capture-templates
                    '("t" "✅   TODO" ;; add a TODO entry
