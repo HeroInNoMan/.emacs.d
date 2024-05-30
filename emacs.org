@@ -1443,11 +1443,13 @@
               '((consult-line buffer)
                 (consult-locate buffer)
                 (consult-history grid)
+                (consult-outline buffer)
                 (consult-yank-pop grid)
-                (find-file flat)
+                (find-file) ;; (find-file flat)
                 (read-color buffer)
                 (yas-complete-expand flat)
-                (yas-insert-snippet grid)))
+                (yas-insert-snippet grid)
+                (consult-yasnippet grid)))
 
         (setq vertico-multiform-categories
               '((file buffer grid)
@@ -1456,12 +1458,8 @@
 
         (vertico-multiform-mode))
 
-      ;; (use-package vertico-posframe)
-
       (use-package vertico-buffer :straight nil :after vertico
-        :load-path vertico-extensions-path
-        ;; :config (setq vertico-buffer-mode nil)
-        )
+        :load-path vertico-extensions-path)
 
       (use-package vertico-directory :straight nil :after vertico
         :load-path vertico-extensions-path)
