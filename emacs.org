@@ -2842,7 +2842,16 @@
                                                         'deadline
                                                         'scheduled
                                                         'regexp "#A"
-                                                        'todo '("STARTED"))))))
+                                                        'todo '("STARTED" "WAIT")))))
+                (tags-todo "enercoop" ;; Block 2 All work-related TODOs
+                           ((org-agenda-overriding-header "⌚ En attente")
+                            (org-agenda-sorting-strategy '(todo-state-up
+                                                           priority-down
+                                                           user-defined-down
+                                                           effort-up
+                                                           alpha-up))
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                        'nottodo '("WAIT"))))))
                ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
                 (org-agenda-files `(,my-private-work-todo-org-file
                                     ,my-private-work-diary-org-file))
