@@ -725,6 +725,22 @@
       (use-package nerd-icons)
     #+END_SRC
 
+*** Analog clock
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package svg
+        :ensure nil
+        :defer t
+        :load-path "elisp/"
+        :config
+        (defun clock-widget ()
+          "Display an svg-analog-clock in a new frame with no modeline."
+          (interactive)
+          (svg-analog-clock)
+          (make-frame)
+          (hide-mode-line-mode)))
+    #+END_SRC
+
 ** Colours
 
    #+BEGIN_SRC emacs-lisp
