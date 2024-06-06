@@ -4825,10 +4825,6 @@
           (setq mu4e-update-interval (* 60 rate))
           (message "Will check mail every %s minutes (after mu4e restarts)." rate)))
 
-      (require 'org-mu4e)
-      ;;store link to message if in header view, not to header query
-      (setq org-mu4e-link-query-in-headers-mode nil)
-
       (setq mu4e-headers-unread-mark    '("u" . "📩 ")
             mu4e-headers-draft-mark     '("D" . "🚧 ")
             mu4e-headers-flagged-mark   '("F" . "🚩 ")
@@ -4953,6 +4949,13 @@
               ("%encp-lb" . "maildir:/Labels/Enercoop")
               ("%work"    . "%encp-fw OR %encp-lb OR %autos"))
             mu4e-query-fragments-append "AND NOT %hidden"))
+
+    (use-package org-mu4e
+      :disabled
+      :after mu4e
+      :config
+      ;;store link to message if in header view, not to header query
+      (setq org-mu4e-link-query-in-headers-mode nil))
 
     (use-package mu4e-alert
       :after mu4e
