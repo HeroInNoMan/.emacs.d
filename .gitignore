@@ -41,3 +41,4 @@ var
 /async-bytecomp.log
 /straight/
 /share/
+*~undo-tree~
