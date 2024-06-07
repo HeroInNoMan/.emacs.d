@@ -1862,11 +1862,17 @@
         (defun my/match-components-literally ()
           "Components match literally for the rest of the session."
           (interactive)
-          (setq-local orderless-matching-styles '(orderless-literal)
-                      orderless-style-dispatchers nil))
+          (if orderless-style-dispatchers
+              (progn
+                (setq-local orderless-matching-styles '(orderless-literal)
+                            orderless-style-dispatchers nil)
+                (message "Match literally."))
+            (progn (setq-local orderless-matching-styles '(orderless-prefixes orderless-initialism orderless-literal orderless-regexp orderless-flex)
+                               orderless-style-dispatchers '(orderless-affix-dispatch))
+                   (message "Match fuzzily."))))
+        (global-set-key (kbd "M-*") #'my/match-components-literally))
 
-        (define-key minibuffer-local-completion-map (kbd "C-l")
-                    #'my/match-components-literally))
+
     #+END_SRC
 
 ** LLM
