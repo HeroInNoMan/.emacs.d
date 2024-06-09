@@ -534,7 +534,7 @@
 
   Let’s have evil-mode installed juste in case:
   #+BEGIN_SRC emacs-lisp
-    (use-package evil)
+    (use-package evil :defer t)
   #+END_SRC
 
 * Appearance
