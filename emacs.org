@@ -3074,6 +3074,8 @@
 
       (defadvice kill-whole-line (after fix-cookies activate)
         (myorg-update-parent-cookie)))
+
+    (use-package org-modern :defer t)
   #+END_SRC
 
   I also use a few more packages depending on org:
