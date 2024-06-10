@@ -1844,17 +1844,17 @@
         (defun my/match-components-literally ()
           "Components match literally for the rest of the session."
           (interactive)
-          (if orderless-style-dispatchers
-              (progn
-                (setq-local orderless-matching-styles '(orderless-literal)
-                            orderless-style-dispatchers nil)
-                (message "Match literally."))
-            (progn (setq-local orderless-matching-styles '(orderless-prefixes orderless-initialism orderless-literal orderless-regexp orderless-flex)
-                               orderless-style-dispatchers '(orderless-affix-dispatch))
-                   (message "Match fuzzily."))))
-        (global-set-key (kbd "M-*") #'my/match-components-literally))
-
-
+          (if (and (boundp 'ale-fuzzy-matching-p)
+                   ale-fuzzy-matching-p)
+              (progn (setq ale-fuzzy-matching-p nil)
+                     (setq orderless-matching-styles '(orderless-literal)))
+            (progn (setq ale-fuzzy-matching-p t)
+                   (setq orderless-matching-styles
+                         '(orderless-prefixes
+                           orderless-initialism
+                           orderless-literal
+                           orderless-regexp
+                           orderless-flex))))))
     #+END_SRC
 
 *** [[https://github.com/minad/corfu][Corfu]]
@@ -4737,7 +4737,9 @@
         "Coding"
         (("(" smartparens-mode                          "smartparens"          :toggle t)
          (")" smartparens-strict-mode                   "smartparens strict"   :toggle t)
-         ("a" aggressive-indent-mode                    "aggressive indent"    :toggle t)
+         ;; ("a" aggressive-indent-mode                    "aggressive indent"    :toggle t)
+         ("z" my/match-components-literally             "fuzzy matching"       :toggle ale-fuzzy-matching-p)
+
          ("A" global-auto-revert-mode                   "auto-revert"          :toggle t)
          ("s" subword-mode                              "sub-word"             :toggle t)
          ("S" superword-mode                            "super-word"           :toggle t)
@@ -4750,7 +4752,7 @@
          ("c" caps-lock-mode                            "CAPS LOCK"            :toggle t)
          ("D" dubcaps-mode                              "dubcaps"              :toggle t)
          ("o" overwrite-mode                            "overwrite"            :toggle t)
-         ("z" darkroom-tentative-mode                   "darkroom"             :toggle t)
+         ("Z" darkroom-tentative-mode                   "darkroom"             :toggle t)
          ("è" flyspell-hydra/body                       "spelling"                      ))))
      (global-set-key (kbd "C-é") 'hydra-toggles/body)
    #+END_SRC
