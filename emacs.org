@@ -1424,6 +1424,8 @@
         (setq vertico-multiform-commands
               '((consult-line buffer)
                 (consult-locate buffer)
+                (consult-fd buffer)
+                (consult-find buffer)
                 (consult-history grid)
                 (consult-outline buffer)
                 (consult-yank-pop grid)
@@ -1589,7 +1591,7 @@
             ("j"     consult-bookmark      "bookmark"))
            "Search"
            (("l"     consult-locate        "locate")
-            ("/"     consult-find          "find")
+            ("/"     consult-fd            "find")
             ("g"     consult-git-grep      "git grep")
             ("\\"    consult-git-log-grep  "git log grep")
             ("x"     deadgrep              "deadgrep")
