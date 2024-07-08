@@ -2810,6 +2810,11 @@
              ;; ("<f8>" . org-agenda)
              ("C-c b" . org-switchb)
              ("C-c l" . org-store-link)
+             :map org-agenda-mode-map
+             ("n" . org-agenda-next-line)
+             ("p" . org-agenda-previous-line)
+             ("M-n" . org-agenda-next-date-line)
+             ("M-p" . org-agenda-previous-date-line)
              :map org-mode-map
              ("C-c +" . increment-number-decimal)
              ("C-c -" . decrement-number-decimal)
@@ -2875,6 +2880,10 @@
             org-refile-allow-creating-parent-nodes 'confirm)
 
       ;; org-agenda
+      (setq org-agenda-inhibit-startup t)
+      (setq org-agenda-ignore-properties '(stats))
+      (setq org-agenda-dim-blocked-tasks nil)
+
       (defun ale/org-agenda ()
         "Run `org-agenda' after setting `default-directory' to `~'."
         (interactive)
@@ -2963,20 +2972,21 @@
                             (org-agenda-weekend-days '(0 5 6))
                             (org-agenda-start-on-weekday 1)
                             (org-agenda-show-future-repeats 'next)
-                            (org-agenda-span 'day)
+                            (org-agenda-span 'fortnight)
                             (org-agenda-include-diary nil)
                             (org-agenda-remove-tags t)
                             (org-agenda-sorting-strategy '(time-up
                                                            priority-down
                                                            effort-up))
-                            (org-agenda-skip-function
-                             '(org-agenda-skip-entry-if 'nottodo '("*")))))
-                (tags "daily"
-                      ((org-agenda-overriding-header "⏰ DAILY")
-                       (org-agenda-sorting-strategy '(priority-down
-                                                      effort-up))
-                       (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                   'todo 'done))))
+                            ;; (org-agenda-skip-function
+                            ;;  '(org-agenda-skip-entry-if 'nottodo '("*")))
+                            ))
+                ;; (tags "daily"
+                ;;       ((org-agenda-overriding-header "⏰ DAILY")
+                ;;        (org-agenda-sorting-strategy '(priority-down
+                ;;                                       effort-up))
+                ;;        (org-agenda-skip-function '(org-agenda-skip-entry-if
+                ;;                                    'todo 'done))))
                 (todo "STARTED"
                       ((org-agenda-overriding-header "🏁 STARTED")
                        (org-agenda-sorting-strategy '(priority-down
@@ -2995,7 +3005,7 @@
                                                         'deadline
                                                         'todo '("STARTED")))))
 
-                (tags-todo "enercoop" ;; Block 2 All work-related TODOs
+                (tags-todo "enercoop" ;; todo
                            ((org-agenda-overriding-header "☑️ À faire")
                             (org-agenda-sorting-strategy '(todo-state-up
                                                            priority-down
@@ -3006,8 +3016,17 @@
                                                         'deadline
                                                         'scheduled
                                                         'regexp "#A"
-                                                        'todo '("STARTED" "WAIT")))))
-                (tags-todo "enercoop" ;; Block 2 All work-related TODOs
+                                                        'todo '("STARTED" "WAIT" "BLOCKED" "MAYBE")))))
+                (tags-todo "enercoop" ;; blocked
+                           ((org-agenda-overriding-header "🚧 Bloqué")
+                            (org-agenda-sorting-strategy '(todo-state-up
+                                                           priority-down
+                                                           user-defined-down
+                                                           effort-up
+                                                           alpha-up))
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                        'nottodo '("BLOCKED")))))
+                (tags-todo "enercoop" ;; waiting
                            ((org-agenda-overriding-header "⌚ En attente")
                             (org-agenda-sorting-strategy '(todo-state-up
                                                            priority-down
@@ -3015,11 +3034,21 @@
                                                            effort-up
                                                            alpha-up))
                             (org-agenda-skip-function '(org-agenda-skip-entry-if
-                                                        'nottodo '("WAIT"))))))
+                                                        'nottodo '("WAIT")))))
+                (tags-todo "enercoop" ;; maybe
+                           ((org-agenda-overriding-header "🤷 Un jour peut-être")
+                            (org-agenda-sorting-strategy '(todo-state-up
+                                                           priority-down
+                                                           user-defined-down
+                                                           effort-up
+                                                           alpha-up))
+                            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                                        'nottodo '("MAYBE"))))))
                ((org-agenda-cmp-user-defined (cmp-date-property "CREATED"))
                 (org-agenda-files `(,my-private-work-todo-org-file
                                     ,my-private-work-diary-org-file))
                 (org-agenda-skip-scheduled-if-deadline-is-shown t)
+                (org-deadline-warning-days 0)
                 (org-agenda-sticky nil)))))
 
       ;; new lines and separators
