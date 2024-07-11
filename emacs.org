@@ -2540,11 +2540,27 @@
   #+BEGIN_SRC emacs-lisp
     (use-package time
       :straight nil
+      :init
+      (require 'calendar)
+      :bind
+      (:map calendar-mode-map
+            ("M-«" . calendar-beginning-of-year)
+            ("M-»" . calendar-end-of-year)
+            ("«" . calendar-backward-month)
+            ("»" . calendar-forward-month)
+            ("(" . calendar-backward-week)
+            (")" . calendar-forward-week)
+            ("b" . calendar-backward-day)
+            ("f" . calendar-forward-day)
+            ("{" . calendar-backward-month)
+            ("}" . calendar-forward-month)
+            ("a" . calendar-beginning-of-week)
+            ("e" . calendar-end-of-week))
       :config
       (setq display-time-day-and-date t ;; display date and time
-            display-time-24hr-format t ;; 24h time format
-            european-calendar-style t ;; day/month/year format for calendar
-            calendar-week-start-day 1 ;; start week on Monday
+            display-time-24hr-format t  ;; 24h time format
+            european-calendar-style t   ;; day/month/year format for calendar
+            calendar-week-start-day 1   ;; start week on Monday
             display-time-string-forms '((if (and (not display-time-format)
                                                  display-time-day-and-date)
                                             (format-time-string "%H:%M" now))))
