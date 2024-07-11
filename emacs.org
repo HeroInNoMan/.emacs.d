@@ -1945,6 +1945,7 @@
         :custom
         (corfu-cycle t)              ;; Enable cycling for `corfu-next/previous'
         (corfu-auto t)               ;; Enable auto completion
+        (corfu-auto-delay 0.8)               ;; Enable auto completion
         (corfu-separator ?\s)        ;; Orderless field separator
         (corfu-quit-at-boundary nil) ;; Never quit at completion boundary
         (corfu-quit-no-match t)      ;; Never quit, even if there is no match
@@ -1983,6 +1984,11 @@
         ;; `completion-at-point' is often bound to M-TAB.
         (setq tab-always-indent 'complete)
         :config)
+
+      (defun corfu-automatic ()
+        "Toggle corfu-auto."
+        (interactive)
+        (setq corfu-auto (not corfu-auto)))
 
       (use-package nerd-icons-corfu
         :disabled
@@ -3780,7 +3786,7 @@
        ;; (sp-local-pair 'emacs-lisp-mode "`" "'") ;; adds `' as a local pair in emacs-lisp-mode
        ;; (sp-local-pair '(tex-mode latex-mode) "{" "}") ;; adds {} as a local pair in latex-mode
        (sp-pair "<" ">")
-       (sp-pair "« " " »" :trigger "«")
+       ;; (sp-pair "« " " »" :trigger "«")
        (sp-pair "“" "”")
        (sp-pair "‘" "’")
        (def-pairs ((paren              . "(")
@@ -3789,7 +3795,7 @@
                    (angle              . "<")
                    (single-quote       . "'")
                    (double-quote       . "\"")
-                   (guillemet          . "« ")
+                   ;; (guillemet          . "« ")
                    (curly-double-quote . "“")
                    (curly-single-quote . "‘")
                    (back-quote         . "`")))
@@ -3799,7 +3805,7 @@
        (global-set-key (kbd "M-s <")  'wrap-with-angles)
        (global-set-key (kbd "M-s '")  'wrap-with-single-quotes)
        (global-set-key (kbd "M-s \"") 'wrap-with-double-quotes)
-       (global-set-key (kbd "M-s «")  'wrap-with-guillemets)
+       ;; (global-set-key (kbd "M-s «")  'wrap-with-guillemets)
        (global-set-key (kbd "M-s “")  'wrap-with-curly-double-quotes)
        (global-set-key (kbd "M-s ‘")  'wrap-with-curly-single-quotes)
        (global-set-key (kbd "M-s `")  'wrap-with-back-quotes)
@@ -4824,7 +4830,9 @@
          ("t" awesome-tab-mode                          "tabs"                 :toggle t)
          ("W" mouse-wheel-mode                          "mouse wheel"          :toggle t))
         "Highlighting"
-        (("C" color-identifiers-mode                    "color identifiers"    :toggle t)
+        (
+         ("C" corfu-automatic                            "auto-completion"      :toggle corfu-auto)
+         ;; ("C" color-identifiers-mode                    "color identifiers"    :toggle t)
          ("H" idle-highlight-mode                       "Idle Highlight"       :toggle t)
          ("d" keypression-mode                          "Demo"                 :toggle t)
          ("G" golden-ratio-mode                         "golden ratio"         :toggle t)
@@ -4833,9 +4841,9 @@
          ("m" global-hide-mode-line-mode                "hide mode-line"       :toggle t)
          ("V" goggles-mode                              "goggles"              :toggle t))
         "Decoration"
-        (;; ("G" grip-mode                              "md/org preview"       :toggle t)
+        ( ;; ("G" grip-mode                                 "md/org preview"       :toggle t)
          ("h" global-hl-line-mode                       "highlight line"       :toggle t)
-         ;; ("D" display-battery-mode                   "display battery"      :toggle t)
+         ;; ("D" display-battery-mode                      "display battery"      :toggle t)
          ("p" prettify-symbols-mode                     "prettify symbols"     :toggle t)
          ("_" glasses-mode                              "glasses"              :toggle t)
          ("e" global-emojify-mode                       "emoji"                :toggle t)
