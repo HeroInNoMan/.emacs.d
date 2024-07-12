@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Arthur Léothaud
+# name: begin source emacs lisp
+# key: bse
+# --
+  #+BEGIN_SRC emacs-lisp
+    $1
+  #+END_SRC
