@@ -823,7 +823,9 @@
   #+BEGIN_SRC emacs-lisp
     (use-package dired
       :straight nil
-      :bind ("C-x C-j". dired-jump)
+      :bind (("C-x C-j". dired-jump)
+             :map dired-mode-map
+             ("K" . my/dired-duplicate-file))
       :config
       (unbind-key "M-b" dired-mode-map)
       (put 'dired-find-alternate-file 'disabled nil)
@@ -833,12 +835,31 @@
             auto-revert-verbose nil
             ;; always delete and copy recursively
             dired-recursive-deletes 'always
-            dired-recursive-copies 'always))
+            dired-recursive-copies 'always)
+
+      (defun my/dired-duplicate-file (arg)
+        "Duplicate a file from dired with an incremented number.
+        If ARG is provided, it sets the counter."
+        (interactive "p")
+        (let* ((file (dired-get-file-for-visit))
+               (dir (file-name-directory file))
+               (name (file-name-nondirectory file))
+               (base-name (file-name-sans-extension name))
+               (extension (file-name-extension name t))
+               (counter (if arg (prefix-numeric-value arg) 1))
+               (new-file))
+          (while (and (setq new-file
+                            (format "%s%s_%03d%s" dir base-name counter extension))
+                      (file-exists-p new-file))
+            (setq counter (1+ counter)))
+          (if (file-directory-p file)
+              (copy-directory file new-file)
+            (copy-file file new-file))
+          (dired-revert))))
 
     (use-package diredfl
       :after dired
       :hook (dired-mode . diredfl-mode))
-
   #+END_SRC
 
 ** Dirvish
