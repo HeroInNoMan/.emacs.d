@@ -2040,6 +2040,14 @@
                     ("l" undo-tree-load-history "load")))))
     #+END_SRC
 
+*** Vundo
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package vundo
+        :config (setq vundo-glyph-alist vundo-unicode-symbols))
+    #+END_SRC
+
+
 *** Undo-fu
 
     [[https://github.com/emacsmirror/undo-fu][undo-fu]] is more robust alternative to undo-tree (which gets in the way a lot…) :
