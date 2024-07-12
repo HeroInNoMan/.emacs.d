@@ -837,6 +837,17 @@
             dired-recursive-deletes 'always
             dired-recursive-copies 'always)
 
+      ;; Ask for creating missing directories on file move / copy / rename
+      (define-advice dired-mark-read-file-name (:around (func &rest args) ask-to-make-dir)
+        (let* ((ret (apply func args))
+               (dir (file-name-directory ret))
+               (op-symbol (nth 2 args)))
+          (when (member op-symbol '(copy move))
+            (when (and (not (file-directory-p dir))
+                       (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
+              (make-directory dir t)))
+          ret))
+
       (defun my/dired-duplicate-file (arg)
         "Duplicate a file from dired with an incremented number.
         If ARG is provided, it sets the counter."
