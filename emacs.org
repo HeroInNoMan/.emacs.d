@@ -2683,6 +2683,17 @@
        "Go to"
        (("g" ale/org-diary-goto-today (format-time-string "%F")))))
 
+    ;; (require 'transient)
+
+    ;; (transient-define-prefix my/transient-dates ()
+    ;;   "Dates"
+    ;;   ["Insert date in various formats"
+    ;;    ["Date"
+    ;;     ("y" "Synonyms" powerthesaurus-lookup-synonyms-dwim)
+    ;;     ("a" "Antonyms" powerthesaurus-lookup-antonyms-dwim)]
+    ;;    ["Date & time"
+    ;;     ("x" "Jinx" jinx-mode)
+    ;;     ("c" "Jinx correct" jinx-correct)]])
     (global-set-key (kbd "C-c d") 'hydra-dates/body)
   #+END_SRC
 
@@ -3282,6 +3293,27 @@
 ** Spell checking
 
    #+BEGIN_SRC emacs-lisp
+     (use-package jinx)
+
+     (use-package powerthesaurus
+       :init
+       (require 'transient)
+       (transient-define-prefix my/transient-spelling ()
+         "Spelling commands"
+         ["Spelling"
+          ["Lookups"
+           ("y" "Synonyms" powerthesaurus-lookup-synonyms-dwim)
+           ("a" "Antonyms" powerthesaurus-lookup-antonyms-dwim)]
+          ["Spelling Tools"
+           ("x" "Jinx" jinx-mode)
+           ("c" "Jinx correct" jinx-correct)]
+          ["Dictionary"
+           ("d" "Lookup" dictionary-lookup-definition)]
+          ["Miscellaneous"
+           ("q" "Quit" transient-quit-one)]])
+       :bind
+       ("C-c s" . my/transient-spelling))
+
      (use-package flyspell
        ;; :bind ("C-è" . flyspell-hydra/body)
        :commands dubcaps-mode
