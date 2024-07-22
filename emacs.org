@@ -1859,11 +1859,8 @@
         ;; (setq orderless-style-dispatchers '(+orderless-dispatch))
         (setq orderless-component-separator #'orderless-escapable-split-on-space)
         (setq completion-styles '(orderless basic))
-        (setq orderless-matching-styles '(orderless-prefixes
-                                          orderless-initialism
-                                          orderless-literal
-                                          orderless-regexp
-                                          orderless-flex))
+        (setq ale-fuzzy-matching-p nil)
+        (setq orderless-matching-styles '(orderless-literal))
 
         (add-to-list 'completion-category-overrides '(buffer   (styles orderless)))
         (add-to-list 'completion-category-overrides '(file     (styles orderless)))
@@ -1875,8 +1872,8 @@
         ;; Enable recursive minibuffers
         (setq enable-recursive-minibuffers t)
         ;; toggle literal matching
-        (defun my/match-components-literally ()
-          "Components match literally for the rest of the session."
+        (defun toggle-fuzzy-matching ()
+          "Toggle fuzzy matching of components."
           (interactive)
           (if (and (boundp 'ale-fuzzy-matching-p)
                    ale-fuzzy-matching-p)
@@ -4796,7 +4793,7 @@
         (("(" smartparens-mode                          "smartparens"          :toggle t)
          (")" smartparens-strict-mode                   "smartparens strict"   :toggle t)
          ;; ("a" aggressive-indent-mode                    "aggressive indent"    :toggle t)
-         ("z" my/match-components-literally             "fuzzy matching"       :toggle ale-fuzzy-matching-p)
+         ("z" toggle-fuzzy-matching                     "fuzzy matching"       :toggle ale-fuzzy-matching-p)
 
          ("A" global-auto-revert-mode                   "auto-revert"          :toggle t)
          ("s" subword-mode                              "sub-word"             :toggle t)
