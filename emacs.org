@@ -1047,13 +1047,21 @@
   I found the package [[https://github.com/alphapapa/dogears.el][dogears]] which replaces ~goto-last-change~.
   #+BEGIN_SRC emacs-lisp
     (use-package dogears
+      :init (dogears-mode)
+      :pretty-hydra
+      ((:color blue :quit-key "q")
+       ("Go" (("g" dogears-go "→")
+              ("p" dogears-back "↶" :color red)
+              ("n" dogears-forward "↷" :color red))
+        "List" (("l" dogears-list "list…")
+                ("s" dogears-sidebar "sidebar"))))
       :bind
+      ("<f6>" . dogears-hydra/body)
       ("M-g d" . dogears-go)
       ("M-g M-b" . dogears-back)
       ("M-g M-f" . dogears-forward)
       ("M-g M-d" . dogears-list)
-      ("M-g M-D" . dogears-sidebar)
-      :config (dogears-mode))
+      ("M-g M-D" . dogears-sidebar))
   #+END_SRC
 
 ** Tabs
