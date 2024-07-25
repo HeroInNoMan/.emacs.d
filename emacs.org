@@ -665,9 +665,12 @@
        :if (not nano-emacs-enabled)
        :straight nil
        :custom-face (hl-line ((t (:inherit org-verse))))
-       :hook ((dired-mode org-agenda-mode ibuffer-mode) . hl-line-mode)
+       :hook
+       (dired-mode          . hl-line-mode)
+       (org-agenda-mode     . hl-line-mode)
+       (ibuffer-mode        . hl-line-mode)
+       (tabulated-list-mode . hl-line-mode)
        :config (global-hl-line-mode -1))
-
 
      (use-package indent-bars
        :disabled
@@ -2304,6 +2307,10 @@
                  ("Tramp" (or (filename . "/sshx?:.+:.+")
                               (name . "\*tramp.*\*")
                               (name . "\*debug tramp.*\*")))
+                 ("Docker" (or
+                            (name . ".*\.Dockerfile.*\ ?\*")
+                            (name . ".*docker-compose\..*")
+                            (name . "\* ?docker.*\ ?\*")))
                  ("Running" (and (process . "")
                                  (not (derived-mode . erc-mode))))
                  ("Text"   (and (derived-mode . text-mode)
@@ -4873,7 +4880,8 @@
          ("\"" erc-start-or-jump "IRC")
          ("a" org-agenda "agenda")
          ("c" open-calendar "calendar")
-         ("T" tomatinho "pomodoro"))
+         ;; ("T" tomatinho "pomodoro")
+         ("D" docker "docker"))
         "Diff"
         (("d" ediff "ediff")
          ("z" ztree-diff "ztree-diff")
