@@ -1660,8 +1660,8 @@
             ("Y"     yas-describe-tables   "yasnippets")
             ("n"     info-display-manual   "manual page")
             ("h"     consult-info          "manual a propos")
-            ("m"     woman                 "man page")
-            ("M"     consult-man           "man a propos"))
+            ("w"     woman                 "(wo)man")
+            ("m"     consult-man           "man -k"))
            "Session"
            (("r"     vertico-repeat        "resume")
             ("R"     vertico-repeat-select "resume…"))))
