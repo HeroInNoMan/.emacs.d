@@ -1465,7 +1465,8 @@
                 (read-color buffer)
                 (yas-complete-expand flat)
                 (yas-insert-snippet grid)
-                (consult-yasnippet grid)))
+                (consult-yasnippet grid)
+                (woman grid)))
 
         (setq vertico-multiform-categories
               '((file buffer grid)
