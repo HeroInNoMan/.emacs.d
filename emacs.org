@@ -16,6 +16,11 @@
 
 * Startup
 
+  We want to use lexical scoping.
+  #+BEGIN_SRC emacs-lisp
+    ;;; emacs.el --- user-init-file                    -*- lexical-binding: t -*-
+  #+END_SRC
+
   Display emacs startup time, with the number of garbage collections during the process.
   #+BEGIN_SRC emacs-lisp
     ;; Use a hook so the message doesn't get clobbered by other messages.
@@ -28,7 +33,30 @@
                          gcs-done)))
   #+END_SRC
 
-  Start by “disabling” garbage collection while starting up:
+  Temporarily disable file name handlers as it’s not needed on initialization.
+  #+BEGIN_SRC emacs-lisp
+    (defvar file-name-handler-alist-old file-name-handler-alist)
+    (setq file-name-handler-alist nil)
+  #+END_SRC
+
+  Increase max number of log messages
+  #+BEGIN_SRC emacs-lisp
+    (setopt message-log-max 16384)
+  #+END_SRC
+
+  Disable certain byte compiler warnings to cut down on the noise. This is a personal choice and can be removed if you would like to see any and all byte compiler warnings.
+
+  Note: these mostly make sense if its your package or if a package would break soon.
+  #+BEGIN_SRC emacs-lisp
+    (setopt byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+  #+END_SRC
+
+  Suppress warnings about lexical binding. Some packages store their data in Elisp files without lexical bindings or simply don’t use it yet.
+  #+BEGIN_SRC emacs-lisp
+    (setopt warning-suppress-types '((lexical-binding)))
+  #+END_SRC
+
+  “Disable” garbage collection while starting up:
   #+BEGIN_SRC emacs-lisp
     (setq gc-cons-threshold most-positive-fixnum)
     ;; restore after startup
