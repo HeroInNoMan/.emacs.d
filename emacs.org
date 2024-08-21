@@ -1631,13 +1631,14 @@
             ("i"     consult-imenu         "imenu")
             ("e"     consult-imenu-multi   "imenu multi")
             ("o"     consult-outline       "outline")
-            ("SPC"   consult-global-mark   "mark")
-            ("j"     consult-bookmark      "bookmark"))
+            ("j"     consult-bookmark      "bookmark")
+            ("SPC"   consult-global-mark   "mark"))
            "Search"
-           (("l"     consult-locate        "locate")
+           (("A"     consult-org-agenda    "org-agenda")
+            ("l"     consult-locate        "locate")
             ("/"     consult-fd            "find")
             ("g"     consult-git-grep      "git grep")
-            ("\\"    consult-git-log-grep  "git log grep")
+            ("\\"    consult-git-log-grep  "git log")
             ("x"     deadgrep              "deadgrep")
             ("X"     consult-recoll        "recoll"))
            "Tools"
@@ -1647,7 +1648,7 @@
             ("k"     consult-kmacro        "run macro")
             ("y"     consult-yasnippet     "yasnippet"))
            "Lookup"
-           (("."     helpful-at-point      "thing at point")
+           (("."     helpful-at-point      "at point")
             ("s"     helpful-symbol        "symbol")
             ("v"     helpful-variable      "variable")
             ("f"     helpful-function      "function")
@@ -1656,10 +1657,10 @@
             ("a"     apropos-value         "value")
             ("b"     which-key-show-full-major-mode "bindings"))
            "Manual"
-           (("b"     describe-bindings     "bindings")
+           (("B"     describe-bindings     "bindings")
             ("Y"     yas-describe-tables   "yasnippets")
-            ("n"     info-display-manual   "manual page")
-            ("h"     consult-info          "manual a propos")
+            ("n"     info-display-manual   "info page")
+            ("h"     consult-info          "info full text")
             ("w"     woman                 "(wo)man")
             ("m"     consult-man           "man -k"))
            "Session"
@@ -4877,12 +4878,13 @@
          ("." find-file-at-point "open at point" :column "Files")
          ("," ffap-menu "open around point" :column "Files"))
         "Management"
-        (("(" mu4e "mu4e")
+        (;; ("(" mu4e "mu4e")
          ("\"" erc-start-or-jump "IRC")
          ("a" org-agenda "agenda")
          ("c" open-calendar "calendar")
          ;; ("T" tomatinho "pomodoro")
-         ("D" docker "docker"))
+         ("k" docker "docker")
+         ("K" docker-compose "docker-compose"))
         "Diff"
         (("d" ediff "ediff")
          ("z" ztree-diff "ztree-diff")
@@ -4895,7 +4897,7 @@
          ("o" crux-open-with "open externally")
          ("w" 0x0-dwim "webpaste"))
         "Straight"
-        (("i" ale/find-init-file "go to init file") 
+        (("i" ale/find-init-file "go to init file")
          ("p p" straight-pull-all "pull packages")
          ("p c" straight-check-all "check packages")
          ("p i" straight-use-package "install package"))))
