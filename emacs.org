@@ -1051,13 +1051,14 @@
   #+BEGIN_SRC emacs-lisp
     (use-package dogears
       :init (dogears-mode)
-      :pretty-hydra
-      ((:color blue :quit-key "q")
-       ("Go" (("g" dogears-go "→")
-              ("p" dogears-back "↶" :color red)
-              ("n" dogears-forward "↷" :color red))
-        "List" (("l" dogears-list "list…")
-                ("s" dogears-sidebar "sidebar"))))
+      :config
+      (pretty-hydra-define dogears-hydra
+        (:color blue :quit-key "q")
+        ("Go" (("g" dogears-go "→")
+               ("p" dogears-back "↶" :color red)
+               ("n" dogears-forward "↷" :color red))
+         "List" (("l" dogears-list "list…")
+                 ("s" dogears-sidebar "sidebar"))))
       :bind
       ("<f6>" . dogears-hydra/body)
       ("M-g d" . dogears-go)
