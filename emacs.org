@@ -2758,6 +2758,7 @@
       (define-key org-mode-map (kbd "M-q") #'endless/org-fill-or-unfill)
 
       (require 'color)
+      (require 'org-indent)
 
       ;; general settings
       (setq org-hide-emphasis-markers t
