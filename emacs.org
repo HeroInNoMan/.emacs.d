@@ -3844,7 +3844,11 @@
 
        (pretty-hydra-define hydra-parens
          (:color teal :quit-key "q")
-         ("Insert"
+         ("Move"
+          (("<right>" sp-forward-sexp "SEXP ⟶")
+           ("<left>" sp-backward-sexp "SEXP ⟵")
+           )
+          "Insert"
           (("c" sp-clone-sexp "clone")
            ("p" sp-split-sexp "split"))
           "Delete"
