@@ -246,6 +246,40 @@
                   ("q" . delete-frame)))
   #+END_SRC
 
+** Casual suite
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package casual-suite
+       :bind (("M-g M-g" . casual-avy-tmenu)
+              :map calc-mode-map ("C-o" . casual-calc-tmenu)
+              :map Info-mode-map ("C-o" . casual-info-tmenu)
+              :map dired-mode-map
+              ("C-o" . casual-dired-tmenu)
+              ("é" . casual-dired-tmenu)
+              :map isearch-mode-map ("C-o" . casual-isearch-tmenu)
+              :map ibuffer-mode-map
+              ("C-o" . casual-ibuffer-tmenu)
+              ("F" . casual-ibuffer-filter-tmenu)
+              ("s" . casual-ibuffer-sortby-tmenu)
+              ("<double-mouse-1>" . ibuffer-visit-buffer) ; optional
+              ("M-<double-mouse-1>" . ibuffer-visit-buffer-other-window) ; optional
+              ("{" . ibuffer-backwards-next-marked) ; optional
+              ("}" . ibuffer-forward-next-marked)   ; optional
+              ("[" . ibuffer-backward-filter-group) ; optional
+              ("]" . ibuffer-forward-filter-group)  ; optional
+              ("$" . ibuffer-toggle-filter-group)  ; optional
+              :map reb-mode-map ("C-o" . casual-re-builder-tmenu)
+              :map reb-lisp-mode-map ("C-o" . casual-re-builder-tmenu)
+              :map bookmark-bmenu-mode-map
+              ("C-o" . casual-bookmarks-tmenu)
+              ("S" . casual-bookmarks-sortby-tmenu)
+              ("J" . bookmark-jump)
+              :map org-agenda-mode-map
+              ("M-j" . org-agenda-clock-goto) ; optional
+              ("J" . bookmark-jump) ; optional
+              ("C-o" . casual-agenda-tmenu)))
+   #+END_SRC
+
 * Defaults
 
   Let’s redefine some basic behaviour:
@@ -1001,12 +1035,6 @@
       :bind (:map dired-mode-map
                   ("r" . hydra-dired-quick-sort/body)))
 
-    (use-package casual-dired
-      :unless (featurep 'dirvish)
-      :after dired
-      :straight (:host github :repo "kickingvegas/casual-dired")
-      :bind (:map dired-mode-map
-                  ("é" . casual-dired-tmenu)))
   #+END_SRC
 
 * Navigation
