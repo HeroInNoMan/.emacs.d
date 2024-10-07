@@ -239,13 +239,6 @@
     (use-package describe-number :defer t)
   #+END_SRC
 
-  #+BEGIN_SRC emacs-lisp
-    (use-package man
-      :straight nil
-      :bind (:map Man-mode-map
-                  ("q" . delete-frame)))
-  #+END_SRC
-
 ** Casual suite
 
    #+BEGIN_SRC emacs-lisp
