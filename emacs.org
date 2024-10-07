@@ -179,21 +179,21 @@
       :demand
       :load-path "elisp/"
       :bind
-      ("C-S-p" . up-arrow)
-      ("C-S-n" . down-arrow)
-      ("C-M-S-p" . scroll-down-line)
-      ("C-M-S-n" . scroll-up-line)
-      ("M-é" . previous-user-buffer)                   ;; call previous user buffer
-      ("M-è" . next-user-buffer)                       ;; call next user buffer
-      ("C-M-é" . previous-buffer)                      ;; call previous buffer
-      ("C-M-è" . next-buffer)                          ;; call next buffer
-      ([remap goto-line] . 'goto-line-with-feedback)   ;; display linum while goto-line
-      ("C-x |" . ale/toggle-window-split)
-      ("C-|" . ale/toggle-window-split)
-      ;; ("C-%" . ale/toggle-selective-display)
-      ("C-x _" . ale/toggle-camel-snake-kebab-case)
-      ("C-c +" . increment-number-decimal)
-      ("C-c -" . decrement-number-decimal))
+      ("C-S-p"           . up-arrow)
+      ("C-S-n"           . down-arrow)
+      ("C-M-S-p"         . scroll-down-line)
+      ("C-M-S-n"         . scroll-up-line)
+      ("M-é"             . previous-buffer)          ;; call previous buffer
+      ("M-è"             . next-buffer)              ;; call next buffer
+      ("C-M-é"           . previous-user-buffer)     ;; call previous user buffer
+      ("C-M-è"           . next-user-buffer)         ;; call next user buffer
+      ([remap goto-line] . 'goto-line-with-feedback) ;; display linum while goto-line
+      ("C-x |"           . ale/toggle-window-split)
+      ("C-|"             . ale/toggle-window-split)
+      ;; ("C-%"            . ale/toggle-selective-display)
+      ("C-x _"           . ale/toggle-camel-snake-kebab-case)
+      ("C-c +"           . increment-number-decimal)
+      ("C-c -"           . decrement-number-decimal))
   #+END_SRC
 
 * Help
