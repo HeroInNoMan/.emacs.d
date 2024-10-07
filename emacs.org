@@ -2773,6 +2773,14 @@
       (use-package calfw-org))
   #+END_SRC
 
+** Time
+
+   [[https://github.com/protesilaos/tmr][TMR]] is a nice package that enables timers that popup at a desired time.
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package tmr :disabled)
+   #+END_SRC
+
 * Text
   #+BEGIN_SRC emacs-lisp
     (use-package text-mode
@@ -5021,6 +5029,52 @@
 
      (key-chord-define-global (kbd "bj") 'hydra-widgets/body)
      (key-chord-define-global (kbd "\"«") 'hydra-widgets/body)
+   #+END_SRC
+
+** Emacs from outside
+
+   Thanks to [[https://protesilaos.com/codelog/2024-09-19-emacs-command-popup-frame-emacsclient/][this]] post I improved the way I summon emacs popup frames from outside of emacs.
+   #+BEGIN_SRC emacs-lisp
+     ;;;; Run commands in a popup frame
+
+     (defun prot-window-delete-popup-frame (&rest _)
+       "Kill selected selected frame if it has parameter `prot-window-popup-frame'.
+     Use this function via a hook."
+       (when (frame-parameter nil 'prot-window-popup-frame)
+         (delete-frame)))
+
+     (defmacro prot-window-define-with-popup-frame (command)
+       "Define interactive function which calls COMMAND in a new frame.
+     Make the new frame have the `prot-window-popup-frame' parameter."
+       `(defun ,(intern (format "prot-window-popup-%s" command)) ()
+          ,(format "Run `%s' in a popup frame with `prot-window-popup-frame' parameter.
+     Also see `prot-window-delete-popup-frame'." command)
+          (interactive)
+          (let ((frame (make-frame '((prot-window-popup-frame . t)))))
+            (select-frame frame)
+            (switch-to-buffer " prot-window-hidden-buffer-for-popup-frame")
+            (condition-case nil
+                (call-interactively ',command)
+              ((quit error user-error)
+               (delete-frame frame))))))
+
+     ;; org-capture
+     (declare-function org-capture "org-capture" (&optional goto keys))
+     (defvar org-capture-after-finalize-hook)
+
+     ;;;###autoload (autoload 'prot-window-popup-org-capture "prot-window")
+     (prot-window-define-with-popup-frame org-capture)
+
+     (add-hook 'org-capture-after-finalize-hook #'prot-window-delete-popup-frame)
+
+     ;; tmr
+     (declare-function tmr "tmr" (time &optional description acknowledgep))
+     (defvar tmr-timer-created-functions)
+
+     ;;;###autoload (autoload 'prot-window-popup-tmr "prot-window")
+     (prot-window-define-with-popup-frame tmr)
+
+     (add-hook 'tmr-timer-created-functions #'prot-window-delete-popup-frame)
    #+END_SRC
 
 ** Bookmarks and registers
