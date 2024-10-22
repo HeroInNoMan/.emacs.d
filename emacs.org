@@ -1495,7 +1495,7 @@
              (expand-file-name "etc/yasnippet/snippets" base-emacs-directory)))
    #+END_SRC
 
-** VEMCO+
+** Vert&co
 
    A set of new-generation tools trying to be as flexible and close to emacs built-in functions as possible :
    - *Vertico*: VERTical Interactive COmpletion
