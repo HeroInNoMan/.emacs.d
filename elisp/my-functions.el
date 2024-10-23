@@ -161,6 +161,18 @@ Show the full path file name in the minibuffer."
   (define-key ediff-mode-map "d" 'ediff-copy-both-to-C))
 (add-hook 'ediff-keymap-setup-hook 'ale/add-d-to-ediff-mode-map)
 
+(defun ale/kill-buffer-and-maybe-window ()
+  "Kill the current buffer. Also delete its window if there is
+more than one window in the frame. With a prefix argument,
+also delete the frame if there is only one window."
+  (interactive)
+  (if (one-window-p)
+      (progn
+        (ale/kill-this-buffer)
+        (unless (equal current-prefix-arg nil)
+          (delete-frame)))
+    (kill-buffer-and-window)))
+
 (defun ale/kill-this-buffer ()
   "Kill the current buffer."
   (interactive)
