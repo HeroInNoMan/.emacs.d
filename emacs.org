@@ -190,7 +190,7 @@
       ([remap goto-line] . 'goto-line-with-feedback)   ;; display linum while goto-line
       ("C-x |" . ale/toggle-window-split)
       ("C-|" . ale/toggle-window-split)
-      ("C-%" . ale/toggle-selective-display)
+      ;; ("C-%" . ale/toggle-selective-display)
       ("C-x _" . ale/toggle-camel-snake-kebab-case)
       ("C-c +" . increment-number-decimal)
       ("C-c -" . decrement-number-decimal))
@@ -1359,6 +1359,15 @@
        ("M-s C-s" . phi-search)
        ("M-s C-r" . phi-search-backward)
        :custom-face (phi-search-selection-face ((t (:inherit isearch :background "dark orange")))))
+   #+END_SRC
+
+** visual-replace
+   #+BEGIN_SRC emacs-lisp
+     (use-package visual-replace
+       :straight '(visual-replace :host github :repo "szermatt/visual-replace")
+       :bind (("C-%" . visual-replace)
+              :map isearch-mode-map
+              ("C-%" . visual-replace-from-isearch)))
    #+END_SRC
 
 ** deadgrep
