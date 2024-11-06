@@ -1071,6 +1071,7 @@
   More navigation commands:
   #+BEGIN_SRC emacs-lisp
     (use-package dumb-jump
+      :disabled
       :bind (:map prog-mode-map
                   ("C-." . xref-find-definitions)
                   ("C-," . xref-pop-marker-stack)
@@ -1079,6 +1080,15 @@
                     (if (boundp 'my-default-project-root)
                         my-default-project-root
                       "~")))
+
+    (use-package dumber-jump
+      :init (add-hook 'xref-backend-functions #'dumber-jump-xref-activate)
+      :bind (:map prog-mode-map
+                  ("C-." . xref-find-definitions)
+                  ("C-," . xref-go-back))
+      ;; :bind (:map prog-mode-map
+      ;;             ("" . dumber-jump))
+      )
 
     (use-package minimap :defer t
       :config
