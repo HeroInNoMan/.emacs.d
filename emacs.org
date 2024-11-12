@@ -44,6 +44,17 @@
     (setopt message-log-max 16384)
   #+END_SRC
 
+  #+BEGIN_SRC emacs-lisp
+    (use-package compile-angel
+      :straight (compile-angel
+                 :type git
+                 :host github
+                 :repo "jamescherti/compile-angel.el")
+      :config
+      (compile-angel-on-save-mode)
+      (compile-angel-on-load-mode))
+  #+END_SRC
+
   Disable certain byte compiler warnings to cut down on the noise. This is a personal choice and can be removed if you would like to see any and all byte compiler warnings.
 
   Note: these mostly make sense if its your package or if a package would break soon.
