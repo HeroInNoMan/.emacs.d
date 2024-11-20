@@ -303,7 +303,8 @@ Swap buffers in the process"
      (buffer-list))
     (if (> (length scratches) 0)
         (switch-to-buffer (buffer-name (car scratches)))
-      (maybe-relocate-before-call 'crux-create-scratch-buffer))))
+      (maybe-relocate-before-call 'crux-create-scratch-buffer))
+    (hide-mode-line-mode 1)))
 
 (defun maybe-relocate-before-call (function)
   "Redefine `default-directory' before calling FUNCTION."

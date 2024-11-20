@@ -814,7 +814,7 @@
           (interactive)
           (svg-analog-clock)
           (make-frame)
-          (hide-mode-line-mode)))
+          (hide-mode-line-mode 1)))
     #+END_SRC
 
 ** Colours
