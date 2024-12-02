@@ -426,6 +426,7 @@ When called with a prefix argument, cleanup all known projects beforehand."
 (defun ale/open-project (&optional dir)
   "Open DIR project magit logs and status as split windows."
   (when dir (find-file dir))
+  (require 'magit)
   (magit-log-all (car (magit-log-arguments)))
   (delete-other-windows)
   (magit-status)
