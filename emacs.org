@@ -2594,6 +2594,7 @@
        (git-commit-setup . ale/insert-ticket-prefix)
        (git-commit-setup . ale/switch-to-all-dict)
        (git-commit-setup . bug-reference-mode)
+       (git-commit-setup . smartparens-mode)
        :custom-face (magit-branch-current ((t ( :inherit magit-branch-local
                                                 :box ( :line-width 3
                                                        :color "#ee0000"
