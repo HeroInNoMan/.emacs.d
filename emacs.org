@@ -3730,7 +3730,16 @@
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-     (use-package format-all :defer t)
+     (use-package format-all
+       :commands format-all-mode
+       :bind ("C-c f" . format-all-region-or-buffer)
+       :hook (prog-mode . format-all-mode)
+       :config
+       (setq-default format-all-formatters
+                     '(("C"     (astyle "--mode=c"))
+                       ("Java" (astyle "--mode=java"))
+                       ("SQL" (sqlformat "-r"))
+                       ("Shell" (shfmt "-i" "2" "-ci")))))
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
