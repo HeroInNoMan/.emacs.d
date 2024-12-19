@@ -2222,7 +2222,7 @@
      (use-package selected
        :commands selected-minor-mode selected-global-mode
        :bind (:map selected-keymap
-                   ("u" . upcase-region)
+                   ;; ("u" . upcase-region)
                    ("l" . downcase-region)
                    ("c" . capitalize-region)
                    ("w" . count-words-region))
