@@ -3732,8 +3732,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package format-all
        :commands format-all-mode
-       :bind ("C-c f" . format-all-region-or-buffer)
-       :hook (prog-mode . format-all-mode)
+       ;; :hook (prog-mode . format-all-mode)
        :config
        (setq-default format-all-formatters
                      '(("C"     (astyle "--mode=c"))
@@ -5069,8 +5068,8 @@
          ("y" ale/diff-last-2-yanks "diff yanks"))
         "Tools"
         (("TAB" crux-cleanup-buffer-or-region "indent region")
-         ("s" ale/cleanup-buffer-and-save "clean & save")
-         ("f" ale/format-all-buffer-or-region "format all")
+         ("l"  list-processes "list processes")
+         ("f"  format-all-region-or-buffer "format all")
          ("o" crux-open-with "open externally")
          ("w" 0x0-dwim "webpaste"))
         "Straight"
